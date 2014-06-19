@@ -3,16 +3,16 @@
 <head>
 	<title>[TITLE]</title>
 	<meta charset="utf-8" />
-    <meta name="author" content="Gaston Bouchayer" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta name="robots" content="noindex, nofollow">
-    
-    <link rel="shortcut icon" href="../images/divers/favicon.ico" />
-    
-    <link media="screen" rel="stylesheet" type="text/css" href="../css/styles.css" />
-    
-    <?php if($_SERVER['HTTP_HOST'] != 'localhost:8888') { ?>
+	<meta name="author" content="Gaston Bouchayer" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="noindex, nofollow">
+	
+	<link rel="shortcut icon" href="../images/logos/favicon.ico" />
+	
+	<link media="screen" rel="stylesheet" type="text/css" href="../css/styles.css" />
+	
+	<?php if($_SERVER['HTTP_HOST'] != 'localhost:8888') { ?>
 	<!-- Google Analytics -->
 	<script type="text/javascript">
 		var _gaq = _gaq || [];

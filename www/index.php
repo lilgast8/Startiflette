@@ -65,7 +65,8 @@
 
 
 <!-- Scripts -->
-<script src="js/plugins/jquery.min.js"></script>
+<!--[if lt IE 9]><script src="js/plugins/jquery-1.10.1.min.js"></script><![endif]-->
+<!--[if gte IE 9]><!--><script src="js/plugins/jquery-2.0.2.min.js"></script><!--<![endif]-->
 <script src="js/plugins/greensock/TweenMax.min.js"></script>
 <script src="js/plugins/jquery.address.min.js"></script>
 <script src="js/scripts.js"></script>

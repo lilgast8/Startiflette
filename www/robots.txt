@@ -1,5 +1,5 @@
 User-Agent: *
-Disallow: /alternate/
+Disallow: /alt/
 Disallow: /css/
 Disallow: /images/
 Disallow: /includes/

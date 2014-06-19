@@ -7,7 +7,7 @@
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="noindex, nofollow">
-	<noscript><meta http-equiv="refresh" content="0; url=alternate/no-js.php" /></noscript>
+	<noscript><meta http-equiv="refresh" content="0; url=alt/no-js.php" /></noscript>
 	<script src="js/plugins/browser-detect.js"></script>
 	
 	<link rel="shortcut icon" href="images/logos/favicon.ico" />

@@ -9,7 +9,7 @@
 	<meta name="robots" content="noindex, nofollow">
 	<script>window.location.href = '../';</script>
 	
-	<link rel="shortcut icon" href="../images/divers/favicon.ico" />
+	<link rel="shortcut icon" href="../images/logos/favicon.ico" />
 	
 	<link media="screen" rel="stylesheet" type="text/css" href="../css/styles.css" />
 	
