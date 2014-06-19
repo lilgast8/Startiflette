@@ -10,8 +10,6 @@
 
     <link rel="shortcut icon" href="images/divers/favicon.ico" />
 	<link media="screen" rel="stylesheet" type="text/css" href="css/styles.css" />
-
-    <script src="js/browser_detect.js"></script>
 </head>
 
 <body>
@@ -20,8 +18,8 @@
 <div id="oldBrowser">
 	<h1>Votre navigateur est obsolète.</h1>
     <p>
-	    Veuillez le mettre à jour gratuitement, afin d'améliorer ses performances et <br />
-	    ainsi avoir un meilleur confort de navigation.
+	    Veuillez le mettre à jour gratuitement, afin d'améliorer ses performances <br />
+        et ainsi avoir un meilleur confort de navigation.
     </p>
     <div class="navigateurs">
     	<a href="http://www.google.com/chrome" target="_blank" class="chrome">

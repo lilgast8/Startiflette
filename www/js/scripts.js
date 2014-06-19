@@ -3,6 +3,7 @@
 /*******************************/
 
 
+/* -------- Mise en page -------- */
 var $window;
 var body;
 
@@ -31,6 +32,7 @@ $(function(){
 	/**************************/
 
 	
+	/* -------- Mise en page -------- */
 	$window = $(window);
 	body = $(document.body);
 

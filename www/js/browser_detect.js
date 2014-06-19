@@ -122,12 +122,12 @@ var BrowserDetect = {
 BrowserDetect.init();
 
 
-/*
+
 var browser = BrowserDetect.browser;
 var vBrowser = BrowserDetect.version;
 
-if(browser == 'Explorer' && vBrowser < 7 || browser == 'Firefox' && vBrowser < 3.6) {
+if(browser == 'Explorer' && vBrowser < 7 || browser == 'Firefox' && vBrowser < 4 || browser == 'Opera' && vBrowser < 10) {
 	document.location = './old_browser.php';
 }
-*/
+
 

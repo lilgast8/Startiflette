@@ -8,7 +8,8 @@
     <meta name="keywords" content="" />
     <meta name="robots" content="index, follow">
     <noscript><meta http-equiv="refresh" content="0; url=no_js.php"></noscript>
-
+    <script src="js/browser_detect.js"></script>
+    
     <meta property="og:title" content="" />
     <meta property="og:site_name" content="" />
     <meta property="og:description" content="" />
@@ -20,9 +21,8 @@
     <link rel="apple-touch-icon-precomposed" href="images/logos/logo-apple-touch.jpg" />
 
     <link media="screen" rel="stylesheet" type="text/css" href="css/styles.css" />
-    
+
     <!--[if lt IE 9]><script type="text/javascript" src="js/html5shiv.js"></script><![endif]-->
-    <script src="js/browser_detect.js"></script>
 </head>
 
 <!--[if IE 7]><body class="ie7 oldie"><![endif]-->
