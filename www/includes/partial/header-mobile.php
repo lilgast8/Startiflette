@@ -8,8 +8,8 @@
 	<meta name="description" content="<?php echo $descPage; ?>" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
-	<meta name="author" content="Akaru" />
-	<meta name="designer" content="Akaru" />
+	<meta name="author" content="Gaston Bouchayer" />
+	<meta name="designer" content="Gaston Bouchayer" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	
 	<!-- Facebook -->
@@ -27,8 +27,8 @@
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content="" />
 	<meta name="twitter:description" content="" />
-	<meta name="twitter:site" content="@Akaru_Agency" />
-	<meta name="twitter:creator" content="@Akaru_Agency" />
+	<meta name="twitter:site" content="@LilGast8" />
+	<meta name="twitter:creator" content="@LilGast8" />
 	<meta name="twitter:url" content="<?php echo RACINE_WEB; ?>" />
 	<meta name="twitter:image" content="<?php echo RACINE_WEB; ?>img/divers/twitter.jpg" />
 	
