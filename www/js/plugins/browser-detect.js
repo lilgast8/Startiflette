@@ -4,6 +4,6 @@ var BrowserDetect={init:function(){this.browser=this.searchString(this.dataBrows
 var browser = BrowserDetect.browser;
 var vBrowser = BrowserDetect.version;
 
-if(browser == 'Explorer' && vBrowser < 7 || browser == 'Firefox' && vBrowser < 4 || browser == 'Opera' && vBrowser < 10) {
+if(browser == 'Explorer' && vBrowser < 7 || browser == 'Firefox' && vBrowser < 4 || browser == 'Opera' && vBrowser < 10 || browser == 'Safari' && vBrowser < 3.1) {
 	document.location = './alternate/old-browser.php';
 }

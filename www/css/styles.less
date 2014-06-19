@@ -27,6 +27,7 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{di
 
 /* -------- TAILLES -------- */
 @largContenu:960px;
+@largContenuMin:980px;
 
 /* -------- COULEURS -------- */
 @bgSelection:#000;
@@ -47,7 +48,7 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{di
 ::-moz-selection { background-color:@bgSelection; color:@texteSelection; }
 ::selection { background-color:@bgSelection; color:@texteSelection; }
 
-body { width:100%; min-width:@largContenu; height:100%; min-height:600px; font:normal 13px/15px Arial; -webkit-font-smoothing:subpixel-antialiased; /*-webkit-font-smoothing:antialiased;*/ color:#000; background-color:#fff; }
+body { width:100%; min-width:@largContenuMin; height:100%; min-height:600px; font:normal 13px/15px Arial; -webkit-font-smoothing:subpixel-antialiased; /*-webkit-font-smoothing:antialiased;*/ color:#000; background-color:#fff; }
 a { text-decoration:none; }
 .centrer { width:@largContenu; margin:auto; }
 
