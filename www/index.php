@@ -8,7 +8,7 @@
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
 	<noscript><meta http-equiv="refresh" content="0; url=no_js.php" /></noscript>
-	<script src="js/browser_detect.js"></script>
+	<script src="js/plugins/browser_detect.js"></script>
 	
 	<meta property="og:title" content="" />
 	<meta property="og:site_name" content="" />
@@ -22,7 +22,7 @@
 	
 	<link media="screen" rel="stylesheet" type="text/css" href="css/styles.css" />
 	
-	<!--[if lt IE 9]><script type="text/javascript" src="js/html5shiv.js"></script><![endif]-->
+	<!--[if lt IE 9]><script type="text/javascript" src="js/plugins/html5shiv.js"></script><![endif]-->
 </head>
 
 <!--[if IE 7]><body class="ie7 oldie"><![endif]-->
@@ -34,9 +34,9 @@
 
 
 <!-- Scripts -->
-<script src="js/jquery.min.js"></script>
-<script src="js/greensock/TweenMax.min.js"></script>
-<script src="js/jquery.address.min.js"></script>
+<script src="js/plugins/jquery.min.js"></script>
+<script src="js/plugins/greensock/TweenMax.min.js"></script>
+<script src="js/plugins/jquery.address.min.js"></script>
 <script src="js/scripts.js"></script>
 
 <?php if($_SERVER['HTTP_HOST'] != 'localhost:8888') { ?>
