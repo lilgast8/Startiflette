@@ -1,0 +1,185 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf200
+{\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;\red217\green11\blue0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11440\viewh12940\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\qc
+
+\f0\b\fs32 \cf0 MAJ Starter Project
+\b0\fs24 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 \
+\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\b \cf0 TO DO :\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf2 - updater Grunt et plugins\cf0 \
+- revoir la gestion du SITE_ROOT et WEB_ROOT\
+- enlever le "/" \'e0 la fin de SITE_ROOT et WEB_ROOT\
+- enlever le "s" des noms de dossier (bgs, btns, logos\'85)\
+- mettre \'e0 jour la gestion du loader, (modernizr et detectizr en haut de page)\
+- changer le texte de no-js.php, enlever "ou retourner \'e0 l'accueil"\
+- revoir le robots.txt\
+- changer LOCALHOST en LOCAL\
+- remplacer $alternate par $alt dans _legals.scss\
+- virer le "data-page", remplacer le #page par .page et mettre le #nom-de-page ???\
+- remplacer $titrePage et $descPage par $title et $desc (dans index.php et header.php)\
+- remplacer $contentWMin par $contentMinW dans _global.scss
+\b0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\b \cf0 - mettre un $contentMinH dans _global.scss\
+- ne mettre le @charset "UTF-8"; que dans le fichier styles.scss\
+- footer.php remplacer Fin par end\
+- mettre le func/load-json.php\
+- enlever le / devant le img : <meta name="twitter:image" content="<?php echo RACINE_WEB; ?>/img/divers/twitter.jpg" />\
+- angliciser navs et nav_ dans le dossier img/logos/\
+- angliciser le index.php (subPage, name, commentaires\'85)\
+- angliciser le .htaccess (subPage, name\'85)\
+- enlever les RewriteRule relatives aux ASSETS dans le htaccess et mettre une var ASSETS dans le init.php (= \'e0 src/ ou assets/ en fonction de PROD)\
+- mettre les commentaires conditionnels de IE sur le <html> plut\'f4t que le <body>\
+- dans View.class.js, cr\'e9er un this.o (objet), this.v (variables), this.$ (elt du DOM) pour socker mes diff\'e9rents type de variables ?\
+- mettre History.js natif plut\'f4t que Zepto\
+- changer tous les RACINE_WEB et RACINE_SITE par BASE_URL/ROOT_WEB et ROOT/ROOT_SITE ???\
+- mettre les versions dans le nom des lib JS (updater le Gruntfile.js en cons\'e9quent)\
+- r\'e9organiser fichiers JS\
+- Gruntfile.js JSHINT : 'www/src/js/app/**/*.js'\
+- actualiser (PHP, JS, CSS, htaccess) la gestion du old-browser.php\
+- rajouter RewriteRule json/(.*)$ assets/json/$1 [L] dans htaccess\
+- rajouter History dans la t\'e2che Modernizr du Gruntfile.js\
+- mettre la r\'e9cup\'e9ration de la langue dans le init.php (pas dans le index.php)\
+- faire que la tache SASS ne minifie pas le CSS quand on est pas en prod\
+- mettre en majuscule le nom des constantes JS dans le footer.php et footer-mobile.php\
+- changer les variables SASS textSelection, alt1\'85, contentW, contentWMin\
+- mettre un "use strict" dans mes JS\
+- exploser les JS et construction en objet, plusieurs fichiers pour plus de lisibilit\'e9\
+- mettre un human.txt : <link rel="author" href="humans.txt" />, <link type="text/plain" rel="author" href="http://domain/humans.txt" />\
+- g\'e9rer le RACINE_WEB qui ne fonctionne pas sur Safari -> \'e0 v\'e9rifier\
+- utiliser history.js plut\'f4t que jquery.address.js\
+- mettre Zepto plut\'f4t que jQuery\
+- mettre setLocal (pour gestion date/heure) dans le init.php\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
+\cf0 - faire une page 404\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 - refaire la redirection 404 dans le .htaccess\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
+\cf0 - mettre un style par d\'e9faut pour le Print : {\field{\*\fldinst{HYPERLINK "http://www.alsacreations.com/astuce/lire/1160-une-feuille-de-styles-de-base-pour-le-media-print.html"}}{\fldrslt http://www.alsacreations.com/astuce/lire/1160-une-feuille-de-styles-de-base-pour-le-media-print.html}}\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\b0 \cf0 \
+\
+\
+\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\b \cf0 DONE :
+\b0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
+\cf0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 - exploser les CSS, plusieurs fichiers pour plus de lisibilit\'e9\
+\pard\pardeftab720
+\cf0 - changer browser-detect par detectizr\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
+\cf0 - voir les autoprefixer avec Compass\
+- utiliser Compass pour g\'e9rer opacity, box-sizing\'85 ?\
+- mettre les css, img, js et json dans un dossier assets/dist\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 - rajouter modernizr \'e0 Grunt\
+- refaire le preload (ancienne version avec fonction dans la boucle)\
+- mettre "-webkit-tap-highlight-color" sur les div dans le CSS Reset\
+\pard\pardeftab720
+\cf0 - mettre les constantes PHP 'true'/'false' en true/false (bool\'e9en)\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 - enlever\'a0type="text/javascript" dans la balise script du code GA\
+- attention, mauvaise url dans les <meta property> "og:url" et "og:image"\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
+\cf0 - browser-detect : IE9, Firefox 10, Opera 11, Safari 4, Chrome 17\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 - mettre des fonctions de base (boxSizing, \strike \strikec0 opacity\strike0\striked0 , transform, transformOrigin, transition...)\
+- rajouter ease en SCSS\
+- virer copyright et publisher dans les metas\
+- mettre un espace entre if/for et () -> if (), for ()\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
+\cf0 - CSS Reset mobile\
+- mettre le Mobile_Detect.php\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 - restructurer scripts.js (pr\'e9sentation objet)\
+- mettre Fonctions dans styles.less\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
+\cf0 - \'e9crire le CSS de #noJS et #mentionsLegales en LESS\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 - mettre no-js.php et old-browser.php en externe\
+- faire fichier includes textes.php pour traduction pour no-js.php et old-browser.php\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
+\cf0 - rajouter toutes les favicon/icons dans le <head> (les mettre dans le dossier images/logos/favicons/)\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 - include le init.php dans le index.php\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
+\cf0 - mettre le "define('LG', langue);" comme sur Akaru\
+- remplacer le <?php if($_SERVER['HTTP_HOST'] != 'localhost:8888') \{ ?> par <?php if(LOCALHOST == 'false') \{ ?> en d\'e9finissant LOCALHOST dans le init.php\
+- mettre les logos des old browser dans un dossier sp\'e9cifique (logos/navs/)\
+- mettre le error_reporting(E_ALL) seulement en local (if($local == 'true') error_reporting(E_ALL);)\
+- FRAMEWORK : dans browser-detect.js, rajouter condition sur Chrome\
+- mettre le html5-shiv dans le footer avec les autres scripts ? -> NON, laisser dans le head\
+- remplacer les const par des var (JS)\
+- mettre les commentaires des types d'image du pr\'e9load en // au lieu de /* */\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 - enlever le [ type="text/javascript" ] dans l'inclusion du html5shiv.js\
+- mettre "URL-DU-SITE.com" en majuscule dans le sitemap.xml\
+- mettre le sitemap dans le robots.txt\
+- mettre le init.php, \strike \strikec0 le linker avec les pages alt et browser_detect()\strike0\striked0  et mettre le RACINE_WEB en const JS\
+- mettre les commentaires du .htaccess comme celui du site Akaru\
+- no-js.php\
+- old-browser.php
+\b \
+
+\b0 - meta partage googleplus / pinterest / twitter
+\b \
+
+\b0 - apple touch "precomposed" \'e0 virer
+\b \
+
+\b0 - mettre tous les apple touch
+\b \
+
+\b0 - hover lien no-js.php
+\b \
+
+\b0 - minifier les plugins JS
+\b \
+
+\b0 - mentions l\'e9gales (CSS)
+\b \
+
+\b0 - browser_detect.js ->  || browser == 'Opera' && vBrowser < 10
+\b \
+
+\b0 - .htaccess
+\b \
+
+\b0 - GA dans le <head> pour webmaster tools
+\b \
+
+\b0 - CSS : couleur pour le noJS et oldBrowser
+\b \
+
+\b0 - scripts.js -> s\'e9lecteur : $varSelecteur
+\b \
+
+\b0 - faire un dossier avec les plugins les plus utiliser
+\b \
+
+\b0 - v\'e9rif UTF-8
+\b \
+
+\b0 - robots.txt
+\b \
+
+\b0 - sitemap.xml
+\b \
+\
+}
