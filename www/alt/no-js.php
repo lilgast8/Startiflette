@@ -7,7 +7,7 @@
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="noindex, nofollow">
-	<script>document.location = '../';</script>
+	<script>window.location.href = '../';</script>
 	
 	<link rel="shortcut icon" href="../images/divers/favicon.ico" />
 	

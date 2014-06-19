@@ -7,7 +7,7 @@
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
-	<noscript><meta http-equiv="refresh" content="0; url=alternate/no-js.php" /></noscript>
+	<noscript><meta http-equiv="refresh" content="0; url=alt/no-js.php" /></noscript>
 	<script src="js/plugins/browser-detect.js"></script>
 	
 	<!-- Facebook -->
@@ -54,6 +54,7 @@
 	</script>
 	<?php } ?>
 </head>
+
 
 <!--[if IE 7]><body class="ie7 oldie"><![endif]-->
 <!--[if IE 8]><body class="ie8 oldie"><![endif]-->
