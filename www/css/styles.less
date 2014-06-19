@@ -25,6 +25,15 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{di
 /* -------- VARIABLES -------- */
 /*******************************/
 
+/* -------- TAILLES -------- */
+@largContenu:960px;
+
+/* -------- COULEURS -------- */
+@bgSelection:#000;
+@texteSelection:#fff;
+@alternate1:#f09;
+@alternate2:#ccc;
+
 
 
 
@@ -35,8 +44,12 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{di
 
 /* -------- GLOBALE -------- */
 
-::-moz-selection { background-color:#000; color:#fff; }
-::selection { background-color:#000; color:#fff; }
+::-moz-selection { background-color:@bgSelection; color:@texteSelection; }
+::selection { background-color:@bgSelection; color:@texteSelection; }
+
+body { width:100%; min-width:@largContenu; height:100%; min-height:600px; font:normal 13px/15px Arial; -webkit-font-smoothing:subpixel-antialiased; /*-webkit-font-smoothing:antialiased;*/ color:#000; background-color:#fff; }
+a { text-decoration:none; }
+.centrer { width:@largContenu; margin:auto; }
 
 
 
@@ -50,39 +63,64 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{di
 
 
 
+
+
+/**************************/
+/* -------- PAGE -------- */
+/**************************/
+
+
+
+
+
+/**************************************/
+/* -------- MENTIONS LÉGALES -------- */
+/**************************************/
+
+#mentionsLegales { width:960px; margin:auto; padding:50px 0; }
+#mentionsLegales .logo { width:100%; margin-bottom:50px; text-align:center; }
+#mentionsLegales h1 { color:@alternate1; font:normal 24px/22px Arial; }
+#mentionsLegales h2 { margin:20px 0 5px 0; color:@alternate1; font:normal 16px/14px Arial; }
+#mentionsLegales a { color:@alternate1; }
+#mentionsLegales a:hover { color:@alternate2; }
+
+
+
+
+
+/***************************/
 /* -------- NO JS -------- */
+/***************************/
 
 #noJS { width:800px; margin:auto; padding-top:100px; }
-#noJS h1 { margin-bottom:20px; font:normal 40px 'Arial'; color:#f09; }
-#noJS a { color:#f09; }
+#noJS .logo { width:100%; margin-bottom:30px; text-align:center; }
+#noJS h1 { margin-bottom:20px; font:normal 40px Arial; color:@alternate1; }
+#noJS a { color:@alternate1; }
+#noJS a:hover { color:@alternate2; }
 
 
 
+
+
+/*********************************/
 /* -------- OLD BROWSER -------- */
+/*********************************/
 
 #oldBrowser { width:800px; margin:auto; padding-top:100px; }
-#oldBrowser h1 { margin-bottom:20px; font:normal 40px 'Arial'; color:#f09; }
+#oldBrowser .logo { width:100%; margin-bottom:30px; text-align:center; }
+#oldBrowser h1 { margin-bottom:20px; font:normal 40px Arial; color:@alternate1; }
 #oldBrowser > p { margin-top:20px; }
-#oldBrowser .navigateurs a { min-height:100px; display:block; float:left; text-align:center; margin:30px 0 0 100px; }
+#oldBrowser .navigateurs a { min-height:100px; display:block; float:left; text-align:center; margin:30px 0 0 100px; color:@alternate1; }
 #oldBrowser .navigateurs a.chrome { width:80px; background:url(../images/logos/nav_chrome.png) center 0 no-repeat; }
 #oldBrowser .navigateurs a.firefox { width:78px; background:url(../images/logos/nav_firefox.png) center 0 no-repeat; }
 #oldBrowser .navigateurs a.safari { width:74px; background:url(../images/logos/nav_safari.png) center 0 no-repeat; }
 #oldBrowser .navigateurs a.opera { width:74px; background:url(../images/logos/nav_opera.png) center 0 no-repeat; }
 #oldBrowser .navigateurs a.ie { width:87px; background:url(../images/logos/nav_internet_explorer.png) center 0 no-repeat; }
 #oldBrowser .navigateurs a:first-child { margin-left:0; }
-#oldBrowser .navigateurs a h2 { height:auto; border:0; padding:0; color:#f09; font-size:18px; margin-top:90px; }
-#oldBrowser .navigateurs a p { color:#f09; display:none; }
+#oldBrowser .navigateurs a h2 { height:auto; border:0; padding:0; color:@alternate1; font-size:18px; margin-top:90px; }
+#oldBrowser .navigateurs a p { color:@alternate2; display:none; }
 #oldBrowser .navigateurs a:hover p { display:block; margin-top:3px; font-size:14px; }
 
-
-
-
-
-/***************************/
-/* -------- PAGES -------- */
-/***************************/
-
-/* -------- NOM PAGE -------- */
 
 
 

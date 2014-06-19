@@ -1,0 +1,7 @@
+User-Agent: *
+Disallow: /alternate/
+Disallow: /css/
+Disallow: /images/
+Disallow: /includes/
+Disallow: /js/
+Disallow: /mentions_legales.php
