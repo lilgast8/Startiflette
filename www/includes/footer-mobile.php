@@ -21,15 +21,13 @@
 	var _lg = '<?php echo LG; ?>';
 </script>
 <?php if(!PROD) { ?>
-<script src="<?php echo RACINE_WEB; ?>src/js/libs/browser-detect.js"></script>
-<!--[if lt IE 9]><script src="<?php echo RACINE_WEB; ?>src/js/libs/jquery-1.11.0.min.js"></script><![endif]-->
-<!--[if gte IE 9]><!--><script src="<?php echo RACINE_WEB; ?>src/js/libs/jquery-2.1.0.min.js"></script><!--<![endif]-->
+<script src="<?php echo RACINE_WEB; ?>src/js/libs/detectizr.min.js"></script>
+<script src="<?php echo RACINE_WEB; ?>src/js/libs/jquery-2.1.0.min.js"></script>
 <script src="<?php echo RACINE_WEB; ?>src/js/libs/greensock/TweenMax.min.js"></script>
 <script src="<?php echo RACINE_WEB; ?>src/js/libs/jquery.address.min.js"></script>
-<script src="<?php echo RACINE_WEB; ?>src/js/scripts.js"></script>
+<script src="<?php echo RACINE_WEB; ?>src/js/scripts-mobile.js"></script>
 <?php } else { ?>
-<!--[if lt IE 9]><script src="<?php echo RACINE_WEB; ?>js/scripts-oldie.min.js"></script><![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><script src="<?php echo RACINE_WEB; ?>js/scripts.min.js"></script><!--<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><script src="<?php echo RACINE_WEB; ?>js/scripts-mobile.min.js"></script><!--<![endif]-->
 <?php } ?>
 
 

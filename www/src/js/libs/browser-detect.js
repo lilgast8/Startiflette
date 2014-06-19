@@ -6,7 +6,7 @@ var BrowserDetect={init:function(){this.browser=this.searchString(this.dataBrows
 var browser = BrowserDetect.browser;
 var vBrowser = BrowserDetect.version;
 
-if(browser == 'Explorer' && vBrowser < 11 || browser == 'Firefox' && vBrowser < 4 || browser == 'Opera' && vBrowser < 10 || browser == 'Safari' && vBrowser < 3.1 || browser == 'Chrome' && vBrowser < 1) {
+if(browser == 'Explorer' && vBrowser < 9 || browser == 'Firefox' && vBrowser < 10 || browser == 'Opera' && vBrowser < 11 || browser == 'Safari' && vBrowser < 4 || browser == 'Chrome' && vBrowser < 17) {
 	document.getElementById('oldBrowser').style.display = 'block';
 }
 

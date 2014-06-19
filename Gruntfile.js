@@ -22,11 +22,74 @@ module.exports = function(grunt) {
 		/* -------- JSHINT -------- */
 		jshint: {
 			options: {
-				'-W075': true
+			//	'-W075': true, // Duplicate key
+				'-W083': true // Don't make functions within a loop
 			},
 			dist: [
 				'www/src/js/*.js'
 			]
+		},
+		
+		
+		/* -------- MODERNIZR -------- */
+		modernizr: {
+			
+			dist: {
+				// [REQUIRED] Path to the build you're using for development.
+				'devFile' : 'www/src/js/libs/modernizr.dev.js',
+				
+				// [REQUIRED] Path to save out the built file.
+				'outputFile' : 'www/src/js/libs/modernizr.min.js',
+				
+				// Based on default settings on http://modernizr.com/download/
+				'extra' : {
+					'shiv' : false,
+					'printshiv' : false,
+					'load' : false,
+					'mq' : false,
+					'cssclasses' : true
+				},
+				
+				// Based on default settings on http://modernizr.com/download/
+				'extensibility' : {
+					'addtest' : false,
+					'prefixed' : false,
+					'teststyles' : true,
+					'testprops' : true,
+					'testallprops' : true,
+					'hasevents' : false,
+					'prefixes' : true,
+					'domprefixes' : true
+				},
+				
+				// By default, source is uglified before saving
+				'uglify' : true,
+				
+				// Define any tests you want to implicitly include.
+				'tests' : [
+				//	'csstransforms3d': true
+					'csstransforms3d',
+					'csstransitions'
+				],
+				
+				// By default, this task will crawl your project for references to Modernizr tests.
+				// Set to false to disable.
+				'parseFiles' : false,
+				
+				// When parseFiles = true, this task will crawl all *.js, *.css, *.scss files, except files that are in node_modules/.
+				// You can override this by defining a 'files' array below.
+				// 'files' : {
+				// 'src': []
+				// },
+				
+				// When parseFiles = true, matchCommunityTests = true will attempt to
+				// match user-contributed tests.
+				'matchCommunityTests' : false,
+				
+				// Have custom Modernizr tests? Add paths to their location here.
+				'customTests' : []
+			}
+			
 		},
 		
 		
@@ -60,7 +123,10 @@ module.exports = function(grunt) {
 		/* -------- JSONLINT -------- */
 		jsonlint: {
 			dist: {
-				src: ['www/json/*.json']
+				src: [
+					'www/src/json/*.json',
+					'www/src/json/**/*.json'
+				]
 			}
 		},
 		
@@ -110,7 +176,10 @@ module.exports = function(grunt) {
 				]
 			},
 			json: {
-				files: ['www/src/json/*.json'],
+				files: [
+					'www/src/json/*.json',
+					'www/src/json/**/*.json'
+				],
 				tasks: ['jsonlint']
 			}
 		}
@@ -121,6 +190,7 @@ module.exports = function(grunt) {
 	
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-modernizr');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-jsonlint');
 	grunt.loadNpmTasks('grunt-minjson');

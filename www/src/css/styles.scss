@@ -55,54 +55,57 @@ $alternate4:#ccc;
 /* -------- FONCTIONS -------- */
 /*******************************/
 
-@mixin _boxSizing() { 
-	-webkit-box-sizing:border-box; 
-	-moz-box-sizing:border-box; 
-	box-sizing:border-box; 
+@mixin _boxSizing() {
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
 }
 
-@mixin _opacity($alpha) { 
-	opacity:$alpha; 
-}
-
-@mixin _transform($transf) { 
+@mixin _transform($transf) {
 	-webkit-transform:$transf; 
 	-moz-transform:$transf; 
 	-ms-transform:$transf; 
 	-o-transform:$transf; 
-	transform:$transf; 
+	transform:$transf;  
 }
 
-@mixin _transformOrigin($transX, $transY, $transZ) { 
-	-webkit-transform-origin:$transX $transY $transZ; 
-	-moz-transform-origin:$transX $transY $transZ; 
-	-ms-transform-origin:$transX $transY $transZ; 
-	-o-transform-origin:$transX $transY $transZ; 
-	transform-origin:$transX $transY $transZ; 
+@mixin _transformOrigin($transX, $transY, $transZ) {
+	-webkit-transform-origin:$transX $transY $transZ;
+	-moz-transform-origin:$transX $transY $transZ;
+	-ms-transform-origin:$transX $transY $transZ;
+	-o-transform-origin:$transX $transY $transZ;
+	transform-origin:$transX $transY $transZ;
 }
 
-@mixin _transition($type:$easeOutQuad, $time:0.3s, $delay:0s) { 
-	-webkit-transition:all $time $type $delay; 
-	-moz-transition:all $time $type $delay; 
-	-ms-transition:all $time $type $delay; 
-	-o-transition:all $time $type $delay; 
-	transition:all $time $type $delay; 
+@mixin _transition($timing-function:$easeOutQuad, $duration:0.3s, $property:all, $delay:0s) {
+	-webkit-transition:$property $duration $timing-function $delay; 
+	-moz-transition:$property $duration $timing-function $delay; 
+	-ms-transition:$property $duration $timing-function $delay; 
+	-o-transition:$property $duration $timing-function $delay; 
+	transition:$property $duration $timing-function $delay; 
 }
 
-@mixin _perspective($pers) { 
-	-webkit-perspective:$pers; 
-	-moz-perspective:$pers; 
-	-ms-perspective:$pers; 
-	-o-perspective:$pers; 
-	perspective:$pers; 
+@mixin _perspective($pers) {
+	-webkit-perspective:$pers;
+	-moz-perspective:$pers;
+	-ms-perspective:$pers;
+	-o-perspective:$pers;
+	perspective:$pers;
 }
 
-@mixin _preserve3d() { 
-	-webkit-transform-style:preserve-3d; 
-	-moz-transform-style:preserve-3d; 
-	-ms-transform-style:preserve-3d; 
-	-o-transform-style:preserve-3d; 
-	transform-style:preserve-3d; 
+@mixin _preserve3d() {
+	-webkit-transform-style:preserve-3d;
+	-moz-transform-style:preserve-3d;
+	-ms-transform-style:preserve-3d;
+	-o-transform-style:preserve-3d;
+	transform-style:preserve-3d;
+}
+
+@mixin _opacity($opacity) {
+	$IEopacity:$opacity*100;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity="+$IEopacity+")"; // IE 8
+	filter: alpha(opacity=$IEopacity); // IE 5-7
+	opacity: $opacity;
 }
 
 

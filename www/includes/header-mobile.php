@@ -10,7 +10,7 @@
 	<meta name="robots" content="index, follow" />
 	<meta name="author" content="Akaru" />
 	<meta name="designer" content="Akaru" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	
 	<!-- Facebook -->
 	<meta property="og:title" content="" />
@@ -54,7 +54,7 @@
 	<meta name="msapplication-square310x310logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-310x310.png" />
 	<meta name="msapplication-wide310x150logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-310x150.png" />
 	
-	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo RACINE_WEB; ?>css/styles.min.css" />
+	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo RACINE_WEB; ?>css/styles-mobile.min.css" />
 	
 	<!--[if lt IE 9]><script src="<?php echo RACINE_WEB; ?>js/libs/html5shiv.js"></script><![endif]-->
 	

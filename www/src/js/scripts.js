@@ -47,7 +47,7 @@ var global = {
 		
 		/* -------- Init -------- */
 		$window.load(function() {
-			global.preload.init();
+			_this.preload.init();
 			
 		//	_this.initPage();
 			_this.resize();
@@ -59,7 +59,7 @@ var global = {
 		$page = $(document.getElementById('page'));
 		_this.idPage = $page[0].getAttribute('data-page');
 		
-		if (_this.idPage == 'accueil') accueil.init();
+		if(_this.idPage == 'accueil') accueil.init();
 		else if(_this.idPage == '_page') _page.init();
 	},
 	
@@ -78,7 +78,7 @@ var global = {
 	afficherLoader : function() {
 		var _this = this;
 		
-		global.loaderAffiche = true;
+		_this.loaderAffiche = true;
 	},
 	
 	masquerLoader : function() {
@@ -86,7 +86,7 @@ var global = {
 		
 		_this.loaderAffiche = false;
 		
-		global.autoriserTransPage();
+		_this.autoriserTransPage();
 	},
 	
 	autoriserTransPage : function() {
@@ -253,21 +253,18 @@ global.preload = {
 	//	console.log('nb imgs à charger : '+nbImgsACharger);
 		
 		for(var i=0; i<_this.nbImgsACharger; i++) {
-			$('<img/>').load(_this.checkerFinChargement(id, fct)).attr('src', tabImgsACharger[i]);
-		}
-	},
-	
-	checkerFinChargement : function(id, fct) {
-		var _this = this;
-	//	console.log(i+' : '+this.src);
-		_this.nbImgChargees++;
-		if(_this.nbImgsACharger == _this.nbImgChargees) {
-		//	console.log('fin chargement');
-			if(id == 'global') global.preload.finirPreloadInit();
-			else {
-			//	console.log('action fin loader');
-				fct();
-			}
+			$('<img/>').load(function() {
+			//	console.log(i+' : '+this.src);
+				_this.nbImgChargees++;
+				if(_this.nbImgsACharger == _this.nbImgChargees) {
+				//	console.log('fin chargement');
+					if(id == 'global') global.preload.finirPreloadInit();
+					else {
+					//	console.log('action fin loader');
+						fct();
+					}
+				}
+			}).attr('src', tabImgsACharger[i]);
 		}
 	},
 	

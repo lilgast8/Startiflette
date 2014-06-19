@@ -11,9 +11,6 @@ if(isset($_GET['lg'])) { // si on a la langue
 		if($lg != 'fr' && $lg != 'en') $lg = 'fr';
 	}
 	else $lg = 'fr';
-	
-//	header('Location:'.RACINE_WEB.$lg.'/'.$expUrl, true, 301);
-//	exit;
 }
 
 
@@ -26,10 +23,11 @@ include_once('init.php');
 /* -------- Mobile Detect -------- */
 include_once(RACINE_SITE.'includes/Mobile_Detect.php');
 $detect = new Mobile_Detect();
-$mobile = $detect->isMobile() ? 'true' : 'false';
-$tablette = $detect->isTablet() ? 'true' : 'false';
-//if(preg_match('/Firefox/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = 'true';
-//if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = 'true';
+$mobile = $detect->isMobile() ? true : false;
+$tablette = $detect->isTablet() ? true : false;
+//if(preg_match('/Firefox/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = true;
+//if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = true;
+//if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) { $mobile = true; $tablette = true; }
 
 
 
@@ -55,14 +53,13 @@ if(!$page) $page = 'accueil';
 
 
 /* -------- Récupération des JSON -------- */
-if(PROD == 'false') {
+if(!PROD) {
 	$jsonInfosPages = file_get_contents(RACINE_SITE.'src/json/infos-pages-'.LG.'.json');
 	$infosPages = json_decode($jsonInfosPages, true);
 } else {
 	$jsonInfosPages = file_get_contents(RACINE_SITE.'json/infos-pages-'.LG.'.json');
 	$infosPages = json_decode($jsonInfosPages, true);
 }
-
 
 
 
@@ -76,13 +73,15 @@ $descPage = $infosPages[$page]['desc'];
 
 
 /* -------- Affichage de la page -------- */
-include_once(RACINE_SITE.'includes/header.php');
-include_once(RACINE_SITE.'pages/'.$page.'.php');
-/*
-if(file_exists(RACINE_SITE.'pages/site/'.$page.'.php')) include_once(RACINE_SITE.'pages/site/'.$page.'.php');
-else include_once(RACINE_SITE.'pages/site/page_404.php');
-*/
-include_once(RACINE_SITE.'includes/footer.php');
+if($mobile && !$tablette) { // mobile
+	include_once(RACINE_SITE.'includes/header-mobile.php');
+	include_once(RACINE_SITE.'pages/mobile/'.$page.'.php');
+	include_once(RACINE_SITE.'includes/footer-mobile.php');
+} else { // desktop & tablette
+	include_once(RACINE_SITE.'includes/header.php');
+	include_once(RACINE_SITE.'pages/'.$page.'.php');
+	include_once(RACINE_SITE.'includes/footer.php');
+}
 
 
 
