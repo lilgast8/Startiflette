@@ -59,20 +59,20 @@ $(function(){
 	
 	
 	/* -------- Liste images à charger -------- */
-	var mesImgsPreload = new Array(
-		/* Background */
+	var tabImgsACharger = new Array(
+		// Background
 	//	'images/bgs/liste-image.png'
-		/* Boutons */
-		/* Divers */
-		/* Logos */
+		// Boutons
+		// Divers
+		// Logos
 	);
 	
-	var nbImgsPreload = mesImgsPreload.length;
+	var nbImgsACharger = tabImgsACharger.length;
 	var nbImgChargees = 0;
-	$.each(mesImgsPreload, function(index, value) {
+	$.each(tabImgsACharger, function(index, value) {
 		$('<img/>').load(function(){
 			nbImgChargees++;
-			if(nbImgsPreload == nbImgChargees) {
+			if(nbImgsACharger == nbImgChargees) {
 				$window.trigger('resize');
 			}
 		}).attr('src', value);

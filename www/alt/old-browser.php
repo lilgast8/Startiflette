@@ -31,9 +31,6 @@
 
 
 <div id="oldBrowser">
-	<div class="logo">
-		<img src="../images/logos/logo" alt="Logo" />
-	</div>
 	<h1>Votre navigateur est obsolète.</h1>
 	<p>
 		Veuillez le mettre à jour gratuitement, afin d'améliorer ses performances <br />

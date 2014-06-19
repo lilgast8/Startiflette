@@ -7,7 +7,7 @@
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
-	<noscript><meta http-equiv="refresh" content="0; url=alt/no-js.php" /></noscript>
+	<!-- <noscript><meta http-equiv="refresh" content="0; url=alt/no-js.php" /></noscript> -->
 	<script src="js/plugins/browser-detect.js"></script>
 	
 	<!-- Facebook -->
@@ -64,7 +64,15 @@
 
 
 
+<noscript>
+	<!-- <meta http-equiv="refresh" content="0; url=alt/no-js.php" /> -->
+	<?php include_once('alt/no-js.php'); ?>
+</noscript>
+
 <!-- Scripts -->
+<script>
+	const _racineWeb = '<?php echo RACINE_WEB; ?>';
+</script>
 <!--[if lt IE 9]><script src="js/plugins/jquery-1.10.1.min.js"></script><![endif]-->
 <!--[if gte IE 9]><!--><script src="js/plugins/jquery-2.0.2.min.js"></script><!--<![endif]-->
 <script src="js/plugins/greensock/TweenMax.min.js"></script>

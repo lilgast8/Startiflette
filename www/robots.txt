@@ -1,4 +1,5 @@
 User-Agent: *
+Sitemap: http://www.URL-DU-SITE.com/sitemap.xml
 Disallow: /alt/
 Disallow: /css/
 Disallow: /images/

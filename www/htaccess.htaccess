@@ -1,21 +1,27 @@
 
-# Désactive les magic quotes
+# -------- Désactive les magic quotes -------- #
 SetEnv MAGIC_QUOTES 0
 
-# Active PHP 5
+# -------- Active PHP 5 -------- #
 SetEnv PHP_VER 5
 
 
 IndexIgnore */*
-
 RewriteEngine on
+
+# -------- Force les www -------- #
 RewriteCond %{HTTP_HOST} ^url-du-site.com$
 RewriteRule ^(.*) http://www.url-du-site.com/$1  [QSA,L,R=301]
 
-# remove PHPSESSID from url
+# -------- Supprime PHPSESSID de l'url -------- #
 RewriteCond %{QUERY_STRING} PHPSESSID=.*$
 RewriteRule .* %{REQUEST_URI}? [R=301,L]
 
+
+
+# ------------------------- #
+# -------- Erreurs -------- #
+# ------------------------- #
 
 ErrorDocument 403 http://www.url-du-site.com
 ErrorDocument 404 http://www.url-du-site.com
