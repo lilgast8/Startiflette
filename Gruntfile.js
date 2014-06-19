@@ -10,14 +10,34 @@ module.exports = function(grunt) {
 		sass: {
 			dist: {
 				options: {
-					style: 'compressed'
+					style: 'compressed',
+				//	style: 'expanded',
+					compass: true
 				},
 				files: {
-					'www/css/styles.min.css': ['www/src/css/styles.scss']
+					'www/assets/css/styles.min.css': ['www/src/css/styles.scss']
 				}
 			}
 		},
 		
+		
+		/* -------- COMPASS -------- */
+	/*	compass: { // Task
+			dist: { // Target
+				options: { // Target options
+					sassDir: 'www/src/css',
+					cssDir: 'www/assets/css',
+					environment: 'production'
+				}
+			},
+		//	dev: { // Another target
+		//		options: {
+		//			sassDir: 'sass',
+		//			cssDir: 'css'
+		//		}
+		//	}
+		},
+	*/	
 		
 		/* -------- JSHINT -------- */
 		jshint: {
@@ -33,15 +53,9 @@ module.exports = function(grunt) {
 		
 		/* -------- MODERNIZR -------- */
 		modernizr: {
-			
 			dist: {
-				// [REQUIRED] Path to the build you're using for development.
-				'devFile' : 'www/src/js/libs/modernizr.dev.js',
-				
-				// [REQUIRED] Path to save out the built file.
-				'outputFile' : 'www/src/js/libs/modernizr.min.js',
-				
-				// Based on default settings on http://modernizr.com/download/
+				'devFile' : 'www/src/js/lib/modernizr.dev.js',
+				'outputFile' : 'www/src/js/lib/modernizr.min.js',
 				'extra' : {
 					'shiv' : false,
 					'printshiv' : false,
@@ -49,47 +63,34 @@ module.exports = function(grunt) {
 					'mq' : false,
 					'cssclasses' : true
 				},
-				
-				// Based on default settings on http://modernizr.com/download/
 				'extensibility' : {
-					'addtest' : false,
-					'prefixed' : false,
+					'addtest' : true,
+					'prefixed' : true,
 					'teststyles' : true,
 					'testprops' : true,
 					'testallprops' : true,
-					'hasevents' : false,
+					'hasevents' : true,
 					'prefixes' : true,
 					'domprefixes' : true
 				},
-				
-				// By default, source is uglified before saving
 				'uglify' : true,
-				
-				// Define any tests you want to implicitly include.
+				// define any tests you want to implicitly include
 				'tests' : [
-				//	'csstransforms3d': true
 					'csstransforms3d',
 					'csstransitions'
 				],
-				
-				// By default, this task will crawl your project for references to Modernizr tests.
-				// Set to false to disable.
+				// by default, this task will crawl your project for references to Modernizr tests, set to false to disable.
 				'parseFiles' : false,
-				
-				// When parseFiles = true, this task will crawl all *.js, *.css, *.scss files, except files that are in node_modules/.
-				// You can override this by defining a 'files' array below.
-				// 'files' : {
-				// 'src': []
-				// },
-				
-				// When parseFiles = true, matchCommunityTests = true will attempt to
-				// match user-contributed tests.
+				// when parseFiles = true, this task will crawl all *.js, *.css, *.scss files, except files that are in node_modules/
+				// you can override this by defining a 'files' array below
+			//	'files' : {
+			//		'src': []
+			//	},
+				// when parseFiles = true, matchCommunityTests = true will attempt to match user-contributed tests
 				'matchCommunityTests' : false,
-				
-				// Have custom Modernizr tests? Add paths to their location here.
+				// have custom Modernizr tests? Add paths to their location here.
 				'customTests' : []
 			}
-			
 		},
 		
 		
@@ -97,22 +98,22 @@ module.exports = function(grunt) {
 		uglify: {
 			dist: {
 				files: {
-					'www/js/scripts.min.js': [
-						'www/src/js/libs/browser-detect.js',
-						'www/src/js/libs/jquery-2.1.0.min.js',
-						'www/src/js/libs/greensock/TweenMax.min.js',
-						'www/src/js/libs/jquery.address.min.js',
+					'www/assets/js/scripts.min.js': [
+						'www/src/js/lib/browser-detect.js',
+						'www/src/js/lib/jquery-2.1.0.min.js',
+						'www/src/js/lib/greensock/TweenMax.min.js',
+						'www/src/js/lib/jquery.address.min.js',
 						'www/src/js/scripts.js'
 					]
 				}
 			},
 			oldie: {
 				files: {
-					'www/js/scripts-oldie.min.js': [
-						'www/src/js/libs/browser-detect.js',
-						'www/src/js/libs/jquery-1.11.0.min.js',
-						'www/src/js/libs/greensock/TweenMax.min.js',
-						'www/src/js/libs/jquery.address.min.js',
+					'www/assets/js/scripts-oldie.min.js': [
+						'www/src/js/lib/browser-detect.js',
+						'www/src/js/lib/jquery-1.11.0.min.js',
+						'www/src/js/lib/greensock/TweenMax.min.js',
+						'www/src/js/lib/jquery.address.min.js',
 						'www/src/js/scripts.js'
 					]
 				}
@@ -135,8 +136,8 @@ module.exports = function(grunt) {
 		minjson: {
 			dist: {
 				files: {
-					'www/json/infos-pages-fr.json': 'www/src/json/infos-pages-fr.json',
-					'www/json/infos-pages-en.json': 'www/src/json/infos-pages-en.json'
+					'www/assets/json/infos-pages-fr.json': 'www/src/json/infos-pages-fr.json',
+					'www/assets/json/infos-pages-en.json': 'www/src/json/infos-pages-en.json'
 				}
 			}
 		},
@@ -149,7 +150,7 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'www/src/img/',
 					src: ['**/*.{png, jpg, gif}'],
-					dest: 'www/img/'
+					dest: 'www/assets/img/'
 				}]
 			}
 		},
@@ -162,11 +163,18 @@ module.exports = function(grunt) {
 				livereload: true
 			},
 			css: {
-				files: ['www/src/css/*.scss'],
+				files: [
+					'www/src/css/*.scss',
+					'www/src/css/**/*.scss'
+				],
 				tasks: ['sass']
+			//	tasks: ['compass']
 			},
 			js: {
-				files: ['www/src/js/*.js'],
+				files: [
+					'www/src/js/*.js',
+					'www/src/js/**/*.js'
+				],
 				tasks: ['jshint']
 			},
 			php: {
@@ -200,12 +208,14 @@ module.exports = function(grunt) {
 	
 	grunt.registerTask('default', [
 		'sass',
+	//	'compass',
 		'jshint',
 		'jsonlint'
 	]);
 	
 	grunt.registerTask('prod', [
 		'sass',
+	//	'compass',
 		'jshint',
 		'uglify',
 		'jsonlint',

@@ -7,9 +7,9 @@ if(isset($_POST['Page'])) {
 
 ?>
 
-<!-- Accueil -->
-<div id="page" class="accueil" data-page="accueil">
+<!-- À propos -->
+<div id="page" class="a-propos" data-page="a-propos">
 	
-	Accueil
+	À propos
 	
 </div>

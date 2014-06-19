@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+
+
+/**************************************/
+/* -------- MENTIONS LÉGALES -------- */
+/**************************************/
+
+
+.mentions { 
+	width:960px; 
+	margin:auto; 
+	padding:50px 0; 
+	
+	.logo { 
+		width:100%; 
+		margin-bottom:50px; 
+		text-align:center; 
+	}
+	
+	h1 { 
+		color:$alternate3; 
+		font:normal 24px/22px Arial; 
+	}
+	
+	h2 { 
+		margin:20px 0 5px 0; 
+		color:$alternate3; 
+		font:normal 16px/14px Arial; 
+	}
+	
+	a { 
+		color:$alternate3; 
+		&:hover { color:$alternate4; }
+	}
+}
+
+

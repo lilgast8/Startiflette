@@ -10,12 +10,12 @@
 /* -------- Mise en page -------- */
 var $window,
 	$body,
-	
+
 	$conteneurSite,
 	$header,
 	$conteneurPage,
 	$page,
-	
+
 	largBody = 0,
 	hautWindow = 0,
 	hautBody = 0;
@@ -30,72 +30,72 @@ var $window,
 
 
 var global = {
-	
+
 	idPage : null,
 	transitionPage : false,
 	loaderAffiche : false,
-	
+
 	init : function() {
 		var _this = this;
-		
-		
+
+
 		/* -------- Resize -------- */
 		$window.resize(function() {
 			_this.resize();
 		});
-		
-		
+
+
 		/* -------- Init -------- */
 		$window.load(function() {
 			_this.preload.init();
-			
+
 		//	_this.initPage();
 			_this.resize();
 		});
 	},
-	
+
 	initPage : function() {
 		var _this = this;
 		$page = $(document.getElementById('page'));
 		_this.idPage = $page[0].getAttribute('data-page');
-		
+
 		if(_this.idPage == 'accueil') accueil.init();
 		else if(_this.idPage == '_page') _page.init();
 	},
-	
+
 	resize : function() {
 		var _this = this;
-		
+
 		/* Mise en page */
 		largBody = $body.width();
 		hautWindow = $window.height() < 600 ? 600 : $window.height();
-		
+
 		/* Resize */
 		if(_this.idPage == 'accueil') accueil.resize();
 		else if(_this.idPage == '_page') _page.resize();
 	},
-	
+
 	afficherLoader : function() {
 		var _this = this;
-		
+
 		_this.loaderAffiche = true;
 	},
-	
+
 	masquerLoader : function() {
 		var _this = this;
-		
+
 		_this.loaderAffiche = false;
-		
+
 		_this.autoriserTransPage();
 	},
-	
+
 	autoriserTransPage : function() {
 		var _this = this;
-		
+
 		_this.transitionPage = false;
 		_this.adresse.verifUrlPage();
 	}
-	
+
 };
 
 
@@ -108,7 +108,7 @@ var global = {
 
 
 global.adresse = {
-	
+
 	init : true,
 	state : window.history.pushState !== undefined,
 	adrState : _racineWeb.substr(0, _racineWeb.length-1),
@@ -126,15 +126,15 @@ global.adresse = {
 			"erreur" : "An error occured. Please try to reload the page."
 		}
 	},
-	
+
 	init : function() {
 		var _this = this;
-		
+
 		if(!Modernizr.history) {
 		//	global.preload.finirPreloadInit();
 			return false;
 		}
-		
+
 		$.address.state(_this.adrState).change(function(fct) {
 			_this.nomPagePrec = _this.nomPage;
 			_this.nomSousPagePrec = _this.nomSousPage;
@@ -142,12 +142,12 @@ global.adresse = {
 			_this.nomSousPage = fct.pathNames[1];
 			_this.nomPartie = fct.pathNames[2];
 			_this.nomSousPartie = fct.pathNames[3];
-			
+
 			_this.majMenu();
-			
+
 			if(_this.state && _this.init) {
 				_this.init = false;
-				
+
 				global.preload.finirPreloadInit();
 			}
 			else {
@@ -156,13 +156,13 @@ global.adresse = {
 					global.transitionPage = true;
 					_this.urlActive = $.address.path();
 				}
-				
+
 				global.afficherLoader();
-				
+
 				var page = _this.nomPage;
 				var urlPage = _this.adrState+'/pages-contenu/'+page+'/';
 				_this.majTitrePage();
-				
+
 				$.ajax({
 					url: urlPage,
 					type: 'POST',
@@ -178,31 +178,31 @@ global.adresse = {
 					}
 				});
 			}
-			
-			
-			
+
+
+
 		});
 	},
-	
+
 	majMenu : function() {
 		var _this = this;
-		
+
 	},
-	
+
 	majTitrePage : function() {
 		var _this = this;
-		
+
 		var titrePage = '';
-		
+
 		$.address.title(titrePage);
 	},
-	
+
 	verifUrlPage : function() {
 		var _this = this;
 		if(_this.premierChargement) _this.premierChargement = false;
 		else if(_this.urlActive != $.address.path()) $.address.update();
 	}
-	
+
 };
 
 
@@ -215,15 +215,15 @@ global.adresse = {
 
 
 global.preload = {
-	
+
 	nbPreload : 0,
 	tabImgsACharger : null,
 	nbImgsACharger : null,
 	nbImgChargees : null,
-	
+
 	init : function() {
 		var _this = this;
-		
+
 		_this.tabImgsACharger = {
 			"global" : [
 				// Background
@@ -239,19 +239,19 @@ global.preload = {
 				'img/logos/navs/nav_safari.png'
 			]
 		};
-		
+
 		_this.loaderImg('global', null, null);
 	},
-	
+
 	loaderImg : function(id, tabImg, fct) {
 		var _this = this;
-		
+
 		var tabImgsACharger = id !== null ? _this.tabImgsACharger[id] : tabImg;
 		_this.nbImgsACharger = tabImgsACharger.length;
 		_this.nbImgChargees = 0;
-		
+
 	//	console.log('nb imgs à charger : '+nbImgsACharger);
-		
+
 		for(var i=0; i<_this.nbImgsACharger; i++) {
 			$('<img/>').load(function() {
 			//	console.log(i+' : '+this.src);
@@ -267,16 +267,16 @@ global.preload = {
 			}).attr('src', tabImgsACharger[i]);
 		}
 	},
-	
+
 	finirPreloadInit : function() {
 		var _this = this;
-		
+
 	//	_this.nbPreload++;
 	//	if(_this.nbPreload == 3) {
 			global.initPage();
 	//	}
 	}
-	
+
 };
 
 
@@ -289,17 +289,17 @@ global.preload = {
 
 
 var accueil = {
-	
+
 	init : function() {
 		var _this = this;
 		
 	},
-	
+
 	resize : function() {
 		var _this = this;
-		
+
 	}
-	
+
 };
 
 
@@ -312,19 +312,19 @@ var accueil = {
 
 
 $(function(){
-	
+
 	/* -------- Mise en page -------- */
 	$window = $(window);
 	$body = $(document.body);
-	
+
 	$conteneurSite = $(document.getElementById('conteneurSite'));
 	$header = $(document.getElementById('header'));
 	$conteneurPage = $(document.getElementById('conteneurPage'));
-	
-	
+
+
 	/* -------- Init -------- */
 	global.init();
-	
+
 });
 
 

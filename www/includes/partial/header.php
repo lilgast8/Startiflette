@@ -54,9 +54,9 @@
 	<meta name="msapplication-square310x310logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-310x310.png" />
 	<meta name="msapplication-wide310x150logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-310x150.png" />
 	
-	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo RACINE_WEB; ?>css/styles.min.css" />
+	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo RACINE_WEB; ?>assets/css/styles.min.css" />
 	
-	<!--[if lt IE 9]><script src="<?php echo RACINE_WEB; ?>js/libs/html5shiv.js"></script><![endif]-->
+	<!--[if lt IE 9]><script src="<?php echo RACINE_WEB; ?>js/lib/html5shiv.js"></script><![endif]-->
 	
 	<?php if(!LOCALHOST && PROD) { ?>
 	<!-- Google Analytics -->
@@ -82,8 +82,8 @@
 
 
 
-<!-- Conteneur page -->
-<div id="conteneurSite">
+<!-- Main container -->
+<div id="main-container">
 	
 	<!-- Loader -->
 	<div id="loader">
@@ -95,6 +95,6 @@
 		
 	</header>
 	
-	<!-- Conteneur page -->
-	<div id="conteneurPage">
+	<!-- Page container -->
+	<div id="page-container">
 		

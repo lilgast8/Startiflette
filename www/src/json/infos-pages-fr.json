@@ -5,6 +5,11 @@
 		"desc" : "[STARTER - DESC FR]"
 	},
 	
+	"a-propos" : {
+		"title" : "À propos",
+		"desc" : "À propos"
+	},
+	
 	"mentions-legales" : {
 		"title" : "Mentions légales",
 		"desc" : "Mentions légales"

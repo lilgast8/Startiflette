@@ -23,9 +23,20 @@ RewriteCond %{QUERY_STRING} PHPSESSID=.*$
 RewriteRule .* %{REQUEST_URI}? [R=301,L]
 
 
+
+
+
+# ------------------------ #
+# -------- ASSETS -------- #
+# ------------------------ #
+
+
 # -------- À DÉSACTIVER EN PROD -------- #
 RewriteRule json/(.*)$ src/json/$1 [L]
 RewriteRule img/(.*)$ src/img/$1 [L]
+
+RewriteRule json/(.*)$ assets/json/$1 [L]
+RewriteRule img/(.*)$ assets/img/$1 [L]
 
 
 

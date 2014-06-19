@@ -21,7 +21,7 @@ include_once('init.php');
 
 
 /* -------- Mobile Detect -------- */
-include_once(RACINE_SITE.'includes/Mobile_Detect.php');
+include_once(RACINE_SITE.'includes/lib/Mobile_Detect.php');
 $detect = new Mobile_Detect();
 $mobile = $detect->isMobile() ? true : false;
 $tablette = $detect->isTablet() ? true : false;
@@ -32,7 +32,7 @@ $tablette = $detect->isTablet() ? true : false;
 
 
 /* -------- Textes -------- */
-include_once(RACINE_SITE.'includes/textes-'.LG.'.php');
+include_once(RACINE_SITE.'includes/content/textes-'.LG.'.php');
 
 
 
@@ -57,7 +57,7 @@ if(!PROD) {
 	$jsonInfosPages = file_get_contents(RACINE_SITE.'src/json/infos-pages-'.LG.'.json');
 	$infosPages = json_decode($jsonInfosPages, true);
 } else {
-	$jsonInfosPages = file_get_contents(RACINE_SITE.'json/infos-pages-'.LG.'.json');
+	$jsonInfosPages = file_get_contents(RACINE_SITE.'assets/json/infos-pages-'.LG.'.json');
 	$infosPages = json_decode($jsonInfosPages, true);
 }
 
@@ -74,13 +74,13 @@ $descPage = $infosPages[$page]['desc'];
 
 /* -------- Affichage de la page -------- */
 if($mobile && !$tablette) { // mobile
-	include_once(RACINE_SITE.'includes/header-mobile.php');
+	include_once(RACINE_SITE.'includes/partial/header-mobile.php');
 	include_once(RACINE_SITE.'pages/mobile/'.$page.'.php');
-	include_once(RACINE_SITE.'includes/footer-mobile.php');
+	include_once(RACINE_SITE.'includes/partial/footer-mobile.php');
 } else { // desktop & tablette
-	include_once(RACINE_SITE.'includes/header.php');
-	include_once(RACINE_SITE.'pages/'.$page.'.php');
-	include_once(RACINE_SITE.'includes/footer.php');
+	include_once(RACINE_SITE.'includes/partial/header.php');
+	include_once(RACINE_SITE.'pages/site/'.$page.'.php');
+	include_once(RACINE_SITE.'includes/partial/footer.php');
 }
 
 

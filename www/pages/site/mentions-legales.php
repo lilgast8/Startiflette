@@ -1,12 +1,13 @@
 <?php
 
 if(isset($_POST['Page'])) {
-	include_once('../../init.php');
-	include_once(RACINE_SITE.'includes/textes-'.LG.'.php');
+//	include_once('../../init.php');
+	include_once(RACINE_SITE.'includes/content/textes-'.LG.'.php');
 }
 
 ?>
 
+<!-- Mentions légales -->
 <section id="page" class="mentions" data-page="mentions">
 	<div class="logo">
 		<img src="img/logos/logo" alt="Logo" />
