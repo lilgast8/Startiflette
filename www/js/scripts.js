@@ -15,7 +15,7 @@ var body;
 /* -------- Fonctions -------- */
 /*******************************/
 
-// TweenLite.to($('element'), duration, {css:{property:value}, ease:Expo.easeOut});
+// TweenLite.to($('element'), duration, {property:value, ease:Expo.easeOut});
 
 
 
