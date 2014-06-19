@@ -1,0 +1,62 @@
+
+# -------- Désactive les magic quotes -------- #
+SetEnv MAGIC_QUOTES 0
+
+
+# -------- Active PHP 5 -------- #
+SetEnv PHP_VER 5
+
+
+IndexIgnore */*
+
+RewriteEngine on
+
+
+
+# -------- Force les www -------- #
+RewriteCond %{HTTP_HOST} ^URL-DU-SITE.COM$
+RewriteRule ^(.*) http://www.URL-DU-SITE.COM/$1  [QSA,L,R=301]
+
+
+# -------- Supprime PHPSESSID de l'url -------- #
+RewriteCond %{QUERY_STRING} PHPSESSID=.*$
+RewriteRule .* %{REQUEST_URI}? [R=301,L]
+
+
+# -------- À DÉSACTIVER EN PROD -------- #
+RewriteRule json/(.*)$ src/json/$1 [L]
+RewriteRule img/(.*)$ src/img/$1 [L]
+
+
+
+
+
+# ---------------------- #
+# -------- PAGE -------- #
+# ---------------------- #
+
+
+# -------- Chargement de la 1ère page -------- #
+RewriteRule (en|fr)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2&sousPage=$3&partie=$4&sousPartie=$5 [L]
+RewriteRule (en|fr)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2&sousPage=$3&partie=$4 [L]
+RewriteRule (en|fr)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2&sousPage=$3 [L]
+RewriteRule (en|fr)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2 [L]
+RewriteRule (en|fr)/?$ index.php?lg=$1 [L]
+
+
+# -------- Chargement en AJAX -------- #
+RewriteRule pages-contenu/([a-z-]+)/([0-9]+)/([a-z0-9-]+)?/$ pages/$1.php?sousPage=$2&partie=$3 [L]
+RewriteRule pages-contenu/([a-z-]+)?/$ pages/$1.php [L]
+
+
+
+
+
+# ------------------------- #
+# -------- Erreurs -------- #
+# ------------------------- #
+
+#ErrorDocument 403 http://www.URL-DU-SITE.COM
+#ErrorDocument 404 http://www.URL-DU-SITE.COM
+#ErrorDocument 500 "Internal server error, please try again later..."
+#ErrorDocument 503 "Internal server error, please try again later..."

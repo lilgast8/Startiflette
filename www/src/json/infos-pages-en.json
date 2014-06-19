@@ -1,0 +1,13 @@
+{
+	
+	"accueil" : {
+		"title" : "[STARTER - TITLE EN]",
+		"desc" : "[STARTER - DESC EN]"
+	},
+	
+	"mentions-legales" : {
+		"title" : "Legal notice",
+		"desc" : "Legal notice"
+	}
+	
+}

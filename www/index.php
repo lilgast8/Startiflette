@@ -1,118 +1,89 @@
-<!DOCTYPE html>
 <?php
+
+
+
+/* -------- Langue -------- */
+if(isset($_GET['lg'])) { // si on a la langue
+	$lg = $_GET['lg'];
+} else { // si on a pas la langue
+	if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+		$lg = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+		if($lg != 'fr' && $lg != 'en') $lg = 'fr';
+	}
+	else $lg = 'fr';
+	
+//	header('Location:'.RACINE_WEB.$lg.'/'.$expUrl, true, 301);
+//	exit;
+}
+
+
+
+/* -------- Init -------- */
 include_once('init.php');
-include_once('includes/textes-'.LG.'.php');
+
+
+
+/* -------- Mobile Detect -------- */
+include_once(RACINE_SITE.'includes/Mobile_Detect.php');
+$detect = new Mobile_Detect();
+$mobile = $detect->isMobile() ? 'true' : 'false';
+$tablette = $detect->isTablet() ? 'true' : 'false';
+//if(preg_match('/Firefox/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = 'true';
+//if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = 'true';
+
+
+
+/* -------- Textes -------- */
+include_once(RACINE_SITE.'includes/textes-'.LG.'.php');
+
+
+
+/* -------- Gestion de l'affichage de la page -------- */
+$page = '';
+$nomPage = '';
+$nomSousPage = '';
+$nomPartie = '';
+$nomSousPartie = '';
+
+if(isset($_GET['page'])) $page = $_GET['page'];
+if(isset($_GET['sousPage'])) $sousPage = $_GET['sousPage'];
+if(isset($_GET['partie'])) $partie = $_GET['partie'];
+if(isset($_GET['sousPartie'])) $sousPartie = $_GET['sousPartie'];
+
+if(!$page) $page = 'accueil';
+
+
+
+/* -------- Récupération des JSON -------- */
+if(PROD == 'false') {
+	$jsonInfosPages = file_get_contents(RACINE_SITE.'src/json/infos-pages-'.LG.'.json');
+	$infosPages = json_decode($jsonInfosPages, true);
+} else {
+	$jsonInfosPages = file_get_contents(RACINE_SITE.'json/infos-pages-'.LG.'.json');
+	$infosPages = json_decode($jsonInfosPages, true);
+}
+
+
+
+
+/* -------- Gestion des infos/titres/metas de la page -------- */
+$titrePage = '';
+$descPage = '';
+
+$titrePage = $infosPages[$page]['title'];
+$descPage = $infosPages[$page]['desc'];
+
+
+
+/* -------- Affichage de la page -------- */
+include_once(RACINE_SITE.'includes/header.php');
+include_once(RACINE_SITE.'pages/'.$page.'.php');
+/*
+if(file_exists(RACINE_SITE.'pages/site/'.$page.'.php')) include_once(RACINE_SITE.'pages/site/'.$page.'.php');
+else include_once(RACINE_SITE.'pages/site/page_404.php');
+*/
+include_once(RACINE_SITE.'includes/footer.php');
+
+
+
 ?>
-<html lang="fr">
-<head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-	
-	<title>[STARTER - TITLE]</title>
-	<meta name="description" content="" />
-	<meta name="keywords" content="" />
-	<meta name="robots" content="index, follow" />
-	<meta name="author" content="Gaston Bouchayer" />
-	<meta name="copyright" content="Gaston Bouchayer" />
-	<meta name="publisher" content="Gaston Bouchayer" />
-	<meta name="designer" content="Gaston Bouchayer" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	
-	<!-- Facebook -->
-	<meta property="og:title" content="" />
-	<meta property="og:site_name" content="" />
-	<meta property="og:description" content="" />
-	<meta property="og:url" content="<?php echo RACINE_WEB; ?>" />
-	<meta property="og:image" content="<?php echo RACINE_WEB; ?>img/logos/partage.png" />
-	<meta property="og:type" content="website" />
-	<!-- Google Plus -->
-	<meta itemprop="name" content="" />
-	<meta itemprop="description" content="" />
-	<meta itemprop="image" content="<?php echo RACINE_WEB; ?>img/logos/partage.png" />
-	<!-- Twitter -->
-	<meta name="twitter:card" content="summary" />
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:description" content="" />
-	<meta name="twitter:site" content="@LilGast8" />
-	<meta name="twitter:creator" content="@LilGast8" />
-	<meta name="twitter:url" content="<?php echo RACINE_WEB; ?>" />
-	<meta name="twitter:image" content="<?php echo RACINE_WEB; ?>/img/divers/twitter.jpg" />
-	
-	<link rel="shortcut icon" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon.ico" />
-	<link rel="apple-touch-icon" sizes="57x57" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-57x57.png" />
-	<link rel="apple-touch-icon" sizes="114x114" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-114x114.png" />
-	<link rel="apple-touch-icon" sizes="72x72" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-72x72.png" />
-	<link rel="apple-touch-icon" sizes="144x144" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-144x144.png" />
-	<link rel="apple-touch-icon" sizes="60x60" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-60x60.png" />
-	<link rel="apple-touch-icon" sizes="120x120" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-120x120.png" />
-	<link rel="apple-touch-icon" sizes="76x76" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-76x76.png" />
-	<link rel="apple-touch-icon" sizes="152x152" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-152x152.png" />
-	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-196x196.png" sizes="196x196" />
-	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-160x160.png" sizes="160x160" />
-	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-96x96.png" sizes="96x96" />
-	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-32x32.png" sizes="32x32" />
-	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-16x16.png" sizes="16x16" />
-	<meta name="msapplication-TileColor" content="#ffffff" />
-	<meta name="msapplication-TileImage" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-144x144.png" />
-	<meta name="msapplication-square70x70logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-70x70.png" />
-	<meta name="msapplication-square144x144logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-144x144.png" />
-	<meta name="msapplication-square150x150logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-150x150.png" />
-	<meta name="msapplication-square310x310logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-310x310.png" />
-	<meta name="msapplication-wide310x150logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-310x150.png" />
-	
-	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo RACINE_WEB; ?>css/styles.css" />
-	
-	<!--[if lt IE 9]><script src="<?php echo RACINE_WEB; ?>js/plugins/html5shiv.js"></script><![endif]-->
-	
-	<?php if(LOCALHOST == 'true') { ?>
-	<!-- Google Analytics -->
-	<script type="text/javascript">
-		var _gaq = _gaq || [];
-		_gaq.push(['_setAccount', 'UA-XXXX-XX']);
-		_gaq.push(['_trackPageview']);
-		(function() {
-			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		})();
-	</script>
-	<?php } ?>
-</head>
-
-
-<!--[if lt IE 7]> <body class="ie6 lt-ie7 lt-ie8 lt-ie9 lt-ie10"> <![endif]-->
-<!--[if IE 7]> <body class="ie7 lt-ie8 lt-ie9 lt-ie10"> <![endif]-->
-<!--[if IE 8]> <body class="ie8 lt-ie9 lt-ie10"> <![endif]-->
-<!--[if IE 9]> <body class="ie9 lt-ie10"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
-
-
-
-
-
-<noscript>
-<!-- No JS -->
-<?php include_once(RACINE_SITE.'alt/no-js.php'); ?>
-</noscript>
-
-<!-- Old browser -->
-<?php include_once(RACINE_SITE.'alt/old-browser.php'); ?>
-
-
-
-<!-- Scripts -->
-<script>
-	var _localhost = '<?php echo LOCALHOST; ?>';
-	var _racineWeb = '<?php echo RACINE_WEB; ?>';
-	var _lg = '<?php echo LG; ?>';
-</script>
-<script src="<?php echo RACINE_WEB; ?>js/plugins/browser-detect.js"></script>
-<!--[if lt IE 9]><script src="<?php echo RACINE_WEB; ?>js/plugins/jquery-1.11.0.min.js"></script><![endif]-->
-<!--[if gte IE 9]><!--><script src="<?php echo RACINE_WEB; ?>js/plugins/jquery-2.1.0.min.js"></script><!--<![endif]-->
-<script src="<?php echo RACINE_WEB; ?>js/plugins/greensock/TweenMax.min.js"></script>
-<script src="<?php echo RACINE_WEB; ?>js/plugins/jquery.address.min.js"></script>
-<script src="<?php echo RACINE_WEB; ?>js/scripts.js"></script>
-
-
-</body>
-</html>

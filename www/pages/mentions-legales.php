@@ -1,44 +1,15 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-	<title>Mentions légales | [TITRE]</title>
-	<meta charset="utf-8" />
-	<meta name="author" content="Gaston Bouchayer" />
-	<meta name="description" content="" />
-	<meta name="keywords" content="" />
-	<meta name="robots" content="noindex, nofollow">
-	<noscript><meta http-equiv="refresh" content="0; url=alt/no-js.php" /></noscript>
-	<script src="js/plugins/browser-detect.js"></script>
-	
-	<link rel="shortcut icon" href="images/logos/favicon.ico" />
-	
-	<link media="screen" rel="stylesheet" type="text/css" href="css/styles.css" />
-	
-	<!--[if lt IE 9]><script type="text/javascript" src="js/plugins/html5shiv.js"></script><![endif]-->
-	
-	<?php if($_SERVER['HTTP_HOST'] != 'localhost:8888') { ?>
-	<!-- Google Analytics -->
-	<script type="text/javascript">
-		var _gaq = _gaq || [];
-		_gaq.push(['_setAccount', 'UA-XXXX-XX']);
-		_gaq.push(['_trackPageview']);
-		(function() {
-			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		})();
-	</script>
-	<?php } ?>
-</head>
+<?php
 
-<!--[if IE 7]><body class="ie7 oldie"><![endif]-->
-<!--[if IE 8]><body class="ie8 oldie"><![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><body><!--<![endif]-->
+if(isset($_POST['Page'])) {
+	include_once('../../init.php');
+	include_once(RACINE_SITE.'includes/textes-'.LG.'.php');
+}
 
+?>
 
-<section id="mentionsLegales">
+<section id="page" class="mentions" data-page="mentions">
 	<div class="logo">
-		<img src="images/logos/logo" alt="Logo" />
+		<img src="img/logos/logo" alt="Logo" />
 	</div>
 	<h1>Mentions légales</h1>
 	<h2>1- Informations légales</h2>
