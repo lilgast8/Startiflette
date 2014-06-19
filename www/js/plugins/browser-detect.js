@@ -4,6 +4,6 @@ var BrowserDetect={init:function(){this.browser=this.searchString(this.dataBrows
 var browser = BrowserDetect.browser;
 var vBrowser = BrowserDetect.version;
 
-if(browser == 'Explorer' && vBrowser < 7 || browser == 'Firefox' && vBrowser < 4 || browser == 'Opera' && vBrowser < 10 || browser == 'Safari' && vBrowser < 3.1) {
-	window.location.href = './alt/old-browser.php';
+if(browser == 'Explorer' && vBrowser < 11 || browser == 'Firefox' && vBrowser < 4 || browser == 'Opera' && vBrowser < 10 || browser == 'Safari' && vBrowser < 3.1 || browser == 'Chrome' && vBrowser < 1) {
+	document.getElementById('oldBrowser').style.display = 'block';
 }

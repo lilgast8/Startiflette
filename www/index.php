@@ -1,46 +1,70 @@
 <!DOCTYPE html>
+<?php
+include_once('init.php');
+include_once('includes/textes-'.LG.'.php');
+?>
 <html lang="fr">
 <head>
-	<title>[TITLE]</title>
 	<meta charset="utf-8" />
-	<meta name="author" content="Gaston Bouchayer" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	
+	<title>[STARTER - TITLE]</title>
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
-	<!-- <noscript><meta http-equiv="refresh" content="0; url=alt/no-js.php" /></noscript> -->
-	<script src="js/plugins/browser-detect.js"></script>
+	<meta name="author" content="Gaston Bouchayer" />
+	<meta name="copyright" content="Gaston Bouchayer" />
+	<meta name="publisher" content="Gaston Bouchayer" />
+	<meta name="designer" content="Gaston Bouchayer" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	
 	<!-- Facebook -->
 	<meta property="og:title" content="" />
 	<meta property="og:site_name" content="" />
 	<meta property="og:description" content="" />
-	<meta property="og:url" content="http://www.url-du-site.com" />
-	<meta property="og:image" content="http://www.url-du-site.com/images/logos/partage.png" />
+	<meta property="og:url" content="<?php echo RACINE_WEB; ?>" />
+	<meta property="og:image" content="<?php echo RACINE_WEB; ?>img/logos/partage.png" />
 	<meta property="og:type" content="website" />
 	<!-- Google Plus -->
 	<meta itemprop="name" content="" />
 	<meta itemprop="description" content="" />
-	<meta itemprop="image" content="http://www.url-du-site.com/images/logos/partage.png" />
+	<meta itemprop="image" content="<?php echo RACINE_WEB; ?>img/logos/partage.png" />
 	<!-- Twitter -->
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content="" />
 	<meta name="twitter:description" content="" />
 	<meta name="twitter:site" content="@LilGast8" />
 	<meta name="twitter:creator" content="@LilGast8" />
-	<meta name="twitter:url" content="http://www.url-du-site.com" />
-	<meta name="twitter:image" content="http://www.url-du-site.com/images/divers/twitter.jpg" />
+	<meta name="twitter:url" content="<?php echo RACINE_WEB; ?>" />
+	<meta name="twitter:image" content="<?php echo RACINE_WEB; ?>/img/divers/twitter.jpg" />
 	
-	<link rel="shortcut icon" href="images/logos/favicon.ico" />
-	<link rel="apple-touch-icon" sizes="57x57" href="images/logos/logo-apple-touch_57.png" />
-	<link rel="apple-touch-icon" sizes="114x114" href="images/logos/logo-apple-touch_114.png" />
-	<link rel="apple-touch-icon" sizes="72x72" href="images/logos/logo-apple-touch_72.png" />
-	<link rel="apple-touch-icon" sizes="144x144" href="images/logos/logo-apple-touch_144.png" />
+	<link rel="shortcut icon" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon.ico" />
+	<link rel="apple-touch-icon" sizes="57x57" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-57x57.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-114x114.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-144x144.png" />
+	<link rel="apple-touch-icon" sizes="60x60" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-60x60.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-120x120.png" />
+	<link rel="apple-touch-icon" sizes="76x76" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-76x76.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-152x152.png" />
+	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-196x196.png" sizes="196x196" />
+	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-160x160.png" sizes="160x160" />
+	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-96x96.png" sizes="96x96" />
+	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-16x16.png" sizes="16x16" />
+	<meta name="msapplication-TileColor" content="#ffffff" />
+	<meta name="msapplication-TileImage" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-144x144.png" />
+	<meta name="msapplication-square70x70logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-70x70.png" />
+	<meta name="msapplication-square144x144logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-144x144.png" />
+	<meta name="msapplication-square150x150logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-150x150.png" />
+	<meta name="msapplication-square310x310logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-310x310.png" />
+	<meta name="msapplication-wide310x150logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-310x150.png" />
 	
-	<link media="screen" rel="stylesheet" type="text/css" href="css/styles.css" />
+	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo RACINE_WEB; ?>css/styles.css" />
 	
-	<!--[if lt IE 9]><script type="text/javascript" src="js/plugins/html5shiv.js"></script><![endif]-->
+	<!--[if lt IE 9]><script src="<?php echo RACINE_WEB; ?>js/plugins/html5shiv.js"></script><![endif]-->
 	
-	<?php if($_SERVER['HTTP_HOST'] != 'localhost:8888') { ?>
+	<?php if(LOCALHOST == 'true') { ?>
 	<!-- Google Analytics -->
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
@@ -56,28 +80,38 @@
 </head>
 
 
-<!--[if IE 7]><body class="ie7 oldie"><![endif]-->
-<!--[if IE 8]><body class="ie8 oldie"><![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><body><!--<![endif]-->
+<!--[if lt IE 7]> <body class="ie6 lt-ie7 lt-ie8 lt-ie9 lt-ie10"> <![endif]-->
+<!--[if IE 7]> <body class="ie7 lt-ie8 lt-ie9 lt-ie10"> <![endif]-->
+<!--[if IE 8]> <body class="ie8 lt-ie9 lt-ie10"> <![endif]-->
+<!--[if IE 9]> <body class="ie9 lt-ie10"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 
 
 
 
 
 <noscript>
-	<!-- <meta http-equiv="refresh" content="0; url=alt/no-js.php" /> -->
-	<?php include_once('alt/no-js.php'); ?>
+<!-- No JS -->
+<?php include_once(RACINE_SITE.'alt/no-js.php'); ?>
 </noscript>
+
+<!-- Old browser -->
+<?php include_once(RACINE_SITE.'alt/old-browser.php'); ?>
+
+
 
 <!-- Scripts -->
 <script>
-	const _racineWeb = '<?php echo RACINE_WEB; ?>';
+	var _localhost = '<?php echo LOCALHOST; ?>';
+	var _racineWeb = '<?php echo RACINE_WEB; ?>';
+	var _lg = '<?php echo LG; ?>';
 </script>
-<!--[if lt IE 9]><script src="js/plugins/jquery-1.10.1.min.js"></script><![endif]-->
-<!--[if gte IE 9]><!--><script src="js/plugins/jquery-2.0.2.min.js"></script><!--<![endif]-->
-<script src="js/plugins/greensock/TweenMax.min.js"></script>
-<script src="js/plugins/jquery.address.min.js"></script>
-<script src="js/scripts.js"></script>
+<script src="<?php echo RACINE_WEB; ?>js/plugins/browser-detect.js"></script>
+<!--[if lt IE 9]><script src="<?php echo RACINE_WEB; ?>js/plugins/jquery-1.11.0.min.js"></script><![endif]-->
+<!--[if gte IE 9]><!--><script src="<?php echo RACINE_WEB; ?>js/plugins/jquery-2.1.0.min.js"></script><!--<![endif]-->
+<script src="<?php echo RACINE_WEB; ?>js/plugins/greensock/TweenMax.min.js"></script>
+<script src="<?php echo RACINE_WEB; ?>js/plugins/jquery.address.min.js"></script>
+<script src="<?php echo RACINE_WEB; ?>js/scripts.js"></script>
 
 
 </body>
