@@ -1,5 +1,5 @@
 User-Agent: *
-Sitemap: http://www.URL-DU-SITE.com/sitemap.xml
+Sitemap: http://www.SITE_URL.COM/sitemap.xml
 Disallow: /assets/
 Disallow: /includes/
 Disallow: /pages/

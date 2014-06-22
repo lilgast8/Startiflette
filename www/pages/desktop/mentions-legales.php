@@ -1,8 +1,9 @@
 <?php
 
 if(isset($_POST['Page'])) {
-//	include_once('../../init.php');
-	include_once(RACINE_SITE.'includes/content/textes-'.LG.'.php');
+	include_once('../../init.php');
+	include_once(SITE_ROOT.'includes/content/textes-'.LG.'.php');
+	include_once(SITE_ROOT.'includes/func/load-json.php');
 }
 
 ?>
@@ -10,12 +11,12 @@ if(isset($_POST['Page'])) {
 <!-- Mentions légales -->
 <section id="page" class="mentions" data-page="mentions">
 	<div class="logo">
-		<img src="img/logos/logo" alt="Logo" />
+		<img src="<?php echo WEB_ROOT; ?>img/logos/LOGO.JPG" alt="Logo" />
 	</div>
 	<h1>Mentions légales</h1>
 	<h2>1- Informations légales</h2>
 	<p>
-		Le site <a href="http://www.URL-DU-SITE.com" target="_blank">www.URL-DU-SITE.com</a> que vous consultez actuellement est la propriété de : <br />
+		Le site <a href="<?php echo SITE_URL; ?>" target="_blank"><?php echo SITE_URL; ?></a> que vous consultez actuellement est la propriété de : <br />
 		<br />
 		NOM SOCIÉTÉ <br />
 		ADRESSE <br />
@@ -40,7 +41,7 @@ if(isset($_POST['Page'])) {
 	</p>
 	<h2>5- Propriété Intellectuelle</h2>
 	<p>
-		L'accès au site <a href="http://www.URL-DU-SITE.com" target="_blank">www.URL-DU-SITE.com</a> vous confère un droit d'usage privé et non exclusif de ce site. Tous les articles, photographies et autres documents sur ce site sont la propriété SOCIÉTÉ, ou sont autorisés avec l'autorisation de leurs propriétaires, et sont soumis au droit d'auteur et autres droits de propriété intellectuelle. L'utilisation frauduleuse de tout contenu du site Internet est totalement interdite. SOCIÉTÉ vous informe qu'il usera largement de ses droits de propriété intellectuelle pour engager des poursuites, mêmes pénales, si nécessaires.
+		L'accès au site <a href="<?php echo SITE_URL; ?>" target="_blank"><?php echo SITE_URL; ?></a> vous confère un droit d'usage privé et non exclusif de ce site. Tous les articles, photographies et autres documents sur ce site sont la propriété SOCIÉTÉ, ou sont autorisés avec l'autorisation de leurs propriétaires, et sont soumis au droit d'auteur et autres droits de propriété intellectuelle. L'utilisation frauduleuse de tout contenu du site Internet est totalement interdite. SOCIÉTÉ vous informe qu'il usera largement de ses droits de propriété intellectuelle pour engager des poursuites, mêmes pénales, si nécessaires.
 	</p>
 	<h2>6- Indisponibilité du site</h2>
 	<p>

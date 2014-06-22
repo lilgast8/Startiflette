@@ -18,14 +18,14 @@
 
 
 
-/*****************************/
-/* -------- OBJECTS -------- */
-/*****************************/
+/******************************/
+/* -------- PARTIALS -------- */
+/******************************/
 
 
-@import 'objects/_header';
-@import 'objects/_footer';
-@import 'objects/_global';
+@import 'partials/_header';
+@import 'partials/_footer';
+@import 'partials/_global';
 
 
 
@@ -36,8 +36,8 @@
 /***************************/
 
 
-@import 'pages/_accueil';
-
-
+@import 'pages/_home';
+@import 'pages/_about';
+@import 'pages/_legals';
 
 

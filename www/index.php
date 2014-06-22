@@ -2,85 +2,66 @@
 
 
 
-/* -------- Langue -------- */
-if(isset($_GET['lg'])) { // si on a la langue
-	$lg = $_GET['lg'];
-} else { // si on a pas la langue
-	if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-		$lg = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-		if($lg != 'fr' && $lg != 'en') $lg = 'fr';
-	}
-	else $lg = 'fr';
-}
-
-
-
 /* -------- Init -------- */
 include_once('init.php');
 
 
 
 /* -------- Mobile Detect -------- */
-include_once(RACINE_SITE.'includes/lib/Mobile_Detect.php');
+include_once(SITE_ROOT.'includes/lib/Mobile_Detect.php');
 $detect = new Mobile_Detect();
 $mobile = $detect->isMobile() ? true : false;
-$tablette = $detect->isTablet() ? true : false;
+$tablet = $detect->isTablet() ? true : false;
 //if(preg_match('/Firefox/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = true;
 //if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = true;
-//if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) { $mobile = true; $tablette = true; }
+//if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) { $mobile = true; $tablet = true; }
 
 
 
-/* -------- Textes -------- */
-include_once(RACINE_SITE.'includes/content/textes-'.LG.'.php');
+/* -------- Texts -------- */
+include_once(SITE_ROOT.'includes/content/texts-'.LG.'.php');
 
 
 
-/* -------- Gestion de l'affichage de la page -------- */
+/* -------- Load JSON -------- */
+include_once(SITE_ROOT.'includes/func/load-json.php');
+
+
+
+/* -------- Get page name -------- */
 $page = '';
-$nomPage = '';
-$nomSousPage = '';
-$nomPartie = '';
-$nomSousPartie = '';
+$namePage = '';
+$nameSubPage = '';
+$namePart = '';
+$nameSubPart = '';
 
 if(isset($_GET['page'])) $page = $_GET['page'];
-if(isset($_GET['sousPage'])) $sousPage = $_GET['sousPage'];
-if(isset($_GET['partie'])) $partie = $_GET['partie'];
-if(isset($_GET['sousPartie'])) $sousPartie = $_GET['sousPartie'];
+if(isset($_GET['subPage'])) $subPage = $_GET['subPage'];
+if(isset($_GET['part'])) $part = $_GET['part'];
+if(isset($_GET['subPart'])) $subPart = $_GET['subPart'];
 
 if(!$page) $page = 'accueil';
 
 
 
-/* -------- Récupération des JSON -------- */
-if(!PROD) {
-	$jsonInfosPages = file_get_contents(RACINE_SITE.'src/json/infos-pages-'.LG.'.json');
-	$infosPages = json_decode($jsonInfosPages, true);
-} else {
-	$jsonInfosPages = file_get_contents(RACINE_SITE.'assets/json/infos-pages-'.LG.'.json');
-	$infosPages = json_decode($jsonInfosPages, true);
-}
+/* -------- Infos/titles/metas of the page -------- */
+$title = '';
+$desc = '';
+
+$title = $infosPages[$page]['title'];
+$desc = $infosPages[$page]['desc'];
 
 
 
-/* -------- Gestion des infos/titres/metas de la page -------- */
-$titrePage = '';
-$descPage = '';
-
-$titrePage = $infosPages[$page]['title'];
-$descPage = $infosPages[$page]['desc'];
-
-
-
-/* -------- Affichage de la page -------- */
-if($mobile && !$tablette) { // mobile
-	include_once(RACINE_SITE.'includes/partial/header-mobile.php');
-	include_once(RACINE_SITE.'pages/mobile/'.$page.'.php');
-	include_once(RACINE_SITE.'includes/partial/footer-mobile.php');
+/* -------- Show page -------- */
+if($mobile && !$tablet) { // mobile
+	include_once(SITE_ROOT.'includes/partial/header-mobile.php');
+	include_once(SITE_ROOT.'pages/mobile/'.$page.'.php');
+	include_once(SITE_ROOT.'includes/partial/footer-mobile.php');
 } else { // desktop & tablette
-	include_once(RACINE_SITE.'includes/partial/header.php');
-	include_once(RACINE_SITE.'pages/site/'.$page.'.php');
-	include_once(RACINE_SITE.'includes/partial/footer.php');
+	include_once(SITE_ROOT.'includes/partial/header.php');
+	include_once(SITE_ROOT.'pages/desktop/'.$page.'.php');
+	include_once(SITE_ROOT.'includes/partial/footer.php');
 }
 
 

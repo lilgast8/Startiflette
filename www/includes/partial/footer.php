@@ -9,11 +9,11 @@
 	
 	<noscript>
 	<!-- No JS -->
-	<?php include_once(RACINE_SITE.'includes/alt/no-js.php'); ?>
+	<?php include_once(SITE_ROOT.'includes/alt/no-js.php'); ?>
 	</noscript>
 	
 	<!-- Old browser -->
-	<?php include_once(RACINE_SITE.'includes/alt/old-browser.php'); ?>
+	<?php include_once(SITE_ROOT.'includes/alt/old-browser.php'); ?>
 	
 </div> <!-- Fin #main-container -->
 
@@ -23,19 +23,19 @@
 <script>
 	var _localhost = '<?php echo LOCALHOST; ?>';
 	var _prod  = '<?php echo PROD; ?>';
-	var _racineWeb = '<?php echo RACINE_WEB; ?>';
+	var _racineWeb = '<?php echo WEB_ROOT; ?>';
 	var _lg = '<?php echo LG; ?>';
 </script>
 <?php if(!PROD) { ?>
-<script src="<?php echo RACINE_WEB; ?>src/js/lib/detectizr.min.js"></script>
-<!--[if lt IE 9]><script src="<?php echo RACINE_WEB; ?>src/js/lib/jquery-1.11.0.min.js"></script><![endif]-->
-<!--[if gte IE 9]><!--><script src="<?php echo RACINE_WEB; ?>src/js/lib/jquery-2.1.0.min.js"></script><!--<![endif]-->
-<script src="<?php echo RACINE_WEB; ?>src/js/lib/greensock/TweenMax.min.js"></script>
-<script src="<?php echo RACINE_WEB; ?>src/js/lib/jquery.address.min.js"></script>
-<script src="<?php echo RACINE_WEB; ?>src/js/scripts.js"></script>
+<script src="<?php echo WEB_ROOT; ?>src/js/lib/detectizr.min.js"></script>
+<!--[if lt IE 9]><script src="<?php echo WEB_ROOT; ?>src/js/lib/jquery-1.11.0.min.js"></script><![endif]-->
+<!--[if gte IE 9]><!--><script src="<?php echo WEB_ROOT; ?>src/js/lib/jquery-2.1.0.min.js"></script><!--<![endif]-->
+<script src="<?php echo WEB_ROOT; ?>src/js/lib/greensock/TweenMax.min.js"></script>
+<script src="<?php echo WEB_ROOT; ?>src/js/lib/jquery.address.min.js"></script>
+<script src="<?php echo WEB_ROOT; ?>src/js/scripts.js"></script>
 <?php } else { ?>
-<!--[if lt IE 9]><script src="<?php echo RACINE_WEB; ?>assets/js/scripts-oldie.min.js"></script><![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><script src="<?php echo RACINE_WEB; ?>assets/js/scripts.min.js"></script><!--<![endif]-->
+<!--[if lt IE 9]><script src="<?php echo WEB_ROOT; ?>assets/js/scripts-oldie.min.js"></script><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><script src="<?php echo WEB_ROOT; ?>assets/js/scripts.min.js"></script><!--<![endif]-->
 <?php } ?>
 
 

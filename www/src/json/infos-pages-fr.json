@@ -1,16 +1,16 @@
 {
 	
-	"accueil" : {
+	"home" : {
 		"title" : "[STARTER - TITLE FR]",
 		"desc" : "[STARTER - DESC FR]"
 	},
 	
-	"a-propos" : {
+	"about" : {
 		"title" : "À propos",
 		"desc" : "À propos"
 	},
 	
-	"mentions-legales" : {
+	"legals" : {
 		"title" : "Mentions légales",
 		"desc" : "Mentions légales"
 	}

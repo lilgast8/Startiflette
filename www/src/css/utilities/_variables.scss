@@ -1,4 +1,3 @@
-@charset "UTF-8";
 
 
 
@@ -9,18 +8,24 @@
 
 /* -------- TAILLES -------- */
 
-$largContenu:960px;
-$largContenuMin:980px;
+$contentW:960px;
+$contentWMin:980px;
+$contentHMin:600px;
 
 
 
 /* -------- COULEURS -------- */
 
-$bgSelection:#000;
-$texteSelection:#fff;
-$alternate1:#fff;
-$alternate2:#000;
-$alternate3:#f09;
-$alternate4:#ccc;
+$black:#000;
+$grey:#888;
+$white:#fff;
+$color1:#f09;
+
+$bgSelection:$black;
+$textSelection:$white;
+$alt1:$white;
+$alt2:$black;
+$alt3:$color1;
+$alt4:$grey;
 
 

@@ -16,47 +16,47 @@
 	<meta property="og:title" content="" />
 	<meta property="og:site_name" content="" />
 	<meta property="og:description" content="" />
-	<meta property="og:url" content="<?php echo URL_SITE; ?>" />
-	<meta property="og:image" content="<?php echo URL_SITE; ?>/img/logos/partage.png" />
+	<meta property="og:url" content="<?php echo SITE_URL; ?>" />
+	<meta property="og:image" content="<?php echo SITE_URL; ?>/img/logos/partage.png" />
 	<meta property="og:type" content="website" />
 	<!-- Google Plus -->
 	<meta itemprop="name" content="" />
 	<meta itemprop="description" content="" />
-	<meta itemprop="image" content="<?php echo RACINE_WEB; ?>img/logos/partage.png" />
+	<meta itemprop="image" content="<?php echo WEB_ROOT; ?>img/logos/partage.png" />
 	<!-- Twitter -->
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content="" />
 	<meta name="twitter:description" content="" />
 	<meta name="twitter:site" content="@LilGast8" />
 	<meta name="twitter:creator" content="@LilGast8" />
-	<meta name="twitter:url" content="<?php echo RACINE_WEB; ?>" />
-	<meta name="twitter:image" content="<?php echo RACINE_WEB; ?>/img/divers/twitter.jpg" />
+	<meta name="twitter:url" content="<?php echo WEB_ROOT; ?>" />
+	<meta name="twitter:image" content="<?php echo WEB_ROOT; ?>/img/divers/twitter.jpg" />
 	
-	<link rel="shortcut icon" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon.ico" />
-	<link rel="apple-touch-icon" sizes="57x57" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-57x57.png" />
-	<link rel="apple-touch-icon" sizes="114x114" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-114x114.png" />
-	<link rel="apple-touch-icon" sizes="72x72" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-72x72.png" />
-	<link rel="apple-touch-icon" sizes="144x144" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-144x144.png" />
-	<link rel="apple-touch-icon" sizes="60x60" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-60x60.png" />
-	<link rel="apple-touch-icon" sizes="120x120" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-120x120.png" />
-	<link rel="apple-touch-icon" sizes="76x76" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-76x76.png" />
-	<link rel="apple-touch-icon" sizes="152x152" href="<?php echo RACINE_WEB; ?>img/logos/favicons/apple-touch-icon-152x152.png" />
-	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-196x196.png" sizes="196x196" />
-	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-160x160.png" sizes="160x160" />
-	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-96x96.png" sizes="96x96" />
-	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-32x32.png" sizes="32x32" />
-	<link rel="icon" type="image/png" href="<?php echo RACINE_WEB; ?>img/logos/favicons/favicon-16x16.png" sizes="16x16" />
+	<link rel="shortcut icon" href="<?php echo WEB_ROOT; ?>img/logos/favicons/favicon.ico" />
+	<link rel="apple-touch-icon" sizes="57x57" href="<?php echo WEB_ROOT; ?>img/logos/favicons/apple-touch-icon-57x57.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="<?php echo WEB_ROOT; ?>img/logos/favicons/apple-touch-icon-114x114.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="<?php echo WEB_ROOT; ?>img/logos/favicons/apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="<?php echo WEB_ROOT; ?>img/logos/favicons/apple-touch-icon-144x144.png" />
+	<link rel="apple-touch-icon" sizes="60x60" href="<?php echo WEB_ROOT; ?>img/logos/favicons/apple-touch-icon-60x60.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="<?php echo WEB_ROOT; ?>img/logos/favicons/apple-touch-icon-120x120.png" />
+	<link rel="apple-touch-icon" sizes="76x76" href="<?php echo WEB_ROOT; ?>img/logos/favicons/apple-touch-icon-76x76.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="<?php echo WEB_ROOT; ?>img/logos/favicons/apple-touch-icon-152x152.png" />
+	<link rel="icon" type="image/png" href="<?php echo WEB_ROOT; ?>img/logos/favicons/favicon-196x196.png" sizes="196x196" />
+	<link rel="icon" type="image/png" href="<?php echo WEB_ROOT; ?>img/logos/favicons/favicon-160x160.png" sizes="160x160" />
+	<link rel="icon" type="image/png" href="<?php echo WEB_ROOT; ?>img/logos/favicons/favicon-96x96.png" sizes="96x96" />
+	<link rel="icon" type="image/png" href="<?php echo WEB_ROOT; ?>img/logos/favicons/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="<?php echo WEB_ROOT; ?>img/logos/favicons/favicon-16x16.png" sizes="16x16" />
 	<meta name="msapplication-TileColor" content="#ffffff" />
-	<meta name="msapplication-TileImage" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-144x144.png" />
-	<meta name="msapplication-square70x70logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-70x70.png" />
-	<meta name="msapplication-square144x144logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-144x144.png" />
-	<meta name="msapplication-square150x150logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-150x150.png" />
-	<meta name="msapplication-square310x310logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-310x310.png" />
-	<meta name="msapplication-wide310x150logo" content="<?php echo RACINE_WEB; ?>img/logos/favicons/mstile-310x150.png" />
+	<meta name="msapplication-TileImage" content="<?php echo WEB_ROOT; ?>img/logos/favicons/mstile-144x144.png" />
+	<meta name="msapplication-square70x70logo" content="<?php echo WEB_ROOT; ?>img/logos/favicons/mstile-70x70.png" />
+	<meta name="msapplication-square144x144logo" content="<?php echo WEB_ROOT; ?>img/logos/favicons/mstile-144x144.png" />
+	<meta name="msapplication-square150x150logo" content="<?php echo WEB_ROOT; ?>img/logos/favicons/mstile-150x150.png" />
+	<meta name="msapplication-square310x310logo" content="<?php echo WEB_ROOT; ?>img/logos/favicons/mstile-310x310.png" />
+	<meta name="msapplication-wide310x150logo" content="<?php echo WEB_ROOT; ?>img/logos/favicons/mstile-310x150.png" />
 	
-	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo RACINE_WEB; ?>assets/css/styles.min.css" />
+	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>assets/css/styles.min.css" />
 	
-	<!--[if lt IE 9]><script src="<?php echo RACINE_WEB; ?>js/lib/html5shiv.js"></script><![endif]-->
+	<!--[if lt IE 9]><script src="<?php echo WEB_ROOT; ?>js/lib/html5shiv.js"></script><![endif]-->
 	
 	<?php if(!LOCALHOST && PROD) { ?>
 	<!-- Google Analytics -->
