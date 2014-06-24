@@ -8,7 +8,7 @@ if(isset($_POST['Page'])) {
 
 ?>
 
-<!-- À propos -->
+<!-- About -->
 <div id="page" class="about" data-page="about">
 	
 	À propos

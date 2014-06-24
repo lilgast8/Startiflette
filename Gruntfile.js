@@ -17,27 +17,18 @@ module.exports = function(grunt) {
 				files: {
 					'www/assets/css/styles.min.css': ['www/src/css/styles.scss']
 				}
+			},
+			prod: {
+				options: {
+					style: 'compressed',
+					compass: true
+				},
+				files: {
+					'www/assets/css/styles.min.css': ['www/src/css/styles.scss']
+				}
 			}
 		},
 		
-		
-		/* -------- COMPASS -------- */
-	/*	compass: { // Task
-			dist: { // Target
-				options: { // Target options
-					sassDir: 'www/src/css',
-					cssDir: 'www/assets/css',
-					environment: 'production'
-				}
-			},
-		//	dev: { // Another target
-		//		options: {
-		//			sassDir: 'sass',
-		//			cssDir: 'css'
-		//		}
-		//	}
-		},
-	*/	
 		
 		/* -------- JSHINT -------- */
 		jshint: {
@@ -46,7 +37,7 @@ module.exports = function(grunt) {
 				'-W083': true // Don't make functions within a loop
 			},
 			dist: [
-				'www/src/js/*.js'
+				'www/src/js/app/**/*.js'
 			]
 		},
 		
@@ -77,7 +68,8 @@ module.exports = function(grunt) {
 				// define any tests you want to implicitly include
 				'tests' : [
 					'csstransforms3d',
-					'csstransitions'
+					'csstransitions',
+					'history'
 				],
 				// by default, this task will crawl your project for references to Modernizr tests, set to false to disable.
 				'parseFiles' : false,
@@ -99,22 +91,34 @@ module.exports = function(grunt) {
 			dist: {
 				files: {
 					'www/assets/js/scripts.min.js': [
-						'www/src/js/lib/browser-detect.js',
-						'www/src/js/lib/jquery-2.1.0.min.js',
+						'www/src/js/lib/zepto-1.1.3.min.js',
 						'www/src/js/lib/greensock/TweenMax.min.js',
-						'www/src/js/lib/jquery.address.min.js',
-						'www/src/js/scripts.js'
+						'www/src/js/lib/history-1.8b2.min.js',
+						'www/src/js/lib/preloadjs-0.4.1.min.js',
+						'www/src/js/lib/signals-1.0.0.min.js',
+						'www/src/js/lib/zepto.dcspamless.1.0.min.js',
+						'www/src/js/app/InitApp.js',
+						'www/src/js/app/com/**/*.js',
+						'www/src/js/app/Main.js'
+					],
+					'www/assets/js/lib/modern-detect-izr.min.js': [
+						'www/src/js/lib/modernizr.min.js',
+						'www/src/js/lib/detectizr-2.0.0.min.js'
 					]
 				}
 			},
 			oldie: {
 				files: {
 					'www/assets/js/scripts-oldie.min.js': [
-						'www/src/js/lib/browser-detect.js',
 						'www/src/js/lib/jquery-1.11.0.min.js',
 						'www/src/js/lib/greensock/TweenMax.min.js',
-						'www/src/js/lib/jquery.address.min.js',
-						'www/src/js/scripts.js'
+						'www/src/js/lib/history-1.8b2.min.js',
+						'www/src/js/lib/preloadjs-0.4.1.min.js',
+						'www/src/js/lib/signals-1.0.0.min.js',
+						'www/src/js/lib/zepto.dcspamless.1.0.min.js',
+						'www/src/js/app/InitApp.js',
+						'www/src/js/app/com/**/*.js',
+						'www/src/js/app/Main.js'
 					]
 				}
 			}
@@ -172,15 +176,16 @@ module.exports = function(grunt) {
 			},
 			js: {
 				files: [
-					'www/src/js/*.js',
 					'www/src/js/**/*.js'
 				],
 				tasks: ['jshint']
 			},
 			php: {
 				files: [
-					'**/*.html',
-					'**/*.php'
+					'www/*.html',
+					'www/**/*.html',
+					'www/*.php',
+					'www/**/*.php'
 				]
 			},
 			json: {
@@ -207,15 +212,13 @@ module.exports = function(grunt) {
 	
 	
 	grunt.registerTask('default', [
-		'sass',
-	//	'compass',
+		'sass:dist',
 		'jshint',
 		'jsonlint'
 	]);
 	
 	grunt.registerTask('prod', [
-		'sass',
-	//	'compass',
+		'sass:prod',
 		'jshint',
 		'uglify',
 		'jsonlint',

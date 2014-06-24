@@ -16,43 +16,29 @@
 \
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
 \cf2 - updater Grunt et plugins\cf0 \
-- mettre jQuery, zepto, history.jquery, history.zepto\'85\
-- MAJ code analytics\
+\
+- revoir le gestion changement de page (RoutesManager.js, View.class.js)\
+- am\'e9liorer la classe Loader.class.js\
+- \'e9crire une classe pour une Google Map\
+\
+- gestion du nom des pages : #page ou .page ?, data-page="page" ? (v\'e9rifier ensuite dans les Views.js)\
+\
 - revoir la gestion du SITE_ROOT et WEB_ROOT\
 - enlever le "/" \'e0 la fin de SITE_ROOT et WEB_ROOT ?\
 - enlever le "s" des noms de dossier (bgs, btns, logos\'85) ?\
-- mettre \'e0 jour la gestion du loader, (modernizr et detectizr en haut de page)\
-- changer le texte de no-js.php, enlever "ou retourner \'e0 l'accueil"\
-- revoir le robots.txt\
 - changer LOCALHOST en LOCAL ?\
-- remplacer $alternate par $alt dans _legals.scss\
-- virer le "data-page", remplacer le #page par .page et mettre le #nom-de-page ???\
-- remplacer $titrePage et $descPage par $title et $desc (dans index.php et header.php)\
-- remplacer $contentWMin par $contentMinW dans _global.scss
-\b0 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
-
-\b \cf0 - mettre un $contentMinH dans _global.scss\
-- ne mettre le @charset "UTF-8"; que dans le fichier styles.scss\
 - enlever la s\'e9lection par #id dans le CSS ?\
-- footer.php remplacer Fin par end\
-- mettre le func/load-json.php\
+\
 - enlever le / devant le img : <meta name="twitter:image" content="<?php echo RACINE_WEB; ?>/img/divers/twitter.jpg" />\
-- angliciser var php dans texts-LG.php\
-- angliciser navs et nav_ dans le dossier img/logos/\
-- angliciser le index.php (subPage, name, commentaires\'85)\
-- angliciser le .htaccess (subPage, name\'85)\
-- enlever les RewriteRule relatives aux ASSETS dans le htaccess et mettre une var ASSETS dans le init.php (= \'e0 src/ ou assets/ en fonction de PROD)\
+\
 - mettre les commentaires conditionnels de IE sur le <html> plut\'f4t que le <body>\
-- dans View.class.js, cr\'e9er un this.o (objet), this.v (variables), this.$ (elt du DOM) pour socker mes diff\'e9rents type de variables ?\
-- mettre History.js natif plut\'f4t que Zepto\
-- changer tous les RACINE_WEB et RACINE_SITE par BASE_URL/ROOT_WEB et ROOT/ROOT_SITE ???\
+- dans View.class.js, cr\'e9er un this.o (objet), this.v (variables), this.$ (elt du DOM) pour stocker mes diff\'e9rents type de variables ?\
+\
 - mettre les versions dans le nom des lib JS (updater le Gruntfile.js en cons\'e9quent)\
 - r\'e9organiser fichiers JS\
 - Gruntfile.js JSHINT : 'www/src/js/app/**/*.js'\
 - actualiser (PHP, JS, CSS, htaccess) la gestion du old-browser.php\
 - rajouter RewriteRule json/(.*)$ assets/json/$1 [L] dans htaccess\
-- rajouter History dans la t\'e2che Modernizr du Gruntfile.js\
 - mettre la r\'e9cup\'e9ration de la langue dans le init.php (pas dans le index.php)\
 - faire que la tache SASS ne minifie pas le CSS quand on est pas en prod\
 - mettre en majuscule le nom des constantes JS dans le footer.php et footer-mobile.php\
@@ -62,8 +48,6 @@
 - exploser les JS et construction en objet, plusieurs fichiers pour plus de lisibilit\'e9\
 - mettre un human.txt : <link rel="author" href="humans.txt" />, <link type="text/plain" rel="author" href="http://domain/humans.txt" />\
 - g\'e9rer le RACINE_WEB qui ne fonctionne pas sur Safari -> \'e0 v\'e9rifier\
-- utiliser history.js plut\'f4t que jquery.address.js\
-- mettre Zepto plut\'f4t que jQuery\
 - mettre setLocal (pour gestion date/heure) dans le init.php\
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
 \cf0 - faire une page 404\
@@ -85,7 +69,26 @@
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
 \cf0 \
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
-\cf0 - exploser les CSS, plusieurs fichiers pour plus de lisibilit\'e9\
+\cf0 - mettre History.js natif plut\'f4t que la version Zepto\
+- remplacer $contentWMin par $contentMinW dans _global.scss\
+- mettre un $contentMinH dans _global.scss\
+- angliciser le index.php (subPage, name, commentaires\'85)\
+- angliciser le .htaccess (subPage, name\'85)\
+- remplacer $titrePage et $descPage par $title et $desc (dans index.php et header.php)\
+- rajouter History dans la t\'e2che Modernizr du Gruntfile.js\
+- angliciser navs et nav_ dans le dossier img/logos/\
+- angliciser var php dans texts-LG.php\
+- mettre le func/load-json.php\
+- mettre \'e0 jour la gestion du loader, (modernizr et detectizr en haut de page)\
+- remplacer $alternate par $alt dans _legals.scss\
+- footer.php remplacer Fin par end\
+- changer tous les RACINE_WEB et RACINE_SITE par BASE_URL/ROOT_WEB et ROOT/ROOT_SITE ???\
+- ne mettre le @charset "UTF-8"; que dans le fichier styles.scss\
+- revoir le robots.txt\
+- changer le texte de no-js.php, enlever "ou retourner \'e0 l'accueil"\
+- MAJ code analytics\
+- mettre jQuery, zepto, history.jquery, history.zepto\'85\
+- exploser les CSS, plusieurs fichiers pour plus de lisibilit\'e9\
 \pard\pardeftab720
 \cf0 - changer browser-detect par detectizr\
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
@@ -94,6 +97,8 @@
 - mettre les css, img, js et json dans un dossier assets/dist\
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
 \cf0 - rajouter modernizr \'e0 Grunt\
+- mettre Zepto plut\'f4t que jQuery\
+- utiliser history.js plut\'f4t que jquery.address.js\
 - refaire le preload (ancienne version avec fonction dans la boucle)\
 - mettre "-webkit-tap-highlight-color" sur les div dans le CSS Reset\
 \pard\pardeftab720
@@ -184,7 +189,22 @@
 \b0 - robots.txt
 \b \
 
-\b0 - sitemap.xml
-\b \
+\b0 - sitemap.xml\
+\
+\
+\
+\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\b \cf0 REMOVE :
+\b0 \
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 \strike \strikec0 - enlever les RewriteRule relatives aux ASSETS dans le htaccess et mettre une var ASSETS dans le init.php (= \'e0 src/ ou assets/ en fonction de PROD)
+\b \strike0\striked0 \
+\
+\
+\
 \
 }

@@ -23,44 +23,4 @@
 
 /* -------- CUSTOM -------- */
 
-@mixin _transform($transf) {
-	-webkit-transform:$transf; 
-	-moz-transform:$transf; 
-	-ms-transform:$transf; 
-	-o-transform:$transf; 
-	transform:$transf;  
-}
-
-@mixin _transformOrigin($transX, $transY, $transZ) {
-	-webkit-transform-origin:$transX $transY $transZ;
-	-moz-transform-origin:$transX $transY $transZ;
-	-ms-transform-origin:$transX $transY $transZ;
-	-o-transform-origin:$transX $transY $transZ;
-	transform-origin:$transX $transY $transZ;
-}
-
-@mixin _transition($timing-function:$easeOutQuad, $duration:0.3s, $property:all, $delay:0s) {
-	-webkit-transition:$property $duration $timing-function $delay; 
-	-moz-transition:$property $duration $timing-function $delay; 
-	-ms-transition:$property $duration $timing-function $delay; 
-	-o-transition:$property $duration $timing-function $delay; 
-	transition:$property $duration $timing-function $delay; 
-}
-
-@mixin _perspective($pers) {
-	-webkit-perspective:$pers;
-	-moz-perspective:$pers;
-	-ms-perspective:$pers;
-	-o-perspective:$pers;
-	perspective:$pers;
-}
-
-@mixin _preserve3d() {
-	-webkit-transform-style:preserve-3d;
-	-moz-transform-style:preserve-3d;
-	-ms-transform-style:preserve-3d;
-	-o-transform-style:preserve-3d;
-	transform-style:preserve-3d;
-}
-
 

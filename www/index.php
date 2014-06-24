@@ -47,11 +47,11 @@ if(!$page) {
 
 
 /* -------- Infos titles/metas of the page -------- */
-$title = '';
-$desc = '';
+$titlePage = '';
+$descPage = '';
 
-$title = $infosPages[$page]['title'];
-$desc = $infosPages[$page]['desc'];
+$titlePage = $infosPages[$page]['title'];
+$descPage = $infosPages[$page]['desc'];
 $file = $infosPages[$page]['file'];
 
 

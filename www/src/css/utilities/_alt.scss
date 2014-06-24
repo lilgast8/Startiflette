@@ -6,19 +6,28 @@
 /***************************/
 
 
-#no-js { position:fixed; left:0; top:20px; width:100%; padding:10px 0; text-align:center; background-color:$alternate2; z-index:88; 
+#no-js { 
+	position:fixed; 
+	left:0; 
+	top:20px; 
+	width:100%; 
+	padding:10px 0; 
+	text-align:center; 
+	background-color:$alt2; 
+	z-index:88; 
+	
 	.alt-title { 
 		margin-bottom:10px; 
-		color:$alternate3; 
+		color:$alt3; 
 	}
 	
-	p { color:$alternate1; }
+	p { color:$alt1; }
 	
 	a { 
-		color:$alternate3; 
+		color:$alt3; 
 		text-decoration:underline; 
 		
-		&:hover { color:$alternate4; }
+		&:hover { color:$alt4; }
 	}
 }
 
@@ -50,15 +59,15 @@
 		height:250px; 
 		padding:95px 0; 
 		margin:-220px 0 0 -480px; 
-		background-color:$alternate1; 
+		background-color:$alt1; 
 	}
 	
 	.alt-title { 
 		margin-bottom:10px; 
-		color:$alternate3; 
+		color:$alt3; 
 	}
 	
-	p { color:$alternate2; }
+	p { color:$alt2; }
 }
 
 .browsers { 
@@ -105,13 +114,13 @@
 		}
 		
 		.alt-subtitle { 
-			color:$alternate3; 
+			color:$alt3; 
 			margin-top:90px; 
 		}
 		
 		p { 
 			display:none; 
-			color:$alternate2; 
+			color:$alt2; 
 		}
 		
 		&:hover p { 

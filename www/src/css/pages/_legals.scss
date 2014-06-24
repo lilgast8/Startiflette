@@ -1,9 +1,9 @@
 
 
 
-/**************************************/
-/* -------- MENTIONS LÉGALES -------- */
-/**************************************/
+/****************************/
+/* -------- LEGALS -------- */
+/****************************/
 
 
 .legals { 
@@ -18,19 +18,19 @@
 	}
 	
 	h1 { 
-		color:$alternate3; 
+		color:$alt3; 
 		font:normal 24px/22px Arial; 
 	}
 	
 	h2 { 
 		margin:20px 0 5px 0; 
-		color:$alternate3; 
+		color:$alt3; 
 		font:normal 16px/14px Arial; 
 	}
 	
 	a { 
-		color:$alternate3; 
-		&:hover { color:$alternate4; }
+		color:$alt3; 
+		&:hover { color:$alt4; }
 	}
 }
 

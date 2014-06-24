@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html class="no-js" lang="fr">
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 	
-	<title><?php echo $title; ?></title>
-	<meta name="description" content="<?php echo $desc; ?>" />
+	<title><?php echo $titlePage; ?></title>
+	<meta name="description" content="<?php echo $descPage; ?>" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
 	<meta name="author" content="Gaston Bouchayer" />
@@ -57,18 +57,22 @@
 	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>assets/css/styles-mobile.min.css" />
 	
 	<!--[if lt IE 9]><script src="<?php echo WEB_ROOT; ?>js/lib/html5shiv.js"></script><![endif]-->
+	<?php if(!PROD) { ?>
+	<script src="<?php echo WEB_ROOT; ?>src/js/lib/modernizr.min.js"></script>
+	<script src="<?php echo WEB_ROOT; ?>src/js/lib/detectizr-2.0.0.min.js"></script>
+	<?php } else { ?>
+	<script src="<?php echo WEB_ROOT; ?>assets/js/lib/modern-detect-izr.min.js"></script>
+	<?php } ?>
 	
 	<?php if(!LOCALHOST && PROD) { ?>
 	<!-- Google Analytics -->
 	<script>
-		var _gaq = _gaq || [];
-		_gaq.push(['_setAccount', 'UA-XXXX-XX']);
-		_gaq.push(['_trackPageview']);
-		(function() {
-			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		})();
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-XXXXXXXX-XX', 'SITE-URL.COM');
+		ga('send', 'pageview');
 	</script>
 	<?php } ?>
 </head>
@@ -83,7 +87,7 @@
 
 
 <!-- Main container -->
-<div id="main-container">
+<div id="main-container" class="preload">
 	
 	<!-- Loader -->
 	<div id="loader">
