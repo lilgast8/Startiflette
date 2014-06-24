@@ -4,8 +4,8 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 	
-	<title><?php echo $titrePage; ?></title>
-	<meta name="description" content="<?php echo $descPage; ?>" />
+	<title><?php echo $title; ?></title>
+	<meta name="description" content="<?php echo $desc; ?>" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
 	<meta name="author" content="Gaston Bouchayer" />

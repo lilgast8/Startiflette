@@ -9,7 +9,7 @@ if(isset($_POST['Page'])) {
 ?>
 
 <!-- Mentions légales -->
-<section id="page" class="mentions" data-page="mentions">
+<section id="page" class="legals" data-page="legals">
 	<div class="logo">
 		<img src="<?php echo WEB_ROOT; ?>img/logos/LOGO.JPG" alt="Logo" />
 	</div>

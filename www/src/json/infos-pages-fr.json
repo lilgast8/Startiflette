@@ -1,16 +1,19 @@
 {
 	
-	"home" : {
+	"accueil" : {
+		"file" : "home",
 		"title" : "[STARTER - TITLE FR]",
 		"desc" : "[STARTER - DESC FR]"
 	},
 	
-	"about" : {
+	"a-propos" : {
+		"file" : "about",
 		"title" : "À propos",
 		"desc" : "À propos"
 	},
 	
-	"legals" : {
+	"mentions-legales" : {
+		"file" : "legals",
 		"title" : "Mentions légales",
 		"desc" : "Mentions légales"
 	}

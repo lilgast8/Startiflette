@@ -1,16 +1,19 @@
 {
 	
 	"home" : {
+		"file" : "home",
 		"title" : "[STARTER - TITLE EN]",
 		"desc" : "[STARTER - DESC EN]"
 	},
 	
 	"about" : {
+		"file" : "about",
 		"title" : "About",
 		"desc" : "About"
 	},
 	
 	"legals" : {
+		"file" : "legals",
 		"title" : "Legal notice",
 		"desc" : "Legal notice"
 	}
