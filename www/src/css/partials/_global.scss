@@ -32,17 +32,9 @@ a { text-decoration:none; }
 
 
 
-/* -------- TRANSITION -------- */
+/* -------- CSS TRANSITION -------- */
 
 .js .preload * { @include transition(none !important); }
-
-
-
-/* -------- CONTAINER -------- */
-
-#main-container { }
-#page-container { }
-.page { }
 
 
 
@@ -58,5 +50,13 @@ a { text-decoration:none; }
 }
 
 .no-js #loader { display:none; }
+
+
+
+/* -------- CONTAINER -------- */
+
+#main-container { }
+#page-container { }
+.page { }
 
 
