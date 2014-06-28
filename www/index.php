@@ -7,17 +7,6 @@ include_once('init.php');
 
 
 
-/* -------- Mobile Detect -------- */
-include_once(SITE_ROOT.'includes/lib/Mobile_Detect.php');
-$detect = new Mobile_Detect();
-$mobile = $detect->isMobile() ? true : false;
-$tablet = $detect->isTablet() ? true : false;
-//if(preg_match('/Firefox/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = true;
-//if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = true;
-//if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) { $mobile = true; $tablet = true; }
-
-
-
 /* -------- Texts -------- */
 include_once(SITE_ROOT.'includes/content/texts-'.LG.'.php');
 
@@ -57,7 +46,7 @@ $file = $infosPages[$page]['file'];
 
 
 /* -------- Show page -------- */
-if($mobile && !$tablet) { // mobile
+if(MOBILE && !TABLET) { // mobile
 	include_once(SITE_ROOT.'includes/partial/header-mobile.php');
 	include_once(SITE_ROOT.'pages/mobile/'.$file.'.php');
 	include_once(SITE_ROOT.'includes/partial/footer-mobile.php');

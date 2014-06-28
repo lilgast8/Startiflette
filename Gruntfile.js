@@ -129,7 +129,6 @@ module.exports = function(grunt) {
 		jsonlint: {
 			dist: {
 				src: [
-					'www/src/json/*.json',
 					'www/src/json/**/*.json'
 				]
 			}
@@ -163,37 +162,32 @@ module.exports = function(grunt) {
 		/* -------- WATCH -------- */
 		watch: {
 			options: {
-				spawn: false,
+			//	spawn: false,
 				livereload: true
 			},
 			css: {
 				files: [
-					'www/src/css/*.scss',
 					'www/src/css/**/*.scss'
 				],
 				tasks: ['sass']
-			//	tasks: ['compass']
 			},
 			js: {
 				files: [
-					'www/src/js/**/*.js'
+					'www/src/js/app/**/*.js'
 				],
 				tasks: ['jshint']
 			},
-			php: {
-				files: [
-					'www/*.html',
-					'www/**/*.html',
-					'www/*.php',
-					'www/**/*.php'
-				]
-			},
 			json: {
 				files: [
-					'www/src/json/*.json',
 					'www/src/json/**/*.json'
 				],
 				tasks: ['jsonlint']
+			},
+			php: {
+				files: [
+					'www/**/*.html',
+					'www/**/*.php'
+				]
 			}
 		}
 		

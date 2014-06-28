@@ -6,14 +6,10 @@
 		
 	</footer>
 	
-	
 	<noscript>
 	<!-- No JS -->
 	<?php include_once(SITE_ROOT.'includes/alt/no-js.php'); ?>
 	</noscript>
-	
-	<!-- Old browser -->
-	<?php include_once(SITE_ROOT.'includes/alt/old-browser.php'); ?>
 	
 </div> <!-- End #main-container -->
 

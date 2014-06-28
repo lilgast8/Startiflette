@@ -17,13 +17,11 @@
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
 \cf2 - updater Grunt et plugins\cf0 \
 \
-- faire le mobile detect dans le init.php et d\'e9finir $mobile/$tablet en const (MOBILE/TABLET)\
-\
 - revoir le gestion changement de page (RoutesManager.js, View.class.js)\
+- gestion du nom des pages : #page ou .page ?, data-page="page" ? (v\'e9rifier ensuite dans les Views.js)\
 - am\'e9liorer la classe Loader.class.js\
 - \'e9crire une classe pour une Google Map\
-\
-- gestion du nom des pages : #page ou .page ?, data-page="page" ? (v\'e9rifier ensuite dans les Views.js)\
+- dans View.class.js, cr\'e9er un this.o (objet), this.v (variables), this.$ (elt du DOM) pour stocker mes diff\'e9rents type de variables ?\
 \
 - revoir la gestion du SITE_ROOT et WEB_ROOT\
 - enlever le "/" \'e0 la fin de SITE_ROOT et WEB_ROOT ?\
@@ -31,23 +29,9 @@
 - changer LOCALHOST en LOCAL ?\
 - enlever la s\'e9lection par #id dans le CSS ?\
 \
-- enlever le / devant le img : <meta name="twitter:image" content="<?php echo RACINE_WEB; ?>/img/divers/twitter.jpg" />\
-\
 - mettre les commentaires conditionnels de IE sur le <html> plut\'f4t que le <body>\
-- dans View.class.js, cr\'e9er un this.o (objet), this.v (variables), this.$ (elt du DOM) pour stocker mes diff\'e9rents type de variables ?\
-\
-- mettre les versions dans le nom des lib JS (updater le Gruntfile.js en cons\'e9quent)\
-- r\'e9organiser fichiers JS\
-- Gruntfile.js JSHINT : 'www/src/js/app/**/*.js'\
-- actualiser (PHP, JS, CSS, htaccess) la gestion du old-browser.php\
-- rajouter RewriteRule json/(.*)$ assets/json/$1 [L] dans htaccess\
-- mettre la r\'e9cup\'e9ration de la langue dans le init.php (pas dans le index.php)\
-- faire que la tache SASS ne minifie pas le CSS quand on est pas en prod\
-- mettre en majuscule le nom des constantes JS dans le footer.php et footer-mobile.php\
-- angliciser TAILLES et COULEURS dans _variables.scss\
-- changer les variables SASS textSelection, alt1\'85, contentW, contentWMin\
+- faire que la tache SASS ne minifie pas le CSS quand on est pas en prod ?\
 - mettre un "use strict" dans mes JS\
-- exploser les JS et construction en objet, plusieurs fichiers pour plus de lisibilit\'e9\
 - mettre un human.txt : <link rel="author" href="humans.txt" />, <link type="text/plain" rel="author" href="http://domain/humans.txt" />\
 - g\'e9rer le RACINE_WEB qui ne fonctionne pas sur Safari -> \'e0 v\'e9rifier\
 - mettre setLocal (pour gestion date/heure) dans le init.php\
@@ -71,7 +55,19 @@
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
 \cf0 \
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
-\cf0 - mettre History.js natif plut\'f4t que la version Zepto\
+\cf0 - rajouter RewriteRule json/(.*)$ assets/json/$1 [L] dans htaccess\
+- actualiser (PHP, JS, CSS, htaccess) la gestion du old-browser.php\
+- exploser les JS et construction en objet, plusieurs fichiers pour plus de lisibilit\'e9\
+- changer les variables SASS textSelection, alt1\'85, contentW, contentWMin\
+- angliciser TAILLES et COULEURS dans _variables.scss\
+- mettre en majuscule le nom des constantes JS dans le footer.php et footer-mobile.php\
+- mettre la r\'e9cup\'e9ration de la langue dans le init.php (pas dans le index.php)\
+- Gruntfile.js JSHINT : 'www/src/js/app/**/*.js'\
+- r\'e9organiser fichiers JS\
+- mettre les versions dans le nom des lib JS (updater le Gruntfile.js en cons\'e9quent)\
+- enlever le / devant le img : <meta name="twitter:image" content="<?php echo RACINE_WEB; ?>/img/divers/twitter.jpg" />\
+- faire le mobile detect dans le init.php et d\'e9finir $mobile/$tablet en const (MOBILE/TABLET)\
+- mettre History.js natif plut\'f4t que la version Zepto\
 - remplacer $contentWMin par $contentMinW dans _global.scss\
 - mettre un $contentMinH dans _global.scss\
 - angliciser le index.php (subPage, name, commentaires\'85)\

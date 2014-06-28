@@ -94,12 +94,12 @@ APP.View = (function(window) {
 	View.prototype.show = function(data) {
 		this.dispatch(this.EVENT.LOADED);
 		
-		APP.Main.$.$pageContainer[0].innerHTML = data;
+		APP.Main.$.pageContainer[0].innerHTML = data;
 		
 		this.hideLoader(false);
 		
 		var self = this;
-		TweenLite.to(APP.Main.$.$pageContainer, 0.8, {opacity:1, ease:Quad.easeOut, onComplete:function(){
+		TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:1, ease:Quad.easeOut, onComplete:function(){
 			self.dispatch(self.EVENT.SHOWN);
 		}});
 	};
@@ -110,7 +110,7 @@ APP.View = (function(window) {
 		this.destroy();
 		
 		var self = this;
-		TweenLite.to(APP.Main.$.$pageContainer, 0.8, {opacity:0, ease:Quad.easeOut});
+		TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:0, ease:Quad.easeOut});
 		TweenLite.to(window, 0.8, {scrollTo:{y:0, autoKill:false}, ease:Quad.easeInOut, onComplete:function(){
 			self.dispatch(self.EVENT.HIDDEN);
 		}});
@@ -118,18 +118,18 @@ APP.View = (function(window) {
 	
 	
 	View.prototype.showLoader = function(data) {
-		APP.Main.$.$loader[0].style.display = 'block';
-		TweenLite.to(APP.Main.$.$loader, 0.8, {opacity:1, ease:Quart.easeOut});
-		TweenLite.to(APP.Main.$.$loaderSpinner, 0.8, {scale:1, ease:Quart.easeOut});
+		APP.Main.$.loader[0].style.display = 'block';
+		TweenLite.to(APP.Main.$.loader, 0.8, {opacity:1, ease:Quart.easeOut});
+		TweenLite.to(APP.Main.$.loaderSpinner, 0.8, {scale:1, ease:Quart.easeOut});
 	};
 	
 	
 	View.prototype.hideLoader = function(firstLoad) {
 		setTimeout(function() {
-			TweenLite.to(APP.Main.$.$loaderSpinner, 0.8, {scale:1.5, ease:Quart.easeOut});
-			TweenLite.to(APP.Main.$.$loader, 0.8, {opacity:0, ease:Quart.easeOut, onComplete:function(){
-				if(firstLoad) APP.Main.$.$loader.find('.bg')[0].style.display = 'none';
-				APP.Main.$.$loader[0].style.display = 'none';
+			TweenLite.to(APP.Main.$.loaderSpinner, 0.8, {scale:1.5, ease:Quart.easeOut});
+			TweenLite.to(APP.Main.$.loader, 0.8, {opacity:0, ease:Quart.easeOut, onComplete:function(){
+				if(firstLoad) APP.Main.$.loader.find('.bg')[0].style.display = 'none';
+				APP.Main.$.loader[0].style.display = 'none';
 			}});
 		}, 0);
 	};
@@ -167,8 +167,8 @@ APP.View = (function(window) {
 	View.prototype.updateMenu = function(pageUrl) {
 		if(this.events.loaded) this.destroyEvt(this.EVENT.LOADED, this.updateMenu.bind(this));
 		
-		var $menu = APP.Views.Header.$.$menu;
-		var $footer = APP.Main.$.$footer;
+		var $menu = APP.Views.Header.$.menu;
+		var $footer = APP.Main.$.footer;
 		
 		var $menuToDisable = $menu.find('[data-active="true"]');
 		if(!$menuToDisable.length) $menuToDisable = $footer.find('[data-active="true"]');

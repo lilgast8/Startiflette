@@ -45,6 +45,19 @@ define('LG', $lg);
 
 
 
+/* -------- Mobile Detect -------- */
+include_once(SITE_ROOT.'includes/lib/Mobile_Detect.php');
+$detect = new Mobile_Detect();
+$mobile = $detect->isMobile() ? true : false;
+$tablet = $detect->isTablet() ? true : false;
+//if(preg_match('/Firefox/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = true;
+//if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = true;
+//if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) { $mobile = true; $tablet = true; }
+define('MOBILE', $mobile);
+define('TABLET', $tablet);
+
+
+
 /* -------- Errors -------- */
 if(LOCALHOST) error_reporting(E_ALL);
 

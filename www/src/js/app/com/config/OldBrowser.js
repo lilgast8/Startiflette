@@ -24,7 +24,7 @@ APP.OldBrowser = APP.OldBrowser || {};
 				br == 'chrome' && brV < 17) {
 				
 				$.ajax({
-					url: APP.Config.WEB_ROOT+'old-browser',
+					url: APP.Config.WEB_ROOT+APP.Config.LG+'/old-browser',
 					type: 'POST',
 					dataType: 'html',
 					success: _successAjax.bind(this),
@@ -37,7 +37,7 @@ APP.OldBrowser = APP.OldBrowser || {};
 	
 	
 	var _successAjax = function(data) {
-		APP.Main.$.$mainContainer.append(data);
+		APP.Main.$.mainContainer.append(data);
 	};
 	
 	

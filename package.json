@@ -1,6 +1,6 @@
 {
   "name": "Starter-Project",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-contrib-sass": "~0.7.3",

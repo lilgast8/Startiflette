@@ -1,3 +1,11 @@
+<?php
+
+include_once('../../init.php');
+include_once(SITE_ROOT.'includes/content/texts-'.LG.'.php');
+
+?>
+
+<!-- Old browser -->
 <div id="old-browser">
 	<div class="container">
 		<div class="alt-title"><?php echo $glo_oldB_title; ?></div>
