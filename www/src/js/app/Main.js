@@ -90,5 +90,5 @@ APP.Main = {};
 })(window);
 
 
-$(document).ready(APP.Main.onReady.bind(APP.Main));
+$(APP.Main.onReady.bind(APP.Main));
 
