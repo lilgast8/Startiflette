@@ -162,7 +162,7 @@ module.exports = function(grunt) {
 		/* -------- WATCH -------- */
 		watch: {
 			options: {
-			//	spawn: false,
+				spawn: false,
 				livereload: true
 			},
 			css: {
