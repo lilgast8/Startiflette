@@ -16,7 +16,7 @@ APP.Config = (function(window) {
 		this.IE_VERSION = null;
 		
 		this.HAS_PUSHSTATE = null;
-	};
+	}
 	
 	
 	Config.prototype.init = function() {

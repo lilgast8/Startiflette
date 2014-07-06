@@ -5,7 +5,7 @@ APP.OldBrowser = (function(window) {
 	
 	function OldBrowser() {
 		
-	};
+	}
 	
 	
 	OldBrowser.prototype.init = function() {
