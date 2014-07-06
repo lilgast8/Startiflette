@@ -16,7 +16,7 @@ APP.Views.Home = (function(window){
 	
 	
 	Home.prototype.initElt = function() {
-		
+		this.$.page = $(document.getElementById('page-content'));
 	};
 	
 	

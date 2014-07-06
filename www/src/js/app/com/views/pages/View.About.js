@@ -16,7 +16,7 @@ APP.Views.About = (function(window){
 	
 	
 	About.prototype.initElt = function() {
-		
+		this.$.page = $(document.getElementById('page-content'));
 	};
 	
 	

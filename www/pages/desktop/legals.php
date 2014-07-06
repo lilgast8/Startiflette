@@ -9,7 +9,8 @@ if(isset($_POST['Page'])) {
 ?>
 
 <!-- Legals -->
-<section id="page" class="legals" data-page="legals">
+<section id="page-content" class="legals" data-page="legals">
+	
 	<div class="logo">
 		<img src="<?php echo WEB_ROOT; ?>img/logos/LOGO.JPG" alt="Logo" />
 	</div>
@@ -49,19 +50,5 @@ if(isset($_POST['Page'])) {
 	</p>
 	<h2>7- Contact</h2>
 	<p>Pour nous contacter par mail : <span class="email">rf[dot]ENIAMOD[at]LIAME</span></p>
+	
 </section>
-
-
-
-<!-- Scripts -->
-<script src="js/plugins/jquery.min.js"></script>
-<script src="js/plugins/jquery.dcspamless.min.js"></script>
-<script>
-	$(function(){
-		$('.email').dcSpamless();
-	});
-</script>
-
-
-</body>
-</html>

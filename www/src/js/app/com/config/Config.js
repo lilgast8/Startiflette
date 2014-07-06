@@ -1,12 +1,9 @@
 
 
-APP.Config = APP.Config || {};
-
-
-(function(window) {
+APP.Config = (function(window) {
 	
 	
-	var Config = function() {
+	function Config() {
 		this.LOCALHOST = LOCALHOST;
 		this.PROD  = PROD;
 		this.WEB_ROOT = WEB_ROOT;
@@ -22,24 +19,20 @@ APP.Config = APP.Config || {};
 	};
 	
 	
-	Config.prototype = {
+	Config.prototype.init = function() {
+		this.BROWSER = Detectizr.browser.name;
+		this.BROWSER_VERSION = Detectizr.browser.version;
+		this.DEVICE = Detectizr.device.type;
+		this.IS_IE = APP.Config.BROWSER == 'ie' ? true : false;
+		this.IE_VERSION = null;
 		
-		init : function() {
-			this.BROWSER = Detectizr.browser.name;
-			this.BROWSER_VERSION = Detectizr.browser.version;
-			this.DEVICE = Detectizr.device.type;
-			this.IS_IE = APP.Config.BROWSER == 'ie' ? true : false;
-			this.IE_VERSION = null;
-			
-			this.HAS_PUSHSTATE = Modernizr.history;
-			
-			APP.OldBrowser.init();
-		}
+		this.HAS_PUSHSTATE = Modernizr.history;
 		
+		APP.OldBrowser.init();
 	};
 	
 	
-	APP.Config = new Config();
+	return new Config();
 	
 	
 })(window);

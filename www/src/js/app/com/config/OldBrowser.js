@@ -1,38 +1,31 @@
 
 
-APP.OldBrowser = APP.OldBrowser || {};
-
-
-(function(window) {
+APP.OldBrowser = (function(window) {
 	
 	
-	var OldBrowser = function () {
+	function OldBrowser() {
 		
 	};
 	
 	
-	OldBrowser.prototype = {
+	OldBrowser.prototype.init = function() {
+		var br = APP.Config.BROWSER;
+		var brV = parseInt(APP.Config.BROWSER_VERSION);
 		
-		init : function() {
-			var br = APP.Config.BROWSER;
-			var brV = parseInt(APP.Config.BROWSER_VERSION);
+		if( br == 'ie' && brV < 9 || 
+			br == 'firefox' && brV < 10 || 
+			br == 'opera' && brV < 11 || 
+			br == 'safari' && brV < 4 || 
+			br == 'chrome' && brV < 17) {
 			
-			if( br == 'ie' && brV < 9 || 
-				br == 'firefox' && brV < 10 || 
-				br == 'opera' && brV < 11 || 
-				br == 'safari' && brV < 4 || 
-				br == 'chrome' && brV < 17) {
-				
-				$.ajax({
-					url: APP.Config.WEB_ROOT+APP.Config.LG+'/old-browser',
-					type: 'POST',
-					dataType: 'html',
-					success: _successAjax.bind(this),
-					error: _errorAjax.bind(this)
-				});
-			}
+			$.ajax({
+				url: APP.Config.WEB_ROOT+APP.Config.LG+'/old-browser',
+				type: 'POST',
+				dataType: 'html',
+				success: _successAjax.bind(this),
+				error: _errorAjax.bind(this)
+			});
 		}
-		
 	};
 	
 	
@@ -46,7 +39,7 @@ APP.OldBrowser = APP.OldBrowser || {};
 	};
 	
 	
-	APP.OldBrowser = new OldBrowser();
+	return new OldBrowser();
 	
 	
 })(window);

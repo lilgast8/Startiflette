@@ -11,6 +11,7 @@
 	<meta name="author" content="Gaston Bouchayer" />
 	<meta name="designer" content="Gaston Bouchayer" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta name="format-detection" content="telephone=no">
 	
 	<!-- Facebook -->
 	<meta property="og:title" content="" />

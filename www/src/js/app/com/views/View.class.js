@@ -1,8 +1,5 @@
 
 
-APP.Views = APP.Views || {};
-
-
 APP.View = (function(window) {
 	
 	

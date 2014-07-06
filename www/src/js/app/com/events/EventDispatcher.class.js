@@ -1,8 +1,5 @@
 
 
-APP.EventDispatcher = APP.EventDispatcher || {};
-
-
 APP.EventDispatcher = (function(window){
 	
 	
@@ -12,25 +9,21 @@ APP.EventDispatcher = (function(window){
 	}
 	
 	
-	EventDispatcher.prototype = {
-		
-		buildEvt : function(name, fct) {
-			this.events[name] = new signals.Signal();
-			this.events[name].add(fct);
-		},
+	EventDispatcher.prototype.buildEvt = function(name, fct) {
+		this.events[name] = new signals.Signal();
+		this.events[name].add(fct);
+	};
 		
 		
-		destroyEvt : function(name, fct) {
-			this.events[name].remove(fct);
-			delete this.events[name];
-		},
+	EventDispatcher.prototype.destroyEvt = function(name, fct) {
+		this.events[name].remove(fct);
+		delete this.events[name];
+	};
 		
 		
-		dispatch : function(name, params) {
-			if(params === undefined) this.events[name].dispatch();
-			else this.events[name].dispatch(params);
-		}
-		
+	EventDispatcher.prototype.dispatch = function(name, params) {
+		if(params === undefined) this.events[name].dispatch();
+		else this.events[name].dispatch(params);
 	};
 	
 	

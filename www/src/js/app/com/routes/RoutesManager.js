@@ -1,9 +1,6 @@
 
 
-APP.RoutesManager = {};
-
-
-(function(window) {
+APP.RoutesManager =(function(window) {
 	
 	
 	function RoutesManager() {
@@ -176,7 +173,7 @@ APP.RoutesManager = {};
 	};
 	
 	
-	APP.RoutesManager = new RoutesManager();
+	return new RoutesManager();
 	
 	
 })(window);

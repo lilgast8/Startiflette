@@ -16,9 +16,9 @@ APP.Views.Legals = (function(window){
 	
 	
 	Legals.prototype.initElt = function() {
-		this.$.legals = $('.legals');
+		this.$.page = $(document.getElementById('page-content'));
 		
-		this.$.legals.find('.email').dcSpamless();
+		this.$.page.find('.email').dcSpamless();
 	};
 	
 	
