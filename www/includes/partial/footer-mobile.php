@@ -6,14 +6,10 @@
 		
 	</footer>
 	
-	
-	<noscript>
 	<!-- No JS -->
+	<noscript>
 	<?php include_once(SITE_ROOT.'includes/alt/no-js.php'); ?>
 	</noscript>
-	
-	<!-- Old browser -->
-	<?php include_once(SITE_ROOT.'includes/alt/old-browser.php'); ?>
 	
 </div> <!-- End #main-container -->
 
@@ -26,17 +22,18 @@
 	var WEB_ROOT = '<?php echo WEB_ROOT; ?>';
 	var LG = '<?php echo LG; ?>';
 </script>
-<?php if(!PROD) { ?>
-
-<script src="<?php echo WEB_ROOT; ?>src/js/lib/zepto-1.1.3.min.js"></script>
-
-<script src="<?php echo WEB_ROOT; ?>src/js/lib/greensock/TweenMax.min.js"></script>
-<script src="<?php echo WEB_ROOT; ?>src/js/lib/history-1.8b2.min.js"></script>
-<script src="<?php echo WEB_ROOT; ?>src/js/lib/preloadjs-0.4.1.min.js"></script>
-<script src="<?php echo WEB_ROOT; ?>src/js/lib/signals-1.0.0.min.js"></script>
-<script src="<?php echo WEB_ROOT; ?>src/js/lib/zepto.dcspamless.1.0.min.js"></script>
-
-<?php } else { ?>
+<?php
+if(!PROD) {
+	$jsonJsFiles = file_get_contents(SITE_ROOT.ASSETS.'js/js-files.json');
+	$jsFiles = json_decode($jsonJsFiles, true);
+	
+	$files = $jsFiles[1]['files'];
+	
+	for($i=0; $i<count($files); $i++) {
+		if(is_array($files[$i])) echo '<script src="'.WEB_ROOT.'src/js/'.$files[$i][0].'"></script>'."\n";
+		else echo '<script src="'.WEB_ROOT.'src/js/'.$files[$i].'"></script>'."\n";
+	}
+} else { ?>
 <script src="<?php echo WEB_ROOT; ?>assets/js/scripts-mobile.min.js"></script>
 <?php } ?>
 

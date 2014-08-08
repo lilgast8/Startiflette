@@ -1,0 +1,53 @@
+[
+	
+	{
+		"name" : "modern-detect-izr.min.js",
+		"dest" : "lib/",
+		"files" : [
+			"lib/modernizr.min.js",
+			"lib/detectizr-2.0.0.min.js"
+		]
+	},
+	
+	{
+		"name" : [
+			"scripts.min.js",
+			"scripts-oldie.min.js"
+		],
+		"dest" : "",
+		"files" : [
+			[	
+				"lib/zepto-1.1.3.min.js",
+				"lib/jquery-1.11.1.min.js"
+			],
+			"lib/greensock/TweenMax.min.js",
+			"lib/signals-1.0.0.min.js",
+			"lib/history-1.8b2.min.js",
+			"lib/preloadjs-0.4.1.min.js",
+			"lib/zepto.dcspamless-1.0.min.js",
+			
+			"app/InitApp.js",
+			
+			"app/com/config/Config.js",
+			"app/com/config/OldBrowser.js",
+			
+			"app/com/events/EventDispatcher.class.js",
+			
+			"app/com/loader/Loader.class.js",
+			
+			"app/com/routes/RoutesManager.js",
+			
+			"app/com/views/View.class.js",
+			
+			"app/com/views/partials/View.Header.js",
+			"app/com/views/partials/View.Footer.js",
+			
+			"app/com/views/pages/View.Home.js",
+			"app/com/views/pages/View.About.js",
+			"app/com/views/pages/View.Legals.js",
+			
+			"app/Main.js"
+		]
+	}
+	
+]

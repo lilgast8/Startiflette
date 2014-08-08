@@ -58,10 +58,17 @@
 	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>assets/css/styles-mobile.min.css" />
 	
 	<!--[if lt IE 9]><script src="<?php echo WEB_ROOT; ?>js/lib/html5shiv.js"></script><![endif]-->
-	<?php if(!PROD) { ?>
-	<script src="<?php echo WEB_ROOT; ?>src/js/lib/modernizr.min.js"></script>
-	<script src="<?php echo WEB_ROOT; ?>src/js/lib/detectizr-2.0.0.min.js"></script>
-	<?php } else { ?>
+	<?php
+	if(!PROD) {
+		$jsonJsFiles = file_get_contents(SITE_ROOT.ASSETS.'js/js-files.json');
+		$jsFiles = json_decode($jsonJsFiles, true);
+		
+		$files = $jsFiles[0]['files'];
+		
+		for($i=0; $i<count($files); $i++) {
+			echo '<script src="'.WEB_ROOT.'src/js/'.$files[$i].'"></script>'."\n	";
+		}
+	} else { ?>
 	<script src="<?php echo WEB_ROOT; ?>assets/js/lib/modern-detect-izr.min.js"></script>
 	<?php } ?>
 	

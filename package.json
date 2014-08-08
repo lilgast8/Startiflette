@@ -1,16 +1,24 @@
 {
   "name": "Starter-Project",
-  "version": "3.0.3",
+  "version": "3.1.0",
+  "main": "gulpfile.js",
+  "author": "Gaston Bouchayer",
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-contrib-sass": "~0.7.3",
-    "grunt-contrib-compass": "~0.9.0",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-modernizr": "~0.5.2",
-    "grunt-contrib-uglify": "~0.4.0",
-    "grunt-jsonlint": "~1.0.4",
-    "grunt-minjson": "~0.1.1",
-    "grunt-contrib-imagemin": "~0.7.1",
-    "grunt-contrib-watch": "~0.6.1"
+    "gulp": "^3.8.7",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.3.4",
+    "gulp-imagemin": "^0.6.2",
+    "gulp-jshint": "^1.8.4",
+    "gulp-json-lint": "0.0.1",
+    "gulp-jsonminify": "0.0.1",
+    "gulp-livereload": "^2.1.0",
+    "gulp-notify": "^1.4.1",
+    "gulp-plumber": "^0.6.4",
+    "gulp-rename": "^1.2.0",
+    "gulp-ruby-sass": "^0.7.1",
+    "gulp-uglify": "^0.3.1",
+    "jshint-stylish": "^0.4.0",
+    "minimist": "^0.2.0",
+    "require-dir": "^0.1.0"
   }
 }
