@@ -5,7 +5,7 @@
 		"dest" : "lib/",
 		"files" : [
 			"lib/modernizr.min.js",
-			"lib/detectizr-2.0.0.min.js"
+			"lib/detectizr.min.js"
 		]
 	},
 	
@@ -17,14 +17,14 @@
 		"dest" : "",
 		"files" : [
 			[	
-				"lib/zepto-1.1.3.min.js",
-				"lib/jquery-1.11.1.min.js"
+				"lib/zepto.min.js",
+				"lib/jquery-oldie.min.js"
 			],
 			"lib/greensock/TweenMax.min.js",
-			"lib/signals-1.0.0.min.js",
-			"lib/history-1.8b2.min.js",
-			"lib/preloadjs-0.4.1.min.js",
-			"lib/zepto.dcspamless-1.0.min.js",
+			"lib/signals.min.js",
+			"lib/history.min.js",
+			"lib/preloadjs.min.js",
+			"lib/zepto.dcspamless.min.js",
 			
 			"app/InitApp.js",
 			

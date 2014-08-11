@@ -57,7 +57,7 @@
 	
 	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>assets/css/styles-mobile.min.css" />
 	
-	<!--[if lt IE 9]><script src="<?php echo WEB_ROOT; ?>js/lib/html5shiv.js"></script><![endif]-->
+	<!--[if lt IE 9]><script src="<?php echo WEB_ROOT; ?>js/lib/html5shiv.min.js"></script><![endif]-->
 	<?php
 	if(!PROD) {
 		$jsonJsFiles = file_get_contents(SITE_ROOT.ASSETS.'js/js-files.json');
