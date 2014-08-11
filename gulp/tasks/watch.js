@@ -13,7 +13,7 @@ gulp.task('watch', function() {
 	gulp.watch(paths.src.json+'**/*.json', ['json']);
 	
 	gulp.watch([
-		paths.src.css+'**/*.scss',
+		paths.assets.css+'**/*.css',
 		paths.src.jsApp+'**/*.js',
 		paths.src.json+'**/*.json',
 		paths.global.root+'**/*.html',
