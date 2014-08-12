@@ -30,7 +30,7 @@ APP.OldBrowser = (function(window) {
 	
 	
 	var _successAjax = function(data) {
-		APP.Main.$.mainContainer.append(data);
+		APP.Main.$.mainContainer[0].innerHTML += data;
 	};
 	
 	
