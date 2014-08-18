@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 
-var paths = require('../options/paths');
+var paths = require('../utils/paths');
 var plumber = require('gulp-plumber');
 var notify = require('gulp-notify');
 var jshint = require('gulp-jshint');

@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 
-var options = require('../options/options');
+var options = require('../utils/options');
 
 
 gulp.task('json', ['json-lint'], function() {
