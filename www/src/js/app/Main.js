@@ -31,43 +31,16 @@ APP.Main = (function(window) {
 		this.windowLoadProxy = null;
 		
 		this.$.mainContainer[0].className = '';
-	//	_loadJson.call(this);
 		
+		APP.Model.Global.buildEvt(APP.Model.Global.EVENT.INIT, _init.bind(this));
 		APP.Model.Global.init();
 	};
 	
-	/*
-	var _loadJson = function() {
-        this.queue = new createjs.LoadQueue(true, APP.Config.WEB_ROOT);
-		
-		this.onFileLoadProxy = $.proxy(_onFileLoad, this);
-		this.queue.addEventListener('fileload', this.onFileLoadProxy);
-		this.onCompleteProxy = $.proxy(_onComplete, this);
-		this.queue.addEventListener('complete', this.onCompleteProxy);
-		
-		this.queue.loadManifest([
-			{ id:'infosPages', src:'json/infos-pages-'+APP.Config.LG+'.json' }
-		]);
-	};
-	
-	
-	var _onFileLoad = function(e) {
-		this.json[e.item.id] = e.result;
-	};
-	
-	
-	var _onComplete = function(e) {
-		this.queue.removeAllEventListeners();
-		this.onCompleteProxy = null;
-		this.onFileLoadProxy = null;
-		this.queue = null;
-		
-		_init.call(this);
-	};
-	*/
-	
 	
 	var _init = function() {
+		console.log('init Main');
+		APP.Model.Global.destroyEvt(APP.Model.Global.EVENT.INIT, _init.bind(this));
+		
 		APP.Config.init();
 	//	APP.Views.Header.init();
 	//	APP.Views.Footer.init();

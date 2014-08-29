@@ -2,8 +2,8 @@
 	
 	"accueil" : {
 		"file" : "home",
-		"title" : "[STARTER - TITLE FR]",
-		"desc" : "[STARTER - DESC FR]"
+		"title" : "Accueil - STARTER",
+		"desc" : "Accueil - STARTER"
 	},
 	
 	"a-propos" : {

@@ -9,13 +9,15 @@ APP.Model.Global = (function(window) {
 	function Global() {
 		APP.EventDispatcher.call(this);
 		
-		this.$ = {};
-		this.p = {};
 		this.v = {};
 		
 		this.EVENT = {
 			INIT : 'init'
 		};
+		
+		this.aJsonToLoad = [
+			{ id:'infosPages', src:'json/infos-pages-'+APP.Config.LG+'.json' }
+		];
 		
 		this.json = {
 			infosPages : null
@@ -28,21 +30,12 @@ APP.Model.Global = (function(window) {
 	
 	
 	Global.prototype.init = function() {
-		this.queue = new createjs.LoadQueue(true, APP.Config.WEB_ROOT);
+		this.jsonLoader = new APP.Loader(true);
 		
-		_bindEvents.call(this);
+		this.jsonLoader.buildEvt(this.jsonLoader.EVENT.FILE_LOAD, _onFileLoad.bind(this));
+		this.jsonLoader.buildEvt(this.jsonLoader.EVENT.COMPLETE, _onComplete.bind(this));
 		
-		this.queue.loadManifest([
-			{ id:'infosPages', src:'json/infos-pages-'+APP.Config.LG+'.json' }
-		]);
-	};
-	
-	
-	var _bindEvents = function() {
-		this.onFileLoadProxy = $.proxy(_onFileLoad, this);
-		this.queue.addEventListener('fileload', this.onFileLoadProxy);
-		this.onCompleteProxy = $.proxy(_onComplete, this);
-		this.queue.addEventListener('complete', this.onCompleteProxy);
+		this.jsonLoader.startLoad(this.aJsonToLoad);
 	};
 	
 	
@@ -52,13 +45,13 @@ APP.Model.Global = (function(window) {
 	
 	
 	var _onComplete = function(e) {
-		this.queue.removeAllEventListeners();
-		this.onCompleteProxy = null;
-		this.onFileLoadProxy = null;
-		this.queue = null;
-		
 		this.dispatch(this.EVENT.INIT);
-	//	_init.call(this);
+		
+		this.jsonLoader.destroyEvt(this.jsonLoader.EVENT.FILE_LOAD, _onFileLoad.bind(this));
+		this.jsonLoader.destroyEvt(this.jsonLoader.EVENT.COMPLETE, _onComplete.bind(this));
+		
+		this.jsonLoader.destroy();
+		this.jsonLoader = null;
 	};
 	
 	
