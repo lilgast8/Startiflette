@@ -28,25 +28,23 @@
 			
 			"app/InitApp.js",
 			
-			"app/config/Config.js",
-			"app/config/OldBrowser.js",
+			"app/com/config/Config.js",
+			"app/com/config/OldBrowser.js",
 			
-			"app/events/EventDispatcher.class.js",
+			"app/com/events/EventDispatcher.class.js",
 			
-			"app/routes/RoutesManager.js",
+			"app/com/loader/Loader.class.js",
 			
-			"app/model/Model.Global.js",
+			"app/com/routes/RoutesManager.js",
 			
-			"app/loader/Loader.class.js",
+			"app/com/views/View.class.js",
 			
-			"app/views/View.class.js",
+			"app/com/views/partials/View.Header.js",
+			"app/com/views/partials/View.Footer.js",
 			
-			"app/views/partials/View.Header.js",
-			"app/views/partials/View.Footer.js",
-			
-			"app/views/pages/View.Home.js",
-			"app/views/pages/View.About.js",
-			"app/views/pages/View.Legals.js",
+			"app/com/views/pages/View.Home.js",
+			"app/com/views/pages/View.About.js",
+			"app/com/views/pages/View.Legals.js",
 			
 			"app/Main.js"
 		]

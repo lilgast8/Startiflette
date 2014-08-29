@@ -5,6 +5,10 @@ APP.Main = (function(window) {
 	
 	function Main() {
 		this.$ = {};
+		
+		this.json = {
+			infosPages : null
+		};
 	}
 	
 	
@@ -20,23 +24,15 @@ APP.Main = (function(window) {
 	};
 	
 	
-	Main.prototype.resize = function() {
-		this.windowW = this.$.window.width();
-		this.windowH = this.$.window.height();
-	};
-	
-	
 	var _windowLoad = function() {
 		this.$.window.off('load', this.windowLoadProxy);
 		this.windowLoadProxy = null;
 		
 		this.$.mainContainer[0].className = '';
-	//	_loadJson.call(this);
-		
-		APP.Model.Global.init();
+		_loadJson.call(this);
 	};
 	
-	/*
+	
 	var _loadJson = function() {
         this.queue = new createjs.LoadQueue(true, APP.Config.WEB_ROOT);
 		
@@ -64,7 +60,6 @@ APP.Main = (function(window) {
 		
 		_init.call(this);
 	};
-	*/
 	
 	
 	var _init = function() {
@@ -72,6 +67,13 @@ APP.Main = (function(window) {
 	//	APP.Views.Header.init();
 	//	APP.Views.Footer.init();
 	//	APP.RoutesManager.init();
+		
+		_bindEvents.call(this);
+	};
+	
+	
+	var _bindEvents = function() {
+		
 	};
 	
 	

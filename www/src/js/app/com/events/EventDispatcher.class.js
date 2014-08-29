@@ -22,9 +22,8 @@ APP.EventDispatcher = (function(window){
 		
 		
 	EventDispatcher.prototype.dispatch = function(name, params) {
-		console.log(name, params);
-	//	if(params === undefined) this.events[name].dispatch();
-	//	else this.events[name].dispatch(params);
+		if(params === undefined) this.events[name].dispatch();
+		else this.events[name].dispatch(params);
 	};
 	
 	
