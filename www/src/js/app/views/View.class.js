@@ -40,10 +40,10 @@ APP.View = (function(window) {
 		var arrayUrl = pageUrl.split('/');
 		var urlL = arrayUrl.length;
 		
-		if(urlL == 1) pageUrlToLoad = APP.Main.json.infosPages[pageName].file;
+		if(urlL == 1) pageUrlToLoad = APP.Model.Global.json.infosPages[pageName].file;
 		else if(urlL > 1) {
 			var pageNameTemp = arrayUrl[0];
-			pageName = APP.Main.json.infosPages[pageNameTemp].file;
+			pageName = APP.Model.Global.json.infosPages[pageNameTemp].file;
 			pageUrlToLoad = pageUrl.replace(pageNameTemp, pageName);
 		}
 		
@@ -93,18 +93,16 @@ APP.View = (function(window) {
 	};
 	
 	
-	View.prototype.showLoader = function(data) {
-		console.log('SHOW LOADER');
+	View.prototype.showLoader = function() {
 		APP.Main.$.loader[0].style.display = 'block';
 		TweenLite.to(APP.Main.$.loader, 0.8, {opacity:1, ease:Quart.easeOut});
 	};
 	
 	
-	View.prototype.hideLoader = function(firstLoad) {
-		console.log('HIDE LOADER');
-		TweenLite.to(APP.Main.$.loader, 0.8, {opacity:0, ease:Quart.easeOut, onComplete:function(){
-			if(firstLoad) APP.Main.$.loader.find('.bg')[0].style.display = 'none';
-			APP.Main.$.loader[0].style.display = 'none';
+	View.prototype.hideLoader = function() {
+		TweenLite.to(APP.Main.$.loader, 0.8, {opacity:0, display:'none', ease:Quart.easeOut, onComplete:function(){
+		//	if(APP.RoutesManager.prevPage) // if need a different behavior in the first load.
+		//	APP.Main.$.loader[0].style.display = 'none';
 		}});
 	};
 	

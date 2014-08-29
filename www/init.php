@@ -25,7 +25,7 @@ define('SITE_URL', 'http://www.SITE_URL.COM');
 define('SITE_ROOT', realpath(dirname(__FILE__)).'/');
 //define('WEB_ROOT', substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'], substr($_SERVER['SCRIPT_FILENAME'], strlen(SITE_ROOT)))));
 //$web_root = LOCALHOST ? 'http://localhost:8888/Documents/Gaston/Web/Starter/root-project/www/' : SITE_URL.'/';
-$web_root = LOCALHOST ? './' : SITE_URL.'/';
+$web_root = LOCALHOST ? 'http://localhost:8888/Documents/Gaston/Web/Starter/root-project/www/' : SITE_URL.'/';
 define('WEB_ROOT', $web_root);
 
 

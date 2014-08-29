@@ -38,13 +38,12 @@ APP.Main = (function(window) {
 	
 	
 	var _init = function() {
-		console.log('init Main');
 		APP.Model.Global.destroyEvt(APP.Model.Global.EVENT.INIT, _init.bind(this));
 		
 		APP.Config.init();
-	//	APP.Views.Header.init();
+		APP.Views.Header.init();
 	//	APP.Views.Footer.init();
-	//	APP.RoutesManager.init();
+		APP.RoutesManager.init();
 	};
 	
 	

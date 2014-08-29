@@ -1,9 +1,9 @@
 
 
-GTS.Utils = GTS.Utils || {};
+APP.Utils = APP.Utils || {};
 
 
-GTS.Utils.Global = (function(window){
+APP.Utils.Global = (function(window){
 	
 	
 	window.getImageSize = function(imgW, imgH, contW, contH) {

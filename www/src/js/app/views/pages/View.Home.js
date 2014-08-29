@@ -22,12 +22,12 @@ APP.Views.Home = (function(window){
 	
 	Home.prototype.bindEvents = function() {
 		this.p.resizeWindow = $.proxy(_resize, this);
-		GTS.Main.$.window.on('resize', this.p.resizeWindow);
+		APP.Main.$.window.on('resize', this.p.resizeWindow);
 	};
 	
 	
 	Home.prototype.unbindEvents = function() {
-		GTS.Main.$.window.off('resize', this.p.resizeWindow);
+		APP.Main.$.window.off('resize', this.p.resizeWindow);
 		
 		this.p = {};
 	};

@@ -59,7 +59,7 @@ APP.RoutesManager =(function(window) {
 		this.currentPage = _getPage.call(this);
 		this.currentPage.init();
 		
-		this.currentPage.hideLoader(true);
+		this.currentPage.hideLoader();
 		_updateMenu.call(this);
 	};
 	
@@ -84,9 +84,9 @@ APP.RoutesManager =(function(window) {
 		var $footer = APP.Views.Footer.$.footer;
 		
 		var $menuToDisable = $menu.find('[data-active="true"]');
-		if(!$menuToDisable.length) $menuToDisable = $footer.find('[data-active="true"]');
+	//	if(!$menuToDisable.length) $menuToDisable = $footer.find('[data-active="true"]');
 		var $menuToEnable = $menu.find('[href*="'+this.pageUrl+'"]');
-		if(!$menuToEnable.length) $menuToEnable = $footer.find('[href*="'+pageUrl+'"]');
+	//	if(!$menuToEnable.length) $menuToEnable = $footer.find('[href*="'+pageUrl+'"]');
 		
 		if($menuToDisable.length) $menuToDisable[0].setAttribute('data-active', 'false');
 		if($menuToEnable.length) $menuToEnable[0].setAttribute('data-active', 'true');
@@ -138,15 +138,17 @@ APP.RoutesManager =(function(window) {
 		var pageName = arrayUrl[0];
 		var urlL = arrayUrl.length;
 		
-		if(urlL == 1) title = APP.Main.json.infosPages[this.pageUrl].title;
-		else if(urlL > 1) {
+		if(urlL == 1) title = APP.Model.Global.json.infosPages[this.pageUrl].title;
+		else if(urlL > 1) { // if subpage
+			/*
 			var urlDetails = arrayUrl[1]+'/'+arrayUrl[2];
 			
-			for(var i=0; i<APP.Main.json.projects.length; i++) {
-				var project = APP.Main.json.projects[i];
+			for(var i=0; i<APP.Model.Global.json.projects.length; i++) {
+				var project = APP.Model.Global.json.projects[i];
 				
 				title = project.name;
 			}
+			*/
 		}
 		
 		return title;

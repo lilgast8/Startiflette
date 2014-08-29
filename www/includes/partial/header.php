@@ -104,7 +104,14 @@
 	
 	<!-- Header -->
 	<header id="header">
-		
+		<!-- Menu -->
+		<nav id="menu">
+			<ul>
+				<li><a href="<?php echo WEB_ROOT; ?>" class="menu-link">Accueil</a></li>
+				<li><a href="<?php echo WEB_ROOT; ?>a-propos" class="menu-link">À propos</a></li>
+				<li><a href="<?php echo WEB_ROOT; ?>mentions-legales" class="menu-link">Mentions légales</a></li>
+			</ul>
+		</nav>
 	</header>
 	
 	<!-- Page container -->

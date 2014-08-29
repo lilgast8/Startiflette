@@ -29,13 +29,6 @@ APP.Loader = (function(window) {
 	Loader.prototype.constructor = Loader;
 	
 	
-/*	Loader.prototype.init = function() {
-		this.queue = new createjs.LoadQueue(true, APP.Config.WEB_ROOT);
-		
-		this.bindEvents.call(this);
-	};*/
-	
-	
 	Loader.prototype.bindEvents = function() {
 		this.p.onLoadStart = $.proxy(this.onLoadStart, this);
 		this.queue.addEventListener('loadstart', this.p.onLoadStart);

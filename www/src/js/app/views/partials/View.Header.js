@@ -17,11 +17,14 @@ APP.Views.Header = (function(window){
 	
 	Header.prototype.initElt = function() {
 		this.$.header = $(document.getElementById('header'));
+		this.$.menu = $(document.getElementById('menu'));
+		this.$.menuLink = this.$.menu.find('.menu-link');
 	};
 	
 	
 	Header.prototype.bindEvents = function() {
-		
+		this.p.clickChangePage = $.proxy(this.clickChangePage, this);
+		this.$.menuLink.on('click', this.p.clickChangePage);
 	};
 	
 	
