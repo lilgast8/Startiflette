@@ -10,7 +10,7 @@ gulp.task('watch', function() {
 	
 	gulp.watch(paths.src.css+'**/*.scss', ['style']);
 	gulp.watch(paths.src.jsApp+'**/*.js', ['js']);
-	gulp.watch(paths.src.json+'**/*.json', ['json']);
+	gulp.watch([paths.src.json+'**/*.json', paths.src.js+'js-files.json'], ['json']);
 	
 	gulp.watch([
 		paths.assets.css+'**/*.css',
