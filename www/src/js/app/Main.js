@@ -41,8 +41,8 @@ APP.Main = (function(window) {
 		APP.Model.Global.destroyEvt(APP.Model.Global.EVENT.INIT, _init.bind(this));
 		
 		APP.Config.init();
-		APP.Views.Header.init();
-	//	APP.Views.Footer.init();
+		APP.Views.Static.Header.init();
+	//	APP.Views.Static.Footer.init();
 		APP.RoutesManager.init();
 	};
 	

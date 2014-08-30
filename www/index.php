@@ -8,7 +8,7 @@ include_once('init.php');
 
 
 /* -------- Texts -------- */
-include_once(SITE_ROOT.'includes/content/texts-'.LG.'.php');
+include_once(SITE_ROOT.'includes/contents/texts-'.LG.'.php');
 
 
 
@@ -47,13 +47,13 @@ $file = $infosPages[$page]['file'];
 
 /* -------- Show page -------- */
 if(MOBILE && !TABLET) { // mobile
-	include_once(SITE_ROOT.'includes/partial/header-mobile.php');
+	include_once(SITE_ROOT.'includes/partials/header-mobile.php');
 	include_once(SITE_ROOT.'pages/mobile/'.$file.'.php');
-	include_once(SITE_ROOT.'includes/partial/footer-mobile.php');
+	include_once(SITE_ROOT.'includes/partials/footer-mobile.php');
 } else { // desktop & tablette
-	include_once(SITE_ROOT.'includes/partial/header.php');
+	include_once(SITE_ROOT.'includes/partials/header.php');
 	include_once(SITE_ROOT.'pages/desktop/'.$file.'.php');
-	include_once(SITE_ROOT.'includes/partial/footer.php');
+	include_once(SITE_ROOT.'includes/partials/footer.php');
 }
 
 

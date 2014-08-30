@@ -1,17 +1,18 @@
 
 
 APP.Views = APP.Views || {};
+APP.Views.Page = APP.Views.Page || {};
 
 
-APP.Views.Legals = (function(window){
+APP.Views.Page.Legals = (function(window){
 	
 	
 	function Legals() {
-		APP.View.call(this);
+		APP.ViewPage.call(this);
 	}
 	
 	
-	Legals.prototype = Object.create(APP.View.prototype);
+	Legals.prototype = Object.create(APP.ViewPage.prototype);
 	Legals.prototype.constructor = Legals;
 	
 	

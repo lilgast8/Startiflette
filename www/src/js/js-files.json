@@ -35,18 +35,21 @@
 			
 			"app/routes/RoutesManager.js",
 			
-			"app/model/Model.Global.js",
+			"app/models/Model.Global.js",
 			
-			"app/loader/Loader.class.js",
+			"app/loaders/Loader.class.js",
 			
 			"app/views/View.class.js",
+			"app/views/View.Static.class.js",
+			"app/views/View.Partial.class.js",
+			"app/views/View.Page.class.js",
 			
-			"app/views/partials/View.Header.js",
-			"app/views/partials/View.Footer.js",
+			"app/views/statics/View.Static.Header.js",
+			"app/views/statics/View.Static.Footer.js",
 			
-			"app/views/pages/View.Home.js",
-			"app/views/pages/View.About.js",
-			"app/views/pages/View.Legals.js",
+			"app/views/pages/View.Page.Home.js",
+			"app/views/pages/View.Page.About.js",
+			"app/views/pages/View.Page.Legals.js",
 			
 			"app/Main.js"
 		]

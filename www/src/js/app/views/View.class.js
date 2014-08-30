@@ -9,13 +9,6 @@ APP.View = (function(window) {
 		this.$ = {};
 		this.p = {};
 		this.v = {};
-		
-		this.EVENT = {
-			LOADED : 'loaded',
-			INIT : 'init',
-			SHOWN : 'shown',
-			HIDDEN : 'hidden'
-		};
 	}
 	
 	
@@ -34,105 +27,12 @@ APP.View = (function(window) {
 	};
 	
 	
-	View.prototype.load = function(pageUrl) {
-		var pageUrlToLoad = null;
-		var pageName = pageUrl;
-		var arrayUrl = pageUrl.split('/');
-		var urlL = arrayUrl.length;
-		
-		if(urlL == 1) pageUrlToLoad = APP.Model.Global.json.infosPages[pageName].file;
-		else if(urlL > 1) {
-			var pageNameTemp = arrayUrl[0];
-			pageName = APP.Model.Global.json.infosPages[pageNameTemp].file;
-			pageUrlToLoad = pageUrl.replace(pageNameTemp, pageName);
-		}
-		
-		var urlPage = APP.Config.WEB_ROOT+'contenu-desktop/'+pageUrlToLoad;
-		$.ajax({
-			context : this,
-			url : urlPage,
-			type : 'POST',
-			data : { Page: urlPage},
-			dataType : 'html',
-			success : this.loaded,
-			error : this.error
-		});
-	};
-	
-	
-	View.prototype.loaded = function(data) {
-		APP.Main.$.pageContainer[0].innerHTML = data;
-		
-		this.init();
-		this.show();
-		
-		this.dispatch(this.EVENT.LOADED);
-	};
-	
-	
-	View.prototype.error = function() {
-		
-	};
-	
-	
-	View.prototype.show = function(data) {
-		TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:1, ease:Quad.easeOut, onComplete:function(){
-			this.dispatch(this.EVENT.SHOWN);
-			this.hideLoader(false);
-		}.bind(this)});
-	};
-	
-	
-	View.prototype.hide = function() {
-		this.showLoader();
-		this.destroy();
-		
-		TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:0, ease:Quad.easeOut, onComplete:function(){
-			this.dispatch(this.EVENT.HIDDEN);
-		}.bind(this)});
-	};
-	
-	
-	View.prototype.showLoader = function() {
-		APP.Main.$.loader[0].style.display = 'block';
-		TweenLite.to(APP.Main.$.loader, 0.8, {opacity:1, ease:Quart.easeOut});
-	};
-	
-	
-	View.prototype.hideLoader = function() {
-		TweenLite.to(APP.Main.$.loader, 0.8, {opacity:0, display:'none', ease:Quart.easeOut, onComplete:function(){
-		//	if(APP.RoutesManager.prevPage) // if need a different behavior in the first load.
-		//	APP.Main.$.loader[0].style.display = 'none';
-		}});
-	};
-	
-	
 	View.prototype.bindEvents = function() {
 		
 	};
 	
 	
-	View.prototype.unbindEvents = function() {
-		
-	};
-	
-	
-	View.prototype.killTweens = function() {
-		
-	};
-	
-	
-	View.prototype.destroy = function() {
-		this.unbindEvents();
-		
-		this.killTweens();
-		
-		this.$ = {};
-		this.v = {};
-	};
-	
-	
-	View.prototype.clickChangePage = function(e) {
+	View.prototype.changePage = function(e) {
 		e.preventDefault();
 		
 		var url = e.currentTarget.href;

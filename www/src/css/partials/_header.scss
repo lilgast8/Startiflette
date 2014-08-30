@@ -11,3 +11,10 @@
 }
 
 
+#menu {
+	.menu-link { color:$gray; 
+		&[data-active="true"] { color:$color1; }
+	}
+}
+
+

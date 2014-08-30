@@ -80,8 +80,8 @@ APP.RoutesManager =(function(window) {
 	var _updateMenu = function() {
 		if(this.currentPage.events.loaded) this.currentPage.destroyEvt(this.currentPage.EVENT.LOADED, _updateMenu.bind(this));
 		
-		var $menu = APP.Views.Header.$.menu;
-		var $footer = APP.Views.Footer.$.footer;
+		var $menu = APP.Views.Static.Header.$.menu;
+		var $footer = APP.Views.Static.Footer.$.footer;
 		
 		var $menuToDisable = $menu.find('[data-active="true"]');
 	//	if(!$menuToDisable.length) $menuToDisable = $footer.find('[data-active="true"]');
@@ -124,9 +124,9 @@ APP.RoutesManager =(function(window) {
 	var _getPage = function() {
 		var currentPage = null;
 		
-		if(this.pageUrl.indexOf('accueil') > -1) currentPage = APP.Views.Home;
-		else if(this.pageUrl.indexOf('a-propos') > -1) currentPage = APP.Views.About;
-		else if(this.pageUrl.indexOf('legals') > -1) currentPage = APP.Views.Legals;
+		if(this.pageUrl.indexOf('accueil') > -1) currentPage = APP.Views.Page.Home;
+		else if(this.pageUrl.indexOf('a-propos') > -1) currentPage = APP.Views.Page.About;
+		else if(this.pageUrl.indexOf('mentions-legales') > -1) currentPage = APP.Views.Page.Legals;
 		
 		return currentPage;
 	};

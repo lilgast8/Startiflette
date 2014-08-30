@@ -1,17 +1,18 @@
 
 
 APP.Views = APP.Views || {};
+APP.Views.Static = APP.Views.Static || {};
 
 
-APP.Views.Header = (function(window){
+APP.Views.Static.Header = (function(window){
 	
 	
 	function Header() {
-		APP.View.call(this);
+		APP.ViewStatic.call(this);
 	}
 	
 	
-	Header.prototype = Object.create(APP.View.prototype);
+	Header.prototype = Object.create(APP.ViewStatic.prototype);
 	Header.prototype.constructor = Header;
 	
 	
@@ -23,7 +24,7 @@ APP.Views.Header = (function(window){
 	
 	
 	Header.prototype.bindEvents = function() {
-		this.p.clickChangePage = $.proxy(this.clickChangePage, this);
+		this.p.clickChangePage = $.proxy(this.changePage, this);
 		this.$.menuLink.on('click', this.p.clickChangePage);
 	};
 	

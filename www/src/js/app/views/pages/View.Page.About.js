@@ -1,32 +1,33 @@
 
 
 APP.Views = APP.Views || {};
+APP.Views.Page = APP.Views.Page || {};
 
 
-APP.Views.Home = (function(window){
+APP.Views.Page.About = (function(window){
 	
 	
-	function Home() {
-		APP.View.call(this);
+	function About() {
+		APP.ViewPage.call(this);
 	}
 	
 	
-	Home.prototype = Object.create(APP.View.prototype);
-	Home.prototype.constructor = Home;
+	About.prototype = Object.create(APP.ViewPage.prototype);
+	About.prototype.constructor = About;
 	
 	
-	Home.prototype.initElt = function() {
+	About.prototype.initElt = function() {
 		this.$.page = $(document.getElementById('page-content'));
 	};
 	
 	
-	Home.prototype.bindEvents = function() {
+	About.prototype.bindEvents = function() {
 		this.p.resizeWindow = $.proxy(_resize, this);
 		APP.Main.$.window.on('resize', this.p.resizeWindow);
 	};
 	
 	
-	Home.prototype.unbindEvents = function() {
+	About.prototype.unbindEvents = function() {
 		APP.Main.$.window.off('resize', this.p.resizeWindow);
 		
 		this.p = {};
@@ -40,7 +41,7 @@ APP.Views.Home = (function(window){
 	};
 	
 	
-	return new Home();
+	return new About();
 	
 	
 })(window);

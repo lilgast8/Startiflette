@@ -2,7 +2,7 @@
 
 if(isset($_POST['Page'])) {
 	include_once('../../init.php');
-	include_once(SITE_ROOT.'includes/content/texts-'.LG.'.php');
+	include_once(SITE_ROOT.'includes/contents/texts-'.LG.'.php');
 	include_once(SITE_ROOT.'includes/func/load-json.php');
 }
 
@@ -11,6 +11,6 @@ if(isset($_POST['Page'])) {
 <!-- About -->
 <section id="page-content" class="about" data-page="about">
 	
-	À propos
+	- Page content / À propos -
 	
 </section>
