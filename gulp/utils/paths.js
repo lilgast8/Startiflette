@@ -3,7 +3,7 @@ module.exports = {
 	global : {
 		root : 'www/',
 		includes : 'www/includes/',
-		partial : 'www/includes/partial/'
+		partials : 'www/includes/partials/'
 	},
 	
 	src : {

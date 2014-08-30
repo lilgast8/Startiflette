@@ -39,6 +39,8 @@
 			
 			"app/loaders/Loader.class.js",
 			
+			"app/utils/Utils.Global.js",
+			
 			"app/views/View.class.js",
 			"app/views/View.Static.class.js",
 			"app/views/View.Partial.class.js",

@@ -36,8 +36,6 @@ APP.Views.Page.About = (function(window){
 	
 	var _resize = function() {
 		APP.Main.resize();
-		
-		console.log('resize');
 	};
 	
 	

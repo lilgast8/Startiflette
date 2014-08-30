@@ -8,7 +8,10 @@ var jsonlint = require('gulp-jsonlint');
 
 gulp.task('json-lint', function() {
 	
-	gulp.src([paths.src.json+'**/*.json', paths.src.js+'js-files.json'])
+	gulp.src([
+		paths.src.json+'**/*.json',
+		paths.src.js+'js-files.json'
+	])
 		.pipe(plumber())
 		.pipe(jsonlint())
 		.pipe(jsonlint.reporter())
