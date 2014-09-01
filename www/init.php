@@ -9,7 +9,7 @@ define('PROD', false);
 
 
 /* -------- Localhost -------- */
-$localhost = strpos($_SERVER['HTTP_HOST'], 'localhost') !== false ? true : false;
+$localhost = $_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_PORT'] == '8888' ? true : false;
 define('LOCALHOST', $localhost);
 
 
@@ -25,7 +25,8 @@ define('SITE_URL', 'http://www.SITE_URL.COM');
 define('SITE_ROOT', realpath(dirname(__FILE__)).'/');
 //define('WEB_ROOT', substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'], substr($_SERVER['SCRIPT_FILENAME'], strlen(SITE_ROOT)))));
 //$web_root = LOCALHOST ? 'http://localhost:8888/Documents/Gaston/Web/Starter/root-project/www/' : SITE_URL.'/';
-$web_root = LOCALHOST ? 'http://localhost:8888/Documents/Gaston/Web/Starter/root-project/www/' : SITE_URL.'/';
+//$web_root = LOCALHOST ? 'http://localhost:8888/Documents/Gaston/Web/Starter/root-project/www/' : SITE_URL.'/';
+$web_root = LOCALHOST ? 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] : SITE_URL.'/';
 define('WEB_ROOT', $web_root);
 
 
