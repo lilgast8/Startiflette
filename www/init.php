@@ -14,6 +14,14 @@ define('LOCALHOST', $localhost);
 
 
 
+/* -------- Errors -------- */
+if(LOCALHOST) {
+	error_reporting(E_ALL);
+	ini_set('display_errors', '1');
+}
+
+
+
 /* -------- Assets -------- */
 $assets = PROD ? 'assets/' : 'src/';
 define('ASSETS', $assets);
@@ -57,11 +65,6 @@ $tablet = $detect->isTablet() ? true : false;
 //if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) { $mobile = true; $tablet = true; }
 define('MOBILE', $mobile);
 define('TABLET', $tablet);
-
-
-
-/* -------- Errors -------- */
-if(LOCALHOST) error_reporting(E_ALL);
 
 
 
