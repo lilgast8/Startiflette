@@ -15,17 +15,7 @@
 \b \cf0 TO DO :\
 \
 - revoir le syst\'e8me de routing pour une version FR/EN et des sous-page (faire une page project)\
-- remplacer tous les 'accueil' par 'home'\
-- RoutesManager : enlever le param\'e8tre ur; dans var _getTitle = function(url)\
-- remplacer le window. par this. avant les fonctions\
-- Utils.Global : rajouter la fonction degToRad()\
-- Utils.Global : rajouter la fonction removeClass()\
-- ajouter un fonction unbindEvents dans View.Static.Example.js\
-- mettre la version de detectizr.js non minifi\'e9 pour ne plus avoir l'erreur sur detectizr.min.map\
-- dans Utils.Global, cr\'e9er un objet color pour y stocker les couleurs\
-- Model.Global.js : remplacer this.json = \{ infosPages : null \}; par this.json = \{\};\
-- mettre un View.Page.Example.js, View.Partial.Example.js et View.Static.Example.js\
-- renommer View.Page.class.js (View.Page.Home.js, View.Static.Header.js\'85) en ViewPage.class.js\
+- remplacer tous les 'accueil' par 'home' ?\
 \
 - faire une var nameActivePage dans RoutesManager (pour lien \'e0 activer, cas sp\'e9cial de l'accueil) ?\
 - gestion du nom des pages : #page ou .page ?, data-page="page" ? (v\'e9rifier ensuite dans les Views.js)\
@@ -60,10 +50,27 @@
 
 \b \cf0 DONE :
 \b0 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural
-\cf0 \
+
+\b \
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
-\cf0 - mettre un menu et une gestion de transition de page basic\
+
+\b0 \cf0 - mettre la version de detectizr.js non minifi\'e9 pour ne plus avoir l'erreur sur detectizr.min.map
+\b \
+
+\b0 - ajouter un fonction unbindEvents dans View.Static.Example.js\
+- mettre un View.Page.Example.js, View.Partial.Example.js et View.Static.Example.js\
+- renommer View.Page.class.js (View.Page.Home.js, View.Static.Header.js\'85) en ViewPage.class.js
+\b \
+
+\b0 - Utils.Global : rajouter la fonction degToRad()\
+- Utils.Global : rajouter la fonction removeClass()
+\b \
+
+\b0 - RoutesManager : enlever le param\'e8tre url dans var _getTitle = function(url)\
+- remplacer le window. par this. avant les fonctions\
+- dans Utils.Global, cr\'e9er un objet color pour y stocker les couleurs\
+- Model.Global.js : remplacer this.json = \{ infosPages : null \}; par this.json = \{\};\
+- mettre un menu et une gestion de transition de page basic\
 - restructurer View.class en d\'e9coupant en View.Page.class, View.Partial.class, View.Static.class, View.Object.class\'85\
 - revoir le gestion changement de page (RoutesManager.js, View.class.js)\
 - am\'e9liorer la classe Loader.class.js\

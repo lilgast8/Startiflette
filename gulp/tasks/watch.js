@@ -15,6 +15,7 @@ gulp.task('watch', function() {
 	gulp.watch([
 		paths.assets.css+'**/*.css',
 		paths.src.jsApp+'**/*.js',
+		paths.src.js+'js-files.json',
 		paths.src.json+'**/*.json',
 		paths.global.root+'**/*.html',
 		paths.global.root+'**/*.php',

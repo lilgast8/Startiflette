@@ -22,6 +22,11 @@ APP.ViewStatic = (function(window) {
 	};
 	
 	
+	ViewStatic.prototype.unbindEvents = function() {
+		
+	};
+	
+	
 	return ViewStatic;
 	
 	

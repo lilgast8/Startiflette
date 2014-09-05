@@ -19,9 +19,7 @@ APP.Model.Global = (function(window) {
 			{ id:'infosPages', src:'json/infos-pages-'+APP.Config.LG+'.json' }
 		];
 		
-		this.json = {
-			infosPages : null
-		};
+		this.json = {};
 	}
 	
 	

@@ -132,7 +132,7 @@ APP.RoutesManager =(function(window) {
 	};
 	
 	
-	var _getTitle = function(url) {
+	var _getTitle = function() {
 		var title = null;
 		var arrayUrl = this.pageUrl.split('/');
 		var pageName = arrayUrl[0];

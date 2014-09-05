@@ -5,7 +5,7 @@
 		"dest" : "lib/",
 		"files" : [
 			"lib/modernizr.min.js",
-			"lib/detectizr.min.js"
+			"lib/detectizr.js"
 		]
 	},
 	
@@ -42,16 +42,16 @@
 			"app/utils/Utils.Global.js",
 			
 			"app/views/View.class.js",
-			"app/views/View.Static.class.js",
-			"app/views/View.Partial.class.js",
-			"app/views/View.Page.class.js",
+			"app/views/ViewStatic.class.js",
+			"app/views/ViewPartial.class.js",
+			"app/views/ViewPage.class.js",
 			
-			"app/views/statics/View.Static.Header.js",
-			"app/views/statics/View.Static.Footer.js",
+			"app/views/statics/ViewStatic.Header.js",
+			"app/views/statics/ViewStatic.Footer.js",
 			
-			"app/views/pages/View.Page.Home.js",
-			"app/views/pages/View.Page.About.js",
-			"app/views/pages/View.Page.Legals.js",
+			"app/views/pages/ViewPage.Home.js",
+			"app/views/pages/ViewPage.About.js",
+			"app/views/pages/ViewPage.Legals.js",
 			
 			"app/Main.js"
 		]

@@ -6,7 +6,19 @@ APP.Utils = APP.Utils || {};
 APP.Utils.Global = (function(window){
 	
 	
-	window.getImageSize = function(imgW, imgH, contW, contH) {
+	this.color = {};
+	
+	
+	this.removeClass = function(elt, classToRemove) {
+		elt.className = elt.className.replace(new RegExp('(^|\\b)' + classToRemove.split(' ').join('|') + '(\\b|$)', 'gi'), '');
+		
+		var lastCharPos = elt.className.length-1;
+		if(elt.className[lastCharPos] == ' ')
+			elt.className = elt.className.substring(0, lastCharPos);
+	};
+	
+	
+	this.getImageSize = function(imgW, imgH, contW, contH) {
 		var imgRatio = imgW/imgH;
 		var contRatio = contW/contH;
 		var sizeImg = {
@@ -27,6 +39,11 @@ APP.Utils.Global = (function(window){
 		}
 		
 		return sizeImg;
+	};
+	
+	
+	this.degToRad = function(deg) {
+		return deg*Math.PI/180;
 	};
 	
 	
