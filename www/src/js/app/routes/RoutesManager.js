@@ -77,7 +77,8 @@ APP.RoutesManager =(function(window) {
 		this.currentPage.buildEvt(this.currentPage.EVENT.LOADED, _updateMenu.bind(this));
 		this.currentPage.buildEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this));
 		
-		this.currentPage.load(this.pageUrl);
+	//	this.currentPage.load(this.pageUrl);
+		this.currentPage.load(this.pageUrl, this.pageName, this.viewName);
 	};
 	
 	
@@ -128,7 +129,7 @@ APP.RoutesManager =(function(window) {
 		
 		this.pageName = this.pageUrl.split('/')[0];
 		
-		this.viewName = APP.Model.Global.json.infosPages[this.pageName].file;
+		this.viewName = APP.Model.Global.json.pages[this.pageName].file;
 	};
 	
 	
@@ -146,7 +147,7 @@ APP.RoutesManager =(function(window) {
 	
 	
 	var _getTitle = function() {
-		var title = APP.Model.Global.json.infosPages[this.pageName].title;
+		var title = APP.Model.Global.json.pages[this.pageName].title;
 		
 		if(this.viewName == 'project') {
 			for(var i=0; i<APP.Model.Global.json.projects.length; i++) {

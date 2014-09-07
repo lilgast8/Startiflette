@@ -19,25 +19,15 @@ APP.ViewPage = (function(window) {
 	ViewPage.prototype.constructor = ViewPage;
 	
 	
-	ViewPage.prototype.load = function(pageUrl) {
-		var pageUrlToLoad = null;
-		var pageName = pageUrl;
-		var arrayUrl = pageUrl.split('/');
-		var urlL = arrayUrl.length;
-		
-		if(urlL == 1) pageUrlToLoad = APP.Model.Global.json.infosPages[pageName].file;
-		else if(urlL > 1) {
-			var pageNameTemp = arrayUrl[0];
-			pageName = APP.Model.Global.json.infosPages[pageNameTemp].file;
-			pageUrlToLoad = pageUrl.replace(pageNameTemp, pageName);
-		}
+	ViewPage.prototype.load = function(pageUrl, pageName, fileName) {
+		var pageUrlToLoad = pageUrl.replace(pageName, fileName);
 		
 		var urlPage = APP.Config.WEB_ROOT+'content-desktop/'+pageUrlToLoad;
 		$.ajax({
 			context : this,
 			url : urlPage,
 			type : 'POST',
-			data : { Page: urlPage},
+			data : { ajax:pageUrlToLoad},
 			dataType : 'html',
 			success : this.loaded,
 			error : this.error
@@ -100,7 +90,7 @@ APP.ViewPage = (function(window) {
 	
 	ViewPage.prototype.hideLoader = function() {
 		TweenLite.to(APP.Main.$.loader, 0.8, {opacity:0, display:'none', ease:Quart.easeOut});
-		//	if(APP.RoutesManager.prevPage) // if need a different behavior in the first load.
+	//	if(APP.RoutesManager.prevPage !== null) // if need a different behavior in the first load.
 	};
 	
 	
