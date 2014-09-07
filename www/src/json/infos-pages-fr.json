@@ -12,6 +12,18 @@
 		"desc" : "À propos"
 	},
 	
+	"projets" : {
+		"file" : "projects",
+		"title" : "Projets",
+		"desc" : "Projets"
+	},
+	
+	"projet" : {
+		"file" : "project",
+		"title" : "Projet",
+		"desc" : "Projet"
+	},
+	
 	"mentions-legales" : {
 		"file" : "legals",
 		"title" : "Mentions légales",

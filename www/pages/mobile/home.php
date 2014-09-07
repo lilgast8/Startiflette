@@ -9,7 +9,7 @@ if(isset($_POST['Page'])) {
 ?>
 
 <!-- Home -->
-<section id="page-content" class="home" data-page="home">
+<section id="page-content" class="home">
 	
 	- Page content mobile / Accueil -
 	

@@ -42,7 +42,7 @@ APP.Main = (function(window) {
 		
 		APP.Config.init();
 		APP.Views.Static.Header.init();
-	//	APP.Views.Static.Footer.init();
+		APP.Views.Static.Footer.init();
 		APP.RoutesManager.init();
 	};
 	

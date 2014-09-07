@@ -2,14 +2,26 @@
 	
 	"home" : {
 		"file" : "home",
-		"title" : "[STARTER - TITLE EN]",
-		"desc" : "[STARTER - DESC EN]"
+		"title" : "Home - STARTER",
+		"desc" : "Home - STARTER"
 	},
 	
 	"about" : {
 		"file" : "about",
 		"title" : "About",
 		"desc" : "About"
+	},
+	
+	"projects" : {
+		"file" : "projects",
+		"title" : "Projects",
+		"desc" : "Projects"
+	},
+	
+	"project" : {
+		"file" : "project",
+		"title" : "Project",
+		"desc" : "Project"
 	},
 	
 	"legals" : {

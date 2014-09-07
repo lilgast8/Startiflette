@@ -3,7 +3,11 @@
 	
 	<!-- Footer -->
 	<footer id="footer">
-		
+		<nav>
+			<ul>
+				<li><a href="<?php echo WEB_ROOT; ?>mentions-legales" class="footer-link">Mentions légales</a></li>
+			</ul>
+		</nav>
 	</footer>
 	
 	<!-- No JS -->

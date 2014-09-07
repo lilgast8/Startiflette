@@ -10,7 +10,10 @@ APP.RoutesManager =(function(window) {
 		this.currentPage = null;
 		this.nextPage = null;
 		
+		this.viewName = null;
+		this.pageName = null;
 		this.pageUrl = null;
+		
 		this.activeUrl = null;
 		this.isPageChange = false;
 	}
@@ -27,7 +30,7 @@ APP.RoutesManager =(function(window) {
 	
 	
 	RoutesManager.prototype.goToPage = function(url) {
-		_setPageUrl.call(this, url);
+		_setInfosPage.call(this, url);
 		
 		var title = _getTitle.call(this);
 		
@@ -44,7 +47,7 @@ APP.RoutesManager =(function(window) {
 		if(!this.isPageChange) {
 			_disablePageChange.call(this);
 			
-			_setPageUrl.call(this, null);
+			_setInfosPage.call(this, null);
 			
 			this.nextPage = _getPage.call(this);
 			
@@ -55,7 +58,8 @@ APP.RoutesManager =(function(window) {
 	
 	
 	var _initFirstPage = function() {
-		_setPageUrl.call(this, null);
+		_setInfosPage.call(this, null);
+		
 		this.currentPage = _getPage.call(this);
 		this.currentPage.init();
 		
@@ -84,9 +88,9 @@ APP.RoutesManager =(function(window) {
 		var $footer = APP.Views.Static.Footer.$.footer;
 		
 		var $menuToDisable = $menu.find('[data-active="true"]');
-	//	if(!$menuToDisable.length) $menuToDisable = $footer.find('[data-active="true"]');
+		if(!$menuToDisable.length) $menuToDisable = $footer.find('[data-active="true"]');
 		var $menuToEnable = $menu.find('[href*="'+this.pageUrl+'"]');
-	//	if(!$menuToEnable.length) $menuToEnable = $footer.find('[href*="'+pageUrl+'"]');
+		if(!$menuToEnable.length) $menuToEnable = $footer.find('[href*="'+this.pageUrl+'"]');
 		
 		if($menuToDisable.length) $menuToDisable[0].setAttribute('data-active', 'false');
 		if($menuToEnable.length) $menuToEnable[0].setAttribute('data-active', 'true');
@@ -112,43 +116,48 @@ APP.RoutesManager =(function(window) {
 	};
 	
 	
-	var _setPageUrl = function(url) {
+	var _setInfosPage = function(url) {
 		if(url === null) url = _getUrl();
 		
 		var endBaseUrl = url.indexOf(APP.Config.WEB_ROOT)+APP.Config.WEB_ROOT.length;
+		
 		this.pageUrl = url.substring(endBaseUrl, url.length);
+		var lastCharPos = this.pageUrl.length-1;
+		if(this.pageUrl[lastCharPos] == '/') this.pageUrl = this.pageUrl.substring(0, lastCharPos);
 		if(this.pageUrl === '') this.pageUrl = 'accueil';
+		
+		this.pageName = this.pageUrl.split('/')[0];
+		
+		this.viewName = APP.Model.Global.json.infosPages[this.pageName].file;
 	};
 	
 	
 	var _getPage = function() {
 		var currentPage = null;
 		
-		if(this.pageUrl.indexOf('accueil') > -1) currentPage = APP.Views.Page.Home;
-		else if(this.pageUrl.indexOf('a-propos') > -1) currentPage = APP.Views.Page.About;
-		else if(this.pageUrl.indexOf('mentions-legales') > -1) currentPage = APP.Views.Page.Legals;
+		if(this.viewName == 'home') currentPage = APP.Views.Page.Home;
+		else if(this.viewName == 'about') currentPage = APP.Views.Page.About;
+		else if(this.viewName == 'projects') currentPage = APP.Views.Page.Projects;
+		else if(this.viewName == 'project') currentPage = APP.Views.Page.Project;
+		else if(this.viewName == 'legals') currentPage = APP.Views.Page.Legals;
 		
 		return currentPage;
 	};
 	
 	
 	var _getTitle = function() {
-		var title = null;
-		var arrayUrl = this.pageUrl.split('/');
-		var pageName = arrayUrl[0];
-		var urlL = arrayUrl.length;
+		var title = APP.Model.Global.json.infosPages[this.pageName].title;
 		
-		if(urlL == 1) title = APP.Model.Global.json.infosPages[this.pageUrl].title;
-		else if(urlL > 1) { // if subpage
-			/*
-			var urlDetails = arrayUrl[1]+'/'+arrayUrl[2];
-			
+		if(this.viewName == 'project') {
 			for(var i=0; i<APP.Model.Global.json.projects.length; i++) {
 				var project = APP.Model.Global.json.projects[i];
 				
-				title = project.name;
+				if(project.url == this.pageUrl) {
+					title = project.name;
+					
+					break;
+				}
 			}
-			*/
 		}
 		
 		return title;

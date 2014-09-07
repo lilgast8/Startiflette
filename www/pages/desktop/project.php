@@ -8,9 +8,9 @@ if(isset($_POST['Page'])) {
 
 ?>
 
-<!-- About -->
-<section id="page-content" class="about">
+<!-- Project -->
+<section id="page-content" class="project">
 	
-	- Page content / À propos -
+	- Page content / Projet -
 	
 </section>

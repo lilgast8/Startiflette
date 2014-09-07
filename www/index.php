@@ -43,6 +43,21 @@ $titlePage = $infosPages[$page]['title'];
 $descPage = $infosPages[$page]['desc'];
 $file = $infosPages[$page]['file'];
 
+if($file == 'project') {
+	$url = $page.'/'.$subPage.'/'.$part;
+	
+	for($i=0; $i<count($projects); $i++) {
+		$project = $projects[$i];
+		
+		if($project['url'] == $url) {
+			$titlePage = $project['name'].' - '.$infosPages[$page]['title'];
+			$descPage = $project['name'].' - '.$infosPages[$page]['title'];
+			
+			break;
+		}
+	}
+}
+
 
 
 /* -------- Show page -------- */

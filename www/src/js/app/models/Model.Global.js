@@ -16,7 +16,8 @@ APP.Model.Global = (function(window) {
 		};
 		
 		this.aJsonToLoad = [
-			{ id:'infosPages', src:'json/infos-pages-'+APP.Config.LG+'.json' }
+			{ id:'infosPages', src:'json/infos-pages-'+APP.Config.LG+'.json' },
+			{ id:'projects', src:'json/projects-'+APP.Config.LG+'.json' }
 		];
 		
 		this.json = {};

@@ -51,6 +51,8 @@
 			
 			"app/views/pages/ViewPage.Home.js",
 			"app/views/pages/ViewPage.About.js",
+			"app/views/pages/ViewPage.Projects.js",
+			"app/views/pages/ViewPage.Project.js",
 			"app/views/pages/ViewPage.Legals.js",
 			
 			"app/Main.js"
