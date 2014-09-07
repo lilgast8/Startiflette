@@ -77,7 +77,6 @@ APP.RoutesManager =(function(window) {
 		this.currentPage.buildEvt(this.currentPage.EVENT.LOADED, _updateMenu.bind(this));
 		this.currentPage.buildEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this));
 		
-	//	this.currentPage.load(this.pageUrl);
 		this.currentPage.load(this.pageUrl, this.pageName, this.viewName);
 	};
 	
