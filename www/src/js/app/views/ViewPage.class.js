@@ -65,7 +65,7 @@ APP.ViewPage = (function(window) {
 	};
 	
 	
-	ViewPage.prototype.show = function(data) {
+	ViewPage.prototype.show = function() {
 		TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:1, ease:Quad.easeOut, onComplete:function(){
 			this.dispatch(this.EVENT.SHOWN);
 			this.hideLoader(false);

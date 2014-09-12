@@ -5,7 +5,7 @@ APP.EventDispatcher = (function(window){
 	
 	function EventDispatcher() {
 		this.events = {};
-		this.EVENT  = {};
+		this.EVENT = {};
 	}
 	
 	
