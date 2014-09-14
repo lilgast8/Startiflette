@@ -41,7 +41,7 @@ APP.ViewPage = (function(window) {
 		this.init();
 		this.show();
 		
-		this.dispatch(this.EVENT.LOADED);
+		this.dispatch(this.EVENT.LOADED); // update menu
 	};
 	
 	
