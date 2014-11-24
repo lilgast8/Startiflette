@@ -1,18 +1,18 @@
 
 
-MJP.Views = MJP.Views || {};
-MJP.Views.Static = MJP.Views.Static || {};
+APP.Views = APP.Views || {};
+APP.Views.Static = APP.Views.Static || {};
 
 
-MJP.Views.Static.Example = (function(window){
+APP.Views.Static.Example = (function(window){
 	
 	
 	function Example() {
-		MJP.ViewStatic.call(this);
+		APP.ViewStatic.call(this);
 	}
 	
 	
-	Example.prototype = Object.create(MJP.ViewStatic.prototype);
+	Example.prototype = Object.create(APP.ViewStatic.prototype);
 	Example.prototype.constructor = Example;
 	
 	

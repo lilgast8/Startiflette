@@ -1,18 +1,18 @@
 
 
-MJP.Views = MJP.Views || {};
-MJP.Views.Page = MJP.Views.Page || {};
+APP.Views = APP.Views || {};
+APP.Views.Page = APP.Views.Page || {};
 
 
-MJP.Views.Page.Example = (function(window){
+APP.Views.Page.Example = (function(window){
 	
 	
 	function Example() {
-		MJP.ViewPage.call(this);
+		APP.ViewPage.call(this);
 	}
 	
 	
-	Example.prototype = Object.create(MJP.ViewPage.prototype);
+	Example.prototype = Object.create(APP.ViewPage.prototype);
 	Example.prototype.constructor = Example;
 	
 	
@@ -23,19 +23,19 @@ MJP.Views.Page.Example = (function(window){
 	
 	Example.prototype.bindEvents = function() {
 		this.p.resizeWindow = $.proxy(_resize, this);
-		MJP.Main.$.window.on('resize', this.p.resizeWindow);
+		APP.Main.$.window.on('resize', this.p.resizeWindow);
 	};
 	
 	
 	Example.prototype.unbindEvents = function() {
-		MJP.Main.$.window.off('resize', this.p.resizeWindow);
+		APP.Main.$.window.off('resize', this.p.resizeWindow);
 		
 		this.p = {};
 	};
 	
 	
 	var _resize = function() {
-		MJP.Main.resize();
+		APP.Main.resize();
 	};
 	
 	

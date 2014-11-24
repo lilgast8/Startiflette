@@ -1,18 +1,18 @@
 
 
-MJP.Views = MJP.Views || {};
-MJP.Views.Partial = MJP.Views.Partial || {};
+APP.Views = APP.Views || {};
+APP.Views.Partial = APP.Views.Partial || {};
 
 
-MJP.Views.Partial.Example = (function(window){
+APP.Views.Partial.Example = (function(window){
 	
 	
 	function Example() {
-		MJP.ViewPartial.call(this);
+		APP.ViewPartial.call(this);
 	}
 	
 	
-	Example.prototype = Object.create(MJP.ViewPartial.prototype);
+	Example.prototype = Object.create(APP.ViewPartial.prototype);
 	Example.prototype.constructor = Example;
 	
 	
