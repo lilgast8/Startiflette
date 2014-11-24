@@ -1,6 +1,6 @@
 
 
-APP.RoutesManager =(function(window) {
+APP.RoutesManager = (function(window) {
 	
 	
 	function RoutesManager() {

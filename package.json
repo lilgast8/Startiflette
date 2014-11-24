@@ -1,5 +1,10 @@
 {
   "name": "Starter-Project",
+  "description": "Starter Project",
+  "author": {
+    "name": "Gaston Bouchayer",
+    "url": "http://www.gastonbouchayer.com"
+  },
   "version": "3.2.6",
   "main": "gulpfile.js",
   "author": "Gaston Bouchayer",
