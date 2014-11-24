@@ -6,7 +6,11 @@
 /****************************/
 
 
-::-moz-selection, ::selection { 
+::selection { 
+	background-color:$bgSelection; 
+	color:$textSelection; 
+}
+::-moz-selection {
 	background-color:$bgSelection; 
 	color:$textSelection; 
 }
