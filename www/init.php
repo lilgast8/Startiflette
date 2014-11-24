@@ -15,7 +15,7 @@ define('LOCALHOST', $localhost);
 
 
 /* -------- Errors -------- */
-if(LOCALHOST) {
+if(LOCALHOST || !PROD)
 	error_reporting(E_ALL);
 	ini_set('display_errors', '1');
 }

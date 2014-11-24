@@ -4,8 +4,8 @@ APP.Config = (function(window) {
 	
 	
 	function Config() {
-		this.LOCALHOST = LOCALHOST;
-		this.PROD  = PROD;
+		this.LOCALHOST = LOCALHOST == '1' ? true : false;
+		this.PROD = PROD == '1' ? true : false;
 		this.WEB_ROOT = WEB_ROOT;
 		this.LG = LG;
 		
