@@ -5,6 +5,8 @@ APP.Main = (function(window) {
 	
 	function Main() {
 		this.$ = {};
+		this.p = {};
+		this.v = {};
 	}
 	
 	
@@ -15,20 +17,20 @@ APP.Main = (function(window) {
 		this.$.pageContainer = $(document.getElementById('page-container'));
 		this.$.loader = $(document.getElementById('loader'));
 		
-		this.windowLoadProxy = $.proxy(_windowLoad, this);
-		this.$.window.on('load', this.windowLoadProxy);
+		this.p.windowLoad = $.proxy(_windowLoad, this);
+		this.$.window.on('load', this.p.windowLoad);
 	};
 	
 	
 	Main.prototype.resize = function() {
-		this.windowW = this.$.window.width();
-		this.windowH = this.$.window.height();
+		this.v.windowW = this.$.window.width();
+		this.v.windowH = this.$.window.height();
 	};
 	
 	
 	var _windowLoad = function() {
-		this.$.window.off('load', this.windowLoadProxy);
-		this.windowLoadProxy = null;
+		this.$.window.off('load', this.p.windowLoad);
+		this.p.windowLoad = null;
 		
 		this.$.mainContainer[0].className = '';
 		
