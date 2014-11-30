@@ -1,62 +1,104 @@
-[
+{
 	
-	{
+	"modern-detect-izr" : {
 		"name" : "modern-detect-izr.min.js",
-		"dest" : "lib/",
+		"dest" : "libs/",
 		"files" : [
-			"lib/modernizr.min.js",
-			"lib/detectizr.js"
+			"libs/modernizr.min.js",
+			"libs/detectizr.js"
 		]
 	},
 	
-	{
+	"scripts-desktop" : {
 		"name" : [
-			"scripts.min.js",
-			"scripts-oldie.min.js"
+			"scripts-desktop.min.js",
+			"scripts-desktop-oldie.min.js"
 		],
 		"dest" : "",
 		"files" : [
 			[	
-				"lib/zepto.min.js",
-				"lib/jquery-oldie.min.js"
+				"libs/zepto.min.js",
+				"libs/jquery-oldie.min.js"
 			],
-			"lib/greensock/TweenMax.min.js",
-			"lib/signals.min.js",
-			"lib/history.min.js",
-			"lib/preloadjs.min.js",
-			"lib/zepto.dcspamless.min.js",
+			"libs/greensock/TweenMax.min.js",
+			"libs/signals.min.js",
+			"libs/history.min.js",
+			"libs/preloadjs.min.js",
 			
-			"app/InitApp.js",
+			"app-desktop/InitApp.js",
 			
-			"app/config/Config.js",
-			"app/config/OldBrowser.js",
+			"shared/config/Config.js",
+			"shared/config/OldBrowser.js",
 			
-			"app/events/EventDispatcher.class.js",
+			"shared/events/EventDispatcher.class.js",
 			
-			"app/routes/RoutesManager.js",
+			"shared/routes/RoutesManager.js",
 			
-			"app/models/Model.Global.js",
+			"shared/models/Model.Global.js",
 			
-			"app/loaders/Loader.class.js",
+			"shared/loaders/Loader.class.js",
 			
-			"app/utils/Utils.Global.js",
+			"shared/utils/Utils.Global.js",
 			
-			"app/views/View.class.js",
-			"app/views/ViewStatic.class.js",
-			"app/views/ViewPartial.class.js",
-			"app/views/ViewPage.class.js",
+			"app-desktop/views/View.class.js",
+			"app-desktop/views/ViewStatic.class.js",
+			"app-desktop/views/ViewPartial.class.js",
+			"app-desktop/views/ViewPage.class.js",
 			
-			"app/views/statics/ViewStatic.Header.js",
-			"app/views/statics/ViewStatic.Footer.js",
+			"app-desktop/views/statics/ViewStatic.Header.js",
+			"app-desktop/views/statics/ViewStatic.Footer.js",
 			
-			"app/views/pages/ViewPage.Home.js",
-			"app/views/pages/ViewPage.About.js",
-			"app/views/pages/ViewPage.Projects.js",
-			"app/views/pages/ViewPage.Project.js",
-			"app/views/pages/ViewPage.Legals.js",
+			"app-desktop/views/pages/ViewPage.Home.js",
+			"app-desktop/views/pages/ViewPage.About.js",
+			"app-desktop/views/pages/ViewPage.Projects.js",
+			"app-desktop/views/pages/ViewPage.Project.js",
+			"app-desktop/views/pages/ViewPage.Legals.js",
 			
-			"app/Main.js"
+			"app-desktop/Main.js"
+		]
+	},
+	
+	"scripts-mobile" : {
+		"name" : "scripts-mobile.min.js",
+		"dest" : "",
+		"files" : [
+			"libs/zepto.min.js",
+			"libs/greensock/TweenMax.min.js",
+			"libs/signals.min.js",
+			"libs/history.min.js",
+			"libs/preloadjs.min.js",
+			
+			"app-mobile/InitApp.js",
+			
+			"shared/config/Config.js",
+			"shared/config/OldBrowser.js",
+			
+			"shared/events/EventDispatcher.class.js",
+			
+			"shared/routes/RoutesManager.js",
+			
+			"shared/models/Model.Global.js",
+			
+			"shared/loaders/Loader.class.js",
+			
+			"shared/utils/Utils.Global.js",
+			
+			"app-mobile/views/View.class.js",
+			"app-mobile/views/ViewStatic.class.js",
+			"app-mobile/views/ViewPartial.class.js",
+			"app-mobile/views/ViewPage.class.js",
+			
+			"app-mobile/views/statics/ViewStatic.Header.js",
+			"app-mobile/views/statics/ViewStatic.Footer.js",
+			
+			"app-mobile/views/pages/ViewPage.Home.js",
+			"app-mobile/views/pages/ViewPage.About.js",
+			"app-mobile/views/pages/ViewPage.Projects.js",
+			"app-mobile/views/pages/ViewPage.Project.js",
+			"app-mobile/views/pages/ViewPage.Legals.js",
+			
+			"app-desktop/Main.js"
 		]
 	}
 	
-]
+}

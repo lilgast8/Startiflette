@@ -15,7 +15,7 @@ define('LOCALHOST', $localhost);
 
 
 /* -------- Errors -------- */
-if(LOCALHOST || !PROD)
+if(LOCALHOST || !PROD) {
 	error_reporting(E_ALL);
 	ini_set('display_errors', '1');
 }
@@ -37,6 +37,12 @@ define('WEB_ROOT', $web_root);
 
 
 /* -------- Language -------- */
+//$aLg = array('fr', 'en', 'es');
+$aLg = array('fr');
+
+$multilingual = count($aLg) > 1 ? true : false;
+define('MULTI_LG', $multilingual);
+
 if(isset($_GET['lg'])) { // if lg
 	$lg = $_GET['lg'];
 } else { // if !lg
@@ -52,7 +58,7 @@ define('LG', $lg);
 
 
 /* -------- Mobile Detect -------- */
-include_once(SITE_ROOT.'includes/lib/Mobile_Detect.php');
+include_once(SITE_ROOT.'php/libs/Mobile_Detect.php');
 $detect = new Mobile_Detect();
 $mobile = $detect->isMobile() ? true : false;
 $tablet = $detect->isTablet() ? true : false;

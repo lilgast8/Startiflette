@@ -5,7 +5,7 @@
 	<footer id="footer">
 		<nav>
 			<ul>
-				<li><a href="<?php echo WEB_ROOT; ?>mentions-legales" class="footer-link">Mentions légales</a></li>
+				<li><a href="<?php echo WEB_ROOT; ?>mentions-legales" class="footer-link" data-url="<?php echo WEB_ROOT; ?>/mentions-legales">Mentions légales</a></li>
 			</ul>
 		</nav>
 	</footer>
@@ -25,13 +25,14 @@
 	var PROD  = '<?php echo PROD; ?>';
 	var WEB_ROOT = '<?php echo WEB_ROOT; ?>';
 	var LG = '<?php echo LG; ?>';
+	var MULTI_LG = '<?php echo MULTI_LG; ?>';
 </script>
 <?php
 if(!PROD) {
 	$jsonJsFiles = file_get_contents(SITE_ROOT.ASSETS.'js/js-files.json');
 	$jsFiles = json_decode($jsonJsFiles, true);
 	
-	$files = $jsFiles[1]['files'];
+	$files = $jsFiles['scripts-desktop']['files'];
 	
 	for($i=0; $i<count($files); $i++) {
 		if(is_array($files[$i])) {

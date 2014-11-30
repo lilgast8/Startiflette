@@ -63,7 +63,7 @@
 		$jsonJsFiles = file_get_contents(SITE_ROOT.ASSETS.'js/js-files.json');
 		$jsFiles = json_decode($jsonJsFiles, true);
 		
-		$files = $jsFiles[0]['files'];
+		$files = $jsFiles['modern-detect-izr']['files'];
 		
 		for($i=0; $i<count($files); $i++) {
 			echo '<script src="'.WEB_ROOT.'src/js/'.$files[$i].'"></script>'."\n	";

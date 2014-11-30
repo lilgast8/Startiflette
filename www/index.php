@@ -8,12 +8,12 @@ include_once('init.php');
 
 
 /* -------- Texts -------- */
-include_once(SITE_ROOT.'includes/contents/texts-'.LG.'.php');
+include_once(SITE_ROOT.'php/contents/texts-'.LG.'.php');
 
 
 
 /* -------- Load JSON -------- */
-include_once(SITE_ROOT.'includes/func/load-json.php');
+include_once(SITE_ROOT.'php/functions/load-json.php');
 
 
 
@@ -62,13 +62,13 @@ if($file == 'project') {
 
 /* -------- Show page -------- */
 if(MOBILE && !TABLET) { // mobile
-	include_once(SITE_ROOT.'includes/partials/header-mobile.php');
-	include_once(SITE_ROOT.'pages/mobile/'.$file.'.php');
-	include_once(SITE_ROOT.'includes/partials/footer-mobile.php');
+	include_once(SITE_ROOT.'php/views/mobile/partials/header.php');
+	include_once(SITE_ROOT.'php/views/mobile/pages/'.$file.'.php');
+	include_once(SITE_ROOT.'php/views/mobile/partials/footer.php');
 } else { // desktop & tablette
-	include_once(SITE_ROOT.'includes/partials/header.php');
-	include_once(SITE_ROOT.'pages/desktop/'.$file.'.php');
-	include_once(SITE_ROOT.'includes/partials/footer.php');
+	include_once(SITE_ROOT.'php/views/desktop/partials/header.php');
+	include_once(SITE_ROOT.'php/views/desktop/pages/'.$file.'.php');
+	include_once(SITE_ROOT.'php/views/desktop/partials/footer.php');
 }
 
 
