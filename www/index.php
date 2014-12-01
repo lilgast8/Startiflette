@@ -17,7 +17,7 @@ include_once(SITE_ROOT.'php/functions/load-json.php');
 
 
 
-/* -------- Get page name -------- */
+/* -------- Get pages name -------- */
 $pageName = '';
 $subPageName = '';
 $partName = '';
@@ -28,9 +28,22 @@ if(isset($_GET['subPage'])) $subPageName = $_GET['subPage'];
 if(isset($_GET['part'])) $partName = $_GET['part'];
 if(isset($_GET['subPart'])) $subPartName = $_GET['subPart'];
 
+
+
+/* -------- Set page name if undefined -------- */
 if(!$pageName) {
-	if(LG == 'fr') $pageName = 'accueil';
-	else if(LG == 'en') $pageName = 'home';
+	for($i=0; $i<count($pages); $i++) {
+		if($i == 0)
+			$pageName = $pages[$i]['url'];
+	}
+}
+
+
+
+/* -------- Set page id -------- */
+for($i=0; $i<count($pages); $i++) {
+	if($pages[$i]['url'] == $pageName)
+		$pageId = $i;
 }
 
 
@@ -39,9 +52,9 @@ if(!$pageName) {
 $titlePage = '';
 $descPage = '';
 
-$titlePage = $pages[$pageName]['title'];
-$descPage = $pages[$pageName]['desc'];
-$file = $pages[$pageName]['file'];
+$titlePage = $pages[$pageId]['title'];
+$descPage = $pages[$pageId]['desc'];
+$file = $pages[$pageId]['file'];
 
 if($file == 'project') {
 	$url = $pageName.'/'.$subPageName.'/'.$partName;
@@ -50,8 +63,8 @@ if($file == 'project') {
 		$project = $projects[$i];
 		
 		if($project['url'] == $url) {
-			$titlePage = $project['name'].' - '.$pages[$pageName]['title'];
-			$descPage = $project['name'].' - '.$pages[$pageName]['title'];
+			$titlePage = $project['name'].' - '.$pages[$pageId]['title'];
+			$descPage = $project['name'].' - '.$pages[$pageId]['title'];
 			
 			break;
 		}

@@ -37,11 +37,10 @@ define('WEB_ROOT', $web_root);
 
 
 /* -------- Language -------- */
-//$aLg = array('fr', 'en', 'es');
-$aLg = array('fr');
+$aLg = array('fr', 'en', 'ex');
+//$aLg = array('fr');
 
 $multilingual = count($aLg) > 1 ? true : false;
-define('MULTI_LG', $multilingual);
 
 if(isset($_GET['lg'])) { // if lg
 	$lg = $_GET['lg'];
@@ -54,6 +53,8 @@ if(isset($_GET['lg'])) { // if lg
 }
 define('LG', $lg);
 //define('LG', 'fr');
+define('MULTI_LG', $multilingual);
+define('DEFAULT_LG', $aLg[0]);
 
 
 

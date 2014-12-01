@@ -1,33 +1,38 @@
-{
+[
 	
-	"accueil" : {
+	{
+		"url" : "accueil",
 		"file" : "home",
 		"title" : "Accueil - STARTER",
 		"desc" : "Accueil - STARTER"
 	},
 	
-	"a-propos" : {
+	{
+		"url" : "a-propos",
 		"file" : "about",
 		"title" : "À propos",
 		"desc" : "À propos"
 	},
 	
-	"projets" : {
+	{
+		"url" : "projets",
 		"file" : "projects",
 		"title" : "Projets",
 		"desc" : "Projets"
 	},
 	
-	"projet" : {
+	{
+		"url" : "projet",
 		"file" : "project",
 		"title" : "Projet",
 		"desc" : "Projet"
 	},
 	
-	"mentions-legales" : {
+	{
+		"url" : "mentions-legales",
 		"file" : "legals",
 		"title" : "Mentions légales",
 		"desc" : "Mentions légales"
 	}
 	
-}
+]

@@ -121,17 +121,32 @@ APP.RoutesManager = (function(window) {
 		
 		var endBaseUrl = url.indexOf(APP.Config.WEB_ROOT)+APP.Config.WEB_ROOT.length;
 		
+		
+		/* set page url & page name */
 		this.pageUrl = url.substring(endBaseUrl, url.length);
 		var lastCharPos = this.pageUrl.length-1;
 		if(this.pageUrl[lastCharPos] == '/') this.pageUrl = this.pageUrl.substring(0, lastCharPos);
-		if(this.pageUrl === '') this.pageUrl = 'accueil';
 		
-		if(!APP.Config.MULTI_LG) // monolingual
+		// monolingual
+		if(!APP.Config.MULTI_LG) {
+			if(this.pageUrl === '')
+				this.pageUrl = APP.Model.Global.json.pages[0].url;
+			
 			this.pageName = this.pageUrl.split('/')[0];
-		else // multilingual
+		}
+		// multilingual
+		else {
+			if(this.pageUrl === '')
+				this.pageUrl = LG + '/' + APP.Model.Global.json.pages[0].url;
+			
 			this.pageName = this.pageUrl.split('/')[1];
+		}
 		
-		this.viewName = APP.Model.Global.json.pages[this.pageName].file;
+		
+		/* set view name */
+		for(key in APP.Model.Global.json.pages)
+			if(this.pageName == APP.Model.Global.json.pages[key].url)
+				this.viewName = APP.Model.Global.json.pages[key].file;
 	};
 	
 	

@@ -12,6 +12,18 @@
 	<meta name="designer" content="Gaston Bouchayer" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="format-detection" content="telephone=no">
+	<?php
+	if(MULTI_LG) {
+		for($i=0; $i<count($aLg); $i++) {
+			if($aLg[$i] != LG) {
+				$urlPageAlt = $pageId != 0 ? '/'.$aPages[$aLg[$i]][$pageId]['url'] : '';
+				$urlAlt = $aLg[$i] == DEFAULT_LG && $pageId == 0 ? WEB_ROOT : WEB_ROOT.$aLg[$i].$urlPageAlt;
+				
+				echo '<link rel="alternate" href="'.$urlAlt.'" hreflang="'.$aLg[$i].'" />'."\n\t";
+			}
+		}
+	}
+	?>
 	
 	<!-- Facebook -->
 	<meta property="og:title" content="" />

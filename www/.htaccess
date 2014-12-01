@@ -51,7 +51,7 @@ RewriteRule img/(.*)$ assets/img/$1 [L]
 # --------------------- #
 
 
-RewriteRule (en|fr|es)/old-browser$ includes/alt/old-browser.php?lg=$1 [L]
+RewriteRule (en|fr|ex)/old-browser$ includes/alt/old-browser.php?lg=$1 [L]
 
 
 
@@ -65,18 +65,18 @@ RewriteRule (en|fr|es)/old-browser$ includes/alt/old-browser.php?lg=$1 [L]
 # -------- MULTILINGUAL -------- #
 
 # -------- Load in AJAX -------- #
-RewriteRule content-desktop/(en|fr|es)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?subPage=$3&part=$4&subPart=$5&lg=$1 [L]
-RewriteRule content-desktop/(en|fr|es)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?subPage=$3&part=$4&lg=$1 [L]
-RewriteRule content-desktop/(en|fr|es)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?subPage=$3&lg=$1 [L]
-RewriteRule content-desktop/(en|fr|es)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?lg=$1 [L]
+RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?subPage=$3&part=$4&subPart=$5&lg=$1 [L]
+RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?subPage=$3&part=$4&lg=$1 [L]
+RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?subPage=$3&lg=$1 [L]
+RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?lg=$1 [L]
 
 
 # -------- First load -------- #
-RewriteRule (en|fr|es)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2&subPage=$3&part=$4&subPart=$5 [L]
-RewriteRule (en|fr|es)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2&subPage=$3&part=$4 [L]
-RewriteRule (en|fr|es)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2&subPage=$3 [L]
-RewriteRule (en|fr|es)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2 [L]
-RewriteRule (en|fr|es)/?$ index.php?lg=$1 [L]
+RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2&subPage=$3&part=$4&subPart=$5 [L]
+RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2&subPage=$3&part=$4 [L]
+RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2&subPage=$3 [L]
+RewriteRule (en|fr|ex)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2 [L]
+RewriteRule (en|fr|ex)/?$ index.php?lg=$1 [L]
 
 
 # -------- MONOLINGUAL -------- #
