@@ -13,13 +13,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="format-detection" content="telephone=no">
 	<?php
+	$aAltLink = array();
+	
 	if(MULTI_LG) {
 		for($i=0; $i<count($aLg); $i++) {
-			if($aLg[$i] != LG) {
-				$urlPageAlt = $pageId != 0 ? '/'.$aPages[$aLg[$i]][$pageId]['url'] : '';
-				$urlAlt = $aLg[$i] == DEFAULT_LG && $pageId == 0 ? WEB_ROOT : WEB_ROOT.$aLg[$i].$urlPageAlt;
+			$lgTemp = $aLg[$i];
+			
+			if($lgTemp != LG) {
+				$urlPageAlt = $pageId != 0 ? '/'.$aPages[$lgTemp][$pageId]['url'] : '';
+				$urlAlt = $lgTemp == DEFAULT_LG && $pageId == 0 ? WEB_ROOT : WEB_ROOT.$lgTemp.$urlPageAlt;
 				
-				echo '<link rel="alternate" href="'.$urlAlt.'" hreflang="'.$aLg[$i].'" />'."\n\t";
+				$aAltLink[$lgTemp] = $urlAlt;
+				
+				echo '<link rel="alternate" href="'.$urlAlt.'" hreflang="'.$lgTemp.'" />'."\n\t";
 			}
 		}
 	}
@@ -119,9 +125,15 @@
 		<!-- Menu -->
 		<nav id="menu">
 			<ul>
-				<li><a href="<?php echo WEB_ROOT; ?>" class="menu-link" data-url="<?php echo WEB_ROOT; ?>/accueil">Accueil</a></li>
-				<li><a href="<?php echo WEB_ROOT; ?>a-propos" class="menu-link" data-url="<?php echo WEB_ROOT; ?>/a-propos">À propos</a></li>
-				<li><a href="<?php echo WEB_ROOT; ?>projets" class="menu-link" data-url="<?php echo WEB_ROOT; ?>/projects">Projets</a></li>
+				<li>
+					<a href="<?php echo WEB_ROOT.LG_LINK_ROOT; ?>" class="menu-link" data-url="<?php echo $aPages[LG][0]['url']; ?>">Accueil</a>
+				</li>
+				<li>
+					<a href="<?php echo WEB_ROOT.LG_LINK.$aPages[LG][1]['url']; ?>" class="menu-link" data-url="<?php echo $aPages[LG][1]['url']; ?>">À propos</a>
+				</li>
+				<li>
+					<a href="<?php echo WEB_ROOT.LG_LINK.$aPages[LG][2]['url']; ?>" class="menu-link" data-url="<?php echo $aPages[LG][2]['url']; ?>">Projets</a>
+				</li>
 			</ul>
 		</nav>
 	</header>

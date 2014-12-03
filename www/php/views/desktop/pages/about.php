@@ -11,6 +11,8 @@ if(isset($_POST['ajax'])) {
 <!-- About -->
 <section id="page-content" class="about">
 	
+	<br><br><br>
 	- Desktop page content / À propos -
+	<br><br><br><br>
 	
 </section>

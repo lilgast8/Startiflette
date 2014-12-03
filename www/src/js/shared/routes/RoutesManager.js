@@ -38,8 +38,30 @@ APP.RoutesManager = (function(window) {
 	};
 	
 	
+	RoutesManager.prototype.updateGA = function() {
+	//	var gaPageName = this.pageUrl == 'accueil' ? '' : this.pageUrl;
+		
+	//	if(!APP.Config.LOCALHOST && APP.Config.PROD)
+	//		ga('send', 'pageview', '/'+gaPageName);
+	};
+	
+	
 	var _bindEvents = function() {
 		History.Adapter.bind(window, 'statechange', _onStateChange.bind(this));
+	};
+	
+	
+	var _initFirstPage = function() {
+		_setInfosPage.call(this, null);
+		
+		this.currentPage = _getPage.call(this);
+	//	this.currentPage.init();
+		
+		this.currentPage.buildEvt(this.currentPage.EVENT.INIT, _enablePageChange.bind(this, true));
+		
+	//	this.currentPage.hideLoader();
+	//	_updateMenu.call(this);
+		this.currentPage.hidePreloader();
 	};
 	
 	
@@ -51,24 +73,25 @@ APP.RoutesManager = (function(window) {
 			
 			this.nextPage = _getPage.call(this);
 			
-			this.currentPage.buildEvt(this.currentPage.EVENT.HIDDEN, _loadNextPage.bind(this));
-			this.currentPage.hide();
+			this.currentPage.buildEvt(this.currentPage.EVENT.HIDDEN, _initNextPage.bind(this));
+			this.currentPage.hideContent();
+			
+			this.nextPage.load(this.pageUrl, this.pageName, this.viewName);
 		}
 	};
 	
 	
-	var _initFirstPage = function() {
-		_setInfosPage.call(this, null);
+	var _initNextPage = function() {
+		this.currentPage.destroyEvt(this.currentPage.EVENT.HIDDEN, _initNextPage.bind(this));
 		
-		this.currentPage = _getPage.call(this);
-		this.currentPage.init();
+		this.prevPage = this.currentPage;
+		this.currentPage = this.nextPage;
 		
-		this.currentPage.hideLoader();
-		_updateMenu.call(this);
-	};
-	
-	
-	var _loadNextPage = function() {
+		this.currentPage.buildEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this, false));
+		
+		this.currentPage.transitionEnded();
+		
+		/*
 		this.currentPage.destroyEvt(this.currentPage.EVENT.HIDDEN, _loadNextPage.bind(this));
 		
 		this.prevPage = this.currentPage;
@@ -78,6 +101,7 @@ APP.RoutesManager = (function(window) {
 		this.currentPage.buildEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this));
 		
 		this.currentPage.load(this.pageUrl, this.pageName, this.viewName);
+		*/
 	};
 	
 	
@@ -97,17 +121,40 @@ APP.RoutesManager = (function(window) {
 	};
 	
 	
+	var _changeLgLinks = function() {
+		console.log('change links');
+	};
+	
+	
 	var _disablePageChange = function() {
+		this.currentPage.showLoader();
+		
 		this.isPageChange = true;
 		this.activeUrl = _getUrl();
 	};
 	
 	
-	var _enablePageChange = function() {
-		this.currentPage.destroyEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this));
-		
-		this.isPageChange = false;
-		_checkUrl.call(this);
+	var _enablePageChange = function(init) {
+		if(init) {
+			this.currentPage.destroyEvt(this.currentPage.EVENT.INIT, _enablePageChange.bind(this));
+			
+			this.currentPage.hideLoader();
+			
+			this.isPageChange = false;
+			
+			APP.Main.resize();
+		}
+		else {
+			this.currentPage.destroyEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this));
+			
+			this.currentPage.hideLoader();
+			
+			this.isPageChange = false;
+			
+			APP.Main.resize();
+			
+			_checkUrl.call(this);
+		}
 	};
 	
 	
@@ -122,25 +169,25 @@ APP.RoutesManager = (function(window) {
 		var endBaseUrl = url.indexOf(APP.Config.WEB_ROOT)+APP.Config.WEB_ROOT.length;
 		
 		
-		/* set page url & page name */
+		/* set page url */
 		this.pageUrl = url.substring(endBaseUrl, url.length);
 		var lastCharPos = this.pageUrl.length-1;
-		if(this.pageUrl[lastCharPos] == '/') this.pageUrl = this.pageUrl.substring(0, lastCharPos);
+		if(this.pageUrl[lastCharPos] == '/')
+			this.pageUrl = this.pageUrl.substring(0, lastCharPos);
 		
-		// monolingual
-		if(!APP.Config.MULTI_LG) {
-			if(this.pageUrl === '')
-				this.pageUrl = APP.Model.Global.json.pages[0].url;
-			
-			this.pageName = this.pageUrl.split('/')[0];
+		if(this.pageUrl.split('/')[0] == LG) { // remove language if it's in the url
+			if(this.pageUrl.split('/')[1] === undefined) // if we are at the root
+				this.pageUrl = '';
+			else
+				this.pageUrl = this.pageUrl.substring(3, this.pageUrl.length);
 		}
-		// multilingual
-		else {
-			if(this.pageUrl === '')
-				this.pageUrl = LG + '/' + APP.Model.Global.json.pages[0].url;
-			
-			this.pageName = this.pageUrl.split('/')[1];
-		}
+		
+		if(this.pageUrl === '')
+			this.pageUrl = APP.Model.Global.json.pages[0].url;
+		
+		
+		/* set view name */
+		this.pageName = this.pageUrl.split('/')[0];
 		
 		
 		/* set view name */
@@ -163,7 +210,9 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _getTitle = function() {
-		var title = APP.Model.Global.json.pages[this.pageName].title;
+		for(key in APP.Model.Global.json.pages)
+			if(this.pageName == APP.Model.Global.json.pages[key].url)
+				title = APP.Model.Global.json.pages[key].title;
 		
 		if(this.viewName == 'project') {
 			for(var i=0; i<APP.Model.Global.json.projects.length; i++) {

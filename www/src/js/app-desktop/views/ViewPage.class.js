@@ -8,6 +8,8 @@ APP.ViewPage = (function(window) {
 		
 		this.name = null;
 		
+		this.tl = {};
+		
 		this.EVENT = {
 			LOADED : 'loaded',
 			INIT : 'init',
@@ -22,6 +24,9 @@ APP.ViewPage = (function(window) {
 	
 	
 	ViewPage.prototype.load = function(pageUrl, pageName, fileName) {
+		this.v.isAjaxLoaded = false;
+		this.v.isTransitionHideEnded = false;
+		
 		var pageUrlToLoad = pageUrl.replace(pageName, fileName);
 		
 		var urlPage = APP.Config.WEB_ROOT+'content-desktop/'+pageUrlToLoad;
@@ -38,17 +43,40 @@ APP.ViewPage = (function(window) {
 	
 	
 	ViewPage.prototype.loaded = function(data) {
-		APP.Main.$.pageContainer[0].innerHTML = data;
+		this.v.data = data;
 		
-		this.init();
-		this.show();
+		this.v.isAjaxLoaded = true;
 		
-		this.dispatch(this.EVENT.LOADED); // update menu
+		this.checkInit();
 	};
 	
 	
 	ViewPage.prototype.error = function() {
+	//	console.log('ajax load error');
+		window.location.href = APP.Config.WEB_ROOT+APP.RoutesManager.pageUrl;
+	};
+	
+	
+	ViewPage.prototype.transitionEnded = function() {
+		this.v.isTransitionHideEnded = true;
 		
+		this.checkInit();
+	};
+	
+	
+	ViewPage.prototype.checkInit = function() {
+		if(this.v.isAjaxLoaded && this.v.isTransitionHideEnded) {
+			APP.RoutesManager.updateGA(); // update Google Analytics
+			
+			APP.Main.$.pageContainer[0].innerHTML = this.v.data;
+			
+			this.v.data = null;
+			this.v.isAjaxLoaded = false;
+			this.v.isTransitionHideEnded = false;
+			
+			this.init();
+			this.show();
+		}
 	};
 	
 	
@@ -67,37 +95,16 @@ APP.ViewPage = (function(window) {
 	};
 	
 	
-	ViewPage.prototype.show = function() {
-		TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:1, ease:Quad.easeOut, onComplete:function(){
-			this.dispatch(this.EVENT.SHOWN);
-			this.hideLoader(false);
-		}.bind(this)});
-	};
-	
-	
-	ViewPage.prototype.hide = function() {
-		this.showLoader();
-		this.destroy();
-		
-		TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:0, ease:Quad.easeOut, onComplete:function(){
-			this.dispatch(this.EVENT.HIDDEN);
-		}.bind(this)});
-	};
-	
-	
-	ViewPage.prototype.showLoader = function() {
-		TweenLite.to(APP.Main.$.loader, 0.8, {opacity:1, display:'block', ease:Quart.easeOut});
-	};
-	
-	
-	ViewPage.prototype.hideLoader = function() {
-		TweenLite.to(APP.Main.$.loader, 0.8, {opacity:0, display:'none', ease:Quart.easeOut});
-	//	if(APP.RoutesManager.prevPage !== null) // if need a different behavior in the first load.
-	};
-	
-	
 	ViewPage.prototype.killTweens = function() {
+		for(var key in this.tl) {
+			var tl = this.tl[key];
+			
+			tl.stop();
+			tl.kill();
+			tl.clear();
+		}
 		
+		this.tl = {};
 	};
 	
 	
@@ -108,6 +115,46 @@ APP.ViewPage = (function(window) {
 		
 		this.$ = {};
 		this.v = {};
+	};
+	
+	
+	ViewPage.prototype.show = function() {
+		TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:1, ease:Quad.easeOut, onComplete:function(){
+			this.dispatch(this.EVENT.SHOWN);
+		}.bind(this)});
+	};
+	
+	
+	ViewPage.prototype.hideContent = function() {
+		this.hide();
+	};
+	
+	
+	ViewPage.prototype.hide = function() {
+		TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:0, ease:Quad.easeOut, onComplete:function(){
+			this.destroy();
+			this.dispatch(this.EVENT.HIDDEN);
+		}.bind(this)});
+	};
+	
+	
+	ViewPage.prototype.showLoader = function() {
+		TweenLite.to(APP.Main.$.loader, 0.8, {opacity:1, display:'block', ease:Quart.easeOut});
+	};
+	
+	
+	ViewPage.prototype.hidePreloader = function() {
+		// hide preloader if need
+		// play intro if need and at the end of it dispatch EVENT.INIT
+		
+		APP.RoutesManager.currentPage.dispatch(APP.RoutesManager.currentPage.EVENT.INIT); // dispatch event to enable page change
+	};
+	
+	
+	ViewPage.prototype.hideLoader = function() {
+		TweenLite.to(APP.Main.$.loader, 0.8, {opacity:0, display:'none', ease:Quart.easeOut});
+		
+		// if(APP.RoutesManager.prevPage == null) // if need a different behavior in the first load.
 	};
 	
 	

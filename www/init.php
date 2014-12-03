@@ -2,19 +2,32 @@
 
 
 
+/* ---------------------- */
 /* -------- Prod -------- */
+/* ---------------------- */
+
 define('PROD', false);
 //define('PROD', true);
 
 
 
+
+
+/* --------------------------- */
 /* -------- Localhost -------- */
+/* --------------------------- */
+
 $localhost = $_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_PORT'] == '8888' ? true : false;
 define('LOCALHOST', $localhost);
 
 
 
+
+
+/* ------------------------ */
 /* -------- Errors -------- */
+/* ------------------------ */
+
 if(LOCALHOST || !PROD) {
 	error_reporting(E_ALL);
 	ini_set('display_errors', '1');
@@ -22,13 +35,23 @@ if(LOCALHOST || !PROD) {
 
 
 
+
+
+/* ------------------------ */
 /* -------- Assets -------- */
+/* ------------------------ */
+
 $assets = PROD ? 'assets/' : 'src/';
 define('ASSETS', $assets);
 
 
 
+
+
+/* ----------------------- */
 /* -------- Roots -------- */
+/* ----------------------- */
+
 define('SITE_URL', 'http://www.SITE_URL.COM');
 define('SITE_ROOT', realpath(dirname(__FILE__)).'/');
 $web_root = LOCALHOST ? substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'], substr($_SERVER['SCRIPT_FILENAME'], strlen(SITE_ROOT)))) : SITE_URL.'/';
@@ -36,7 +59,12 @@ define('WEB_ROOT', $web_root);
 
 
 
-/* -------- Language -------- */
+
+
+/* --------------------------- */
+/* -------- Languages -------- */
+/* --------------------------- */
+
 $aLg = array('fr', 'en', 'ex');
 //$aLg = array('fr');
 
@@ -56,9 +84,18 @@ define('LG', $lg);
 define('MULTI_LG', $multilingual);
 define('DEFAULT_LG', $aLg[0]);
 
+define('LG_LINK', LG.'/');
+$lgLinkRoot = LG == $aLg[0] ? '' : LG;
+define('LG_LINK_ROOT', $lgLinkRoot);
 
 
+
+
+
+/* ------------------------------- */
 /* -------- Mobile Detect -------- */
+/* ------------------------------- */
+
 include_once(SITE_ROOT.'php/libs/Mobile_Detect.php');
 $detect = new Mobile_Detect();
 $mobile = $detect->isMobile() ? true : false;

@@ -3,9 +3,16 @@
 	
 	<!-- Footer -->
 	<footer id="footer">
+		<nav class="footer-lg">
+			<?php foreach($aAltLink as $key => $value) { ?>
+			<a href="<?php echo $value; ?>" class="footer-lg-link"><?php echo $key; ?></a>
+			<?php } ?>
+		</nav>
 		<nav>
 			<ul>
-				<li><a href="<?php echo WEB_ROOT; ?>mentions-legales" class="footer-link" data-url="<?php echo WEB_ROOT; ?>/mentions-legales">Mentions légales</a></li>
+				<li>
+					<a href="<?php echo WEB_ROOT.LG_LINK.$aPages[LG][4]['url']; ?>" class="footer-link" data-url="<?php echo $aPages[LG][4]['url']; ?>">Mentions légales</a>
+				</li>
 			</ul>
 		</nav>
 	</footer>

@@ -11,6 +11,8 @@ if(isset($_POST['ajax'])) {
 <!-- Project -->
 <section id="page-content" class="project">
 	
+	<br><br><br>
 	- Desktop page content / Projet / <?php echo $_GET['subPage'].'/'.$_GET['part']; ?> -
+	<br><br><br><br>
 	
 </section>
