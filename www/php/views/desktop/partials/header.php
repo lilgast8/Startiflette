@@ -16,12 +16,12 @@
 	$aAltLink = array();
 	
 	if(MULTI_LG) {
-		for($i=0; $i<count($aLg); $i++) {
-			$lgTemp = $aLg[$i];
+		for($i=0; $i<count($allLg); $i++) {
+			$lgTemp = $allLg[$i];
 			
 			if($lgTemp != LG) {
 				$urlPageAlt = $pageId != 0 ? '/'.$aPages[$lgTemp][$pageId]['url'] : '';
-				$urlAlt = $lgTemp == DEFAULT_LG && $pageId == 0 ? WEB_ROOT : WEB_ROOT.$lgTemp.$urlPageAlt;
+				$urlAlt = $lgTemp == $allLg[0] && $pageId == 0 ? WEB_ROOT : WEB_ROOT.$lgTemp.$urlPageAlt;
 				
 				$aAltLink[$lgTemp] = $urlAlt;
 				

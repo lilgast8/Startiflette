@@ -39,10 +39,11 @@ APP.RoutesManager = (function(window) {
 	
 	
 	RoutesManager.prototype.updateGA = function() {
-	//	var gaPageName = this.pageUrl == 'accueil' ? '' : this.pageUrl;
+		var pageUrl = this.pageId != 0 ? '/'+this.pageUrl : '';
+		var gaPageName = APP.Config.LG == APP.Config.ALL_LG[0] && this.pageId === 0 ? '' : APP.Config.LG+pageUrl;
 		
-	//	if(!APP.Config.LOCALHOST && APP.Config.PROD)
-	//		ga('send', 'pageview', '/'+gaPageName);
+		if(!APP.Config.LOCALHOST && APP.Config.PROD)
+			ga('send', 'pageview', '/'+gaPageName);
 	};
 	
 	
@@ -55,12 +56,11 @@ APP.RoutesManager = (function(window) {
 		_setInfosPage.call(this, null);
 		
 		this.currentPage = _getPage.call(this);
-	//	this.currentPage.init();
 		
-		this.currentPage.buildEvt(this.currentPage.EVENT.INIT, _enablePageChange.bind(this, true));
+		_updateMenu.call(this);
 		
-	//	this.currentPage.hideLoader();
-	//	_updateMenu.call(this);
+		this.currentPage.buildEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this, true));
+		
 		this.currentPage.hidePreloader();
 	};
 	
@@ -87,27 +87,16 @@ APP.RoutesManager = (function(window) {
 		this.prevPage = this.currentPage;
 		this.currentPage = this.nextPage;
 		
+		_updateMenu.call(this);
+		_updateLgLinks.call(this);
+		
 		this.currentPage.buildEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this, false));
 		
 		this.currentPage.transitionEnded();
-		
-		/*
-		this.currentPage.destroyEvt(this.currentPage.EVENT.HIDDEN, _loadNextPage.bind(this));
-		
-		this.prevPage = this.currentPage;
-		this.currentPage = this.nextPage;
-		
-		this.currentPage.buildEvt(this.currentPage.EVENT.LOADED, _updateMenu.bind(this));
-		this.currentPage.buildEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this));
-		
-		this.currentPage.load(this.pageUrl, this.pageName, this.viewName);
-		*/
 	};
 	
 	
 	var _updateMenu = function() {
-		if(this.currentPage.events.loaded) this.currentPage.destroyEvt(this.currentPage.EVENT.LOADED, _updateMenu.bind(this));
-		
 		var $menu = APP.Views.Static.Header.$.menu;
 		var $footer = APP.Views.Static.Footer.$.footer;
 		
@@ -121,8 +110,50 @@ APP.RoutesManager = (function(window) {
 	};
 	
 	
-	var _changeLgLinks = function() {
-		console.log('change links');
+	var _updateLgLinks = function() {
+		var aAltLink = _getAltLinks.call(this);
+		
+		var lgTemp, $footerLgLink;
+		
+		for(var i=0; i<APP.Views.Static.Footer.$.footerLgLink.length; i++) {
+			$footerLgLink = APP.Views.Static.Footer.$.footerLgLink[i];
+			
+			lgTemp = $footerLgLink.getAttribute('data-lg');
+			
+			$footerLgLink.href = aAltLink[lgTemp];
+		}
+	};
+	
+	
+	var _getAltLinks = function() {
+		this.pageId = _getPageId.call(this);
+		
+		var aAltLink = [];
+		var lgTemp, urlPageAlt, urlAlt;
+		
+		for(var i=0; i<APP.Config.ALL_LG.length; i++) {
+			lgTemp = APP.Config.ALL_LG[i];
+			
+			if(lgTemp != APP.Config.LG) {
+				urlPageAlt = this.pageId != 0 ? '/'+APP.Model.Global.json['page-'+lgTemp][this.pageId]['url'] : '';
+				urlAlt = lgTemp == APP.Config.ALL_LG[0] && this.pageId == 0 ? APP.Config.WEB_ROOT : APP.Config.WEB_ROOT+lgTemp+urlPageAlt;
+				
+				aAltLink[lgTemp] = urlAlt;
+			}
+		}
+		
+		return aAltLink;
+	};
+	
+	
+	var _getPageId = function() {
+		var pageId = null;
+		
+		for(var i=0; i<APP.Model.Global.json.pages.length; i++)
+			if(this.viewName == APP.Model.Global.json.pages[i].file)
+				pageId = i;
+		
+		return pageId;
 	};
 	
 	
@@ -135,26 +166,19 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _enablePageChange = function(init) {
-		if(init) {
-			this.currentPage.destroyEvt(this.currentPage.EVENT.INIT, _enablePageChange.bind(this));
-			
-			this.currentPage.hideLoader();
-			
-			this.isPageChange = false;
-			
-			APP.Main.resize();
-		}
-		else {
-			this.currentPage.destroyEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this));
-			
-			this.currentPage.hideLoader();
-			
-			this.isPageChange = false;
-			
-			APP.Main.resize();
-			
+		this.currentPage.destroyEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this));
+		
+		this.currentPage.hideLoader();
+		
+		this.isPageChange = false;
+		
+		if(init)
+			this.currentPage.init();
+		
+		APP.Main.resize();
+		
+		if(!init)
 			_checkUrl.call(this);
-		}
 	};
 	
 	

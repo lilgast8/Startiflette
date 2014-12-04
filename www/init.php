@@ -65,10 +65,10 @@ define('WEB_ROOT', $web_root);
 /* -------- Languages -------- */
 /* --------------------------- */
 
-$aLg = array('fr', 'en', 'ex');
-//$aLg = array('fr');
+$allLg = array('fr', 'en', 'ex');
+//$allLg = array('fr');
 
-$multilingual = count($aLg) > 1 ? true : false;
+$multilingual = count($allLg) > 1 ? true : false;
 
 if(isset($_GET['lg'])) { // if lg
 	$lg = $_GET['lg'];
@@ -82,10 +82,9 @@ if(isset($_GET['lg'])) { // if lg
 define('LG', $lg);
 //define('LG', 'fr');
 define('MULTI_LG', $multilingual);
-define('DEFAULT_LG', $aLg[0]);
 
 define('LG_LINK', LG.'/');
-$lgLinkRoot = LG == $aLg[0] ? '' : LG;
+$lgLinkRoot = LG == $allLg[0] ? '' : LG;
 define('LG_LINK_ROOT', $lgLinkRoot);
 
 

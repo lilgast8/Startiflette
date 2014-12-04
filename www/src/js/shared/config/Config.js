@@ -9,6 +9,7 @@ APP.Config = (function(window) {
 		this.WEB_ROOT = WEB_ROOT;
 		this.LG = LG;
 		this.MULTI_LG = MULTI_LG == '1' ? true : false;
+		this.ALL_LG = ALL_LG;
 		
 		this.BROWSER = null;
 		this.BROWSER_VERSION = null;

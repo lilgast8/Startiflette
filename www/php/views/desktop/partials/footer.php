@@ -5,7 +5,7 @@
 	<footer id="footer">
 		<nav class="footer-lg">
 			<?php foreach($aAltLink as $key => $value) { ?>
-			<a href="<?php echo $value; ?>" class="footer-lg-link"><?php echo $key; ?></a>
+			<a href="<?php echo $value; ?>" class="footer-lg-link" data-lg="<?php echo $key; ?>"><?php echo $key; ?></a>
 			<?php } ?>
 		</nav>
 		<nav>
@@ -33,6 +33,7 @@
 	var WEB_ROOT = '<?php echo WEB_ROOT; ?>';
 	var LG = '<?php echo LG; ?>';
 	var MULTI_LG = '<?php echo MULTI_LG; ?>';
+	var ALL_LG = <?php echo json_encode($allLg); /* [<?php echo '"'.implode('","', $allLg).'"' ?>]; */ ?>;
 </script>
 <?php
 if(!PROD) {

@@ -2,8 +2,8 @@
 
 $aPages = array();
 
-for($i=0; $i<count($aLg); $i++) {
-	$lgTemp = $aLg[$i];
+for($i=0; $i<count($allLg); $i++) {
+	$lgTemp = $allLg[$i];
 	$jsonPagesTemp = file_get_contents(SITE_ROOT.ASSETS.'json/'.$lgTemp.'/pages.json');
 	$pagesTemp = json_decode($jsonPagesTemp, true);
 	

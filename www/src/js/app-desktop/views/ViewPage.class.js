@@ -11,8 +11,8 @@ APP.ViewPage = (function(window) {
 		this.tl = {};
 		
 		this.EVENT = {
-			LOADED : 'loaded',
-			INIT : 'init',
+		//	LOADED : 'loaded',
+		//	INIT : 'init',
 			SHOWN : 'shown',
 			HIDDEN : 'hidden'
 		};
@@ -34,7 +34,7 @@ APP.ViewPage = (function(window) {
 			context : this,
 			url : urlPage,
 			type : 'POST',
-			data : { ajax:pageUrlToLoad},
+			data : { ajax:pageUrlToLoad },
 			dataType : 'html',
 			success : this.loaded,
 			error : this.error
@@ -145,9 +145,9 @@ APP.ViewPage = (function(window) {
 	
 	ViewPage.prototype.hidePreloader = function() {
 		// hide preloader if need
-		// play intro if need and at the end of it dispatch EVENT.INIT
+		// play intro if need and at the end of it dispatch APP.RoutesManager.currentPage.EVENT.SHOWN
 		
-		APP.RoutesManager.currentPage.dispatch(APP.RoutesManager.currentPage.EVENT.INIT); // dispatch event to enable page change
+		APP.RoutesManager.currentPage.dispatch(APP.RoutesManager.currentPage.EVENT.SHOWN); // dispatch event to enable page change
 	};
 	
 	

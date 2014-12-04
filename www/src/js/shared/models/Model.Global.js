@@ -29,12 +29,30 @@ APP.Model.Global = (function(window) {
 	
 	
 	Global.prototype.init = function() {
+		if(APP.Config.MULTI_LG)
+			_addInfosOthersLg.call(this);
+		
 		this.jsonLoader = new APP.Loader(true);
 		
 		this.jsonLoader.buildEvt(this.jsonLoader.EVENT.FILE_LOAD, _onFileLoad.bind(this));
 		this.jsonLoader.buildEvt(this.jsonLoader.EVENT.COMPLETE, _onComplete.bind(this));
 		
 		this.jsonLoader.startLoad(this.aJsonToLoad);
+	};
+	
+	
+	var _addInfosOthersLg = function() {
+		var lgTemp;
+		
+		for(var i=0; i<APP.Config.ALL_LG.length; i++) {
+			lgTemp = APP.Config.ALL_LG[i];
+			
+			if(lgTemp != APP.Config.LG)
+				this.aJsonToLoad.push({
+					id :'page-'+lgTemp,
+					src : 'json/'+lgTemp+'/pages.json'
+				});
+		}
 	};
 	
 	
