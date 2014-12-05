@@ -16,11 +16,21 @@ APP.Model.Global = (function(window) {
 		};
 		
 		this.aJsonToLoad = [
-			{ id:'pages', src:'json/'+APP.Config.LG+'/pages.json' },
-			{ id:'projects', src:'json/'+APP.Config.LG+'/projects.json' }
+			{
+				id : 'pages',
+				src : 'json/' + APP.Config.LG + '/pages.json',
+				lg : 'df'
+			},
+			{
+				id : 'projects',
+				src : 'json/' + APP.Config.LG + '/projects.json',
+				lg : 'df'
+			}
 		];
 		
 		this.json = {};
+		// this.json.pages = {};
+		// this.json.projects = {};
 	}
 	
 	
@@ -49,15 +59,18 @@ APP.Model.Global = (function(window) {
 			
 			if(lgTemp != APP.Config.LG)
 				this.aJsonToLoad.push({
-					id :'page-'+lgTemp,
-					src : 'json/'+lgTemp+'/pages.json'
+					id : 'pages',
+					src : 'json/' + lgTemp + '/pages.json',
+					lg : lgTemp
 				});
 		}
 	};
 	
 	
 	var _onFileLoad = function(e) {
-		this.json[e.item.id] = e.result;
+		this.json[e.item.id] = this.json[e.item.id] || {};
+		
+		this.json[e.item.id][e.item.lg] = e.result;
 	};
 	
 	

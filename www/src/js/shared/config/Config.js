@@ -8,7 +8,7 @@ APP.Config = (function(window) {
 		this.PROD = PROD == '1' ? true : false;
 		this.WEB_ROOT = WEB_ROOT;
 		this.LG = LG;
-		this.MULTI_LG = MULTI_LG == '1' ? true : false;
+		this.MULTI_LG = ALL_LG.length == 1 ? false : true;
 		this.ALL_LG = ALL_LG;
 		
 		this.BROWSER = null;

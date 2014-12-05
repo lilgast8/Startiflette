@@ -65,34 +65,34 @@ RewriteRule (en|fr|ex)/old-browser$ includes/alt/old-browser.php?lg=$1 [L]
 # -------- MULTILINGUAL -------- #
 
 # -------- Load in AJAX -------- #
-RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?subPage=$3&part=$4&subPart=$5&lg=$1 [L]
-RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?subPage=$3&part=$4&lg=$1 [L]
-RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?subPage=$3&lg=$1 [L]
+RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?urlPart2=$3&urlPart3=$4&urlPart4=$5&lg=$1 [L]
+RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?urlPart2=$3&urlPart3=$4&lg=$1 [L]
+RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?urlPart2=$3&lg=$1 [L]
 RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?lg=$1 [L]
 
 
 # -------- First load -------- #
-RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2&subPage=$3&part=$4&subPart=$5 [L]
-RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2&subPage=$3&part=$4 [L]
-RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2&subPage=$3 [L]
-RewriteRule (en|fr|ex)/([a-z0-9-]+)/?$ index.php?lg=$1&page=$2 [L]
+RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&urlPart1=$2&urlPart2=$3&urlPart3=$4&urlPart4=$5 [L]
+RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&urlPart1=$2&urlPart2=$3&urlPart3=$4 [L]
+RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&urlPart1=$2&urlPart2=$3 [L]
+RewriteRule (en|fr|ex)/([a-z0-9-]+)/?$ index.php?lg=$1&urlPart1=$2 [L]
 RewriteRule (en|fr|ex)/?$ index.php?lg=$1 [L]
 
 
 # -------- MONOLINGUAL -------- #
 
 # -------- Load in AJAX -------- #
-RewriteRule content-desktop/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php?subPage=$2&part=$3&subPart=$4 [L]
-RewriteRule content-desktop/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php?subPage=$2&part=$3 [L]
-RewriteRule content-desktop/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php?subPage=$2 [L]
+RewriteRule content-desktop/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php?urlPart2=$2&urlPart3=$3&urlPart4=$4 [L]
+RewriteRule content-desktop/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php?urlPart2=$2&urlPart3=$3 [L]
+RewriteRule content-desktop/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php?urlPart2=$2 [L]
 RewriteRule content-desktop/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php [L]
 
 
 # -------- First load -------- #
-RewriteRule (^[a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?page=$1&subPage=$2&part=$3&subPart=$4 [L]
-RewriteRule (^[a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?page=$1&subPage=$2&part=$3 [L]
-RewriteRule (^[a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?page=$1&subPage=$2 [L]
-RewriteRule (^[a-z0-9-]+)/?$ index.php?page=$1 [L]
+RewriteRule (^[a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?urlPart1=$1&urlPart2=$2&urlPart3=$3&urlPart4=$4 [L]
+RewriteRule (^[a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?urlPart1=$1&urlPart2=$2&urlPart3=$3 [L]
+RewriteRule (^[a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?urlPart1=$1&urlPart2=$2 [L]
+RewriteRule (^[a-z0-9-]+)/?$ index.php?urlPart1=$1 [L]
 
 
 

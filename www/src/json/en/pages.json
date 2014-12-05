@@ -1,38 +1,33 @@
-[
+{
 	
-	{
-		"url" : "home",
+	"home" : {
 		"file" : "home",
 		"title" : "Home - STARTER",
 		"desc" : "Home - STARTER"
 	},
 	
-	{
-		"url" : "about",
+	"about" : {
 		"file" : "about",
 		"title" : "About",
 		"desc" : "About"
 	},
 	
-	{
-		"url" : "projects",
+	"projects" : {
 		"file" : "projects",
 		"title" : "Projects",
 		"desc" : "Projects"
 	},
 	
-	{
-		"url" : "project",
+	"project" : {
 		"file" : "project",
 		"title" : "Project",
 		"desc" : "Project"
 	},
 	
-	{
-		"url" : "legals",
+	"legals" : {
 		"file" : "legals",
 		"title" : "Legal notice",
 		"desc" : "Legal notice"
 	}
 	
-]
+}

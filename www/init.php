@@ -66,7 +66,7 @@ define('WEB_ROOT', $web_root);
 /* --------------------------- */
 
 $allLg = array('fr', 'en', 'ex');
-//$allLg = array('fr');
+// $allLg = array('fr');
 
 $multilingual = count($allLg) > 1 ? true : false;
 

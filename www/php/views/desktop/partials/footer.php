@@ -3,15 +3,17 @@
 	
 	<!-- Footer -->
 	<footer id="footer">
+		<?php if(MULTI_LG) { ?>
 		<nav class="footer-lg">
-			<?php foreach($aAltLink as $key => $value) { ?>
-			<a href="<?php echo $value; ?>" class="footer-lg-link" data-lg="<?php echo $key; ?>"><?php echo $key; ?></a>
+			<?php foreach($aAltLink as $lgTemp => $urlPage) { ?>
+			<a href="<?php echo $urlPage; ?>" class="footer-lg-link" data-lg="<?php echo $lgTemp; ?>"><?php echo $lgTemp; ?></a>
 			<?php } ?>
 		</nav>
+		<?php } ?>
 		<nav>
 			<ul>
 				<li>
-					<a href="<?php echo WEB_ROOT.LG_LINK.$aPages[LG][4]['url']; ?>" class="footer-link" data-url="<?php echo $aPages[LG][4]['url']; ?>">Mentions légales</a>
+					<a href="<?php echo $aPagesLinks->legals; ?>" class="footer-link" data-url="<?php echo $aPagesLinks->legalsId; ?>">Mentions légales</a>
 				</li>
 			</ul>
 		</nav>
@@ -32,7 +34,6 @@
 	var PROD  = '<?php echo PROD; ?>';
 	var WEB_ROOT = '<?php echo WEB_ROOT; ?>';
 	var LG = '<?php echo LG; ?>';
-	var MULTI_LG = '<?php echo MULTI_LG; ?>';
 	var ALL_LG = <?php echo json_encode($allLg); /* [<?php echo '"'.implode('","', $allLg).'"' ?>]; */ ?>;
 </script>
 <?php

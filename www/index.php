@@ -8,7 +8,7 @@ include_once('init.php');
 
 
 /* -------- Texts -------- */
-include_once(SITE_ROOT.'php/contents/texts-'.LG.'.php');
+include_once(SITE_ROOT.'php/contents/'. LG .'/texts.php');
 
 
 
@@ -17,34 +17,52 @@ include_once(SITE_ROOT.'php/functions/load-json.php');
 
 
 
-/* -------- Get pages name -------- */
-$pageName = '';
-$subPageName = '';
-$partName = '';
-$subPartName = '';
+/* -------- Set root page name -------- */
+foreach($pages as $url => $infosPage) {
+	$rootUrlName = $url;
+	
+	break;
+}
 
-if(isset($_GET['page'])) $pageName = $_GET['page'];
-if(isset($_GET['subPage'])) $subPageName = $_GET['subPage'];
-if(isset($_GET['part'])) $partName = $_GET['part'];
-if(isset($_GET['subPart'])) $subPartName = $_GET['subPart'];
+
+
+/* -------- Set pages name -------- */
+$urlPart1 = '';
+$urlPart2 = '';
+$urlPart3 = '';
+$urlPart4 = '';
+
+if(isset($_GET['urlPart1'])) $urlPart1 = $_GET['urlPart1'];
+if(isset($_GET['urlPart2'])) $urlPart2 = $_GET['urlPart2'];
+if(isset($_GET['urlPart3'])) $urlPart3 = $_GET['urlPart3'];
+if(isset($_GET['urlPart4'])) $urlPart4 = $_GET['urlPart4'];
 
 
 
 /* -------- Set page name if undefined -------- */
-if(!$pageName) {
-	for($i=0; $i<count($pages); $i++) {
-		if($i == 0)
-			$pageName = $pages[$i]['url'];
-	}
-}
+if(!$urlPart1)
+	$urlPart1 = $rootUrlName;
 
 
 
 /* -------- Set page id -------- */
-for($i=0; $i<count($pages); $i++) {
+/*for($i=0; $i<count($pages); $i++) {
 	if($pages[$i]['url'] == $pageName)
 		$pageId = $i;
+}*/
+/*
+$i = 0;
+foreach($pages as $key => $value) {
+	if($key == $pageName) {
+		echo $i.'<br />';
+		$pageId = $i;
+		
+		break;
+	}
+	
+	$i++;
 }
+*/
 
 
 
@@ -52,19 +70,19 @@ for($i=0; $i<count($pages); $i++) {
 $titlePage = '';
 $descPage = '';
 
-$titlePage = $pages[$pageId]['title'];
-$descPage = $pages[$pageId]['desc'];
-$file = $pages[$pageId]['file'];
+$titlePage = $pages[$urlPart1]['title'];
+$descPage = $pages[$urlPart1]['desc'];
+$file = $pages[$urlPart1]['file'];
 
 if($file == 'project') {
-	$url = $pageName.'/'.$subPageName.'/'.$partName;
+	$url = $urlPart1.'/'.$urlPart2.'/'.$urlPart3;
 	
 	for($i=0; $i<count($projects); $i++) {
 		$project = $projects[$i];
 		
 		if($project['url'] == $url) {
-			$titlePage = $project['name'].' - '.$pages[$pageId]['title'];
-			$descPage = $project['name'].' - '.$pages[$pageId]['title'];
+			$titlePage = $project['name'].' - '.$pages[$urlPart1]['title'];
+			$descPage = $project['name'].' - '.$pages[$urlPart1]['title'];
 			
 			break;
 		}

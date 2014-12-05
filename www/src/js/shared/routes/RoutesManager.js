@@ -10,6 +10,7 @@ APP.RoutesManager = (function(window) {
 		this.currentPage = null;
 		this.nextPage = null;
 		
+		this.rootUrlName = null;
 		this.viewName = null;
 		this.pageName = null;
 		this.pageUrl = null;
@@ -24,7 +25,10 @@ APP.RoutesManager = (function(window) {
 	
 	
 	RoutesManager.prototype.init = function() {
+		_setRootUrlName.call(this);
+		
 		_bindEvents.call(this);
+		
 		_initFirstPage.call(this);
 	};
 	
@@ -69,7 +73,7 @@ APP.RoutesManager = (function(window) {
 		if(!this.isPageChange) {
 			_disablePageChange.call(this);
 			
-			_setInfosPage.call(this, null);
+		//	_setInfosPage.call(this, null);
 			
 			this.nextPage = _getPage.call(this);
 			
@@ -125,35 +129,40 @@ APP.RoutesManager = (function(window) {
 	};
 	
 	
-	var _getAltLinks = function() {
-		this.pageId = _getPageId.call(this);
-		
-		var aAltLink = [];
-		var lgTemp, urlPageAlt, urlAlt;
-		
-		for(var i=0; i<APP.Config.ALL_LG.length; i++) {
-			lgTemp = APP.Config.ALL_LG[i];
+	var _setRootUrlName = function() {
+		for(url in APP.Model.Global.json.pages.df) {
+			this.rootUrlName = url;
 			
-			if(lgTemp != APP.Config.LG) {
-				urlPageAlt = this.pageId != 0 ? '/'+APP.Model.Global.json['page-'+lgTemp][this.pageId]['url'] : '';
-				urlAlt = lgTemp == APP.Config.ALL_LG[0] && this.pageId == 0 ? APP.Config.WEB_ROOT : APP.Config.WEB_ROOT+lgTemp+urlPageAlt;
-				
-				aAltLink[lgTemp] = urlAlt;
-			}
+			break;
 		}
-		
-		return aAltLink;
 	};
 	
 	
-	var _getPageId = function() {
-		var pageId = null;
+	var _getAltLinks = function() {
+		var aAltLink = [];
+		var lgTemp, urlPageAlt, urlAlt;
 		
-		for(var i=0; i<APP.Model.Global.json.pages.length; i++)
-			if(this.viewName == APP.Model.Global.json.pages[i].file)
-				pageId = i;
+		for(var i=0; i<APP.Config.ALL_LG.length; i++) { // parse language
+			lgTemp = APP.Config.ALL_LG[i];
+			
+			if(lgTemp != APP.Config.LG) { // if not current language
+				
+				for(pageUrl in APP.Model.Global.json.pages[lgTemp]) { // parse page
+					
+					if(APP.Model.Global.json.pages[lgTemp][pageUrl].file == this.viewName) { // if file match with view name
+						urlPageAlt = this.pageName == this.rootUrlName ? '' : '/'+pageUrl;
+						urlAlt = lgTemp == APP.Config.ALL_LG[0] && this.pageName == this.rootUrlName ? APP.Config.WEB_ROOT : APP.Config.WEB_ROOT+lgTemp+urlPageAlt;
+						
+						aAltLink[lgTemp] = urlAlt;
+					}
+					
+				}
+				
+			}
+			
+		}
 		
-		return pageId;
+		return aAltLink;
 	};
 	
 	
@@ -207,36 +216,31 @@ APP.RoutesManager = (function(window) {
 		}
 		
 		if(this.pageUrl === '')
-			this.pageUrl = APP.Model.Global.json.pages[0].url;
+			this.pageUrl = this.rootUrlName;
 		
 		
-		/* set view name */
+		/* set page name */
 		this.pageName = this.pageUrl.split('/')[0];
 		
 		
 		/* set view name */
-		for(key in APP.Model.Global.json.pages)
-			if(this.pageName == APP.Model.Global.json.pages[key].url)
-				this.viewName = APP.Model.Global.json.pages[key].file;
+		this.viewName = APP.Model.Global.json.pages.df[this.pageName].file;
 	};
 	
 	
 	var _getPage = function() {
 		var currentPage = null;
-		var key = null;
 		
-		for(key in APP.Views.Page)
-			if(this.viewName == APP.Views.Page[key].name)
-				currentPage = APP.Views.Page[key];
+		for(pageView in APP.Views.Page)
+			if(this.viewName == APP.Views.Page[pageView].name)
+				currentPage = APP.Views.Page[pageView];
 		
 		return currentPage;
 	};
 	
 	
 	var _getTitle = function() {
-		for(key in APP.Model.Global.json.pages)
-			if(this.pageName == APP.Model.Global.json.pages[key].url)
-				title = APP.Model.Global.json.pages[key].title;
+		title = APP.Model.Global.json.pages.df[this.pageName].title;
 		
 		if(this.viewName == 'project') {
 			for(var i=0; i<APP.Model.Global.json.projects.length; i++) {

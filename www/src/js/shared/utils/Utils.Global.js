@@ -12,8 +12,10 @@ APP.Utils.Global = (function(window){
 	this.addClass = function(elt, classToAdd){
 		if(elt.classList)
 			elt.classList.add(classToAdd);
-		else
-			elt.className += ' ' + classToAdd;
+		else {
+			if(!hasClass(elt, classToAdd))
+				elt.className += ' ' + classToAdd;
+		}
 	};
 	
 	

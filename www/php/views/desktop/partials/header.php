@@ -13,21 +13,31 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="format-detection" content="telephone=no">
 	<?php
-	$aAltLink = array();
-	
 	if(MULTI_LG) {
-		for($i=0; $i<count($allLg); $i++) {
-			$lgTemp = $allLg[$i];
-			
-			if($lgTemp != LG) {
-				$urlPageAlt = $pageId != 0 ? '/'.$aPages[$lgTemp][$pageId]['url'] : '';
-				$urlAlt = $lgTemp == $allLg[0] && $pageId == 0 ? WEB_ROOT : WEB_ROOT.$lgTemp.$urlPageAlt;
+		$aAltLink = array();
+		$viewName = $aPages[LG][$urlPart1]['file'];
+		
+		foreach($aPages as $lgTemp => $infosAllPages) { // parse languages
+			if($lgTemp != LG) { // if not current language
 				
-				$aAltLink[$lgTemp] = $urlAlt;
+				foreach($infosAllPages as $pageUrl => $infosPage) { // parse page
+					$infosPage = (object) $infosPage;
+					
+					if($infosPage->file == $viewName) { // if file match with view name
+						$urlPageAlt = $urlPart1 == $rootUrlName ? '' : '/'.$pageUrl;
+						$urlAlt = $lgTemp == $allLg[0] && $urlPart1 == $rootUrlName ? WEB_ROOT : WEB_ROOT.$lgTemp.$urlPageAlt;
+						
+						$aAltLink[$lgTemp] = $urlAlt;
+						
+						echo '<link rel="alternate" href="'.$urlAlt.'" hreflang="'.$lgTemp.'" />'."\n\t";
+					}
+					
+				}
 				
-				echo '<link rel="alternate" href="'.$urlAlt.'" hreflang="'.$lgTemp.'" />'."\n\t";
 			}
+			
 		}
+		
 	}
 	?>
 	
@@ -97,7 +107,7 @@
 		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-		ga('create', 'UA-XXXXXXXX-XX', 'SITE-URL.COM');
+		ga('create', 'UA-XXXXXXXX-XX', 'auto');
 		ga('send', 'pageview');
 	</script>
 	<?php } ?>
@@ -126,13 +136,13 @@
 		<nav id="menu">
 			<ul>
 				<li>
-					<a href="<?php echo WEB_ROOT.LG_LINK_ROOT; ?>" class="menu-link" data-url="<?php echo $aPages[LG][0]['url']; ?>">Accueil</a>
+					<a href="<?php echo $aPagesLinks->home; ?>" class="menu-link" data-url="<?php echo $aPagesLinks->homeId; ?>">Accueil</a>
 				</li>
 				<li>
-					<a href="<?php echo WEB_ROOT.LG_LINK.$aPages[LG][1]['url']; ?>" class="menu-link" data-url="<?php echo $aPages[LG][1]['url']; ?>">À propos</a>
+					<a href="<?php echo $aPagesLinks->about; ?>" class="menu-link" data-url="<?php echo $aPagesLinks->aboutId; ?>">À propos</a>
 				</li>
 				<li>
-					<a href="<?php echo WEB_ROOT.LG_LINK.$aPages[LG][2]['url']; ?>" class="menu-link" data-url="<?php echo $aPages[LG][2]['url']; ?>">Projets</a>
+					<a href="<?php echo $aPagesLinks->projects; ?>" class="menu-link" data-url="<?php echo $aPagesLinks->projectsId; ?>">Projets</a>
 				</li>
 			</ul>
 		</nav>

@@ -1,38 +1,33 @@
-[
+{
 	
-	{
-		"url" : "home-ex",
+	"home-ex" : {
 		"file" : "home",
 		"title" : "Home - EX - STARTER",
 		"desc" : "Home - EX - STARTER"
 	},
 	
-	{
-		"url" : "about-ex",
+	"about-ex" : {
 		"file" : "about",
 		"title" : "About - EX",
 		"desc" : "About - EX"
 	},
 	
-	{
-		"url" : "projects-ex",
+	"projects-ex" : {
 		"file" : "projects",
 		"title" : "Projects - EX",
 		"desc" : "Projects - EX"
 	},
 	
-	{
-		"url" : "project-ex",
+	"project-ex" : {
 		"file" : "project",
 		"title" : "Project - EX",
 		"desc" : "Project - EX"
 	},
 	
-	{
-		"url" : "legals-ex",
+	"legals-ex" : {
 		"file" : "legals",
 		"title" : "Legal notice - EX",
 		"desc" : "Legal notice - EX"
 	}
 	
-]
+}
