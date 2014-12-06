@@ -72,13 +72,13 @@
 		<nav id="menu">
 			<ul>
 				<li>
-					<a href="<?php echo $aPagesUrl->home; ?>" class="menu-link" data-url="<?php echo $aPagesUrl->homeId; ?>">Accueil</a>
+					<a href="<?php echo $aUrl->home; ?>" class="menu-link" data-url="<?php echo $aUrl->homeId; ?>">Accueil</a>
 				</li>
 				<li>
-					<a href="<?php echo $aPagesUrl->about; ?>" class="menu-link" data-url="<?php echo $aPagesUrl->aboutId; ?>">À propos</a>
+					<a href="<?php echo $aUrl->about; ?>" class="menu-link" data-url="<?php echo $aUrl->aboutId; ?>">À propos</a>
 				</li>
 				<li>
-					<a href="<?php echo $aPagesUrl->projects; ?>" class="menu-link" data-url="<?php echo $aPagesUrl->projectsId; ?>">Projets</a>
+					<a href="<?php echo $aUrl->projects; ?>" class="menu-link" data-url="<?php echo $aUrl->projectsId; ?>">Projets</a>
 				</li>
 			</ul>
 		</nav>

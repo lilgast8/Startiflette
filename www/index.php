@@ -8,12 +8,12 @@ include_once('init.php');
 
 
 /* -------- Texts -------- */
-include_once(SITE_ROOT.'php/contents/'. LG .'/texts.php');
+include_once(SITE_ROOT.'php/contents/'.LG.'/texts.php');
 
 
 
 /* -------- Load JSON -------- */
-include_once(SITE_ROOT.'php/functions/load-json.php');
+include_once(SITE_ROOT.'php/functions/load-pages-infos.php');
 
 
 

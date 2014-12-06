@@ -13,7 +13,7 @@
 		<nav>
 			<ul>
 				<li>
-					<a href="<?php echo $aPagesUrl->legals; ?>" class="footer-link" data-url="<?php echo $aPagesUrl->legalsId; ?>">Mentions légales</a>
+					<a href="<?php echo $aUrl->legals; ?>" class="footer-link" data-url="<?php echo $aUrl->legalsId; ?>">Mentions légales</a>
 				</li>
 			</ul>
 		</nav>

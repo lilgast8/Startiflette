@@ -15,21 +15,6 @@ APP.Model.Global = (function(window) {
 			INIT : 'init'
 		};
 		
-		/*
-		this.aJsonToLoad = [
-			{
-				id : 'pages',
-				src : 'json/' + APP.Config.LG + '/pages.json',
-				lg : 'df'
-			},
-			{
-				id : 'projects',
-				src : 'json/' + APP.Config.LG + '/projects.json',
-				lg : 'df'
-			}
-		];
-		*/
-		
 		this.aJsonToLoad = [
 			{
 				id : 'pages',
@@ -81,17 +66,13 @@ APP.Model.Global = (function(window) {
 	
 	
 	var _onFileLoad = function(e) {
-		// this.json[e.item.id] = this.json[e.item.id] || {};
-		
-		// this.json[e.item.id][e.item.lg] = e.result;
-		
 		var id = e.item.id;
 		var lg = e.item.lg;
 		
-		if(lg === undefined) // page infos active language
+		if(lg === undefined) // pages infos for active language
 			this.json[id] = e.result;
 		
-		else { // page infos for others languages
+		else { // pages infos for others languages
 			this.json[id] = this.json[id] || {};
 			this.json[id][lg] = this.json[id][lg] || {};
 			
