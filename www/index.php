@@ -45,27 +45,6 @@ if(!$urlPart1)
 
 
 
-/* -------- Set page id -------- */
-/*for($i=0; $i<count($pages); $i++) {
-	if($pages[$i]['url'] == $pageName)
-		$pageId = $i;
-}*/
-/*
-$i = 0;
-foreach($pages as $key => $value) {
-	if($key == $pageName) {
-		echo $i.'<br />';
-		$pageId = $i;
-		
-		break;
-	}
-	
-	$i++;
-}
-*/
-
-
-
 /* -------- Titles/metas of the page -------- */
 $titlePage = '';
 $descPage = '';

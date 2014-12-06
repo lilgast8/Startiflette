@@ -40,7 +40,7 @@ APP.Model.Global = (function(window) {
 		if(APP.Config.MULTI_LG)
 			_addInfosOthersLg.call(this);
 		
-		this.jsonLoader = new APP.Loader(true);
+		this.jsonLoader = new APP.Loader(true, false);
 		
 		this.jsonLoader.buildEvt(this.jsonLoader.EVENT.FILE_LOAD, _onFileLoad.bind(this));
 		this.jsonLoader.buildEvt(this.jsonLoader.EVENT.COMPLETE, _onComplete.bind(this));

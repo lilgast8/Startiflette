@@ -3,7 +3,7 @@
 APP.Loader = (function(window) {
 	
 	
-	function Loader(fileLoadOpt) {
+	function Loader(fileLoadOpt, onProgress) {
 		APP.EventDispatcher.call(this);
 		
 		this.p = {};
@@ -18,6 +18,7 @@ APP.Loader = (function(window) {
 		};
 		
 		this.isFileLoadOpt = fileLoadOpt;
+		this.isOnProgress = onProgress;
 		
 		this.queue = new createjs.LoadQueue(true, APP.Config.WEB_ROOT);
 		
@@ -60,17 +61,21 @@ APP.Loader = (function(window) {
 	
 	
 	Loader.prototype.onLoadStart = function(e) {
-	//	console.log('loadStart loader');
+		// console.log('loadStart loader');
 	};
 	
 	
 	Loader.prototype.onProgress = function(e) {
-	//	console.log('progress loader', e.loaded);
+		// console.log('progress loader', e.loaded);
+		
+		if(this.isOnProgress)
+			this.dispatch(this.EVENT.PROGRESS, e);
 	};
 	
 	
 	Loader.prototype.onFileLoad = function(e) {
-		if(this.isFileLoadOpt) this.dispatch(this.EVENT.FILE_LOAD, e);
+		if(this.isFileLoadOpt)
+			this.dispatch(this.EVENT.FILE_LOAD, e);
 	};
 	
 	
