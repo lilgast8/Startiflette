@@ -72,68 +72,6 @@ APP.RoutesManager = (function(window) {
 	};
 	
 	
-	var _onStateChange = function() {
-		if(!this.isPageChange) {
-			_disablePageChange.call(this);
-			
-		//	_setInfosPage.call(this, null);
-			
-			this.nextPage = _getPage.call(this);
-			
-			this.currentPage.buildEvt(this.currentPage.EVENT.HIDDEN, _initNextPage.bind(this));
-			this.currentPage.hideContent();
-			
-			this.nextPage.load(this.pageUrl, this.pageName, this.viewName);
-		}
-	};
-	
-	
-	var _initNextPage = function() {
-		this.currentPage.destroyEvt(this.currentPage.EVENT.HIDDEN, _initNextPage.bind(this));
-		
-		this.prevPage = this.currentPage;
-		this.currentPage = this.nextPage;
-		
-		_updateMenu.call(this);
-		if(APP.Config.MULTI_LG)
-			_updateLgLinks.call(this);
-		
-		this.currentPage.buildEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this, false));
-		
-		this.currentPage.transitionEnded();
-	};
-	
-	
-	var _updateMenu = function() {
-		var $menu = APP.Views.Static.Header.$.menu;
-		var $footer = APP.Views.Static.Footer.$.footer;
-		
-		var $menuToDisable = $menu.find('[data-active="true"]');
-		if(!$menuToDisable.length) $menuToDisable = $footer.find('[data-active="true"]');
-		var $menuToEnable = $menu.find('[data-url*="'+this.pageUrl+'"]');
-		if(!$menuToEnable.length) $menuToEnable = $footer.find('[data-url*="'+this.pageUrl+'"]');
-		
-		if($menuToDisable.length) $menuToDisable[0].setAttribute('data-active', 'false');
-		if($menuToEnable.length) $menuToEnable[0].setAttribute('data-active', 'true');
-	};
-	
-	
-	var _updateLgLinks = function() {
-	//	var aAltLink = _getAltLinks.call(this);
-		
-		var lgTemp, $footerLgLink;
-		
-		for(var i=0; i<APP.Views.Static.Footer.$.footerLgLink.length; i++) {
-			$footerLgLink = APP.Views.Static.Footer.$.footerLgLink[i];
-			
-			lgTemp = $footerLgLink.getAttribute('data-lg');
-			
-		//	$footerLgLink.href = aAltLink[lgTemp];
-			$footerLgLink.href = this.altUrl[this.pageUrl][lgTemp];
-		}
-	};
-	
-	
 	var _setRootUrlName = function() {
 		for(url in APP.Model.Global.json.pages) {
 			this.rootUrlName = url;
@@ -163,121 +101,45 @@ APP.RoutesManager = (function(window) {
 						
 						this.altUrl[pageUrl][lgTemp] = urlAlt;
 					}
-					
-				}
-				
-			}
-			
-			
-			/*
-			for(pageTemp in APP.Model.Global.json.pages.en) {
-				var fileTemp = APP.Model.Global.json.pages.en[pageTemp].file;
-				
-				if(file == fileTemp) {
-					console.log(pageTemp);
-					this.altUrl[page]['en'] = pageTemp;
-					break;
 				}
 			}
-			
-			for(pageTemp in APP.Model.Global.json.pages.ex) {
-				var fileTemp = APP.Model.Global.json.pages.ex[pageTemp].file;
-				
-				if(file == fileTemp) {
-					console.log(pageTemp);
-					this.altUrl[page]['ex'] = pageTemp;
-					break;
-				}
-			}
-			*/
-			
-			
 		}
-		
-		
-		
-		// for(lgTemp in APP.Model.Global.json.pagesTr) {
-		// //	console.log( APP.Model.Global.json.pagesTr[lgTemp] );
-			
-		// 	for(pageTemp in APP.Model.Global.json.pagesTr[lgTemp]) {
-		// 	//	console.log(APP.Model.Global.json.pagesTr[lgTemp][pageTemp].file);
-				
-		// 		for(page in APP.Model.Global.json.pages) {
-		// 			var file = APP.Model.Global.json.pages[page].file;
-		// 			console.log(file);
-					
-		// 			i++;
-		// 		}
-				
-		// 	}
-		// }
-		
-		console.log('ALT url 2', this.altUrl);
 	};
 	
 	
-	/*
-	var _getAltLinks = function() {
-		var aAltLink = [];
-		var lgTemp, urlPageAlt, urlAlt;
-		
-		for(var i=0; i<APP.Config.ALL_LG.length; i++) { // parse language
-			lgTemp = APP.Config.ALL_LG[i];
+	var _onStateChange = function() {
+		if(!this.isPageChange) {
+			_disablePageChange.call(this);
 			
-			if(lgTemp != APP.Config.LG) { // if not current language
-				
-				for(pageUrl in APP.Model.Global.json.pages[lgTemp]) { // parse page
-					
-					if(APP.Model.Global.json.pages[lgTemp][pageUrl].file == this.viewName) { // if file match with view name
-						urlPageAlt = this.pageName == this.rootUrlName ? '' : '/'+pageUrl;
-						urlAlt = lgTemp == APP.Config.ALL_LG[0] && this.pageName == this.rootUrlName ? APP.Config.WEB_ROOT : APP.Config.WEB_ROOT+lgTemp+urlPageAlt;
-						
-						aAltLink[lgTemp] = urlAlt;
-					}
-					
-				}
-				
-			}
+			this.nextPage = _getPage.call(this);
 			
+			this.currentPage.buildEvt(this.currentPage.EVENT.HIDDEN, _initNextPage.bind(this));
+			this.currentPage.hideContent();
+			
+			this.nextPage.load(this.pageUrl, this.pageName, this.viewName);
 		}
-		
-		return aAltLink;
-	};
-	*/
-	
-	
-	var _disablePageChange = function() {
-		this.currentPage.showLoader();
-		
-		this.isPageChange = true;
-		this.activeUrl = _getUrl();
 	};
 	
 	
-	var _enablePageChange = function(init) {
-		this.currentPage.destroyEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this));
+	var _initNextPage = function() {
+		this.currentPage.destroyEvt(this.currentPage.EVENT.HIDDEN, _initNextPage.bind(this));
 		
-		this.currentPage.hideLoader();
+		this.prevPage = this.currentPage;
+		this.currentPage = this.nextPage;
 		
-		this.isPageChange = false;
+		_updateMenu.call(this);
+		if(APP.Config.MULTI_LG)
+			_updateLgLinks.call(this);
 		
-		if(init)
-			this.currentPage.init();
+		this.currentPage.buildEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this, false));
 		
-		APP.Main.resize();
-		
-		if(!init)
-			_checkUrl.call(this);
-	};
-	
-	
-	var _checkUrl = function() {
-		if(this.activeUrl != _getUrl()) _onStateChange.call(this);
+		this.currentPage.transitionEnded();
 	};
 	
 	
 	var _setInfosPage = function(url) {
-		if(url === null) url = _getUrl();
+		if(url === null)
+			url = _getUrl();
 		
 		var endBaseUrl = url.indexOf(APP.Config.WEB_ROOT)+APP.Config.WEB_ROOT.length;
 		
@@ -343,6 +205,63 @@ APP.RoutesManager = (function(window) {
 		url = state.url;
 		
 		return url;
+	};
+	
+	
+	var _updateMenu = function() {
+		var $menu = APP.Views.Static.Header.$.menu;
+		var $footer = APP.Views.Static.Footer.$.footer;
+		
+		var $menuToDisable = $menu.find('[data-active="true"]');
+		if(!$menuToDisable.length) $menuToDisable = $footer.find('[data-active="true"]');
+		var $menuToEnable = $menu.find('[data-url*="'+this.pageUrl+'"]');
+		if(!$menuToEnable.length) $menuToEnable = $footer.find('[data-url*="'+this.pageUrl+'"]');
+		
+		if($menuToDisable.length) $menuToDisable[0].setAttribute('data-active', 'false');
+		if($menuToEnable.length) $menuToEnable[0].setAttribute('data-active', 'true');
+	};
+	
+	
+	var _updateLgLinks = function() {
+		var lgTemp, $footerLgLink;
+		
+		for(var i=0; i<APP.Views.Static.Footer.$.footerLgLink.length; i++) {
+			$footerLgLink = APP.Views.Static.Footer.$.footerLgLink[i];
+			
+			lgTemp = $footerLgLink.getAttribute('data-lg');
+			
+			$footerLgLink.href = this.altUrl[this.pageUrl][lgTemp];
+		}
+	};
+	
+	
+	var _disablePageChange = function() {
+		this.currentPage.showLoader();
+		
+		this.isPageChange = true;
+		this.activeUrl = _getUrl();
+	};
+	
+	
+	var _enablePageChange = function(init) {
+		this.currentPage.destroyEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this));
+		
+		this.currentPage.hideLoader();
+		
+		this.isPageChange = false;
+		
+		if(init)
+			this.currentPage.init();
+		
+		APP.Main.resize();
+		
+		if(!init)
+			_checkUrl.call(this);
+	};
+	
+	
+	var _checkUrl = function() {
+		if(this.activeUrl != _getUrl()) _onStateChange.call(this);
 	};
 	
 	
