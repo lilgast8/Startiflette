@@ -66,27 +66,33 @@ define('WEB_ROOT', $web_root);
 /* --------------------------- */
 
 $allLg = array('fr', 'en', 'ex');
-// $allLg = array('fr');
+// $allLg = array('en');
 
 $multilingual = count($allLg) > 1 ? true : false;
 
-if(isset($_GET['lg'])) { // if lg
+/* Language */
+if(isset($_GET['lg'])) // if get lg
 	$lg = $_GET['lg'];
-} else { // if !lg
-	if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-		$lg = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-		if($lg != 'fr' && $lg != 'en') $lg = 'fr';
-	}
-	else $lg = 'fr';
-}
+else // if don't get lg
+	$lg = $allLg[0];
 
+/* Alternative language */
+if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+	$altLg = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+	if($lg != 'fr' && $lg != 'en') $altLg = 'en';
+	else $altLg = $lg;
+}
+else $altLg = 'en';
+
+
+$lgLink = $multilingual ? $lg.'/' : '';
 $lgLinkRoot = $lg == $allLg[0] ? '' : $lg;
 
 define('LG', $lg);
-//define('LG', 'fr');
 define('MULTI_LG', $multilingual);
-define('LG_LINK', LG.'/');
+define('LG_LINK', $lgLink);
 define('LG_LINK_ROOT', $lgLinkRoot);
+define('ALT_LG', $altLg);
 
 
 
