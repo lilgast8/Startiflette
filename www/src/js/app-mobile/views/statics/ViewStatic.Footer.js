@@ -16,8 +16,9 @@ APP.Views.Static.Footer = (function(window){
 	Footer.prototype.constructor = Footer;
 	
 	
-	Footer.prototype.initElt = function() {
+	Footer.prototype.initEl = function() {
 		this.$.footer = $(document.getElementById('footer'));
+		this.$.footerLgLink = this.$.footer.find('.footer-lg-link');
 		this.$.footerLink = this.$.footer.find('.footer-link');
 	};
 	

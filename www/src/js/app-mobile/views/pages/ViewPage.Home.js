@@ -9,6 +9,8 @@ APP.Views.Page.Home = (function(window){
 	
 	function Home() {
 		APP.ViewPage.call(this);
+		
+		this.name = 'home';
 	}
 	
 	
@@ -16,7 +18,7 @@ APP.Views.Page.Home = (function(window){
 	Home.prototype.constructor = Home;
 	
 	
-	Home.prototype.initElt = function() {
+	Home.prototype.initEl = function() {
 		this.$.page = $(document.getElementById('page-content'));
 	};
 	

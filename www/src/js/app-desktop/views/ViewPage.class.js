@@ -80,7 +80,7 @@ APP.ViewPage = (function(window) {
 	};
 	
 	
-	ViewPage.prototype.initElt = function() {
+	ViewPage.prototype.initEl = function() {
 		
 	};
 	

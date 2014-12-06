@@ -17,12 +17,12 @@ APP.View = (function(window) {
 	
 	
 	View.prototype.init = function() {
-		this.initElt();
+		this.initEl();
 		this.bindEvents();
 	};
 	
 	
-	View.prototype.initElt = function() {
+	View.prototype.initEl = function() {
 		
 	};
 	

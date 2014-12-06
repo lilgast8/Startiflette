@@ -9,6 +9,8 @@ APP.Views.Page.About = (function(window){
 	
 	function About() {
 		APP.ViewPage.call(this);
+		
+		this.name = 'about';
 	}
 	
 	
@@ -16,7 +18,7 @@ APP.Views.Page.About = (function(window){
 	About.prototype.constructor = About;
 	
 	
-	About.prototype.initElt = function() {
+	About.prototype.initEl = function() {
 		this.$.page = $(document.getElementById('page-content'));
 	};
 	

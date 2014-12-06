@@ -9,6 +9,8 @@ APP.Views.Page.Projects = (function(window){
 	
 	function Projects() {
 		APP.ViewPage.call(this);
+		
+		this.name = 'projects';
 	}
 	
 	
@@ -16,7 +18,7 @@ APP.Views.Page.Projects = (function(window){
 	Projects.prototype.constructor = Projects;
 	
 	
-	Projects.prototype.initElt = function() {
+	Projects.prototype.initEl = function() {
 		this.$.page = $(document.getElementById('page-content'));
 		this.$.projectLink = this.$.page.find('.project-link');
 	};

@@ -12,7 +12,7 @@ APP.ViewPartial = (function(window) {
 	ViewPartial.prototype.constructor = ViewPartial;
 	
 	
-	ViewPartial.prototype.initElt = function() {
+	ViewPartial.prototype.initEl = function() {
 		
 	};
 	

@@ -18,7 +18,7 @@ APP.Views.Page.Legals = (function(window){
 	Legals.prototype.constructor = Legals;
 	
 	
-	Legals.prototype.initElt = function() {
+	Legals.prototype.initEl = function() {
 		this.$.page = $(document.getElementById('page-content'));
 		
 		this.$.email = this.$.page.find('.email');

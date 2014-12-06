@@ -9,67 +9,67 @@ APP.Utils.Global = (function(window){
 	this.color = {};
 	
 	
-	this.addClass = function(elt, classToAdd){
-		if(elt.classList)
-			elt.classList.add(classToAdd);
+	this.addClass = function(el, classToAdd){
+		if(el.classList)
+			el.classList.add(classToAdd);
 		else {
-			if(!hasClass(elt, classToAdd))
-				elt.className += ' ' + classToAdd;
+			if(!hasClass(el, classToAdd))
+				el.className += ' ' + classToAdd;
 		}
 	};
 	
 	
-	this.removeClass = function(elt, classToRemove) {
-		if(elt.classList)
-			elt.classList.remove(classToRemove);
+	this.removeClass = function(el, classToRemove) {
+		if(el.classList)
+			el.classList.remove(classToRemove);
 		else {
-			elt.className = elt.className.replace(new RegExp('(^|\\b)' + classToRemove.split(' ').join('|') + '(\\b|$)', 'gi'), '');
+			el.className = el.className.replace(new RegExp('(^|\\b)' + classToRemove.split(' ').join('|') + '(\\b|$)', 'gi'), '');
 			
-			var lastCharPos = elt.className.length-1;
-			if(elt.className[lastCharPos] == ' ')
-				elt.className = elt.className.substring(0, lastCharPos);
+			var lastCharPos = el.className.length-1;
+			if(el.className[lastCharPos] == ' ')
+				el.className = el.className.substring(0, lastCharPos);
 		}
 	};
 	
 	
-	this.hasClass = function(elt, classToCheck) {
+	this.hasClass = function(el, classToCheck) {
 		var hasClass;
 		
-		if(elt.classList)
-			hasClass = elt.classList.contains(classToCheck);
+		if(el.classList)
+			hasClass = el.classList.contains(classToCheck);
 		else
-			hasClass = new RegExp('(^| )' + classToCheck + '( |$)', 'gi').test(elt.className);
+			hasClass = new RegExp('(^| )' + classToCheck + '( |$)', 'gi').test(el.className);
 		
 		return hasClass;
 	};
 	
 	
-	this.resetStyle = function(elt){
-		elt.style.cssText = '';
+	this.resetStyle = function(el){
+		el.style.cssText = '';
 	};
 	
 	
-	this.getEltSize = function(eltW, eltH, contW, contH) {
-		var imgRatio = eltW/eltW;
+	this.getElSize = function(elW, elH, contW, contH) {
+		var imgRatio = elW/elW;
 		var contRatio = contW/contH;
-		var sizeElt = {
+		var sizeEl = {
 			x : 0,
 			y : 0,
 			w : 0,
 			h : 0
 		};
 		
-		if(eltRatio < contRatio) {
-			sizeElt.w = contW;
-			sizeElt.h = Math.round(sizeElt.w/eltRatio);
-			sizeElt.y = Math.round(-(sizeElt.h-contH)/2);
+		if(elRatio < contRatio) {
+			sizeEl.w = contW;
+			sizeEl.h = Math.round(sizeEl.w/elRatio);
+			sizeEl.y = Math.round(-(sizeEl.h-contH)/2);
 		} else {
-			sizeElt.h = contH;
-			sizeElt.w = Math.round(sizeElt.h*eltRatio);
-			sizeElt.x = Math.round(-(sizeElt.w-contW)/2);
+			sizeEl.h = contH;
+			sizeEl.w = Math.round(sizeEl.h*elRatio);
+			sizeEl.x = Math.round(-(sizeEl.w-contW)/2);
 		}
 		
-		return sizeElt;
+		return sizeEl;
 	};
 	
 	
@@ -99,7 +99,7 @@ APP.Utils.Global = (function(window){
 	};
 	
 	
-	this.initMailto = function(elt, address, domain, end) {
+	this.initMailto = function(el, address, domain, end) {
 		var mailto = 'mailto';
 		var separator = ':';
 		var at = '@';
@@ -107,7 +107,7 @@ APP.Utils.Global = (function(window){
 		
 		var email = mailto + separator + address + at + domain + dot + end;
 		
-		elt.setAttribute('href', email);
+		el.setAttribute('href', email);
 	};
 	
 	

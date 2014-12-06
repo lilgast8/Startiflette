@@ -18,7 +18,7 @@ APP.Views.Page.Example = (function(window){
 	Example.prototype.constructor = Example;
 	
 	
-	Example.prototype.initElt = function() {
+	Example.prototype.initEl = function() {
 		this.$.page = $(document.getElementById('page-content'));
 	};
 	

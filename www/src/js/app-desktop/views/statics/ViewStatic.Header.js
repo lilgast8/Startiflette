@@ -16,7 +16,7 @@ APP.Views.Static.Header = (function(window){
 	Header.prototype.constructor = Header;
 	
 	
-	Header.prototype.initElt = function() {
+	Header.prototype.initEl = function() {
 		this.$.header = $(document.getElementById('header'));
 		this.$.menu = $(document.getElementById('menu'));
 		this.$.menuLink = this.$.menu.find('.menu-link');

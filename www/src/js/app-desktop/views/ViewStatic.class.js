@@ -12,7 +12,7 @@ APP.ViewStatic = (function(window) {
 	ViewStatic.prototype.constructor = ViewStatic;
 	
 	
-	ViewStatic.prototype.initElt = function() {
+	ViewStatic.prototype.initEl = function() {
 		
 	};
 	

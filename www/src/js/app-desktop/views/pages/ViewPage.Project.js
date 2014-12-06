@@ -18,7 +18,7 @@ APP.Views.Page.Project = (function(window){
 	Project.prototype.constructor = Project;
 	
 	
-	Project.prototype.initElt = function() {
+	Project.prototype.initEl = function() {
 		this.$.page = $(document.getElementById('page-content'));
 	};
 	

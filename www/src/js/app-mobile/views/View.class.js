@@ -17,12 +17,12 @@ APP.View = (function(window) {
 	
 	
 	View.prototype.init = function() {
-		this.initElt();
+		this.initEl();
 		this.bindEvents();
 	};
 	
 	
-	View.prototype.initElt = function() {
+	View.prototype.initEl = function() {
 		
 	};
 	
@@ -36,7 +36,11 @@ APP.View = (function(window) {
 		e.preventDefault();
 		
 		var url = e.currentTarget.href;
-		APP.RoutesManager.goToPage(url);
+		
+		if(APP.Config.HAS_PUSHSTATE) // if pushstate supported
+			APP.RoutesManager.goToPage(url);
+		else // if pushstate not supported
+			window.location = url;
 	};
 	
 	
