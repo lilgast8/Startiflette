@@ -1,5 +1,7 @@
 <?php
 
+
+/* -------- Projects -------- */
 $aPages = array();
 
 for($i=0; $i<count($allLg); $i++) {
@@ -13,24 +15,28 @@ for($i=0; $i<count($allLg); $i++) {
 $pages = $aPages[LG];
 
 
+
+/* -------- Page url -------- */
 $i = 0;
-$aPagesLinks = array();
+$aPagesUrl = array();
+
 foreach($pages as $pageUrl => $infosPage) {
 	$infosPage = (object) $infosPage;
 	
 	if($i == 0)
-		$aPagesLinks[ $infosPage->file ] = WEB_ROOT.LG_LINK_ROOT;
+		$aPagesUrl[ $infosPage->file ] = WEB_ROOT.LG_LINK_ROOT;
 	else
-		$aPagesLinks[ $infosPage->file ] = WEB_ROOT.LG_LINK.$pageUrl;
+		$aPagesUrl[ $infosPage->file ] = WEB_ROOT.LG_LINK.$pageUrl;
 	
-	$aPagesLinks[ $infosPage->file.'Id' ] = $pageUrl;
+	$aPagesUrl[ $infosPage->file.'Id' ] = $pageUrl;
 	
 	$i++;
 }
-$aPagesLinks = (object) $aPagesLinks;
+$aPagesUrl = (object) $aPagesUrl;
 
 
 
+/* -------- Projects -------- */
 $jsonProjects = file_get_contents(SITE_ROOT.ASSETS.'json/'.LG.'/projects.json');
 $projects = json_decode($jsonProjects, true);
 

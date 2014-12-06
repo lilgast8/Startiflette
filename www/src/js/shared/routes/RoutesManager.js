@@ -11,6 +11,7 @@ APP.RoutesManager = (function(window) {
 		this.nextPage = null;
 		
 		this.rootUrlName = null;
+		this.altUrl = null;
 		this.viewName = null;
 		this.pageName = null;
 		this.pageUrl = null;
@@ -26,6 +27,8 @@ APP.RoutesManager = (function(window) {
 	
 	RoutesManager.prototype.init = function() {
 		_setRootUrlName.call(this);
+		if(APP.Config.MULTI_LG)
+			_setAltUrl.call(this);
 		
 		_bindEvents.call(this);
 		
@@ -92,7 +95,8 @@ APP.RoutesManager = (function(window) {
 		this.currentPage = this.nextPage;
 		
 		_updateMenu.call(this);
-		_updateLgLinks.call(this);
+		if(APP.Config.MULTI_LG)
+			_updateLgLinks.call(this);
 		
 		this.currentPage.buildEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this, false));
 		
@@ -115,7 +119,7 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _updateLgLinks = function() {
-		var aAltLink = _getAltLinks.call(this);
+	//	var aAltLink = _getAltLinks.call(this);
 		
 		var lgTemp, $footerLgLink;
 		
@@ -124,13 +128,14 @@ APP.RoutesManager = (function(window) {
 			
 			lgTemp = $footerLgLink.getAttribute('data-lg');
 			
-			$footerLgLink.href = aAltLink[lgTemp];
+		//	$footerLgLink.href = aAltLink[lgTemp];
+			$footerLgLink.href = this.altUrl[this.pageUrl][lgTemp];
 		}
 	};
 	
 	
 	var _setRootUrlName = function() {
-		for(url in APP.Model.Global.json.pages.df) {
+		for(url in APP.Model.Global.json.pages) {
 			this.rootUrlName = url;
 			
 			break;
@@ -138,6 +143,80 @@ APP.RoutesManager = (function(window) {
 	};
 	
 	
+	var _setAltUrl = function() {
+		this.altUrl = {};
+		
+		for(pageUrl in APP.Model.Global.json.pages) { // parse pages of the active language
+			var file = APP.Model.Global.json.pages[pageUrl].file
+			
+			this.altUrl[pageUrl] = this.altUrl[pageUrl] || {};
+			
+			for(lgTemp in APP.Model.Global.json.pagesTr) { // parse translations of the others languages
+				
+				for(pageTemp in APP.Model.Global.json.pagesTr[lgTemp]) { // parse pages of the translated language
+					
+					// if the file of the translated language match with the file of the active language
+					if(APP.Model.Global.json.pagesTr[lgTemp][pageTemp].file == file) {
+						urlPageAlt = pageUrl == this.rootUrlName ? '' : '/'+pageTemp;
+						urlAlt = lgTemp == APP.Config.ALL_LG[0] && pageUrl == this.rootUrlName ? 
+							APP.Config.WEB_ROOT : APP.Config.WEB_ROOT+lgTemp+urlPageAlt;
+						
+						this.altUrl[pageUrl][lgTemp] = urlAlt;
+					}
+					
+				}
+				
+			}
+			
+			
+			/*
+			for(pageTemp in APP.Model.Global.json.pages.en) {
+				var fileTemp = APP.Model.Global.json.pages.en[pageTemp].file;
+				
+				if(file == fileTemp) {
+					console.log(pageTemp);
+					this.altUrl[page]['en'] = pageTemp;
+					break;
+				}
+			}
+			
+			for(pageTemp in APP.Model.Global.json.pages.ex) {
+				var fileTemp = APP.Model.Global.json.pages.ex[pageTemp].file;
+				
+				if(file == fileTemp) {
+					console.log(pageTemp);
+					this.altUrl[page]['ex'] = pageTemp;
+					break;
+				}
+			}
+			*/
+			
+			
+		}
+		
+		
+		
+		// for(lgTemp in APP.Model.Global.json.pagesTr) {
+		// //	console.log( APP.Model.Global.json.pagesTr[lgTemp] );
+			
+		// 	for(pageTemp in APP.Model.Global.json.pagesTr[lgTemp]) {
+		// 	//	console.log(APP.Model.Global.json.pagesTr[lgTemp][pageTemp].file);
+				
+		// 		for(page in APP.Model.Global.json.pages) {
+		// 			var file = APP.Model.Global.json.pages[page].file;
+		// 			console.log(file);
+					
+		// 			i++;
+		// 		}
+				
+		// 	}
+		// }
+		
+		console.log('ALT url 2', this.altUrl);
+	};
+	
+	
+	/*
 	var _getAltLinks = function() {
 		var aAltLink = [];
 		var lgTemp, urlPageAlt, urlAlt;
@@ -164,6 +243,7 @@ APP.RoutesManager = (function(window) {
 		
 		return aAltLink;
 	};
+	*/
 	
 	
 	var _disablePageChange = function() {
@@ -224,7 +304,7 @@ APP.RoutesManager = (function(window) {
 		
 		
 		/* set view name */
-		this.viewName = APP.Model.Global.json.pages.df[this.pageName].file;
+		this.viewName = APP.Model.Global.json.pages[this.pageName].file;
 	};
 	
 	
@@ -240,7 +320,7 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _getTitle = function() {
-		title = APP.Model.Global.json.pages.df[this.pageName].title;
+		title = APP.Model.Global.json.pages[this.pageName].title;
 		
 		if(this.viewName == 'project') {
 			for(var i=0; i<APP.Model.Global.json.projects.length; i++) {

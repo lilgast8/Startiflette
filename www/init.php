@@ -79,12 +79,13 @@ if(isset($_GET['lg'])) { // if lg
 	}
 	else $lg = 'fr';
 }
+
+$lgLinkRoot = $lg == $allLg[0] ? '' : $lg;
+
 define('LG', $lg);
 //define('LG', 'fr');
 define('MULTI_LG', $multilingual);
-
 define('LG_LINK', LG.'/');
-$lgLinkRoot = LG == $allLg[0] ? '' : LG;
 define('LG_LINK_ROOT', $lgLinkRoot);
 
 
