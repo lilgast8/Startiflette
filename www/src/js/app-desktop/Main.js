@@ -74,8 +74,8 @@ APP.Main = (function(window) {
 	
 	
 	var _setWindowSize = function() {
-		this.windowW = this.$.window.width();
-		this.windowH = this.$.window.height();
+		this.v.windowW = this.$.window.width();
+		this.v.windowH = this.$.window.height();
 	};
 	
 	

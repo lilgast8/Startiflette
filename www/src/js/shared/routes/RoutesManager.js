@@ -147,8 +147,6 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _setPageInfos = function(url) {
-		console.log('SET PAGE INFOS');
-		
 		if(url === null)
 			url = _getUrl();
 		

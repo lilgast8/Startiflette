@@ -79,37 +79,33 @@
 		display:block; 
 		position:absolute; 
 		top:0; 
+		width:80px; 
 		text-align:center; 
 		color:#3a6774; 
 		
 		&.chrome { 
 			left:94px; 
-			width:80px; 
-			background:url(../img/logos/browsers/browser_chrome.png) center 0 no-repeat; 
+			background:url(../img/logos/browsers/browser_chrome.png) center top no-repeat; 
 		}
 		
 		&.firefox { 
 			left:268px; 
-			width:78px; 
-			background:url(../img/logos/browsers/browser_firefox.png) center 0 no-repeat; 
+			background:url(../img/logos/browsers/browser_firefox.png) center top no-repeat; 
 		}
 		
 		&.safari { 
 			left:440px; 
-			width:74px; 
-			background:url(../img/logos/browsers/browser_safari.png) center 0 no-repeat; 
+			background:url(../img/logos/browsers/browser_safari.png) center top no-repeat; 
 		}
 		
 		&.opera { 
 			left:608px; 
-			width:74px; 
-			background:url(../img/logos/browsers/browser_opera.png) center 0 no-repeat; 
+			background:url(../img/logos/browsers/browser_opera.png) center top no-repeat; 
 		}
 		
 		&.ie { 
 			left:776px; 
-			width:87px; 
-			background:url(../img/logos/browsers/browser_internet_explorer.png) center 0 no-repeat; 
+			background:url(../img/logos/browsers/browser_internet_explorer.png) center top no-repeat; 
 		}
 		
 		.alt-subtitle { 

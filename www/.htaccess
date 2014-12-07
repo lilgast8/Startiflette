@@ -51,7 +51,7 @@ RewriteRule img/(.*)$ assets/img/$1 [L]
 # --------------------- #
 
 
-RewriteRule (en|fr|ex)/old-browser$ includes/alt/old-browser.php?lg=$1 [L]
+RewriteRule (en|fr|ex)/old-browser$ php/views/alt/old-browser.php?lg=$1 [L]
 
 
 
