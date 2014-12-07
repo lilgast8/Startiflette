@@ -24,20 +24,17 @@ APP.Views.Page.About = (function(window){
 	
 	
 	About.prototype.bindEvents = function() {
-		this.p.resizeWindow = $.proxy(_resize, this);
-		APP.Main.$.window.on('resize', this.p.resizeWindow);
+		
 	};
 	
 	
 	About.prototype.unbindEvents = function() {
-		APP.Main.$.window.off('resize', this.p.resizeWindow);
 		
-		this.p = {};
 	};
 	
 	
-	var _resize = function() {
-		APP.Main.resize();
+	About.prototype.resize = function() {
+		
 	};
 	
 	

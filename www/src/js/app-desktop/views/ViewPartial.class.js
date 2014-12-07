@@ -27,6 +27,11 @@ APP.ViewPartial = (function(window) {
 	};
 	
 	
+	ViewPartial.prototype.resize = function() {
+		
+	};
+	
+	
 	ViewPartial.prototype.killTweens = function() {
 		
 	};
@@ -38,6 +43,7 @@ APP.ViewPartial = (function(window) {
 		this.killTweens();
 		
 		this.$ = {};
+		this.p = {};
 		this.v = {};
 	};
 	

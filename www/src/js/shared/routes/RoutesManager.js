@@ -16,8 +16,10 @@ APP.RoutesManager = (function(window) {
 		this.pageName = null;
 		this.pageUrl = null;
 		
+		this.isPageChangedByClick = false; // used to avoid to set page infos two times
+		
 		this.activeUrl = null;
-		this.isPageChange = false;
+		this.isPageChange = true;
 	}
 	
 	
@@ -37,7 +39,9 @@ APP.RoutesManager = (function(window) {
 	
 	
 	RoutesManager.prototype.goToPage = function(url) {
-		_setInfosPage.call(this, url);
+		this.isPageChangedByClick = true;
+		
+		_setPageInfos.call(this, url);
 		
 		var title = _getTitle.call(this);
 		
@@ -60,7 +64,7 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _initFirstPage = function() {
-		_setInfosPage.call(this, null);
+		_setPageInfos.call(this, null);
 		
 		this.currentPage = _getPage.call(this);
 		
@@ -111,6 +115,11 @@ APP.RoutesManager = (function(window) {
 		if(!this.isPageChange) {
 			_disablePageChange.call(this);
 			
+			if(this.isPageChangedByClick) // if page is changed by a click
+				this.isPageChangedByClick = false;
+			else // if page is changed by a prev/next
+				_setPageInfos.call(this, null);
+			
 			this.nextPage = _getPage.call(this);
 			
 			this.currentPage.buildEvt(this.currentPage.EVENT.HIDDEN, _initNextPage.bind(this));
@@ -137,7 +146,9 @@ APP.RoutesManager = (function(window) {
 	};
 	
 	
-	var _setInfosPage = function(url) {
+	var _setPageInfos = function(url) {
+		console.log('SET PAGE INFOS');
+		
 		if(url === null)
 			url = _getUrl();
 		

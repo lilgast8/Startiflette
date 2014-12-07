@@ -31,6 +31,11 @@ APP.Views.Static.Example = (function(window){
 	};
 	
 	
+	Example.prototype.resize = function() {
+		
+	};
+	
+	
 	return new Example();
 	
 	

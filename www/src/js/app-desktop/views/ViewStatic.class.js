@@ -27,6 +27,11 @@ APP.ViewStatic = (function(window) {
 	};
 	
 	
+	ViewStatic.prototype.resize = function() {
+		
+	};
+	
+	
 	return ViewStatic;
 	
 	

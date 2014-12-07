@@ -32,6 +32,11 @@ APP.View = (function(window) {
 	};
 	
 	
+	View.prototype.resize = function() {
+		
+	};
+	
+	
 	View.prototype.changePage = function(e) {
 		e.preventDefault();
 		

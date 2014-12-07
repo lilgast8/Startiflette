@@ -31,6 +31,11 @@ APP.Views.Partial.Example = (function(window){
 	};
 	
 	
+	Example.prototype.resize = function() {
+		
+	};
+	
+	
 	Example.prototype.killTweens = function() {
 		
 	};

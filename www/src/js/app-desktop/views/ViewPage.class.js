@@ -95,6 +95,11 @@ APP.ViewPage = (function(window) {
 	};
 	
 	
+	ViewPage.prototype.resize = function() {
+		
+	};
+	
+	
 	ViewPage.prototype.killTweens = function() {
 		for(var key in this.tl) {
 			var tl = this.tl[key];
@@ -114,6 +119,7 @@ APP.ViewPage = (function(window) {
 		this.killTweens();
 		
 		this.$ = {};
+		this.p = {};
 		this.v = {};
 	};
 	

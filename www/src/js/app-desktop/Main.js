@@ -23,8 +23,16 @@ APP.Main = (function(window) {
 	
 	
 	Main.prototype.resize = function() {
-		this.v.windowW = this.$.window.width();
-		this.v.windowH = this.$.window.height();
+		_setWindowSize.call(this);
+		
+		// APP.Views.Static.Header.resize();
+		// APP.Views.Static.Footer.resize();
+		
+		if(APP.RoutesManager.isPageChange) // stop the resize if page is changing (is in transition)
+			return false; 
+		
+		if(APP.RoutesManager.currentPage !== null) // if current page exist, resize it
+			APP.RoutesManager.currentPage.resize();
 	};
 	
 	
@@ -42,10 +50,45 @@ APP.Main = (function(window) {
 	var _init = function() {
 		APP.Model.Global.destroyEvt(APP.Model.Global.EVENT.INIT, _init.bind(this));
 		
+		// if(APP.Config.LOCALHOST && !APP.Config.PROD) // stats
+		// 	_initStats.call(this);
+		
+		_setWindowSize.call(this);
+		
 		APP.Config.init();
 		APP.Views.Static.Header.init();
 		APP.Views.Static.Footer.init();
-		APP.RoutesManager.init();
+		
+		_bindEvents.call(this);
+		
+		this.resize();
+		
+		setTimeout(function() { APP.RoutesManager.init(); }, 0);
+	};
+	
+	
+	var _bindEvents = function() {
+		this.p.resizeWindow = $.proxy(this.resize, this);
+		this.$.window.on('resize', this.p.resizeWindow);
+	};
+	
+	
+	var _setWindowSize = function() {
+		this.windowW = this.$.window.width();
+		this.windowH = this.$.window.height();
+	};
+	
+	
+	var _initStats = function() {
+		this.stats = new Stats();
+		this.stats.setMode(0);
+		
+		this.stats.domElement.style.position = 'absolute';
+		this.stats.domElement.style.right = '0px';
+		this.stats.domElement.style.bottom = '0px';
+		this.stats.domElement.style.zIndex = 88;
+		
+		document.body.appendChild(this.stats.domElement);
 	};
 	
 	
