@@ -24,7 +24,7 @@ APP.Model.Global = (function(window) {
 				id : 'projects',
 				src:'json/' + APP.Config.LG + '/projects.json'
 			}
-		]
+		];
 		
 		this.json = {};
 		this.json.pages = {};

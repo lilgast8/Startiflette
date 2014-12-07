@@ -112,7 +112,7 @@ APP.Utils.Global = (function(window){
 	
 	
 	this.getObjSize = function(obj) {
-		var size = 0
+		var size = 0;
 		var key;
 		
 		for(key in obj)

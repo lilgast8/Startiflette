@@ -50,7 +50,7 @@ APP.RoutesManager = (function(window) {
 	
 	
 	RoutesManager.prototype.updateGA = function() {
-		var pageUrl = this.pageId != 0 ? '/'+this.pageUrl : '';
+		var pageUrl = this.pageId !== 0 ? '/'+this.pageUrl : '';
 		var gaPageName = APP.Config.LG == APP.Config.ALL_LG[0] && this.pageId === 0 ? '' : APP.Config.LG+pageUrl;
 		
 		if(!APP.Config.LOCALHOST && APP.Config.PROD)
@@ -77,7 +77,7 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _setRootUrlName = function() {
-		for(url in APP.Model.Global.json.pages) {
+		for(var url in APP.Model.Global.json.pages) {
 			this.rootUrlName = url;
 			
 			break;
@@ -88,14 +88,14 @@ APP.RoutesManager = (function(window) {
 	var _setAltUrl = function() {
 		this.altUrl = {};
 		
-		for(pageUrl in APP.Model.Global.json.pages) { // parse pages of the active language
-			var file = APP.Model.Global.json.pages[pageUrl].file
+		for(var pageUrl in APP.Model.Global.json.pages) { // parse pages of the active language
+			var file = APP.Model.Global.json.pages[pageUrl].file;
 			
 			this.altUrl[pageUrl] = this.altUrl[pageUrl] || {};
 			
-			for(lgTemp in APP.Model.Global.json.pagesTr) { // parse translations of the others languages
+			for(var lgTemp in APP.Model.Global.json.pagesTr) { // parse translations of the others languages
 				
-				for(pageTemp in APP.Model.Global.json.pagesTr[lgTemp]) { // parse pages of the translated language
+				for(var pageTemp in APP.Model.Global.json.pagesTr[lgTemp]) { // parse pages of the translated language
 					
 					// if the file of the translated language match with the file of the active language
 					if(APP.Model.Global.json.pagesTr[lgTemp][pageTemp].file == file) {
@@ -182,7 +182,7 @@ APP.RoutesManager = (function(window) {
 	var _getPage = function() {
 		var currentPage = null;
 		
-		for(pageView in APP.Views.Page)
+		for(var pageView in APP.Views.Page)
 			if(this.viewName == APP.Views.Page[pageView].name)
 				currentPage = APP.Views.Page[pageView];
 		

@@ -25,36 +25,36 @@
 			"libs/history.min.js",
 			"libs/preloadjs.min.js",
 			
-			"app-desktop/InitApp.js",
+			"app/desktop/InitApp.js",
 			
-			"shared/config/Config.js",
-			"shared/config/OldBrowser.js",
+			"app/shared/config/Config.js",
+			"app/shared/config/OldBrowser.js",
 			
-			"shared/events/EventDispatcher.class.js",
+			"app/shared/events/EventDispatcher.class.js",
 			
-			"shared/routes/RoutesManager.js",
+			"app/shared/routes/RoutesManager.js",
 			
-			"shared/models/Model.Global.js",
+			"app/shared/models/Model.Global.js",
 			
-			"shared/loaders/Loader.class.js",
+			"app/shared/loaders/Loader.class.js",
 			
-			"shared/utils/Utils.Global.js",
+			"app/shared/utils/Utils.Global.js",
 			
-			"app-desktop/views/View.class.js",
-			"app-desktop/views/ViewStatic.class.js",
-			"app-desktop/views/ViewPartial.class.js",
-			"app-desktop/views/ViewPage.class.js",
+			"app/desktop/views/View.class.js",
+			"app/desktop/views/ViewStatic.class.js",
+			"app/desktop/views/ViewPartial.class.js",
+			"app/desktop/views/ViewPage.class.js",
 			
-			"app-desktop/views/statics/ViewStatic.Header.js",
-			"app-desktop/views/statics/ViewStatic.Footer.js",
+			"app/desktop/views/statics/ViewStatic.Header.js",
+			"app/desktop/views/statics/ViewStatic.Footer.js",
 			
-			"app-desktop/views/pages/ViewPage.Home.js",
-			"app-desktop/views/pages/ViewPage.About.js",
-			"app-desktop/views/pages/ViewPage.Projects.js",
-			"app-desktop/views/pages/ViewPage.Project.js",
-			"app-desktop/views/pages/ViewPage.Legals.js",
+			"app/desktop/views/pages/ViewPage.Home.js",
+			"app/desktop/views/pages/ViewPage.About.js",
+			"app/desktop/views/pages/ViewPage.Projects.js",
+			"app/desktop/views/pages/ViewPage.Project.js",
+			"app/desktop/views/pages/ViewPage.Legals.js",
 			
-			"app-desktop/Main.js"
+			"app/desktop/Main.js"
 		]
 	},
 	
@@ -68,36 +68,36 @@
 			"libs/history.min.js",
 			"libs/preloadjs.min.js",
 			
-			"app-mobile/InitApp.js",
+			"app/mobile/InitApp.js",
 			
-			"shared/config/Config.js",
-			"shared/config/OldBrowser.js",
+			"app/shared/config/Config.js",
+			"app/shared/config/OldBrowser.js",
 			
-			"shared/events/EventDispatcher.class.js",
+			"app/shared/events/EventDispatcher.class.js",
 			
-			"shared/routes/RoutesManager.js",
+			"app/shared/routes/RoutesManager.js",
 			
-			"shared/models/Model.Global.js",
+			"app/shared/models/Model.Global.js",
 			
-			"shared/loaders/Loader.class.js",
+			"app/shared/loaders/Loader.class.js",
 			
-			"shared/utils/Utils.Global.js",
+			"app/shared/utils/Utils.Global.js",
 			
-			"app-mobile/views/View.class.js",
-			"app-mobile/views/ViewStatic.class.js",
-			"app-mobile/views/ViewPartial.class.js",
-			"app-mobile/views/ViewPage.class.js",
+			"app/mobile/views/View.class.js",
+			"app/mobile/views/ViewStatic.class.js",
+			"app/mobile/views/ViewPartial.class.js",
+			"app/mobile/views/ViewPage.class.js",
 			
-			"app-mobile/views/statics/ViewStatic.Header.js",
-			"app-mobile/views/statics/ViewStatic.Footer.js",
+			"app/mobile/views/statics/ViewStatic.Header.js",
+			"app/mobile/views/statics/ViewStatic.Footer.js",
 			
-			"app-mobile/views/pages/ViewPage.Home.js",
-			"app-mobile/views/pages/ViewPage.About.js",
-			"app-mobile/views/pages/ViewPage.Projects.js",
-			"app-mobile/views/pages/ViewPage.Project.js",
-			"app-mobile/views/pages/ViewPage.Legals.js",
+			"app/mobile/views/pages/ViewPage.Home.js",
+			"app/mobile/views/pages/ViewPage.About.js",
+			"app/mobile/views/pages/ViewPage.Projects.js",
+			"app/mobile/views/pages/ViewPage.Project.js",
+			"app/mobile/views/pages/ViewPage.Legals.js",
 			
-			"app-desktop/Main.js"
+			"app/mobile/Main.js"
 		]
 	}
 	
