@@ -1,35 +1,55 @@
-var gulp = require('gulp');
-var path = require('path');
+var gulp		= require( 'gulp' );
+var path		= require( 'path' );
 
-var paths = require('../utils/paths');
-var livereload = require('gulp-livereload');
+var options		= require( '../utils/options' );
+var paths		= require( '../utils/paths' );
+
+var livereload	= require( 'gulp-livereload' );
 
 
-gulp.task('watch', function() {
+
+gulp.task( 'watch', function() {
 	
-	livereload.listen();
+	// livereload.listen();
 	
-	// gulp.watch(paths.src.cssFiles, ['style']);
-	// gulp.watch(paths.src.jsAppFiles, ['js-hint']);
-	// gulp.watch([
-	// 	paths.src.json+'**/*.json', 
-	// 	paths.src.js+'js-files.json'
-	// ], ['json']);
 	
-	gulp.watch(paths.src.allFiles, function(e){
-		
-		console.log(e);
-		
+	gulp.watch( paths.src.allFiles, function(e) {
 		var filePath, ext, desktop, mobile, shared, taskname;
-		filePath = e.path;
-		ext = path.extname(filePath);
 		
-		desktop = filePath.indexOf('desktop/') > -1 ? true : false;
-		mobile = filePath.indexOf('mobile/') > -1 ? true : false;
-		shared = filePath.indexOf('shared/') > -1 ? true : false;
+		filePath	= e.path;
+		ext			= path.extname( filePath );
 		
-		console.log(ext);
-		console.log(desktop, mobile, shared);
+		desktop	= filePath.indexOf( 'desktop' )	> -1 ? true : false;
+		mobile	= filePath.indexOf( 'mobile' ) > -1 ? true : false;
+		shared	= filePath.indexOf( 'shared' ) > -1 ? true : false;
+		
+		if( ext == '.js' ) {
+			taskname = 'js-hint';
+			
+			if( desktop )
+				options.sourcesPath = paths.src.jsAppDesktopFiles;
+			else if( mobile )
+				options.sourcesPath = paths.src.jsAppMobileFiles;
+		}
+		else if( ext == '.scss' ) {
+			taskname = 'sass';
+			
+			if( desktop ) {
+				options.sourcesPath = paths.src.cssDesktopFile;
+				options.assetsPath = paths.assets.cssDesktop;
+			}
+			else if( mobile ) {
+				options.sourcesPath = paths.src.cssMobileFile;
+				options.assetsPath = paths.assets.cssMobile;
+			}
+			else if( shared ) {
+				options.sourcesPath = [paths.src.cssDesktopFile, paths.src.cssMobileFile];
+				options.assetsPath = [paths.assets.cssDesktop, paths.assets.cssMobile];
+			}
+		}
+		
+		
+		gulp.start( taskname );
 		
 	});
 	

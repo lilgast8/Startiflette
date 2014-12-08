@@ -20,7 +20,9 @@ module.exports = {
 		css					: 'www/src/css/',
 		cssFiles			: 'www/src/css/**/*.scss',
 		cssDesktopFile		: 'www/src/css/styles-desktop.scss',
+		cssDesktopFiles		: 'www/src/css/desktop/**/*.scss',
 		cssMobileFile		: 'www/src/css/styles-mobile.scss',
+		cssMobileFiles		: 'www/src/css/mobile/**/*.scss',
 		img					: 'www/src/img/',
 		imgLogosBrowsers	: 'www/src/img/logos/browsers/',
 		js					: 'www/src/js/',
@@ -41,6 +43,8 @@ module.exports = {
 	assets : {
 		root	: 'www/assets/',
 		css		: 'www/assets/css/',
+		cssDesktop		: 'styles-desktop.min.scss',
+		cssMobile		: 'styles-mobile.min.scss',
 		img		: 'www/assets/img/',
 		js		: 'www/assets/js/',
 		jsLib	: 'www/assets/js/libs/',

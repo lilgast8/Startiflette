@@ -12,6 +12,8 @@ if(options._[0] == 'prod') {
 
 options.minify = options.minify === undefined ? defaults.minify : options.minify;
 options.device = null;
+options.sourcesPath = null;
+options.assetsPath = null;
 
 
 module.exports = options;
