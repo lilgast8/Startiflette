@@ -3,12 +3,25 @@
 	
 	<!-- Footer -->
 	<footer id="footer">
-		
+		<?php if(MULTI_LG) { ?>
+		<nav class="footer-lg">
+			<?php foreach($aAltUrl as $lgTemp => $altUrl) { ?>
+			<a href="<?php echo $altUrl; ?>" class="footer-lg-link" data-lg="<?php echo $lgTemp; ?>"><?php echo $lgTemp; ?></a>
+			<?php } ?>
+		</nav>
+		<?php } ?>
+		<nav>
+			<ul>
+				<li>
+					<a href="<?php echo $aUrl->legals; ?>" class="footer-link" data-url="<?php echo $aUrl->legalsId; ?>">Mentions légales</a>
+				</li>
+			</ul>
+		</nav>
 	</footer>
 	
 	<!-- No JS -->
 	<noscript>
-	<?php include_once(SITE_ROOT.'includes/alt/no-js.php'); ?>
+	<?php include_once(SITE_ROOT.'php/views/alt/no-js.php'); ?>
 	</noscript>
 	
 </div> <!-- End #main-container -->
@@ -21,7 +34,7 @@
 	var PROD  = '<?php echo PROD; ?>';
 	var WEB_ROOT = '<?php echo WEB_ROOT; ?>';
 	var LG = '<?php echo LG; ?>';
-	var MULTI_LG = '<?php echo MULTI_LG; ?>';
+	var ALL_LG = <?php echo json_encode($allLg); /* [<?php echo '"'.implode('","', $allLg).'"' ?>]; */ ?>;
 </script>
 <?php
 if(!PROD) {
