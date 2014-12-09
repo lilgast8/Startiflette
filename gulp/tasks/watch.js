@@ -1,8 +1,8 @@
-var gulp		= require( 'gulp' );
-var path		= require( 'path' );
+var gulp	= require( 'gulp' );
+var path	= require( 'path' );
 
-var options		= require( '../utils/options' );
-var paths		= require( '../utils/paths' );
+var options	= require( '../utils/options' );
+var paths	= require( '../utils/paths' );
 
 // var livereload	= require( 'gulp-livereload' );
 
@@ -46,6 +46,13 @@ gulp.task( 'watch', function() {
 				options.srcPath = paths.src.jsAppMobileFiles;
 			else if( shared )
 				options.srcPath = paths.src.jsSharedFiles;
+		}
+		
+		/* JSON */
+		else if( ext == '.json' ) {
+			taskname = 'json-lint';
+			
+			options.srcPath = [paths.src.jsJsFilesFile, paths.src.jsonAllFiles];
 		}
 		
 		

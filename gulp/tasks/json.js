@@ -1,10 +1,14 @@
-var gulp = require('gulp');
+var gulp	= require( 'gulp' );
 
-var options = require('../utils/options');
+var options = require( '../utils/options' );
+var paths	= require( '../utils/paths' );
 
 
-gulp.task('json', ['json-lint'], function() {
+
+gulp.task( 'json', ['json-lint'], function() {
 	
-	if(options.minify) gulp.start('json-min');
+	options.cleanPath = paths.assets.json;
+	
+	gulp.start( 'json-min' );
 	
 });

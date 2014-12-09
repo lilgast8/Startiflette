@@ -11,7 +11,7 @@ gulp.task('default', ['watch']);
 /* Prod */
 gulp.task('prod', [
 	// 'style',
-	'js',
+	// 'js',
 	'json',
 	// 'image'
 ]);

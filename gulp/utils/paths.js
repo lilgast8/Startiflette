@@ -32,7 +32,7 @@ module.exports = {
 		jsSharedFiles		: 'www/src/js/app/shared/**/*.js',
 		jsLib				: 'www/src/js/libs/',
 		
-		json				: 'www/src/json/'
+		jsonAllFiles		: 'www/src/json/**/*.json'
 	},
 	
 	assets : {
