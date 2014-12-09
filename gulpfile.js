@@ -13,8 +13,9 @@ gulp.task('prod', [
 	// 'style',
 	'js',
 	'json',
-	'image'
+	// 'image'
 ]);
+
 
 
 

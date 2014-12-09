@@ -4,7 +4,7 @@ APP.Views = APP.Views || {};
 APP.Views.Page = APP.Views.Page || {};
 
 
-APP.Views.Page.Home = (function(window){
+APP.Views.Page.Home = (function(window) {
 	
 	
 	function Home() {

@@ -4,7 +4,7 @@ var path		= require( 'path' );
 var options		= require( '../utils/options' );
 var paths		= require( '../utils/paths' );
 
-var livereload	= require( 'gulp-livereload' );
+// var livereload	= require( 'gulp-livereload' );
 
 
 
@@ -23,29 +23,29 @@ gulp.task( 'watch', function() {
 		mobile	= filePath.indexOf( 'mobile' ) > -1 ? true : false;
 		shared	= filePath.indexOf( 'shared' ) > -1 ? true : false;
 		
-		if( ext == '.js' ) {
+		
+		/* SASS */
+		if( ext == '.scss' ) {
+			taskname = 'sass';
+			
+			if( desktop )
+				options.srcPath = [paths.src.cssDesktopFile];
+			else if( mobile )
+				options.srcPath = [paths.src.cssMobileFile];
+			else if( shared )
+				options.srcPath = [paths.src.cssDesktopFile, paths.src.cssMobileFile];
+		}
+		
+		/* JS */
+		else if( ext == '.js' ) {
 			taskname = 'js-hint';
 			
 			if( desktop )
-				options.sourcesPath = paths.src.jsAppDesktopFiles;
+				options.srcPath = paths.src.jsAppDesktopFiles;
 			else if( mobile )
-				options.sourcesPath = paths.src.jsAppMobileFiles;
-		}
-		else if( ext == '.scss' ) {
-			taskname = 'sass';
-			
-			if( desktop ) {
-				options.sourcesPath = paths.src.cssDesktopFile;
-				options.assetsPath = paths.assets.cssDesktop;
-			}
-			else if( mobile ) {
-				options.sourcesPath = paths.src.cssMobileFile;
-				options.assetsPath = paths.assets.cssMobile;
-			}
-			else if( shared ) {
-				options.sourcesPath = [paths.src.cssDesktopFile, paths.src.cssMobileFile];
-				options.assetsPath = [paths.assets.cssDesktop, paths.assets.cssMobile];
-			}
+				options.srcPath = paths.src.jsAppMobileFiles;
+			else if( shared )
+				options.srcPath = paths.src.jsSharedFiles;
 		}
 		
 		

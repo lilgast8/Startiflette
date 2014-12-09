@@ -32,7 +32,7 @@
 	
 	?>
 	
-	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>assets/css/styles.min.css" />
+	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>assets/css/styles-desktop.min.css" />
 	
 	<!--[if lt IE 9]><script src="<?php echo WEB_ROOT; ?>js/lib/html5shiv.min.js"></script><![endif]-->
 	<?php
