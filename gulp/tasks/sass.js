@@ -7,7 +7,6 @@ var plumber		= require( 'gulp-plumber' );
 var notify		= require( 'gulp-notify' );
 var sass		= require( 'gulp-ruby-sass' );
 var rename		= require( 'gulp-rename' );
-var livereload	= require( 'gulp-livereload' );
 
 
 
@@ -27,8 +26,7 @@ gulp.task( 'sass', function() {
 				return notify().write( options.device + ': ' + path.basename( error.message ) );
 			} )
 			.pipe( rename( {suffix : '.min'} ) )
-			.pipe( gulp.dest( paths.assets.css ) )
-			.pipe( livereload() );
+			.pipe( gulp.dest( paths.assets.css ) );
 		
 	}
 	

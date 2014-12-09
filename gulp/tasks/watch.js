@@ -4,7 +4,7 @@ var path	= require( 'path' );
 var options	= require( '../utils/options' );
 var paths	= require( '../utils/paths' );
 
-// var livereload	= require( 'gulp-livereload' );
+var livereload	= require( 'gulp-livereload' );
 
 
 
@@ -13,6 +13,7 @@ gulp.task( 'watch', function() {
 	// livereload.listen();
 	
 	
+	/* Tasks management */
 	gulp.watch( paths.src.allFiles, function(e) {
 		var filePath, ext, desktop, mobile, shared, taskname;
 		
@@ -52,7 +53,7 @@ gulp.task( 'watch', function() {
 		else if( ext == '.json' ) {
 			taskname = 'json-lint';
 			
-			options.srcPath = [paths.src.jsJsFilesFile, paths.src.jsonAllFiles];
+			options.srcPath = [paths.src.jsJsFilesFile, paths.src.jsonFiles];
 		}
 		
 		
@@ -60,31 +61,14 @@ gulp.task( 'watch', function() {
 		
 	});
 	
-	// gulp.watch([
-	// 	paths.assets.css+'**/*.css',
-	// 	paths.src.jsApp+'**/*.js',
-	// 	paths.src.js+'js-files.json',
-	// 	paths.src.json+'**/*.json',
-	// 	// paths.php.root+'**/*.php',
-	// ]).on('change', livereload.changed);
+	
+	/* Livereload */
+	gulp.watch( [
+		paths.assets.cssFiles,
+		paths.src.jsJsFilesFile,
+		paths.src.jsFiles,
+		paths.src.jsonFiles,
+		paths.php.allFiles
+	] ).on('change', livereload.changed);
 	
 });
-
-
-
-
-
-// var gulp = require('gulp');
-
-// var paths = require('../utils/paths');
-
-
-
-// module.exports = function() {
-	
-// 	// gulp.watch('gulp/**/*.js', ['js:hint']);
-// 	gulp.watch(paths.src.jsAppDesktopFiles, ['js:hint']);
-	
-	
-	
-// }

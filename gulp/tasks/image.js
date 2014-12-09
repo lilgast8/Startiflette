@@ -1,18 +1,17 @@
-var gulp = require('gulp');
+var gulp		= require('gulp');
 
-var paths = require('../utils/paths');
-var plumber = require('gulp-plumber');
-var imagemin = require('gulp-imagemin');
+var options		= require( '../utils/options' );
+var paths		= require('../utils/paths');
+
+var plumber		= require('gulp-plumber');
+var imagemin	= require('gulp-imagemin');
 
 
-gulp.task('image', ['image-clean'], function() {
+
+gulp.task('image', function() {
 	
-	return gulp.src(paths.src.img+'**/*')
-		.pipe(plumber())
-		.pipe(imagemin({
-			optimizationLevel : 3, // png, default 3
-			progressive : false // jpg, default false
-		}))
-		.pipe(gulp.dest(paths.assets.img));
+	options.cleanPath = paths.assets.img;
+	
+	gulp.start( 'image-min' );
 	
 });

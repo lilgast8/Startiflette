@@ -16,7 +16,9 @@ gulp.task( 'js-hint', function() {
 	
 	gulp.src( options.srcPath )
 		.pipe( plumber() )
-		.pipe( jshint() )
+		.pipe( jshint({
+			'-W083' : true // Don't make functions within a loop
+		}) )
 		.pipe( jshint.reporter( 'jshint-stylish' ) )
 		.pipe( notify( function(file) {
 			

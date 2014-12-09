@@ -7,7 +7,7 @@ var paths	= require( '../utils/paths' );
 
 gulp.task( 'js', ['js-hint'], function() {
 	
-	options.cleanPath = [paths.assets.jsAllFiles, '!' + paths.assets.jsHTML5Shiv];
+	options.cleanPath = [paths.assets.jsFiles, '!' + paths.assets.jsHTML5Shiv];
 	
 	gulp.start( 'js-min' );
 	

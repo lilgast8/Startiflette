@@ -1,15 +1,15 @@
-var gulp = require('gulp');
+var gulp		= require( 'gulp' );
 
-var paths = require('../utils/paths');
+var paths		= require( '../utils/paths' );
 
-var plumber = require('gulp-plumber');
-var jsonminify = require('gulp-jsonminify');
+var plumber		= require( 'gulp-plumber' );
+var jsonminify	= require( 'gulp-jsonminify' );
 
 
 
 gulp.task( 'json-min', ['clean'], function () {
 	
-	gulp.src( paths.src.jsonAllFiles )
+	gulp.src( paths.src.jsonFiles )
 		.pipe( plumber() )
 		.pipe( jsonminify() )
 		.pipe( gulp.dest( paths.assets.json ) );

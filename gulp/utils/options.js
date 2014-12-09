@@ -1,16 +1,17 @@
 var options = require('minimist')(process.argv.slice(2));
 
-var defaults = {
-	minify : false
-}
 
 
-if(options._[0] == 'prod') {
-	defaults.minify = true
-}
+// var defaults = {
+// 	minify : false
+// }
+
+// if(options._[0] == 'prod')
+// 	defaults.minify = true
 
 
-options.minify = options.minify === undefined ? defaults.minify : options.minify;
+
+// options.minify = options.minify === undefined ? defaults.minify : options.minify;
 options.device = null;
 options.srcPath = null;
 options.assetsPath = null;
