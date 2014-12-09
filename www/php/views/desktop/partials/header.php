@@ -72,13 +72,19 @@
 		<nav id="menu">
 			<ul>
 				<li>
-					<a href="<?php echo $aUrl->home; ?>" class="menu-link" data-url="<?php echo $aUrl->homeId; ?>">Accueil</a>
+					<a href="<?php echo $aUrl->home; ?>" class="menu-link" data-url="<?php echo $aUrl->homeId; ?>">
+						<?php echo $glo_menu_txt['home']; ?>
+					</a>
 				</li>
 				<li>
-					<a href="<?php echo $aUrl->about; ?>" class="menu-link" data-url="<?php echo $aUrl->aboutId; ?>">À propos</a>
+					<a href="<?php echo $aUrl->about; ?>" class="menu-link" data-url="<?php echo $aUrl->aboutId; ?>">
+						<?php echo $glo_menu_txt['about']; ?>
+					</a>
 				</li>
 				<li>
-					<a href="<?php echo $aUrl->projects; ?>" class="menu-link" data-url="<?php echo $aUrl->projectsId; ?>">Projets</a>
+					<a href="<?php echo $aUrl->projects; ?>" class="menu-link" data-url="<?php echo $aUrl->projectsId; ?>">
+						<?php echo $glo_menu_txt['projects']; ?>
+					</a>
 				</li>
 			</ul>
 		</nav>

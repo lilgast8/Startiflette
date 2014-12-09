@@ -101,8 +101,8 @@ APP.ViewPage = (function(window) {
 	
 	
 	ViewPage.prototype.killTweens = function() {
-		for(var key in this.tl) {
-			var tl = this.tl[key];
+		for(var timeline in this.tl) {
+			var tl = this.tl[timeline];
 			
 			tl.stop();
 			tl.kill();

@@ -4,7 +4,7 @@ APP.Views = APP.Views || {};
 APP.Views.Static = APP.Views.Static || {};
 
 
-APP.Views.Static.Footer = (function(window){
+APP.Views.Static.Footer = (function(window) {
 	
 	
 	function Footer() {

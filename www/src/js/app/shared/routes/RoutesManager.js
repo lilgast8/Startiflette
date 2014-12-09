@@ -151,11 +151,13 @@ APP.RoutesManager = (function(window) {
 			url = _getUrl();
 		
 		var endBaseUrl = url.indexOf(APP.Config.WEB_ROOT)+APP.Config.WEB_ROOT.length;
+		var endUrl = url.indexOf('?') < 0 ? url.length : url.indexOf('?');
 		
 		
 		/* set page url */
-		this.pageUrl = url.substring(endBaseUrl, url.length);
+		this.pageUrl = url.substring(endBaseUrl, endUrl);
 		var lastCharPos = this.pageUrl.length-1;
+		
 		if(this.pageUrl[lastCharPos] == '/')
 			this.pageUrl = this.pageUrl.substring(0, lastCharPos);
 		

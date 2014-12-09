@@ -4,7 +4,7 @@ APP.Views = APP.Views || {};
 APP.Views.Static = APP.Views.Static || {};
 
 
-APP.Views.Static.Example = (function(window){
+APP.Views.Static.Example = (function(window) {
 	
 	
 	function Example() {

@@ -13,7 +13,9 @@
 		<nav>
 			<ul>
 				<li>
-					<a href="<?php echo $aUrl->legals; ?>" class="footer-link" data-url="<?php echo $aUrl->legalsId; ?>">Mentions légales</a>
+					<a href="<?php echo $aUrl->legals; ?>" class="footer-link" data-url="<?php echo $aUrl->legalsId; ?>">
+						<?php echo $glo_menu_txt['legals']; ?>
+					</a>
 				</li>
 			</ul>
 		</nav>

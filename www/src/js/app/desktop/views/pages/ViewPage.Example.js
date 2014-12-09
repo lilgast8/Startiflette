@@ -4,7 +4,7 @@ APP.Views = APP.Views || {};
 APP.Views.Page = APP.Views.Page || {};
 
 
-APP.Views.Page.Example = (function(window){
+APP.Views.Page.Example = (function(window) {
 	
 	
 	function Example() {

@@ -4,7 +4,7 @@ APP.Views = APP.Views || {};
 APP.Views.Partial = APP.Views.Partial || {};
 
 
-APP.Views.Partial.Example = (function(window){
+APP.Views.Partial.Example = (function(window) {
 	
 	
 	function Example() {

@@ -4,7 +4,7 @@ APP.Views = APP.Views || {};
 APP.Views.Static = APP.Views.Static || {};
 
 
-APP.Views.Static.Header = (function(window){
+APP.Views.Static.Header = (function(window) {
 	
 	
 	function Header() {

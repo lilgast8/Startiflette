@@ -6,6 +6,13 @@
 /* -------- GLOBAL -------- */
 /****************************/
 
+$glo_menu_txt = array(
+	"home"		=> "Home",
+	"about"		=> "About",
+	"projects"	=> "Projects",
+	"legals"	=> "Legals"
+);
+
 
 
 

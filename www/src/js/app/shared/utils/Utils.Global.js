@@ -3,7 +3,7 @@
 APP.Utils = APP.Utils || {};
 
 
-APP.Utils.Global = (function(window){
+APP.Utils.Global = (function(window) {
 	
 	
 	this.color = {};
@@ -113,9 +113,8 @@ APP.Utils.Global = (function(window){
 	
 	this.getObjSize = function(obj) {
 		var size = 0;
-		var key;
 		
-		for(key in obj)
+		for(var key in obj)
 			if(obj.hasOwnProperty(key)) size++;
 		
 		return size;

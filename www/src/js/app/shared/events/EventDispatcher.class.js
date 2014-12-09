@@ -1,6 +1,6 @@
 
 
-APP.EventDispatcher = (function(window){
+APP.EventDispatcher = (function(window) {
 	
 	
 	function EventDispatcher() {

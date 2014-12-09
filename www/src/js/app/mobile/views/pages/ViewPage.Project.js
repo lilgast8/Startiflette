@@ -4,7 +4,7 @@ APP.Views = APP.Views || {};
 APP.Views.Page = APP.Views.Page || {};
 
 
-APP.Views.Page.Project = (function(window){
+APP.Views.Page.Project = (function(window) {
 	
 	
 	function Project() {

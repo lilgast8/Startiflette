@@ -4,7 +4,7 @@ APP.Views = APP.Views || {};
 APP.Views.Page = APP.Views.Page || {};
 
 
-APP.Views.Page.Legals = (function(window){
+APP.Views.Page.Legals = (function(window) {
 	
 	
 	function Legals() {
