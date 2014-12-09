@@ -1,10 +1,14 @@
-var gulp = require('gulp');
+var gulp	= require( 'gulp' );
 
-var options = require('../utils/options');
+var options	= require( '../utils/options' );
+var paths	= require( '../utils/paths' );
 
 
-gulp.task('js', ['js-hint'], function() {
+
+gulp.task( 'js', ['js-hint'], function() {
 	
-	if(options.minify) gulp.start('js-min');
+	options.cleanPath = [paths.assets.jsAllFiles, '!' + paths.assets.jsHTML5Shiv];
+	
+	gulp.start( 'js-min' );
 	
 });
