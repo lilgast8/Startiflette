@@ -221,13 +221,17 @@ APP.RoutesManager = (function(window) {
 		var $menu = APP.Views.Static.Header.$.menu;
 		var $footer = APP.Views.Static.Footer.$.footer;
 		
-		var $menuToDisable = $menu.find('[data-active="true"]');
-		if(!$menuToDisable.length) $menuToDisable = $footer.find('[data-active="true"]');
+		var $menuToDisable = $menu.find('.active');
+		if(!$menuToDisable.length)
+			$menuToDisable = $footer.find('.active');
 		var $menuToEnable = $menu.find('[data-url*="'+this.pageUrl+'"]');
-		if(!$menuToEnable.length) $menuToEnable = $footer.find('[data-url*="'+this.pageUrl+'"]');
+		if(!$menuToEnable.length)
+			$menuToEnable = $footer.find('[data-url*="'+this.pageUrl+'"]');
 		
-		if($menuToDisable.length) $menuToDisable[0].setAttribute('data-active', 'false');
-		if($menuToEnable.length) $menuToEnable[0].setAttribute('data-active', 'true');
+		if($menuToDisable.length)
+			removeClass($menuToDisable[0], 'active');
+		if($menuToEnable.length)
+			addClass($menuToEnable[0], 'active');
 	};
 	
 	
