@@ -8,7 +8,7 @@ APP.ViewPage = (function(window) {
 		
 		this.name = null;
 		
-		this.EVENT = {
+		this.E = {
 		//	LOADED : 'loaded',
 		//	INIT : 'init',
 			SHOWN : 'shown',
@@ -100,7 +100,7 @@ APP.ViewPage = (function(window) {
 	
 	ViewPage.prototype.show = function() {
 		this.tw.showPage = TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:1, ease:Quad.easeOut, onComplete:function(){
-			this.dispatch(this.EVENT.SHOWN);
+			this.dispatch(this.E.SHOWN);
 		}.bind(this)});
 	};
 	
@@ -108,7 +108,7 @@ APP.ViewPage = (function(window) {
 	ViewPage.prototype.hide = function() {
 		this.tw.hidePage = TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:0, ease:Quad.easeOut, onComplete:function(){
 			this.destroy();
-			this.dispatch(this.EVENT.HIDDEN);
+			this.dispatch(this.E.HIDDEN);
 		}.bind(this)});
 	};
 	

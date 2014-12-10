@@ -38,9 +38,9 @@ APP.Views.Static.MainLoader = (function(window) {
 	
 	MainLoader.prototype.hidePreloader = function() {
 		// hide preloader if need
-		// play intro if need and at the end of it dispatch APP.RoutesManager.currentPage.EVENT.SHOWN
+		// play intro if need and at the end of it dispatch APP.RoutesManager.currentPage.E.SHOWN
 		
-		APP.RoutesManager.currentPage.dispatch(APP.RoutesManager.currentPage.EVENT.SHOWN); // dispatch event to enable page change
+		APP.RoutesManager.currentPage.dispatch(APP.RoutesManager.currentPage.E.SHOWN); // dispatch event to enable page change
 	};
 	
 	

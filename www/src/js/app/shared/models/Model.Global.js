@@ -9,9 +9,7 @@ APP.Model.Global = (function(window) {
 	function Global() {
 		APP.EventDispatcher.call(this);
 		
-		this.v = {};
-		
-		this.EVENT = {
+		this.E = {
 			INIT : 'init'
 		};
 		
@@ -42,8 +40,8 @@ APP.Model.Global = (function(window) {
 		
 		this.jsonLoader = new APP.Loader(true, false);
 		
-		this.jsonLoader.buildEvt(this.jsonLoader.EVENT.FILE_LOAD, _onFileLoad.bind(this));
-		this.jsonLoader.buildEvt(this.jsonLoader.EVENT.COMPLETE, _onComplete.bind(this));
+		this.jsonLoader.buildEvt(this.jsonLoader.E.FILE_LOAD, _onFileLoad.bind(this));
+		this.jsonLoader.buildEvt(this.jsonLoader.E.COMPLETE, _onComplete.bind(this));
 		
 		this.jsonLoader.startLoad(this.aJsonToLoad);
 	};
@@ -82,10 +80,10 @@ APP.Model.Global = (function(window) {
 	
 	
 	var _onComplete = function(e) {
-		this.dispatch(this.EVENT.INIT);
+		this.dispatch(this.E.INIT);
 		
-		this.jsonLoader.destroyEvt(this.jsonLoader.EVENT.FILE_LOAD, _onFileLoad.bind(this));
-		this.jsonLoader.destroyEvt(this.jsonLoader.EVENT.COMPLETE, _onComplete.bind(this));
+		this.jsonLoader.destroyEvt(this.jsonLoader.E.FILE_LOAD, _onFileLoad.bind(this));
+		this.jsonLoader.destroyEvt(this.jsonLoader.E.COMPLETE, _onComplete.bind(this));
 		
 		this.jsonLoader.destroy();
 		this.jsonLoader = null;

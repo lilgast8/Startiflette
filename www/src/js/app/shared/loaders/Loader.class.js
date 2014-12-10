@@ -8,7 +8,7 @@ APP.Loader = (function(window) {
 		
 		this.p = {};
 		
-		this.EVENT = {
+		this.E = {
 			STARTED : 'started',
 			FILE_LOAD : 'fileload',
 			COMPLETE : 'complete',
@@ -69,23 +69,23 @@ APP.Loader = (function(window) {
 		// console.log('progress loader', e.loaded);
 		
 		if(this.isOnProgress)
-			this.dispatch(this.EVENT.PROGRESS, e);
+			this.dispatch(this.E.PROGRESS, e);
 	};
 	
 	
 	Loader.prototype.onFileLoad = function(e) {
 		if(this.isFileLoadOpt)
-			this.dispatch(this.EVENT.FILE_LOAD, e);
+			this.dispatch(this.E.FILE_LOAD, e);
 	};
 	
 	
 	Loader.prototype.onComplete = function(e) {
-		this.dispatch(this.EVENT.COMPLETE);
+		this.dispatch(this.E.COMPLETE);
 	};
 	
 	
 	Loader.prototype.onError = function(e) {
-		this.dispatch(this.EVENT.ERROR);
+		this.dispatch(this.E.ERROR);
 	};
 	
 	

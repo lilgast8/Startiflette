@@ -25,7 +25,7 @@
 			"libs/history.min.js",
 			"libs/preloadjs.min.js",
 			
-			"app/desktop/InitApp.js",
+			"app/InitApp.js",
 			
 			"app/shared/config/Config.js",
 			"app/shared/config/OldBrowser.js",
@@ -53,7 +53,7 @@
 			"app/desktop/views/pages/ViewPage.Project.js",
 			"app/desktop/views/pages/ViewPage.Legals.js",
 			
-			"app/desktop/Main.js"
+			"app/Main.js"
 		]
 	},
 	
@@ -67,7 +67,7 @@
 			"libs/history.min.js",
 			"libs/preloadjs.min.js",
 			
-			"app/mobile/InitApp.js",
+			"app/InitApp.js",
 			
 			"app/shared/config/Config.js",
 			"app/shared/config/OldBrowser.js",
@@ -95,7 +95,7 @@
 			"app/mobile/views/pages/ViewPage.Project.js",
 			"app/mobile/views/pages/ViewPage.Legals.js",
 			
-			"app/mobile/Main.js"
+			"app/Main.js"
 		]
 	}
 	

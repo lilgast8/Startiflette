@@ -36,21 +36,6 @@ APP.Views.Partial.Example = (function(window) {
 	};
 	
 	
-	Example.prototype.killTweens = function() {
-		
-	};
-	
-	
-	Example.prototype.destroy = function() {
-		this.unbindEvents();
-		
-		this.killTweens();
-		
-		this.$ = {};
-		this.v = {};
-	};
-	
-	
 	return Example;
 	
 	
