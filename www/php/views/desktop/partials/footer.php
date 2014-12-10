@@ -21,24 +21,16 @@
 		</nav>
 	</footer>
 	
-	<!-- No JS -->
-	<noscript>
-	<?php include_once(SITE_ROOT.'php/views/alt/no-js.php'); ?>
-	</noscript>
+	<?php include_once(SITE_ROOT.'php/views/alt/no-js.php'); // no JS ?>
 	
 </div> <!-- End #main-container -->
 
 
 
-<!-- Scripts -->
-<script>
-	var LOCALHOST = '<?php echo LOCALHOST; ?>';
-	var PROD  = '<?php echo PROD; ?>';
-	var WEB_ROOT = '<?php echo WEB_ROOT; ?>';
-	var LG = '<?php echo LG; ?>';
-	var ALL_LG = <?php echo json_encode($allLg); /* [<?php echo '"'.implode('","', $allLg).'"' ?>]; */ ?>;
-</script>
 <?php
+
+include_once(SITE_ROOT.'php/shared/js-var.php'); // JS var
+
 if(!PROD) {
 	$jsonJsFiles = file_get_contents(SITE_ROOT.ASSETS.'js/js-files.json');
 	$jsFiles = json_decode($jsonJsFiles, true);
@@ -52,9 +44,12 @@ if(!PROD) {
 		}
 		else echo '<script src="'.WEB_ROOT.'src/js/'.$files[$i].'"></script>'."\n";
 	}
+
 } else { ?>
+
 <!--[if lt IE 9]><script src="<?php echo WEB_ROOT; ?>assets/js/scripts-oldie.min.js"></script><![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><script src="<?php echo WEB_ROOT; ?>assets/js/scripts.min.js"></script><!--<![endif]-->
+
 <?php } ?>
 
 
