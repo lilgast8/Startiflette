@@ -71,8 +71,7 @@ APP.RoutesManager = (function(window) {
 		_updateMenu.call(this);
 		
 		this.currentPage.buildEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this, true));
-		
-		this.currentPage.hidePreloader();
+		APP.Views.Static.MainLoader.hidePreloader();
 	};
 	
 	
@@ -123,7 +122,7 @@ APP.RoutesManager = (function(window) {
 			this.nextPage = _getPage.call(this);
 			
 			this.currentPage.buildEvt(this.currentPage.EVENT.HIDDEN, _initNextPage.bind(this));
-			this.currentPage.hideContent();
+			this.currentPage.hide();
 			
 			this.nextPage.load(this.pageUrl, this.pageName, this.viewName);
 		}
@@ -141,7 +140,6 @@ APP.RoutesManager = (function(window) {
 			_updateLgLinks.call(this);
 		
 		this.currentPage.buildEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this, false));
-		
 		this.currentPage.transitionEnded();
 	};
 	
@@ -247,7 +245,7 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _disablePageChange = function() {
-		this.currentPage.showLoader();
+		APP.Views.Static.MainLoader.show();
 		
 		this.isPageChange = true;
 		this.activeUrl = _getUrl();
@@ -256,8 +254,7 @@ APP.RoutesManager = (function(window) {
 	
 	var _enablePageChange = function(init) {
 		this.currentPage.destroyEvt(this.currentPage.EVENT.SHOWN, _enablePageChange.bind(this));
-		
-		this.currentPage.hideLoader();
+		APP.Views.Static.MainLoader.hide();
 		
 		this.isPageChange = false;
 		

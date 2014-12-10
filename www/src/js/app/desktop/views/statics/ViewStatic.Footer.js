@@ -8,11 +8,11 @@ APP.Views.Static.Footer = (function(window) {
 	
 	
 	function Footer() {
-		APP.ViewStatic.call(this);
+		APP.View.call(this);
 	}
 	
 	
-	Footer.prototype = Object.create(APP.ViewStatic.prototype);
+	Footer.prototype = Object.create(APP.View.prototype);
 	Footer.prototype.constructor = Footer;
 	
 	

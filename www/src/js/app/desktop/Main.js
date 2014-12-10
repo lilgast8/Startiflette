@@ -15,7 +15,6 @@ APP.Main = (function(window) {
 		this.$.body = $(document.body);
 		this.$.mainContainer = $(document.getElementById('main-container'));
 		this.$.pageContainer = $(document.getElementById('page-container'));
-		this.$.loader = $(document.getElementById('loader'));
 		
 		this.p.windowLoad = $.proxy(_windowLoad, this);
 		this.$.window.on('load', this.p.windowLoad);
@@ -58,6 +57,7 @@ APP.Main = (function(window) {
 		APP.Config.init();
 		APP.Views.Static.Header.init();
 		APP.Views.Static.Footer.init();
+		APP.Views.Static.MainLoader.init();
 		
 		_bindEvents.call(this);
 		

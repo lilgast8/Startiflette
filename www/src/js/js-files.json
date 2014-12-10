@@ -40,13 +40,12 @@
 			
 			"app/shared/utils/Utils.Global.js",
 			
-			"app/desktop/views/View.class.js",
-			"app/desktop/views/ViewStatic.class.js",
-			"app/desktop/views/ViewPartial.class.js",
-			"app/desktop/views/ViewPage.class.js",
+			"app/shared/views/View.class.js",
+			"app/shared/views/ViewPage.class.js",
 			
 			"app/desktop/views/statics/ViewStatic.Header.js",
 			"app/desktop/views/statics/ViewStatic.Footer.js",
+			"app/desktop/views/statics/ViewStatic.MainLoader.js",
 			
 			"app/desktop/views/pages/ViewPage.Home.js",
 			"app/desktop/views/pages/ViewPage.About.js",
@@ -83,13 +82,12 @@
 			
 			"app/shared/utils/Utils.Global.js",
 			
-			"app/mobile/views/View.class.js",
-			"app/mobile/views/ViewStatic.class.js",
-			"app/mobile/views/ViewPartial.class.js",
-			"app/mobile/views/ViewPage.class.js",
+			"app/shared/views/View.class.js",
+			"app/shared/views/ViewPage.class.js",
 			
 			"app/mobile/views/statics/ViewStatic.Header.js",
 			"app/mobile/views/statics/ViewStatic.Footer.js",
+			"app/mobile/views/statics/ViewStatic.MainLoader.js",
 			
 			"app/mobile/views/pages/ViewPage.Home.js",
 			"app/mobile/views/pages/ViewPage.About.js",

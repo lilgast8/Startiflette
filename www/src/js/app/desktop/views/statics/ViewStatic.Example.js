@@ -8,11 +8,11 @@ APP.Views.Static.Example = (function(window) {
 	
 	
 	function Example() {
-		APP.ViewStatic.call(this);
+		APP.View.call(this);
 	}
 	
 	
-	Example.prototype = Object.create(APP.ViewStatic.prototype);
+	Example.prototype = Object.create(APP.View.prototype);
 	Example.prototype.constructor = Example;
 	
 	

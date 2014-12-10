@@ -8,11 +8,11 @@ APP.Views.Static.Header = (function(window) {
 	
 	
 	function Header() {
-		APP.ViewStatic.call(this);
+		APP.View.call(this);
 	}
 	
 	
-	Header.prototype = Object.create(APP.ViewStatic.prototype);
+	Header.prototype = Object.create(APP.View.prototype);
 	Header.prototype.constructor = Header;
 	
 	

@@ -8,11 +8,11 @@ APP.Views.Partial.Example = (function(window) {
 	
 	
 	function Example() {
-		APP.ViewPartial.call(this);
+		APP.View.call(this);
 	}
 	
 	
-	Example.prototype = Object.create(APP.ViewPartial.prototype);
+	Example.prototype = Object.create(APP.View.prototype);
 	Example.prototype.constructor = Example;
 	
 	

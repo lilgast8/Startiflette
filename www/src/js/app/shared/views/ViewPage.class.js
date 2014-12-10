@@ -8,8 +8,6 @@ APP.ViewPage = (function(window) {
 		
 		this.name = null;
 		
-		this.tl = {};
-		
 		this.EVENT = {
 		//	LOADED : 'loaded',
 		//	INIT : 'init',
@@ -100,67 +98,18 @@ APP.ViewPage = (function(window) {
 	};
 	
 	
-	ViewPage.prototype.killTweens = function() {
-		for(var timeline in this.tl) {
-			var tl = this.tl[timeline];
-			
-			tl.stop();
-			tl.kill();
-			tl.clear();
-		}
-		
-		this.tl = {};
-	};
-	
-	
-	ViewPage.prototype.destroy = function() {
-		this.unbindEvents();
-		
-		this.killTweens();
-		
-		this.$ = {};
-		this.p = {};
-		this.v = {};
-	};
-	
-	
 	ViewPage.prototype.show = function() {
-		TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:1, ease:Quad.easeOut, onComplete:function(){
+		this.tw.showPage = TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:1, ease:Quad.easeOut, onComplete:function(){
 			this.dispatch(this.EVENT.SHOWN);
 		}.bind(this)});
 	};
 	
 	
-	ViewPage.prototype.hideContent = function() {
-		this.hide();
-	};
-	
-	
 	ViewPage.prototype.hide = function() {
-		TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:0, ease:Quad.easeOut, onComplete:function(){
+		this.tw.hidePage = TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:0, ease:Quad.easeOut, onComplete:function(){
 			this.destroy();
 			this.dispatch(this.EVENT.HIDDEN);
 		}.bind(this)});
-	};
-	
-	
-	ViewPage.prototype.showLoader = function() {
-		TweenLite.to(APP.Main.$.loader, 0.8, {opacity:1, display:'block', ease:Quart.easeOut});
-	};
-	
-	
-	ViewPage.prototype.hidePreloader = function() {
-		// hide preloader if need
-		// play intro if need and at the end of it dispatch APP.RoutesManager.currentPage.EVENT.SHOWN
-		
-		APP.RoutesManager.currentPage.dispatch(APP.RoutesManager.currentPage.EVENT.SHOWN); // dispatch event to enable page change
-	};
-	
-	
-	ViewPage.prototype.hideLoader = function() {
-		TweenLite.to(APP.Main.$.loader, 0.8, {opacity:0, display:'none', ease:Quart.easeOut});
-		
-		// if(APP.RoutesManager.prevPage == null) // if need a different behavior in the first load.
 	};
 	
 	

@@ -9,6 +9,8 @@ APP.View = (function(window) {
 		this.$ = {};
 		this.p = {};
 		this.v = {};
+		this.tw = {};
+		this.tl = {};
 	}
 	
 	
@@ -29,6 +31,44 @@ APP.View = (function(window) {
 	
 	View.prototype.bindEvents = function() {
 		
+	};
+	
+	
+	View.prototype.unbindEvents = function() {
+		
+	};
+	
+	
+	View.prototype.killTweens = function() {
+		/* tween */
+		for(var tween in this.tw) {
+			var tw = this.tw[tween];
+			
+			tw.kill();
+		}
+		
+		/* timeline */
+		for(var timeline in this.tl) {
+			var tl = this.tl[timeline];
+			
+			tl.stop();
+			tl.kill();
+			tl.clear();
+		}
+		
+		this.tl = {};
+		this.tw = {};
+	};
+	
+	
+	View.prototype.destroy = function() {
+		this.unbindEvents();
+		
+		this.killTweens();
+		
+		this.$ = {};
+		this.p = {};
+		this.v = {};
 	};
 	
 	
