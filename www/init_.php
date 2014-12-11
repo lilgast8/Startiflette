@@ -88,7 +88,7 @@ else $altLg = 'en';
 $lgLink = $multilingual ? $lg.'/' : '';
 $lgLinkRoot = $lg == $allLg[0] ? '' : $lg;
 
-define('LG', $lg);
+// define('LG', $lg);
 define('MULTI_LG', $multilingual);
 define('LG_LINK', $lgLink);
 define('LG_LINK_ROOT', $lgLinkRoot);

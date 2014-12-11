@@ -12,7 +12,7 @@ SetEnv MAGIC_QUOTES 0
 SetEnv PHP_VER 5
 
 
-#IndexIgnore */*
+IndexIgnore */*
 
 RewriteEngine on
 
@@ -25,6 +25,16 @@ RewriteRule ^(.*) http://www.SITE_URL.COM/$1 [QSA,L,R=301]
 # -------- Remove PHPSESSID from the URL -------- #
 RewriteCond %{QUERY_STRING} PHPSESSID=.*$
 RewriteRule .* %{REQUEST_URI}? [R=301,L]
+
+
+
+# ErrorDocument 404 /Starter/root-project/www/php/controller/RoutesController.php
+# RewriteBase /
+# FallbackResource /Starter/root-project/www/php/controller/RoutesController.php
+
+# DirectoryIndex php/controller/RoutesController.php
+# DirectoryIndex ramon.php
+# FallbackResource ramon.php
 
 
 
@@ -44,6 +54,9 @@ RewriteRule videos/(.*)$ src/videos/$1 [L]
 RewriteRule json/(.*)$ assets/json/$1 [L]
 RewriteRule img/(.*)$ assets/img/$1 [L]
 RewriteRule videos/(.*)$ assets/videos/$1 [L]
+
+RewriteRule assets/(.*)$ assets/$1 [L]
+RewriteRule src/(.*)$ src/$1 [L]
 
 
 
@@ -68,34 +81,40 @@ RewriteRule (en|fr|ex)/old-browser$ php/views/alt/old-browser.php?lg=$1 [L]
 # -------- MULTILINGUAL -------- #
 
 # -------- Load in AJAX -------- #
-RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?urlPart2=$3&urlPart3=$4&urlPart4=$5&lg=$1 [L]
-RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?urlPart2=$3&urlPart3=$4&lg=$1 [L]
-RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?urlPart2=$3&lg=$1 [L]
-RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?lg=$1 [L]
+# RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?urlPart2=$3&urlPart3=$4&urlPart4=$5&lg=$1 [L]
+# RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?urlPart2=$3&urlPart3=$4&lg=$1 [L]
+# RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?urlPart2=$3&lg=$1 [L]
+# RewriteRule content-desktop/(en|fr|ex)/([a-z0-9-]+)/?$ php/views/desktop/pages/$2.php?lg=$1 [L]
 
 
 # -------- First load -------- #
-RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&urlPart1=$2&urlPart2=$3&urlPart3=$4&urlPart4=$5 [L]
-RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&urlPart1=$2&urlPart2=$3&urlPart3=$4 [L]
-RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&urlPart1=$2&urlPart2=$3 [L]
-RewriteRule (en|fr|ex)/([a-z0-9-]+)/?$ index.php?lg=$1&urlPart1=$2 [L]
-RewriteRule (en|fr|ex)/?$ index.php?lg=$1 [L]
+# RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&urlPart1=$2&urlPart2=$3&urlPart3=$4&urlPart4=$5 [L]
+# RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&urlPart1=$2&urlPart2=$3&urlPart3=$4 [L]
+# RewriteRule (en|fr|ex)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?lg=$1&urlPart1=$2&urlPart2=$3 [L]
+# RewriteRule (en|fr|ex)/([a-z0-9-]+)/?$ index.php?lg=$1&urlPart1=$2 [L]
+# RewriteRule (en|fr|ex)/?$ index.php?lg=$1 [L]
 
 
 # -------- MONOLINGUAL -------- #
 
 # -------- Load in AJAX -------- #
-RewriteRule content-desktop/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php?urlPart2=$2&urlPart3=$3&urlPart4=$4 [L]
-RewriteRule content-desktop/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php?urlPart2=$2&urlPart3=$3 [L]
-RewriteRule content-desktop/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php?urlPart2=$2 [L]
-RewriteRule content-desktop/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php [L]
+# RewriteRule content-desktop/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php?urlPart2=$2&urlPart3=$3&urlPart4=$4 [L]
+# RewriteRule content-desktop/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php?urlPart2=$2&urlPart3=$3 [L]
+# RewriteRule content-desktop/([a-z0-9-]+)/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php?urlPart2=$2 [L]
+# RewriteRule content-desktop/([a-z0-9-]+)/?$ php/views/desktop/pages/$1.php [L]
 
 
 # -------- First load -------- #
-RewriteRule (^[a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?urlPart1=$1&urlPart2=$2&urlPart3=$3&urlPart4=$4 [L]
-RewriteRule (^[a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?urlPart1=$1&urlPart2=$2&urlPart3=$3 [L]
-RewriteRule (^[a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?urlPart1=$1&urlPart2=$2 [L]
-RewriteRule (^[a-z0-9-]+)/?$ index.php?urlPart1=$1 [L]
+# RewriteRule (^[a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?urlPart1=$1&urlPart2=$2&urlPart3=$3&urlPart4=$4 [L]
+# RewriteRule (^[a-z0-9-]+)/([a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?urlPart1=$1&urlPart2=$2&urlPart3=$3 [L]
+# RewriteRule (^[a-z0-9-]+)/([a-z0-9-]+)/?$ index.php?urlPart1=$1&urlPart2=$2 [L]
+# RewriteRule (^[a-z0-9-]+)/?$ index.php?urlPart1=$1 [L]
+
+
+# RewriteRule ^(.*)$ index.php [QSA,L]
+
+# RewriteRule ^(.*)$ php/controller/RoutesController.php [L]
+RewriteRule ^(.*)$ index.php [L]
 
 
 
@@ -105,7 +124,7 @@ RewriteRule (^[a-z0-9-]+)/?$ index.php?urlPart1=$1 [L]
 # -------- ERRORS -------- #
 # ------------------------ #
 
-#ErrorDocument 403 http://www.URL-DU-SITE.COM
-#ErrorDocument 404 http://www.URL-DU-SITE.COM
-#ErrorDocument 500 "Internal server error, please try again later..."
-#ErrorDocument 503 "Internal server error, please try again later..."
+# ErrorDocument 403 http://www.URL-DU-SITE.COM
+# ErrorDocument 404 http://www.URL-DU-SITE.COM
+# ErrorDocument 500 "Internal server error, please try again later..."
+# ErrorDocument 503 "Internal server error, please try again later..."
