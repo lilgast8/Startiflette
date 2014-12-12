@@ -1,17 +1,18 @@
 <?php
 
 
+
 include_once 'php/Main.php';
 
 $main = Main::getInstance();
-// $main->init();
+$main->init();
 
 
 
+include_once $main->path->file->views . Main::$DEVICE_PATH . 'partials'.DS.'header.php';
+include_once $main->path->file->views . Main::$DEVICE_PATH . 'pages'.DS.$main->routes->viewName.'.php';
+include_once $main->path->file->views . Main::$DEVICE_PATH . 'partials'.DS.'footer.php';
 
-// include_once(SITE_ROOT.'php/views/'.DEVICE.'/partials/header.php');
-// include_once(SITE_ROOT.'php/views/'.DEVICE.'/pages/'.$file.'.php');
-// include_once(SITE_ROOT.'php/views/'.DEVICE.'/partials/footer.php');
 
 
 ?>
