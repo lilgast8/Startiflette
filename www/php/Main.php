@@ -28,6 +28,7 @@ class Main
 	public $path		= null;
 	public $config		= null;
 	public $routes		= null;
+	public $contents	= null;
 	
 	
 	protected function __construct()
@@ -59,6 +60,7 @@ class Main
 		$this->setPath();
 		$this->setConfig();
 		$this->setRoutes();
+		$this->setContents();
 	}
 	
 	
@@ -122,6 +124,13 @@ class Main
 	private function setRoutes()
 	{
 		$this->routes = RoutesController::getInstance();
+	}
+	
+	
+	private function setContents()
+	{
+		include_once $this->path->file->contents . Config::$LANG . DS . 'contents.php';
+		$this->contents = getContents();
 	}
 	
 }

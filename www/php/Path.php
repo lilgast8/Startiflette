@@ -7,6 +7,8 @@ class Path
 	
 	protected static $instance;
 	
+	const SITE_URL			= 'http://www.SITE-URL.com';
+	
 	public $url		= null;
 	public $file	= null;
 	
@@ -43,7 +45,6 @@ class Path
 		
 		$this->url->base	= str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
 		$this->url->current	= $_SERVER['REQUEST_URI'];
-		
 		$this->url->assets	= $this->url->base . $assets_folder.'/';
 		
 		
@@ -52,6 +53,7 @@ class Path
 		
 		$this->file->base				= str_replace('index.php', '', $script_filename);
 		$this->file->php				= $this->file->base . 'php'.DS;
+		$this->file->contents			= $this->file->php . 'contents'.DS;
 		$this->file->views				= $this->file->php . 'views'.DS;
 		$this->file->alt				= $this->file->views . 'alt'.DS;
 		$this->file->desktop			= $this->file->views . 'desktop'.DS;

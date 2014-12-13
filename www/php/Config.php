@@ -57,6 +57,7 @@ class Config
 		$this->setMultiLang();
 		$this->setAltLang();
 		$this->setLang();
+		$this->checkLang();
 		$this->setLinksLang();
 	}
 	
@@ -106,9 +107,16 @@ class Config
 	}
 	
 	
+	private function checkLang()
+	{
+		if(!in_array(self::$LANG, self::$ALL_LANG))
+			echo 'Show 404';
+	}
+	
+	
 	private function setLinksLang()
 	{
-		self::$LG_LINK		= self::$MULTI_LANG ? self::$LANG : '';
+		self::$LG_LINK		= self::$MULTI_LANG ? self::$LANG.'/' : '';
 		self::$LG_LINK_ROOT	= self::$LANG == self::$ALL_LANG[0] ? '' : self::$LANG;
 	}
 	

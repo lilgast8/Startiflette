@@ -18,13 +18,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<?php
 	if(Config::$MULTI_LANG)
-		$main->routes->getAltUrl();
+		$main->routes->getAltLink();
 	
 	/* Social share */
-	// include_once $main->path->file->base.'php/shared/social-share.php';
+	include_once $main->path->file->base.'php/shared/social-share.php';
 	
 	/* Favicons */
-	// include_once $main->path->file->base.'php/shared/favicons.php';
+	include_once $main->path->file->base.'php/shared/favicons.php';
 	
 	?>
 	
@@ -39,14 +39,14 @@
 		$files = $jsFiles['modern-detect-izr']['files'];
 		
 		for($i=0; $i<count($files); $i++) {
-			echo '<script src="'.$main->path->url->base.'src/js/'.$files[$i].'"></script>'."\n	";
+			echo '<script src="' . $main->path->url->base . 'src/js/' . $files[$i] . '"></script>' . "\n";
 		}
 	} else { ?>
 	<script src="<?php echo $main->path->url->base; ?>assets/js/lib/modern-detect-izr.min.js"></script>
 	<?php }
 	
 	/* Google Analytics */
-	// include_once $main->path->file->base.'php/shared/google-analytics.php';
+	include_once $main->path->file->base.'php/shared/google-analytics.php';
 	
 	?>
 </head>
@@ -68,18 +68,18 @@
 		<nav id="menu">
 			<ul>
 				<li>
-					<a href="<?php echo $aUrl->home; ?>" class="menu-link" data-url="<?php echo $aUrl->homeId; ?>">
-						<?php echo $glo_menu_txt['home']; ?>
+					<a href="<?php echo $main->routes->url->home; ?>" class="menu-link" data-url="<?php echo $main->routes->url->homeId; ?>">
+						<?php echo $main->contents->global->menu->home; ?>
 					</a>
 				</li>
 				<li>
-					<a href="<?php echo $aUrl->about; ?>" class="menu-link" data-url="<?php echo $aUrl->aboutId; ?>">
-						<?php echo $glo_menu_txt['about']; ?>
+					<a href="<?php echo $main->routes->url->about; ?>" class="menu-link" data-url="<?php echo $main->routes->url->aboutId; ?>">
+						<?php echo $main->contents->global->menu->about; ?>
 					</a>
 				</li>
 				<li>
-					<a href="<?php echo $aUrl->projects; ?>" class="menu-link" data-url="<?php echo $aUrl->projectsId; ?>">
-						<?php echo $glo_menu_txt['projects']; ?>
+					<a href="<?php echo $main->routes->url->projects; ?>" class="menu-link" data-url="<?php echo $main->routes->url->projectsId; ?>">
+						<?php echo $main->contents->global->menu->projects; ?>
 					</a>
 				</li>
 			</ul>

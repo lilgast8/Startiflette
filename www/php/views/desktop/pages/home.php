@@ -12,7 +12,7 @@ if(isset($_POST['ajax'])) {
 <section id="page-content" class="home">
 	
 	<br><br><br>
-	- Desktop page content / Accueil -
+	- Desktop page content / <?php echo $main->contents->global->menu->home; ?> / <?php echo Config::$LANG; ?> -
 	<br><br><br><br>
 	
 </section>
