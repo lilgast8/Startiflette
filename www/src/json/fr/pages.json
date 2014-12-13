@@ -1,33 +1,33 @@
 {
 	
 	"accueil" : {
-		"file" : "home",
-		"title" : "Accueil - STARTER",
-		"desc" : "Accueil - STARTER"
+		"file"	: "home",
+		"title"	: "Accueil - STARTER",
+		"desc"	: "Accueil - STARTER"
 	},
 	
 	"a-propos" : {
-		"file" : "about",
-		"title" : "À propos",
-		"desc" : "À propos"
+		"file"	: "about",
+		"title"	: "À propos",
+		"desc"	: "À propos"
 	},
 	
 	"projets" : {
-		"file" : "projects",
-		"title" : "Projets",
-		"desc" : "Projets"
+		"file"	: "projects",
+		"title"	: "Projets",
+		"desc"	: "Projets"
 	},
 	
 	"projet" : {
-		"file" : "project",
-		"title" : "Projet",
-		"desc" : "Projet"
+		"file"	: "project",
+		"title"	: "Projet",
+		"desc"	: "Projet"
 	},
 	
 	"mentions-legales" : {
-		"file" : "legals",
-		"title" : "Mentions légales",
-		"desc" : "Mentions légales"
+		"file"	: "legals",
+		"title"	: "Mentions légales",
+		"desc"	: "Mentions légales"
 	}
 	
 }

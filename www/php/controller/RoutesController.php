@@ -135,13 +135,34 @@ class RoutesController
 					
 					if($infosPage->file == $this->viewName) { // if file match with view name
 						$urlPageAlt = $this->pageName == $this->rootPageName ? '' : '/'.$pageUrl;
-						$urlAlt = $lang == Config::$ALL_LANG[0] && $this->pageName == $this->rootUrlName ? $this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
+						$urlAlt = $lang == Config::$ALL_LANG[0] && $this->pageName == $this->rootPageName ? $this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
 						
 						$this->altUrl[ $lang ] = $urlAlt;
 					}
 				}
 			}
 		}
+		
+		// projects
+		foreach($this->config->projects as $lang => $infosAllPages) { // parse languages
+			
+			if($lang != Config::$LANG) { // if not current language
+				
+				foreach($infosAllPages as $pageUrl => $infosPage) { // parse pages
+					$infosPage = (object) $infosPage;
+					
+					// if($infosPage->file == $this->viewName) { // if file match with view name
+					if($infosPage->id == $this->urlParts[1]) { // if id match
+						$urlPageAlt = $this->pageName == $this->rootPageName ? '' : '/'.$pageUrl;
+						$urlAlt = $lang == Config::$ALL_LANG[0] && $this->pageName == $this->rootPageName ? $this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
+						
+						$this->altUrl[ $lang ] = $urlAlt;
+					}
+				}
+			}
+		}
+		
+		print_r($this->altUrl);
 	}
 	
 	

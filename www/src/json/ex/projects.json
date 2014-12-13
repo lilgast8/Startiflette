@@ -1,23 +1,24 @@
-[
-	{
-		"id" : 1,
-		"name" : "Nom project 1",
-		"alias" : "nom-project-1",
-		"url" : "projet/1/nom-projet-1"
-	},
-	
-	{
-		"id" : 2,
-		"name" : "Nom project 2",
-		"alias" : "nom-project-2",
-		"url" : "projet/2/nom-projet-2"
-	},
-	
-	{
-		"id" : 3,
-		"name" : "Nom project 3",
-		"alias" : "nom-project-3",
-		"url" : "projet/3/nom-projet-3"
+{
+	"ex": {
+		
+		"1/project-name-ex-1" : {
+			"id"	: 1,
+			"alias"	: "project-name-ex-1",
+			"name"	: "Project name ex 1"
+		},
+		
+		"2/project-name-ex-2" : {
+			"id"	: 2,
+			"alias"	: "project-name-ex-2",
+			"name"	: "Project name ex 2"
+		},
+		
+		"3/project-name-ex-3" : {
+			"id"	: 3,
+			"alias"	: "project-name-ex-3",
+			"name"	: "Project name ex 3"
+		}
+		
 	}
 	
-]
+}

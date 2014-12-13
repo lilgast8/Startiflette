@@ -17,8 +17,8 @@ class Config
 	
 	private $path			= null;
 	
-	public $config			= null;
 	public $pages			= null;
+	public $projects		= null;
 	
 	
 	protected function __construct()
@@ -46,12 +46,13 @@ class Config
 	{
 		$this->path = Path::getInstance();
 		
-		if(!file_exists($this->path->file->pagesConfig))
-			throw new ErrorException('Pages config file is missing!');
+		// if(!file_exists($this->path->file->pagesConfig))
+		// 	throw new ErrorException('Pages config file is missing!');
 		
-		$pages = file_get_contents($this->path->file->pagesConfig);
-		$this->pages = json_decode($pages);
+		// $pages = file_get_contents($this->path->file->pagesConfig);
+		// $this->pages = json_decode($pages);
 		
+		$this->getConfig();
 		
 		$this->setAllLang();
 		$this->setMultiLang();
@@ -59,6 +60,26 @@ class Config
 		$this->setLang();
 		$this->checkLang();
 		$this->setLinksLang();
+	}
+	
+	
+	private function getConfig()
+	{
+		// pages config
+		if(!file_exists($this->path->file->pagesConfig))
+			throw new ErrorException('Pages config file is missing!');
+		
+		$pages = file_get_contents($this->path->file->pagesConfig);
+		$this->pages = json_decode($pages);
+		
+		
+		// projects config
+		$projectsConfig = $this->path->file->json . 'projects.json';
+		if(!file_exists($projectsConfig))
+			throw new ErrorException('Projects config file is missing!');
+		
+		$projects = file_get_contents($projectsConfig);
+		$this->projects = json_decode($projects);
 	}
 	
 	
