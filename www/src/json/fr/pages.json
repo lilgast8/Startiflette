@@ -1,31 +1,31 @@
 {
 	
 	"accueil" : {
-		"file"	: "home",
+		"name"	: "home",
 		"title"	: "Accueil - STARTER",
 		"desc"	: "Accueil - STARTER"
 	},
 	
 	"a-propos" : {
-		"file"	: "about",
+		"name"	: "about",
 		"title"	: "À propos",
 		"desc"	: "À propos"
 	},
 	
 	"projets" : {
-		"file"	: "projects",
+		"name"	: "projects",
 		"title"	: "Projets",
 		"desc"	: "Projets"
 	},
 	
 	"projet" : {
-		"file"	: "project",
+		"name"	: "project",
 		"title"	: "Projet",
 		"desc"	: "Projet"
 	},
 	
 	"mentions-legales" : {
-		"file"	: "legals",
+		"name"	: "legals",
 		"title"	: "Mentions légales",
 		"desc"	: "Mentions légales"
 	}

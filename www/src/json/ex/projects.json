@@ -1,22 +1,23 @@
 {
+	
 	"ex": {
 		
 		"1/project-name-ex-1" : {
-			"id"	: 1,
-			"alias"	: "project-name-ex-1",
-			"name"	: "Project name ex 1"
+			"name"	: 1,
+			"title"	: "Project name ex 1",
+			"desc"	: "Project name ex 1"
 		},
 		
 		"2/project-name-ex-2" : {
-			"id"	: 2,
-			"alias"	: "project-name-ex-2",
-			"name"	: "Project name ex 2"
+			"name"	: 2,
+			"title"	: "Project name ex 2",
+			"desc"	: "Project name ex 2"
 		},
 		
 		"3/project-name-ex-3" : {
-			"id"	: 3,
-			"alias"	: "project-name-ex-3",
-			"name"	: "Project name ex 3"
+			"name"	: 3,
+			"title"	: "Project name ex 3",
+			"desc"	: "Project name ex 3"
 		}
 		
 	}

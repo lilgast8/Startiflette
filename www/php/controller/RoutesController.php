@@ -20,6 +20,8 @@ class RoutesController
 	public $descPage		= null;
 	public $altUrl			= null;
 	
+	private $subPages		= array();
+	
 	
 	protected function __construct()
 	{
@@ -48,16 +50,23 @@ class RoutesController
 		$this->path		= Path::getInstance();
 		
 		$this->setPagesInfos();
+		$this->setSubPages();
 		$this->setUrl();
 		$this->setRootPageName();
 		$this->setPageInfos();
-		$this->setAltUrl();
+		$this->manageAltUrl();
 	}
 	
 	
 	private function setPagesInfos()
 	{
 		$this->pagesInfos = $this->config->pages->{ Config::$LANG };
+	}
+	
+	
+	private function setSubPages()
+	{
+		$this->subPages[ 'project' ] = $this->config->projects;
 	}
 	
 	
@@ -69,11 +78,11 @@ class RoutesController
 			$infosPage = (object) $infosPage;
 			
 			if($i == 0)
-				$this->url[ $infosPage->file ] = $this->path->url->base . Config::$LG_LINK_ROOT;
+				$this->url[ $infosPage->name ] = $this->path->url->base . Config::$LG_LINK_ROOT;
 			else
-				$this->url[ $infosPage->file ] = $this->path->url->base . Config::$LG_LINK . $pageUrl;
+				$this->url[ $infosPage->name ] = $this->path->url->base . Config::$LG_LINK . $pageUrl;
 			
-			$this->url[ $infosPage->file.'Id' ] = $pageUrl;
+			$this->url[ $infosPage->name.'Id' ] = $pageUrl;
 			
 			$i++;
 		}
@@ -116,16 +125,25 @@ class RoutesController
 		
 		$this->urlParts		= $urlParts;
 		$this->pageName		= $pageName;
-		$this->viewName		= $this->pagesInfos->{ $this->pageName }->file;
+		$this->viewName		= $this->pagesInfos->{ $this->pageName }->name;
 		$this->titlePage	= $this->pagesInfos->{ $this->pageName }->title;
 		$this->descPage		= $this->pagesInfos->{ $this->pageName }->desc;
 	}
 	
 	
-	private function setAltUrl()
+	private function manageAltUrl()
 	{
 		$this->altUrl = array();
 		
+		$this->setAltUrl($this->config->pages, 'page');
+		
+		foreach($this->subPages as $viewName => $infosAllSubPages) // parse subpages
+			if($this->viewName == $viewName)
+				$this->setAltUrl($infosAllSubPages, 'subpage');
+		
+		
+		
+		/*
 		foreach($this->config->pages as $lang => $infosAllPages) { // parse languages
 			
 			if($lang != Config::$LANG) { // if not current language
@@ -133,7 +151,7 @@ class RoutesController
 				foreach($infosAllPages as $pageUrl => $infosPage) { // parse pages
 					$infosPage = (object) $infosPage;
 					
-					if($infosPage->file == $this->viewName) { // if file match with view name
+					if($infosPage->name == $this->viewName) { // if name match
 						$urlPageAlt = $this->pageName == $this->rootPageName ? '' : '/'.$pageUrl;
 						$urlAlt = $lang == Config::$ALL_LANG[0] && $this->pageName == $this->rootPageName ? $this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
 						
@@ -142,27 +160,124 @@ class RoutesController
 				}
 			}
 		}
+		*/
+		
+		/*
+		foreach($this->subPages as $viewName => $infosAllPages) { // parse subpages
+			
+			if($this->viewName == $viewName) {
+				
+				
+				
+				foreach($this->config->projects as $lang => $infosAllPages) { // parse languages
+					
+					if($lang != Config::$LANG) { // if not current language
+						
+						foreach($infosAllPages as $pageUrl => $infosPage) { // parse pages
+							$infosPage = (object) $infosPage;
+							
+							// if($infosPage->file == $this->viewName) { // if file match with view name
+							if($infosPage->id == $this->urlParts[1]) { // if id match
+								// $urlPageAlt = $this->pageName == $this->rootPageName ? '' : '/'.$pageUrl;
+								// $urlAlt = $lang == Config::$ALL_LANG[0] && $this->pageName == $this->rootPageName ? $this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
+								
+								$urlPageAlt = '/'.$pageUrl;
+								
+								$this->altUrl[ $lang ] = $this->altUrl[ $lang ] . $urlPageAlt;
+							}
+						}
+					}
+				}
+				
+				
+				
+			}
+				
+		}
+		*/
+		
+		
 		
 		// projects
-		foreach($this->config->projects as $lang => $infosAllPages) { // parse languages
+		// foreach($this->config->projects as $lang => $infosAllPages) { // parse languages
+			
+		// 	if($lang != Config::$LANG) { // if not current language
+				
+		// 		foreach($infosAllPages as $pageUrl => $infosPage) { // parse pages
+		// 			$infosPage = (object) $infosPage;
+					
+		// 			// if($infosPage->file == $this->viewName) { // if file match with view name
+		// 			if($infosPage->id == $this->urlParts[1]) { // if id match
+		// 				$urlPageAlt = $this->pageName == $this->rootPageName ? '' : '/'.$pageUrl;
+		// 				$urlAlt = $lang == Config::$ALL_LANG[0] && $this->pageName == $this->rootPageName ? $this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
+						
+		// 				$this->altUrl[ $lang ] = $urlAlt;
+		// 			}
+		// 		}
+		// 	}
+		// }
+		
+		
+		// if($this->viewName == 'project') {
+			
+		// 	foreach($this->config->projects as $lang => $infosAllPages) { // parse languages
+				
+		// 		if($lang != Config::$LANG) { // if not current language
+					
+		// 			foreach($infosAllPages as $pageUrl => $infosPage) { // parse pages
+		// 				$infosPage = (object) $infosPage;
+						
+		// 				// if($infosPage->file == $this->viewName) { // if file match with view name
+		// 				if($infosPage->id == $this->urlParts[1]) { // if id match
+		// 					// $urlPageAlt = $this->pageName == $this->rootPageName ? '' : '/'.$pageUrl;
+		// 					// $urlAlt = $lang == Config::$ALL_LANG[0] && $this->pageName == $this->rootPageName ? $this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
+							
+		// 					$urlPageAlt = '/'.$pageUrl;
+							
+		// 					$this->altUrl[ $lang ] = $this->altUrl[ $lang ] . $urlPageAlt;
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+			
+		// }
+		
+		print_r($this->altUrl);
+	}
+	
+	
+	private function setAltUrl($objToParse, $type)
+	{
+		if($type == 'page')
+			$viewName = $this->viewName;
+		else if($type == 'subpage')
+			$viewName = $this->urlParts[1];
+		
+		foreach($objToParse as $lang => $infosAllPages) { // parse object
 			
 			if($lang != Config::$LANG) { // if not current language
 				
 				foreach($infosAllPages as $pageUrl => $infosPage) { // parse pages
 					$infosPage = (object) $infosPage;
 					
-					// if($infosPage->file == $this->viewName) { // if file match with view name
-					if($infosPage->id == $this->urlParts[1]) { // if id match
-						$urlPageAlt = $this->pageName == $this->rootPageName ? '' : '/'.$pageUrl;
-						$urlAlt = $lang == Config::$ALL_LANG[0] && $this->pageName == $this->rootPageName ? $this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
+					if($infosPage->name == $viewName) { // if name match
 						
-						$this->altUrl[ $lang ] = $urlAlt;
+						if($type == 'page') {
+							$urlPageAlt = $this->pageName == $this->rootPageName ? '' : '/'.$pageUrl;
+							$urlAlt = $lang == Config::$ALL_LANG[0] && $this->pageName == $this->rootPageName ? $this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
+							
+							$this->altUrl[ $lang ] = $urlAlt;
+						}
+						else if($type == 'subpage') {
+							$urlPageAlt = '/'.$pageUrl;
+							
+							$this->altUrl[ $lang ] = $this->altUrl[ $lang ] . $urlPageAlt;
+						}
+						
 					}
 				}
 			}
 		}
-		
-		print_r($this->altUrl);
 	}
 	
 	

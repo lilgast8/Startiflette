@@ -1,22 +1,23 @@
 {
+	
 	"fr": {
 		
 		"1/nom-projet-1" : {
-			"id"	: 1,
-			"alias"	: "nom-projet-1",
-			"name"	: "Nom project 1"
+			"name"	: 1,
+			"title"	: "Nom project 1",
+			"desc"	: "Nom project 1"
 		},
 		
 		"2/nom-projet-2" : {
-			"id"	: 2,
-			"alias"	: "nom-projet-2",
-			"name"	: "Nom project 2"
+			"name"	: 2,
+			"title"	: "Nom project 2",
+			"desc"	: "Nom project 2"
 		},
 		
 		"3/nom-projet-3" : {
-			"id"	: 3,
-			"alias"	: "nom-projet-3",
-			"name"	: "Nom project 3"
+			"name"	: 3,
+			"title"	: "Nom project 3",
+			"desc"	: "Nom project 3"
 		}
 		
 	}

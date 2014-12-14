@@ -3,21 +3,21 @@
 	"fr": {
 		
 		"1/nom-projet-1" : {
-			"id"	: 1,
-			"alias"	: "nom-projet-1",
-			"name"	: "Nom project 1"
+			"name"	: 1,
+			"title"	: "Nom project 1",
+			"desc"	: "Nom project 1"
 		},
 		
 		"2/nom-projet-2" : {
-			"id"	: 2,
-			"alias"	: "nom-projet-2",
-			"name"	: "Nom project 2"
+			"name"	: 2,
+			"title"	: "Nom project 2",
+			"desc"	: "Nom project 2"
 		},
 		
 		"3/nom-projet-3" : {
-			"id"	: 3,
-			"alias"	: "nom-projet-3",
-			"name"	: "Nom project 3"
+			"name"	: 3,
+			"title"	: "Nom project 3",
+			"desc"	: "Nom project 3"
 		}
 		
 	},
@@ -27,44 +27,45 @@
 	"en": {
 		
 		"1/project-name-1" : {
-			"id"	: 1,
-			"alias"	: "project-name-1",
-			"name"	: "Project name 1"
+			"name"	: 1,
+			"title"	: "Project name 1",
+			"desc"	: "Project name 2"
 		},
 		
 		"2/project-name-2" : {
-			"id"	: 2,
-			"alias"	: "project-name-2",
-			"name"	: "Project name 2"
+			"name"	: 2,
+			"title"	: "Project name 2",
+			"desc"	: "Project name 2"
 		},
 		
 		"3/project-name-3" : {
-			"id"	: 3,
-			"alias"	: "project-name-3",
-			"name"	: "Project name 3"
+			"name"	: 3,
+			"title"	: "Project name 3",
+			"desc"	: "Project name 3"
 		}
 		
 	},
 	
 	
+	
 	"ex": {
 		
 		"1/project-name-ex-1" : {
-			"id"	: 1,
-			"alias"	: "project-name-ex-1",
-			"name"	: "Project name ex 1"
+			"name"	: 1,
+			"title"	: "Project name ex 1",
+			"desc"	: "Project name ex 1"
 		},
 		
 		"2/project-name-ex-2" : {
-			"id"	: 2,
-			"alias"	: "project-name-ex-2",
-			"name"	: "Project name ex 2"
+			"name"	: 2,
+			"title"	: "Project name ex 2",
+			"desc"	: "Project name ex 2"
 		},
 		
 		"3/project-name-ex-3" : {
-			"id"	: 3,
-			"alias"	: "project-name-ex-3",
-			"name"	: "Project name ex 3"
+			"name"	: 3,
+			"title"	: "Project name ex 3",
+			"desc"	: "Project name ex 3"
 		}
 		
 	}

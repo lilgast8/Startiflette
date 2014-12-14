@@ -1,31 +1,31 @@
 {
 	
 	"home-ex" : {
-		"file"	: "home",
+		"name"	: "home",
 		"title"	: "Home - EX - STARTER",
 		"desc"	: "Home - EX - STARTER"
 	},
 	
 	"about-ex" : {
-		"file"	: "about",
+		"name"	: "about",
 		"title"	: "About - EX",
 		"desc"	: "About - EX"
 	},
 	
 	"projects-ex" : {
-		"file"	: "projects",
+		"name"	: "projects",
 		"title"	: "Projects - EX",
 		"desc"	: "Projects - EX"
 	},
 	
 	"project-ex" : {
-		"file"	: "project",
+		"name"	: "project",
 		"title"	: "Project - EX",
 		"desc"	: "Project - EX"
 	},
 	
 	"legals-ex" : {
-		"file"	: "legals",
+		"name"	: "legals",
 		"title"	: "Legal notice - EX",
 		"desc"	: "Legal notice - EX"
 	}
