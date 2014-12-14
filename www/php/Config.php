@@ -7,6 +7,14 @@ class Config
 	
 	protected static $instance;
 	
+	const PROD				= false;
+	// const PROD			= true;
+	
+	static $LOCALHOST		= null;
+	static $DEVICE			= null;
+	static $DEVICE_FOLDER	= null;
+	static $FOLDER			= null;
+	
 	static $MULTI_LANG		= null;
 	static $ALT_LANG		= null;
 	static $ALL_LANG		= null;
@@ -16,6 +24,7 @@ class Config
 	static $LG_LINK_ROOT	= null;
 	
 	static $IS_AJAX			= false;
+	static $IS_ALT_CONTENT	= false;
 	
 	private $path			= null;
 	
@@ -25,7 +34,9 @@ class Config
 	
 	protected function __construct()
 	{
-		$this->set();
+		$this->setEnv();
+		$this->setErrors();
+		$this->setDevice();
 	}
 	
 	
@@ -44,7 +55,53 @@ class Config
 	}
 	
 	
-	private function set()
+	private function setEnv()
+	{
+		self::$LOCALHOST = $_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_PORT'] == '8888' ? true : false;
+	}
+	
+	
+	private function setErrors()
+	{
+		if(self::$LOCALHOST || !self::PROD) {
+			error_reporting(E_ALL);
+			ini_set('display_errors', '1');
+		}
+	}
+	
+	
+	private function setDevice()
+	{
+		$detect = new Mobile_Detect();
+		$mobile = $detect->isMobile() ? true : false;
+		$tablet = $detect->isTablet() ? true : false;
+		$desktop = !$mobile && !$tablet ? true : false;
+		// if(preg_match('/Firefox/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = true;
+		// if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = true;
+		// if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) { $mobile = true; $tablet = true; }
+		
+		// set device
+		if($mobile && !$tablet)
+			$device = 'mobile';
+		else if($tablet)
+			$device = 'tablet';
+		else if($desktop)
+			$device = 'desktop';
+		
+		// set device path
+		if($device == 'desktop' || $device == 'tablet')
+			$devicePath = 'desktop';
+		else if($device == 'mobile')
+			$devicePath = 'mobile';
+		
+		
+		self::$DEVICE			= $device;
+		self::$DEVICE_FOLDER	= $devicePath.DS;
+		self::$FOLDER			= 'pages'.DS;
+	}
+	
+	
+	public function init()
 	{
 		$this->path = Path::getInstance();
 		
@@ -116,7 +173,7 @@ class Config
 		$current = $this->path->url->current;
 		$pageUrl = str_replace($this->path->url->base, '', $current);
 		
-		if(strlen($pageUrl) == 0)
+		if(!Config::$MULTI_LANG || strlen($pageUrl) == 0)
 			self::$LANG = self::$ALL_LANG[0];	
 		else
 			self::$LANG = substr($pageUrl, 0, 2);
@@ -139,10 +196,24 @@ class Config
 	
 	public function manageAjax($pageUrl)
 	{
-		if(strrpos($pageUrl, 'ajax-content')) {
+		if(strrpos($pageUrl, 'ajax-content/') !== false) {
 			$pageUrl = str_replace('ajax-content/', '', $pageUrl);
 			
 			self::$IS_AJAX = true;
+		}
+		
+		return $pageUrl;
+	}
+	
+	
+	public function manageAltContent($pageUrl)
+	{
+		if(strrpos($pageUrl, 'alt-content/') !== false) {
+			$pageUrl = str_replace('alt-content/', '', $pageUrl);
+			
+			self::$IS_ALT_CONTENT	= true;
+			self::$DEVICE_FOLDER	= 'alt'.DS;
+			self::$FOLDER			= '';
 		}
 		
 		return $pageUrl;

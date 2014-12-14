@@ -21,11 +21,12 @@ class RoutesController
 	public $altUrl			= null;
 	
 	private $subPages		= array();
+	private $isAltContent	= false;
 	
 	
 	protected function __construct()
 	{
-		$this->set();
+		$this->init();
 	}
 	
 	
@@ -44,7 +45,7 @@ class RoutesController
 	}
 	
 	
-	private function set()
+	private function init()
 	{
 		$this->config	= Config::getInstance();
 		$this->path		= Path::getInstance();
@@ -119,6 +120,9 @@ class RoutesController
 		// AJAX management
 		$pageUrl = $this->config->manageAjax($pageUrl);
 		
+		// alternative content management
+		$pageUrl = $this->config->manageAltContent($pageUrl);
+		
 		// remove first slash if there is one
 		if(substr($pageUrl, 0, 1) == '/')
 			$pageUrl = preg_replace('/\//', '', $pageUrl, 1);
@@ -140,9 +144,13 @@ class RoutesController
 		
 		$this->urlParts		= $urlParts;
 		$this->pageName		= $pageName;
-		$this->viewName		= $this->pagesInfos->{ $this->pageName }->name;
-		$this->titlePage	= $this->pagesInfos->{ $this->pageName }->title;
-		$this->descPage		= $this->pagesInfos->{ $this->pageName }->desc;
+		if(!Config::$IS_ALT_CONTENT) {
+			$this->viewName		= $this->pagesInfos->{ $this->pageName }->name;
+			$this->titlePage	= $this->pagesInfos->{ $this->pageName }->title;
+			$this->descPage		= $this->pagesInfos->{ $this->pageName }->desc;
+		}
+		else
+			$this->viewName		= 'old-browser';
 	}
 	
 	

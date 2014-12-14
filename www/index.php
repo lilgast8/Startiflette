@@ -10,12 +10,12 @@ $main->init();
 
 
 if(!Config::$IS_AJAX)
-	include_once $main->path->file->views . Main::$DEVICE_PATH . 'partials'.DS.'header.php';
+	include_once $main->path->file->views . Config::$DEVICE_FOLDER . 'partials'.DS.'header.php';
 
-include_once $main->path->file->views . Main::$DEVICE_PATH . 'pages'.DS.$main->routes->viewName.'.php';
+include_once $main->path->file->views . Config::$DEVICE_FOLDER.Config::$FOLDER .$main->routes->viewName.'.php';
 
 if(!Config::$IS_AJAX)
-	include_once $main->path->file->views . Main::$DEVICE_PATH . 'partials'.DS.'footer.php';
+	include_once $main->path->file->views . Config::$DEVICE_FOLDER . 'partials'.DS.'footer.php';
 
 
 

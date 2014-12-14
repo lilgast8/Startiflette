@@ -1,7 +1,8 @@
 module.exports = {
 	
 	php : {
-		allFiles : 'www/php/**/*.php'
+		indexFile	: 'www/index.php',
+		allFiles	: 'www/php/**/*.php'
 	},
 	
 	src : {

@@ -15,7 +15,7 @@ class Path
 	
 	protected function __construct()
 	{
-		$this->set();
+		$this->init();
 	}
 	
 	
@@ -34,9 +34,9 @@ class Path
 	}
 	
 	
-	private function set()
+	private function init()
 	{
-		$assets_folder		= Main::PROD ? 'assets' : 'src';
+		$assets_folder		= Config::PROD ? 'assets' : 'src';
 		$script_filename	= $_SERVER['SCRIPT_FILENAME'];
 		
 		

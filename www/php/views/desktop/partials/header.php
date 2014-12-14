@@ -32,7 +32,7 @@
 	
 	<!--[if lt IE 9]><script src="<?php echo $main->path->url->base; ?>js/lib/html5shiv.min.js"></script><![endif]-->
 	<?php
-	if(!$main::PROD) {
+	if(!Config::PROD) {
 		$jsonJsFiles = file_get_contents($main->path->file->js.'js-files.json');
 		$jsFiles = json_decode($jsonJsFiles, true);
 		

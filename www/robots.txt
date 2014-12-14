@@ -1,6 +1,5 @@
 User-Agent: *
 Disallow: /assets/
-Disallow: /includes/
 Disallow: /php/
 
 Sitemap: http://www.SITE_URL.COM/sitemap.xml

@@ -19,7 +19,7 @@ APP.OldBrowser = (function(window) {
 			browser == 'chrome' && browserVersion < 17) {
 			
 			$.ajax({
-				url: APP.Config.WEB_ROOT+APP.Config.LG+'/old-browser',
+				url: APP.Config.WEB_ROOT + APP.Config.LANG + '/ajax-content/alt-content/old-browser',
 				type: 'POST',
 				dataType: 'html',
 				success: _successAjax.bind(this),

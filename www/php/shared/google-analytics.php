@@ -1,5 +1,5 @@
 
-<?php if(!$main::$LOCALHOST && $main::PROD) { ?>
+<?php if(!Config::$LOCALHOST && Config::PROD) { ?>
 	<!-- Google Analytics -->
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

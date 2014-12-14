@@ -68,6 +68,7 @@ gulp.task( 'watch', function() {
 		paths.src.jsJsFilesFile,
 		paths.src.jsFiles,
 		paths.src.jsonFiles,
+		paths.php.indexFile,
 		paths.php.allFiles
 	] ).on('change', livereload.changed);
 	

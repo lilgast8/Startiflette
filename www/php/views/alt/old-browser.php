@@ -1,9 +1,3 @@
-<?php
-
-include_once('../../init.php');
-include_once(SITE_ROOT.'includes/contents/texts-'.LG.'.php');
-
-?>
 
 <!-- Old browser -->
 <div id="old-browser">

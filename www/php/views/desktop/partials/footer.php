@@ -31,7 +31,7 @@
 
 include_once $main->path->file->base.'php/shared/js-var.php'; // JS var
 
-if(!$main::PROD) {
+if(!Config::PROD) {
 	$jsonJsFiles = file_get_contents($main->path->file->js.'js-files.json');
 	$jsFiles = json_decode($jsonJsFiles, true);
 	
