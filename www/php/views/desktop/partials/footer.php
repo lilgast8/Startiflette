@@ -39,16 +39,16 @@ if(!Config::PROD) {
 	
 	for($i=0; $i<count($files); $i++) {
 		if(is_array($files[$i])) {
-			echo '<!--[if lt IE 9]><script src="' . $main->path->url->base . 'src/js/' . $files[$i][1] . '"></script><![endif]-->' . "\n";
-			echo '<!--[if gte IE 9]><!--><script src="' . $main->path->url->base . 'src/js/' . $files[$i][0] . '"></script><!--<![endif]-->' . "\n";
+			echo '<!--[if lt IE 9]><script src="' . $main->path->url->js . $files[$i][1] . '"></script><![endif]-->' . "\n";
+			echo '<!--[if gte IE 9]><!--><script src="' . $main->path->url->js . $files[$i][0] . '"></script><!--<![endif]-->' . "\n";
 		}
-		else echo '<script src="' . $main->path->url->base . 'src/js/' . $files[$i] . '"></script>' . "\n";
+		else echo '<script src="' . $main->path->url->js . $files[$i] . '"></script>' . "\n";
 	}
 
 } else { ?>
 
-<!--[if lt IE 9]><script src="<?php echo $main->path->url->base; ?>assets/js/scripts-oldie.min.js"></script><![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><script src="<?php echo $main->path->url->base; ?>assets/js/scripts.min.js"></script><!--<![endif]-->
+<!--[if lt IE 9]><script src="<?php echo $main->path->url->js; ?>scripts-oldie.min.js"></script><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><script src="<?php echo $main->path->url->js; ?>scripts.min.js"></script><!--<![endif]-->
 
 <?php } ?>
 

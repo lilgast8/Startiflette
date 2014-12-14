@@ -8,7 +8,7 @@ class Config
 	protected static $instance;
 	
 	const PROD				= false;
-	// const PROD			= true;
+	// const PROD				= true;
 	
 	static $LOCALHOST		= null;
 	static $DEVICE			= null;

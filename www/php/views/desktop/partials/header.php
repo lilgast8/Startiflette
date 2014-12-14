@@ -28,9 +28,9 @@
 	
 	?>
 	
-	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo $main->path->url->base; ?>assets/css/styles-desktop.min.css" />
+	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo $main->path->url->css; ?>styles-desktop.min.css" />
 	
-	<!--[if lt IE 9]><script src="<?php echo $main->path->url->base; ?>js/lib/html5shiv.min.js"></script><![endif]-->
+	<!--[if lt IE 9]><script src="<?php echo $main->path->url->js; ?>libs/html5shiv.min.js"></script><![endif]-->
 	<?php
 	if(!Config::PROD) {
 		$jsonJsFiles = file_get_contents($main->path->file->js.'js-files.json');
@@ -38,11 +38,10 @@
 		
 		$files = $jsFiles['modern-detect-izr']['files'];
 		
-		for($i=0; $i<count($files); $i++) {
-			echo '<script src="' . $main->path->url->base . 'src/js/' . $files[$i] . '"></script>' . "\n";
-		}
+		for($i=0; $i<count($files); $i++)
+			echo '<script src="' . $main->path->url->js . $files[$i] . '"></script>' . "\n";
 	} else { ?>
-	<script src="<?php echo $main->path->url->base; ?>assets/js/lib/modern-detect-izr.min.js"></script>
+	<script src="<?php echo $main->path->url->js; ?>lib/modern-detect-izr.min.js"></script>
 	<?php }
 	
 	/* Google Analytics */

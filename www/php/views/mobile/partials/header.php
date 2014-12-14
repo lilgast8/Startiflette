@@ -13,39 +13,34 @@
 	<meta name="format-detection" content="telephone=no">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<?php
-	if(MULTI_LG) {
-		include_once(SITE_ROOT.'php/functions/set-alt-url.php');
-		
-		foreach($aAltUrl as $lgTemp => $urlAlt) // parse alternative url
-			echo '<link rel="alternate" href="'.$urlAlt.'" hreflang="'.$lgTemp.'" />'."\n\t";
-	}
+	if(Config::$MULTI_LANG)
+		$main->routes->getAltLink();
 	
 	/* Social share */
-	include_once(SITE_ROOT.'php/shared/social-share.php');
+	include_once $main->path->file->base.'php/shared/social-share.php';
 	
 	/* Favicons */
-	include_once(SITE_ROOT.'php/shared/favicons.php');
+	include_once $main->path->file->base.'php/shared/favicons.php';
 	
 	?>
 	
-	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>assets/css/styles-desktop.min.css" />
+	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo $main->path->url->css; ?>styles-desktop.min.css" />
 	
 	<?php
-	if(!PROD) {
-		$jsonJsFiles = file_get_contents(SITE_ROOT.ASSETS.'js/js-files.json');
+	if(!Config::PROD) {
+		$jsonJsFiles = file_get_contents($main->path->file->js.'js-files.json');
 		$jsFiles = json_decode($jsonJsFiles, true);
 		
 		$files = $jsFiles['modern-detect-izr']['files'];
 		
-		for($i=0; $i<count($files); $i++) {
-			echo '<script src="'.WEB_ROOT.'src/js/'.$files[$i].'"></script>'."\n	";
-		}
+		for($i=0; $i<count($files); $i++)
+			echo '<script src="' . $main->path->url->js . $files[$i] . '"></script>' . "\n";
 	} else { ?>
-	<script src="<?php echo WEB_ROOT; ?>assets/js/lib/modern-detect-izr.min.js"></script>
+	<script src="<?php echo $main->path->url->js; ?>lib/modern-detect-izr.min.js"></script>
 	<?php }
 	
 	/* Google Analytics */
-	include_once(SITE_ROOT.'php/shared/google-analytics.php');
+	include_once $main->path->file->base.'php/shared/google-analytics.php';
 	
 	?>
 </head>

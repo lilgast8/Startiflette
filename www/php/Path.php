@@ -46,6 +46,10 @@ class Path
 		$this->url->base	= str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
 		$this->url->current	= $_SERVER['REQUEST_URI'];
 		$this->url->assets	= $this->url->base . $assets_folder.'/';
+		$this->url->css		= $this->url->base .'css/';
+		$this->url->img		= $this->url->assets .'img/';
+		$this->url->js		= $this->url->assets .'js/';
+		$this->url->json	= $this->url->assets .'json/';
 		
 		
 		// file path
@@ -66,10 +70,6 @@ class Path
 		$this->file->js					= $this->file->assets . 'js'.DS;
 		$this->file->json				= $this->file->assets . 'json'.DS;
 		$this->file->pagesConfig		= $this->file->json . 'pages.json';
-		
-		// files config path
-		// $this->config			= new stdClass();
-		// $this->config->pages	= $this->file->json . 'pages.json';
 	}
 	
 }
