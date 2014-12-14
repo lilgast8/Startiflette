@@ -15,6 +15,8 @@ class Config
 	static $LG_LINK			= null;
 	static $LG_LINK_ROOT	= null;
 	
+	static $IS_AJAX			= false;
+	
 	private $path			= null;
 	
 	public $pages			= null;
@@ -46,14 +48,7 @@ class Config
 	{
 		$this->path = Path::getInstance();
 		
-		// if(!file_exists($this->path->file->pagesConfig))
-		// 	throw new ErrorException('Pages config file is missing!');
-		
-		// $pages = file_get_contents($this->path->file->pagesConfig);
-		// $this->pages = json_decode($pages);
-		
 		$this->getConfig();
-		
 		$this->setAllLang();
 		$this->setMultiLang();
 		$this->setAltLang();
@@ -139,6 +134,18 @@ class Config
 	{
 		self::$LG_LINK		= self::$MULTI_LANG ? self::$LANG.'/' : '';
 		self::$LG_LINK_ROOT	= self::$LANG == self::$ALL_LANG[0] ? '' : self::$LANG;
+	}
+	
+	
+	public function manageAjax($pageUrl)
+	{
+		if(strrpos($pageUrl, 'ajax-content')) {
+			$pageUrl = str_replace('ajax-content/', '', $pageUrl);
+			
+			self::$IS_AJAX = true;
+		}
+		
+		return $pageUrl;
 	}
 	
 }

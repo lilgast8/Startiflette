@@ -6,20 +6,21 @@ APP.RoutesManager = (function(window) {
 	function RoutesManager() {
 		APP.EventDispatcher.call(this);
 		
-		this.prevPage = null;
-		this.currentPage = null;
-		this.nextPage = null;
+		this.prevPage				= null;
+		this.currentPage			= null;
+		this.nextPage				= null;
 		
-		this.rootUrlName = null;
-		this.altUrl = null;
-		this.viewName = null;
-		this.pageName = null;
-		this.pageUrl = null;
+		this.rootPageName			= null;
+		this.urlParts				= null;
+		this.pageUrl				= null;
+		this.pageName				= null;
+		this.viewName				= null;
+		this.altUrl					= null;
 		
-		this.isPageChangedByClick = false; // used to avoid to set page infos two times
+		this.isPageChangedByClick	= false; // used to avoid to set page infos two times
 		
-		this.activeUrl = null;
-		this.isPageChange = true;
+		this.activeUrl				= null;
+		this.isPageChange			= true;
 	}
 	
 	
@@ -28,8 +29,9 @@ APP.RoutesManager = (function(window) {
 	
 	
 	RoutesManager.prototype.init = function() {
-		_setRootUrlName.call(this);
-		if(APP.Config.MULTI_LG)
+		_setRootPageName.call(this);
+		
+		if(APP.Config.MULTI_LANG)
 			_setAltUrl.call(this);
 		
 		_bindEvents.call(this);
@@ -51,7 +53,7 @@ APP.RoutesManager = (function(window) {
 	
 	RoutesManager.prototype.updateGA = function() {
 		var pageUrl = this.pageId !== 0 ? '/'+this.pageUrl : '';
-		var gaPageName = APP.Config.LG == APP.Config.ALL_LG[0] && this.pageId === 0 ? '' : APP.Config.LG+pageUrl;
+		var gaPageName = APP.Config.LANG == APP.Config.ALL_LANG[0] && this.pageId === 0 ? '' : APP.Config.LANG+pageUrl;
 		
 		if(!APP.Config.LOCALHOST && APP.Config.PROD)
 			ga('send', 'pageview', '/'+gaPageName);
@@ -75,9 +77,9 @@ APP.RoutesManager = (function(window) {
 	};
 	
 	
-	var _setRootUrlName = function() {
-		for(var url in APP.Model.Global.json.pages) {
-			this.rootUrlName = url;
+	var _setRootPageName = function() {
+		for(var url in APP.Model.Global.json.pages[APP.Config.LANG]) {
+			this.rootPageName = url;
 			
 			break;
 		}
@@ -87,26 +89,39 @@ APP.RoutesManager = (function(window) {
 	var _setAltUrl = function() {
 		this.altUrl = {};
 		
-		for(var pageUrl in APP.Model.Global.json.pages) { // parse pages of the active language
-			var file = APP.Model.Global.json.pages[pageUrl].file;
+		var activePage;
+		var translatedPages = [];
+		
+		for(var lang in APP.Model.Global.json.pages) { // parse pages
+			if(lang == APP.Config.LANG)
+				activePage = APP.Model.Global.json.pages[lang];
+			else
+				translatedPages[lang] = APP.Model.Global.json.pages[lang];
+		}
+		
+		
+		for(var pageName in activePage) { // parse pages of the active language
+			var viewName = activePage[pageName].name;
 			
-			this.altUrl[pageUrl] = this.altUrl[pageUrl] || {};
+			this.altUrl[pageName] = this.altUrl[pageName] || {};
 			
-			for(var lgTemp in APP.Model.Global.json.pagesTr) { // parse translations of the others languages
+			for(lang in translatedPages) { // parse translations of the others languages
 				
-				for(var pageTemp in APP.Model.Global.json.pagesTr[lgTemp]) { // parse pages of the translated language
+				for(var page in translatedPages[lang]) { // parse pages of the translated language
 					
-					// if the file of the translated language match with the file of the active language
-					if(APP.Model.Global.json.pagesTr[lgTemp][pageTemp].file == file) {
-						urlPageAlt = pageUrl == this.rootUrlName ? '' : '/'+pageTemp;
-						urlAlt = lgTemp == APP.Config.ALL_LG[0] && pageUrl == this.rootUrlName ? 
-							APP.Config.WEB_ROOT : APP.Config.WEB_ROOT+lgTemp+urlPageAlt;
+					// if the name of the translated language match with the viewName of the active language
+					if(translatedPages[lang][page].name == viewName) {
+						urlPageAlt = pageName == this.rootPageName ? '' : '/' + page;
+						urlAlt = lang == APP.Config.ALL_LANG[0] && pageName == this.rootPageName ? 
+							APP.Config.WEB_ROOT : APP.Config.WEB_ROOT + lang + urlPageAlt;
 						
-						this.altUrl[pageUrl][lgTemp] = urlAlt;
+						this.altUrl[pageName][lang] = urlAlt;
 					}
 				}
 			}
 		}
+		
+		console.log(this.altUrl);
 	};
 	
 	
@@ -124,7 +139,7 @@ APP.RoutesManager = (function(window) {
 			this.currentPage.buildEvt(this.currentPage.E.HIDDEN, _initNextPage.bind(this));
 			this.currentPage.hide();
 			
-			this.nextPage.load(this.pageUrl, this.pageName, this.viewName);
+			this.nextPage.load(this.pageUrl);
 		}
 	};
 	
@@ -136,7 +151,7 @@ APP.RoutesManager = (function(window) {
 		this.currentPage = this.nextPage;
 		
 		_updateMenu.call(this);
-		if(APP.Config.MULTI_LG)
+		if(APP.Config.MULTI_LANG)
 			_updateLgLinks.call(this);
 		
 		this.currentPage.buildEvt(this.currentPage.E.SHOWN, _enablePageChange.bind(this, false));
@@ -144,38 +159,108 @@ APP.RoutesManager = (function(window) {
 	};
 	
 	
-	var _setPageInfos = function(url) {
-		if(url === null)
-			url = _getUrl();
+	var _setPageInfos = function(currentUrl) {
+		if(currentUrl === null)
+			currentUrl = _getUrl();
 		
-		var endBaseUrl = url.indexOf(APP.Config.WEB_ROOT)+APP.Config.WEB_ROOT.length;
-		var endUrl = url.indexOf('?') < 0 ? url.length : url.indexOf('?');
+		var urlBaseEnd, urlEnd, pageUrl, urlParts, pageName;
+		
+		// remove base & parameters if there is one
+		urlBaseEnd	= currentUrl.indexOf(APP.Config.WEB_ROOT) + APP.Config.WEB_ROOT.length;
+		urlEnd		= currentUrl.indexOf('?') < 0 ? currentUrl.length : currentUrl.indexOf('?');
+		pageUrl		= currentUrl.substring(urlBaseEnd, urlEnd);
+		
+		// remove language if exist
+		if(APP.Config.MULTI_LANG && pageUrl.substr(0, 2) == APP.Config.LANG)
+			pageUrl = pageUrl.replace(APP.Config.LANG, '');
+		
+		// remove first slash if exist
+		if(pageUrl.substr(0, 1) == '/')
+			pageUrl = pageUrl.replace('/', '');
+		
+		// remove last slash if there is one
+		if(pageUrl.substr(pageUrl.length-1, 1) == '/')
+			pageUrl = pageUrl.substr(0, pageUrl.length-1);
+		
+		// get the url parts
+		urlParts = pageUrl.split('/');
+		
+		// set page name
+		if(urlParts[0] === '')
+			pageName = this.rootPageName;
+		else
+			pageName = urlParts[0];
+		
+		// set page url
+		if(pageUrl === '')
+			pageUrl = this.rootPageName;
 		
 		
-		/* set page url */
-		this.pageUrl = url.substring(endBaseUrl, endUrl);
-		var lastCharPos = this.pageUrl.length-1;
-		
-		if(this.pageUrl[lastCharPos] == '/')
-			this.pageUrl = this.pageUrl.substring(0, lastCharPos);
-		
-		if(this.pageUrl.split('/')[0] == LG) { // remove language if it's in the url
-			if(this.pageUrl.split('/')[1] === undefined) // if we are at the root
-				this.pageUrl = '';
-			else
-				this.pageUrl = this.pageUrl.substring(3, this.pageUrl.length);
-		}
-		
-		if(this.pageUrl === '')
-			this.pageUrl = this.rootUrlName;
+		this.urlParts	= urlParts;
+		this.pageUrl	= pageUrl;
+		this.pageName	= pageName;
+		this.viewName	= APP.Model.Global.json.pages[ APP.Config.LANG ][this.pageName].name;
+		// this.titlePage	= this.pagesInfos->{ $this->pageName }->title;
+		// this.descPage	= this.pagesInfos->{ $this->pageName }->desc;
 		
 		
-		/* set page name */
-		this.pageName = this.pageUrl.split('/')[0];
+		/*
+		$pageUrl = str_replace($this->path->url->base, '', $this->path->url->current);
+		
+		// remove language if exist
+		if(Config::$MULTI_LANG && substr($pageUrl, 0, 2) == Config::$LANG)
+			$pageUrl = preg_replace('/'.Config::$LANG.'/', '', $pageUrl, 1);
+		
+		// remove first slash if exist
+		if(substr($pageUrl, 0, 1) == '/')
+			$pageUrl = preg_replace('/\//', '', $pageUrl, 1);
+		
+		// get the url parts
+		$urlParts = explode('/', $pageUrl);
+		
+		// set page name
+		if($urlParts[0] === '')
+			$pageName = $this->rootPageName;
+		else
+			$pageName = $urlParts[0];
 		
 		
-		/* set view name */
-		this.viewName = APP.Model.Global.json.pages[this.pageName].file;
+		$this->urlParts		= $urlParts;
+		$this->pageName		= $pageName;
+		$this->viewName		= $this->pagesInfos->{ $this->pageName }->name;
+		$this->titlePage	= $this->pagesInfos->{ $this->pageName }->title;
+		$this->descPage		= $this->pagesInfos->{ $this->pageName }->desc;
+		*/
+		
+		
+		// var endBaseUrl = url.indexOf(APP.Config.WEB_ROOT)+APP.Config.WEB_ROOT.length;
+		// var endUrl = url.indexOf('?') < 0 ? url.length : url.indexOf('?');
+		
+		
+		// /* set page url */
+		// this.pageUrl = url.substring(endBaseUrl, endUrl);
+		// var lastCharPos = this.pageUrl.length-1;
+		
+		// if(this.pageUrl[lastCharPos] == '/')
+		// 	this.pageUrl = this.pageUrl.substring(0, lastCharPos);
+		
+		// if(this.pageUrl.split('/')[0] == APP.Config.LANG) { // remove language if it's in the url
+		// 	if(this.pageUrl.split('/')[1] === undefined) // if we are at the root
+		// 		this.pageUrl = '';
+		// 	else
+		// 		this.pageUrl = this.pageUrl.substring(3, this.pageUrl.length);
+		// }
+		
+		// if(this.pageUrl === '')
+		// 	this.pageUrl = this.rootPageName;
+		
+		
+		// /* set page name */
+		// this.pageName = this.pageUrl.split('/')[0];
+		
+		
+		// /* set view name */
+		// this.viewName = APP.Model.Global.json.pages[this.pageName].file;
 	};
 	
 	
@@ -191,7 +276,7 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _getTitle = function() {
-		title = APP.Model.Global.json.pages[this.pageName].title;
+		title = APP.Model.Global.json.pages[APP.Config.LANG][this.pageName].title;
 		
 		if(this.viewName == 'project') {
 			for(var i=0; i<APP.Model.Global.json.projects.length; i++) {
@@ -211,7 +296,9 @@ APP.RoutesManager = (function(window) {
 	
 	var _getUrl = function() {
 		var state = History.getState();
+		
 		url = state.url;
+		// url = state.hash;
 		
 		return url;
 	};
@@ -236,14 +323,14 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _updateLgLinks = function() {
-		var lgTemp, $footerLgLink;
+		var lang, $footerLgLink;
 		
 		for(var i=0; i<APP.Views.Static.Footer.$.footerLgLink.length; i++) {
 			$footerLgLink = APP.Views.Static.Footer.$.footerLgLink[i];
 			
-			lgTemp = $footerLgLink.getAttribute('data-lg');
+			lang = $footerLgLink.getAttribute('data-lg');
 			
-			$footerLgLink.href = this.altUrl[this.pageUrl][lgTemp];
+			$footerLgLink.href = this.altUrl[this.pageUrl][lang];
 		}
 	};
 	

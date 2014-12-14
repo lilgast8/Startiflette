@@ -21,18 +21,20 @@ APP.ViewPage = (function(window) {
 	ViewPage.prototype.constructor = ViewPage;
 	
 	
-	ViewPage.prototype.load = function(pageUrl, pageName, fileName) {
+	ViewPage.prototype.load = function(pageUrl) {
 		this.v.isAjaxLoaded = false;
 		this.v.isTransitionHideEnded = false;
 		
-		var pageUrlToLoad = pageUrl.replace(pageName, fileName);
+		var urlPage = APP.Config.MULTI_LANG ? 
+						APP.Config.WEB_ROOT + APP.Config.LANG + '/ajax-content/' + pageUrl : 
+						APP.Config.WEB_ROOT + 'ajax-content/'+ pageUrl;
 		
-		var urlPage = APP.Config.WEB_ROOT+'content-desktop/'+pageUrlToLoad;
 		$.ajax({
 			context : this,
 			url : urlPage,
 			type : 'POST',
-			data : { ajax:pageUrlToLoad },
+			data : { ajax:pageUrl }, // useful if need a different behavior on PHP file when AJAX load
+									 // can be detected with if(isset($_POST['ajax']))
 			dataType : 'html',
 			success : this.loaded,
 			error : this.error

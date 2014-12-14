@@ -114,6 +114,9 @@ RewriteRule (en|fr|ex)/old-browser$ php/views/alt/old-browser.php?lg=$1 [L]
 # RewriteRule ^(.*)$ index.php [QSA,L]
 
 # RewriteRule ^(.*)$ php/controller/RoutesController.php [L]
+
+# http://web:8888/Starter/root-project/www/src/img/logos/browsers/browser_chrome.png
+# RewriteRule ^(.*)ajax-content/(.*)$ img/logos/browsers/browser_chrome.png [L]
 RewriteRule ^(.*)$ index.php [L]
 
 

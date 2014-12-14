@@ -1,16 +1,9 @@
-<?php
-
-if(isset($_POST['ajax'])) {
-	include_once('../../init.php');
-	include_once(SITE_ROOT.'includes/contents/texts-'.LG.'.php');
-	include_once(SITE_ROOT.'includes/func/load-json.php');
-}
-
-?>
 
 <!-- Project -->
 <section id="page-content" class="project">
 	
-	- Mobile page content / Projet / <?php echo $_GET['subPage'].'/'.$_GET['part']; ?> -
+	<br><br><br>
+	- Mobile page content / Projet / <?php echo $main->routes->urlParts[1].'/'.$main->routes->urlParts[2]; ?> / <?php echo Config::$LANG; ?> -
+	<br><br><br><br>
 	
 </section>

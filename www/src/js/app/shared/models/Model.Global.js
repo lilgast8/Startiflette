@@ -16,11 +16,12 @@ APP.Model.Global = (function(window) {
 		this.aJsonToLoad = [
 			{
 				id : 'pages',
-				src : 'json/' + APP.Config.LG + '/pages.json'
+				// src : 'json/' + APP.Config.LG + '/pages.json'
+				src : 'json/pages.json'
 			},
 			{
 				id : 'projects',
-				src:'json/' + APP.Config.LG + '/projects.json'
+				src:'json/projects.json'
 			}
 		];
 		
@@ -35,8 +36,8 @@ APP.Model.Global = (function(window) {
 	
 	
 	Global.prototype.init = function() {
-		if(APP.Config.MULTI_LG)
-			_addInfosOthersLg.call(this);
+		// if(APP.Config.MULTI_LG)
+		// 	_addInfosOthersLg.call(this);
 		
 		this.jsonLoader = new APP.Loader(true, false);
 		
@@ -46,7 +47,7 @@ APP.Model.Global = (function(window) {
 		this.jsonLoader.startLoad(this.aJsonToLoad);
 	};
 	
-	
+	/*
 	var _addInfosOthersLg = function() {
 		var lgTemp;
 		
@@ -61,12 +62,12 @@ APP.Model.Global = (function(window) {
 				});
 		}
 	};
-	
+	*/
 	
 	var _onFileLoad = function(e) {
-		var id = e.item.id;
-		var lg = e.item.lg;
+		this.json[e.item.id] = e.result;
 		
+		/*
 		if(lg === undefined) // pages infos for active language
 			this.json[id] = e.result;
 		
@@ -76,6 +77,7 @@ APP.Model.Global = (function(window) {
 			
 			this.json[id][lg] = e.result;
 		}
+		*/
 	};
 	
 	
