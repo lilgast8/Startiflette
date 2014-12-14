@@ -158,14 +158,14 @@ class RoutesController
 	}
 	
 	
-	private function setAltUrl($objToParse, $type)
+	private function setAltUrl($infosToParse, $type)
 	{
 		if($type == 'page')
 			$viewName = $this->viewName;
 		else if($type == 'subpage')
 			$viewName = $this->urlParts[1];
 		
-		foreach($objToParse as $lang => $infosAllPages) { // parse object
+		foreach($infosToParse as $lang => $infosAllPages) { // parse object
 			
 			if($lang != Config::$LANG) { // if not current language
 				
@@ -173,19 +173,10 @@ class RoutesController
 					$infosPage = (object) $infosPage;
 					
 					if($infosPage->name == $viewName) { // if name match
+						$urlPageAlt = $this->pageName == $this->rootPageName ? '' : '/'.$pageUrl;
+						$urlAlt = $lang == Config::$ALL_LANG[0] && $this->pageName == $this->rootPageName ? $this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
 						
-						if($type == 'page') {
-							$urlPageAlt = $this->pageName == $this->rootPageName ? '' : '/'.$pageUrl;
-							$urlAlt = $lang == Config::$ALL_LANG[0] && $this->pageName == $this->rootPageName ? $this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
-							
-							$this->altUrl[ $lang ] = $urlAlt;
-						}
-						else if($type == 'subpage') {
-							$urlPageAlt = '/'.$pageUrl;
-							
-							$this->altUrl[ $lang ] = $this->altUrl[ $lang ] . $urlPageAlt;
-						}
-						
+						$this->altUrl[ $lang ] = $urlAlt;
 					}
 				}
 			}

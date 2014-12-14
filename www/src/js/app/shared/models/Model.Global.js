@@ -15,19 +15,16 @@ APP.Model.Global = (function(window) {
 		
 		this.aJsonToLoad = [
 			{
-				id : 'pages',
-				// src : 'json/' + APP.Config.LG + '/pages.json'
-				src : 'json/pages.json'
+				id	: 'pages',
+				src	: 'json/pages.json'
 			},
 			{
-				id : 'projects',
-				src:'json/projects.json'
+				id	: 'projects',
+				src	: 'json/projects.json'
 			}
 		];
 		
 		this.json = {};
-		this.json.pages = {};
-		this.json.projects = {};
 	}
 	
 	
@@ -36,9 +33,6 @@ APP.Model.Global = (function(window) {
 	
 	
 	Global.prototype.init = function() {
-		// if(APP.Config.MULTI_LG)
-		// 	_addInfosOthersLg.call(this);
-		
 		this.jsonLoader = new APP.Loader(true, false);
 		
 		this.jsonLoader.buildEvt(this.jsonLoader.E.FILE_LOAD, _onFileLoad.bind(this));
@@ -47,37 +41,14 @@ APP.Model.Global = (function(window) {
 		this.jsonLoader.startLoad(this.aJsonToLoad);
 	};
 	
-	/*
-	var _addInfosOthersLg = function() {
-		var lgTemp;
-		
-		for(var i=0; i<APP.Config.ALL_LG.length; i++) {
-			lgTemp = APP.Config.ALL_LG[i];
-			
-			if(lgTemp != APP.Config.LG)
-				this.aJsonToLoad.push({
-					id : 'pagesTr',
-					src : 'json/' + lgTemp + '/pages.json',
-					lg : lgTemp
-				});
-		}
-	};
-	*/
-	
 	var _onFileLoad = function(e) {
-		this.json[e.item.id] = e.result;
+		if(e.item.id == 'pages')
+			this.json[e.item.id] = e.result;
 		
-		/*
-		if(lg === undefined) // pages infos for active language
-			this.json[id] = e.result;
-		
-		else { // pages infos for others languages
-			this.json[id] = this.json[id] || {};
-			this.json[id][lg] = this.json[id][lg] || {};
-			
-			this.json[id][lg] = e.result;
+		else {
+			this.json.subPages = this.json.subPages || {};
+			this.json.subPages[e.item.id] = e.result;
 		}
-		*/
 	};
 	
 	

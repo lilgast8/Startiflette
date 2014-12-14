@@ -32,7 +32,7 @@ APP.RoutesManager = (function(window) {
 		_setRootPageName.call(this);
 		
 		if(APP.Config.MULTI_LANG)
-			_setAltUrl.call(this);
+			_manageAltUrl.call(this);
 		
 		_bindEvents.call(this);
 		
@@ -86,19 +86,26 @@ APP.RoutesManager = (function(window) {
 	};
 	
 	
-	var _setAltUrl = function() {
+	var _manageAltUrl = function() {
 		this.altUrl = {};
 		
+		_setAltUrl.call(this, APP.Model.Global.json.pages, 'page');
+		
+		for(var subPagesName in APP.Model.Global.json.subPages) // parse subpages
+			_setAltUrl.call(this, APP.Model.Global.json.subPages[subPagesName]);
+	};
+	
+	
+	var _setAltUrl = function(infosToParse) {
 		var activePage;
 		var translatedPages = [];
 		
-		for(var lang in APP.Model.Global.json.pages) { // parse pages
+		for(var lang in infosToParse) { // parse pages
 			if(lang == APP.Config.LANG)
-				activePage = APP.Model.Global.json.pages[lang];
+				activePage = infosToParse[lang];
 			else
-				translatedPages[lang] = APP.Model.Global.json.pages[lang];
+				translatedPages[lang] = infosToParse[lang];
 		}
-		
 		
 		for(var pageName in activePage) { // parse pages of the active language
 			var viewName = activePage[pageName].name;
@@ -120,8 +127,6 @@ APP.RoutesManager = (function(window) {
 				}
 			}
 		}
-		
-		console.log(this.altUrl);
 	};
 	
 	
@@ -200,67 +205,6 @@ APP.RoutesManager = (function(window) {
 		this.pageUrl	= pageUrl;
 		this.pageName	= pageName;
 		this.viewName	= APP.Model.Global.json.pages[ APP.Config.LANG ][this.pageName].name;
-		// this.titlePage	= this.pagesInfos->{ $this->pageName }->title;
-		// this.descPage	= this.pagesInfos->{ $this->pageName }->desc;
-		
-		
-		/*
-		$pageUrl = str_replace($this->path->url->base, '', $this->path->url->current);
-		
-		// remove language if exist
-		if(Config::$MULTI_LANG && substr($pageUrl, 0, 2) == Config::$LANG)
-			$pageUrl = preg_replace('/'.Config::$LANG.'/', '', $pageUrl, 1);
-		
-		// remove first slash if exist
-		if(substr($pageUrl, 0, 1) == '/')
-			$pageUrl = preg_replace('/\//', '', $pageUrl, 1);
-		
-		// get the url parts
-		$urlParts = explode('/', $pageUrl);
-		
-		// set page name
-		if($urlParts[0] === '')
-			$pageName = $this->rootPageName;
-		else
-			$pageName = $urlParts[0];
-		
-		
-		$this->urlParts		= $urlParts;
-		$this->pageName		= $pageName;
-		$this->viewName		= $this->pagesInfos->{ $this->pageName }->name;
-		$this->titlePage	= $this->pagesInfos->{ $this->pageName }->title;
-		$this->descPage		= $this->pagesInfos->{ $this->pageName }->desc;
-		*/
-		
-		
-		// var endBaseUrl = url.indexOf(APP.Config.WEB_ROOT)+APP.Config.WEB_ROOT.length;
-		// var endUrl = url.indexOf('?') < 0 ? url.length : url.indexOf('?');
-		
-		
-		// /* set page url */
-		// this.pageUrl = url.substring(endBaseUrl, endUrl);
-		// var lastCharPos = this.pageUrl.length-1;
-		
-		// if(this.pageUrl[lastCharPos] == '/')
-		// 	this.pageUrl = this.pageUrl.substring(0, lastCharPos);
-		
-		// if(this.pageUrl.split('/')[0] == APP.Config.LANG) { // remove language if it's in the url
-		// 	if(this.pageUrl.split('/')[1] === undefined) // if we are at the root
-		// 		this.pageUrl = '';
-		// 	else
-		// 		this.pageUrl = this.pageUrl.substring(3, this.pageUrl.length);
-		// }
-		
-		// if(this.pageUrl === '')
-		// 	this.pageUrl = this.rootPageName;
-		
-		
-		// /* set page name */
-		// this.pageName = this.pageUrl.split('/')[0];
-		
-		
-		// /* set view name */
-		// this.viewName = APP.Model.Global.json.pages[this.pageName].file;
 	};
 	
 	
@@ -277,7 +221,7 @@ APP.RoutesManager = (function(window) {
 	
 	var _getTitle = function() {
 		title = APP.Model.Global.json.pages[APP.Config.LANG][this.pageName].title;
-		
+		/*
 		if(this.viewName == 'project') {
 			for(var i=0; i<APP.Model.Global.json.projects.length; i++) {
 				var project = APP.Model.Global.json.projects[i];
@@ -289,7 +233,7 @@ APP.RoutesManager = (function(window) {
 				}
 			}
 		}
-		
+		*/
 		return title;
 	};
 	
