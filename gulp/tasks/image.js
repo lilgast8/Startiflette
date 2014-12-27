@@ -10,13 +10,8 @@ var imagemin	= require('gulp-imagemin');
 
 gulp.task('image', function() {
 	
-	// options.cleanPath = paths.assets.img;
-	
-	// if ( options.cleanPath.length === 0 )
-	// 	options.cleanPath = paths.assets.img;
-	// else
-	// 	options.cleanPath.push( paths.assets.img );
-	// console.log('cleanPath IMAGE : ', options.cleanPath);
+	if ( options.cleanPath === null )
+		options.cleanPath = paths.assets.img;
 	
 	gulp.start( 'image-min' );
 	
