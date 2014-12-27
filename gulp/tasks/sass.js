@@ -18,7 +18,7 @@ gulp.task( 'sass', function() {
 	
 	
 	// parse srcPath
-	for( var i = 0; i < options.cssSrcPath.length; i++ ) {
+	for ( var i = 0; i < options.cssSrcPath.length; i++ ) {
 		
 		gulp.src( options.cssSrcPath[i] )
 			.pipe( plumber() )

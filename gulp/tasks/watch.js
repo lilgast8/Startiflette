@@ -1,8 +1,8 @@
-var gulp	= require( 'gulp' );
-var path	= require( 'path' );
+var gulp		= require( 'gulp' );
+var path		= require( 'path' );
 
-var options	= require( '../utils/options' );
-var paths	= require( '../utils/paths' );
+var options		= require( '../utils/options' );
+var paths		= require( '../utils/paths' );
 
 var livereload	= require( 'gulp-livereload' );
 
@@ -26,31 +26,31 @@ gulp.task( 'watch', function() {
 		
 		
 		/* SASS */
-		if( ext == '.scss' ) {
+		if ( ext == '.scss' ) {
 			taskname = 'sass';
 			
-			if( desktop )
+			if ( desktop )
 				options.cssSrcPath = [ paths.src.cssDesktopFile ];
-			else if( mobile )
+			else if ( mobile )
 				options.cssSrcPath = [ paths.src.cssMobileFile ];
-			else if( shared )
+			else if ( shared )
 				options.cssSrcPath = [ paths.src.cssDesktopFile, paths.src.cssMobileFile ];
 		}
 		
 		/* JS */
-		else if( ext == '.js' ) {
+		else if ( ext == '.js' ) {
 			taskname = 'js-hint';
 			
-			if( desktop )
+			if ( desktop )
 				options.jsSrcPath = paths.src.jsAppDesktopFiles;
-			else if( mobile )
+			else if ( mobile )
 				options.jsSrcPath = paths.src.jsAppMobileFiles;
-			else if( shared )
+			else if ( shared )
 				options.jsSrcPath = paths.src.jsSharedFiles;
 		}
 		
 		/* JSON */
-		else if( ext == '.json' ) {
+		else if ( ext == '.json' ) {
 			taskname = 'json-lint';
 			
 			options.jsonSrcPath = [ paths.src.jsJsFilesFile, paths.src.jsonFiles ];
@@ -70,6 +70,6 @@ gulp.task( 'watch', function() {
 		paths.src.jsonFiles,
 		paths.php.indexFile,
 		paths.php.allFiles
-	] ).on('change', livereload.changed);
+	] ).on( 'change', livereload.changed );
 	
 });

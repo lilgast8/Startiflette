@@ -14,7 +14,7 @@ gulp.task( 'js-min', ['clean'], function() {
 	
 	
 	// parse js-files file
-	for(var name in jsFiles) {
+	for ( var name in jsFiles ) {
 		jsFile = jsFiles[name];
 		
 		var needOldie		= typeof( jsFile.name ) == 'string' ? false : true;
@@ -24,7 +24,7 @@ gulp.task( 'js-min', ['clean'], function() {
 		var aFilesOldie		= [];
 		
 		// parse files list
-		for( var j = 0; j < jsFile.files.length; j++) {
+		for ( var j = 0; j < jsFile.files.length; j++ ) {
 			file = jsFile.files[j];
 			
 			if ( typeof( file ) == 'string' ) { // if file - one version of file

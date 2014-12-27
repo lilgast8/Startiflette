@@ -6,7 +6,7 @@ var options = require('minimist')(process.argv.slice(2));
 // 	minify : false
 // }
 
-// if(options._[0] == 'prod')
+// if ( options._[0] == 'prod' )
 // 	defaults.minify = true
 
 
