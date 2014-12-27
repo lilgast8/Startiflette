@@ -6,6 +6,12 @@ var dir			= requireDir( './gulp/tasks/' );
 
 
 
+/* Init */
+gulp.task( 'init', [
+	'remove-empty'
+] );
+
+
 /* Default - Dev */
 gulp.task( 'default', ['watch'] );
 

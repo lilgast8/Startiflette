@@ -1,5 +1,9 @@
 module.exports = {
 	
+	all : {
+		emptyFiles : 'www/**/empty.txt'
+	},
+	
 	php : {
 		indexFile	: 'www/index.php',
 		allFiles	: 'www/php/**/*.php'
