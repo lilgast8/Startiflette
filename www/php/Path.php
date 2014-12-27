@@ -37,14 +37,15 @@ class Path
 	private function init()
 	{
 		$assets_folder		= Config::PROD ? 'assets' : 'src';
-		$script_filename	= $_SERVER['SCRIPT_FILENAME'];
 		
 		
 		// url path
 		$this->url			= new stdClass();
 		
-		$this->url->base	= str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
-		$this->url->current	= $_SERVER['REQUEST_URI'];
+		// $this->url->base	= str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
+		$this->url->base	= 'http://'.$_SERVER['HTTP_HOST'].str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
+		// $this->url->current	= $_SERVER['REQUEST_URI'];
+		$this->url->current	= 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 		$this->url->assets	= $this->url->base . $assets_folder.'/';
 		$this->url->css		= $this->url->base .'css/';
 		$this->url->img		= $this->url->assets .'img/';
@@ -55,7 +56,7 @@ class Path
 		// file path
 		$this->file						= new stdClass();
 		
-		$this->file->base				= str_replace('index.php', '', $script_filename);
+		$this->file->base				= str_replace('index.php', '', $_SERVER['SCRIPT_FILENAME']);
 		$this->file->php				= $this->file->base . 'php'.DS;
 		$this->file->contents			= $this->file->php . 'contents'.DS;
 		$this->file->views				= $this->file->php . 'views'.DS;
