@@ -12,10 +12,15 @@ var options = require('minimist')(process.argv.slice(2));
 
 
 // options.minify = options.minify === undefined ? defaults.minify : options.minify;
-options.device = null;
-options.srcPath = null;
-options.assetsPath = null;
-options.cleanPath = null;
+options.device		= null;
+
+options.cssSrcPath	= null;
+options.jsSrcPath	= null;
+options.jsonSrcPath	= null;
+
+options.assetsPath	= null;
+
+options.cleanPath	= null;
 
 
-module.exports = options;
+module.exports		= options;

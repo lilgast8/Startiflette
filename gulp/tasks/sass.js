@@ -13,9 +13,14 @@ var rename		= require( 'gulp-rename' );
 
 gulp.task( 'sass', function() {
 	
-	for( var i = 0; i < options.srcPath.length; i++ ) {
+	if ( options.cssSrcPath === null )
+		options.cssSrcPath = [ paths.src.cssDesktopFile, paths.src.cssMobileFile ];
+	
+	
+	// parse srcPath
+	for( var i = 0; i < options.cssSrcPath.length; i++ ) {
 		
-		gulp.src( options.srcPath[i] )
+		gulp.src( options.cssSrcPath[i] )
 			.pipe( plumber() )
 			.pipe( sass({
 				style: 'compressed',

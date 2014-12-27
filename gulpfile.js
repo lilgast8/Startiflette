@@ -20,7 +20,7 @@ gulp.task( 'default', [
 
 /* Prod */
 gulp.task( 'prod', [
-	'style',
+	'sass',
 	'js',
 	'json',
 	'image'

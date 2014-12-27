@@ -30,11 +30,11 @@ gulp.task( 'watch', function() {
 			taskname = 'sass';
 			
 			if( desktop )
-				options.srcPath = [paths.src.cssDesktopFile];
+				options.cssSrcPath = [ paths.src.cssDesktopFile ];
 			else if( mobile )
-				options.srcPath = [paths.src.cssMobileFile];
+				options.cssSrcPath = [ paths.src.cssMobileFile ];
 			else if( shared )
-				options.srcPath = [paths.src.cssDesktopFile, paths.src.cssMobileFile];
+				options.cssSrcPath = [ paths.src.cssDesktopFile, paths.src.cssMobileFile ];
 		}
 		
 		/* JS */
@@ -42,18 +42,18 @@ gulp.task( 'watch', function() {
 			taskname = 'js-hint';
 			
 			if( desktop )
-				options.srcPath = paths.src.jsAppDesktopFiles;
+				options.jsSrcPath = paths.src.jsAppDesktopFiles;
 			else if( mobile )
-				options.srcPath = paths.src.jsAppMobileFiles;
+				options.jsSrcPath = paths.src.jsAppMobileFiles;
 			else if( shared )
-				options.srcPath = paths.src.jsSharedFiles;
+				options.jsSrcPath = paths.src.jsSharedFiles;
 		}
 		
 		/* JSON */
 		else if( ext == '.json' ) {
 			taskname = 'json-lint';
 			
-			options.srcPath = [paths.src.jsJsFilesFile, paths.src.jsonFiles];
+			options.jsonSrcPath = [ paths.src.jsJsFilesFile, paths.src.jsonFiles ];
 		}
 		
 		

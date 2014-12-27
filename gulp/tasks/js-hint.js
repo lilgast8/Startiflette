@@ -11,10 +11,10 @@ var jshint	= require( 'gulp-jshint' );
 
 gulp.task( 'js-hint', function() {
 	
-	if ( options.srcPath === null )
-		options.srcPath = paths.src.jsAppFiles;
+	if ( options.jsSrcPath === null )
+		options.jsSrcPath = paths.src.jsAppFiles;
 	
-	gulp.src( options.srcPath )
+	gulp.src( options.jsSrcPath )
 		.pipe( plumber() )
 		.pipe( jshint({
 			'-W083' : true // Don't make functions within a loop
