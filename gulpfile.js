@@ -13,9 +13,9 @@ gulp.task( 'init', [
 
 
 /* Default - Dev */
-gulp.task( 'default', ['
-	watch
-'] );
+gulp.task( 'default', [
+	'watch'
+] );
 
 
 /* Prod */
