@@ -25,3 +25,15 @@ gulp.task( 'prod', [
 	'json',
 	'image'
 ] );
+
+// gulp.task( 'prod', function() {
+	
+// 	gulp.start( 'sass', function() {
+// 		gulp.start( 'js', function() {
+// 			gulp.start( 'json', function() {
+// 				gulp.start( 'image' );
+// 			} );
+// 		} );
+// 	} );
+	
+// } );
