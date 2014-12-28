@@ -93,9 +93,6 @@ APP.RoutesManager = (function(window) {
 		
 		for(var subPagesName in APP.Model.Global.json.subPages) // parse subpages
 			_setAltUrl.call(this, APP.Model.Global.json.subPages[subPagesName]);
-		
-		// for(var jsonName in APP.Model.Global.json) // parse json
-			// _setAltUrl.call(this, APP.Model.Global.json[jsonName]);
 	};
 	
 	
@@ -244,23 +241,6 @@ APP.RoutesManager = (function(window) {
 				}
 			}
 		}
-		
-		// if(this.viewName == 'project')
-			// title = APP.Model.Global.json.projects[APP.Config.LANG][this.pageUrl].title;
-		
-		/*
-		if(this.viewName == 'project') {
-			for(var i=0; i<APP.Model.Global.json.projects.length; i++) {
-				var project = APP.Model.Global.json.projects[i];
-				
-				if(project.url == this.pageUrl) {
-					title = project.name;
-					
-					break;
-				}
-			}
-		}
-		*/
 		
 		return title;
 	};

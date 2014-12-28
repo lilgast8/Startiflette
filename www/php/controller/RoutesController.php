@@ -144,19 +144,13 @@ class RoutesController
 		
 		$this->urlParts		= $urlParts;
 		$this->pageName		= $pageName;
-		if(!Config::$IS_ALT_CONTENT) {
+		if(!Config::$IS_ALT_CONTENT)
 			$this->setInfos($pageUrl);
-			// $this->viewName		= $this->pagesInfos->{ $this->pageName }->name;
-			// $metas				= $this->getMetas($pageUrl);
-			// $this->titlePage	= $metas->title;
-			// $this->descPage		= $metas->desc;
-		}
 		else
 			$this->viewName		= 'old-browser';
 	}
 	
 	
-	// private function getMetas($pageUrl)
 	private function setInfos($activePageUrl)
 	{
 		$viewName = $this->pagesInfos->{ $this->pageName }->name;
@@ -184,22 +178,6 @@ class RoutesController
 		$this->viewName		= $viewName;
 		$this->titlePage	= $title;
 		$this->descPage		= $desc;
-		
-		
-		// $metas = new stdClass();
-		
-		// $metas->title	= $this->pagesInfos->{ $this->pageName }->title;
-		// $metas->desc	= $this->pagesInfos->{ $this->pageName }->desc;
-		
-		// echo 'RAMON : '.$metas->title;
-		
-		// if($this->viewName == 'project') {
-		// 	$metas->title	= $this->subPages['project']->{ Config::$LANG }->$pageUrl->title;
-		// 	$metas->desc	= $this->subPages['project']->{ Config::$LANG }->$pageUrl->desc;
-		// }
-		
-		// return $metas;
-		
 	}
 	
 	
