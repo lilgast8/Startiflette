@@ -75,15 +75,15 @@ class RoutesController
 	{
 		$i = 0;
 		
-		foreach($this->pagesInfos as $pageUrl => $infosPage) {
-			$infosPage = (object) $infosPage;
+		foreach($this->pagesInfos as $pageUrl => $pageInfos) {
+			$pageInfos = (object) $pageInfos;
 			
 			if($i == 0)
-				$this->url[ $infosPage->name ] = $this->path->url->base . Config::$LG_LINK_ROOT;
+				$this->url[ $pageInfos->name ] = $this->path->url->base . Config::$LG_LINK_ROOT;
 			else
-				$this->url[ $infosPage->name ] = $this->path->url->base . Config::$LG_LINK . $pageUrl;
+				$this->url[ $pageInfos->name ] = $this->path->url->base . Config::$LG_LINK . $pageUrl;
 			
-			$this->url[ $infosPage->name.'Id' ] = $pageUrl;
+			$this->url[ $pageInfos->name.'Id' ] = $pageUrl;
 			
 			$i++;
 		}
@@ -145,12 +145,61 @@ class RoutesController
 		$this->urlParts		= $urlParts;
 		$this->pageName		= $pageName;
 		if(!Config::$IS_ALT_CONTENT) {
-			$this->viewName		= $this->pagesInfos->{ $this->pageName }->name;
-			$this->titlePage	= $this->pagesInfos->{ $this->pageName }->title;
-			$this->descPage		= $this->pagesInfos->{ $this->pageName }->desc;
+			$this->setInfos($pageUrl);
+			// $this->viewName		= $this->pagesInfos->{ $this->pageName }->name;
+			// $metas				= $this->getMetas($pageUrl);
+			// $this->titlePage	= $metas->title;
+			// $this->descPage		= $metas->desc;
 		}
 		else
 			$this->viewName		= 'old-browser';
+	}
+	
+	
+	// private function getMetas($pageUrl)
+	private function setInfos($activePageUrl)
+	{
+		$viewName = $this->pagesInfos->{ $this->pageName }->name;
+		
+		$title	= $this->pagesInfos->{ $this->pageName }->title;
+		$desc	= $this->pagesInfos->{ $this->pageName }->desc;
+		
+		if($title == '' && $desc == '') {
+			
+			foreach($this->subPages as $viewName => $infosAllSubPages) { // parse subpages
+				
+				foreach($infosAllSubPages->{ Config::$LANG } as $pageUrl => $pagesInfos) { // parse subpages infos
+					
+					if($pageUrl == $activePageUrl) { // if page url match
+						$title	= $pagesInfos->title;
+						$desc	= $pagesInfos->desc;
+						
+						break;
+					}
+				}
+			}
+		}
+		
+		
+		$this->viewName		= $viewName;
+		$this->titlePage	= $title;
+		$this->descPage		= $desc;
+		
+		
+		// $metas = new stdClass();
+		
+		// $metas->title	= $this->pagesInfos->{ $this->pageName }->title;
+		// $metas->desc	= $this->pagesInfos->{ $this->pageName }->desc;
+		
+		// echo 'RAMON : '.$metas->title;
+		
+		// if($this->viewName == 'project') {
+		// 	$metas->title	= $this->subPages['project']->{ Config::$LANG }->$pageUrl->title;
+		// 	$metas->desc	= $this->subPages['project']->{ Config::$LANG }->$pageUrl->desc;
+		// }
+		
+		// return $metas;
+		
 	}
 	
 	
@@ -160,9 +209,13 @@ class RoutesController
 		
 		$this->setAltUrl($this->config->pages, 'page');
 		
-		foreach($this->subPages as $viewName => $infosAllSubPages) // parse subpages
-			if($this->viewName == $viewName)
+		foreach($this->subPages as $viewName => $infosAllSubPages) { // parse subpages
+			if($this->viewName == $viewName) {
 				$this->setAltUrl($infosAllSubPages, 'subpage');
+				
+				break;
+			}
+		}
 	}
 	
 	
@@ -177,10 +230,10 @@ class RoutesController
 			
 			if($lang != Config::$LANG) { // if not current language
 				
-				foreach($infosAllPages as $pageUrl => $infosPage) { // parse pages
-					$infosPage = (object) $infosPage;
+				foreach($infosAllPages as $pageUrl => $pageInfos) { // parse pages infos
+					$pageInfos = (object) $pageInfos;
 					
-					if($infosPage->name == $viewName) { // if name match
+					if($pageInfos->name == $viewName) { // if name match
 						$urlPageAlt = $this->pageName == $this->rootPageName ? '' : '/'.$pageUrl;
 						$urlAlt = $lang == Config::$ALL_LANG[0] && $this->pageName == $this->rootPageName ? $this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
 						

@@ -22,8 +22,8 @@
 		
 		"projet" : {
 			"name" : "project",
-			"title" : "Projet",
-			"desc" : "Projet"
+			"title" : "",
+			"desc" : ""
 		},
 		
 		"mentions-legales" : {
@@ -58,8 +58,8 @@
 		
 		"project" : {
 			"name" : "project",
-			"title" : "Project",
-			"desc" : "Project"
+			"title" : "",
+			"desc" : ""
 		},
 		
 		"legals" : {
@@ -94,8 +94,8 @@
 		
 		"project-ex" : {
 			"name" : "project",
-			"title" : "Project - EX",
-			"desc" : "Project - EX"
+			"title" : "",
+			"desc" : ""
 		},
 		
 		"legals-ex" : {

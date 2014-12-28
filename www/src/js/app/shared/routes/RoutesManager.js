@@ -89,10 +89,13 @@ APP.RoutesManager = (function(window) {
 	var _manageAltUrl = function() {
 		this.altUrl = {};
 		
-		_setAltUrl.call(this, APP.Model.Global.json.pages, 'page');
+		_setAltUrl.call(this, APP.Model.Global.json.pages);
 		
 		for(var subPagesName in APP.Model.Global.json.subPages) // parse subpages
 			_setAltUrl.call(this, APP.Model.Global.json.subPages[subPagesName]);
+		
+		// for(var jsonName in APP.Model.Global.json) // parse json
+			// _setAltUrl.call(this, APP.Model.Global.json[jsonName]);
 	};
 	
 	
@@ -211,16 +214,40 @@ APP.RoutesManager = (function(window) {
 	var _getPage = function() {
 		var currentPage = null;
 		
-		for(var pageView in APP.Views.Page)
-			if(this.viewName == APP.Views.Page[pageView].name)
+		for(var pageView in APP.Views.Page) {
+			if(this.viewName == APP.Views.Page[pageView].name) {
 				currentPage = APP.Views.Page[pageView];
+				
+				break;
+			}
+		}
 		
 		return currentPage;
 	};
 	
 	
 	var _getTitle = function() {
-		title = APP.Model.Global.json.pages[APP.Config.LANG][this.pageName].title;
+		var title = APP.Model.Global.json.pages[APP.Config.LANG][this.pageName].title;
+		
+		if(title === '') {
+			
+			for(var subPagesName in APP.Model.Global.json.subPages) { // parse subpages
+				var subPagesInfos = APP.Model.Global.json.subPages[ subPagesName ][ APP.Config.LANG ];
+				
+				for(var pageUrl in subPagesInfos) { // parse subpages infos
+					
+					if(pageUrl == this.pageUrl) { // if page url match
+						title = subPagesInfos[ pageUrl ].title;
+						
+						break;
+					}
+				}
+			}
+		}
+		
+		// if(this.viewName == 'project')
+			// title = APP.Model.Global.json.projects[APP.Config.LANG][this.pageUrl].title;
+		
 		/*
 		if(this.viewName == 'project') {
 			for(var i=0; i<APP.Model.Global.json.projects.length; i++) {
@@ -234,6 +261,7 @@ APP.RoutesManager = (function(window) {
 			}
 		}
 		*/
+		
 		return title;
 	};
 	

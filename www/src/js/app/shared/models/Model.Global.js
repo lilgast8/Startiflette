@@ -49,6 +49,8 @@ APP.Model.Global = (function(window) {
 			this.json.subPages = this.json.subPages || {};
 			this.json.subPages[e.item.id] = e.result;
 		}
+		
+		// this.json[e.item.id] = e.result;
 	};
 	
 	
