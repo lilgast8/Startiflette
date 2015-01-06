@@ -1,8 +1,11 @@
 {
-  "name": "Starter-Project",
-  "description": "Starter Project",
-  "author": "Gaston Bouchayer",
+  "name": "Startiflette",
+  "description": "Starter + tartiflette = Startiflette, a bootstrap for HTML5 + JS app",
   "version": "4.0.0b",
+  "author": {
+    "name": "Gaston Bouchayer",
+    "url": "http://www.gastonbouchayer.com"
+  },
   "main": "gulpfile.js",
   "devDependencies": {
     "gulp": "^3.8.10",
