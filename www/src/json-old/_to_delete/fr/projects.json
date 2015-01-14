@@ -1,0 +1,25 @@
+{
+	
+	"fr": {
+		
+		"projet/1/nom-projet-1" : {
+			"name"	: 1,
+			"title"	: "Nom project 1",
+			"desc"	: "Nom project 1"
+		},
+		
+		"projet/2/nom-projet-2" : {
+			"name"	: 2,
+			"title"	: "Nom project 2",
+			"desc"	: "Nom project 2"
+		},
+		
+		"projet/3/nom-projet-3" : {
+			"name"	: 3,
+			"title"	: "Nom project 3",
+			"desc"	: "Nom project 3"
+		}
+		
+	}
+	
+}

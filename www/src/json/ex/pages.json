@@ -1,0 +1,36 @@
+{
+	
+	"ex" : {
+		
+		"home-ex" : {
+			"name"	: "home",
+			"title"	: "Home - EX - STARTER",
+			"desc"	: "Home - EX - STARTER"
+		},
+		
+		"about-ex" : {
+			"name"	: "about",
+			"title"	: "About - EX",
+			"desc"	: "About - EX"
+		},
+		
+		"projects-ex" : {
+			"name"	: "projects",
+			"title"	: "Projects - EX",
+			"desc"	: "Projects - EX"
+		},
+		
+		"project-ex" : {
+			"name"	: "project",
+			"title"	: "Project - EX",
+			"desc"	: "Project - EX"
+		},
+		
+		"legals-ex" : {
+			"name"	: "legals",
+			"title"	: "Legal notice - EX",
+			"desc"	: "Legal notice - EX"
+		}
+	}
+	
+}

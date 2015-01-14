@@ -10,26 +10,60 @@ var plumber		= require( 'gulp-plumber' );
 // var jsoncombine	= require( 'gulp-jsoncombine' );
 // var concatjson	= require( 'gulp-concat-json' );
 
+// var jsoncombine = require( 'gulp-jsoncombine' );
+// var concat = require( 'gulp-concat' );
+var concatjson = require( 'gulp-concat-json' );
+
 
 
 var fs = require('fs');
 
 gulp.task( 'json-test', function() {
 	
-	// console.log(paths.src.json);
-	
-	// var files = fs.readdirSync(paths.src.json);
 	/*
-	var jsonFiles = fs.readdirSync(paths.src.json);
-	var jsonFolder = [];
-	
-	console.log(jsonFiles);
-	
-	var fileName = null;
+	gulp.src( 'www/src/json/** /pages.json' )
+		.pipe( plumber() )
+		.pipe( jsoncombine( "result.js", function(data){
+			// console.log('DATA :', data);
+			
+			fs.writeFile('www/src/json/pages.json', data, function (err) {
+				console.log('DATA :', data);
+				if (err) throw err;
+				console.log('It\'s saved!');
+			});
+			
+			
+		}) )
+		.pipe( gulp.dest( paths.assets.json ) );
 	*/
 	
-	var files = fs.readdirSync( paths.src.json );
-	var dirs = [];
+	
+	/*
+	gulp.src( 'www/src/json/** /pages.json' )
+		.pipe( plumber() )
+		.pipe( concat( 'page_test.json' ) )
+		.pipe( gulp.dest( 'www/src/json/' ) );
+	*/
+	
+	
+	/*
+	gulp.src( 'www/src/json/** /pages.json' )
+		.pipe( plumber() )
+		.pipe( concatjson( 'page_test.json' ) )
+		.pipe( gulp.dest( 'www/src/json/' ) );
+	*/
+	
+	// var listFiles = getListFiles();
+	// console.log(listFiles);
+	
+	var firstDir	= false;
+	
+	var listFiles	= null;
+	var files		= fs.readdirSync( 'www/src/json/' );
+	var dirs		= [];
+	
+	console.log(files.length);
+	console.log(files);
 	
 	var file, filePath, fileInfo;
 	
@@ -37,103 +71,52 @@ gulp.task( 'json-test', function() {
 		file = files[i];
 		
 		if ( file[0] !== '.' ) {
-			filePath = paths.src.json + file;
+			console.log('FILE :', file);
+			filePath = 'www/src/json/' + file;
 			fileInfo = fs.statSync( filePath );
 			
-			if ( fileInfo.isDirectory() )
+			if ( fileInfo.isDirectory() ) {
 				dirs.push(file);
+				
+				if ( !firstDir ) {
+					listFiles = getListFiles( file );
+					firstDir = true;
+				}
+			}
 		}
 	}
-	// console.log(dirs);
+	console.log('DIRS :', dirs);
+	console.log('LIST FILES :', listFiles);
 	
 	
+	console.log('www/src/json/' + dirs[0] + '/' + listFiles[0]);
+	var data = fs.readFileSync( 'www/src/json/' + dirs[0] + '/' + listFiles[0], 'utf8' );
+	console.log(data);
 	
 	
-	var jsonFiles = [];
-	files = fs.readdirSync( paths.src.json + dirs[0] );
-	// console.log(files);
+	// fs.writeFile( 'www/src/json/pages.json', data, function (err) {
+	fs.writeFileSync( 'www/src/json/pages_yo.json', data, 'utf8' );
 	
-	for ( i=0; i<files.length; i++ ) {
-		file = files[i];
-		
-		
-		// console.log(path.basename( file, '.json' ));
-		// console.log(path.extname( file ));
-		if( path.extname( file ) == '.json' )
-			jsonFiles.push( file );
-	}
-	console.log(jsonFiles);
-	
-	
-	
-	
-	// [
-	// 		paths.src.json + 'fr/pages.json',
-	// 		paths.src.json + 'en/pages.json',
-	// 		paths.src.json + 'ex/pages.json'
-	// 	]
-	
-	gulp.src( paths.src.json + '**/pages.json' )
-	// gulp.src( [
-	// 		paths.src.json + 'fr/pages.json',
-	// 		paths.src.json + 'en/pages.json',
-	// 		paths.src.json + 'ex/pages.json'
-	// 	] )
-		.pipe( plumber() )
-    	.pipe( jsoncombine( 'pages.json', function(data) {
-    		console.log('DATA', data);
-    	}) )
-    	.pipe( gulp.dest( paths.src.json ) );
-	
-	
-	
-	
-	
-	// gulp.src( paths.src.json + '**/pages.json' )
-	/*
-	gulp.src( [
-			paths.src.json + 'fr/pages.json',
-			paths.src.json + 'en/pages.json',
-			paths.src.json + 'ex/pages.json'
-		] )
-		.pipe( plumber() )
-		.pipe( concatjson( 'pages.json' ) )
-		.pipe( gulp.dest( paths.src.json ) );
-	*/
-	
-	
-	/*
-	for ( var i=0; i<jsonFiles.length; i++ ) {
-		fileName = jsonFiles[i];
-		
-		if ( fileName.indexOf('.') == -1 )
-			jsonFolder.push(fileName);
-	}
-	console.log(jsonFolder);
-	*/
-	
-	
-	// var jsonFiles	= fs.readdir(paths.src.json);
-	
-	// for ( var i=0; i<jsonFiles.length; i++ ) {
-		
-	// }
-	
-	// function getFiles(dir,files_){
-	//     files_ = files_ || [];
-	//     if (typeof files_ === 'undefined') files_=[];
-	//     var files = fs.readdirSync(dir);
-	//     for ( var i in files ) {
-	//         if (!files.hasOwnProperty(i)) continue;
-	//         var name = dir+'/'+files[i];
-	//         if (fs.statSync(name).isDirectory()){
-	//             getFiles(name,files_);
-	//         } else {
-	//             files_.push(name);
-	//         }
-	//     }
-	//     return files_;
-	// }
-	// console.log(getFiles('path/to/dir'))
 	
 });
+
+
+
+
+function getListFiles(dir) {
+	console.log('Get List Files :', dir);
+	
+	var files = fs.readdirSync( 'www/src/json/' + dir );
+	var listFiles = [];
+	var file;
+	
+	for ( i = 0; i<files.length; i++ ) {
+		file = files[i];
+		console.log('YOYOYOYO', file);
+		
+		if ( file[0] !== '.' )
+			listFiles.push( file );
+	}
+	
+	return listFiles;
+}

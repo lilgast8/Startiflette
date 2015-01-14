@@ -22,7 +22,7 @@ gulp.task( 'json-lint', function() {
 			var posJsonStr = file.path.indexOf( 'www/' ) + 4;
 			var fileName = file.path.substring( posJsonStr, file.path.length );
 			
-			return notify().write( 'JSON Lint error on: ' + fileName);
-		}));
+			return notify().write( 'JSON Lint error on: ' + fileName );
+		}) );
 	
 });
