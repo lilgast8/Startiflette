@@ -1,0 +1,29 @@
+{
+    "en": {
+        "home": {
+            "name": "home",
+            "title": "Home - STARTER",
+            "desc": "Home - STARTER"
+        },
+        "about": {
+            "name": "about",
+            "title": "About",
+            "desc": "About"
+        },
+        "projects": {
+            "name": "projects",
+            "title": "Projects",
+            "desc": "Projects"
+        },
+        "project": {
+            "name": "project",
+            "title": "Project",
+            "desc": "Project"
+        },
+        "legals": {
+            "name": "legals",
+            "title": "Legal notice",
+            "desc": "Legal notice"
+        }
+    }
+}

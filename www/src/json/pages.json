@@ -1,0 +1,113 @@
+{
+
+
+
+"en" : 	{
+	
+	"home" : {
+		"name"	: "home",
+		"title"	: "Home - STARTER",
+		"desc"	: "Home - STARTER"
+	},
+	
+	"about" : {
+		"name"	: "about",
+		"title"	: "About",
+		"desc"	: "About"
+	},
+	
+	"projects" : {
+		"name"	: "projects",
+		"title"	: "Projects",
+		"desc"	: "Projects"
+	},
+	
+	"project" : {
+		"name"	: "project",
+		"title"	: "Project",
+		"desc"	: "Project"
+	},
+	
+	"legals" : {
+		"name"	: "legals",
+		"title"	: "Legal notice",
+		"desc"	: "Legal notice"
+	}
+	
+},
+
+
+
+"ex" : 	{
+	
+	"home-ex" : {
+		"name"	: "home",
+		"title"	: "Home - EX - STARTER",
+		"desc"	: "Home - EX - STARTER"
+	},
+	
+	"about-ex" : {
+		"name"	: "about",
+		"title"	: "About - EX",
+		"desc"	: "About - EX"
+	},
+	
+	"projects-ex" : {
+		"name"	: "projects",
+		"title"	: "Projects - EX",
+		"desc"	: "Projects - EX"
+	},
+	
+	"project-ex" : {
+		"name"	: "project",
+		"title"	: "Project - EX",
+		"desc"	: "Project - EX"
+	},
+	
+	"legals-ex" : {
+		"name"	: "legals",
+		"title"	: "Legal notice - EX",
+		"desc"	: "Legal notice - EX"
+	}
+	
+},
+
+
+
+"fr" : 	{
+	
+	"accueil" : {
+		"name"	: "home",
+		"title"	: "Accueil - STARTER",
+		"desc"	: "Accueil - STARTER"
+	},
+	
+	"a-propos" : {
+		"name"	: "about",
+		"title"	: "À propos",
+		"desc"	: "À propos"
+	},
+	
+	"projets" : {
+		"name"	: "projects",
+		"title"	: "Projets",
+		"desc"	: "Projets"
+	},
+	
+	"projet" : {
+		"name"	: "project",
+		"title"	: "Projet",
+		"desc"	: "Projet"
+	},
+	
+	"mentions-legales" : {
+		"name"	: "legals",
+		"title"	: "Mentions légales",
+		"desc"	: "Mentions légales"
+	}
+	
+}
+
+
+
+}
