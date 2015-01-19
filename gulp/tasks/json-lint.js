@@ -12,7 +12,9 @@ var jsonlint	= require( 'gulp-jsonlint' );
 gulp.task( 'json-lint', function() {
 	
 	if ( options.jsonSrcPath === null )
-		options.jsonSrcPath = paths.src.jsonFiles;
+		options.jsonSrcPath = paths.src.jsonAllFiles;
+	
+	console.log('OPT', options.jsonSrcPath);
 	
 	gulp.src( options.jsonSrcPath )
 		.pipe( plumber() )

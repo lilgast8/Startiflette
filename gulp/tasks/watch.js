@@ -14,7 +14,11 @@ gulp.task( 'watch', function() {
 	
 	
 	/* Tasks management */
-	gulp.watch( paths.src.allFiles, function(e) {
+	gulp.watch( [
+		
+		paths.src.allFiles,
+		'!' + paths.src.jsonConcatFiles ], function(e) {
+			
 		var filePath, ext, desktop, mobile, shared, taskname;
 		
 		filePath	= e.path;
@@ -51,9 +55,10 @@ gulp.task( 'watch', function() {
 		
 		/* JSON */
 		else if ( ext == '.json' ) {
-			taskname = 'json-lint';
+			// taskname = 'json-lint';
+			taskname = 'json-concat';
 			
-			options.jsonSrcPath = [ paths.src.jsJsFilesFile, paths.src.jsonFiles ];
+			options.jsonSrcPath = [ paths.src.jsJsFilesFile, paths.src.jsonAllFiles ];
 		}
 		
 		
@@ -64,12 +69,22 @@ gulp.task( 'watch', function() {
 	
 	/* Livereload */
 	gulp.watch( [
+		
+		// SASS
 		paths.assets.cssFiles,
-		paths.src.jsJsFilesFile,
+		
+		// JS
 		paths.src.jsFiles,
-		paths.src.jsonFiles,
+		
+		// JSON
+		paths.src.jsJsFilesFile,
+		paths.src.jsonAllFiles,
+		// '!' + paths.src.jsonConcatFiles,
+		
+		// PHP
 		paths.php.indexFile,
 		paths.php.allFiles
+		
 	] ).on( 'change', livereload.changed );
 	
 });

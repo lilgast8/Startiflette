@@ -22,7 +22,9 @@ module.exports = {
 		jsAppMobileFiles	: 'www/src/js/app/mobile/**/*.js',
 		jsSharedFiles		: 'www/src/js/app/shared/**/*.js',
 		
-		jsonFiles			: 'www/src/json/*.json'
+		json 				: 'www/src/json/',
+		jsonAllFiles		: 'www/src/json/**/*.json',
+		jsonConcatFiles		: 'www/src/json/*.json'
 	},
 	
 	assets : {
