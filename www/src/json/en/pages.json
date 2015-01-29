@@ -20,8 +20,8 @@
 	
 	"project" : {
 		"name"	: "project",
-		"title"	: "Project",
-		"desc"	: "Project"
+		"title"	: "",
+		"desc"	: ""
 	},
 	
 	"legals" : {

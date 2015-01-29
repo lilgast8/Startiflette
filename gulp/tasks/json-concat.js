@@ -42,8 +42,8 @@ gulp.task( 'json-concat', function() {
 	
 	
 	// lint concat JSON
-	// options.jsonSrcPath = paths.src.jsonConcatFiles;
-	// gulp.start( 'json-lint' );
+	options.jsonSrcPath = paths.src.jsonConcatFiles;
+	gulp.start( 'json-lint' );
 	
 });
 
@@ -56,18 +56,19 @@ function getInfosFiles( files ) {
 	var firstDir	= false;
 	var file, filePath, fileInfo;
 	
+	// parse files
 	for ( var i = 0; i < files.length; i++ ) {
 		file = files[i];
 		
-		if ( file[0] !== '.' ) {
+		if ( file[0] !== '.' ) { // if filename don't begin by a '.'
 			filePath = paths.src.json + file;
 			fileInfo = fs.statSync( filePath );
 			
-			if ( fileInfo.isDirectory() ) {
-				langDirs.push(file);
+			if ( fileInfo.isDirectory() ) { // if file is a directory
+				langDirs.push(file); // stock language directories
 				
-				if ( !firstDir ) {
-					jsonFiles = getJsonFiles( file );
+				if ( !firstDir ) { // if it's first directory, parse files in it to get json files list
+					jsonFiles = getJsonFiles( file ); // get json filenames
 					firstDir = true;
 				}
 			}
@@ -86,11 +87,12 @@ function getJsonFiles( dir ) {
 	var jsonFiles	= [];
 	var file;
 	
+	// parse json files
 	for ( var i = 0; i < files.length; i++ ) {
 		file = files[i];
 		
-		if ( file[0] !== '.' )
-			jsonFiles.push( file );
+		if ( file[0] !== '.' ) // if filename don't begin by a '.'
+			jsonFiles.push( file ); // stock json filenames
 	}
 	
 	return jsonFiles;

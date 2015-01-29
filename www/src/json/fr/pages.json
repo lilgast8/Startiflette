@@ -20,8 +20,8 @@
 	
 	"projet" : {
 		"name"	: "project",
-		"title"	: "Projet",
-		"desc"	: "Projet"
+		"title"	: "",
+		"desc"	: ""
 	},
 	
 	"mentions-legales" : {

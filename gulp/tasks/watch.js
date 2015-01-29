@@ -79,7 +79,7 @@ gulp.task( 'watch', function() {
 		// JSON
 		paths.src.jsJsFilesFile,
 		paths.src.jsonAllFiles,
-		// '!' + paths.src.jsonConcatFiles,
+		'!' + paths.src.jsonConcatFiles,
 		
 		// PHP
 		paths.php.indexFile,

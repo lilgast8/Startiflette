@@ -14,8 +14,6 @@ gulp.task( 'json-lint', function() {
 	if ( options.jsonSrcPath === null )
 		options.jsonSrcPath = paths.src.jsonAllFiles;
 	
-	console.log('OPT', options.jsonSrcPath);
-	
 	gulp.src( options.jsonSrcPath )
 		.pipe( plumber() )
 		.pipe( jsonlint() )
