@@ -213,7 +213,8 @@ class RoutesController
 					
 					if($pageInfos->name == $viewName) { // if name match
 						$urlPageAlt = $this->pageName == $this->rootPageName ? '' : '/'.$pageUrl;
-						$urlAlt = $lang == Config::$ALL_LANG[0] && $this->pageName == $this->rootPageName ? $this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
+						$urlAlt = $lang == 	Config::DEFAULT_LANG && $this->pageName == $this->rootPageName ? 
+											$this->path->url->base : $this->path->url->base.$lang.$urlPageAlt;
 						
 						$this->altUrl[ $lang ] = $urlAlt;
 					}

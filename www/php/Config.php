@@ -9,6 +9,7 @@ class Config
 	
 	const PROD				= false;
 	// const PROD				= true;
+	const DEFAULT_LANG		= 'fr';
 	
 	static $LOCALHOST		= null;
 	static $DEVICE			= null;
@@ -174,7 +175,7 @@ class Config
 		$pageUrl = str_replace($this->path->url->base, '', $current);
 		
 		if(!Config::$MULTI_LANG || strlen($pageUrl) == 0)
-			self::$LANG = self::$ALL_LANG[0];	
+			self::$LANG = self::DEFAULT_LANG;
 		else
 			self::$LANG = substr($pageUrl, 0, 2);
 	}
@@ -190,7 +191,7 @@ class Config
 	private function setLinksLang()
 	{
 		self::$LG_LINK		= self::$MULTI_LANG ? self::$LANG.'/' : '';
-		self::$LG_LINK_ROOT	= self::$LANG == self::$ALL_LANG[0] ? '' : self::$LANG;
+		self::$LG_LINK_ROOT	= self::$LANG == self::DEFAULT_LANG ? '' : self::$LANG;
 	}
 	
 	

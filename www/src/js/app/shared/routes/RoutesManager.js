@@ -53,7 +53,7 @@ APP.RoutesManager = (function(window) {
 	
 	RoutesManager.prototype.updateGA = function() {
 		var pageUrl = this.pageId !== 0 ? '/'+this.pageUrl : '';
-		var gaPageName = APP.Config.LANG == APP.Config.ALL_LANG[0] && this.pageId === 0 ? '' : APP.Config.LANG+pageUrl;
+		var gaPageName = APP.Config.LANG == APP.Config.DEFAULT_LANG && this.pageId === 0 ? '' : APP.Config.LANG+pageUrl;
 		
 		if(!APP.Config.LOCALHOST && APP.Config.PROD)
 			ga('send', 'pageview', '/'+gaPageName);
@@ -119,8 +119,8 @@ APP.RoutesManager = (function(window) {
 					// if the name of the translated language match with the viewName of the active language
 					if(translatedPages[lang][page].name == viewName) {
 						urlPageAlt = pageName == this.rootPageName ? '' : '/' + page;
-						urlAlt = lang == APP.Config.ALL_LANG[0] && pageName == this.rootPageName ? 
-							APP.Config.WEB_ROOT : APP.Config.WEB_ROOT + lang + urlPageAlt;
+						urlAlt = lang == 	APP.Config.DEFAULT_LANG && pageName == this.rootPageName ? 
+											APP.Config.WEB_ROOT : APP.Config.WEB_ROOT + lang + urlPageAlt;
 						
 						this.altUrl[pageName][lang] = urlAlt;
 					}

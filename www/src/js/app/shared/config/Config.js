@@ -7,6 +7,7 @@ APP.Config = (function(window) {
 		this.LOCALHOST			= LOCALHOST == '1' ? true : false;
 		this.PROD				= PROD == '1' ? true : false;
 		this.WEB_ROOT			= WEB_ROOT;
+		this.DEFAULT_LANG		= DEFAULT_LANG;
 		this.LANG				= null;
 		this.MULTI_LANG			= null;
 		this.ALL_LANG			= null;
@@ -55,7 +56,7 @@ APP.Config = (function(window) {
 		var pageUrl = current.replace(this.WEB_ROOT, '');
 		
 		if(!this.MULTI_LANG || pageUrl.length === 0)
-			lang = this.ALL_LANG[0];	
+			lang = this.DEFAULT_LANG;	
 		else
 			lang = pageUrl.substr(0, 2);
 		
