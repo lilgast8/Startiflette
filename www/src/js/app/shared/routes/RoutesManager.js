@@ -257,8 +257,8 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _updateMenu = function() {
-		var $menu = APP.Views.Static.Header.$.menu;
-		var $footer = APP.Views.Static.Footer.$.footer;
+		var $menu	= APP.Views.Static.Header.$.menu;
+		var $footer	= APP.Views.Static.Footer.$.footer;
 		
 		var $menuToDisable = $menu.find('.active');
 		if(!$menuToDisable.length)

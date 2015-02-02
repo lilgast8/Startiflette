@@ -30,14 +30,14 @@ APP.ViewPage = (function(window) {
 						APP.Config.WEB_ROOT + 'ajax-content/'+ pageUrl;
 		
 		$.ajax({
-			context : this,
-			url : urlPage,
-			type : 'POST',
-			data : { ajax:pageUrl }, // useful if need a different behavior on PHP file when AJAX load
-									 // can be detected with if(isset($_POST['ajax']))
-			dataType : 'html',
-			success : this.loaded,
-			error : this.error
+			context		: this,
+			url			: urlPage,
+			type		: 'POST',
+			data		: { ajax:pageUrl },	// useful if need a different behavior on PHP file when AJAX load
+									 		// can be detected with if(isset($_POST['ajax']))
+			dataType	: 'html',
+			success		: this.loaded,
+			error		: this.error
 		});
 	};
 	

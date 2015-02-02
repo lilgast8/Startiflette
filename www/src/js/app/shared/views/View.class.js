@@ -6,11 +6,11 @@ APP.View = (function(window) {
 	function View() {
 		APP.EventDispatcher.call(this);
 		
-		this.$ = {};
-		this.p = {};
-		this.v = {};
-		this.tw = {};
-		this.tl = {};
+		this.$	= {};
+		this.p	= {};
+		this.v	= {};
+		this.tw	= {};
+		this.tl	= {};
 	}
 	
 	
