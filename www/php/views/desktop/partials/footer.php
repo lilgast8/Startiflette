@@ -29,28 +29,13 @@
 
 <?php
 
-include_once $main->path->file->base.'php/shared/js-var.php'; // JS var
+/* JS var */
+include_once $main->path->file->base.'php/shared/js-var.php';
 
-if(!Config::PROD) {
-	$jsonJsFiles = file_get_contents($main->path->file->js.'js-files.json');
-	$jsFiles = json_decode($jsonJsFiles, true);
-	
-	$files = $jsFiles['scripts-desktop']['files'];
-	
-	for($i=0; $i<count($files); $i++) {
-		if(is_array($files[$i])) {
-			echo '<!--[if lt IE 9]><script src="' . $main->path->url->js . $files[$i][1] . '"></script><![endif]-->' . "\n";
-			echo '<!--[if gte IE 9]><!--><script src="' . $main->path->url->js . $files[$i][0] . '"></script><!--<![endif]-->' . "\n";
-		}
-		else echo '<script src="' . $main->path->url->js . $files[$i] . '"></script>' . "\n";
-	}
+/* JS scripts */
+echo $main->config->listJsFiles('scripts-desktop');
 
-} else { ?>
-
-<!--[if lt IE 9]><script src="<?php echo $main->path->url->js; ?>scripts-desktop-oldie.min.js"></script><![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><script src="<?php echo $main->path->url->js; ?>scripts-desktop.min.js"></script><!--<![endif]-->
-
-<?php } ?>
+?>
 
 
 </body>

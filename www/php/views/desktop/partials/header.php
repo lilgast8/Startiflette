@@ -32,17 +32,9 @@
 	
 	<!--[if lt IE 9]><script src="<?php echo $main->path->url->js; ?>libs/html5shiv.min.js"></script><![endif]-->
 	<?php
-	if(!Config::PROD) {
-		$jsonJsFiles = file_get_contents($main->path->file->js.'js-files.json');
-		$jsFiles = json_decode($jsonJsFiles, true);
-		
-		$files = $jsFiles['modern-detect-izr']['files'];
-		
-		for($i=0; $i<count($files); $i++)
-			echo '<script src="' . $main->path->url->js . $files[$i] . '"></script>' . "\n";
-	} else { ?>
-	<script src="<?php echo $main->path->url->js; ?>libs/modern-detect-izr.min.js"></script>
-	<?php }
+	
+	/* Modernirz & Detectizr */
+	echo $main->config->listJsFiles('modern-detect-izr');
 	
 	/* Google Analytics */
 	include_once $main->path->file->base.'php/shared/google-analytics.php';
