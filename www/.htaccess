@@ -38,11 +38,12 @@ RewriteRule .* %{REQUEST_URI}? [R=301,L]
 # -------- TO DISABLE IN PROD -------- #
 RewriteRule img/(.*)$						src/img/$1 [L]
 RewriteRule json/(.*)$						src/json/$1 [L]
+RewriteRule src/js/app/shared/sounds/(.*)$	src/js/app/shared/sounds/$1 [L]
 RewriteRule src/js/app/shared/videos/(.*)$	src/js/app/shared/videos/$1 [L]
-RewriteRule videos/(.*)$					src/videos/$1 [L]
 
 RewriteRule img/(.*)$		assets/img/$1 [L]
 RewriteRule json/(.*)$		assets/json/$1 [L]
+RewriteRule sounds/(.*)$	assets/sounds/$1 [L]
 RewriteRule videos/(.*)$	assets/videos/$1 [L]
 
 RewriteRule css/(.*)$		assets/css/$1 [L]
