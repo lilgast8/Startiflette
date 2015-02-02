@@ -10,6 +10,7 @@ class Config
 	const PROD				= false;
 	// const PROD				= true;
 	const DEFAULT_LANG		= 'fr';
+	const GA_ID				= 'UA-XXXXXXXX-XX';
 	
 	static $LOCALHOST		= null;
 	static $DEVICE			= null;

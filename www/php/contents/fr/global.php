@@ -29,8 +29,10 @@ function getGlobal() {
 	
 	$global->tw = new stdClass();
 	
-	$global->tw->title	= "Titre Twitter";
-	$global->tw->desc	= "Desc Twitter";
+	$global->tw->title		= "Titre Twitter";
+	$global->tw->desc		= "Desc Twitter";
+	$global->tw->id_site	= "@LilGast8";
+	$global->tw->id_creator	= "@LilGast8";
 	
 	
 	

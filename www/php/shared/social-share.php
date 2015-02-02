@@ -14,7 +14,7 @@
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content="<?php echo $main->contents->global->tw->title; ?>" />
 	<meta name="twitter:description" content="<?php echo $main->contents->global->tw->desc; ?>" />
-	<meta name="twitter:site" content="@LilGast8" />
-	<meta name="twitter:creator" content="@LilGast8" />
+	<meta name="twitter:site" content="<?php echo $main->contents->global->tw->id_site; ?>" />
+	<meta name="twitter:creator" content="<?php echo $main->contents->global->tw->id_creator; ?>" />
 	<meta name="twitter:url" content="<?php echo Path::SITE_URL; ?>" />
 	<meta name="twitter:image" content="<?php echo Path::SITE_URL; ?>/img/divers/share_twitter.jpg" />
