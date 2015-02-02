@@ -6,8 +6,8 @@ APP.Config = (function(window) {
 	function Config() {
 		this.LOCALHOST			= LOCALHOST == '1' ? true : false;
 		this.PROD				= PROD == '1' ? true : false;
-		this.WEB_ROOT			= WEB_ROOT;
 		this.DEFAULT_LANG		= DEFAULT_LANG;
+		this.WEB_ROOT			= WEB_ROOT;
 		this.ASSETS				= this.PROD ? 'assets/' : 'src/';
 		this.LANG				= null;
 		this.MULTI_LANG			= null;

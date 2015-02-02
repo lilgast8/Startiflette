@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="<?php echo LG; ?>" class="no-js">
+<html dir="ltr" lang="<?php echo Config::$LANG; ?>" class="no-js">
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 	
-	<title><?php echo $titlePage; ?></title>
-	<meta name="description" content="<?php echo $descPage; ?>" />
+	<title><?php echo $main->routes->titlePage; ?></title>
+	<meta name="description" content="<?php echo $main->routes->descPage; ?>" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
 	<meta name="author" content="Gaston Bouchayer" />
@@ -27,17 +27,9 @@
 	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo $main->path->url->css; ?>styles-desktop.min.css" />
 	
 	<?php
-	if(!Config::PROD) {
-		$jsonJsFiles = file_get_contents($main->path->file->js.'js-files.json');
-		$jsFiles = json_decode($jsonJsFiles, true);
-		
-		$files = $jsFiles['modern-detect-izr']['files'];
-		
-		for($i=0; $i<count($files); $i++)
-			echo '<script src="' . $main->path->url->js . $files[$i] . '"></script>' . "\n";
-	} else { ?>
-	<script src="<?php echo $main->path->url->js; ?>lib/modern-detect-izr.min.js"></script>
-	<?php }
+	
+	/* Modernirz & Detectizr */
+	echo $main->config->listJsFiles('modern-detect-izr');
 	
 	/* Google Analytics */
 	include_once $main->path->file->base.'php/shared/google-analytics.php';
@@ -62,13 +54,19 @@
 		<nav id="menu">
 			<ul>
 				<li>
-					<a href="<?php echo $aUrl->home; ?>" class="menu-link" data-url="<?php echo $aUrl->homeId; ?>">Accueil</a>
+					<a href="<?php echo $main->routes->url->home; ?>" class="menu-link" data-url="<?php echo $main->routes->url->homeId; ?>">
+						<?php echo $main->contents->global->menu->home; ?>
+					</a>
 				</li>
 				<li>
-					<a href="<?php echo $aUrl->about; ?>" class="menu-link" data-url="<?php echo $aUrl->aboutId; ?>">À propos</a>
+					<a href="<?php echo $main->routes->url->about; ?>" class="menu-link" data-url="<?php echo $main->routes->url->aboutId; ?>">
+						<?php echo $main->contents->global->menu->about; ?>
+					</a>
 				</li>
 				<li>
-					<a href="<?php echo $aUrl->projects; ?>" class="menu-link" data-url="<?php echo $aUrl->projectsId; ?>">Projets</a>
+					<a href="<?php echo $main->routes->url->projects; ?>" class="menu-link" data-url="<?php echo $main->routes->url->projectsId; ?>">
+						<?php echo $main->contents->global->menu->projects; ?>
+					</a>
 				</li>
 			</ul>
 		</nav>

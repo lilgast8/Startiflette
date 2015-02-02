@@ -29,24 +29,13 @@
 
 <?php
 
-include_once $main->path->file->base.'php/shared/js-var.php'; // JS var
+/* JS var */
+include_once $main->path->file->base.'php/shared/js-var.php';
 
-if(!Config::PROD) {
-	$jsonJsFiles = file_get_contents($main->path->file->js.'js-files.json');
-	$jsFiles = json_decode($jsonJsFiles, true);
-	
-	$files = $jsFiles['scripts-mobile']['files'];
-	
-	for($i=0; $i<count($files); $i++) {
-		if(is_array($files[$i])) echo '<script src="' . $main->path->url->js . $files[$i][0] . '"></script>' . "\n";
-		else echo '<script src="' . $main->path->url->js . $files[$i] . '"></script>' . "\n";
-	}
-	
-} else { ?>
+/* JS scripts */
+echo $main->config->listJsFiles('scripts-mobile');
 
-<script src="<?php echo $main->path->url->js; ?>scripts-mobile.min.js"></script>
-
-<?php } ?>
+?>
 
 
 </body>

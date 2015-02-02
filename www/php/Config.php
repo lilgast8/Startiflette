@@ -235,7 +235,7 @@ class Config
 			for ($i = 0; $i < count($files); $i++) {
 				if (is_array($files[$i])) {
 					$listFiles .= '<!--[if lt IE 9]><script src="' . $this->path->url->js . $files[$i][1] . '"></script><![endif]-->' . "\n";
-					$listFiles .= '<!--[if gte IE 9]><!--><script src="' . $this->path->url->js . $files[$i][0] . '"></script><!--<![endif]-->' . "\n";
+					$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . $this->path->url->js . $files[$i][0] . '"></script><!--<![endif]-->' . "\n";
 				}
 				else
 					$listFiles .= '<script src="' . $this->path->url->js . $files[$i] . '"></script>' . "\n";
@@ -247,7 +247,7 @@ class Config
 			
 			if ( is_array( $files ) ) {
 					$listFiles .= '<!--[if lt IE 9]><script src="' . $this->path->url->js . $files[1] . '"></script><![endif]-->' . "\n";
-					$listFiles .= '<!--[if gte IE 9]><!--><script src="' . $this->path->url->js . $files[0] . '"></script><!--<![endif]-->' . "\n";
+					$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . $this->path->url->js . $files[0] . '"></script><!--<![endif]-->' . "\n";
 				}
 				else
 					$listFiles .= '<script src="' . $this->path->url->js . $dest . $files . '"></script>' . "\n";
