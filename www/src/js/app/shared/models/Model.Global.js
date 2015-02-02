@@ -16,11 +16,11 @@ APP.Model.Global = (function(window) {
 		this.aJsonToLoad = [
 			{
 				id	: 'pages',
-				src	: 'json/pages.json'
+				src	: APP.Config.ASSETS + 'json/pages.json'
 			},
 			{
 				id	: 'projects',
-				src	: 'json/projects.json'
+				src	: APP.Config.ASSETS + 'json/projects.json'
 			}
 		];
 		
@@ -42,6 +42,7 @@ APP.Model.Global = (function(window) {
 	};
 	
 	var _onFileLoad = function(e) {
+		
 		if(e.item.id == 'pages')
 			this.json[e.item.id] = e.result;
 		

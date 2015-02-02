@@ -8,6 +8,7 @@ APP.Config = (function(window) {
 		this.PROD				= PROD == '1' ? true : false;
 		this.WEB_ROOT			= WEB_ROOT;
 		this.DEFAULT_LANG		= DEFAULT_LANG;
+		this.ASSETS				= this.PROD ? 'assets/' : 'src/';
 		this.LANG				= null;
 		this.MULTI_LANG			= null;
 		this.ALL_LANG			= null;
