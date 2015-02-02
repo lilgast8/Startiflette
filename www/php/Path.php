@@ -48,9 +48,12 @@ class Path
 		$this->url->current	= 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 		$this->url->assets	= $this->url->base . $assets_folder.'/';
 		$this->url->css		= $this->url->base .'css/';
-		$this->url->img		= $this->url->assets .'img/';
-		$this->url->js		= $this->url->assets .'js/';
-		$this->url->json	= $this->url->assets .'json/';
+		// $this->url->img		= $this->url->assets .'img/';
+		// $this->url->js		= $this->url->assets .'js/';
+		// $this->url->json	= $this->url->assets .'json/';
+		$this->url->img		= $this->url->base .'img/';
+		$this->url->js		= $this->url->base .'js/';
+		$this->url->json	= $this->url->base .'json/';
 		
 		
 		// file path

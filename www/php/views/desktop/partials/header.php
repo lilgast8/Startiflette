@@ -41,7 +41,7 @@
 		for($i=0; $i<count($files); $i++)
 			echo '<script src="' . $main->path->url->js . $files[$i] . '"></script>' . "\n";
 	} else { ?>
-	<script src="<?php echo $main->path->url->js; ?>lib/modern-detect-izr.min.js"></script>
+	<script src="<?php echo $main->path->url->js; ?>libs/modern-detect-izr.min.js"></script>
 	<?php }
 	
 	/* Google Analytics */

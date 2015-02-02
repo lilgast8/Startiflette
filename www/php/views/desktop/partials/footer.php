@@ -47,8 +47,8 @@ if(!Config::PROD) {
 
 } else { ?>
 
-<!--[if lt IE 9]><script src="<?php echo $main->path->url->js; ?>scripts-oldie.min.js"></script><![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><script src="<?php echo $main->path->url->js; ?>scripts.min.js"></script><!--<![endif]-->
+<!--[if lt IE 9]><script src="<?php echo $main->path->url->js; ?>scripts-desktop-oldie.min.js"></script><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><script src="<?php echo $main->path->url->js; ?>scripts-desktop.min.js"></script><!--<![endif]-->
 
 <?php } ?>
 
