@@ -34,7 +34,8 @@
 			
 			"app/shared/routes/RoutesManager.js",
 			
-			"app/shared/models/Model.Global.js",
+			"app/shared/models/Models.Json.js",
+			"app/shared/models/Models.Assets.js",
 			
 			"app/shared/loaders/Loader.class.js",
 			

@@ -91,7 +91,7 @@ APP.Utils.Global = (function(window) {
 			property = prefix === '' ? property : property.charAt(0).toUpperCase() + property.substring(1).toLowerCase();
 			var prop = prefix+property;
 			
-			if(typeof document.body.style[prop] != "undefined")
+			if(typeof document.body.style[prop] != 'undefined')
 				return prop;
 		}
 		

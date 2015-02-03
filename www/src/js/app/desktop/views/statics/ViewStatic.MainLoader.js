@@ -17,7 +17,8 @@ APP.Views.Static.MainLoader = (function(window) {
 	
 	
 	MainLoader.prototype.initEl = function() {
-		this.$.loader = $(document.getElementById('loader'));
+		this.$.loader	= $(document.getElementById('loader'));
+		this.$.progress	= this.$.loader.find('.loader-progress');
 	};
 	
 	
@@ -36,11 +37,22 @@ APP.Views.Static.MainLoader = (function(window) {
 	};
 	
 	
+	MainLoader.prototype.progressLoader = function(percentage) {
+		var progress = percentage - 100 + '%';
+		
+		this.$.progress[0].style[ APP.Config.TRANSFORM ] = 'translate(' + progress + ', 0%)';
+	};
+	
+	
 	MainLoader.prototype.hidePreloader = function() {
 		// hide preloader if need
 		// play intro if need and at the end of it dispatch APP.RoutesManager.currentPage.E.SHOWN
 		
-		APP.RoutesManager.currentPage.dispatch(APP.RoutesManager.currentPage.E.SHOWN); // dispatch event to enable page change
+		// APP.RoutesManager.currentPage.dispatch(APP.RoutesManager.currentPage.E.SHOWN); // dispatch event to enable page change
+		
+		this.tw.hidePreloader = TweenLite.to(this.$.progress, 1, {x:'100%', ease:Quart.easeIn, onComplete:function(){
+			APP.RoutesManager.currentPage.dispatch(APP.RoutesManager.currentPage.E.SHOWN); // dispatch event to enable page change
+		}});
 	};
 	
 	

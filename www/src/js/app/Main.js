@@ -41,23 +41,24 @@ APP.Main = (function(window) {
 		
 		this.$.mainContainer[0].className = '';
 		
-		APP.Model.Global.buildEvt(APP.Model.Global.E.INIT, _init.bind(this));
-		APP.Model.Global.init();
+		APP.Config.init();
+		APP.Views.Static.MainLoader.init();
+		
+		APP.Models.Json.buildEvt(APP.Models.Json.E.INIT, _init.bind(this));
+		APP.Models.Json.init();
 	};
 	
 	
 	var _init = function() {
-		APP.Model.Global.destroyEvt(APP.Model.Global.E.INIT, _init.bind(this));
+		APP.Models.Json.destroyEvt(APP.Models.Json.E.INIT, _init.bind(this));
 		
 		// if(APP.Config.LOCALHOST && !APP.Config.PROD) // stats
 		// 	_initStats.call(this);
 		
 		_setWindowSize.call(this);
 		
-		APP.Config.init();
 		APP.Views.Static.Header.init();
 		APP.Views.Static.Footer.init();
-		APP.Views.Static.MainLoader.init();
 		
 		_bindEvents.call(this);
 		

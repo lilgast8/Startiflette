@@ -78,7 +78,7 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _setRootPageName = function() {
-		for(var url in APP.Model.Global.json.pages[APP.Config.LANG]) {
+		for(var url in APP.Models.Json.data.pages[APP.Config.LANG]) {
 			this.rootPageName = url;
 			
 			break;
@@ -89,10 +89,10 @@ APP.RoutesManager = (function(window) {
 	var _manageAltUrl = function() {
 		this.altUrl = {};
 		
-		_setAltUrl.call(this, APP.Model.Global.json.pages);
+		_setAltUrl.call(this, APP.Models.Json.data.pages);
 		
-		for(var subPagesName in APP.Model.Global.json.subPages) // parse subpages
-			_setAltUrl.call(this, APP.Model.Global.json.subPages[subPagesName]);
+		for(var subPagesName in APP.Models.Json.data.subPages) // parse subpages
+			_setAltUrl.call(this, APP.Models.Json.data.subPages[subPagesName]);
 	};
 	
 	
@@ -204,7 +204,7 @@ APP.RoutesManager = (function(window) {
 		this.urlParts	= urlParts;
 		this.pageUrl	= pageUrl;
 		this.pageName	= pageName;
-		this.viewName	= APP.Model.Global.json.pages[ APP.Config.LANG ][this.pageName].name;
+		this.viewName	= APP.Models.Json.data.pages[ APP.Config.LANG ][this.pageName].name;
 	};
 	
 	
@@ -224,12 +224,12 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _getTitle = function() {
-		var title = APP.Model.Global.json.pages[APP.Config.LANG][this.pageName].title;
+		var title = APP.Models.Json.data.pages[APP.Config.LANG][this.pageName].title;
 		
 		if(title === '') {
 			
-			for(var subPagesName in APP.Model.Global.json.subPages) { // parse subpages
-				var subPagesInfos = APP.Model.Global.json.subPages[ subPagesName ][ APP.Config.LANG ];
+			for(var subPagesName in APP.Models.Json.data.subPages) { // parse subpages
+				var subPagesInfos = APP.Models.Json.data.subPages[ subPagesName ][ APP.Config.LANG ];
 				
 				for(var pageUrl in subPagesInfos) { // parse subpages infos
 					

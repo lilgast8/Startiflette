@@ -50,7 +50,7 @@
 	
 	<!-- Loader -->
 	<div id="loader">
-		
+		<div class="loader-progress"></div>
 	</div>
 	
 	<!-- Header -->

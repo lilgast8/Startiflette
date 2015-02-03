@@ -20,6 +20,8 @@ APP.Config = (function(window) {
 		this.IE_VERSION			= null;
 		
 		this.HAS_PUSHSTATE		= null;
+		
+		this.TRANSFORM			= null;
 	}
 	
 	
@@ -36,6 +38,8 @@ APP.Config = (function(window) {
 		
 		this.HAS_PUSHSTATE		= Modernizr.history;
 		
+		this.TRANSFORM			= getSupportedPropertyName('transform');
+		
 		APP.OldBrowser.init();
 	};
 	
@@ -43,7 +47,7 @@ APP.Config = (function(window) {
 	var _setAllLang = function() {
 		var allLang = [];
 		
-		for(var lang in APP.Model.Global.json.pages)
+		for(var lang in APP.Models.Json.data.pages)
 			allLang.push(lang);
 		
 		return allLang;
