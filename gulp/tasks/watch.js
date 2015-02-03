@@ -19,7 +19,8 @@ gulp.task( 'watch', function() {
 		paths.src.allFiles,
 		'!' + paths.src.jsonConcatFiles ], function(e) {
 			
-		var filePath, ext, desktop, mobile, shared, taskname;
+		var filePath, ext, desktop, mobile, shared;
+		var taskname = null;
 		
 		filePath	= e.path;
 		ext			= path.extname( filePath );
@@ -62,7 +63,8 @@ gulp.task( 'watch', function() {
 		}
 		
 		
-		gulp.start( taskname );
+		if( taskname )
+			gulp.start( taskname );
 		
 	});
 	
