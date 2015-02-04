@@ -50,7 +50,7 @@ APP.Utils.Global = (function(window) {
 	
 	
 	this.getElSize = function(elW, elH, contW, contH) {
-		var imgRatio = elW/elW;
+		var elRatio = elW/elW;
 		var contRatio = contW/contH;
 		var sizeEl = {
 			x : 0,
