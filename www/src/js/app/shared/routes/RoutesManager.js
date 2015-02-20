@@ -6,9 +6,9 @@ APP.RoutesManager = (function(window) {
 	function RoutesManager() {
 		APP.EventDispatcher.call(this);
 		
-		this.prevPage				= null;
-		this.currentPage			= null;
-		this.nextPage				= null;
+		this.prevView				= null;
+		this.currentView			= null;
+		this.nextView				= null;
 		
 		this.rootPageName			= null;
 		this.urlParts				= null;
@@ -36,7 +36,7 @@ APP.RoutesManager = (function(window) {
 		
 		_bindEvents.call(this);
 		
-		_initFirstPage.call(this);
+		_initFirstView.call(this);
 	};
 	
 	
@@ -65,14 +65,14 @@ APP.RoutesManager = (function(window) {
 	};
 	
 	
-	var _initFirstPage = function() {
+	var _initFirstView = function() {
 		_setPageInfos.call(this, null);
 		
-		this.currentPage = _getPage.call(this);
+		this.currentView = _getView.call(this);
 		
 		_updateMenu.call(this);
 		
-		this.currentPage.buildEvt(this.currentPage.E.SHOWN, _enablePageChange.bind(this, true));
+		this.currentView.buildEvt(this.currentView.E.SHOWN, _enablePageChange.bind(this, true));
 		APP.Views.Static.MainLoader.hidePreloader();
 	};
 	
@@ -139,28 +139,28 @@ APP.RoutesManager = (function(window) {
 			else // if page is changed by a prev/next
 				_setPageInfos.call(this, null);
 			
-			this.nextPage = _getPage.call(this);
+			this.nextView = _getView.call(this);
 			
-			this.currentPage.buildEvt(this.currentPage.E.HIDDEN, _initNextPage.bind(this));
-			this.currentPage.hide();
+			this.currentView.buildEvt(this.currentView.E.HIDDEN, _initNextView.bind(this));
+			this.currentView.hide();
 			
-			this.nextPage.load(this.pageUrl);
+			this.nextView.load(this.pageUrl);
 		}
 	};
 	
 	
-	var _initNextPage = function() {
-		this.currentPage.destroyEvt(this.currentPage.E.HIDDEN, _initNextPage.bind(this));
+	var _initNextView = function() {
+		this.currentView.destroyEvt(this.currentView.E.HIDDEN, _initNextView.bind(this));
 		
-		this.prevPage = this.currentPage;
-		this.currentPage = this.nextPage;
+		this.prevView		= this.currentView;
+		this.currentView	= this.nextView;
 		
 		_updateMenu.call(this);
 		if(APP.Config.MULTI_LANG)
 			_updateLgLinks.call(this);
 		
-		this.currentPage.buildEvt(this.currentPage.E.SHOWN, _enablePageChange.bind(this, false));
-		this.currentPage.transitionEnded();
+		this.currentView.buildEvt(this.currentView.E.SHOWN, _enablePageChange.bind(this, false));
+		this.currentView.transitionEnded();
 	};
 	
 	
@@ -208,18 +208,18 @@ APP.RoutesManager = (function(window) {
 	};
 	
 	
-	var _getPage = function() {
-		var currentPage = null;
+	var _getView = function() {
+		var currentView = null;
 		
 		for(var pageView in APP.Views.Page) {
 			if(this.viewName == APP.Views.Page[pageView].name) {
-				currentPage = APP.Views.Page[pageView];
+				currentView = APP.Views.Page[pageView];
 				
 				break;
 			}
 		}
 		
-		return currentPage;
+		return currentView;
 	};
 	
 	
@@ -296,13 +296,13 @@ APP.RoutesManager = (function(window) {
 	
 	
 	var _enablePageChange = function(init) {
-		this.currentPage.destroyEvt(this.currentPage.E.SHOWN, _enablePageChange.bind(this));
+		this.currentView.destroyEvt(this.currentView.E.SHOWN, _enablePageChange.bind(this));
 		APP.Views.Static.MainLoader.hide();
 		
 		this.isPageChange = false;
 		
 		if(init)
-			this.currentPage.init();
+			this.currentView.init();
 		
 		APP.Main.resize();
 		

@@ -32,8 +32,8 @@ APP.Main = (function(window) {
 		if(APP.RoutesManager.isPageChange) // stop the resize if page is changing (is in transition)
 			return false; 
 		
-		if(APP.RoutesManager.currentPage !== null) // if current page exist, resize it
-			APP.RoutesManager.currentPage.resize();
+		if(APP.RoutesManager.currentView !== null) // if current page exist, resize it
+			APP.RoutesManager.currentView.resize();
 	};
 	
 	

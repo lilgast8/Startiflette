@@ -38,16 +38,16 @@ APP.Views.Static.MainLoader = (function(window) {
 	
 	MainLoader.prototype.hidePreloader = function() {
 		// hide preloader if need
-		// play intro if need and at the end of it dispatch APP.RoutesManager.currentPage.E.SHOWN
+		// play intro if need and at the end of it dispatch APP.RoutesManager.currentView.E.SHOWN
 		
-		APP.RoutesManager.currentPage.dispatch(APP.RoutesManager.currentPage.E.SHOWN); // dispatch event to enable page change
+		APP.RoutesManager.currentView.dispatch(APP.RoutesManager.currentView.E.SHOWN); // dispatch event to enable page change
 	};
 	
 	
 	MainLoader.prototype.hide = function() {
 		this.tw.hideLoader = TweenLite.to(this.$.loader, 0.8, {opacity:0, display:'none', ease:Quart.easeOut});
 		
-		// if(APP.RoutesManager.prevPage == null) // if need a different behavior in the first load.
+		// if(APP.RoutesManager.prevView == null) // if need a different behavior in the first load.
 	};
 	
 	
