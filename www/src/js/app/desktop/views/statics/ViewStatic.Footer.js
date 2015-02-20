@@ -24,8 +24,8 @@ APP.Views.Static.Footer = (function(window) {
 	
 	
 	Footer.prototype.bindEvents = function() {
-		this.p.clickChangePage = $.proxy(this.changePage, this);
-		this.$.footerLink.on('click', this.p.clickChangePage);
+		this.p.clickFooterLink = $.proxy(this.changePage, this);
+		this.$.footerLink.on('click', this.p.clickFooterLink);
 	};
 	
 	

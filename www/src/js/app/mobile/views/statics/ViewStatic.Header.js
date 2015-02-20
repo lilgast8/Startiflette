@@ -24,8 +24,8 @@ APP.Views.Static.Header = (function(window) {
 	
 	
 	Header.prototype.bindEvents = function() {
-		this.p.clickChangePage = $.proxy(this.changePage, this);
-		this.$.menuLink.on('click', this.p.clickChangePage);
+		this.p.clickMenuLink = $.proxy(this.changePage, this);
+		this.$.menuLink.on('click', this.p.clickMenuLink);
 	};
 	
 	

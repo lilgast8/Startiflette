@@ -25,13 +25,13 @@ APP.Views.Page.Projects = (function(window) {
 	
 	
 	Projects.prototype.bindEvents = function() {
-		this.p.clickChangePage = $.proxy(this.changePage, this);
-		this.$.projectLink.on('click', this.p.clickChangePage);
+		this.p.clickProjectLink = $.proxy(this.changePage, this);
+		this.$.projectLink.on('click', this.p.clickProjectLink);
 	};
 	
 	
 	Projects.prototype.unbindEvents = function() {
-		this.$.projectLink.off('click', this.p.clickChangePage);
+		this.$.projectLink.off('click', this.p.clickProjectLink);
 	};
 	
 	
