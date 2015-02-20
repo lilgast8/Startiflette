@@ -11,6 +11,8 @@ APP.Main = (function(window) {
 	
 	
 	Main.prototype.onReady = function() {
+		APP.Config.init();
+		
 		this.$.window = $(window);
 		this.$.body = $(document.body);
 		this.$.mainContainer = $(document.getElementById('main-container'));
@@ -41,7 +43,6 @@ APP.Main = (function(window) {
 		
 		this.$.mainContainer[0].className = '';
 		
-		APP.Config.init();
 		APP.Views.Static.MainLoader.init();
 		
 		APP.Models.Json.buildEvt(APP.Models.Json.E.INIT, _init.bind(this));
