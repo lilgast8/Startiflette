@@ -22,8 +22,7 @@ APP.ViewPage = (function(window) {
 	
 	
 	ViewPage.prototype.load = function(pageUrl) {
-		this.v.isAjaxLoaded = false;
-		this.v.isTransitionHideEnded = false;
+		this.initTransitionValues();
 		
 		var urlPage = APP.Config.MULTI_LANG ? 
 						APP.Config.WEB_ROOT + APP.Config.LANG + '/ajax-content/' + pageUrl : 
@@ -71,12 +70,18 @@ APP.ViewPage = (function(window) {
 			APP.Main.$.pageContainer[0].innerHTML = this.v.data;
 			
 			this.v.data = null;
-			this.v.isAjaxLoaded = false;
-			this.v.isTransitionHideEnded = false;
+			
+			this.initTransitionValues();
 			
 			this.init();
 			this.show();
 		}
+	};
+	
+	
+	ViewPage.prototype.initTransitionValues = function() {
+		this.v.isAjaxLoaded				= false;
+		this.v.isTransitionHideEnded	= false;
 	};
 	
 	
