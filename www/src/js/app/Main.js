@@ -54,7 +54,7 @@ APP.Main = (function(window) {
 		APP.Models.Json.destroyEvt(APP.Models.Json.E.INIT, _init.bind(this));
 		
 		// if(APP.Config.LOCALHOST && !APP.Config.PROD) // stats
-		// 	_initStats.call(this);
+		// 	APP.Utils.Stats.init()
 		
 		_setWindowSize.call(this);
 		
@@ -78,19 +78,6 @@ APP.Main = (function(window) {
 	var _setWindowSize = function() {
 		this.v.windowW = this.$.window.width();
 		this.v.windowH = this.$.window.height();
-	};
-	
-	
-	var _initStats = function() {
-		this.stats = new Stats();
-		this.stats.setMode(0);
-		
-		this.stats.domElement.style.position = 'absolute';
-		this.stats.domElement.style.right = '0px';
-		this.stats.domElement.style.bottom = '0px';
-		this.stats.domElement.style.zIndex = 88;
-		
-		document.body.appendChild(this.stats.domElement);
 	};
 	
 	
