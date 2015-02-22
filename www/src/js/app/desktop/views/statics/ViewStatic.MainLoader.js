@@ -48,11 +48,16 @@ APP.Views.Static.MainLoader = (function(window) {
 		// hide preloader if need
 		// play intro if need and at the end of it dispatch APP.RoutesManager.currentView.E.SHOWN
 		
-		// APP.RoutesManager.currentView.dispatch(APP.RoutesManager.currentView.E.SHOWN); // dispatch event to enable page change
-		
-		this.tw.hidePreloader = TweenLite.to(this.$.progress, 1, {x:'100%', ease:Quart.easeIn, onComplete:function(){
+		this.tl.hidePreloader = new TimelineLite();
+		this.tl.hidePreloader.to( this.$.progress, 1, {x:'100%', ease:Quart.easeIn, onComplete:function(){
+			this.killTimeline('hidePreloader');
+			
 			APP.RoutesManager.currentView.dispatch(APP.RoutesManager.currentView.E.SHOWN); // dispatch event to enable page change
-		}});
+		}.bind(this)} );
+		
+		
+		// if don't need to hide preloader just dispath APP.RoutesManager.currentView.E.SHOWN
+		// APP.RoutesManager.currentView.dispatch(APP.RoutesManager.currentView.E.SHOWN); // dispatch event to enable page change
 	};
 	
 	

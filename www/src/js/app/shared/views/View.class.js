@@ -39,7 +39,7 @@ APP.View = (function(window) {
 	};
 	
 	
-	View.prototype.killTweens = function() {
+	View.prototype.destroyGSAP = function() {
 		/* tween */
 		for(var tween in this.tw) {
 			var tw = this.tw[tween];
@@ -52,8 +52,8 @@ APP.View = (function(window) {
 			var tl = this.tl[timeline];
 			
 			tl.stop();
-			tl.kill();
 			tl.clear();
+			tl.kill();
 		}
 		
 		this.tl = {};
@@ -61,10 +61,26 @@ APP.View = (function(window) {
 	};
 	
 	
+	View.prototype.killTween = function(twName) {
+		this.tw[twName].kill();
+		
+		this.tw[twName] = null;
+	};
+	
+	
+	View.prototype.killTimeline = function(tlName) {
+		this.tl[tlName].stop();
+		this.tl[tlName].clear();
+		this.tl[tlName].kill();
+		
+		this.tl[tlName] = null;
+	};
+	
+	
 	View.prototype.destroy = function() {
 		this.unbindEvents();
 		
-		this.killTweens();
+		this.destroyGSAP();
 		
 		this.$ = {};
 		this.p = {};
