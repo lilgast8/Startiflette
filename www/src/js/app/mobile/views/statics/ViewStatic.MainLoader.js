@@ -40,6 +40,8 @@ APP.Views.Static.MainLoader = (function(window) {
 		// hide preloader if need
 		// play intro if need and at the end of it dispatch APP.RoutesManager.currentView.E.SHOWN
 		
+		
+		// if don't need to hide preloader just dispath APP.RoutesManager.currentView.E.SHOWN
 		APP.RoutesManager.currentView.dispatch(APP.RoutesManager.currentView.E.SHOWN); // dispatch event to enable page change
 	};
 	
