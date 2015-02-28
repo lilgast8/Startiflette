@@ -99,15 +99,16 @@ APP.Utils.Global = (function(window) {
 	};
 	
 	
-	this.initMailto = function(el, address, domain, end) {
+	this.initMailto = function(el, address, domain, end, replaceContent) {
 		var mailto = 'mailto';
 		var separator = ':';
 		var at = '@';
 		var dot = '.';
 		
-		var email = mailto + separator + address + at + domain + dot + end;
+		var content	= replaceContent ? address + at + domain + dot + end : el.innerHTML;
+		var email	= mailto + separator + address + at + domain + dot + end;
 		
-		el.setAttribute('href', email);
+		el.outerHTML = '<a href="'+ email +'">'+ content +'</a>';
 	};
 	
 	

@@ -20,7 +20,7 @@
 	</p>
 	<h2>2- Données personnelles</h2>
 	<p>
-		Conformément à la loi Informatique et Libertés du 6 Janvier 1978, vous disposez d'un droit d'accès, de rectification, de modification et de suppression des données personnelles que vous nous avez communiquées. Vous pouvez exercer ce droit en envoyant un e-mail à : <a class="email">CONTACT</a>. <br />
+		Conformément à la loi Informatique et Libertés du 6 Janvier 1978, vous disposez d'un droit d'accès, de rectification, de modification et de suppression des données personnelles que vous nous avez communiquées. Vous pouvez exercer ce droit en envoyant un e-mail à : <span class="email">CONTACT</span>. <br />
 		Si vous êtes abonnés à des services d'information par courrier électronique ("newsletter"), vous pouvez demander à ne plus recevoir ces courriers soit comme indiqué ci-dessus, soit en suivant les instructions figurant en fin de chacun de ces courriers, lorsque vous les recevez.
 	</p>
 	<h2>3- Cookies</h2>
@@ -40,6 +40,6 @@
 		SOCIÉTÉ s'engage à faire ses meilleurs efforts pour assurer aux utilisateurs une accessibilité du site à tout moment. SOCIÉTÉ ne pourra être tenu responsable, en cas d'indisponibilité du site, pour quelque cause que ce soit.
 	</p>
 	<h2>7- Contact</h2>
-	<p>Pour nous contacter par mail : <a class="email">CONTACT</a></p>
+	<p>Pour nous contacter par mail : <span class="email">CONTACT</span></p>
 	
 </section>
