@@ -35,8 +35,6 @@ else if ( tasks.prod )
 		paths.assets.img
 	];
 
-options.tasks	= tasks;
-
 
 
 module.exports	= options;
