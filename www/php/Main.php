@@ -4,12 +4,10 @@
 
 defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
 
-include_once 'libs/Mobile_Detect.php';
-include_once 'Config.php';
-include_once 'Path.php';
-include_once 'Path.php';
-include_once 'controller/RoutesController.php';
-// use controller\RoutesController;
+include_once 'php/libs/Mobile_Detect.php';
+include_once 'php/Config.php';
+include_once 'php/Path.php';
+include_once 'php/controller/RoutesController.php';
 
 
 
