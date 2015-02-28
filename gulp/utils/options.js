@@ -3,15 +3,15 @@ var paths	= require( '../utils/paths' );
 
 
 
-var defaults = {
+var tasks = {
 	init : false,
 	prod : false
 }
 
 if ( options._[0] == 'prod' )
-	defaults.prod = true;
+	tasks.prod = true;
 else if ( options._[0] == 'init' )
-	defaults.init = true;
+	tasks.init = true;
 
 
 
@@ -24,10 +24,10 @@ options.jsonSrcPath	= null;
 options.cleanPath	= null;
 
 
-if ( defaults.init )
+if ( tasks.init )
 	options.cleanPath = paths.emptyFiles;
 
-else if ( defaults.prod )
+else if ( tasks.prod )
 	options.cleanPath = [
 		paths.assets.jsFiles,
 		'!' + paths.assets.jsHTML5Shiv,
@@ -35,6 +35,8 @@ else if ( defaults.prod )
 		paths.assets.img
 	];
 
+options.tasks	= tasks;
 
 
-module.exports		= options;
+
+module.exports	= options;

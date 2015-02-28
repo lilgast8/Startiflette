@@ -9,7 +9,7 @@ var fs		= require( 'fs' );
 
 
 
-gulp.task( 'json-concat', function() {
+gulp.task( 'json-concat', ['clean'], function() {
 	
 	var files		= fs.readdirSync( paths.src.json );
 	var infosFiles	= getInfosFiles( files );
