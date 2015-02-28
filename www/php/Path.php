@@ -69,7 +69,7 @@ class Path
 		$this->file->partialsMobile		= $this->file->mobile . 'partials'.DS;
 		$this->file->assets				= $this->file->base . $assets_folder.DS;
 		$this->file->js					= $this->file->assets . 'js'.DS;
-		$this->file->jsFilesFile		= $this->file->base . 'src'.DS.'js'.DS.'js-files.json';
+		$this->file->jsFilesFile		= $this->file->base . $assets_folder.DS.'js'.DS.'js-files.json';
 		$this->file->json				= $this->file->assets . 'json'.DS;
 		$this->file->pagesConfig		= $this->file->json . 'pages.json';
 	}
