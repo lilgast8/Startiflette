@@ -28,15 +28,16 @@ module.exports = {
 	},
 	
 	assets : {
-		css			: 'www/assets/css/',
-		cssFiles	: 'www/assets/css/**/*.css',
-		img			: 'www/assets/img/',
+		css				: 'www/assets/css/',
+		cssFiles		: 'www/assets/css/**/*.css',
+		img				: 'www/assets/img/',
 		
-		js			: 'www/assets/js/',
-		jsFiles		: 'www/assets/js/**/*.js',
-		jsHTML5Shiv	: 'www/assets/js/libs/html5shiv.min.js',
+		jsJsFilesFile	: 'www/assets/js/js-files.json',
+		js				: 'www/assets/js/',
+		jsFiles			: 'www/assets/js/**/*.js',
+		jsHTML5Shiv		: 'www/assets/js/libs/html5shiv.min.js',
 		
-		json		: 'www/assets/json/'
+		json			: 'www/assets/json/'
 	}
 	
 };

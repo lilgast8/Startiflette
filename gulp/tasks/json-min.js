@@ -8,38 +8,12 @@ var jsonminify	= require( 'gulp-jsonminify' );
 
 
 
-// gulp.task( 'json-min', ['clean'], function () {
-gulp.task( 'json-min', function () {
-	/*
-	var jsonToMin = [
-		{
-			input	: paths.src.jsonConcatFiles,
-			output	: paths.assets.json
-		},
-		{
-			input	: paths.src.jsJsFilesFile,
-			output	: paths.assets.js
-		}
-	];
+gulp.task( 'json-min', ['clean'], function () {
 	
-	
-	var json;
-	
-	for ( var i = 0; i < jsonToMin.length; i++ ) {
-		json	= jsonToMin[i];
-		
-		gulp.src( json.input )
-			.pipe( plumber() )
-			.pipe( jsonminify() )
-			.pipe( gulp.dest( json.output ) );
-	}
-	*/
-	
-	
-	// gulp.src( paths.src.jsonConcatFiles )
-	// 	.pipe( plumber() )
-	// 	.pipe( jsonminify() )
-	// 	.pipe( gulp.dest( paths.assets.json ) );
+	gulp.src( paths.src.jsonConcatFiles )
+		.pipe( plumber() )
+		.pipe( jsonminify() )
+		.pipe( gulp.dest( paths.assets.json ) );
 	
 	
 	minifyJsFiles();
@@ -49,28 +23,28 @@ gulp.task( 'json-min', function () {
 
 
 function minifyJsFiles() {
-	// var files = fs.readdirSync( paths.src.jsJsFilesFile );
-	// var data = fs.readFileSync( paths.src.jsJsFilesFile, 'utf8' );
-	// var jsFiles = fs.readFileSync( paths.src.jsJsFilesFile, 'utf8' );
-	
-	// console.log(data);
-	
 	var jsFiles	= require( '../../' + paths.src.jsJsFilesFile );
-	var data	= '{';
+	var aLength	= Object.keys( jsFiles ).length;
+	var i		= 0;
 	var jsFile, jsFileName, isArray;
 	
+	var data	= '{';
+	
+	// parse js-files file
 	for ( var name in jsFiles ) {
+		i++;
+		
 		jsFile		= jsFiles[name];
-		jsFileName	= jsFile.name;
+		jsFileName	= JSON.stringify( jsFile.name );
+		jsFileDest	= JSON.stringify( jsFile.dest );
 		
-		isArray = Array.isArray(jsFileName)
-		if (!isArray)
-			jsFileName = '"'+ jsFileName + '"';
+		data += '"'+ name +'":{"name":'+ jsFileName +',"dest":'+ jsFileDest +'}';
 		
-		data += '"'+ name +'":{"name":'+ jsFileName +'}';
+		if ( i < aLength )
+			data += ',';
 	}
 	
 	data += '}';
 	
-	console.log(data);
+	fs.writeFileSync( paths.assets.jsJsFilesFile, data, 'utf8' );
 }

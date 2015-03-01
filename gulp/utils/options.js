@@ -29,6 +29,7 @@ if ( tasks.init )
 
 else if ( tasks.prod )
 	options.cleanPath = [
+		paths.assets.jsJsFilesFile,
 		paths.assets.jsFiles,
 		'!' + paths.assets.jsHTML5Shiv,
 		paths.assets.json,
