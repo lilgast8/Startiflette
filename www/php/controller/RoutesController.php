@@ -76,14 +76,15 @@ class RoutesController
 		$i = 0;
 		
 		foreach($this->pagesInfos as $pageUrl => $pageInfos) {
-			$pageInfos = (object) $pageInfos;
+			$pageInfos	= (object) $pageInfos;
+			$viewName	= str_replace('-', '_', $pageInfos->name);
 			
 			if($i == 0)
-				$this->url[ $pageInfos->name ] = $this->path->url->base . Config::$LG_LINK_ROOT;
+				$this->url[ $viewName ] = $this->path->url->base . Config::$LG_LINK_ROOT;
 			else
-				$this->url[ $pageInfos->name ] = $this->path->url->base . Config::$LG_LINK . $pageUrl;
+				$this->url[ $viewName ] = $this->path->url->base . Config::$LG_LINK . $pageUrl;
 			
-			$this->url[ $pageInfos->name.'Id' ] = $pageUrl;
+			$this->url[ $viewName.'_ID' ] = $pageUrl;
 			
 			$i++;
 		}
