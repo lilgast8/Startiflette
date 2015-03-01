@@ -4,8 +4,8 @@ var path	= require( 'path' );
 var options	= require( '../utils/options' );
 var paths	= require( '../utils/paths' );
 
-var plumber	= require( 'gulp-plumber' );
 var fs		= require( 'fs' );
+var plumber	= require( 'gulp-plumber' );
 
 
 
@@ -31,7 +31,7 @@ gulp.task( 'json-concat', function() {
 			data += '"' + lang + '" : ';
 			data += '\t' + fs.readFileSync( paths.src.json + lang + '/' + jsonFileName, 'utf8' );
 			
-			if( j < langDirs.length-1 )
+			if ( j < langDirs.length-1 )
 				data += ',\n\n\n\n';
 		}
 		

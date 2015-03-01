@@ -62,7 +62,7 @@ gulp.task( 'watch', function() {
 		}
 		
 		
-		if( taskname )
+		if ( taskname )
 			gulp.start( taskname );
 		
 	});
