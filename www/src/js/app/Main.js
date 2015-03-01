@@ -54,7 +54,7 @@ APP.Main = (function(window) {
 		APP.Models.Json.destroyEvt(APP.Models.Json.E.INIT, _init.bind(this));
 		
 		// if(APP.Config.LOCALHOST && !APP.Config.PROD) // stats
-		// 	APP.Utils.Stats.init()
+		// 	APP.Utils.FPSStats.init();
 		
 		_setWindowSize.call(this);
 		
