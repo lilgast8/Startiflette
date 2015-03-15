@@ -23,13 +23,7 @@ APP.Views.Page.Legals = (function(window) {
 		
 		this.$.email = this.$.page.find('.email');
 		
-		_encryptMailto.call(this);
-	};
-	
-	
-	var _encryptMailto = function() {
-		for(var i=0; i<this.$.email.length; i++)
-			initMailto(this.$.email[i], 'contact', 'domain', 'com', true);
+		this.encryptMailto(this.$.email, 'contact', 'domain', 'com', true);
 	};
 	
 	

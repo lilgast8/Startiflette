@@ -105,6 +105,12 @@ APP.View = (function(window) {
 	};
 	
 	
+	View.prototype.encryptMailto = function($email, address, domain, end, replaceContent) {
+		for ( var i = 0; i < $email.length; i++)
+			initMailto($email[i], address, domain, end, replaceContent);
+	};
+	
+	
 	return View;
 	
 	
