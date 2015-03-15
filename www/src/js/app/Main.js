@@ -53,8 +53,11 @@ APP.Main = (function(window) {
 	var _init = function() {
 		APP.Models.Json.destroyEvt(APP.Models.Json.E.INIT, _init.bind(this));
 		
-		// if(APP.Config.LOCALHOST && !APP.Config.PROD) // stats
+		// if(APP.Config.LOCALHOST && !APP.Config.PROD) // FPS stats
 		// 	APP.Utils.FPSStats.init();
+		
+		// if(APP.Config.LOCALHOST && !APP.Config.PROD) // datGUI
+		// 	APP.Utils.DatGUI.init();
 		
 		_setWindowSize.call(this);
 		
