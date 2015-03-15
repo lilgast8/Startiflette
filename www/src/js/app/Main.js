@@ -56,6 +56,9 @@ APP.Main = (function(window) {
 		// if(APP.Config.LOCALHOST && !APP.Config.PROD) // FPS stats
 		// 	APP.Utils.FPSStats.init();
 		
+		// if(APP.Config.LOCALHOST && !APP.Config.PROD) // memory stats
+		// 	APP.Utils.MemoryStats.init();
+		
 		// if(APP.Config.LOCALHOST && !APP.Config.PROD) // datGUI
 		// 	APP.Utils.DatGUI.init();
 		
