@@ -16,13 +16,13 @@ gulp.task( 'json-min', ['clean'], function () {
 		.pipe( gulp.dest( paths.assets.json ) );
 	
 	
-	minifyJsFiles();
+	minifyJsFilesFile();
 	
 });
 
 
 
-function minifyJsFiles() {
+function minifyJsFilesFile() {
 	var jsFiles	= require( '../../' + paths.src.jsJsFilesFile );
 	var aLength	= Object.keys( jsFiles ).length;
 	var i		= 0;
