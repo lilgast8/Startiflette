@@ -29,6 +29,8 @@ APP.RoutesManager = (function(window) {
 	
 	
 	RoutesManager.prototype.init = function() {
+		History.options.disableSuid = true;
+		
 		_setRootPageName.call(this);
 		
 		if(APP.Config.MULTI_LANG)
