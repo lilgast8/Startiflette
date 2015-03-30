@@ -4,7 +4,7 @@
 		"name" : "modern-detect-izr.min.js",
 		"dest" : "libs/",
 		"files" : [
-			"libs/modernizr.min.js",
+			"libs/modernizr.js",
 			"libs/detectizr.js"
 		]
 	},
@@ -17,13 +17,13 @@
 		"dest" : "",
 		"files" : [
 			[	
-				"libs/zepto.min.js",
-				"libs/jquery-oldie.min.js"
+				"libs/zepto.js",
+				"libs/jquery-oldie.js"
 			],
-			"libs/greensock/TweenMax.min.js",
-			"libs/signals.min.js",
-			"libs/history.min.js",
-			"libs/preloadjs.min.js",
+			"libs/greensock/TweenMax.js",
+			"libs/signals.js",
+			"libs/history.js",
+			"libs/preloadjs.js",
 			
 			"app/InitApp.js",
 			
@@ -62,11 +62,11 @@
 		"name" : "scripts-mobile.min.js",
 		"dest" : "",
 		"files" : [
-			"libs/zepto.min.js",
-			"libs/greensock/TweenMax.min.js",
-			"libs/signals.min.js",
-			"libs/history.min.js",
-			"libs/preloadjs.min.js",
+			"libs/zepto.js",
+			"libs/greensock/TweenMax.js",
+			"libs/signals.js",
+			"libs/history.js",
+			"libs/preloadjs.js",
 			
 			"app/InitApp.js",
 			
