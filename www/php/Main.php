@@ -73,7 +73,7 @@ class Main
 	
 	private function setContents()
 	{
-		include_once $this->path->file->contents . Config::$LANG . DS . 'contents.php';
+		include_once $this->path->file->contents . DS . 'contents.php';
 		$this->contents = getContents();
 	}
 	
