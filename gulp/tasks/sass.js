@@ -25,7 +25,8 @@ gulp.task( 'sass', function() {
 			.pipe( sass({
 				style: 'compressed',
 				// style: 'expanded',
-				compass: true
+				compass: true,
+				'sourcemap=none': true
 			}) )
 			.on( 'error', function(error) {
 				console.log( error.message );
