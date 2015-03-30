@@ -94,12 +94,12 @@ APP.View = (function(window) {
 	
 	
 	View.prototype.changePage = function(e) {
-		if(EQT.Config.HAS_PUSHSTATE) { // if pushstate supported
+		if(APP.Config.HAS_PUSHSTATE) { // if pushstate supported
 			e.preventDefault();
 			
 			var url = e.currentTarget.href;
 			
-			EQT.RoutesManager.goToPage(url);
+			APP.RoutesManager.goToPage(url);
 		}
 	};
 	
