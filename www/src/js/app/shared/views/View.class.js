@@ -97,7 +97,7 @@ APP.View = (function(window) {
 		if(EQT.Config.HAS_PUSHSTATE) { // if pushstate supported
 			e.preventDefault();
 			
-			var url			= e.currentTarget.href;
+			var url = e.currentTarget.href;
 			
 			EQT.RoutesManager.goToPage(url);
 		}
