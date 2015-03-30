@@ -15,6 +15,8 @@ else if ( options._[0] == 'init' )
 
 
 
+options.imageMin	= true;
+
 options.device		= null;
 
 options.cssSrcPath	= null;

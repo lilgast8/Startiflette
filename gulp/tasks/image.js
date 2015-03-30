@@ -13,6 +13,9 @@ gulp.task('image', function() {
 	if ( options.cleanPath === null )
 		options.cleanPath = paths.assets.img;
 	
-	gulp.start( 'image-min' );
+	if ( options.imageMin )
+		gulp.start( 'image-min' );
+	else
+		gulp.start( 'image-move' );
 	
 });
