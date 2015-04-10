@@ -15,10 +15,10 @@ gulp.task( 'watch', function() {
 	
 	/* Tasks management */
 	gulp.watch( [
-		
 		paths.src.allFiles,
-		'!' + paths.src.jsonConcatFiles ], function(e) {
-			
+		'!' + paths.src.jsonConcatFiles
+	], function(e) {
+		
 		var filePath, ext, desktop, mobile, shared;
 		var taskname = null;
 		
