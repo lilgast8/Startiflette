@@ -33,7 +33,9 @@
 include_once $main->path->file->base.'php/shared/js-var.php';
 
 /* JS scripts */
-echo $main->config->listJsFiles('scripts-desktop');
+// echo $main->config->listJsFiles('scripts-desktop');
+// echo '<script src="http://startiflette:8888/src/js/app/Main.js"></script>';
+echo '<script src="http://startiflette:8888/src/js/scripts.js"></script>';
 
 ?>
 
