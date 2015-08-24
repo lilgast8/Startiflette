@@ -8,7 +8,8 @@ var dir			= requireDir( './gulp/tasks/' );
 
 /* Init */
 gulp.task( 'init', [
-	'remove-empty'
+	// 'remove-empty'
+	'delete'
 ] );
 
 
