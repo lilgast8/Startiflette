@@ -1,0 +1,10 @@
+{
+	
+	"PROD"				: "false",
+	"DEFAULT_LANG"		: "fr",
+	"LANGUAGES"			: ["fr", "en", "ex"],
+	"SITE_URL"			: "./",
+	"HAS_MOBILE_VERSION": "true",
+	"GA_ID"				: "",
+	
+}
