@@ -1,0 +1,95 @@
+{
+
+
+
+"fr" : 	{
+	
+	"project_1" : {
+		"url"		: "projet/1/nom-projet-1",
+		"jsView"	: "project",
+		"phpView"	: "project",
+		"title"		: "Nom projet 1",
+		"desc"		: "Nom projet 1"
+	},
+	
+	"project_2" : {
+		"url"		: "projet/2/nom-projet-2",
+		"jsView"	: "project",
+		"phpView"	: "project",
+		"title"		: "Nom projet 2",
+		"desc"		: "Nom projet 2"
+	},
+	
+	"project_3" : {
+		"url"		: "projet/3/nom-projet-3",
+		"jsView"	: "project",
+		"phpView"	: "project",
+		"title"		: "Nom projet 3",
+		"desc"		: "Nom projet 3"
+	}
+	
+},
+
+
+
+"en" : 	{
+	
+	"project_1" : {
+		"url"		: "project/1/project-name-1",
+		"jsView"	: "project",
+		"phpView"	: "project",
+		"title"		: "Project name 1",
+		"desc"		: "Project name 1"
+	},
+	
+	"project_2" : {
+		"url"		: "project/2/project-name-2",
+		"jsView"	: "project",
+		"phpView"	: "project",
+		"title"		: "Project name 2",
+		"desc"		: "Project name 2"
+	},
+	
+	"project_3" : {
+		"url"		: "project/3/project-name-3",
+		"jsView"	: "project",
+		"phpView"	: "project",
+		"title"		: "Project name 3",
+		"desc"		: "Project name 3"
+	}
+	
+},
+
+
+
+"ex" : 	{
+	
+	"project_1" : {
+		"url"		: "project-ex/1/project-name-ex-1",
+		"jsView"	: "project",
+		"phpView"	: "project",
+		"title"		: "Project name ex 1",
+		"desc"		: "Project name ex 1"
+	},
+	
+	"project_2" : {
+		"url"		: "project-ex/2/project-name-ex-2",
+		"jsView"	: "project",
+		"phpView"	: "project",
+		"title"		: "Project name ex 2",
+		"desc"		: "Project name ex 2"
+	},
+	
+	"project_3" : {
+		"url"		: "project-ex/3/project-name-ex-3",
+		"jsView"	: "project",
+		"phpView"	: "project",
+		"title"		: "Project name ex 3",
+		"desc"		: "Project name ex 3"
+	}
+	
+}
+
+
+
+}

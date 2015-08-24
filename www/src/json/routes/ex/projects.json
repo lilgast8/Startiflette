@@ -1,6 +1,6 @@
 {
 	
-	"project/1" : {
+	"project_1" : {
 		"url"		: "project-ex/1/project-name-ex-1",
 		"jsView"	: "project",
 		"phpView"	: "project",
@@ -8,7 +8,7 @@
 		"desc"		: "Project name ex 1"
 	},
 	
-	"project/2" : {
+	"project_2" : {
 		"url"		: "project-ex/2/project-name-ex-2",
 		"jsView"	: "project",
 		"phpView"	: "project",
@@ -16,7 +16,7 @@
 		"desc"		: "Project name ex 2"
 	},
 	
-	"project/3" : {
+	"project_3" : {
 		"url"		: "project-ex/3/project-name-ex-3",
 		"jsView"	: "project",
 		"phpView"	: "project",

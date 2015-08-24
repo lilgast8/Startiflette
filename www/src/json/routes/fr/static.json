@@ -1,5 +1,13 @@
 {
 	
+	"error404" : {
+		"url"		: "",
+		"jsView"	: "error404",
+		"phpView"	: "error-404",
+		"title"		: "Erreur 404",
+		"desc"		: "Erreur 404"
+	},
+	
 	"home" : {
 		"url"		: "",
 		"jsView"	: "home",
