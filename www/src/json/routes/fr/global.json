@@ -1,0 +1,35 @@
+{
+	
+	"home" : {
+		"url"		: "",
+		"jsView"	: "home",
+		"phpView"	: "home",
+		"title"		: "Accueil - STARTIFLETTE",
+		"desc"		: "Accueil - STARTIFLETTE"
+	},
+	
+	"about" : {
+		"url"		: "a-propos",
+		"jsView"	: "about",
+		"phpView"	: "about",
+		"title"		: "À propos",
+		"desc"		: "À propos"
+	},
+	
+	"projects" : {
+		"url"		: "projets",
+		"jsView"	: "projects",
+		"phpView"	: "projects",
+		"title"		: "Projets",
+		"desc"		: "Projets"
+	},
+	
+	"legal-notices" : {
+		"url"		: "mentions-legales",
+		"jsView"	: "legal-notices",
+		"phpView"	: "legal-notices",
+		"title"		: "Mentions légales",
+		"desc"		: "Mentions légales"
+	}
+	
+}
