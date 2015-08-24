@@ -8,7 +8,6 @@
   },
   "main": "gulpfile.js",
   "devDependencies": {
-    "browserify": "^10.2.4",
     "gulp": "^3.8.10",
     "gulp-clean": "^0.3.1",
     "gulp-concat": "^2.3.4",
@@ -22,15 +21,9 @@
     "gulp-rename": "^1.2.0",
     "gulp-ruby-sass": "^0.7.1",
     "gulp-uglify": "^1.0.2",
-    "gulp-util": "^3.0.6",
     "jshint-stylish": "^1.0.0",
     "minimist": "^1.1.0",
     "path": "^0.4.9",
-    "require-dir": "^0.1.0",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.2.3"
-  },
-  "dependencies": {
-    "zepto-browserify": "^1.1.6-1"
+    "require-dir": "^0.1.0"
   }
 }

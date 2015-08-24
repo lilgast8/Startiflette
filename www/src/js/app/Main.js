@@ -1,34 +1,6 @@
-var $	= require('zepto-browserify').$;
-// var App	= require('/app/App');
 
 
-
-var Main = function(){};
-
-
-Main.prototype.onReady = function() {
-	// var app = new App();
-	// app.init();
-	console.log('onReady :');
-};
-
-
-var main = new Main();
-$(document).ready(main.onReady.bind(main));
-// console.log($);
-// $('body').append('SLP');
-
-
-// $(APP.Main.onReady.bind(APP.Main));
-
-
-
-module.exports = main;
-// module.exports = new Main();
-
-
-
-/*APP.Main = (function(window) {
+APP.Main = (function(window) {
 	
 	
 	function Main() {
@@ -121,5 +93,5 @@ module.exports = main;
 })(window);
 
 
-$(APP.Main.onReady.bind(APP.Main));*/
+$(APP.Main.onReady.bind(APP.Main));
 
