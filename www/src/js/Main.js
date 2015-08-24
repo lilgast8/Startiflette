@@ -1,30 +1,31 @@
-var $	= require('zepto-browserify').$;
-// var App	= require('/app/App');
+var $		= require('zepto-browserify').$;
+var App		= require('app/App');
+var Stats	= require('libs/stats');
+var gs		= require('libs/greensock/TweenMax.js');
 
 
 
-var Main = function(){};
+var Main = function(){
+	
+};
 
 
 Main.prototype.onReady = function() {
-	// var app = new App();
-	// app.init();
-	console.log('onReady :');
+	var app = new App();
+	app.init();
+	// console.log('onReady :', app);
+	// console.log(gs);
+	
+	TweenLite.to($('body'), 2.5, {backgroundColor:'#fe7272', ease:Quart.easeOut});
 };
 
 
 var main = new Main();
 $(document).ready(main.onReady.bind(main));
-// console.log($);
-// $('body').append('SLP');
-
-
-// $(APP.Main.onReady.bind(APP.Main));
 
 
 
 module.exports = main;
-// module.exports = new Main();
 
 
 
