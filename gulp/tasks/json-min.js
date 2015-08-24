@@ -23,7 +23,7 @@ gulp.task( 'json-min', ['clean'], function () {
 
 
 function minifyJsFilesFile() {
-	var jsFiles	= require( '../../' + paths.src.jsJsFilesFile );
+	var jsFiles	= require( '../../' + paths.src.jsonJsFilesFile );
 	var aLength	= Object.keys( jsFiles ).length;
 	var i		= 0;
 	var jsFile, jsFileName, isArray;
@@ -46,5 +46,5 @@ function minifyJsFilesFile() {
 	
 	data += '}';
 	
-	fs.writeFileSync( paths.assets.jsJsFilesFile, data, 'utf8' );
+	fs.writeFileSync( paths.assets.jsonJsFilesFile, data, 'utf8' );
 }

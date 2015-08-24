@@ -55,11 +55,10 @@ gulp.task( 'watch', function() {
 		}
 		
 		/* JSON */
-		else if ( ext == '.json' && filePath.indexOf( paths.src.jsJsFilesFile ) < 0 ) {
-			// taskname = 'json-concat';
-			taskname = 'json-lint';
+		else if ( ext == '.json' && filePath.indexOf( paths.src.jsonJsFilesFile ) < 0 ) {
+			taskname = 'json-concat';
 			
-			options.jsonSrcPath = [ paths.src.jsJsFilesFile, paths.src.jsonAllFiles ];
+			options.jsonSrcPath = [ paths.src.jsonJsFilesFile, paths.src.jsonAllFiles ];
 		}
 		
 		
@@ -79,7 +78,7 @@ gulp.task( 'watch', function() {
 		paths.src.jsFiles,
 		
 		// JSON
-		paths.src.jsJsFilesFile,
+		paths.src.jsonJsFilesFile,
 		paths.src.jsonAllFiles,
 		'!' + paths.src.jsonConcatFiles,
 		

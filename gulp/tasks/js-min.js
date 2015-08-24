@@ -10,7 +10,7 @@ var uglify	= require( 'gulp-uglify' );
 
 gulp.task( 'js-min', ['clean'], function() {
 	
-	var jsFiles = require( '../../' + paths.src.jsJsFilesFile );
+	var jsFiles = require( '../../' + paths.src.jsonJsFilesFile );
 	
 	
 	// parse js-files file

@@ -19,8 +19,8 @@ gulp.task( 'json-lint', function() {
 		.pipe( jsonlint() )
 		.pipe( jsonlint.reporter() )
 		.pipe( jsonlint.reporter(function(file) {
-			var posJsonStr = file.path.indexOf( 'www/' ) + 4;
-			var fileName = file.path.substring( posJsonStr, file.path.length );
+			var posJsonStr	= file.path.indexOf( 'www/' ) + 4;
+			var fileName	= file.path.substring( posJsonStr, file.path.length );
 			
 			return notify().write( 'JSON Lint error on: ' + fileName );
 		}) );
