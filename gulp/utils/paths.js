@@ -1,6 +1,6 @@
 module.exports = {
 	
-	emptyFiles : 'www/**/empty-folder.txt',
+	emptyFiles	: 'www/**/empty-folder.txt',
 	
 	php : {
 		indexFile	: 'www/index.php',
@@ -23,6 +23,7 @@ module.exports = {
 		jsSharedFiles		: 'www/src/js/app/shared/**/*.js',
 		
 		json 				: 'www/src/json/',
+		jsonConfigFile		: 'www/src/json/config/config.json',
 		jsonAllFiles		: 'www/src/json/**/*.json',
 		jsonConcatFiles		: 'www/src/json/*.json'
 	},

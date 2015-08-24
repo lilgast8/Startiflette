@@ -56,7 +56,8 @@ gulp.task( 'watch', function() {
 		
 		/* JSON */
 		else if ( ext == '.json' && filePath.indexOf( paths.src.jsJsFilesFile ) < 0 ) {
-			taskname = 'json-concat';
+			// taskname = 'json-concat';
+			taskname = 'json-lint';
 			
 			options.jsonSrcPath = [ paths.src.jsJsFilesFile, paths.src.jsonAllFiles ];
 		}

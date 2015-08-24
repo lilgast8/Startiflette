@@ -11,6 +11,28 @@ var plumber	= require( 'gulp-plumber' );
 
 gulp.task( 'json-concat', function() {
 	
+	console.log(paths.src.jsonConfigFile);
+	
+	// var configFile = fs.readdirSync( paths.src.jsonConfigFile );
+	var configFile = fs.readFileSync( paths.src.jsonConfigFile, 'utf8' );
+	// var configFile = require( paths.src.jsonConfigFile );
+	// console.log(configFile);
+	var config = JSON.parse(configFile);
+	// console.log(configFile.PROD);
+	
+	
+	// for (var i = 0; i < config.LANGUAGES.length; i++) {
+	// 	console.log(config.LANGUAGES[i]);
+	// }
+	
+	
+	for (var i = 0; i < config.ROUTES_FILES.length; i++) {
+		console.log(config.ROUTES_FILES[i]);
+	}
+	
+	
+	
+	/*
 	var files		= fs.readdirSync( paths.src.json );
 	var infosFiles	= getInfosFiles( files );
 	var langDirs	= infosFiles[0];
@@ -44,7 +66,7 @@ gulp.task( 'json-concat', function() {
 	// lint concat JSON
 	options.jsonSrcPath = paths.src.jsonConcatFiles;
 	gulp.start( 'json-lint' );
-	
+	*/
 });
 
 
