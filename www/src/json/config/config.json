@@ -1,9 +1,9 @@
 {
 	
-	"PROD"					: "false",
-	"SITE_URL"				: "./",
+	"ENV"					: "dev",
+	"BASE_URL"				: "./",
 	"ROUTES_FILES"			: [
-		"global",
+		"static",
 		"projects"
 	],
 	"LANGUAGES"				: [
@@ -13,6 +13,6 @@
 	],
 	"HAS_MOBILE_VERSION"	: "true",
 	"HAS_LANGUAGES_LANDING"	: "false",
-	"GA_ID"					: ""
+	"GA_ID"					: []
 	
 }
