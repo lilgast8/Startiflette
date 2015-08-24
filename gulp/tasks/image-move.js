@@ -6,7 +6,7 @@ var plumber		= require('gulp-plumber');
 
 
 
-gulp.task( 'image-move', ['clean'], function() {
+gulp.task( 'image-move', ['delete'], function() {
 	
 	gulp.src( paths.src.imgFiles )
 		.pipe( plumber() )

@@ -23,14 +23,14 @@ options.cssSrcPath	= null;
 options.jsSrcPath	= null;
 options.jsonSrcPath	= null;
 
-options.cleanPath	= null;
+options.deletePath	= null;
 
 
 if ( tasks.init )
-	options.cleanPath = paths.emptyFiles;
+	options.deletePath = paths.emptyFiles;
 
 else if ( tasks.prod )
-	options.cleanPath = [
+	options.deletePath = [
 		paths.assets.jsonJsFilesFile,
 		paths.assets.jsFiles,
 		'!' + paths.assets.jsHTML5Shiv,

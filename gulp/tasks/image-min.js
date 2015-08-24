@@ -7,7 +7,7 @@ var imagemin	= require('gulp-imagemin');
 
 
 
-gulp.task( 'image-min', ['clean'], function() {
+gulp.task( 'image-min', ['delete'], function() {
 	
 	gulp.src( paths.src.imgFiles )
 		.pipe( plumber() )

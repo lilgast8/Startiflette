@@ -9,6 +9,6 @@ var del		= require( 'del' );
 
 gulp.task( 'delete', function() {
 	
-	del( options.cleanPath );
+	del( options.deletePath );
 	
 });

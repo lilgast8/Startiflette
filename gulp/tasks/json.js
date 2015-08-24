@@ -7,8 +7,8 @@ var paths	= require( '../utils/paths' );
 
 gulp.task( 'json', ['json-lint'], function() {
 	
-	if ( options.cleanPath === null )
-		options.cleanPath = paths.assets.json;
+	if ( options.deletePath === null )
+		options.deletePath = paths.assets.json;
 	
 	gulp.start( 'json-min' );
 	

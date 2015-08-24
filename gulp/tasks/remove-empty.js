@@ -7,9 +7,9 @@ var paths		= require('../utils/paths');
 
 gulp.task('remove-empty', function() {
 	
-	if ( options.cleanPath === null )
-		options.cleanPath = paths.emptyFiles;
+	if ( options.deletePath === null )
+		options.deletePath = paths.emptyFiles;
 	
-	gulp.start( 'clean' );
+	gulp.start( 'delete' );
 	
 });
