@@ -7,9 +7,10 @@ var paths	= require( '../utils/paths' );
 
 gulp.task( 'js', ['js-hint'], function() {
 	
-	if ( options.deletePath === null && options.tasks.prod )
-		options.deletePath = [ paths.assets.jsFiles, '!' + paths.assets.jsHTML5Shiv ];
+	if ( options.task == 'default' )
+		gulp.start( 'js-hint' );
 	
-	gulp.start( 'js-min' );
+	else if ( options.task == 'prod' || options.task == 'js'  )
+		gulp.start( 'js-min' );
 	
 } );

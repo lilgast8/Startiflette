@@ -17,7 +17,7 @@ gulp.task( 'json-concat', ['delete'], function() {
 	var routesFileName, lang, data;
 	
 	// parse routes files
-	for (var i = 0; i < config.ROUTES_FILES.length; i++) {
+	for ( var i = 0; i < config.ROUTES_FILES.length; i++ ) {
 		var routesFileName = config.ROUTES_FILES[i] + '.json';
 		
 		data = '{\n\n\n\n';

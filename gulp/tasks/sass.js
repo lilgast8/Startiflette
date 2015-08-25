@@ -11,11 +11,10 @@ var rename	= require( 'gulp-rename' );
 
 
 
-gulp.task( 'sass', function() {
+gulp.task( 'sass', ['delete'], function() {
 	
-	if ( options.cssSrcPath === null && options.tasks.prod )
+	if ( options.cssSrcPath === null )
 		options.cssSrcPath = [ paths.src.cssDesktopFile, paths.src.cssMobileFile ];
-	
 	
 	// parse srcPath
 	for ( var i = 0; i < options.cssSrcPath.length; i++ ) {
@@ -37,4 +36,4 @@ gulp.task( 'sass', function() {
 		
 	}
 	
-} );
+});

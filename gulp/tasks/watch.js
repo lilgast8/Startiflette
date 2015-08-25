@@ -10,7 +10,7 @@ var livereload	= require( 'gulp-livereload' );
 
 gulp.task( 'watch', function() {
 	
-	// livereload.listen();
+	livereload.listen();
 	
 	
 	/* Tasks management */
@@ -19,22 +19,23 @@ gulp.task( 'watch', function() {
 		'!' + paths.src.jsonRoutesConcatFiles
 	], function(e) {
 		
-		var filePath, ext, desktop, mobile, shared, config, routes;
+		var ext, desktop, mobile, shared, config, routes;
 		var taskname = null;
 		
-		filePath	= e.path;
-		ext			= path.extname( filePath );
+		options.filePath	= e.path;
+		ext					= path.extname( options.filePath );
 		
-		desktop	= filePath.indexOf( 'desktop/' ) > -1 ? true : false;
-		mobile	= filePath.indexOf( 'mobile/' ) > -1 ? true : false;
-		shared	= filePath.indexOf( 'shared/' ) > -1 ? true : false;
-		config	= filePath.indexOf( 'config/' ) > -1 ? true : false;
-		routes	= filePath.indexOf( 'routes/' ) > -1 ? true : false;
+		desktop	= options.filePath.indexOf( 'desktop/' ) > -1 ? true : false;
+		mobile	= options.filePath.indexOf( 'mobile/' ) > -1 ? true : false;
+		shared	= options.filePath.indexOf( 'shared/' ) > -1 ? true : false;
+		config	= options.filePath.indexOf( 'config/' ) > -1 ? true : false;
+		routes	= options.filePath.indexOf( 'routes/' ) > -1 ? true : false;
 		
 		
 		/* SASS */
 		if ( ext == '.scss' ) {
-			taskname = 'sass';
+			taskname		= 'sass';
+			options.subtask	= 'default-sass';
 			
 			if ( desktop )
 				options.cssSrcPath = [ paths.src.cssDesktopFile ];
@@ -46,7 +47,8 @@ gulp.task( 'watch', function() {
 		
 		/* JS */
 		else if ( ext == '.js' ) {
-			taskname = 'js-hint';
+			taskname		= 'js';
+			options.subtask	= 'default-js';
 			
 			if ( desktop )
 				options.jsSrcPath = paths.src.jsAppDesktopFiles;
@@ -57,16 +59,9 @@ gulp.task( 'watch', function() {
 		}
 		
 		/* JSON */
-		// else if ( ext == '.json' && filePath.indexOf( paths.src.jsonJsFilesFile ) < 0 ) {
 		else if ( ext == '.json' ) {
-			// taskname = 'json-concat';
-			
-			// options.jsonSrcPath = paths.src.jsonAllFiles;
-			// console.log(options.jsonSrcPath);
-			
-			// console.log('CONFIG/ROUTES:', config, routes);
-			
-			taskname = 'json';
+			taskname		= 'json';
+			options.subtask	= 'default-json';
 			
 			if ( config )
 				options.jsonSrcPath = paths.src.jsonConfigFiles;
@@ -91,7 +86,6 @@ gulp.task( 'watch', function() {
 		paths.src.jsFiles,
 		
 		// JSON
-		// paths.src.jsonJsFilesFile,
 		paths.src.jsonAllFiles,
 		'!' + paths.src.jsonRoutesConcatFiles,
 		

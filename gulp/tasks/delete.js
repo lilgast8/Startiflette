@@ -10,9 +10,49 @@ var del		= require( 'del' );
 
 gulp.task( 'delete', function() {
 	
-	console.log('DELETE');
+	console.log('DELETE PATH:', options.deletePath);
+	console.log('task:', options.task + ' / ' + options.subtask);
 	
-	if ( options.deletePath === null && options.tasks.default )
+	if ( options.deletePath === null && options.task == 'init' )
+		options.deletePath = paths.emptyFiles;
+	
+	else if ( options.deletePath === null && options.task == 'default' && options.subtask == 'default-json' )
+		options.deletePath = paths.src.jsonRoutesConcatFiles;
+	
+	else if ( options.deletePath === null && options.task == 'prod' )
+		options.deletePath = [
+			paths.assets.cssFiles,
+			paths.assets.jsFiles,
+			'!' + paths.assets.jsHTML5Shiv,
+			/*paths.assets.json,
+			paths.assets.jsonConfigFiles,*/
+			paths.src.jsonRoutesConcatFiles,
+			paths.assets.jsonAllFiles
+			// paths.assets.img
+		];
+	
+	else if ( options.deletePath === null && options.task == 'sass' )
+		options.deletePath = paths.assets.cssFiles;
+	
+	else if ( options.deletePath === null && ( options.task == 'js' || options.task == 'js-min' ) )
+		options.deletePath = [
+			paths.assets.jsFiles,
+			'!' + paths.assets.jsHTML5Shiv
+		];
+	
+	else if ( options.deletePath === null && ( options.task == 'json' || options.task == 'json-min' ) )
+		options.deletePath = [
+			paths.src.jsonRoutesConcatFiles,
+			paths.assets.jsonAllFiles
+		];
+	
+	
+	if (options.deletePath !== null)
+		del.sync( options.deletePath );
+	
+	
+	
+	/*if ( options.deletePath === null && options.tasks.default )
 		options.deletePath = paths.src.jsonRoutesConcatFiles;
 	
 	else if ( options.deletePath === null && options.tasks.init )
@@ -36,6 +76,6 @@ gulp.task( 'delete', function() {
 	// 	console.log('DELETE COMPLETE');
 	// } );
 	
-	del.sync( options.deletePath );
+	del.sync( options.deletePath );*/
 	
 } );

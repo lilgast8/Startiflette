@@ -6,19 +6,11 @@ var paths	= require( '../utils/paths' );
 
 
 gulp.task( 'json', ['json-lint'], function() {
-// gulp.task( 'json', function() {
 	
-	/*if ( options.deletePath === null && options.tasks.prod )
-		options.deletePath = paths.assets.json;
-	
-	gulp.start( 'json-min' );*/
-	
-	// console.log(options.jsonSrcPath);
-	
-	
-	if ( options.tasks.default )
+	if ( options.task == 'default' && options.filePath.indexOf( paths.src.jsonJsFilesFile ) < 0 )
 		gulp.start( 'json-concat' );
-	else if ( options.tasks.prod )
+	
+	else if ( options.task == 'prod' || options.task == 'json' )
 		gulp.start( 'json-min' );
 	
 } );

@@ -8,16 +8,22 @@ var jsonminify	= require( 'gulp-jsonminify' );
 
 
 
-gulp.task( 'json-min', ['delete'], function () {
+gulp.task( 'json-min', ['json-concat'], function () {
 	
-	console.log('JSON-MIN');
+	// config file
+	gulp.src( paths.src.jsonConfigFile )
+		.pipe( plumber() )
+		.pipe( jsonminify() )
+		.pipe( gulp.dest( paths.assets.jsonConfig ) );
+	
+	// routes files
 	gulp.src( paths.src.jsonRoutesConcatFiles )
 		.pipe( plumber() )
 		.pipe( jsonminify() )
 		.pipe( gulp.dest( paths.assets.jsonRoutes ) );
 	
 	
-	minifyJsFilesFile();
+	minifyJsFilesFile(); // js-files file
 	
 } );
 

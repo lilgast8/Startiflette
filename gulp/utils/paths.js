@@ -33,7 +33,7 @@ module.exports = {
 	
 	assets : {
 		css				: 'www/assets/css/',
-		cssFiles		: 'www/assets/css/**/*.css',
+		cssFiles		: 'www/assets/css/*.css',
 		img				: 'www/assets/img/',
 		
 		js				: 'www/assets/js/',
@@ -41,6 +41,7 @@ module.exports = {
 		jsHTML5Shiv		: 'www/assets/js/libs/html5shiv.min.js',
 		
 		json			: 'www/assets/json/',
+		jsonAllFiles	: 'www/assets/json/**/*.json',
 		jsonConfig		: 'www/assets/json/config/',
 		jsonConfigFiles	: 'www/assets/json/config/*.json',
 		jsonJsFilesFile	: 'www/assets/json/config/js-files.json',
