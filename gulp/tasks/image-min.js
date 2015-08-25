@@ -17,4 +17,4 @@ gulp.task( 'image-min', ['delete'], function() {
 		}) )
 		.pipe( gulp.dest( paths.assets.img ) );
 	
-});
+} );

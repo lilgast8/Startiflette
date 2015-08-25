@@ -12,4 +12,4 @@ gulp.task( 'image-move', ['delete'], function() {
 		.pipe( plumber() )
 		.pipe( gulp.dest( paths.assets.img ) );
 	
-});
+} );

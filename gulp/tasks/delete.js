@@ -38,4 +38,4 @@ gulp.task( 'delete', function() {
 	
 	del.sync( options.deletePath );
 	
-});
+} );

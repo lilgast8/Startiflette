@@ -19,7 +19,7 @@ gulp.task( 'json-min', ['delete'], function () {
 	
 	minifyJsFilesFile();
 	
-});
+} );
 
 
 

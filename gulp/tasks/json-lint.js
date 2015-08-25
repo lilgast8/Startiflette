@@ -25,4 +25,4 @@ gulp.task( 'json-lint', function() {
 			return notify().write( 'JSON Lint error on: ' + fileName );
 		}) );
 	
-});
+} );

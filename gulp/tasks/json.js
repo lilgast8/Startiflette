@@ -21,4 +21,4 @@ gulp.task( 'json', ['json-lint'], function() {
 	else if ( options.tasks.prod )
 		gulp.start( 'json-min' );
 	
-});
+} );

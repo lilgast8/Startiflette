@@ -39,4 +39,4 @@ gulp.task( 'json-concat', ['delete'], function() {
 		
 	}
 	
-});
+} );

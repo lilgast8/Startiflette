@@ -61,4 +61,4 @@ gulp.task( 'js-min', ['delete'], function() {
 		
 	}
 	
-});
+} );

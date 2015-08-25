@@ -78,7 +78,7 @@ gulp.task( 'watch', function() {
 		if ( taskname )
 			gulp.start( taskname );
 		
-	});
+	} );
 	
 	
 	/* Livereload */
@@ -101,4 +101,4 @@ gulp.task( 'watch', function() {
 		
 	] ).on( 'change', livereload.changed );
 	
-});
+} );

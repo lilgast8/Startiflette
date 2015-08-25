@@ -37,4 +37,4 @@ gulp.task( 'sass', function() {
 		
 	}
 	
-});
+} );

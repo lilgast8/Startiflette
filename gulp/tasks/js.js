@@ -12,4 +12,4 @@ gulp.task( 'js', ['js-hint'], function() {
 	
 	gulp.start( 'js-min' );
 	
-});
+} );

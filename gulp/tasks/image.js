@@ -18,4 +18,4 @@ gulp.task('image', function() {
 	else
 		gulp.start( 'image-move' );
 	
-});
+} );

@@ -35,4 +35,4 @@ gulp.task( 'js-hint', function() {
 		}))
 		.pipe( jshint.reporter( 'fail' ) );
 	
-});
+} );
