@@ -13,7 +13,7 @@ var rename	= require( 'gulp-rename' );
 
 gulp.task( 'sass', function() {
 	
-	if ( options.cssSrcPath === null )
+	if ( options.cssSrcPath === null && options.tasks.prod )
 		options.cssSrcPath = [ paths.src.cssDesktopFile, paths.src.cssMobileFile ];
 	
 	

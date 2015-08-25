@@ -23,6 +23,7 @@ module.exports = {
 		
 		json 					: 'www/src/json/',
 		jsonAllFiles			: 'www/src/json/**/*.json',
+		jsonConfigFiles			: 'www/src/json/config/*.json',
 		jsonConfigFile			: 'www/src/json/config/config.json',
 		jsonJsFilesFile			: 'www/src/json/config/js-files.json',
 		jsonRoutes				: 'www/src/json/routes/',
@@ -40,6 +41,11 @@ module.exports = {
 		jsHTML5Shiv		: 'www/assets/js/libs/html5shiv.min.js',
 		
 		json			: 'www/assets/json/',
+		jsonConfig		: 'www/assets/json/config/',
+		jsonConfigFiles	: 'www/assets/json/config/*.json',
+		jsonJsFilesFile	: 'www/assets/json/config/js-files.json',
+		jsonRoutes		: 'www/assets/json/routes/',
+		jsonRoutesFiles	: 'www/assets/json/routes/*.json',
 		jsonJsFilesFile	: 'www/assets/json/config/js-files.json',
 	}
 	

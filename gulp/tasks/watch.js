@@ -16,18 +16,20 @@ gulp.task( 'watch', function() {
 	/* Tasks management */
 	gulp.watch( [
 		paths.src.allFiles,
-		'!' + paths.src.jsonConcatFiles
+		'!' + paths.src.jsonRoutesConcatFiles
 	], function(e) {
 		
-		var filePath, ext, desktop, mobile, shared;
+		var filePath, ext, desktop, mobile, shared, config, routes;
 		var taskname = null;
 		
 		filePath	= e.path;
 		ext			= path.extname( filePath );
 		
-		desktop	= filePath.indexOf( 'desktop' )	> -1 ? true : false;
-		mobile	= filePath.indexOf( 'mobile' ) > -1 ? true : false;
-		shared	= filePath.indexOf( 'shared' ) > -1 ? true : false;
+		desktop	= filePath.indexOf( 'desktop/' ) > -1 ? true : false;
+		mobile	= filePath.indexOf( 'mobile/' ) > -1 ? true : false;
+		shared	= filePath.indexOf( 'shared/' ) > -1 ? true : false;
+		config	= filePath.indexOf( 'config/' ) > -1 ? true : false;
+		routes	= filePath.indexOf( 'routes/' ) > -1 ? true : false;
 		
 		
 		/* SASS */
@@ -55,10 +57,21 @@ gulp.task( 'watch', function() {
 		}
 		
 		/* JSON */
-		else if ( ext == '.json' && filePath.indexOf( paths.src.jsonJsFilesFile ) < 0 ) {
-			taskname = 'json-concat';
+		// else if ( ext == '.json' && filePath.indexOf( paths.src.jsonJsFilesFile ) < 0 ) {
+		else if ( ext == '.json' ) {
+			// taskname = 'json-concat';
 			
-			options.jsonSrcPath = [ paths.src.jsonJsFilesFile, paths.src.jsonAllFiles ];
+			// options.jsonSrcPath = paths.src.jsonAllFiles;
+			// console.log(options.jsonSrcPath);
+			
+			// console.log('CONFIG/ROUTES:', config, routes);
+			
+			taskname = 'json';
+			
+			if ( config )
+				options.jsonSrcPath = paths.src.jsonConfigFiles;
+			else if ( routes )
+				options.jsonSrcPath = paths.src.jsonRoutesFiles;
 		}
 		
 		
@@ -78,9 +91,9 @@ gulp.task( 'watch', function() {
 		paths.src.jsFiles,
 		
 		// JSON
-		paths.src.jsonJsFilesFile,
+		// paths.src.jsonJsFilesFile,
 		paths.src.jsonAllFiles,
-		'!' + paths.src.jsonConcatFiles,
+		'!' + paths.src.jsonRoutesConcatFiles,
 		
 		// PHP
 		paths.php.indexFile,

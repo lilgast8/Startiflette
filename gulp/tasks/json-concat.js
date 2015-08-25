@@ -9,7 +9,7 @@ var plumber	= require( 'gulp-plumber' );
 
 
 
-gulp.task( 'json-concat', function() {
+gulp.task( 'json-concat', ['delete'], function() {
 	
 	var configFile	= fs.readFileSync( paths.src.jsonConfigFile, 'utf8' );
 	var config		= JSON.parse(configFile);
@@ -38,10 +38,5 @@ gulp.task( 'json-concat', function() {
 		fs.writeFileSync( paths.src.jsonRoutes + routesFileName, data, 'utf8' );
 		
 	}
-	
-	
-	// lint routes concat files
-	options.jsonSrcPath = paths.src.jsonRoutesConcatFiles;
-	gulp.start( 'json-lint' );
 	
 });

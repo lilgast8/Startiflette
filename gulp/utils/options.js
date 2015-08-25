@@ -20,11 +20,15 @@ options.tasks = {
 	prod : false
 }
 
-if ( options._[0] == 'prod' )
-	options.tasks.prod = true;
+if ( options._[0] == '' )
+	options.tasks.default = true;
 else if ( options._[0] == 'init' )
 	options.tasks.init = true;
-
+else if ( options._[0] == 'prod' )
+	options.tasks.prod = true;
+else
+	options.tasks.default = true;
+console.log('--------> TASKS:', options.tasks);
 
 
 module.exports	= options;
