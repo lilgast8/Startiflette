@@ -7,7 +7,7 @@ var paths	= require( '../utils/paths' );
 
 gulp.task( 'json', ['json-lint'], function() {
 	
-	if ( options.task == 'default' && options.filePath.indexOf( paths.src.jsonJsFilesFile ) < 0 )
+	if ( options.task == 'default' && options.filePath.indexOf( paths.src.json.config.jsFilesFile ) < 0 )
 		gulp.start( 'json-concat' );
 	
 	else if ( options.task == 'prod' || options.task == 'json' )

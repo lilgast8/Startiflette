@@ -10,7 +10,7 @@ var uglify	= require( 'gulp-uglify' );
 
 gulp.task( 'js-min', ['delete'], function() {
 	
-	var jsFiles = require( '../../' + paths.src.jsonJsFilesFile );
+	var jsFiles = require( '../../' + paths.src.json.config.jsFilesFile );
 	
 	
 	// parse js-files file
@@ -28,16 +28,16 @@ gulp.task( 'js-min', ['delete'], function() {
 			file = jsFile.files[j];
 			
 			if ( typeof( file ) == 'string' ) { // if file - one version of file
-				aFiles.push( paths.src.js + file );
+				aFiles.push( paths.src.js.dir + file );
 				
 				if ( needOldie ) // if need oldie version
-					aFilesOldie.push( paths.src.js + file );
+					aFilesOldie.push( paths.src.js.dir + file );
 			}
 			else { // if object - two versions of file for manage oldie version
-				aFiles.push( paths.src.js + file[0] );
+				aFiles.push( paths.src.js.dir + file[0] );
 				
 				if ( needOldie ) // if need oldie version
-					aFilesOldie.push( paths.src.js + file[1] );
+					aFilesOldie.push( paths.src.js.dir + file[1] );
 			}
 		}
 		
@@ -46,7 +46,7 @@ gulp.task( 'js-min', ['delete'], function() {
 			.pipe( plumber() )
 			.pipe( concat( nameOutputFile ) )
 			.pipe( uglify() )
-			.pipe( gulp.dest( paths.assets.js + destOutputFile ) );
+			.pipe( gulp.dest( paths.assets.js.dir + destOutputFile ) );
 		
 		// generate oldie min js
 		if ( needOldie ) {
@@ -56,7 +56,7 @@ gulp.task( 'js-min', ['delete'], function() {
 				.pipe( plumber() )
 				.pipe( concat( nameOutputFile ) )
 				.pipe( uglify() )
-				.pipe( gulp.dest( paths.assets.js + destOutputFile ) );
+				.pipe( gulp.dest( paths.assets.js.dir + destOutputFile ) );
 		}
 		
 	}

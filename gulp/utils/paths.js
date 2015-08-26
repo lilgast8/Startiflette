@@ -1,53 +1,81 @@
 module.exports = {
 	
-	emptyFiles	: 'www/**/empty-folder.txt',
+	emptyFiles: 'www/**/empty-folder.txt',
 	
-	php : {
-		indexFile	: 'www/index.php',
-		allFiles	: 'www/php/**/*.php'
+	php: {
+		indexFile:	'www/index.php',
+		allFiles:	'www/php/**/*.php'
 	},
 	
-	src : {
-		allFiles				: 'www/src/**/*',
-		cssDesktopFile			: 'www/src/css/styles-desktop.scss',
-		cssMobileFile			: 'www/src/css/styles-mobile.scss',
+	src: {
+		allFiles: 'www/src/**/*',
 		
-		imgFiles				: 'www/src/img/**/*',
+		css: {
+			desktopFile:	'www/src/css/styles-desktop.scss',
+			mobileFile:		'www/src/css/styles-mobile.scss'
+		},
 		
-		js						: 'www/src/js/',
-		jsFiles					: 'www/src/js/**/*.js',
-		jsAppFiles				: 'www/src/js/app/**/*.js',
-		jsAppDesktopFiles		: 'www/src/js/app/desktop/**/*.js',
-		jsAppMobileFiles		: 'www/src/js/app/mobile/**/*.js',
-		jsSharedFiles			: 'www/src/js/app/shared/**/*.js',
+		img: {
+			allFiles: 'www/src/img/**/*'
+		},
 		
-		json 					: 'www/src/json/',
-		jsonAllFiles			: 'www/src/json/**/*.json',
-		jsonConfigFiles			: 'www/src/json/config/*.json',
-		jsonConfigFile			: 'www/src/json/config/config.json',
-		jsonJsFilesFile			: 'www/src/json/config/js-files.json',
-		jsonRoutes				: 'www/src/json/routes/',
-		jsonRoutesConcatFiles	: 'www/src/json/routes/*.json',
-		jsonRoutesFiles			: 'www/src/json/routes/**/*.json'
+		js: {
+			dir:		'www/src/js/',
+			allFiles:	'www/src/js/**/*.js',
+			
+			app: {
+				allFiles:			'www/src/js/app/**/*.js',
+				desktopAllFiles:	'www/src/js/app/desktop/**/*.js',
+				mobileAllFiles:		'www/src/js/app/mobile/**/*.js',
+				sharedAllFiles:		'www/src/js/app/shared/**/*.js'
+			}
+		},
+		
+		json: {
+			allFiles: 'www/src/json/**/*.json',
+			
+			config: {
+				allFiles:		'www/src/json/config/*.json',
+				configFile:		'www/src/json/config/config.json',
+				jsFilesFile:	'www/src/json/config/js-files.json'
+			},
+			
+			routes: {
+				dir:			'www/src/json/routes/',
+				allFiles:		'www/src/json/routes/**/*.json',
+				concatAllFiles:	'www/src/json/routes/*.json'
+			}
+		}
 	},
 	
-	assets : {
-		css				: 'www/assets/css/',
-		cssFiles		: 'www/assets/css/*.css',
-		img				: 'www/assets/img/',
+	assets: {
+		css: {
+			dir:		'www/assets/css/',
+			allFiles:	'www/assets/css/*.css'
+		},
 		
-		js				: 'www/assets/js/',
-		jsFiles			: 'www/assets/js/**/*.js',
-		jsHTML5Shiv		: 'www/assets/js/libs/html5shiv.min.js',
+		img: {
+			dir: 'www/assets/img/'
+		},
 		
-		json			: 'www/assets/json/',
-		jsonAllFiles	: 'www/assets/json/**/*.json',
-		jsonConfig		: 'www/assets/json/config/',
-		jsonConfigFiles	: 'www/assets/json/config/*.json',
-		jsonJsFilesFile	: 'www/assets/json/config/js-files.json',
-		jsonRoutes		: 'www/assets/json/routes/',
-		jsonRoutesFiles	: 'www/assets/json/routes/*.json',
-		jsonJsFilesFile	: 'www/assets/json/config/js-files.json',
+		js: {
+			dir:			'www/assets/js/',
+			allFiles:		'www/assets/js/**/*.js',
+			HTML5ShivFile:	'www/assets/js/libs/html5shiv.min.js'
+		},
+		
+		json: {
+			allFiles: 'www/assets/json/**/*.json',
+			
+			config: {
+				dir:			'www/assets/json/config/',
+				jsFilesFile:	'www/assets/json/config/js-files.json'
+			},
+			
+			routes: {
+				dir: 'www/assets/json/routes/'
+			}
+		}
 	}
 	
 };

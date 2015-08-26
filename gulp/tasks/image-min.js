@@ -9,12 +9,12 @@ var imagemin	= require('gulp-imagemin');
 
 gulp.task( 'image-min', ['delete'], function() {
 	
-	gulp.src( paths.src.imgFiles )
+	gulp.src( paths.src.img.allFiles )
 		.pipe( plumber() )
 		.pipe( imagemin({
 			optimizationLevel : 3, // png, default 3
 			progressive : false // jpg, default false
 		}) )
-		.pipe( gulp.dest( paths.assets.img ) );
+		.pipe( gulp.dest( paths.assets.img.dir ) );
 	
 } );

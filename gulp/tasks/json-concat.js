@@ -11,10 +11,11 @@ var plumber	= require( 'gulp-plumber' );
 
 gulp.task( 'json-concat', ['delete'], function() {
 	
-	var configFile	= fs.readFileSync( paths.src.jsonConfigFile, 'utf8' );
+	var configFile	= fs.readFileSync( paths.src.json.config.configFile, 'utf8' );
 	var config		= JSON.parse(configFile);
 	
 	var routesFileName, lang, data;
+	
 	
 	// parse routes files
 	for ( var i = 0; i < config.ROUTES_FILES.length; i++ ) {
@@ -27,7 +28,7 @@ gulp.task( 'json-concat', ['delete'], function() {
 			lang = config.LANGUAGES[j];
 			
 			data += '"' + lang + '" : ';
-			data += '\t' + fs.readFileSync( paths.src.jsonRoutes + lang + '/' + routesFileName, 'utf8' );
+			data += '\t' + fs.readFileSync( paths.src.json.routes.dir + lang + '/' + routesFileName, 'utf8' );
 			
 			if ( j < config.LANGUAGES[j].length )
 				data += ',\n\n\n\n';
@@ -35,7 +36,7 @@ gulp.task( 'json-concat', ['delete'], function() {
 		
 		data += '\n\n\n\n}';
 		
-		fs.writeFileSync( paths.src.jsonRoutes + routesFileName, data, 'utf8' );
+		fs.writeFileSync( paths.src.json.routes.dir + routesFileName, data, 'utf8' );
 		
 	}
 	

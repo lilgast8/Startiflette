@@ -16,7 +16,7 @@ gulp.task( 'watch', function() {
 	/* Tasks management */
 	gulp.watch( [
 		paths.src.allFiles,
-		'!' + paths.src.jsonRoutesConcatFiles
+		'!' + paths.src.json.routes.concatAllFiles
 	], function(e) {
 		
 		var ext, desktop, mobile, shared, config, routes;
@@ -38,11 +38,11 @@ gulp.task( 'watch', function() {
 			options.subtask	= 'default-sass';
 			
 			if ( desktop )
-				options.cssSrcPath = [ paths.src.cssDesktopFile ];
+				options.cssSrcPath = [ paths.src.css.desktopFile ];
 			else if ( mobile )
-				options.cssSrcPath = [ paths.src.cssMobileFile ];
+				options.cssSrcPath = [ paths.src.css.mobileFile ];
 			else if ( shared )
-				options.cssSrcPath = [ paths.src.cssDesktopFile, paths.src.cssMobileFile ];
+				options.cssSrcPath = [ paths.src.css.desktopFile, paths.src.css.mobileFile ];
 		}
 		
 		/* JS */
@@ -51,11 +51,11 @@ gulp.task( 'watch', function() {
 			options.subtask	= 'default-js';
 			
 			if ( desktop )
-				options.jsSrcPath = paths.src.jsAppDesktopFiles;
+				options.jsSrcPath = paths.src.js.app.desktopAllFiles;
 			else if ( mobile )
-				options.jsSrcPath = paths.src.jsAppMobileFiles;
+				options.jsSrcPath = paths.src.js.app.mobileAllFiles;
 			else if ( shared )
-				options.jsSrcPath = paths.src.jsSharedFiles;
+				options.jsSrcPath = paths.src.js.app.sharedAllFiles;
 		}
 		
 		/* JSON */
@@ -64,9 +64,9 @@ gulp.task( 'watch', function() {
 			options.subtask	= 'default-json';
 			
 			if ( config )
-				options.jsonSrcPath = paths.src.jsonConfigFiles;
+				options.jsonSrcPath = paths.src.json.config.allFiles;
 			else if ( routes )
-				options.jsonSrcPath = paths.src.jsonRoutesFiles;
+				options.jsonSrcPath = paths.src.json.routes.allFiles;
 		}
 		
 		
@@ -80,14 +80,14 @@ gulp.task( 'watch', function() {
 	gulp.watch( [
 		
 		// SASS
-		paths.assets.cssFiles,
+		paths.assets.css.allFiles,
 		
 		// JS
-		paths.src.jsFiles,
+		paths.src.js.allFiles,
 		
 		// JSON
-		paths.src.jsonAllFiles,
-		'!' + paths.src.jsonRoutesConcatFiles,
+		paths.src.json.allFiles,
+		'!' + paths.src.json.routes.concatAllFiles,
 		
 		// PHP
 		paths.php.indexFile,

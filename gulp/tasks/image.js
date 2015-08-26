@@ -10,9 +10,6 @@ var imagemin	= require('gulp-imagemin');
 
 gulp.task('image', function() {
 	
-	if ( options.deletePath === null )
-		options.deletePath = paths.assets.img;
-	
 	if ( options.imageMin )
 		gulp.start( 'image-min' );
 	else

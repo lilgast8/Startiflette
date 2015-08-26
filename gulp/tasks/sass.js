@@ -14,7 +14,8 @@ var rename	= require( 'gulp-rename' );
 gulp.task( 'sass', ['delete'], function() {
 	
 	if ( options.cssSrcPath === null )
-		options.cssSrcPath = [ paths.src.cssDesktopFile, paths.src.cssMobileFile ];
+		options.cssSrcPath = [ paths.src.css.desktopFile, paths.src.css.mobileFile ];
+	
 	
 	// parse srcPath
 	for ( var i = 0; i < options.cssSrcPath.length; i++ ) {
@@ -32,7 +33,7 @@ gulp.task( 'sass', ['delete'], function() {
 				return notify().write( options.device + ': ' + path.basename( error.message ) );
 			} )
 			.pipe( rename( {suffix : '.min'} ) )
-			.pipe( gulp.dest( paths.assets.css ) );
+			.pipe( gulp.dest( paths.assets.css.dir ) );
 		
 	}
 	
