@@ -1,21 +1,21 @@
 {
 	
-	"modern-detect-izr" : {
-		"name" : "modern-detect-izr.min.js",
-		"dest" : "libs/",
-		"files" : [
+	"modern-detect-izr": {
+		"name": "modern-detect-izr.min.js",
+		"dest": "libs/",
+		"files": [
 			"libs/modernizr.js",
 			"libs/detectizr.js"
 		]
 	},
 	
-	"scripts-desktop" : {
-		"name" : [
+	"scripts-desktop": {
+		"name": [
 			"scripts-desktop.min.js",
 			"scripts-desktop-oldie.min.js"
 		],
-		"dest" : "",
-		"files" : [
+		"dest": "",
+		"files": [
 			[	
 				"libs/zepto.js",
 				"libs/jquery-oldie.js"
@@ -58,10 +58,10 @@
 		]
 	},
 	
-	"scripts-mobile" : {
-		"name" : "scripts-mobile.min.js",
-		"dest" : "",
-		"files" : [
+	"scripts-mobile": {
+		"name": "scripts-mobile.min.js",
+		"dest": "",
+		"files": [
 			"libs/zepto.js",
 			"libs/greensock/TweenMax.js",
 			"libs/signals.js",
