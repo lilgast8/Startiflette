@@ -24,13 +24,13 @@ gulp.task( 'json-concat', ['delete'], function() {
 		data = '{\n\n\n\n';
 		
 		// parse language directories
-		for ( var j = 0; j < config.LANGUAGES.length; j++ ) {
-			lang = config.LANGUAGES[j];
+		for ( var j = 0; j < config.ALL_LANG.length; j++ ) {
+			lang = config.ALL_LANG[j];
 			
 			data += '"' + lang + '" : ';
 			data += '\t' + fs.readFileSync( paths.src.json.routes.dir + lang + '/' + routesFileName, 'utf8' );
 			
-			if ( j < config.LANGUAGES[j].length )
+			if ( j < config.ALL_LANG[j].length )
 				data += ',\n\n\n\n';
 		}
 		

@@ -6,13 +6,13 @@
 		"static",
 		"projects"
 	],
-	"LANGUAGES":				[
+	"ALL_LANG":					[
 		"fr",
 		"en",
 		"ex"
 	],
 	"HAS_MOBILE_VERSION":		"true",
-	"HAS_LANGUAGES_LANDING":	"false",
+	"HAS_LANG_LANDING":			"false",
 	"GA_ID":					[]
 	
 }
