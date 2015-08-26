@@ -7,22 +7,31 @@ class Config
 	
 	protected static $instance;
 	
-	const PROD				= false;
+	const CONFIG_FILE_PATH = 'src/json/config/config.json';
+	/*const PROD				= false;
 	// const PROD				= true;
 	const DEFAULT_LANG		= 'fr';
-	const GA_ID				= 'UA-XXXXXXXX-XX';
+	const GA_ID				= 'UA-XXXXXXXX-XX';*/
 	
-	static $LOCALHOST		= null;
+	static $ENV					= null;
+	static $BASE_URL			= null;
+	static $ROUTES_FILES		= null;
+	static $ALL_LANG			= null;
+	static $HAS_MOBILE_VERSION	= null;
+	static $HAS_LANG_LANDING	= null;
+	static $GA_ID				= null;
+	
+	// static $LOCALHOST		= null;
 	static $DEVICE			= null;
 	static $DEVICE_FOLDER	= null;
 	static $FOLDER			= null;
 	
 	static $MULTI_LANG		= null;
-	static $ALT_LANG		= null;
-	static $ALL_LANG		= null;
-	static $LANG			= null;
+	// static $ALT_LANG		= null;
+	// static $ALL_LANG		= null;
+	// static $LANG			= null;
 	
-	static $LG_LINK			= null;
+	/*static $LG_LINK			= null;
 	static $LG_LINK_ROOT	= null;
 	
 	static $IS_AJAX			= false;
@@ -31,14 +40,15 @@ class Config
 	private $path			= null;
 	
 	public $pages			= null;
-	public $projects		= null;
+	public $projects		= null;*/
 	
 	
 	protected function __construct()
 	{
-		$this->setEnv();
-		$this->setErrors();
-		$this->setDevice();
+		$this->setConfig();
+		// $this->setEnv();
+		// $this->setErrors();
+		// $this->setDevice();
 	}
 	
 	
@@ -57,9 +67,28 @@ class Config
 	}
 	
 	
+	private function setConfig()
+	{
+		if ( !file_exists(self::CONFIG_FILE_PATH) )
+			throw new ErrorException('Config file is missing!');
+		
+		$config = file_get_contents(self::CONFIG_FILE_PATH);
+		$this->config = json_decode($config);
+		
+		// var_dump($this->config);
+		// echo $this->config->ENV;
+		
+		// $projects = file_get_contents($projectsConfig);
+		// $this->projects = json_decode($projects);
+		
+	}
+	
+	
 	private function setEnv()
 	{
-		self::$LOCALHOST = $_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_PORT'] == '8888' ? true : false;
+		self::$ENV			= '';
+		
+		self::$LOCALHOST	= $_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_PORT'] == '8888' ? true : false;
 	}
 	
 	

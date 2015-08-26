@@ -46,22 +46,22 @@ class Main
 	public function init()
 	{
 		$this->setConfig();
-		$this->setPath();
-		$this->config->init();
-		$this->setRoutes();
-		$this->setContents();
-	}
-	
-	
-	private function setPath()
-	{
-		$this->path = Path::getInstance();
+		// $this->setPath();
+		// $this->config->init();
+		// $this->setRoutes();
+		// $this->setContents();
 	}
 	
 	
 	private function setConfig()
 	{
 		$this->config = Config::getInstance();
+	}
+	
+	
+	private function setPath()
+	{
+		$this->path = Path::getInstance();
 	}
 	
 	
