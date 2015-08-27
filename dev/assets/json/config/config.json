@@ -2,11 +2,9 @@
 	
 	"ENV":						"dev",
 	"LOCALHOST":				true,
-	
 	"BASE_URL_DEV":				"http://startiflette:8888/www/",
-	"BASE_URL_PREPROD":			"http://preprod.SITE_URL.COM",
-	"BASE_URL_PROD":			"http://www.SITE_URL.COM",
-	
+	"BASE_URL_PREPROD":			"http://preprod.SITE_URL.COM/",
+	"BASE_URL_PROD":			"http://www.SITE_URL.COM/",
 	"ROUTES_FILES":				[
 		"static",
 		"projects"
