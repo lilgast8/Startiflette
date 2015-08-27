@@ -43,6 +43,13 @@ gulp.task( 'sass', ['delete'], function() {
 });
 
 
+gulp.task( 'sass:dev', ['delete'], function() {
+	gulp.start( 'move' );
+});
+
+
 gulp.task( 'sass:prod', ['sass'], function() {
 	gulp.start( 'move' );
 });
+
+

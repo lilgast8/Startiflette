@@ -21,7 +21,7 @@ gulp.task( 'default', [
 
 
 /* Prod */
-gulp.task( 'prod', ['delete'], function() {
+/*gulp.task( 'prod', ['delete'], function() {
 	
 	options.subtask = 'prod-deleted';
 	
@@ -30,9 +30,9 @@ gulp.task( 'prod', ['delete'], function() {
 	gulp.start( 'json' );
 	gulp.start( 'image' );
 	
-} );
+} );*/
 
-/*gulp.task( 'prod', ['delete'], function() {
+gulp.task( 'prod', ['delete'], function() {
 	options.subtask = 'prod-deleted';
 	gulp.start( 'prod-thing' );
 } );
@@ -47,7 +47,7 @@ gulp.task( 'prod-thing', [
 	console.log('move shit');
 	gulp.start( 'move' );
 	
-} );*/
+} );
 
 
 
