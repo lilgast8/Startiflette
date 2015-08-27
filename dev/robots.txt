@@ -1,0 +1,5 @@
+User-Agent: *
+Disallow: /assets/
+Disallow: /php/
+
+Sitemap: http://www.SITE_URL.COM/sitemap.xml

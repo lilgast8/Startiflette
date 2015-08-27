@@ -1,0 +1,27 @@
+{
+	
+	"project_1" : {
+		"url"		: "project-ex/1/project-name-ex-1",
+		"jsView"	: "project",
+		"phpView"	: "project",
+		"title"		: "Project name ex 1",
+		"desc"		: "Project name ex 1"
+	},
+	
+	"project_2" : {
+		"url"		: "project-ex/2/project-name-ex-2",
+		"jsView"	: "project",
+		"phpView"	: "project",
+		"title"		: "Project name ex 2",
+		"desc"		: "Project name ex 2"
+	},
+	
+	"project_3" : {
+		"url"		: "project-ex/3/project-name-ex-3",
+		"jsView"	: "project",
+		"phpView"	: "project",
+		"title"		: "Project name ex 3",
+		"desc"		: "Project name ex 3"
+	}
+	
+}

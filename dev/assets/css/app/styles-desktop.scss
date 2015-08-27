@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+
+
+/****************************************/
+/* -------- SHARED - UTILITIES -------- */
+/****************************************/
+
+
+@import 'shared/utilities/_reset';
+@import 'shared/utilities/_fonts';
+@import 'shared/utilities/_variables';
+@import 'shared/utilities/_easing';
+@import 'shared/utilities/_functions';
+@import 'shared/utilities/_alt';
+
+
+
+
+
+/***************************************/
+/* -------- SHARED - PARTIALS -------- */
+/***************************************/
+
+
+//@import 'shared/partials/_PARTIALS';
+
+
+
+
+
+/******************************/
+/* -------- PARTIALS -------- */
+/******************************/
+
+
+@import 'desktop/partials/_global';
+@import 'desktop/partials/_loader';
+@import 'desktop/partials/_containers';
+@import 'desktop/partials/_header';
+@import 'desktop/partials/_footer';
+
+
+
+
+
+/***************************/
+/* -------- PAGES -------- */
+/***************************/
+
+
+@import 'desktop/pages/_home';
+@import 'desktop/pages/_about';
+@import 'desktop/pages/_legals';
+
+
