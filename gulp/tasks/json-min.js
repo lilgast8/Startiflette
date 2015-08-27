@@ -10,17 +10,23 @@ var jsonminify	= require( 'gulp-jsonminify' );
 
 gulp.task( 'json-min', ['json-concat'], function () {
 	
-	// config file
-	gulp.src( paths.src.json.config.configFile )
-		.pipe( plumber() )
-		.pipe( jsonminify() )
-		.pipe( gulp.dest( paths.assets.json.config.dir ) );
+	var jsonSrcPath = [
+		paths.env.dev + paths.assets.json.allFiles,
+		'!' + paths.env.dev + paths.assets.json.config.jsFilesFile
+	];
 	
-	// routes files
-	gulp.src( paths.src.json.routes.concatAllFiles )
+	
+	var configFile	= fs.readFileSync( paths.env.dev + paths.assets.json.config.configFile, 'utf8' );
+	var config		= JSON.parse(configFile);
+	
+	for ( var i = 0; i < config.ALL_LANG.length; i++ )
+		jsonSrcPath.push( '!' + paths.env.dev + paths.assets.json.routes.dir + config.ALL_LANG[i] + '/**/*.json' );
+	
+	
+	gulp.src( jsonSrcPath )
 		.pipe( plumber() )
 		.pipe( jsonminify() )
-		.pipe( gulp.dest( paths.assets.json.routes.dir ) );
+		.pipe( gulp.dest( paths.env.prod + paths.assets.json.dir ) );
 	
 	
 	minifyJsFilesFile(); // js-files file
@@ -30,7 +36,7 @@ gulp.task( 'json-min', ['json-concat'], function () {
 
 
 function minifyJsFilesFile() {
-	var jsFiles	= require( '../../' + paths.src.json.config.jsFilesFile );
+	var jsFiles	= require( '../../' + paths.env.dev + paths.assets.json.config.jsFilesFile );
 	var aLength	= Object.keys( jsFiles ).length;
 	var i		= 0;
 	var jsFile, jsFileName, isArray;
@@ -53,5 +59,5 @@ function minifyJsFilesFile() {
 	
 	data += '}';
 	
-	fs.writeFileSync( paths.assets.json.config.jsFilesFile, data, 'utf8' );
+	fs.writeFileSync( paths.env.prod + paths.assets.json.config.jsFilesFile, data, 'utf8' );
 }

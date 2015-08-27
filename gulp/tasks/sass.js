@@ -14,13 +14,16 @@ var rename	= require( 'gulp-rename' );
 gulp.task( 'sass', ['delete'], function() {
 	
 	if ( options.cssSrcPath === null )
-		options.cssSrcPath = [ paths.src.css.desktopFile, paths.src.css.mobileFile ];
+		options.cssSrcPath = [
+			paths.env.dev + paths.assets.css.app.desktopFile,
+			paths.env.dev + paths.assets.css.app.mobileFile
+		];
 	
 	
-	// parse srcPath
-	for ( var i = 0; i < options.cssSrcPath.length; i++ ) {
+	// parse cssSrcPath
+	// for ( var i = 0; i < options.cssSrcPath.length; i++ ) {
 		
-		gulp.src( options.cssSrcPath[i] )
+		return gulp.src( options.cssSrcPath )
 			.pipe( plumber() )
 			.pipe( sass({
 				style: 'compressed',
@@ -33,8 +36,13 @@ gulp.task( 'sass', ['delete'], function() {
 				return notify().write( options.device + ': ' + path.basename( error.message ) );
 			} )
 			.pipe( rename( {suffix : '.min'} ) )
-			.pipe( gulp.dest( paths.assets.css.dir ) );
+			.pipe( gulp.dest( paths.env.dev + paths.assets.css.dir ) );
 		
-	}
+	// }
 	
+});
+
+
+gulp.task( 'sass:prod', ['sass'], function() {
+	gulp.start( 'move' );
 });

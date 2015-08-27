@@ -8,8 +8,8 @@ var plumber	= require('gulp-plumber');
 
 gulp.task( 'image-move', ['delete'], function() {
 	
-	gulp.src( paths.src.img.allFiles )
+	gulp.src( paths.env.dev + paths.assets.img.allFiles )
 		.pipe( plumber() )
-		.pipe( gulp.dest( paths.assets.img.dir ) );
+		.pipe( gulp.dest( paths.env.prod + paths.assets.img.dir ) );
 	
 } );

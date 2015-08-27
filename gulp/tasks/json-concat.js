@@ -11,7 +11,7 @@ var plumber	= require( 'gulp-plumber' );
 
 gulp.task( 'json-concat', ['delete'], function() {
 	
-	var configFile	= fs.readFileSync( paths.src.json.config.configFile, 'utf8' );
+	var configFile	= fs.readFileSync( paths.env.dev + paths.assets.json.config.configFile, 'utf8' );
 	var config		= JSON.parse(configFile);
 	
 	var routesFileName, lang, data;
@@ -28,7 +28,7 @@ gulp.task( 'json-concat', ['delete'], function() {
 			lang = config.ALL_LANG[j];
 			
 			data += '"' + lang + '" : ';
-			data += '\t' + fs.readFileSync( paths.src.json.routes.dir + lang + '/' + routesFileName, 'utf8' );
+			data += '\t' + fs.readFileSync( paths.env.dev + paths.assets.json.routes.dir + lang + '/' + routesFileName, 'utf8' );
 			
 			if ( j < config.ALL_LANG[j].length )
 				data += ',\n\n\n\n';
@@ -36,7 +36,7 @@ gulp.task( 'json-concat', ['delete'], function() {
 		
 		data += '\n\n\n\n}';
 		
-		fs.writeFileSync( paths.src.json.routes.dir + routesFileName, data, 'utf8' );
+		fs.writeFileSync( paths.env.dev + paths.assets.json.routes.dir + routesFileName, data, 'utf8' );
 		
 	}
 	

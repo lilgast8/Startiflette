@@ -15,8 +15,9 @@ gulp.task( 'watch', function() {
 	
 	/* Tasks management */
 	gulp.watch( [
-		paths.src.allFiles,
-		'!' + paths.src.json.routes.concatAllFiles
+		paths.env.dev + paths.assets.allFiles,
+		'!' + paths.env.dev + paths.assets.css.minAllFiles,
+		'!' + paths.env.dev + paths.assets.json.routes.concatAllFiles
 	], function(e) {
 		
 		var ext, desktop, mobile, shared, config, routes;
@@ -38,11 +39,14 @@ gulp.task( 'watch', function() {
 			options.subtask	= 'default-sass';
 			
 			if ( desktop )
-				options.cssSrcPath = [ paths.src.css.desktopFile ];
+				options.cssSrcPath = [ paths.env.dev + paths.assets.css.app.desktopFile ];
 			else if ( mobile )
-				options.cssSrcPath = [ paths.src.css.mobileFile ];
+				options.cssSrcPath = [ paths.env.dev + paths.assets.css.app.mobileFile ];
 			else if ( shared )
-				options.cssSrcPath = [ paths.src.css.desktopFile, paths.src.css.mobileFile ];
+				options.cssSrcPath = [
+					paths.env.dev + paths.assets.css.app.desktopFile,
+					paths.env.dev + paths.assets.css.app.mobileFile
+				];
 		}
 		
 		/* JS */
@@ -51,11 +55,11 @@ gulp.task( 'watch', function() {
 			options.subtask	= 'default-js';
 			
 			if ( desktop )
-				options.jsSrcPath = paths.src.js.app.desktopAllFiles;
+				options.jsSrcPath = paths.env.dev + paths.assets.js.app.desktopAllFiles;
 			else if ( mobile )
-				options.jsSrcPath = paths.src.js.app.mobileAllFiles;
+				options.jsSrcPath = paths.env.dev + paths.assets.js.app.mobileAllFiles;
 			else if ( shared )
-				options.jsSrcPath = paths.src.js.app.sharedAllFiles;
+				options.jsSrcPath = paths.env.dev + paths.assets.js.app.sharedAllFiles;
 		}
 		
 		/* JSON */
@@ -64,9 +68,9 @@ gulp.task( 'watch', function() {
 			options.subtask	= 'default-json';
 			
 			if ( config )
-				options.jsonSrcPath = paths.src.json.config.allFiles;
+				options.jsonSrcPath = paths.env.dev + paths.assets.json.config.allFiles;
 			else if ( routes )
-				options.jsonSrcPath = paths.src.json.routes.allFiles;
+				options.jsonSrcPath = paths.env.dev + paths.assets.json.routes.allFiles;
 		}
 		
 		
@@ -80,18 +84,18 @@ gulp.task( 'watch', function() {
 	gulp.watch( [
 		
 		// SASS
-		paths.assets.css.allFiles,
+		paths.env.dev + paths.assets.css.minAllFiles,
 		
 		// JS
-		paths.src.js.allFiles,
+		paths.env.dev + paths.assets.js.allFiles,
 		
 		// JSON
-		paths.src.json.allFiles,
-		'!' + paths.src.json.routes.concatAllFiles,
+		paths.env.dev + paths.assets.json.allFiles,
+		'!' + paths.env.dev + paths.assets.json.routes.concatAllFiles,
 		
 		// PHP
-		paths.php.indexFile,
-		paths.php.allFiles
+		paths.env.dev + paths.php.indexFile,
+		paths.env.dev + paths.php.allFiles
 		
 	] ).on( 'change', livereload.changed );
 	

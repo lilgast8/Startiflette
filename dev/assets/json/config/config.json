@@ -14,8 +14,8 @@
 		"en",
 		"ex"
 	],
-	"HAS_MOBILE_VERSION":		"true",
-	"HAS_LANG_LANDING":			"false",
+	"HAS_MOBILE_VERSION":		true,
+	"HAS_LANG_LANDING":			false,
 	"GA_ID":					[]
 	
 }
