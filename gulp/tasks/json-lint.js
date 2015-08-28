@@ -4,8 +4,8 @@ var options		= require( '../utils/options' );
 var paths		= require( '../utils/paths' );
 
 var plumber		= require( 'gulp-plumber' );
-var notify		= require( 'gulp-notify' );
 var jsonlint	= require( 'gulp-jsonlint' );
+var notify		= require( 'gulp-notify' );
 
 
 

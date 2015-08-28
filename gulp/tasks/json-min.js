@@ -59,5 +59,14 @@ function minifyJsFilesFile() {
 	
 	data += '}';
 	
+	
+	createDir( paths.env.prod + paths.assets.json.dir );
+	createDir( paths.env.prod + paths.assets.json.config.dir );
 	fs.writeFileSync( paths.env.prod + paths.assets.json.config.jsFilesFile, data, 'utf8' );
+}
+
+
+function createDir( dirPath ) {
+	if ( !fs.existsSync( dirPath ) )
+		fs.mkdirSync( dirPath );
 }

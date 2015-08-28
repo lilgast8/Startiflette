@@ -1,5 +1,6 @@
 var gulp	= require( 'gulp' );
 
+var options	= require( '../utils/options' );
 var paths	= require( '../utils/paths' );
 
 var plumber	= require( 'gulp-plumber' );
@@ -9,6 +10,10 @@ var uglify	= require( 'gulp-uglify' );
 
 
 gulp.task( 'js-min', ['delete'], function() {
+	
+	if ( options.task == 'js' || options.task == 'js-min' )
+		gulp.start( 'move' );
+	
 	
 	var jsFiles = require( '../../' + paths.env.dev + paths.assets.json.config.jsFilesFile );
 	

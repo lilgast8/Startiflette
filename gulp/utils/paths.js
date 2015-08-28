@@ -10,7 +10,7 @@ module.exports = {
 	php: {
 		indexFile:	'index.php',
 		dir:		'php/',
-		allFiles:	'php/**/*.php'
+		allFiles:	'php/**/*'
 	},
 	
 	assets: {
@@ -23,6 +23,11 @@ module.exports = {
 			app: {
 				desktopFile:	'assets/css/app/styles-desktop.scss',
 				mobileFile:		'assets/css/app/styles-mobile.scss'
+			},
+			
+			fonts: {
+				dir:		'assets/css/fonts/',
+				allFiles:	'assets/css/fonts/**/*'
 			}
 		},
 		
@@ -34,13 +39,17 @@ module.exports = {
 		js: {
 			dir:			'assets/js/',
 			allFiles:		'assets/js/**/*.js',
-			HTML5ShivFile:	'assets/js/libs/html5shiv.min.js',
 			
 			app: {
 				allFiles:			'assets/js/app/**/*.js',
 				desktopAllFiles:	'assets/js/app/desktop/**/*.js',
 				mobileAllFiles:		'assets/js/app/mobile/**/*.js',
 				sharedAllFiles:		'assets/js/app/shared/**/*.js'
+			},
+			
+			vendors: {
+				dir:			'assets/js/libs/',
+				HTML5ShivFile:	'assets/js/libs/html5shiv.min.js',
 			}
 		},
 		

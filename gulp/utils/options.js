@@ -18,6 +18,10 @@ options.jsonSrcPath		= null;
 options.deletePath		= null;
 options.moveFromPath	= null;
 options.moveToPath		= null;
+options.movePath		= {
+	from:	'',
+	to:		''
+};
 
 
 

@@ -1,10 +1,6 @@
-var gulp		= require('gulp');
+var gulp	= require('gulp');
 
-var options		= require( '../utils/options' );
-var paths		= require('../utils/paths');
-
-var plumber		= require('gulp-plumber');
-var imagemin	= require('gulp-imagemin');
+var options	= require( '../utils/options' );
 
 
 
@@ -12,7 +8,7 @@ gulp.task('image', function() {
 	
 	if ( options.imageMin )
 		gulp.start( 'image-min' );
-	else
+	else if ( !options.imageMin && options.task == 'image' )
 		gulp.start( 'image-move' );
 	
 } );

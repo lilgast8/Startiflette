@@ -33,18 +33,21 @@ gulp.task( 'default', [
 } );*/
 
 gulp.task( 'prod', ['delete'], function() {
+	
 	options.subtask = 'prod-deleted';
-	gulp.start( 'prod-thing' );
+	
+	gulp.start( 'prod:move' );
+	
 } );
 
-gulp.task( 'prod-thing', [
+gulp.task( 'prod:move', [
 	'sass',
 	'js',
 	'json',
 	'image'
 ], function() {
 	
-	console.log('move shit');
+	console.log('move prod');
 	gulp.start( 'move' );
 	
 } );

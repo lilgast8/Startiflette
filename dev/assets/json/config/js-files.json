@@ -1,8 +1,8 @@
 {
 	
-	"modern-detect-izr": {
-		"name": "modern-detect-izr.min.js",
-		"dest": "libs/",
+	"header": {
+		"name": "header.min.js",
+		"dest": "",
 		"files": [
 			"libs/modernizr.js",
 			"libs/detectizr.js"

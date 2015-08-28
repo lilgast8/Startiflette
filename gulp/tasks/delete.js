@@ -3,12 +3,13 @@ var gulp	= require( 'gulp' );
 var options	= require( '../utils/options' );
 var paths	= require('../utils/paths');
 
-var plumber	= require( 'gulp-plumber' );
 var del		= require( 'del' );
 
 
 
 gulp.task( 'delete', function() {
+	
+	console.log('TASK:', options.task);
 	
 	/* Init */
 	if ( options.deletePath === null && options.task == 'init' )
@@ -24,37 +25,41 @@ gulp.task( 'delete', function() {
 	else if ( options.deletePath === null && options.task == 'prod' )
 		options.deletePath = [
 			paths.env.dev + paths.assets.css.minAllFiles,
-			paths.env.prod + paths.assets.css.minAllFiles,
-			paths.env.prod + paths.assets.js.allFiles,
-			'!' + paths.env.prod + paths.assets.js.HTML5ShivFile,
 			paths.env.dev + paths.assets.json.routes.concatAllFiles,
-			paths.env.prod + paths.assets.json.allFiles,
-			paths.env.prod + paths.assets.img.dir
+			paths.env.prod + paths.assets.allFiles,
+			paths.env.prod + paths.php.dir
 		];
 	
 	
-	/* Direct task */
-	else if ( options.deletePath === null && options.task == 'sass:prod' )
+	/* SASS */
+	else if ( options.deletePath === null && options.task == 'sass' )
 		options.deletePath = [
 			paths.env.dev + paths.assets.css.minAllFiles,
-			paths.env.prod + paths.assets.css.minAllFiles
+			paths.env.prod + paths.assets.css.dir
 		];
 	
 	
+	/* JS & JS-min */
 	else if ( options.deletePath === null && ( options.task == 'js' || options.task == 'js-min' ) )
-		options.deletePath = [
-			paths.env.prod + paths.assets.js.allFiles,
-			'!' + paths.env.prod + paths.assets.js.HTML5ShivFile
-		];
+		options.deletePath = paths.env.prod + paths.assets.js.dir;
 	
+	
+	/* JSON & JSON-min */
 	else if ( options.deletePath === null && ( options.task == 'json' || options.task == 'json-min' ) )
 		options.deletePath = [
 			paths.env.dev + paths.assets.json.routes.concatAllFiles,
-			paths.env.prod + paths.assets.json.allFiles
+			paths.env.prod + paths.assets.json.dir
 		];
 	
-	else if ( options.deletePath === null && ( options.task == 'image' || options.task == 'image-min' || options.task == 'image-move') )
+	
+	/* Image, Image-min & Image-move */
+	else if ( options.deletePath === null && ( options.task == 'image' || options.task == 'image-min' || options.task == 'image-move' ) )
 		options.deletePath = paths.env.prod + paths.assets.img.dir;
+	
+	
+	/* PHP */
+	else if ( options.deletePath === null && options.task == 'php' )
+		options.deletePath = paths.env.prod + paths.php.dir;
 	
 	
 	
