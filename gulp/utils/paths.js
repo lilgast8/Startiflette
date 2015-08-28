@@ -48,8 +48,8 @@ module.exports = {
 			},
 			
 			vendors: {
-				dir:			'assets/js/libs/',
-				HTML5ShivFile:	'assets/js/libs/html5shiv.min.js',
+				dir:			'assets/js/vendors/',
+				HTML5ShivFile:	'assets/js/vendors/html5shiv.min.js',
 			}
 		},
 		

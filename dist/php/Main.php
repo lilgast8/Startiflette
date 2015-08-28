@@ -4,7 +4,7 @@
 
 defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
 
-include_once 'php/libs/Mobile_Detect.php';
+include_once 'php/vendors/Mobile_Detect.php';
 include_once 'php/Config.php';
 include_once 'php/Path.php';
 include_once 'php/controller/RoutesController.php';

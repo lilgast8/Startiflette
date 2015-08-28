@@ -4,8 +4,8 @@
 		"name": "header.min.js",
 		"dest": "",
 		"files": [
-			"libs/modernizr.js",
-			"libs/detectizr.js"
+			"vendors/modernizr.js",
+			"vendors/detectizr.js"
 		]
 	},
 	
@@ -17,13 +17,13 @@
 		"dest": "",
 		"files": [
 			[	
-				"libs/zepto.js",
-				"libs/jquery-oldie.js"
+				"vendors/zepto.js",
+				"vendors/jquery-oldie.js"
 			],
-			"libs/greensock/TweenMax.js",
-			"libs/signals.js",
-			"libs/history.js",
-			"libs/preloadjs.js",
+			"vendors/greensock/TweenMax.js",
+			"vendors/signals.js",
+			"vendors/history.js",
+			"vendors/preloadjs.js",
 			
 			"app/InitApp.js",
 			
@@ -62,11 +62,11 @@
 		"name": "scripts-mobile.min.js",
 		"dest": "",
 		"files": [
-			"libs/zepto.js",
-			"libs/greensock/TweenMax.js",
-			"libs/signals.js",
-			"libs/history.js",
-			"libs/preloadjs.js",
+			"vendors/zepto.js",
+			"vendors/greensock/TweenMax.js",
+			"vendors/signals.js",
+			"vendors/history.js",
+			"vendors/preloadjs.js",
 			
 			"app/InitApp.js",
 			
