@@ -1,1 +1,1 @@
-{"ENV":"dev","BASE_URL":"./","ROUTES_FILES":["static","projects"],"LANGUAGES":["fr","en","ex"],"HAS_MOBILE_VERSION":"true","HAS_LANGUAGES_LANDING":"false","GA_ID":[]}
+{"ENV":"dev","LOCALHOST":true,"BASE_URL_DEV":"http://startiflette:8888/www/","BASE_URL_PREPROD":"http://preprod.SITE_URL.COM/","BASE_URL_PROD":"http://www.SITE_URL.COM/","ROUTES_FILES":["static","projects"],"ALL_LANG":["fr","en","ex"],"HAS_MOBILE_VERSION":true,"HAS_LANG_LANDING":false,"GA_ID":[]}

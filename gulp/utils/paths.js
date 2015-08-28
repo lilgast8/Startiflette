@@ -2,7 +2,7 @@ module.exports = {
 	
 	env: {
 		dev:	'dev/',
-		prod:	'dist/'
+		prod:	'www/'
 	},
 	
 	emptyFiles: '**/empty-folder.txt',
