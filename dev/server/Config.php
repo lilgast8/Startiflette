@@ -7,7 +7,7 @@ class Config
 	
 	protected static $instance;
 	
-	const CONFIG_FILE_PATH = 'src/json/config/config.json';
+	const CONFIG_FILE_PATH = 'assets/json/config/config.json';
 	/*const PROD				= false;
 	// const PROD				= true;
 	const DEFAULT_LANG		= 'fr';
@@ -72,10 +72,12 @@ class Config
 		if ( !file_exists(self::CONFIG_FILE_PATH) )
 			throw new ErrorException('Config file is missing!');
 		
-		$config = file_get_contents(self::CONFIG_FILE_PATH);
-		$this->config = json_decode($config);
+		$config			= file_get_contents(self::CONFIG_FILE_PATH);
+		$this->config	= json_decode($config);
 		
-		// var_dump($this->config);
+		echo '<pre>';
+		var_dump($this->config);
+		echo '</pre>';
 		// echo $this->config->ENV;
 		
 		// $projects = file_get_contents($projectsConfig);

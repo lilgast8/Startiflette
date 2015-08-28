@@ -2,17 +2,18 @@
 	
 	"ENV":						"dev",
 	"LOCALHOST":				true,
-	"BASE_URL_DEV":				"http://startiflette:8888/www/",
+	"BASE_URL_DEV":				"http://startiflette:8888/dev/",
 	"BASE_URL_PREPROD":			"http://preprod.SITE_URL.COM/",
 	"BASE_URL_PROD":			"http://www.SITE_URL.COM/",
+	"BASE_URL_PROD_ALT":		"http://startiflette:8888/www/",
 	"ROUTES_FILES":				[
-		"static",
-		"projects"
+									"static",
+									"projects"
 	],
 	"ALL_LANG":					[
-		"fr",
-		"en",
-		"ex"
+									"fr",
+									"en",
+									"ex"
 	],
 	"HAS_AJAX":					true,
 	"HAS_MOBILE_VERSION":		true,

@@ -11,6 +11,7 @@ Made the configurations in the `dev/assets/json/config/config.json` file.
 * BASE_URL_DEV: @type {string}
 * BASE_URL_PREPROD: @type {string}
 * BASE_URL_PROD: @type {string}
+* BASE_URL_PROD_ALT: @type {string}
 * ROUTES_FILES: @type {array of string} list of json files used for routing management
 * ALL_LANG: @type {array of string} list of languages
 * HAS_AJAX: @type {boolean}
