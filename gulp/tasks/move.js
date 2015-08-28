@@ -10,64 +10,70 @@ var plumber	= require('gulp-plumber');
 gulp.task( 'move', function() {
 	
 	/* Prod */
-	if ( options.moveFromPath === null && options.task == 'prod' ) {
-		options.moveFromPath	= [
-			paths.env.dev + paths.assets.css.minAllFiles,
-			paths.env.dev + paths.assets.css.fonts.allFiles,
-			paths.env.dev + paths.assets.js.vendors.HTML5ShivFile,
-			paths.env.dev + paths.php.allFiles,
-		];
-		options.moveToPath		= [
-			paths.env.prod + paths.assets.css.dir,
-			paths.env.prod + paths.assets.css.fonts.dir,
-			paths.env.prod + paths.assets.js.vendors.dir,
-			paths.env.prod + paths.php.dir
-		];
-	}
+	if ( options.movePath === null && options.task == 'prod' )
+		options.movePath = {
+			from: [
+				paths.env.dev + paths.assets.css.minAllFiles,
+				paths.env.dev + paths.assets.css.fonts.allFiles,
+				paths.env.dev + paths.assets.js.vendors.HTML5ShivFile,
+				paths.env.dev + paths.php.allFiles,
+			],
+			to: [
+				paths.env.prod + paths.assets.css.dir,
+				paths.env.prod + paths.assets.css.fonts.dir,
+				paths.env.prod + paths.assets.js.vendors.dir,
+				paths.env.prod + paths.php.dir
+			]
+		};
 	
 	
 	/* SASS */
-	else if ( options.moveFromPath === null && options.task == 'sass' ) {
-		options.moveFromPath	= [
-			paths.env.dev + paths.assets.css.minAllFiles,
-			paths.env.dev + paths.assets.css.fonts.allFiles
-		];
-		options.moveToPath		= [
-			paths.env.prod + paths.assets.css.dir,
-			paths.env.prod + paths.assets.css.fonts.dir
-		];
-	}
+	else if ( options.movePath === null && options.task == 'sass' )
+		options.movePath = {
+			from: [
+				paths.env.dev + paths.assets.css.minAllFiles,
+				paths.env.dev + paths.assets.css.fonts.allFiles
+			],
+			to: [
+				paths.env.prod + paths.assets.css.dir,
+				paths.env.prod + paths.assets.css.fonts.dir
+			]
+		};
 	
 	
 	/* JS & JS-min */
-	else if ( options.moveFromPath === null && ( options.task == 'js' || options.task == 'js-min' ) ) {
-		options.moveFromPath	= [ paths.env.dev + paths.assets.js.vendors.HTML5ShivFile ];
-		options.moveToPath		= [ paths.env.prod + paths.assets.js.vendors.dir ];
-	}
+	else if ( options.movePath === null && ( options.task == 'js' || options.task == 'js-min' ) )
+		options.movePath = {
+			from: [ paths.env.dev + paths.assets.js.vendors.HTML5ShivFile ],
+			to: [ paths.env.prod + paths.assets.js.vendors.dir ]
+		};
 	
 	
 	/* Image */
-	else if ( options.moveFromPath === null && ( options.task == 'image' || options.task == 'image-min' || options.task == 'image-move' ) ) {
-		options.moveFromPath	= [ paths.env.dev + paths.assets.img.allFiles ];
-		options.moveToPath		= [ paths.env.prod + paths.assets.img.dir ];
-	}
+	else if ( options.movePath === null && ( options.task == 'image' || options.task == 'image-min' || options.task == 'image-move' ) )
+		options.movePath = {
+			from: [ paths.env.dev + paths.assets.img.allFiles ],
+			to: [ paths.env.prod + paths.assets.img.dir ]
+		};
 	
 	
 	/* PHP */
-	else if ( options.moveFromPath === null && options.task == 'php' ) {
-		options.moveFromPath	= [ paths.env.dev + paths.php.allFiles ];
-		options.moveToPath		= [ paths.env.prod + paths.php.dir ];
-	}
+	else if ( options.movePath === null && options.task == 'php' )
+		options.movePath = {
+			from: [ paths.env.dev + paths.php.allFiles ],
+			to: [ paths.env.prod + paths.php.dir ]
+		};
 	
 	
 	
-	// parse options.moveFromPath
-	for ( var i = 0; i < options.moveFromPath.length; i++ ) {
-		
-		gulp.src( options.moveFromPath[i] )
-			.pipe( plumber() )
-			.pipe( gulp.dest( options.moveToPath[i] ) );
-		
+	if ( options.movePath !== null ) {
+		for ( var i = 0; i < options.movePath.from.length; i++ ) {
+			
+			gulp.src( options.movePath.from[i] )
+				.pipe( plumber() )
+				.pipe( gulp.dest( options.movePath.to[i] ) );
+			
+		}
 	}
 	
 } );
