@@ -9,8 +9,6 @@ var plumber	= require('gulp-plumber');
 
 gulp.task( 'move', function() {
 	
-	console.log('MOVE', options.moveFromPath);
-	
 	/* Prod */
 	if ( options.moveFromPath === null && options.task == 'prod' ) {
 		options.moveFromPath	= [
@@ -65,8 +63,6 @@ gulp.task( 'move', function() {
 	
 	// parse options.moveFromPath
 	for ( var i = 0; i < options.moveFromPath.length; i++ ) {
-		
-		console.log('from:', options.moveFromPath[i], ' -> to:', options.moveToPath[i]);
 		
 		gulp.src( options.moveFromPath[i] )
 			.pipe( plumber() )

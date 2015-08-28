@@ -9,8 +9,6 @@ var del		= require( 'del' );
 
 gulp.task( 'delete', function() {
 	
-	console.log('TASK:', options.task);
-	
 	/* Init */
 	if ( options.deletePath === null && options.task == 'init' )
 		options.deletePath = paths.emptyFiles;
@@ -63,11 +61,7 @@ gulp.task( 'delete', function() {
 	
 	
 	
-	console.log('——— delete func ———');
-	if (options.deletePath !== null && options.subtask != 'prod-deleted' ) {
-		console.log('--------> deletePath:', options.deletePath);
-		
+	if (options.deletePath !== null && options.subtask != 'prod-deleted' )
 		del.sync( options.deletePath );
-	}
 	
 } );
