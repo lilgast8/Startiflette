@@ -21,10 +21,10 @@
 		$main->routes->getAltLink();
 	
 	/* Social share */
-	include_once $main->path->file->base.'php/shared/social-share.php';
+	include_once $main->path->file->base.'server/shared/social-share.php';
 	
 	/* Favicons */
-	include_once $main->path->file->base.'php/shared/favicons.php';
+	include_once $main->path->file->base.'server/shared/favicons.php';
 	
 	?>
 	
@@ -37,7 +37,7 @@
 	echo $main->config->listJsFiles('modern-detect-izr');
 	
 	/* Google Analytics */
-	include_once $main->path->file->base.'php/shared/google-analytics.php';
+	include_once $main->path->file->base.'server/shared/google-analytics.php';
 	
 	?>
 </head>

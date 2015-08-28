@@ -2,7 +2,7 @@
 
 
 
-include_once 'php/Main.php';
+include_once 'server/Main.php';
 
 // $main = Main::getInstance();
 // $main->init();

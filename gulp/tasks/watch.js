@@ -83,19 +83,19 @@ gulp.task( 'watch', function() {
 	/* Livereload */
 	gulp.watch( [
 		
-		// SASS
+		/* SASS */
 		paths.env.dev + paths.assets.css.minAllFiles,
 		
-		// JS
+		/* JS */
 		paths.env.dev + paths.assets.js.allFiles,
 		
-		// JSON
+		/* JSON */
 		paths.env.dev + paths.assets.json.allFiles,
 		'!' + paths.env.dev + paths.assets.json.routes.concatAllFiles,
 		
-		// PHP
-		paths.env.dev + paths.php.indexFile,
-		paths.env.dev + paths.php.allFiles
+		/* Server */
+		paths.env.dev + paths.server.indexFile,
+		paths.env.dev + paths.server.allFiles
 		
 	] ).on( 'change', livereload.changed );
 	

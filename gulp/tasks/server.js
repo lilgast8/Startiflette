@@ -2,7 +2,7 @@ var gulp = require('gulp');
 
 
 
-gulp.task( 'php', ['delete'], function() {
+gulp.task( 'server', ['delete'], function() {
 	
 	gulp.start( 'move' );
 	

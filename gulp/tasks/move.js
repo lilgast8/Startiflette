@@ -16,13 +16,13 @@ gulp.task( 'move', function() {
 				paths.env.dev + paths.assets.css.minAllFiles,
 				paths.env.dev + paths.assets.css.fonts.allFiles,
 				paths.env.dev + paths.assets.js.vendors.HTML5ShivFile,
-				paths.env.dev + paths.php.allFiles,
+				paths.env.dev + paths.server.allFiles,
 			],
 			to: [
 				paths.env.prod + paths.assets.css.dir,
 				paths.env.prod + paths.assets.css.fonts.dir,
 				paths.env.prod + paths.assets.js.vendors.dir,
-				paths.env.prod + paths.php.dir
+				paths.env.prod + paths.server.dir
 			]
 		};
 	
@@ -57,11 +57,11 @@ gulp.task( 'move', function() {
 		};
 	
 	
-	/* PHP */
-	else if ( options.movePath === null && options.task == 'php' )
+	/* Server */
+	else if ( options.movePath === null && options.task == 'server' )
 		options.movePath = {
-			from: [ paths.env.dev + paths.php.allFiles ],
-			to: [ paths.env.prod + paths.php.dir ]
+			from: [ paths.env.dev + paths.server.allFiles ],
+			to: [ paths.env.prod + paths.server.dir ]
 		};
 	
 	

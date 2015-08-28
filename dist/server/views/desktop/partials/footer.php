@@ -21,7 +21,7 @@
 		</nav>
 	</footer>
 	
-	<?php include_once $main->path->file->base.'php/views/alt/no-js.php'; // no JS ?>
+	<?php include_once $main->path->file->base.'server/views/alt/no-js.php'; // no JS ?>
 	
 </div> <!-- End #main-container -->
 
@@ -30,10 +30,10 @@
 <?php
 
 /* JS var */
-include_once $main->path->file->base.'php/shared/js-var.php';
+include_once $main->path->file->base.'server/shared/js-var.php';
 
 /* JS scripts */
-echo $main->config->listJsFiles('scripts-mobile');
+echo $main->config->listJsFiles('scripts-desktop');
 
 ?>
 

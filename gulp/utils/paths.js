@@ -7,10 +7,10 @@ module.exports = {
 	
 	emptyFiles: '**/empty-folder.txt',
 	
-	php: {
+	server: {
 		indexFile:	'index.php',
-		dir:		'php/',
-		allFiles:	'php/**/*'
+		dir:		'server/',
+		allFiles:	'server/**/*'
 	},
 	
 	assets: {
