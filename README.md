@@ -13,7 +13,7 @@ Made the configurations in the `dev/assets/json/config/config.json` file.
 * BASE_URL_PROD: @type {string}
 * BASE_URL_PROD_ALT: @type {string}
 * ROUTES_FILES: @type {array of string} list of json files used for routing management
-* ALL_LANG: @type {array of string} list of languages
+* ALL_LANG: @type {array of string} list of languages, the first one will be the default language
 * HAS_LANG_LANDING: @type {boolean}
 * HAS_MOBILE_VERSION: @type {boolean}
 * FORCE_DEVICE: @type {boolean or string} can be false, "desktop", "tablet" or "mobile"
