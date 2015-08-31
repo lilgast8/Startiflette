@@ -7,31 +7,28 @@ class Config
 	
 	protected static $instance;
 	
-	const CONFIG_FILE_PATH = 'assets/json/config/config.json';
-	/*const PROD				= false;
-	// const PROD				= true;
-	const DEFAULT_LANG		= 'fr';
-	const GA_ID				= 'UA-XXXXXXXX-XX';*/
+	// const CONFIG_FILE_PATH		= 'assets/json/config/config.json';
+	const CONFIG_FILE_PATH		= 'assets' .DS. 'json' .DS. 'config' .DS. 'config.json';
 	
 	static $ENV					= null;
-	static $BASE_URL			= null;
+	static $LOCALHOST			= null;
+	static $BASE_URL_DEV		= null;
+	static $BASE_URL_PREPROD	= null;
+	static $BASE_URL_PROD		= null;
+	static $BASE_URL_PROD_ALT	= null;
 	static $ROUTES_FILES		= null;
 	static $ALL_LANG			= null;
-	static $HAS_MOBILE_VERSION	= null;
 	static $HAS_LANG_LANDING	= null;
+	static $HAS_MOBILE_VERSION	= null;
+	static $FORCE_DEVICE		= null;
+	static $HAS_AJAX			= null;
 	static $GA_ID				= null;
 	
-	// static $LOCALHOST		= null;
-	static $DEVICE			= null;
-	static $DEVICE_FOLDER	= null;
-	static $FOLDER			= null;
+	static $DEVICE				= null;
+	static $DEVICE_FOLDER		= null;
 	
-	static $MULTI_LANG		= null;
-	// static $ALT_LANG		= null;
-	// static $ALL_LANG		= null;
-	// static $LANG			= null;
-	
-	/*static $LG_LINK			= null;
+	/*
+	static $LG_LINK			= null;
 	static $LG_LINK_ROOT	= null;
 	
 	static $IS_AJAX			= false;
@@ -40,24 +37,18 @@ class Config
 	private $path			= null;
 	
 	public $pages			= null;
-	public $projects		= null;*/
+	public $projects		= null;
+	*/
 	
 	
 	protected function __construct()
 	{
-		$this->setConfig();
-		// $this->setEnv();
-		// $this->setErrors();
-		// $this->setDevice();
-	}
-	
-	
-	public static function getInstance()
-	{
-		if(!isset(self::$instance))
-			self::$instance = new self;
+		/*$this->getConfig();
+		$this->setEnv();
+		$this->setErrors();
+		$this->setDevice();*/
 		
-		return self::$instance;
+		$this->init();
 	}
 	
 	
@@ -67,7 +58,25 @@ class Config
 	}
 	
 	
-	private function setConfig()
+	public static function getInstance()
+	{
+		if (!isset(self::$instance))
+			self::$instance = new self;
+		
+		return self::$instance;
+	}
+	
+	
+	private function init()
+	{
+		$this->getConfig();
+		$this->setConfig();
+		// $this->setEnv();
+		$this->setDevice();
+	}
+	
+	
+	private function getConfig()
 	{
 		if ( !file_exists(self::CONFIG_FILE_PATH) )
 			throw new ErrorException('Config file is missing!');
@@ -75,66 +84,70 @@ class Config
 		$config			= file_get_contents(self::CONFIG_FILE_PATH);
 		$this->config	= json_decode($config);
 		
-		echo '<pre>';
-		var_dump($this->config);
-		echo '</pre>';
-		// echo $this->config->ENV;
-		
-		// $projects = file_get_contents($projectsConfig);
-		// $this->projects = json_decode($projects);
-		
+		// echo '<pre>';
+		// var_dump($this->config);
+		// echo '</pre>';
 	}
 	
 	
-	private function setEnv()
+	private function setConfig()
 	{
-		self::$ENV			= '';
+		foreach ($this->config as $key => $value)
+			self::${$key} = $value;
 		
-		self::$LOCALHOST	= $_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_PORT'] == '8888' ? true : false;
+		// echo '<pre>';
+		// var_dump($this);
+		// echo '</pre>';
 	}
 	
 	
-	private function setErrors()
+	/*private function setEnv()
 	{
-		if(self::$LOCALHOST || !self::PROD) {
-			error_reporting(E_ALL);
-			ini_set('display_errors', '1');
-		}
-	}
+		self::$ENV			= $this->config->ENV;
+		
+		self::$LOCALHOST	= $this->config->LOCALHOST;
+	}*/
 	
 	
 	private function setDevice()
 	{
-		$detect = new Mobile_Detect();
-		$mobile = $detect->isMobile() ? true : false;
-		$tablet = $detect->isTablet() ? true : false;
-		$desktop = !$mobile && !$tablet ? true : false;
-		// if(preg_match('/Firefox/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = true;
-		// if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) $mobile = true;
-		// if(preg_match('/Chrome/i', $_SERVER['HTTP_USER_AGENT'])) { $mobile = true; $tablet = true; }
+		
+		self::$HAS_MOBILE_VERSION	= $this->config->HAS_MOBILE_VERSION;
+		self::$FORCE_DEVICE			= $this->config->FORCE_DEVICE;
+		
+		
+		$detect		= new Mobile_Detect();
+		$mobile		= $detect->isMobile() ? true : false; // mobile device: phones or tablets
+		$tablet		= $detect->isTablet() ? true : false; // tablet device
+		$desktop	= !$mobile && !$tablet ? true : false; // desktop device
+		
 		
 		// set device
-		if($mobile && !$tablet)
+		if (self::$FORCE_DEVICE)
+			$device = self::$FORCE_DEVICE;
+		else if ($mobile && !$tablet)
 			$device = 'mobile';
-		else if($tablet)
+		else if ($tablet)
 			$device = 'tablet';
-		else if($desktop)
+		else if ($desktop)
 			$device = 'desktop';
 		
+		
 		// set device path
-		if($device == 'desktop' || $device == 'tablet')
+		if (!self::$HAS_MOBILE_VERSION)
 			$devicePath = 'desktop';
-		else if($device == 'mobile')
+		else if (self::$HAS_MOBILE_VERSION && ($device == 'desktop' || $device == 'tablet'))
+			$devicePath = 'desktop';
+		else if (self::$HAS_MOBILE_VERSION && $device == 'mobile')
 			$devicePath = 'mobile';
 		
 		
 		self::$DEVICE			= $device;
 		self::$DEVICE_FOLDER	= $devicePath.DS;
-		self::$FOLDER			= 'pages'.DS;
 	}
 	
 	
-	public function init()
+	/*public function init()
 	{
 		$this->path = Path::getInstance();
 		
@@ -145,10 +158,10 @@ class Config
 		$this->setLang();
 		$this->checkLang();
 		$this->setLinksLang();
-	}
+	}*/
 	
 	
-	private function getConfig()
+	/*private function getConfig()
 	{
 		// pages config
 		if(!file_exists($this->path->file->pagesConfig))
@@ -165,10 +178,10 @@ class Config
 		
 		$projects = file_get_contents($projectsConfig);
 		$this->projects = json_decode($projects);
-	}
+	}*/
 	
 	
-	private function setAllLang()
+	/*private function setAllLang()
 	{
 		self::$ALL_LANG = array();
 		
@@ -224,7 +237,7 @@ class Config
 	{
 		self::$LG_LINK		= self::$MULTI_LANG ? self::$LANG.'/' : '';
 		self::$LG_LINK_ROOT	= self::$LANG == self::DEFAULT_LANG ? '' : self::$LANG;
-	}
+	}*/
 	
 	
 	public function manageAjax($pageUrl)

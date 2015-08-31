@@ -7,10 +7,12 @@ class Path
 	
 	protected static $instance;
 	
-	const SITE_URL			= 'http://www.SITE-URL.com';
+	// const SITE_URL			= 'http://www.SITE-URL.com';
 	
-	public $url		= null;
-	public $file	= null;
+	// public $url		= null;
+	// public $file	= null;
+	static $URL		= null;
+	static $FILE	= null;
 	
 	
 	protected function __construct()
@@ -21,7 +23,7 @@ class Path
 	
 	public static function getInstance()
 	{
-		if(!isset(self::$instance))
+		if (!isset(self::$instance))
 			self::$instance = new self;
 		
 		return self::$instance;
@@ -36,12 +38,39 @@ class Path
 	
 	private function init()
 	{
-		$assets_folder		= Config::PROD ? 'assets' : 'src';
+		// $assets_folder		= Config::PROD ? 'assets' : 'src';
 		
 		
 		// url path
-		$this->url			= new stdClass();
+		// $this->url			= new stdClass();
+		self::$URL			= new stdClass();
 		
+		self::$URL->base	= Config::$BASE_URL_DEV;
+		self::$URL->current	= $_SERVER['REQUEST_URI'];
+		self::$URL->assets	= self::$URL->base . 'assets/';
+		self::$URL->css		= self::$URL->assets . 'css/';
+		self::$URL->img		= self::$URL->assets . 'img/';
+		self::$URL->js		= self::$URL->assets . 'js/';
+		self::$URL->json	= self::$URL->assets . 'json/';
+		
+		
+		// file path
+		self::$FILE			= new stdClass();
+		// echo $_SERVER["SCRIPT_FILENAME"];
+		
+		self::$FILE->base	= str_replace('index.php', '', $_SERVER['SCRIPT_FILENAME']);
+		
+		
+		
+		echo '<pre>';
+		// var_dump(self::$URL);
+		var_dump(self::$FILE);
+		echo '</pre>';
+		
+		
+		
+		
+		/*
 		// $this->url->base	= str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
 		$this->url->base	= 'http://'.$_SERVER['HTTP_HOST'].str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
 		// $this->url->current	= $_SERVER['REQUEST_URI'];
@@ -51,9 +80,11 @@ class Path
 		$this->url->img		= $this->url->assets .'img/';
 		$this->url->js		= $this->url->assets .'js/';
 		$this->url->json	= $this->url->assets .'json/';
+		*/
 		
 		
 		// file path
+		/*
 		$this->file						= new stdClass();
 		
 		$this->file->base				= str_replace('index.php', '', $_SERVER['SCRIPT_FILENAME']);
@@ -72,6 +103,7 @@ class Path
 		$this->file->jsFilesFile		= $this->file->base . $assets_folder.DS.'js'.DS.'js-files.json';
 		$this->file->json				= $this->file->assets . 'json'.DS;
 		$this->file->pagesConfig		= $this->file->json . 'pages.json';
+		*/
 	}
 	
 }

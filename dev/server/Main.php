@@ -5,9 +5,10 @@
 defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
 
 include_once 'server/vendors/Mobile_Detect.php';
-include_once 'server/Config.php';
-include_once 'server/Path.php';
-include_once 'server/controller/RoutesController.php';
+include_once 'server/config/Config.php';
+include_once 'server/config/Lang.php';
+include_once 'server/config/Path.php';
+// include_once 'server/controller/RoutesController.php';
 
 
 
@@ -36,7 +37,7 @@ class Main
 	
 	public static function getInstance()
 	{
-		if(!isset(self::$instance))
+		if (!isset(self::$instance))
 			self::$instance = new self;
 		
 		return self::$instance;
@@ -46,6 +47,7 @@ class Main
 	public function init()
 	{
 		$this->setConfig();
+		$this->setLang();
 		// $this->setPath();
 		// $this->config->init();
 		// $this->setRoutes();
@@ -59,7 +61,13 @@ class Main
 	}
 	
 	
-	private function setPath()
+	private function setLang()
+	{
+		$this->lang = Lang::getInstance();
+	}
+	
+	
+	/*private function setPath()
 	{
 		$this->path = Path::getInstance();
 	}
@@ -75,7 +83,7 @@ class Main
 	{
 		include_once $this->path->file->contents . DS . 'contents.php';
 		$this->contents = getContents();
-	}
+	}*/
 	
 }
 
