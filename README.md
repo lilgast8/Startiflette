@@ -14,8 +14,8 @@ Made the configurations in the `dev/assets/json/config/config.json` file.
 * BASE_URL_PROD_ALT: @type {string}
 * ROUTES_FILES: @type {array of string} list of json files used for routing management
 * ALL_LANG: @type {array of string} list of languages
-* HAS_AJAX: @type {boolean}
-* HAS_MOBILE_VERSION: @type {boolean}
 * HAS_LANG_LANDING: @type {boolean}
-* FORCE_DEVICE: @type {string} can be "desktop", "tablet" or "mobile"
+* HAS_MOBILE_VERSION: @type {boolean}
+* FORCE_DEVICE: @type {boolean or string} can be false, "desktop", "tablet" or "mobile"
+* HAS_AJAX: @type {boolean}
 * GA_ID: @type {array of string} list of Google Analytics ID
