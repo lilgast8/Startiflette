@@ -2,8 +2,6 @@
 
 
 
-defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
-
 include_once 'server/vendors/Mobile_Detect.php';
 include_once 'server/config/Config.php';
 include_once 'server/config/Lang.php';

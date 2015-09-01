@@ -7,8 +7,8 @@ class Config
 	
 	protected static $instance;
 	
-	// const CONFIG_FILE_PATH		= 'assets/json/config/config.json';
-	const CONFIG_FILE_PATH		= 'assets' .DS. 'json' .DS. 'config' .DS. 'config.json';
+	const CONFIG_FILE_PATH		= 'assets/json/config/config.json';
+	// const CONFIG_FILE_PATH		= 'assets' .DS. 'json' .DS. 'config' .DS. 'config.json';
 	
 	static $ENV					= null;
 	static $LOCALHOST			= null;
