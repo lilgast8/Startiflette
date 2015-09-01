@@ -8,7 +8,6 @@ class Config
 	protected static $instance;
 	
 	const CONFIG_FILE_PATH		= 'assets/json/config/config.json';
-	// const CONFIG_FILE_PATH		= 'assets' .DS. 'json' .DS. 'config' .DS. 'config.json';
 	
 	static $ENV					= null;
 	static $LOCALHOST			= null;
@@ -133,17 +132,17 @@ class Config
 			$device = 'desktop';
 		
 		
-		// set device path
+		// set device folder
 		if (!self::$HAS_MOBILE_VERSION)
-			$devicePath = 'desktop';
+			$deviceFolder = 'desktop';
 		else if (self::$HAS_MOBILE_VERSION && ($device == 'desktop' || $device == 'tablet'))
-			$devicePath = 'desktop';
+			$deviceFolder = 'desktop';
 		else if (self::$HAS_MOBILE_VERSION && $device == 'mobile')
-			$devicePath = 'mobile';
+			$deviceFolder = 'mobile';
 		
 		
 		self::$DEVICE			= $device;
-		self::$DEVICE_FOLDER	= $devicePath.DS;
+		self::$DEVICE_FOLDER	= $deviceFolder . '/';
 	}
 	
 	
