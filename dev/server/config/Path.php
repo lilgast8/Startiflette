@@ -33,10 +33,13 @@ class Path
 	
 	private function init()
 	{
+		$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+		
+		
 		self::$URL			= new stdClass();
 		
 		self::$URL->base	= Config::$BASE_URL_DEV;
-		self::$URL->current	= $_SERVER['REQUEST_URI'];
+		self::$URL->current	= $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		self::$URL->assets	= self::$URL->base . 'assets/';
 		self::$URL->css		= self::$URL->assets . 'css/';
 		self::$URL->img		= self::$URL->assets . 'img/';

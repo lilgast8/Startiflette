@@ -42,11 +42,6 @@ class Config
 	
 	protected function __construct()
 	{
-		/*$this->getConfig();
-		$this->setEnv();
-		$this->setErrors();
-		$this->setDevice();*/
-		
 		$this->init();
 	}
 	
@@ -68,53 +63,34 @@ class Config
 	
 	private function init()
 	{
-		$this->getConfig();
 		$this->setConfig();
-		// $this->setEnv();
 		$this->setDevice();
-	}
-	
-	
-	private function getConfig()
-	{
-		if ( !file_exists(self::CONFIG_FILE_PATH) )
-			throw new ErrorException('Config file is missing!');
-		
-		$config			= file_get_contents(self::CONFIG_FILE_PATH);
-		$this->config	= json_decode($config);
-		
-		// echo '<pre>';
-		// var_dump($this->config);
-		// echo '</pre>';
 	}
 	
 	
 	private function setConfig()
 	{
-		foreach ($this->config as $key => $value)
-			self::${$key} = $value;
+		$config = $this->getConfigFile();
 		
-		// echo '<pre>';
-		// var_dump($this);
-		// echo '</pre>';
+		foreach ($config as $key => $value)
+			self::${$key} = $value;
 	}
 	
 	
-	/*private function setEnv()
+	private function getConfigFile()
 	{
-		self::$ENV			= $this->config->ENV;
+		if ( !file_exists(self::CONFIG_FILE_PATH) )
+			throw new ErrorException('Config file is missing!');
 		
-		self::$LOCALHOST	= $this->config->LOCALHOST;
-	}*/
+		$config	= file_get_contents(self::CONFIG_FILE_PATH);
+		$config	= json_decode($config);
+		
+		return $config;
+	}
 	
 	
 	private function setDevice()
 	{
-		
-		self::$HAS_MOBILE_VERSION	= $this->config->HAS_MOBILE_VERSION;
-		self::$FORCE_DEVICE			= $this->config->FORCE_DEVICE;
-		
-		
 		$detect		= new Mobile_Detect();
 		$mobile		= $detect->isMobile() ? true : false; // mobile device: phones or tablets
 		$tablet		= $detect->isTablet() ? true : false; // tablet device
@@ -239,7 +215,7 @@ class Config
 	}*/
 	
 	
-	public function manageAjax($pageUrl)
+	/*public function manageAjax($pageUrl)
 	{
 		if(strrpos($pageUrl, 'ajax-content/') !== false) {
 			$pageUrl = str_replace('ajax-content/', '', $pageUrl);
@@ -298,7 +274,7 @@ class Config
 		
 		
 		return $listFiles;
-	}
+	}*/
 	
 }
 
