@@ -46,6 +46,9 @@ class Path
 		self::$URL->js		= self::$URL->assets . 'js/';
 		self::$URL->json	= self::$URL->assets . 'json/';
 		self::$URL->server	= self::$URL->base . 'server/';
+		
+		echo self::$URL->current.'<br><br>';
+		echo '<b>faire une currentUrlShorten ? :</b> <br>'.str_replace(Path::$URL->base, '', self::$URL->current);
 	}
 	
 }

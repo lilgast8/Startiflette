@@ -42,28 +42,10 @@ class Lang
 		$this->path = Path::getInstance();
 		
 		$this->setGlobalInfos();
-		
-		// $this->setAllLang();
-		// $this->setDefaultLang();
-		// $this->setMultiLang();
-		
-		// $this->getLang();
-		
-		// $this->setAltLang();
 		$this->setCurrentLang();
 		$this->checkCurrentLang();
 		$this->setLinksLang();
 	}
-	
-	
-	// private function getLang()
-	// {
-	// 	self::$ALL_LANG = Config::$ALL_LANG;
-		
-	// 	echo '<pre>';
-	// 	var_dump(self::$ALL_LANG);
-	// 	echo '</pre>';
-	// }
 	
 	
 	private function setGlobalInfos()
