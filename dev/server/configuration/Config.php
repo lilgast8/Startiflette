@@ -42,7 +42,8 @@ class Config
 	
 	protected function __construct()
 	{
-		$this->init();
+		$this->setConfig();
+		$this->setDevice();
 	}
 	
 	
@@ -58,13 +59,6 @@ class Config
 			self::$instance = new self;
 		
 		return self::$instance;
-	}
-	
-	
-	private function init()
-	{
-		$this->setConfig();
-		$this->setDevice();
 	}
 	
 	
@@ -120,6 +114,12 @@ class Config
 		self::$DEVICE			= $device;
 		self::$DEVICE_FOLDER	= $deviceFolder . '/';
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	/*public function init()

@@ -23,7 +23,12 @@ class Main
 	
 	protected function __construct()
 	{
-		$this->init();
+		$this->setConfig();
+		$this->setPath();
+		$this->setLang();
+		// $this->config->init();
+		$this->setRoutes();
+		// $this->setContents();
 	}
 	
 	
@@ -39,17 +44,6 @@ class Main
 			self::$instance = new self;
 		
 		return self::$instance;
-	}
-	
-	
-	public function init()
-	{
-		$this->setConfig();
-		$this->setPath();
-		$this->setLang();
-		// $this->config->init();
-		$this->setRoutes();
-		// $this->setContents();
 	}
 	
 	

@@ -14,7 +14,7 @@ class Path
 	
 	protected function __construct()
 	{
-		$this->init();
+		$this->setPaths();
 	}
 	
 	
@@ -33,7 +33,7 @@ class Path
 	}
 	
 	
-	private function init()
+	private function setPaths()
 	{
 		// url paths
 		self::$URL			= new stdClass();

@@ -30,27 +30,6 @@ class RoutesController
 	
 	protected function __construct()
 	{
-		$this->init();
-	}
-	
-	
-	protected function __clone()
-	{
-		
-	}
-	
-	
-	public static function getInstance()
-	{
-		if (!isset(self::$instance))
-			self::$instance = new self;
-		
-		return self::$instance;
-	}
-	
-	
-	private function init()
-	{
 		// $this->config	= Config::getInstance();
 		// $this->path		= Path::getInstance();
 		
@@ -66,6 +45,21 @@ class RoutesController
 		// $this->setRootPageName();
 		// $this->setPageInfos();
 		// $this->manageAltUrl();
+	}
+	
+	
+	protected function __clone()
+	{
+		
+	}
+	
+	
+	public static function getInstance()
+	{
+		if (!isset(self::$instance))
+			self::$instance = new self;
+		
+		return self::$instance;
 	}
 	
 	

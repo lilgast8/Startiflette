@@ -18,7 +18,12 @@ class Lang
 	
 	protected function __construct()
 	{
-		$this->init();
+		// Path::getInstance();
+		
+		$this->setGlobalInfos();
+		$this->setCurrentLang();
+		// $this->checkCurrentLang();
+		$this->setLinksLang();
 	}
 	
 	
@@ -34,17 +39,6 @@ class Lang
 			self::$instance = new self;
 		
 		return self::$instance;
-	}
-	
-	
-	private function init()
-	{
-		// Path::getInstance();
-		
-		$this->setGlobalInfos();
-		$this->setCurrentLang();
-		// $this->checkCurrentLang();
-		$this->setLinksLang();
 	}
 	
 	
