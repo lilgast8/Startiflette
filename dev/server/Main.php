@@ -3,9 +3,9 @@
 
 
 include_once 'server/vendors/Mobile_Detect.php';
-include_once 'server/config/Config.php';
-include_once 'server/config/Lang.php';
-include_once 'server/config/Path.php';
+include_once 'server/configuration/Config.php';
+include_once 'server/configuration/Lang.php';
+include_once 'server/configuration/Path.php';
 // include_once 'server/controller/RoutesController.php';
 
 
