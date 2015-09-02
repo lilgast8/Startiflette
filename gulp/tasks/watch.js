@@ -16,8 +16,7 @@ gulp.task( 'watch', function() {
 	/* Tasks management */
 	gulp.watch( [
 		paths.env.dev + paths.assets.allFiles,
-		'!' + paths.env.dev + paths.assets.css.minAllFiles,
-		'!' + paths.env.dev + paths.assets.json.routes.concatAllFiles
+		'!' + paths.env.dev + paths.assets.css.minAllFiles
 	], function(e) {
 		
 		var ext, desktop, mobile, shared, config, routes;
@@ -35,8 +34,7 @@ gulp.task( 'watch', function() {
 		
 		/* SASS */
 		if ( ext == '.scss' ) {
-			taskname		= 'sass';
-			options.subtask	= 'default-sass';
+			taskname = 'sass';
 			
 			if ( desktop )
 				options.cssSrcPath = [ paths.env.dev + paths.assets.css.app.desktopFile ];
@@ -51,8 +49,7 @@ gulp.task( 'watch', function() {
 		
 		/* JS */
 		else if ( ext == '.js' ) {
-			taskname		= 'js';
-			options.subtask	= 'default-js';
+			taskname = 'js';
 			
 			if ( desktop )
 				options.jsSrcPath = paths.env.dev + paths.assets.js.app.desktopAllFiles;
@@ -64,8 +61,7 @@ gulp.task( 'watch', function() {
 		
 		/* JSON */
 		else if ( ext == '.json' ) {
-			taskname		= 'json';
-			options.subtask	= 'default-json';
+			taskname = 'json';
 			
 			if ( config )
 				options.jsonSrcPath = paths.env.dev + paths.assets.json.config.allFiles;
@@ -91,7 +87,6 @@ gulp.task( 'watch', function() {
 		
 		/* JSON */
 		paths.env.dev + paths.assets.json.allFiles,
-		'!' + paths.env.dev + paths.assets.json.routes.concatAllFiles,
 		
 		/* Server */
 		paths.env.dev + paths.server.indexFile,

@@ -8,7 +8,7 @@ var jsonminify	= require( 'gulp-jsonminify' );
 
 
 
-gulp.task( 'json-min', ['json-concat'], function () {
+gulp.task( 'json-min', ['delete'], function () {
 	
 	var jsonSrcPath = [
 		paths.env.dev + paths.assets.json.allFiles,

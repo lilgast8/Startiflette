@@ -14,16 +14,10 @@ gulp.task( 'delete', function() {
 		options.deletePath = paths.emptyFiles;
 	
 	
-	/* Default */
-	else if ( options.deletePath === null && options.task == 'default' && options.subtask == 'default-json' )
-		options.deletePath = paths.env.dev + paths.assets.json.routes.concatAllFiles;
-	
-	
 	/* Prod */
 	else if ( options.deletePath === null && options.task == 'prod' )
 		options.deletePath = [
 			paths.env.dev + paths.assets.css.minAllFiles,
-			paths.env.dev + paths.assets.json.routes.concatAllFiles,
 			paths.env.prod + paths.assets.allFiles,
 			paths.env.prod + paths.server.dir
 		];
@@ -44,10 +38,7 @@ gulp.task( 'delete', function() {
 	
 	/* JSON & JSON-min */
 	else if ( options.deletePath === null && ( options.task == 'json' || options.task == 'json-min' ) )
-		options.deletePath = [
-			paths.env.dev + paths.assets.json.routes.concatAllFiles,
-			paths.env.prod + paths.assets.json.dir
-		];
+		options.deletePath = [ paths.env.prod + paths.assets.json.dir ];
 	
 	
 	/* Image, Image-min & Image-move */

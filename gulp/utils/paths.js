@@ -65,9 +65,8 @@ module.exports = {
 			},
 			
 			routes: {
-				dir:			'assets/json/routes/',
-				allFiles:		'assets/json/routes/**/*.json',
-				concatAllFiles:	'assets/json/routes/*.json'
+				dir:		'assets/json/routes/',
+				allFiles:	'assets/json/routes/*.json',
 			}
 		}
 	}
