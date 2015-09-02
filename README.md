@@ -19,3 +19,8 @@ Made the configurations in the `dev/assets/json/config/config.json` file.
 * FORCE_DEVICE: @type {boolean or string} can be false, "desktop", "tablet" or "mobile"
 * HAS_AJAX: @type {boolean}
 * GA_ID: @type {array of string} list of Google Analytics ID
+
+
+## Routes
+
+* error404 & home must be defined *— TO COMPLETE*

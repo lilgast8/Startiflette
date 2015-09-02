@@ -10,6 +10,7 @@ class Path
 	static $URL			= null;
 	static $FILE		= null;
 	static $PAGE_URL	= null;
+	static $LINKS		= null;
 	
 	
 	protected function __construct()
@@ -65,7 +66,7 @@ class Path
 		
 		self::$PAGE_URL->fullCurrent	= $this->getFullCurrentUrl();
 		self::$PAGE_URL->current		= $this->getCurrentUrl();
-		self::$PAGE_URL->paramsCurrent	= explode('/', self::$PAGE_URL->current);
+		self::$PAGE_URL->aCurrent		= explode('/', self::$PAGE_URL->current);
 	}
 	
 	
@@ -79,7 +80,7 @@ class Path
 	
 	private function getCurrentUrl()
 	{
-		$currentUrl = str_replace(Path::$URL->base, '', Path::$PAGE_URL->fullCurrent);
+		$currentUrl = str_replace(self::$URL->base, '', self::$PAGE_URL->fullCurrent);
 		
 		if (substr($currentUrl, 0, 1) == '/') // if / is first character, remove it
 			$currentUrl = substr($currentUrl, 1);
@@ -88,11 +89,52 @@ class Path
 			$currentUrl = substr($currentUrl, 0, -1);
 		
 		// remove ?params
-		$aCurrentUrl = explode('?', $currentUrl);
-		$currentUrl = $aCurrentUrl[0];
+		$aCurrentUrl	= explode('?', $currentUrl);
+		$currentUrl		= $aCurrentUrl[0];
 		
 		
 		return $currentUrl;
+	}
+	
+	
+	public function setPageUrlParams()
+	{
+		self::$PAGE_URL->params = $this->getUrlParams();
+		self::$PAGE_URL->aParams = explode('/', self::$PAGE_URL->params);
+	}
+	
+	
+	private function getUrlParams()
+	{
+		$params = preg_replace('/' . Lang::$LANG . '/', '', self::$PAGE_URL->current, 1);
+		
+		if (substr($params, 0, 1) == '/') // if / is first character, remove it
+			$params = substr($params, 1);
+		
+		
+		return $params;
+	}
+	
+	
+	public function setLinks()
+	{
+		self::$LINKS = new stdClass();
+		
+		foreach (RoutesController::$ROUTES as $routesGroup => $pages) { // parse all routes group
+			
+			self::$LINKS->$routesGroup = new stdClass();
+			
+			foreach ($pages as $pageId => $pageParams) { // parse all pages
+				
+				if ($pageId !== 'error404' && $pageId == 'home')
+					self::$LINKS->$routesGroup->$pageId = self::$URL->base . Lang::$LANG_LINK_ROOT . $pageParams->{Lang::$LANG}->url;
+				
+				else if ($pageId !== 'error404')
+					self::$LINKS->$routesGroup->$pageId = self::$URL->base . Lang::$LANG_LINK . $pageParams->{Lang::$LANG}->url;
+				
+			}
+			
+		}
 	}
 	
 }

@@ -34,10 +34,13 @@ class RoutesController
 		// $this->path		= Path::getInstance();
 		
 		$this->setRoutes();
-		$this->setPageUrl();
+		// $this->setPageUrl();
 		
-		// $this->checkLangExistence();
-		// $this->checkPageExistence();
+		$this->checkLangExistence();
+		$this->checkPageExistence();
+		
+		$this->setPathLinks();
+		
 		
 		// $this->setPagesInfos();
 		// $this->setSubPages();
@@ -63,14 +66,6 @@ class RoutesController
 	}
 	
 	
-	private function setPageUrl()
-	{
-		self::$PAGE_URL = str_replace(Lang::$LANG . '/', '', Path::$PAGE_URL->current);
-		
-		echo self::$PAGE_URL;
-	}
-	
-	
 	private function setRoutes()
 	{
 		self::$ROUTES = new stdClass();
@@ -93,20 +88,55 @@ class RoutesController
 	private function checkLangExistence()
 	{
 		if (!in_array(Lang::$LANG, Lang::$ALL_LANG)) {
-			Lang::$LANG		= Lang::$DEFAULT_LANG;
+			Lang::$LANG = Lang::$DEFAULT_LANG;
 			
-			header("Status: 404 NOT FOUND", false, 404);
-			
-			// self::$IS_404	= true;
-			
-			echo '<b>Show 404 - Language not available</b> <br><br>';
+			$this->set404('<b>Show 404 - Language not available</b> <br><br>');
 		}
 	}
 	
 	
 	private function checkPageExistence()
 	{
-		echo 'SLP'.'<br />';
+		$doesPageExist = false;
+		
+		foreach (self::$ROUTES as $routesGroup => $pages) { // parse all routes group
+			
+			foreach ($pages as $pageId => $pageParams) { // parse all pages
+				
+				if ($pageParams->{Lang::$LANG}->url == Path::$PAGE_URL->params) { // if url exist
+					$doesPageExist = true;
+					
+					break; // break second foreach
+				}
+				
+			}
+			
+			if ($doesPageExist)
+				break; // break first foreach
+			
+		}
+		
+		
+		if (!$doesPageExist)
+			$this->set404('<b>Show 404 - Page not available</b> <br><br>');
+	}
+	
+	
+	private function set404($status)
+	{
+		echo $status; // $status param to remove
+		
+		
+		// header('Status: 404 NOT FOUND', false, 404);
+		
+		// self::$IS_404	= true;
+	}
+	
+	
+	private function setPathLinks()
+	{
+		$this->path = Path::getInstance();
+		$this->path->setLinks();
 	}
 	
 	
