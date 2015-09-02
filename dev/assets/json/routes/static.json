@@ -36,7 +36,7 @@
 		"desc"		: "Projets"
 	},
 	
-	"legal-notices" : {
+	"legal_notices" : {
 		"url"		: "mentions-legales",
 		"jsView"	: "legal-notices",
 		"phpView"	: "legal-notices",
@@ -82,7 +82,7 @@
 		"desc"		: "Projects"
 	},
 	
-	"legal-notices" : {
+	"legal_notices" : {
 		"url"		: "legal-notices",
 		"jsView"	: "legal-notices",
 		"phpView"	: "legal-notices",
@@ -128,7 +128,7 @@
 		"desc"		: "Projects - ex"
 	},
 	
-	"legal-notices" : {
+	"legal_notices" : {
 		"url"		: "legal-notices-ex",
 		"jsView"	: "legal-notices",
 		"phpView"	: "legal-notices",

@@ -32,7 +32,7 @@
 		"desc"		: "Projets"
 	},
 	
-	"legal-notices" : {
+	"legal_notices" : {
 		"url"		: "mentions-legales",
 		"jsView"	: "legal-notices",
 		"phpView"	: "legal-notices",
