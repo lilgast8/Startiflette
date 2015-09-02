@@ -43,7 +43,7 @@ class Lang
 		
 		$this->setGlobalInfos();
 		$this->setCurrentLang();
-		$this->checkCurrentLang();
+		// $this->checkCurrentLang();
 		$this->setLinksLang();
 	}
 	
@@ -65,58 +65,17 @@ class Lang
 	}
 	
 	
-	/*private function setDefaultLang()
-	{
-		self::$DEFAULT_LANG = self::$ALL_LANG[0];
-	}
-	
-	
-	private function setMultiLang()
-	{
-		if (count(self::$ALL_LANG) == 1)
-			self::$MULTI_LANG = false;
-		else
-			self::$MULTI_LANG = true;
-	}*/
-	
-	
-	/*private function setAltLang()
-	{
-		if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-			$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-			
-			if($lang != 'fr' && $lang != 'en')
-				self::$ALT_LANG = 'en';
-			else
-				self::$ALT_LANG = $lang;
-		}
-		else
-			self::$ALT_LANG = 'en';
-	}*/
-	
-	
 	private function setCurrentLang()
 	{
-		$currentUrl = Path::$URL->current;
-		$currentUrl = str_replace(Path::$URL->base, '', $currentUrl);
-		
-		if (substr($currentUrl, 0, 1) == '/') // if / is first character, remove it
-			$currentUrl = substr($currentUrl, 1);
-		
-		if (substr($currentUrl, -1, 1) == '/') // if / is last character, remove it
-			$currentUrl = substr($currentUrl, 0, -1);
-		
-		$aCurrentUrl = explode('/', $currentUrl);
-		
-		
-		if (!self::$MULTI_LANG || strlen($currentUrl) == 0)
+		if (!self::$MULTI_LANG || strlen(Path::$URL->current) == 0)
 			self::$LANG = self::$DEFAULT_LANG;
 		else
-			self::$LANG = $aCurrentUrl[0];
+			self::$LANG = Path::$URL->paramsCurrent[0];
 	}
 	
 	
-	private function checkCurrentLang()
+	/* À METTRE DANS LE ROUTES CONTROLLER */
+	/*private function checkCurrentLang()
 	{
 		if (!in_array(self::$LANG, self::$ALL_LANG)) {
 			self::$LANG		= self::$DEFAULT_LANG;
@@ -127,7 +86,7 @@ class Lang
 			
 			echo 'Show 404 - Language not available';
 		}
-	}
+	}*/
 	
 	
 	private function setLinksLang()
