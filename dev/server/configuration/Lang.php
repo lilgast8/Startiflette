@@ -39,7 +39,7 @@ class Lang
 	
 	private function init()
 	{
-		$this->path = Path::getInstance();
+		// Path::getInstance();
 		
 		$this->setGlobalInfos();
 		$this->setCurrentLang();
@@ -67,10 +67,10 @@ class Lang
 	
 	private function setCurrentLang()
 	{
-		if (!self::$MULTI_LANG || strlen(Path::$URL->current) == 0)
+		if (!self::$MULTI_LANG || strlen(Path::$PAGE_URL->current) == 0)
 			self::$LANG = self::$DEFAULT_LANG;
 		else
-			self::$LANG = Path::$URL->paramsCurrent[0];
+			self::$LANG = Path::$PAGE_URL->paramsCurrent[0];
 	}
 	
 	

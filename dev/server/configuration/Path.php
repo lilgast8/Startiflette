@@ -7,7 +7,9 @@ class Path
 	
 	protected static $instance;
 	
-	static $URL		= null;
+	static $URL			= null;
+	static $FILE		= null;
+	static $PAGE_URL	= null;
 	
 	
 	protected function __construct()
@@ -33,18 +35,37 @@ class Path
 	
 	private function init()
 	{
-		self::$URL					= new stdClass();
+		// url paths
+		self::$URL			= new stdClass();
 		
-		self::$URL->base			= Config::$BASE_URL_DEV;
-		self::$URL->fullCurrent		= $this->getFullCurrentUrl();
-		self::$URL->current			= $this->getCurrentUrl();
-		self::$URL->paramsCurrent	= explode('/', self::$URL->current);
-		self::$URL->assets			= self::$URL->base . 'assets/';
-		self::$URL->css				= self::$URL->assets . 'css/';
-		self::$URL->img				= self::$URL->assets . 'img/';
-		self::$URL->js				= self::$URL->assets . 'js/';
-		self::$URL->json			= self::$URL->assets . 'json/';
-		self::$URL->server			= self::$URL->base . 'server/';
+		self::$URL->base	= Config::$BASE_URL_DEV;
+		self::$URL->assets	= self::$URL->base . 'assets/';
+		self::$URL->css		= self::$URL->assets . 'css/';
+		self::$URL->img		= self::$URL->assets . 'img/';
+		self::$URL->js		= self::$URL->assets . 'js/';
+		self::$URL->json	= self::$URL->assets . 'json/';
+		self::$URL->routes	= self::$URL->json . 'routes/';
+		self::$URL->server	= self::$URL->base . 'server/';
+		
+		
+		// file paths
+		self::$FILE			= new stdClass();
+		
+		self::$FILE->assets	= 'assets/';
+		self::$FILE->css	= self::$FILE->assets . 'css/';
+		self::$FILE->img	= self::$FILE->assets . 'img/';
+		self::$FILE->js		= self::$FILE->assets . 'js/';
+		self::$FILE->json	= self::$FILE->assets . 'json/';
+		self::$FILE->routes	= self::$FILE->json . 'routes/';
+		self::$FILE->server	= 'server/';
+		
+		
+		// page url paths
+		self::$PAGE_URL					= new stdClass();
+		
+		self::$PAGE_URL->fullCurrent	= $this->getFullCurrentUrl();
+		self::$PAGE_URL->current		= $this->getCurrentUrl();
+		self::$PAGE_URL->paramsCurrent	= explode('/', self::$PAGE_URL->current);
 	}
 	
 	
@@ -58,7 +79,7 @@ class Path
 	
 	private function getCurrentUrl()
 	{
-		$currentUrl = str_replace(Path::$URL->base, '', Path::$URL->fullCurrent);
+		$currentUrl = str_replace(Path::$URL->base, '', Path::$PAGE_URL->fullCurrent);
 		
 		if (substr($currentUrl, 0, 1) == '/') // if / is first character, remove it
 			$currentUrl = substr($currentUrl, 1);

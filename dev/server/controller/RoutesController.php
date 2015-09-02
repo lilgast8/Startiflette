@@ -7,7 +7,7 @@ class RoutesController
 	
 	protected static $instance;
 	
-	private $config			= null;
+	/*private $config			= null;
 	private $path			= null;
 	
 	public $pagesInfos		= null;
@@ -21,7 +21,11 @@ class RoutesController
 	public $altUrl			= null;
 	
 	private $subPages		= array();
-	private $isAltContent	= false;
+	private $isAltContent	= false;*/
+	
+	// static $ROUTES = array();
+	static $ROUTES		= null;
+	static $PAGE_URL	= null;
 	
 	
 	protected function __construct()
@@ -47,16 +51,75 @@ class RoutesController
 	
 	private function init()
 	{
-		$this->config	= Config::getInstance();
-		$this->path		= Path::getInstance();
+		// $this->config	= Config::getInstance();
+		// $this->path		= Path::getInstance();
 		
-		$this->setPagesInfos();
-		$this->setSubPages();
-		$this->setUrl();
-		$this->setRootPageName();
-		$this->setPageInfos();
-		$this->manageAltUrl();
+		$this->setRoutes();
+		$this->setPageUrl();
+		
+		// $this->checkLangExistence();
+		// $this->checkPageExistence();
+		
+		// $this->setPagesInfos();
+		// $this->setSubPages();
+		// $this->setUrl();
+		// $this->setRootPageName();
+		// $this->setPageInfos();
+		// $this->manageAltUrl();
 	}
+	
+	
+	private function setPageUrl()
+	{
+		self::$PAGE_URL = str_replace(Lang::$LANG . '/', '', Path::$PAGE_URL->current);
+		
+		echo self::$PAGE_URL;
+	}
+	
+	
+	private function setRoutes()
+	{
+		self::$ROUTES = new stdClass();
+		
+		foreach (Config::$ROUTES_FILES as $key => $fileName) {
+			$filePath = Path::$FILE->routes . $fileName . '.json';
+			
+			if ( !file_exists($filePath) )
+				throw new ErrorException('Routes file is missing!');
+			
+			$routes	= file_get_contents($filePath);
+			$routes	= json_decode($routes);
+			
+			self::$ROUTES->$fileName = new stdClass();
+			self::$ROUTES->$fileName = $routes;
+		}
+	}
+	
+	
+	private function checkLangExistence()
+	{
+		if (!in_array(Lang::$LANG, Lang::$ALL_LANG)) {
+			Lang::$LANG		= Lang::$DEFAULT_LANG;
+			
+			header("Status: 404 NOT FOUND", false, 404);
+			
+			// self::$IS_404	= true;
+			
+			echo '<b>Show 404 - Language not available</b> <br><br>';
+		}
+	}
+	
+	
+	private function checkPageExistence()
+	{
+		echo 'SLP'.'<br />';
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	private function setPagesInfos()

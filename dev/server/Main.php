@@ -6,7 +6,7 @@ include_once 'server/vendors/Mobile_Detect.php';
 include_once 'server/configuration/Config.php';
 include_once 'server/configuration/Lang.php';
 include_once 'server/configuration/Path.php';
-// include_once 'server/controller/RoutesController.php';
+include_once 'server/controller/RoutesController.php';
 
 
 
@@ -23,7 +23,7 @@ class Main
 	
 	protected function __construct()
 	{
-		
+		$this->init();
 	}
 	
 	
@@ -45,10 +45,10 @@ class Main
 	public function init()
 	{
 		$this->setConfig();
+		$this->setPath();
 		$this->setLang();
-		// $this->setPath();
 		// $this->config->init();
-		// $this->setRoutes();
+		$this->setRoutes();
 		// $this->setContents();
 	}
 	
@@ -63,6 +63,24 @@ class Main
 	{
 		$this->lang = Lang::getInstance();
 	}
+	
+	
+	private function setPath()
+	{
+		$this->path = Path::getInstance();
+	}
+	
+	
+	private function setRoutes()
+	{
+		$this->routes = RoutesController::getInstance();
+	}
+	
+	
+	/*private function setPath()
+	{
+		$this->path = Path::getInstance();
+	}*/
 	
 	
 	/*private function setPath()
