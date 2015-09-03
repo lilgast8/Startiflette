@@ -52,8 +52,8 @@ class Config
 	{
 		$config = $this->getConfigFile();
 		
-		foreach ($config as $key => $value)
-			self::${$key} = $value;
+		foreach ($config as $varName => $value)
+			self::${$varName} = $value;
 	}
 	
 	

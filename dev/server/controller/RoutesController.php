@@ -24,22 +24,23 @@ class RoutesController
 	private $isAltContent	= false;*/
 	
 	// static $ROUTES = array();
-	static $ROUTES		= null;
-	static $PAGE_URL	= null;
+	static $ROUTES			= null;
+	static $PAGE_URL		= null;
+	static $ALT_LANG_URL	= null;
 	
-	static $PHP_VIEW	= null;
-	static $TITLE		= null;
-	static $DESC		= null;
+	static $PHP_VIEW		= null;
+	static $TITLE			= null;
+	static $DESC			= null;
 	
-	private $path		= null;
+	private $path			= null;
 	
-	private $pageId		= null;
-	private $pageParams = null;
+	private $pageId			= null;
+	private $pageParams		= null;
 	// private $title		= null;
 	// private $desc		= null;
 	
-	private $is404		= null;
-	private $isHomepage	= null;
+	private $is404			= null;
+	private $isHomepage		= null;
 	
 	
 	protected function __construct()
@@ -89,7 +90,7 @@ class RoutesController
 	{
 		self::$ROUTES = new stdClass();
 		
-		foreach (Config::$ROUTES_FILES as $key => $fileName) {
+		foreach (Config::$ROUTES_FILES as $fileName) {
 			$filePath = Path::$FILE->routes . $fileName . '.json';
 			
 			if ( !file_exists($filePath) )
@@ -141,7 +142,7 @@ class RoutesController
 		else {
 			$this->setPageInfos($pageId, $pageParams);
 			$this->setIsHomepage();
-			// $this->setAltLangUrl($pageParams);
+			$this->setAltLangUrl();
 		}
 	}
 	
@@ -174,15 +175,11 @@ class RoutesController
 	}
 	
 	
-	// private function setAltLangUrl($pageParams)
-	public function getAltLangUrl()
+	private function setAltLangUrl()
 	{
-		if (!Lang::$MULTI_LANG)
-			return false;
+		$ALT_LANG_URL = array();
 		
-		$altLangUrlList = '';
-		
-		foreach (Lang::$ALL_LANG as $key => $lang) {
+		foreach (Lang::$ALL_LANG as $lang) {
 			
 			if ($lang !== Lang::$LANG) {
 				$currentUrl = $this->pageParams->$lang->url;
@@ -196,11 +193,23 @@ class RoutesController
 				
 				$altLangUrl = Path::$URL->base . $urlPart;
 				
-				
-				$altLangUrlList .= '<link rel="alternate" href="' . $altLangUrl . '" hreflang="' . $lang . '" />' . "\n\t";
+				self::$ALT_LANG_URL[$lang] = $altLangUrl;
 			}
 			
 		}
+	}
+	
+	
+	public function getAltLangUrl()
+	{
+		if (!Lang::$MULTI_LANG)
+			return false;
+		
+		
+		$altLangUrlList = '';
+		
+		foreach (self::$ALT_LANG_URL as $lang => $altLangUrl)
+			$altLangUrlList .= '<link rel="alternate" href="' . $altLangUrl . '" hreflang="' . $lang . '" />' . "\n\t";
 		
 		
 		return $altLangUrlList;
