@@ -4,17 +4,17 @@
 		"jsView"	: "error404",
 		"phpView"	: "error-404",
 		"fr": {
-			"url"		: "",
+			"url"		: "404",
 			"title"		: "Erreur 404",
 			"desc"		: "Erreur 404"
 		},
 		"en": {
-			"url"		: "",
+			"url"		: "404",
 			"title"		: "Error 404",
 			"desc"		: "Error 404"
 		},
 		"ex": {
-			"url"		: "",
+			"url"		: "404",
 			"title"		: "Error 404 - ex",
 			"desc"		: "Error 404 - ex"
 		}
