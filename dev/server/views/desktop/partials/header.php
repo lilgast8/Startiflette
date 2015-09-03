@@ -59,17 +59,17 @@
 		<nav id="menu">
 			<ul>
 				<li>
-					<a href="<?php echo Path::$LINK->static->home; ?>" class="menu-link" data-url="<?php // echo $main->routes->url->home_ID; ?>">
+					<a href="<?php echo Path::$LINK->static->home; ?>" class="menu-link">
 						<?php echo $contents->global->menu->home; ?>
 					</a>
 				</li>
 				<li>
-					<a href="<?php echo Path::$LINK->static->about; ?>" class="menu-link" data-url="<?php // echo $main->routes->url->about_ID; ?>">
+					<a href="<?php echo Path::$LINK->static->about; ?>" class="menu-link">
 						<?php echo $contents->global->menu->about; ?>
 					</a>
 				</li>
 				<li>
-					<a href="<?php echo Path::$LINK->static->projects; ?>" class="menu-link" data-url="<?php // echo $main->routes->url->projects_ID; ?>">
+					<a href="<?php echo Path::$LINK->static->projects; ?>" class="menu-link">
 						<?php echo $contents->global->menu->projects; ?>
 					</a>
 				</li>
