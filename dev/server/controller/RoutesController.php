@@ -27,6 +27,15 @@ class RoutesController
 	static $ROUTES		= null;
 	static $PAGE_URL	= null;
 	
+	private $path		= null;
+	
+	private $pageId		= null;
+	private $title		= null;
+	private $desc		= null;
+	
+	private $is404		= null;
+	private $isHomepage	= null;
+	
 	
 	protected function __construct()
 	{
@@ -125,7 +134,9 @@ class RoutesController
 		if (!$doesPageExist)
 			$this->set404('<b>Show 404 - Page not available</b> <br><br>');
 		else {
+			$this->setIsHomepage($pageId);
 			$this->setPageInfos($pageId, $pageParams);
+			// $this->setAltLangUrl($pageParams);
 		}
 	}
 	
@@ -134,75 +145,49 @@ class RoutesController
 	{
 		echo $status; // $status param to remove
 		
-		
 		// header('Status: 404 NOT FOUND', false, 404);
 		
-		// self::$IS_404	= true;
+		// self::$IS_404 = true;
+		// $this->is404 = true;
+	}
+	
+	
+	private function setIsHomepage($pageId)
+	{
+		$this->isHomepage = $pageId == 'home' ? true : false;
 	}
 	
 	
 	private function setPageInfos($pageId, $pageParams)
 	{
-		// print_r(Path::$PAGE_URL);
-		
-		echo Path::$PAGE_URL->current.'<br>';
-		echo $pageId.'<br>';
-		
-		
 		$this->pageId	= $pageId;
 		$this->title	= $pageParams->{Lang::$LANG}->title;
 		$this->desc		= $pageParams->{Lang::$LANG}->desc;
-		
-		
-		
-		
-		
-		/*
-		$currentUrl	= $this->path->url->current;
-		$baseUrl	= $this->path->url->base;
-		
-		// remove base & parameters if there is one
-		$urlBaseEnd	= strrpos($currentUrl, $baseUrl) + strlen($baseUrl);
-		$urlEnd		= strrpos($currentUrl, '?') ? strrpos($currentUrl, '?') : strlen($currentUrl);
-		$urlLength	= $urlEnd - $urlBaseEnd;
-		$pageUrl	= substr($currentUrl, $urlBaseEnd, $urlLength);
-		
-		// remove language if there is one
-		if(Config::$MULTI_LANG && substr($pageUrl, 0, 2) == Config::$LANG)
-			$pageUrl = preg_replace('/'.Config::$LANG.'/', '', $pageUrl, 1);
-		
-		// AJAX management
-		$pageUrl = $this->config->manageAjax($pageUrl);
-		
-		// alternative content management
-		$pageUrl = $this->config->manageAltContent($pageUrl);
-		
-		// remove first slash if there is one
-		if(substr($pageUrl, 0, 1) == '/')
-			$pageUrl = preg_replace('/\//', '', $pageUrl, 1);
-		
-		// remove last slash if there is one
-		if(substr($pageUrl, strlen($pageUrl)-1, 1) == '/')
-			$pageUrl = substr_replace($pageUrl, '', -1);
-			// $pageUrl = substr($pageUrl, 0, -1);
-		
-		// get the url parts
-		$urlParts = explode('/', $pageUrl);
-		
-		// set page name
-		if($urlParts[0] === '')
-			$pageName = $this->rootPageName;
-		else
-			$pageName = $urlParts[0];
-		
-		
-		$this->urlParts		= $urlParts;
-		$this->pageName		= $pageName;
-		if(!Config::$IS_ALT_CONTENT)
-			$this->setInfos($pageUrl);
-		else
-			$this->viewName		= 'old-browser';
-		*/
+	}
+	
+	
+	// private function setAltLangUrl($pageParams)
+	public function getAltLangUrl($pageParams)
+	{
+		foreach (Lang::$ALL_LANG as $key => $lang) {
+			
+			if ($lang !== Lang::$LANG) {
+				$currentUrl = $pageParams->$lang->url;
+				
+				if ($this->isHomepage && $lang == Lang::$DEFAULT_LANG)
+					$urlPart = '';
+				else if ($this->isHomepage)
+					$urlPart = $lang;
+				else
+					$urlPart = $lang . '/' . $pageParams->$lang->url;
+				
+				$altLangUrl = Path::$URL->base . $urlPart;
+				
+				
+				return '<link rel="alternate" href="' . $altLangUrl . '" hreflang="' . $lang . '" />' . "\n\t";
+			}
+			
+		}
 	}
 	
 	
@@ -305,7 +290,7 @@ class RoutesController
 	}*/
 	
 	
-	private function setInfos($activePageUrl)
+	/*private function setInfos($activePageUrl)
 	{
 		$viewName = $this->pagesInfos->{ $this->pageName }->name;
 		
@@ -332,10 +317,10 @@ class RoutesController
 		$this->viewName		= $viewName;
 		$this->titlePage	= $title;
 		$this->descPage		= $desc;
-	}
+	}*/
 	
 	
-	private function manageAltUrl()
+	/*private function manageAltUrl()
 	{
 		$this->altUrl = array();
 		
@@ -348,10 +333,10 @@ class RoutesController
 				break;
 			}
 		}
-	}
+	}*/
 	
 	
-	private function setAltUrl($infosToParse, $type)
+	/*private function setAltUrl($infosToParse, $type)
 	{
 		if($type == 'page')
 			$viewName = $this->viewName;
@@ -375,14 +360,14 @@ class RoutesController
 				}
 			}
 		}
-	}
+	}*/
 	
 	
-	public function getAltLink()
+	/*public function getAltLink()
 	{
 		foreach($this->altUrl as $lang => $urlAlt)
 			echo '<link rel="alternate" href="'.$urlAlt.'" hreflang="'.$lang.'" />'."\n\t";
-	}
+	}*/
 	
 }
 
