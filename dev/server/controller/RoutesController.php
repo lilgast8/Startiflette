@@ -41,7 +41,7 @@ class RoutesController
 		
 		$this->checkLangExistence();
 		$this->checkPageExistence();
-		$this->setPageInfos();
+		// $this->setPageInfos();
 		
 		// $this->setPathLinks();
 		$this->path->setLinks();
@@ -124,6 +124,9 @@ class RoutesController
 		
 		if (!$doesPageExist)
 			$this->set404('<b>Show 404 - Page not available</b> <br><br>');
+		else {
+			$this->setPageInfos($pageId, $pageParams);
+		}
 	}
 	
 	
@@ -138,11 +141,21 @@ class RoutesController
 	}
 	
 	
-	private function setPageInfos()
+	private function setPageInfos($pageId, $pageParams)
 	{
 		// print_r(Path::$PAGE_URL);
 		
-		// echo Path::$PAGE_URL->params;
+		echo Path::$PAGE_URL->current.'<br>';
+		echo $pageId.'<br>';
+		
+		
+		$this->pageId	= $pageId;
+		$this->title	= $pageParams->{Lang::$LANG}->title;
+		$this->desc		= $pageParams->{Lang::$LANG}->desc;
+		
+		
+		
+		
 		
 		/*
 		$currentUrl	= $this->path->url->current;
