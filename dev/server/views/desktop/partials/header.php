@@ -17,8 +17,8 @@
 	<meta name="format-detection" content="telephone=no">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<?php
-	if(Lang::$MULTI_LANG)
-		echo $main->routes->getAltLangUrl();
+	
+	echo $main->routes->getAltLangUrl();
 	
 	/* Social share */
 	// include_once $main->path->file->base . 'server/shared/social-share.php';

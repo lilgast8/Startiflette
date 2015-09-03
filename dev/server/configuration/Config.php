@@ -24,20 +24,6 @@ class Config
 	static $GA_ID				= null;
 	
 	static $DEVICE				= null;
-	static $DEVICE_FOLDER		= null;
-	
-	/*
-	static $LG_LINK			= null;
-	static $LG_LINK_ROOT	= null;
-	
-	static $IS_AJAX			= false;
-	static $IS_ALT_CONTENT	= false;
-	
-	private $path			= null;
-	
-	public $pages			= null;
-	public $projects		= null;
-	*/
 	
 	
 	protected function __construct()
@@ -91,7 +77,6 @@ class Config
 		$desktop	= !$mobile && !$tablet ? true : false; // desktop device
 		
 		
-		// set device
 		if (self::$FORCE_DEVICE)
 			$device = self::$FORCE_DEVICE;
 		else if ($mobile && !$tablet)
@@ -102,17 +87,7 @@ class Config
 			$device = 'desktop';
 		
 		
-		// set device folder
-		if (!self::$HAS_MOBILE_VERSION)
-			$deviceFolder = 'desktop';
-		else if (self::$HAS_MOBILE_VERSION && ($device == 'desktop' || $device == 'tablet'))
-			$deviceFolder = 'desktop';
-		else if (self::$HAS_MOBILE_VERSION && $device == 'mobile')
-			$deviceFolder = 'mobile';
-		
-		
-		self::$DEVICE			= $device;
-		self::$DEVICE_FOLDER	= $deviceFolder . '/';
+		self::$DEVICE = $device;
 	}
 	
 	

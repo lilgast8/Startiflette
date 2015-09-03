@@ -22,12 +22,12 @@ if(!Config::$IS_AJAX)
 
 // phpinfo();
 
-include_once Path::$FILE->views . Config::$DEVICE_FOLDER . 'partials/header.php';
+include_once Path::$FILE->viewsPartials . 'header.php';
 
 // include_once Path::$FILE->views . Config::$DEVICE_FOLDER . 'pages/' . RoutesController::$PHP_VIEW . '.php';
 include_once Path::$FILE->viewsPage . RoutesController::$PHP_VIEW . '.php';
 
-include_once Path::$FILE->views . Config::$DEVICE_FOLDER . 'partials/footer.php';
+include_once Path::$FILE->viewsPartials . 'footer.php';
 
 
 

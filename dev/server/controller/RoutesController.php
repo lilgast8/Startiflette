@@ -177,6 +177,9 @@ class RoutesController
 	// private function setAltLangUrl($pageParams)
 	public function getAltLangUrl()
 	{
+		if (!Lang::$MULTI_LANG)
+			return false;
+			
 		$altLangUrlList = '';
 		
 		foreach (Lang::$ALL_LANG as $key => $lang) {
