@@ -4,13 +4,13 @@
 
 function getContents() {
 	
-	include_once Config::$LANG . DS . 'global.php';
-	include_once Config::$LANG . DS . 'alt.php';
+	include_once Lang::$LANG . '/global.php';
+	include_once Lang::$LANG . '/alt.php';
 	
-	include_once Config::$LANG . DS . 'home.php';
-	include_once Config::$LANG . DS . 'about.php';
-	include_once Config::$LANG . DS . 'projects.php';
-	include_once Config::$LANG . DS . 'project.php';
+	include_once Lang::$LANG . '/home.php';
+	include_once Lang::$LANG . '/about.php';
+	include_once Lang::$LANG . '/projects.php';
+	include_once Lang::$LANG . '/project.php';
 	
 	
 	$contents = new stdClass();

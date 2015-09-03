@@ -3,7 +3,8 @@
 <section id="page-content" class="home">
 	
 	<br><br><br>
-	- Mobile page content / <?php echo $main->contents->global->menu->home; ?> / <?php echo Config::$LANG; ?> -
+	<?php echo $contents->home->title; ?><br>
+	mobile page content / <?php echo Lang::$LANG; ?>
 	<br><br><br><br>
 	
 </section>

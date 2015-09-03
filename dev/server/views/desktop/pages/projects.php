@@ -3,7 +3,7 @@
 <section id="page-content" class="projects">
 	
 	<br><br><br>
-	<?php //echo $main->contents->projects->title; ?><br>
+	<?php echo $contents->projects->title; ?><br>
 	desktop page content / <?php echo Lang::$LANG; ?>
 	<br><br>
 	

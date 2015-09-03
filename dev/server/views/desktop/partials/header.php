@@ -37,7 +37,7 @@
 	// echo $main->config->listJsFiles('modern-detect-izr');
 	
 	/* Google Analytics */
-	// include_once $main->path->file->base . 'server/shared/google-analytics.php';
+	include_once Path::$FILE->shared . 'google-analytics.php';
 	
 	?>
 </head>
@@ -60,17 +60,17 @@
 			<ul>
 				<li>
 					<a href="<?php echo Path::$LINK->static->home; ?>" class="menu-link" data-url="<?php // echo $main->routes->url->home_ID; ?>">
-						<?php // echo $main->contents->global->menu->home; ?>
+						<?php echo $contents->global->menu->home; ?>
 					</a>
 				</li>
 				<li>
 					<a href="<?php echo Path::$LINK->static->about; ?>" class="menu-link" data-url="<?php // echo $main->routes->url->about_ID; ?>">
-						<?php // echo $main->contents->global->menu->about; ?>
+						<?php echo $contents->global->menu->about; ?>
 					</a>
 				</li>
 				<li>
 					<a href="<?php echo Path::$LINK->static->projects; ?>" class="menu-link" data-url="<?php // echo $main->routes->url->projects_ID; ?>">
-						<?php // echo $main->contents->global->menu->projects; ?>
+						<?php echo $contents->global->menu->projects; ?>
 					</a>
 				</li>
 			</ul>
