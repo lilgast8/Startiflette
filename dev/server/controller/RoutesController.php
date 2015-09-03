@@ -33,13 +33,18 @@ class RoutesController
 		// $this->config	= Config::getInstance();
 		// $this->path		= Path::getInstance();
 		
+		$this->path = Path::getInstance();
+		
+		
 		$this->setRoutes();
 		// $this->setPageUrl();
 		
 		$this->checkLangExistence();
 		$this->checkPageExistence();
+		$this->setPageInfos();
 		
-		$this->setPathLinks();
+		// $this->setPathLinks();
+		$this->path->setLinks();
 		
 		
 		// $this->setPagesInfos();
@@ -103,7 +108,7 @@ class RoutesController
 			
 			foreach ($pages as $pageId => $pageParams) { // parse all pages
 				
-				if ($pageParams->{Lang::$LANG}->url == Path::$PAGE_URL->params) { // if url exist
+				if ($pageParams->{Lang::$LANG}->url == Path::$PAGE_URL->current) { // if url exist
 					$doesPageExist = true;
 					
 					break; // break second foreach
@@ -133,10 +138,58 @@ class RoutesController
 	}
 	
 	
-	private function setPathLinks()
+	private function setPageInfos()
 	{
-		$this->path = Path::getInstance();
-		$this->path->setLinks();
+		// print_r(Path::$PAGE_URL);
+		
+		// echo Path::$PAGE_URL->params;
+		
+		/*
+		$currentUrl	= $this->path->url->current;
+		$baseUrl	= $this->path->url->base;
+		
+		// remove base & parameters if there is one
+		$urlBaseEnd	= strrpos($currentUrl, $baseUrl) + strlen($baseUrl);
+		$urlEnd		= strrpos($currentUrl, '?') ? strrpos($currentUrl, '?') : strlen($currentUrl);
+		$urlLength	= $urlEnd - $urlBaseEnd;
+		$pageUrl	= substr($currentUrl, $urlBaseEnd, $urlLength);
+		
+		// remove language if there is one
+		if(Config::$MULTI_LANG && substr($pageUrl, 0, 2) == Config::$LANG)
+			$pageUrl = preg_replace('/'.Config::$LANG.'/', '', $pageUrl, 1);
+		
+		// AJAX management
+		$pageUrl = $this->config->manageAjax($pageUrl);
+		
+		// alternative content management
+		$pageUrl = $this->config->manageAltContent($pageUrl);
+		
+		// remove first slash if there is one
+		if(substr($pageUrl, 0, 1) == '/')
+			$pageUrl = preg_replace('/\//', '', $pageUrl, 1);
+		
+		// remove last slash if there is one
+		if(substr($pageUrl, strlen($pageUrl)-1, 1) == '/')
+			$pageUrl = substr_replace($pageUrl, '', -1);
+			// $pageUrl = substr($pageUrl, 0, -1);
+		
+		// get the url parts
+		$urlParts = explode('/', $pageUrl);
+		
+		// set page name
+		if($urlParts[0] === '')
+			$pageName = $this->rootPageName;
+		else
+			$pageName = $urlParts[0];
+		
+		
+		$this->urlParts		= $urlParts;
+		$this->pageName		= $pageName;
+		if(!Config::$IS_ALT_CONTENT)
+			$this->setInfos($pageUrl);
+		else
+			$this->viewName		= 'old-browser';
+		*/
 	}
 	
 	
@@ -146,19 +199,19 @@ class RoutesController
 	
 	
 	
-	private function setPagesInfos()
+	/*private function setPagesInfos()
 	{
 		$this->pagesInfos = $this->config->pages->{ Config::$LANG };
-	}
+	}*/
 	
 	
-	private function setSubPages()
+	/*private function setSubPages()
 	{
 		$this->subPages['project'] = $this->config->projects;
-	}
+	}*/
 	
 	
-	private function setUrl()
+	/*private function setUrl()
 	{
 		$i = 0;
 		
@@ -177,20 +230,20 @@ class RoutesController
 		}
 		
 		$this->url = (object) $this->url;
-	}
+	}*/
 	
 	
-	private function setRootPageName()
+	/*private function setRootPageName()
 	{
 		foreach($this->pagesInfos as $url => $value) {
 			$this->rootPageName = $url;
 			
 			break;
 		}
-	}
+	}*/
 	
 	
-	private function setPageInfos()
+	/*private function setPageInfos()
 	{
 		$currentUrl	= $this->path->url->current;
 		$baseUrl	= $this->path->url->base;
@@ -236,7 +289,7 @@ class RoutesController
 			$this->setInfos($pageUrl);
 		else
 			$this->viewName		= 'old-browser';
-	}
+	}*/
 	
 	
 	private function setInfos($activePageUrl)

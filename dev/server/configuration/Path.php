@@ -10,7 +10,7 @@ class Path
 	static $URL			= null;
 	static $FILE		= null;
 	static $PAGE_URL	= null;
-	static $LINKS		= null;
+	static $LINK		= null;
 	
 	
 	protected function __construct()
@@ -62,15 +62,15 @@ class Path
 		
 		
 		// page url paths
-		self::$PAGE_URL					= new stdClass();
+		self::$PAGE_URL				= new stdClass();
 		
-		self::$PAGE_URL->fullCurrent	= $this->getFullCurrentUrl();
-		self::$PAGE_URL->current		= $this->getCurrentUrl();
-		self::$PAGE_URL->aCurrent		= explode('/', self::$PAGE_URL->current);
+		self::$PAGE_URL->full		= $this->getFullPageUrl();
+		self::$PAGE_URL->params		= $this->getParamsPageUrl();
+		self::$PAGE_URL->aParams	= explode('/', self::$PAGE_URL->params);
 	}
 	
 	
-	private function getFullCurrentUrl()
+	private function getFullPageUrl()
 	{
 		$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
 		
@@ -78,59 +78,59 @@ class Path
 	}
 	
 	
-	private function getCurrentUrl()
+	private function getParamsPageUrl()
 	{
-		$currentUrl = str_replace(self::$URL->base, '', self::$PAGE_URL->fullCurrent);
+		$paramsPageUrl = str_replace(self::$URL->base, '', self::$PAGE_URL->full);
 		
-		if (substr($currentUrl, 0, 1) == '/') // if / is first character, remove it
-			$currentUrl = substr($currentUrl, 1);
+		if (substr($paramsPageUrl, 0, 1) == '/') // if / is first character, remove it
+			$paramsPageUrl = substr($paramsPageUrl, 1);
 		
-		if (substr($currentUrl, -1, 1) == '/') // if / is last character, remove it
-			$currentUrl = substr($currentUrl, 0, -1);
+		if (substr($paramsPageUrl, -1, 1) == '/') // if / is last character, remove it
+			$paramsPageUrl = substr($paramsPageUrl, 0, -1);
 		
 		// remove ?params
-		$aCurrentUrl	= explode('?', $currentUrl);
-		$currentUrl		= $aCurrentUrl[0];
+		$aParamsPageUrl	= explode('?', $paramsPageUrl);
+		$paramsPageUrl	= $aParamsPageUrl[0];
 		
 		
-		return $currentUrl;
+		return $paramsPageUrl;
 	}
 	
 	
-	public function setPageUrlParams()
+	public function setCurrentPageUrl()
 	{
-		self::$PAGE_URL->params = $this->getUrlParams();
-		self::$PAGE_URL->aParams = explode('/', self::$PAGE_URL->params);
+		self::$PAGE_URL->current	= $this->getCurrentPageUrl();
+		self::$PAGE_URL->aCurrent	= explode('/', self::$PAGE_URL->current);
 	}
 	
 	
-	private function getUrlParams()
+	private function getCurrentPageUrl()
 	{
-		$params = preg_replace('/' . Lang::$LANG . '/', '', self::$PAGE_URL->current, 1);
+		$currentPageUrl = preg_replace('/' . Lang::$LANG . '/', '', self::$PAGE_URL->params, 1);
 		
-		if (substr($params, 0, 1) == '/') // if / is first character, remove it
-			$params = substr($params, 1);
+		if (substr($currentPageUrl, 0, 1) == '/') // if / is first character, remove it
+			$currentPageUrl = substr($currentPageUrl, 1);
 		
 		
-		return $params;
+		return $currentPageUrl;
 	}
 	
 	
 	public function setLinks()
 	{
-		self::$LINKS = new stdClass();
+		self::$LINK = new stdClass();
 		
 		foreach (RoutesController::$ROUTES as $routesGroup => $pages) { // parse all routes group
 			
-			self::$LINKS->$routesGroup = new stdClass();
+			self::$LINK->$routesGroup = new stdClass();
 			
 			foreach ($pages as $pageId => $pageParams) { // parse all pages
 				
 				if ($pageId !== 'error404' && $pageId == 'home')
-					self::$LINKS->$routesGroup->$pageId = self::$URL->base . Lang::$LANG_LINK_ROOT . $pageParams->{Lang::$LANG}->url;
+					self::$LINK->$routesGroup->$pageId = self::$URL->base . Lang::$LANG_LINK_ROOT . $pageParams->{Lang::$LANG}->url;
 				
 				else if ($pageId !== 'error404')
-					self::$LINKS->$routesGroup->$pageId = self::$URL->base . Lang::$LANG_LINK . $pageParams->{Lang::$LANG}->url;
+					self::$LINK->$routesGroup->$pageId = self::$URL->base . Lang::$LANG_LINK . $pageParams->{Lang::$LANG}->url;
 				
 			}
 			

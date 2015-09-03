@@ -18,11 +18,16 @@ class Lang
 	
 	protected function __construct()
 	{
+		$this->path = Path::getInstance();
+		
+		
 		$this->setGlobalInfos();
 		$this->setCurrentLang();
 		// $this->checkCurrentLang();
 		$this->setLangLinks();
-		$this->setPathPageUrlParams();
+		
+		// $this->setPathPageUrlCurrent();
+		$this->path->setCurrentPageUrl();
 	}
 	
 	
@@ -60,10 +65,10 @@ class Lang
 	
 	private function setCurrentLang()
 	{
-		if (!self::$MULTI_LANG || strlen(Path::$PAGE_URL->current) == 0)
+		if (!self::$MULTI_LANG || strlen(Path::$PAGE_URL->params) == 0)
 			self::$LANG = self::$DEFAULT_LANG;
 		else
-			self::$LANG = Path::$PAGE_URL->aCurrent[0];
+			self::$LANG = Path::$PAGE_URL->aParams[0];
 	}
 	
 	
@@ -86,13 +91,6 @@ class Lang
 	{
 		self::$LANG_LINK_ROOT	= self::$LANG == self::$DEFAULT_LANG ? '' : self::$LANG;
 		self::$LANG_LINK		= self::$MULTI_LANG ? self::$LANG.'/' : '';
-	}
-	
-	
-	private function setPathPageUrlParams()
-	{
-		$this->path = Path::getInstance();
-		$this->path->setPageUrlParams();
 	}
 	
 }
