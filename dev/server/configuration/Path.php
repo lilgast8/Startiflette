@@ -71,6 +71,7 @@ class Path
 		self::$FILE->img			= self::$FILE->assets . 'img/';
 		self::$FILE->js				= self::$FILE->assets . 'js/';
 		self::$FILE->json			= self::$FILE->assets . 'json/';
+		self::$FILE->jsFilesFile	= self::$FILE->json . 'config/js-files.json';
 		self::$FILE->routes			= self::$FILE->json . 'routes/';
 		self::$FILE->server			= 'server/';
 		self::$FILE->shared			= self::$FILE->server . 'shared/';
@@ -155,6 +156,64 @@ class Path
 			}
 			
 		}
+	}
+	
+	
+	public function getAltLangUrl()
+	{
+		if (!Lang::$MULTI_LANG)
+			return false;
+		
+		
+		$altLangUrlList = '';
+		
+		foreach (RoutesController::$ALT_LANG_URL as $lang => $altLangUrl)
+			$altLangUrlList .= '<link rel="alternate" href="' . $altLangUrl . '" hreflang="' . $lang . '" />' . "\n\t";
+		
+		
+		return $altLangUrlList;
+	}
+	
+	
+	public function listJsFiles($listName)
+	{
+		// À LOADER DANS CONFIG !!!
+		if ( !file_exists(self::$FILE->jsFilesFile) )
+			throw new ErrorException('JsFilesFile is missing!');
+		
+		$jsFiles	= file_get_contents(self::$FILE->jsFilesFile);
+		$jsFiles	= json_decode($jsFiles);
+		
+		
+		$listFiles = '';
+		
+		if (Config::$ENV == 'dev') {
+			$files = $jsFiles->$listName->files;
+			
+			foreach ($files as $filePath) {
+				
+				if ( is_array($filePath) ) {
+					$listFiles .= '<!--[if lt IE 9]><script src="' . self::$URL->js . $filePath[1] . '"></script><![endif]-->' . "\n";
+					$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . self::$URL->js . $filePath[0] . '"></script><!--<![endif]-->' . "\n";
+				}
+				else
+					$listFiles .= '<script src="' . self::$URL->js . $filePath . '"></script>' . "\n";
+			}
+		}
+		else {
+			$fileName	= $jsFiles->$listName->name;
+			$fileDest	= $jsFiles->$listName->dest;
+			
+			if ( is_array( $files ) ) {
+					$listFiles .= '<!--[if lt IE 9]><script src="' . self::$URL->js . $fileName[1] . '"></script><![endif]-->' . "\n";
+					$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . self::$URL->js . $fileName[0] . '"></script><!--<![endif]-->' . "\n";
+				}
+				else
+					$listFiles .= '<script src="' . self::$URL->js . $fileDest . $fileName . '"></script>' . "\n";
+		}
+		
+		
+		return $listFiles;
 	}
 	
 }

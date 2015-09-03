@@ -164,22 +164,6 @@ class RoutesController
 		}
 	}
 	
-	
-	public function getAltLangUrl()
-	{
-		if (!Lang::$MULTI_LANG)
-			return false;
-		
-		
-		$altLangUrlList = '';
-		
-		foreach (self::$ALT_LANG_URL as $lang => $altLangUrl)
-			$altLangUrlList .= '<link rel="alternate" href="' . $altLangUrl . '" hreflang="' . $lang . '" />' . "\n\t";
-		
-		
-		return $altLangUrlList;
-	}
-	
 }
 
 

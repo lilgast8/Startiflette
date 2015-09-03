@@ -90,51 +90,6 @@ class Config
 		self::$DEVICE = $device;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	public function listJsFiles($listName)
-	{
-		$listFiles = '';
-		
-		$jsonJsFiles	= file_get_contents($this->path->file->jsFilesFile);
-		$jsFiles		= json_decode($jsonJsFiles, true);
-		
-		if (!self::PROD) {
-			$files = $jsFiles[ $listName ]['files'];
-			
-			for ($i = 0; $i < count($files); $i++) {
-				if (is_array($files[$i])) {
-					$listFiles .= '<!--[if lt IE 9]><script src="' . $this->path->url->js . $files[$i][1] . '"></script><![endif]-->' . "\n";
-					$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . $this->path->url->js . $files[$i][0] . '"></script><!--<![endif]-->' . "\n";
-				}
-				else
-					$listFiles .= '<script src="' . $this->path->url->js . $files[$i] . '"></script>' . "\n";
-			}
-		}
-		else {
-			$files	= $jsFiles[ $listName ]['name'];
-			$dest	= $jsFiles[ $listName ]['dest'];
-			
-			if ( is_array( $files ) ) {
-					$listFiles .= '<!--[if lt IE 9]><script src="' . $this->path->url->js . $files[1] . '"></script><![endif]-->' . "\n";
-					$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . $this->path->url->js . $files[0] . '"></script><!--<![endif]-->' . "\n";
-				}
-				else
-					$listFiles .= '<script src="' . $this->path->url->js . $dest . $files . '"></script>' . "\n";
-		}
-		
-		
-		return $listFiles;
-	}*/
-	
 }
 
 

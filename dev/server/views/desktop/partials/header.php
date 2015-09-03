@@ -18,7 +18,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<?php
 	
-	echo $main->routes->getAltLangUrl();
+	echo $main->path->getAltLangUrl();
 	
 	/* Social share */
 	// include_once $main->path->file->base . 'server/shared/social-share.php';
@@ -34,7 +34,7 @@
 	<?php
 	
 	/* Modernirz & Detectizr */
-	// echo $main->config->listJsFiles('modern-detect-izr');
+	echo $main->path->listJsFiles('header');
 	
 	/* Google Analytics */
 	include_once Path::$FILE->shared . 'google-analytics.php';
