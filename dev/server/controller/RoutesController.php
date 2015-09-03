@@ -179,7 +179,7 @@ class RoutesController
 	{
 		if (!Lang::$MULTI_LANG)
 			return false;
-			
+		
 		$altLangUrlList = '';
 		
 		foreach (Lang::$ALL_LANG as $key => $lang) {
