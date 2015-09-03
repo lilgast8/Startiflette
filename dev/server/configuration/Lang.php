@@ -20,13 +20,10 @@ class Lang
 	{
 		$this->path = Path::getInstance();
 		
-		
 		$this->setGlobalInfos();
 		$this->setCurrentLang();
-		// $this->checkCurrentLang();
 		$this->setLangLinks();
 		
-		// $this->setPathPageUrlCurrent();
 		$this->path->setCurrentPageUrl();
 	}
 	
@@ -70,21 +67,6 @@ class Lang
 		else
 			self::$LANG = Path::$PAGE_URL->aParams[0];
 	}
-	
-	
-	/* À METTRE DANS LE ROUTES CONTROLLER */
-	/*private function checkCurrentLang()
-	{
-		if (!in_array(self::$LANG, self::$ALL_LANG)) {
-			self::$LANG		= self::$DEFAULT_LANG;
-			
-			header("Status: 404 NOT FOUND", false, 404);
-			
-			// self::$IS_404	= true;
-			
-			echo 'Show 404 - Language not available';
-		}
-	}*/
 	
 	
 	private function setLangLinks()

@@ -26,9 +26,7 @@ class Main
 		$this->setConfig();
 		$this->setPath();
 		$this->setLang();
-		// $this->config->init();
 		$this->setRoutes();
-		// $this->setContents();
 	}
 	
 	
@@ -69,31 +67,6 @@ class Main
 	{
 		$this->routes = RoutesController::getInstance();
 	}
-	
-	
-	/*private function setPath()
-	{
-		$this->path = Path::getInstance();
-	}*/
-	
-	
-	/*private function setPath()
-	{
-		$this->path = Path::getInstance();
-	}
-	
-	
-	private function setRoutes()
-	{
-		$this->routes = RoutesController::getInstance();
-	}
-	
-	
-	private function setContents()
-	{
-		include_once $this->path->file->contents . DS . 'contents.php';
-		$this->contents = getContents();
-	}*/
 	
 }
 
