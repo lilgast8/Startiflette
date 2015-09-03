@@ -3,7 +3,8 @@
 	
 	<!-- Footer -->
 	<footer id="footer">
-		<?php if(Config::$MULTI_LANG) { ?>
+		<!--
+		<?php if(Lang::$MULTI_LANG) { ?>
 		<nav class="footer-lg">
 			<?php foreach($main->routes->altUrl as $lang => $urlAlt) { ?>
 			<a href="<?php echo $urlAlt; ?>" class="footer-lg-link" data-lg="<?php echo $lang; ?>"><?php echo $lang; ?></a>
@@ -19,9 +20,10 @@
 				</li>
 			</ul>
 		</nav>
+		-->
 	</footer>
 	
-	<?php include_once $main->path->file->base.'server/views/alt/no-js.php'; // no JS ?>
+	<?php include_once Path::$FILE->viewsAlt . 'no-js.php'; // no JS ?>
 	
 </div> <!-- End #main-container -->
 
@@ -30,10 +32,10 @@
 <?php
 
 /* JS var */
-include_once $main->path->file->base.'server/shared/js-var.php';
+include_once Path::$FILE->shared . 'js-var.php';
 
 /* JS scripts */
-echo $main->config->listJsFiles('scripts-desktop');
+// echo $main->config->listJsFiles('scripts-desktop');
 
 ?>
 

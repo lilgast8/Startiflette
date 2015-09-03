@@ -27,11 +27,16 @@ class RoutesController
 	static $ROUTES		= null;
 	static $PAGE_URL	= null;
 	
+	static $PHP_VIEW	= null;
+	static $TITLE		= null;
+	static $DESC		= null;
+	
 	private $path		= null;
 	
 	private $pageId		= null;
-	private $title		= null;
-	private $desc		= null;
+	private $pageParams = null;
+	// private $title		= null;
+	// private $desc		= null;
 	
 	private $is404		= null;
 	private $isHomepage	= null;
@@ -134,8 +139,8 @@ class RoutesController
 		if (!$doesPageExist)
 			$this->set404('<b>Show 404 - Page not available</b> <br><br>');
 		else {
-			$this->setIsHomepage($pageId);
 			$this->setPageInfos($pageId, $pageParams);
+			$this->setIsHomepage();
 			// $this->setAltLangUrl($pageParams);
 		}
 	}
@@ -152,42 +157,50 @@ class RoutesController
 	}
 	
 	
-	private function setIsHomepage($pageId)
+	private function setPageInfos($pageId, $pageParams)
 	{
-		$this->isHomepage = $pageId == 'home' ? true : false;
+		$this->pageId		= $pageId;
+		$this->pageParams	= $pageParams;
+		
+		self::$PHP_VIEW		= $this->pageParams->phpView;
+		self::$TITLE		= $this->pageParams->{Lang::$LANG}->title;
+		self::$DESC			= $this->pageParams->{Lang::$LANG}->desc;
 	}
 	
 	
-	private function setPageInfos($pageId, $pageParams)
+	private function setIsHomepage()
 	{
-		$this->pageId	= $pageId;
-		$this->title	= $pageParams->{Lang::$LANG}->title;
-		$this->desc		= $pageParams->{Lang::$LANG}->desc;
+		$this->isHomepage = $this->pageId == 'home' ? true : false;
 	}
 	
 	
 	// private function setAltLangUrl($pageParams)
-	public function getAltLangUrl($pageParams)
+	public function getAltLangUrl()
 	{
+		$altLangUrlList = '';
+		
 		foreach (Lang::$ALL_LANG as $key => $lang) {
 			
 			if ($lang !== Lang::$LANG) {
-				$currentUrl = $pageParams->$lang->url;
+				$currentUrl = $this->pageParams->$lang->url;
 				
 				if ($this->isHomepage && $lang == Lang::$DEFAULT_LANG)
 					$urlPart = '';
 				else if ($this->isHomepage)
 					$urlPart = $lang;
 				else
-					$urlPart = $lang . '/' . $pageParams->$lang->url;
+					$urlPart = $lang . '/' . $this->pageParams->$lang->url;
 				
 				$altLangUrl = Path::$URL->base . $urlPart;
 				
 				
-				return '<link rel="alternate" href="' . $altLangUrl . '" hreflang="' . $lang . '" />' . "\n\t";
+				$altLangUrlList .= '<link rel="alternate" href="' . $altLangUrl . '" hreflang="' . $lang . '" />' . "\n\t";
 			}
 			
 		}
+		
+		
+		return $altLangUrlList;
 	}
 	
 	

@@ -50,15 +50,20 @@ class Path
 		
 		
 		// file paths
-		self::$FILE			= new stdClass();
+		self::$FILE				= new stdClass();
 		
-		self::$FILE->assets	= 'assets/';
-		self::$FILE->css	= self::$FILE->assets . 'css/';
-		self::$FILE->img	= self::$FILE->assets . 'img/';
-		self::$FILE->js		= self::$FILE->assets . 'js/';
-		self::$FILE->json	= self::$FILE->assets . 'json/';
-		self::$FILE->routes	= self::$FILE->json . 'routes/';
-		self::$FILE->server	= 'server/';
+		self::$FILE->assets		= 'assets/';
+		self::$FILE->css		= self::$FILE->assets . 'css/';
+		self::$FILE->img		= self::$FILE->assets . 'img/';
+		self::$FILE->js			= self::$FILE->assets . 'js/';
+		self::$FILE->json		= self::$FILE->assets . 'json/';
+		self::$FILE->routes		= self::$FILE->json . 'routes/';
+		self::$FILE->server		= 'server/';
+		self::$FILE->shared		= self::$FILE->server . 'shared/';
+		self::$FILE->views		= self::$FILE->server . 'views/';
+		self::$FILE->viewsPage	= self::$FILE->views . Config::$DEVICE_FOLDER . 'pages/';
+		self::$FILE->viewsAlt	= self::$FILE->views . 'alt/';
+		
 		
 		
 		// page url paths
