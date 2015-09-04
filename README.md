@@ -21,6 +21,7 @@ Made the configurations in the `dev/assets/json/config/config.json` file.
 * GA_ID: @type {array of string} list of Google Analytics ID
 
 
+
 ## Routes
 
 * error404 & home must be defined *— TO COMPLETE*
