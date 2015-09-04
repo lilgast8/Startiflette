@@ -30,6 +30,8 @@ APP.Main = ( function( window ) {
 		APP.Path.init();
 		APP.Lang.init();
 		
+		APP.OldBrowser.init();
+		
 		// APP.RoutesManager.init();
 	};
 	
