@@ -36,7 +36,7 @@ class Lang
 	
 	public static function getInstance()
 	{
-		if (!isset(self::$instance))
+		if ( !isset( self::$instance ) )
 			self::$instance = new self;
 		
 		return self::$instance;
@@ -53,7 +53,7 @@ class Lang
 		
 		
 		// multi-lang
-		if (count(self::$ALL_LANG) == 1)
+		if ( count( self::$ALL_LANG ) == 1 )
 			self::$MULTI_LANG = false;
 		else
 			self::$MULTI_LANG = true;
@@ -62,7 +62,7 @@ class Lang
 	
 	private function setCurrentLang()
 	{
-		if (!self::$MULTI_LANG || strlen(Path::$PAGE_URL->params) == 0)
+		if ( !self::$MULTI_LANG || strlen( Path::$PAGE_URL->params ) == 0 )
 			self::$LANG = self::$DEFAULT_LANG;
 		else
 			self::$LANG = Path::$PAGE_URL->aParams[0];
@@ -72,7 +72,7 @@ class Lang
 	private function setLangLinks()
 	{
 		self::$LANG_LINK_ROOT	= self::$LANG == self::$DEFAULT_LANG ? '' : self::$LANG;
-		self::$LANG_LINK		= self::$MULTI_LANG ? self::$LANG.'/' : '';
+		self::$LANG_LINK		= self::$MULTI_LANG ? self::$LANG . '/' : '';
 	}
 	
 }

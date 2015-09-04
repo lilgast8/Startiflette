@@ -43,7 +43,7 @@ class Config
 	
 	public static function getInstance()
 	{
-		if (!isset(self::$instance))
+		if ( !isset( self::$instance ) )
 			self::$instance = new self;
 		
 		return self::$instance;
@@ -54,18 +54,18 @@ class Config
 	{
 		$config = $this->getConfigFile();
 		
-		foreach ($config as $varName => $value)
-			self::${$varName} = $value;
+		foreach ( $config as $varName => $value )
+			self::${ $varName } = $value;
 	}
 	
 	
 	private function getConfigFile()
 	{
-		if ( !file_exists(self::CONFIG_FILE_PATH) )
-			throw new ErrorException('Config file is missing!');
+		if ( !file_exists( self::CONFIG_FILE_PATH ) )
+			throw new ErrorException( 'Config file is missing!' );
 		
-		$config	= file_get_contents(self::CONFIG_FILE_PATH);
-		$config	= json_decode($config);
+		$config	= file_get_contents( self::CONFIG_FILE_PATH );
+		$config	= json_decode( $config );
 		
 		return $config;
 	}
@@ -79,28 +79,25 @@ class Config
 		$desktop	= !$mobile && !$tablet ? true : false; // desktop device
 		
 		
-		if (self::$FORCE_DEVICE)
-			$device = self::$FORCE_DEVICE;
-		else if ($mobile && !$tablet)
-			$device = 'mobile';
-		else if ($tablet)
-			$device = 'tablet';
-		else if ($desktop)
-			$device = 'desktop';
-		
-		
-		self::$DEVICE = $device;
+		if ( self::$FORCE_DEVICE )
+			self::$DEVICE = self::$FORCE_DEVICE;
+		else if ( $mobile && !$tablet )
+			self::$DEVICE = 'mobile';
+		else if ( $tablet )
+			self::$DEVICE = 'tablet';
+		else if ( $desktop )
+			self::$DEVICE = 'desktop';
 	}
 	
 	
 	public function getJsFilesFile()
 	{
-		if (!$this->jsFiles) { // load file if it wasn't already done
-			if ( !file_exists(Path::$FILE->jsFilesFile) )
-				throw new ErrorException('JsFilesFile is missing!');
+		if ( !$this->jsFiles ) { // load file if it wasn't already done
+			if ( !file_exists( Path::$FILE->jsFilesFile ) )
+				throw new ErrorException( 'JsFilesFile is missing!' );
 			
-			$this->jsFiles	= file_get_contents(Path::$FILE->jsFilesFile);
-			$this->jsFiles	= json_decode($this->jsFiles);
+			$this->jsFiles	= file_get_contents( Path::$FILE->jsFilesFile );
+			$this->jsFiles	= json_decode( $this->jsFiles );
 		}
 		
 		

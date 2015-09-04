@@ -44,7 +44,7 @@ class RoutesController
 	
 	public static function getInstance()
 	{
-		if (!isset(self::$instance))
+		if ( !isset(self::$instance ) )
 			self::$instance = new self;
 		
 		return self::$instance;
@@ -55,14 +55,14 @@ class RoutesController
 	{
 		self::$ROUTES = new stdClass();
 		
-		foreach (Config::$ROUTES_FILES as $fileName) {
+		foreach ( Config::$ROUTES_FILES as $fileName ) {
 			$filePath = Path::$FILE->routes . $fileName . '.json';
 			
-			if ( !file_exists($filePath) )
+			if ( !file_exists( $filePath ) )
 				throw new ErrorException('Routes file is missing!');
 			
-			$routes	= file_get_contents($filePath);
-			$routes	= json_decode($routes);
+			$routes	= file_get_contents( $filePath );
+			$routes	= json_decode( $routes );
 			
 			self::$ROUTES->$fileName = new stdClass();
 			self::$ROUTES->$fileName = $routes;
@@ -72,10 +72,10 @@ class RoutesController
 	
 	private function checkLangExistence()
 	{
-		if (!in_array(Lang::$LANG, Lang::$ALL_LANG)) {
+		if ( !in_array( Lang::$LANG, Lang::$ALL_LANG ) ) {
 			Lang::$LANG = Lang::$DEFAULT_LANG;
 			
-			$this->set404('<b>Show 404 - Language not available</b> <br><br>');
+			$this->set404( '<b>Show 404 - Language not available</b> <br><br>' );
 		}
 	}
 	
@@ -84,11 +84,11 @@ class RoutesController
 	{
 		$doesPageExist = false;
 		
-		foreach (self::$ROUTES as $routesGroup => $pages) { // parse all routes group
+		foreach ( self::$ROUTES as $routesGroup => $pages ) { // parse all routes group
 			
-			foreach ($pages as $pageId => $pageParams) { // parse all pages
+			foreach ( $pages as $pageId => $pageParams ) { // parse all pages
 				
-				if ($pageParams->{Lang::$LANG}->url == Path::$PAGE_URL->current) { // if url exist
+				if ( $pageParams->{ Lang::$LANG }->url == Path::$PAGE_URL->current ) { // if url exist
 					$doesPageExist = true;
 					
 					break; // break second foreach
@@ -96,41 +96,41 @@ class RoutesController
 				
 			}
 			
-			if ($doesPageExist)
+			if ( $doesPageExist )
 				break; // break first foreach
 			
 		}
 		
 		
-		if (!$doesPageExist)
-			$this->set404('<b>Show 404 - Page not available</b> <br><br>');
+		if ( !$doesPageExist )
+			$this->set404( '<b>Show 404 - Page not available</b> <br><br>' );
 		else {
-			$this->setPageInfos($pageId, $pageParams);
+			$this->setPageInfos( $pageId, $pageParams );
 			$this->setIsHomepage();
 			$this->setAltLangUrl();
 		}
 	}
 	
 	
-	private function set404($status)
+	private function set404( $status )
 	{
 		echo $status; // $status param to remove
 		
-		// header('Status: 404 NOT FOUND', false, 404);
+		// header( 'Status: 404 NOT FOUND', false, 404 );
 		
 		// self::$IS_404 = true;
 		// $this->is404 = true;
 	}
 	
 	
-	private function setPageInfos($pageId, $pageParams)
+	private function setPageInfos( $pageId, $pageParams )
 	{
 		$this->pageId		= $pageId;
 		$this->pageParams	= $pageParams;
 		
 		self::$PHP_VIEW		= $this->pageParams->phpView;
-		self::$TITLE		= $this->pageParams->{Lang::$LANG}->title;
-		self::$DESC			= $this->pageParams->{Lang::$LANG}->desc;
+		self::$TITLE		= $this->pageParams->{ Lang::$LANG }->title;
+		self::$DESC			= $this->pageParams->{ Lang::$LANG }->desc;
 	}
 	
 	
@@ -144,21 +144,21 @@ class RoutesController
 	{
 		$ALT_LANG_URL = array();
 		
-		foreach (Lang::$ALL_LANG as $lang) {
+		foreach ( Lang::$ALL_LANG as $lang ) {
 			
-			if ($lang !== Lang::$LANG) {
+			if ( $lang !== Lang::$LANG ) {
 				$currentUrl = $this->pageParams->$lang->url;
 				
-				if ($this->isHomepage && $lang == Lang::$DEFAULT_LANG)
+				if ( $this->isHomepage && $lang == Lang::$DEFAULT_LANG )
 					$urlPart = '';
-				else if ($this->isHomepage)
+				else if ( $this->isHomepage )
 					$urlPart = $lang;
 				else
 					$urlPart = $lang . '/' . $this->pageParams->$lang->url;
 				
 				$altLangUrl = Path::$URL->base . $urlPart;
 				
-				self::$ALT_LANG_URL[$lang] = $altLangUrl;
+				self::$ALT_LANG_URL[ $lang ] = $altLangUrl;
 			}
 			
 		}
