@@ -16,7 +16,7 @@ APP.OldBrowser = (function(window) {
 			browser == 'firefox'	&& browserVersion < 10 || 
 			browser == 'opera'		&& browserVersion < 11 || 
 			browser == 'safari'		&& browserVersion < 5 || 
-			browser == 'chrome'		&& browserVersion < 117 ) {
+			browser == 'chrome'		&& browserVersion < 17 ) {
 			
 			$.ajax( {
 				url:		APP.Path.URL.base + APP.Lang.LANG + '/ajax-content/alt-content/old-browser',

@@ -5,11 +5,7 @@ APP.Path = ( function( window ) {
 	
 	function Path() {
 		this.URL		= null;
-		// this.FILE		= null;
 		this.PAGE_URL	= null;
-		// this.LINK		= null;
-		
-		// this.deviceDir	= null;
 		
 		this.PAGE_URL = {
 			full:		null,
@@ -22,19 +18,8 @@ APP.Path = ( function( window ) {
 	
 	
 	Path.prototype.init = function() {
-		// _setDeviceDir.call( this );
 		_setPaths.call( this );
 	};
-	
-	
-	// var _setDeviceDir = function() {
-	// 	if ( APP.Config.HAS_MOBILE_VERSION )
-	// 		this.deviceDir = 'desktop/';
-	// 	else if ( APP.Config.HAS_MOBILE_VERSION && ( APP.Config.DEVICE == 'desktop' || APP.Config.DEVICE == 'tablet' ) )
-	// 		this.deviceDir = 'desktop/';
-	// 	else if ( APP.Config.HAS_MOBILE_VERSION && APP.Config.DEVICE == 'mobile' )
-	// 		this.deviceDir = 'mobile/';
-	// };
 	
 	
 	var _setPaths = function() {
@@ -49,26 +34,6 @@ APP.Path = ( function( window ) {
 			routes:	APP.Config.BASE_URL_DEV + 'assets/routes/',
 			server:	APP.Config.BASE_URL_DEV + 'server/',
 		};
-		
-		
-		// file paths
-		/*
-		this.FILE = {
-			assets:			'assets/',
-			css:			'assets/css/',
-			img:			'assets/img/',
-			js:				'assets/js/',
-			json:			'assets/json/',
-			jsFilesFile:	'assets/json/config/js-files.json',
-			routes:			'assets/json/routes/',
-			server:			'server/',
-			shared:			'server/shared/',
-			views:			'server/views/',
-			viewsPage:		'server/views' + this.deviceDir + 'pages/',
-			viewsPartials:	'server/views' + this.deviceDir + 'partials/',
-			viewsAlt:		'server/views/alt/'
-		};
-		*/
 		
 		
 		// page url paths

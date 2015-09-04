@@ -45,7 +45,6 @@ APP.Config = ( function( window ) {
 		_setBrowser.call( this );
 		_setMethods.call( this );
 		
-		// console.log(this.E.INIT);
 		this.dispatch( this.E.INIT );
 	};
 	

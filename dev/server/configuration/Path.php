@@ -83,7 +83,6 @@ class Path
 		self::$FILE->viewsAlt		= self::$FILE->views	. 'alt/';
 		
 		
-		
 		// page url paths
 		self::$PAGE_URL				= new stdClass();
 		
