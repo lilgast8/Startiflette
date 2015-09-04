@@ -34,7 +34,7 @@
 	<?php
 	
 	/* Modernirz & Detectizr */
-	echo $main->path->listJsFiles('header');
+	echo $main->path->getJsFilesUrl('header');
 	
 	/* Google Analytics */
 	include_once Path::$FILE->shared . 'google-analytics.php';

@@ -30,7 +30,7 @@
 <?php
 
 /* JS scripts */
-echo $main->path->listJsFiles('scripts-desktop');
+echo $main->path->getJsFilesUrl('scripts-desktop');
 
 ?>
 

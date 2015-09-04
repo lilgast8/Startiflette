@@ -1,6 +1,6 @@
 {
 	
-	"ENV":						"dev",
+	"ENV":						"prod",
 	"LOCALHOST":				true,
 	"BASE_URL_DEV":				"http://startiflette:8888/dev/",
 	"BASE_URL_PREPROD":			"http://preprod.SITE_URL.COM/",

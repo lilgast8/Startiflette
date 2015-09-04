@@ -17,6 +17,8 @@ class Path
 	
 	protected function __construct()
 	{
+		$this->config = Config::getInstance();
+		
 		$this->setDeviceDir();
 		$this->setPaths();
 	}
@@ -175,17 +177,10 @@ class Path
 	}
 	
 	
-	public function listJsFiles($listName)
+	public function getJsFilesUrl($listName)
 	{
-		// À LOADER DANS CONFIG !!!
-		if ( !file_exists(self::$FILE->jsFilesFile) )
-			throw new ErrorException('JsFilesFile is missing!');
-		
-		$jsFiles	= file_get_contents(self::$FILE->jsFilesFile);
-		$jsFiles	= json_decode($jsFiles);
-		
-		
-		$listFiles = '';
+		$jsFiles	= $this->config->getJsFilesFile();
+		$listFiles	= '';
 		
 		if (Config::$ENV == 'dev') {
 			$files = $jsFiles->$listName->files;
@@ -204,7 +199,7 @@ class Path
 			$fileName	= $jsFiles->$listName->name;
 			$fileDest	= $jsFiles->$listName->dest;
 			
-			if ( is_array( $files ) ) {
+			if ( is_array($fileName) ) {
 					$listFiles .= '<!--[if lt IE 9]><script src="' . self::$URL->js . $fileName[1] . '"></script><![endif]-->' . "\n";
 					$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . self::$URL->js . $fileName[0] . '"></script><!--<![endif]-->' . "\n";
 				}

@@ -25,6 +25,8 @@ class Config
 	
 	static $DEVICE				= null;
 	
+	private $jsFiles			= null;
+	
 	
 	protected function __construct()
 	{
@@ -88,6 +90,21 @@ class Config
 		
 		
 		self::$DEVICE = $device;
+	}
+	
+	
+	public function getJsFilesFile()
+	{
+		if (!$this->jsFiles) { // load file if it wasn't already done
+			if ( !file_exists(Path::$FILE->jsFilesFile) )
+				throw new ErrorException('JsFilesFile is missing!');
+			
+			$this->jsFiles	= file_get_contents(Path::$FILE->jsFilesFile);
+			$this->jsFiles	= json_decode($this->jsFiles);
+		}
+		
+		
+		return $this->jsFiles;
 	}
 	
 }
