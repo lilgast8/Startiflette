@@ -21,7 +21,7 @@
 	echo $main->path->getAltLangUrl();
 	
 	/* Social share */
-	// include_once $main->path->file->base . 'server/shared/social-share.php';
+	include_once Path::$FILE->shared . 'social-share.php';
 	
 	/* Favicons */
 	// include_once $main->path->file->base . 'server/shared/favicons.php';
