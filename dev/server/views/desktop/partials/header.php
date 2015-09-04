@@ -24,7 +24,7 @@
 	include_once Path::$FILE->shared . 'social-share.php';
 	
 	/* Favicons */
-	include_once Path::$FILE->shared . 'favicons.php';
+	// include_once Path::$FILE->shared . 'favicons.php';
 	
 	?>
 	
