@@ -4,6 +4,12 @@ APP.Config = ( function( window ) {
 	
 	
 	function Config() {
+		APP.EventDispatcher.call(this);
+		
+		this.E = {
+			INIT: 'init'
+		};
+		
 		this.CONFIG_FILE_PATH	= 'assets/json/config/config.json';
 		
 		this.aJsonFiles			= [
@@ -13,6 +19,10 @@ APP.Config = ( function( window ) {
 			}
 		];
 	}
+	
+	
+	Config.prototype				= Object.create( APP.EventDispatcher.prototype );
+	Config.prototype.constructor	= Config;
 	
 	
 	Config.prototype.init = function() {
@@ -35,7 +45,8 @@ APP.Config = ( function( window ) {
 		_setBrowser.call( this );
 		_setMethods.call( this );
 		
-		// APP.OldBrowser.init();
+		// console.log(this.E.INIT);
+		this.dispatch( this.E.INIT );
 	};
 	
 	
@@ -72,5 +83,5 @@ APP.Config = ( function( window ) {
 	return new Config();
 	
 	
-} ) (window);
+} ) ( window );
 

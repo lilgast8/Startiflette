@@ -27,10 +27,11 @@
 			
 			"app/InitApp.js",
 			
-			"app/shared/config/Config.js",
-			"app/shared/config/OldBrowser.js",
-			
 			"app/shared/events/EventDispatcher.class.js",
+			
+			"app/shared/config/Config.js",
+			"app/shared/config/Path.js",
+			"app/shared/config/OldBrowser.js",
 			
 			"app/shared/routes/RoutesManager.js",
 			
@@ -70,10 +71,11 @@
 			
 			"app/InitApp.js",
 			
-			"app/shared/config/Config.js",
-			"app/shared/config/OldBrowser.js",
-			
 			"app/shared/events/EventDispatcher.class.js",
+			
+			"app/shared/config/Config.js",
+			"app/shared/config/Path.js",
+			"app/shared/config/OldBrowser.js",
 			
 			"app/shared/routes/RoutesManager.js",
 			
