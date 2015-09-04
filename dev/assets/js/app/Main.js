@@ -1,6 +1,6 @@
 
 
-APP.Main = (function(window) {
+APP.Main = ( function( window ) {
 	
 	
 	function Main() {
@@ -13,13 +13,13 @@ APP.Main = (function(window) {
 	Main.prototype.onReady = function() {
 		APP.Config.init();
 		
-		this.$.window = $(window);
-		this.$.body = $(document.body);
-		this.$.mainContainer = $(document.getElementById('main-container'));
-		this.$.pageContainer = $(document.getElementById('page-container'));
+		// this.$.window = $(window);
+		// this.$.body = $(document.body);
+		// this.$.mainContainer = $(document.getElementById('main-container'));
+		// this.$.pageContainer = $(document.getElementById('page-container'));
 		
-		this.p.windowLoad = $.proxy(_windowLoad, this);
-		this.$.window.on('load', this.p.windowLoad);
+		// this.p.windowLoad = $.proxy(_windowLoad, this);
+		// this.$.window.on('load', this.p.windowLoad);
 	};
 	
 	
@@ -90,8 +90,8 @@ APP.Main = (function(window) {
 	return new Main();
 	
 	
-})(window);
+} ) (window);
 
 
-$(APP.Main.onReady.bind(APP.Main));
+$( APP.Main.onReady.bind( APP.Main ) );
 

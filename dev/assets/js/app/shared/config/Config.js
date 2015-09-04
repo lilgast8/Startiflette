@@ -1,32 +1,41 @@
 
 
-APP.Config = (function(window) {
+APP.Config = ( function( window ) {
 	
 	
 	function Config() {
-		this.LOCALHOST			= LOCALHOST == '1' ? true : false;
-		this.PROD				= PROD == '1' ? true : false;
-		this.DEFAULT_LANG		= DEFAULT_LANG;
-		this.WEB_ROOT			= WEB_ROOT;
-		this.ASSETS				= this.PROD ? 'assets/' : 'src/';
-		this.LANG				= null;
-		this.MULTI_LANG			= null;
-		this.ALL_LANG			= null;
+		this.CONFIG_FILE_PATH	= 'assets/json/config/config.json';
 		
-		this.BROWSER			= null;
-		this.BROWSER_VERSION	= null;
-		this.DEVICE				= null;
-		this.IS_IE				= null;
-		this.IE_VERSION			= null;
+		this.aJsonFiles			= [
+			{
+				id:		'config',
+				src:	this.CONFIG_FILE_PATH
+			}
+		];
 		
-		this.HAS_PUSHSTATE		= null;
+		// this.LOCALHOST			= LOCALHOST == '1' ? true : false;
+		// this.PROD				= PROD == '1' ? true : false;
+		// this.DEFAULT_LANG		= DEFAULT_LANG;
+		// this.WEB_ROOT			= WEB_ROOT;
+		// this.ASSETS				= this.PROD ? 'assets/' : 'src/';
+		// this.LANG				= null;
+		// this.MULTI_LANG			= null;
+		// this.ALL_LANG			= null;
 		
-		this.TRANSFORM			= null;
+		// this.BROWSER			= null;
+		// this.BROWSER_VERSION	= null;
+		// this.DEVICE				= null;
+		// this.IS_IE				= null;
+		// this.IE_VERSION			= null;
+		
+		// this.HAS_PUSHSTATE		= null;
+		
+		// this.TRANSFORM			= null;
 	}
 	
 	
 	Config.prototype.init = function() {
-		this.BROWSER			= Detectizr.browser.name;
+		/*this.BROWSER			= Detectizr.browser.name;
 		this.BROWSER_VERSION	= Detectizr.browser.version;
 		this.DEVICE				= Detectizr.device.type;
 		this.IS_IE				= APP.Config.BROWSER == 'ie' ? true : false;
@@ -40,11 +49,47 @@ APP.Config = (function(window) {
 		
 		this.TRANSFORM			= getSupportedPropertyName('transform');
 		
-		APP.OldBrowser.init();
+		APP.OldBrowser.init();*/
+		
+		_loadConfigFile.call(this);
 	};
 	
 	
-	var _setAllLang = function() {
+	var _loadConfigFile = function() {
+		this.jsonLoader = new APP.Loader( false );
+		
+		this.jsonLoader.buildEvt(this.jsonLoader.E.COMPLETE, _onComplete.bind(this));
+		
+		this.jsonLoader.startLoad( this.aJsonFiles );
+	};
+	
+	
+	var _onComplete = function( datas ) {
+		var config = datas.config;
+		
+		for ( var varName in config )
+			this[ varName ] = config[ varName ];
+		
+		
+		_setDevice.call( this );
+	};
+	
+	
+	var _setDevice = function() {
+		if ( this.FORCE_DEVICE )
+			this.DEVICE = this.FORCE_DEVICE;
+		else
+			this.DEVICE = Detectizr.device.type;
+	};
+	
+	
+	
+	
+	
+	
+	
+	
+	/*var _setAllLang = function() {
 		var allLang = [];
 		
 		for(var lang in APP.Models.Json.data.pages)
@@ -66,11 +111,11 @@ APP.Config = (function(window) {
 			lang = pageUrl.substr(0, 2);
 		
 		return lang;
-	};
+	};*/
 	
 	
 	return new Config();
 	
 	
-})(window);
+} ) (window);
 
