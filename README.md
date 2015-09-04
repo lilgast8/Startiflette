@@ -1,6 +1,5 @@
 # Startiflette
-Starter + tartiflette = Startiflette, a starter for HTML5 + JS app with a Savoyard touch in its name.
-
+Starter + tartiflette = Startiflette, a starter for HTML5 + JS app with a Savoyard touch.
 
 
 
@@ -20,7 +19,6 @@ Made the configurations in the `dev/assets/json/config/config.json` file.
 * FORCE_DEVICE: @type {boolean or string} can be false, "desktop", "tablet" or "mobile"
 * HAS_AJAX: @type {boolean}
 * GA_ID: @type {array of string} list of Google Analytics ID
-
 
 
 ## Routes
