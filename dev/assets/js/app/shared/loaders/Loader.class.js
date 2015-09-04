@@ -26,7 +26,7 @@ APP.Loader = (function(window) {
 		
 		
 		// this.items	= [];
-		this.datas	= [];
+		this.data	= [];
 		this.queue	= null;
 		
 		this.init();
@@ -97,14 +97,14 @@ APP.Loader = (function(window) {
 	
 	
 	var _onFileLoad = function(e) {
-		this.datas[ e.item.id ] = e.result;
+		this.data[ e.item.id ] = e.result;
 	};
 	
 	
 	var _onComplete = function(e) {
 		// this.dispatch(this.E.COMPLETE, e);
 		// this.dispatch(this.E.COMPLETE, this.items);
-		this.dispatch( this.E.COMPLETE, this.datas );
+		this.dispatch( this.E.COMPLETE, this.data );
 	};
 	
 	

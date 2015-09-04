@@ -29,8 +29,8 @@ APP.Config = ( function( window ) {
 	};
 	
 	
-	var _onComplete = function( datas ) {
-		_setConfig.call( this, datas );
+	var _onComplete = function( data ) {
+		_setConfig.call( this, data );
 		_setDevice.call( this );
 		_setBrowser.call( this );
 		_setMethods.call( this );
@@ -39,8 +39,8 @@ APP.Config = ( function( window ) {
 	};
 	
 	
-	var _setConfig = function( datas ) {
-		var config = datas.config;
+	var _setConfig = function( data ) {
+		var config = data.config;
 		
 		for ( var varName in config )
 			this[ varName ] = config[ varName ];
