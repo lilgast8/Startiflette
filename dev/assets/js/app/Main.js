@@ -28,7 +28,7 @@ APP.Main = ( function( window ) {
 	
 	var _init = function() {
 		APP.Path.init();
-		// APP.Lang.init();
+		APP.Lang.init();
 		
 		// APP.RoutesManager.init();
 	};

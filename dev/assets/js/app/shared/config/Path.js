@@ -79,8 +79,8 @@ APP.Path = ( function( window ) {
 	
 	
 	Path.prototype.setCurrentPageUrl = function() {
-		// this.PAGE_URL.current	= this.getCurrentPageUrl();
-		// this.PAGE_URL.aCurrent	= explode( '/', self::$PAGE_URL->current );
+		this.PAGE_URL.current	= _getCurrentPageUrl.call( this );
+		this.PAGE_URL.aCurrent	= this.PAGE_URL.current.split( '/' );
 	};
 	
 	
@@ -102,13 +102,13 @@ APP.Path = ( function( window ) {
 	
 	var _getCurrentPageUrl = function()
 	{
-		// $currentPageUrl = preg_replace( '/' . Lang::$LANG . '/', '', self::$PAGE_URL->params, 1 );
+		var currentPageUrl = this.PAGE_URL.params.replace( APP.Lang.LANG, '' );
 		
-		// if ( substr( $currentPageUrl, 0, 1 ) == '/' ) // if / is first character, remove it
-		// 	$currentPageUrl = substr( $currentPageUrl, 1 );
+		if ( currentPageUrl.substr( 0, 1 ) == '/' ) // if / is first character, remove it
+			currentPageUrl = currentPageUrl.substr( 1 );
 		
 		
-		// return $currentPageUrl;
+		return currentPageUrl;
 	};
 	
 	

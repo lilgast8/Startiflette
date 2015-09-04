@@ -51,7 +51,6 @@ class Lang
 		// default lang
 		self::$DEFAULT_LANG = self::$ALL_LANG[0];
 		
-		
 		// multi-lang
 		if ( count( self::$ALL_LANG ) == 1 )
 			self::$MULTI_LANG = false;
