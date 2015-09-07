@@ -30,8 +30,8 @@ APP.Path = ( function( window ) {
 			css:	APP.Config.BASE_URL_DEV + 'assets/css/',
 			img:	APP.Config.BASE_URL_DEV + 'assets/img/',
 			js:		APP.Config.BASE_URL_DEV + 'assets/js/',
-			json:	APP.Config.BASE_URL_DEV + 'json/',
-			routes:	APP.Config.BASE_URL_DEV + 'assets/routes/',
+			json:	APP.Config.BASE_URL_DEV + 'assets/json/',
+			routes:	APP.Config.BASE_URL_DEV + 'assets/json/routes/',
 			server:	APP.Config.BASE_URL_DEV + 'server/',
 		};
 		
