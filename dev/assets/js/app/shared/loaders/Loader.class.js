@@ -55,7 +55,11 @@ APP.Loader = ( function( window ) {
 	Loader.prototype.destroy = function() {
 		this.unbindEvents();
 		
-		this.queue = null;
+		this.queue.removeAll();
+		this.queue			= null;
+		
+		this.isOnProgress	= null;
+		this.data			= null;
 	};
 	
 	
