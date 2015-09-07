@@ -45,7 +45,7 @@ APP.Config = ( function( window ) {
 		_setConfig.call( this, data );
 		_setDevice.call( this );
 		_setBrowser.call( this );
-		_setMethods.call( this );
+		_setProperties.call( this );
 		
 		this.dispatch( this.E.INIT );
 	};
@@ -83,7 +83,7 @@ APP.Config = ( function( window ) {
 	};
 	
 	
-	var _setMethods = function() {
+	var _setProperties = function() {
 		this.HAS_PUSHSTATE	= Modernizr.history;
 		this.TRANSFORM		= getSupportedPropertyName( 'transform' );
 	};
