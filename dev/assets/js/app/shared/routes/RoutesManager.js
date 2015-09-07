@@ -6,6 +6,10 @@ APP.RoutesManager = ( function( window ) {
 	function RoutesManager() {
 		APP.EventDispatcher.call( this );
 		
+		this.E = {
+			INIT: 'init'
+		};
+		
 		// this.prevView				= null;
 		// this.currentView			= null;
 		// this.nextView				= null;
@@ -47,8 +51,6 @@ APP.RoutesManager = ( function( window ) {
 			fileName = APP.Config.ROUTES_FILES[ key ];
 			filePath = APP.Path.URL.routes + fileName + '.json';
 			
-			console.log(fileName, filePath);
-			
 			aJsonFiles.push( {
 				id:		fileName,
 				src:	filePath
@@ -60,12 +62,14 @@ APP.RoutesManager = ( function( window ) {
 	
 	
 	var _onComplete = function( data ) {
-		_killJsonLoader.call( this );
+		_destroyJsonLoader.call( this );
 		_setRoutes.call( this, data );
+		
+		this.dispatch( this.E.INIT );
 	};
 	
 	
-	var _killJsonLoader = function() {
+	var _destroyJsonLoader = function() {
 		this.jsonLoader.destroyEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
 		
 		this.jsonLoader.destroy();

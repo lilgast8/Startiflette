@@ -40,7 +40,7 @@ APP.Config = ( function( window ) {
 	
 	
 	var _onComplete = function( data ) {
-		_killJsonLoader.call( this );
+		_destroyJsonLoader.call( this );
 		
 		_setConfig.call( this, data );
 		_setDevice.call( this );
@@ -51,7 +51,7 @@ APP.Config = ( function( window ) {
 	};
 	
 	
-	var _killJsonLoader = function() {
+	var _destroyJsonLoader = function() {
 		this.jsonLoader.destroyEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
 		
 		this.jsonLoader.destroy();
