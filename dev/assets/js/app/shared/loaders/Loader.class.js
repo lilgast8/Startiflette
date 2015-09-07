@@ -3,7 +3,7 @@
 APP.Loader = ( function( window ) {
 	
 	
-	function Loader(isOnProgress) {
+	function Loader( isOnProgress ) {
 		APP.EventDispatcher.call( this );
 		
 		this.isOnProgress = isOnProgress;
@@ -58,6 +58,7 @@ APP.Loader = ( function( window ) {
 		this.queue.removeAll();
 		this.queue			= null;
 		
+		this.E				= null;
 		this.isOnProgress	= null;
 		this.data			= null;
 	};
