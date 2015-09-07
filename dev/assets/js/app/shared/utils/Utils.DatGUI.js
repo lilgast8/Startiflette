@@ -1,5 +1,8 @@
 
 
+APP.Utils = APP.Utils || {};
+
+
 APP.Utils.DatGUI = (function(window){
 	
 	

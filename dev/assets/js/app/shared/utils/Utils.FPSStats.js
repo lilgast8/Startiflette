@@ -1,5 +1,8 @@
 
 
+APP.Utils = APP.Utils || {};
+
+
 APP.Utils.FPSStats = (function(window){
 	
 	

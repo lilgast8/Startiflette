@@ -1,5 +1,8 @@
 
 
+APP.Utils = APP.Utils || {};
+
+
 APP.Utils.MemoryStats = (function(window){
 	
 	
