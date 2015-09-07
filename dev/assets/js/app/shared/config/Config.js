@@ -40,12 +40,22 @@ APP.Config = ( function( window ) {
 	
 	
 	var _onComplete = function( data ) {
+		_killJsonLoader.call( this );
+		
 		_setConfig.call( this, data );
 		_setDevice.call( this );
 		_setBrowser.call( this );
 		_setMethods.call( this );
 		
 		this.dispatch( this.E.INIT );
+	};
+	
+	
+	var _killJsonLoader = function() {
+		this.jsonLoader.destroyEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
+		
+		this.jsonLoader.destroy();
+		this.jsonLoader = null;
 	};
 	
 	
