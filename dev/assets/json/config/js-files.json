@@ -36,25 +36,17 @@
 			
 			"app/shared/routes/RoutesManager.js",
 			
-			"app/shared/models/Models.Json.js",
-			"app/shared/models/Models.Assets.js",
-			
 			"app/shared/loaders/Loader.class.js",
 			
 			"app/shared/utils/Utils.Global.js",
 			
-			"app/shared/views/View.class.js",
-			"app/shared/views/ViewPage.class.js",
+			"app/shared/abstracts/AbstractController.js",
+			"app/shared/abstracts/AbstractView.js",
 			
-			"app/desktop/views/statics/ViewStatic.Header.js",
-			"app/desktop/views/statics/ViewStatic.Footer.js",
-			"app/desktop/views/statics/ViewStatic.MainLoader.js",
+			"app/shared/controllers/MainController.js",
+			"app/shared/views/MainView.js",
 			
-			"app/desktop/views/pages/ViewPage.Home.js",
-			"app/desktop/views/pages/ViewPage.About.js",
-			"app/desktop/views/pages/ViewPage.Projects.js",
-			"app/desktop/views/pages/ViewPage.Project.js",
-			"app/desktop/views/pages/ViewPage.Legals.js",
+			
 			
 			"app/Main.js"
 		]
