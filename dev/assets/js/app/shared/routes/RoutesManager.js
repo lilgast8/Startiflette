@@ -4,7 +4,7 @@ APP.RoutesManager = ( function( window ) {
 	
 	
 	function RoutesManager() {
-		APP.EventDispatcher.call(this);
+		APP.EventDispatcher.call( this );
 		
 		// this.prevView				= null;
 		// this.currentView			= null;
@@ -26,8 +26,8 @@ APP.RoutesManager = ( function( window ) {
 	}
 	
 	
-	// RoutesManager.prototype = Object.create(APP.EventDispatcher.prototype);
-	// RoutesManager.prototype.constructor = RoutesManager;
+	RoutesManager.prototype				= Object.create( APP.EventDispatcher.prototype );
+	RoutesManager.prototype.constructor	= RoutesManager;
 	
 	
 	RoutesManager.prototype.init = function() {

@@ -4,7 +4,7 @@ APP.Loader = ( function( window ) {
 	
 	
 	function Loader(isOnProgress) {
-		APP.EventDispatcher.call(this);
+		APP.EventDispatcher.call( this );
 		
 		this.isOnProgress = isOnProgress;
 		

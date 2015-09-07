@@ -4,7 +4,7 @@ APP.Config = ( function( window ) {
 	
 	
 	function Config() {
-		APP.EventDispatcher.call(this);
+		APP.EventDispatcher.call( this );
 		
 		this.E = {
 			INIT: 'init'
