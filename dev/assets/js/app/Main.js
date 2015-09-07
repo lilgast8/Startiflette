@@ -4,17 +4,18 @@ APP.Main = ( function( window ) {
 	
 	
 	function Main() {
-		this.$ = {};
+		// this.$ = {};
 		// this.p = {};
 		this.v = {};
+		this.o = {};
 	}
 	
 	
-	Main.prototype.onReady = function() {
-		console.time('load');
+	Main.prototype.init = function() {
+		// console.time('load');
 		
 		// console.log(APP.Config);
-		APP.Config.buildEvt( APP.Config.E.INIT, _init.bind( this ) );
+		APP.Config.buildEvt( APP.Config.E.INIT, _configLoaded.bind( this ) );
 		APP.Config.init();
 		
 		// this.$.window = $( window );
@@ -26,13 +27,47 @@ APP.Main = ( function( window ) {
 	};
 	
 	
-	var _init = function() {
+	var _configLoaded = function() {
 		APP.Path.init();
 		APP.Lang.init();
 		
-		APP.OldBrowser.init();
+		// APP.OldBrowser.init();
 		
+		_loadRoutes.call( this );
+	};
+	
+	
+	var _loadRoutes = function() {
+		APP.RoutesManager.buildEvt( APP.RoutesManager.E.INIT, _routesLoaded.bind( this ) );
 		APP.RoutesManager.init();
+	};
+	
+	
+	var _routesLoaded = function() {
+		// APP.ViewsManager.init();
+		
+		// APP.MainController.init();
+		this.o.mainController = new APP.MainController();
+		this.o.mainController.init();
+		
+		
+		/*
+		APP.MainController.init();
+			-> APP.MainView.init();
+				-> body
+				-> window
+				-> resize()
+				-> raf()
+			-> set header / footer ()
+				-> instance HeaderController
+					-> HeaderView
+				-> instance FooterController
+					-> FooterView
+			
+			-> CurrentPageController
+				-> CurrentPageView
+		*/
+		
 	};
 	
 	
@@ -109,5 +144,5 @@ APP.Main = ( function( window ) {
 } ) ( window );
 
 
-$( APP.Main.onReady.bind( APP.Main ) );
+$( APP.Main.init.bind( APP.Main ) );
 
