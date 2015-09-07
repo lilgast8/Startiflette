@@ -1,33 +1,92 @@
 
 
-APP.RoutesManager = (function(window) {
+APP.RoutesManager = ( function( window ) {
 	
 	
 	function RoutesManager() {
 		APP.EventDispatcher.call(this);
 		
-		this.prevView				= null;
-		this.currentView			= null;
-		this.nextView				= null;
+		// this.prevView				= null;
+		// this.currentView			= null;
+		// this.nextView				= null;
 		
-		this.rootPageName			= null;
-		this.urlParts				= null;
-		this.pageUrl				= null;
-		this.pageName				= null;
-		this.viewName				= null;
-		this.altUrl					= null;
+		// this.rootPageName			= null;
+		// this.urlParts				= null;
+		// this.pageUrl				= null;
+		// this.pageName				= null;
+		// this.viewName				= null;
+		// this.altUrl					= null;
 		
-		this.isPageChangedByClick	= false; // used to avoid to set page infos two times
+		// this.isPageChangedByClick	= false; // used to avoid to set page infos two times
 		
-		this.activeUrl				= null;
-		this.isPageChange			= true;
+		// this.activeUrl				= null;
+		// this.isPageChange			= true;
+		
+		this.routes = {};
 	}
 	
 	
-	RoutesManager.prototype = Object.create(APP.EventDispatcher.prototype);
-	RoutesManager.prototype.constructor = RoutesManager;
+	// RoutesManager.prototype = Object.create(APP.EventDispatcher.prototype);
+	// RoutesManager.prototype.constructor = RoutesManager;
 	
 	
+	RoutesManager.prototype.init = function() {
+		_loadRoutesFile.call( this );
+	};
+	
+	
+	var _loadRoutesFile = function() {
+		this.jsonLoader = new APP.Loader( false );
+		
+		this.jsonLoader.buildEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
+		
+		var aJsonFiles = [];
+		var fileName, filePath;
+		
+		for ( var key in APP.Config.ROUTES_FILES ) {
+			fileName = APP.Config.ROUTES_FILES[ key ];
+			filePath = APP.Path.URL.routes + fileName + '.json';
+			
+			console.log(fileName, filePath);
+			
+			aJsonFiles.push( {
+				id:		fileName,
+				src:	filePath
+			} );
+		}
+		
+		this.jsonLoader.startLoad( aJsonFiles );
+	};
+	
+	
+	var _onComplete = function( data ) {
+		_killJsonLoader.call( this );
+		_setRoutes.call( this, data );
+	};
+	
+	
+	var _killJsonLoader = function() {
+		this.jsonLoader.destroyEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
+		
+		this.jsonLoader.destroy();
+		this.jsonLoader = null;
+	};
+	
+	
+	var _setRoutes = function( data ) {
+		for ( var routesName in data )
+			this.routes[ routesName ] = data[routesName];
+	};
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
 	RoutesManager.prototype.init = function() {
 		History.options.disableSuid = true;
 		
@@ -316,10 +375,11 @@ APP.RoutesManager = (function(window) {
 	var _checkUrl = function() {
 		if(this.activeUrl != _getUrl()) _onStateChange.call(this);
 	};
+	*/
 	
 	
 	return new RoutesManager();
 	
 	
-})(window);
+} ) ( window );
 
