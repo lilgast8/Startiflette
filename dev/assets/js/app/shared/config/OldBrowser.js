@@ -1,6 +1,6 @@
 
 
-APP.OldBrowser = (function(window) {
+APP.OldBrowser = ( function( window ) {
 	
 	
 	function OldBrowser() {
@@ -43,5 +43,5 @@ APP.OldBrowser = (function(window) {
 	return new OldBrowser();
 	
 	
-})(window);
+} ) ( window );
 

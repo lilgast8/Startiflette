@@ -32,7 +32,7 @@ APP.Main = ( function( window ) {
 		
 		APP.OldBrowser.init();
 		
-		// APP.RoutesManager.init();
+		APP.RoutesManager.init();
 	};
 	
 	
