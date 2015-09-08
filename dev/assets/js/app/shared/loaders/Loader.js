@@ -56,11 +56,6 @@ APP.Loader = ( function( window ) {
 		this.unbindEvents();
 		
 		this.queue.removeAll();
-		this.queue			= null;
-		
-		this.E				= null;
-		this.isOnProgress	= null;
-		this.data			= null;
 	};
 	
 	
