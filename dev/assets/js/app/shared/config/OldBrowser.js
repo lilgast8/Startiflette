@@ -16,7 +16,7 @@ APP.OldBrowser = ( function( window ) {
 			browser == 'firefox'	&& browserVersion < 10 || 
 			browser == 'opera'		&& browserVersion < 11 || 
 			browser == 'safari'		&& browserVersion < 5 || 
-			browser == 'chrome'		&& browserVersion < 17 ) {
+			browser == 'chrome'		&& browserVersion < 117 ) {
 			
 			$.ajax( {
 				url:		APP.Path.URL.base + APP.Lang.LANG + '/ajax-content/alt-content/old-browser',
@@ -30,8 +30,8 @@ APP.OldBrowser = ( function( window ) {
 	
 	
 	var _successAjax = function( data ) {
-		// console.log(data);
-		// APP.Main.$.mainContainer[0].innerHTML += data;
+		console.log( data );
+		APP.MainController.view.$mainCont[0].innerHTML += data;
 	};
 	
 	

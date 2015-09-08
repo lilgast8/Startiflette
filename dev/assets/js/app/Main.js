@@ -50,6 +50,8 @@ APP.Main = ( function( window ) {
 		// this.mainController = new APP.MainController();
 		// this.mainController.init();
 		
+		APP.OldBrowser.init();
+		
 		
 		/*
 		APP.MainController.init();

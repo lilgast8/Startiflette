@@ -30,7 +30,11 @@ class RoutesController
 		
 		$this->setRoutes();
 		$this->checkLangExistence();
-		$this->checkPageExistence();
+		// $this->checkPageExistence();
+		if ( !$this->isAltContent() )
+			$this->checkPageExistence();
+		else
+			echo 'SET ALT CONTENT';
 		
 		$this->path->setLinks();
 	}
@@ -109,6 +113,24 @@ class RoutesController
 			$this->setIsHomepage();
 			$this->setAltLangUrl();
 		}
+	}
+	
+	
+	private function isAltContent()
+	{
+		$isAltContent = false;
+		
+		/*
+		echo '-------- '.Path::$PAGE_URL->current.' --------';
+		echo strstr( Path::$PAGE_URL->current, 'alt-content' );
+		// echo strpos( Path::$PAGE_URL->current, 'alt-contentasdsa' );
+		echo '----------------------';
+		*/
+		
+		if ( strstr( Path::$PAGE_URL->current, 'alt-content' ) )
+			$isAltContent = true;
+		
+		return $isAltContent;
 	}
 	
 	
