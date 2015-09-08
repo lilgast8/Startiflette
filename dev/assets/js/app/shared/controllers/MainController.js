@@ -26,10 +26,27 @@ APP.MainController = ( function( window ) {
 		
 		this.o.view = new APP.MainView();
 		
+		this.bindEvents();
 		this.o.view.init();
+		
 	};
 	
 	
+	MainController.prototype.bindEvents = function() {
+		console.log('MainController.bindEvents()');
+		// Bind all main events (resize, raf, mousemove, mousedown, mouseup, scroll, orientationChange...)
+		
+		// this.o.view.buildEvt( this.o.view.E.RESIZE, _resize.bind( this ) );
+		this.o.view.buildEvt( this.o.view.E.RESIZE, _resize.bind( this ) );
+	};
+	
+	
+	var _resize = function() {
+		console.log('MainController _resize()', this.o.view.v.wW, this.o.view.v.hW);
+	};
+	
+	
+	// return new MainController();
 	return MainController;
 	
 	
