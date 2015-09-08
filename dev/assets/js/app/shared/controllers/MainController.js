@@ -15,29 +15,24 @@ APP.MainController = ( function( window ) {
 	
 	
 	MainController.prototype.init = function() {
-		// console.log('MainController.init()');
-		
 		this.instanceView();
 	};
 	
 	
 	MainController.prototype.instanceView = function() {
-		// console.log('MainController.instanceView()');
-		
-		this.o.view = new APP.MainView();
+		this.o.view = APP.MainView;
 		
 		this.bindEvents();
 		this.o.view.init();
-		
 	};
 	
 	
 	MainController.prototype.bindEvents = function() {
-		console.log('MainController.bindEvents()');
-		// Bind all main events (resize, raf, mousemove, mousedown, mouseup, scroll, orientationChange...)
-		
-		// this.o.view.buildEvt( this.o.view.E.RESIZE, _resize.bind( this ) );
 		this.o.view.buildEvt( this.o.view.E.RESIZE, _resize.bind( this ) );
+		this.o.view.buildEvt( this.o.view.E.RAF, _raf.bind( this ) );
+		this.o.view.buildEvt( this.o.view.E.MOUSE_MOVE, _mouseMove.bind( this ) );
+		this.o.view.buildEvt( this.o.view.E.MOUSE_DOWN, _mouseDown.bind( this ) );
+		this.o.view.buildEvt( this.o.view.E.MOUSE_UP, _mouseUp.bind( this ) );
 	};
 	
 	
@@ -46,8 +41,27 @@ APP.MainController = ( function( window ) {
 	};
 	
 	
-	// return new MainController();
-	return MainController;
+	var _raf = function() {
+		console.log('MainController _raf()');
+	};
+	
+	
+	var _mouseMove = function() {
+		console.log('MainController _mouseMove()');
+	};
+	
+	
+	var _mouseDown = function() {
+		console.log('MainController _mouseDown()');
+	};
+	
+	
+	var _mouseUp = function() {
+		console.log('MainController _mouseUp()');
+	};
+	
+	
+	return new MainController();
 	
 	
 } ) ( window );

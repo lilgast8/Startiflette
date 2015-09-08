@@ -21,13 +21,11 @@ APP.MainView = ( function( window ) {
 	
 	
 	MainView.prototype.init = function() {
-		console.log('MainView.init()');
-		
-		this.v.wW = null;
-		this.v.wH = null;
+		this.v.wW		= null;
+		this.v.wH		= null;
+		this.v.scrollY	= null;
 		
 		this.initDOM();
-		this.setEvt();
 		this.bindEvents();
 	};
 	
@@ -40,54 +38,16 @@ APP.MainView = ( function( window ) {
 	};
 	
 	
-	MainView.prototype.setEvt = function() {
-		this.evt = {
-			'resizeW':		[
-				this.$.window,
-				'resize',
-				$.proxy(_resize, this)
-			],
-			// 'raf':			'$.proxy(_raf, this)',
-			'mouseMoveW':	[
-				this.$.window,
-				'mousemove',
-				$.proxy(_mouseMove, this)
-			],
-			'mouseDownW':	[
-				this.$.window,
-				'mousedown',
-				$.proxy(_mouseDown, this)
-			],
-			'mouseUpW':	[
-				this.$.window,
-				'mouseup',
-				$.proxy(_mouseUp, this)
-			]
-		};
-	};
-	
-	
 	MainView.prototype.bindEvents = function() {
-		// Bind all main events (resize, raf, mousemove, mousedown, mouseup, scroll, orientationChange...)
-		
-		var prop;
-		for ( var evt in this.evt ) {
-			// console.log(evt, this.evt[evt][0], this.evt[evt][1], this.evt[evt][2]);
-			
-			// this.p.NAME = $.proxy(FCT, this);
-			// this.$.ELT.on('EVENT', this.p.NAME);
-			
-			prop = this.evt[ evt ];
-			// console.log(prop[0], prop[1], prop[2]);
-			// prop[0].on(prop[1], prop[2]);
-		}
-		
+		this.$.window.on( 'resize', $.proxy( _resize, this ) );
+		TweenLite.ticker.addEventListener( 'tick', _raf, this );
+		this.$.window.on( 'mousemove', $.proxy( _mouseMove, this ) );
+		this.$.window.on( 'mousedown', $.proxy( _mouseDown, this ) );
+		this.$.window.on( 'mouseup', $.proxy( _mouseUp, this ) );
 	};
 	
 	
 	var _resize = function() {
-		// console.log('_resize()');
-		
 		this.v.wW = this.$.window.width();
 		this.v.hW = this.$.window.height();
 		
@@ -96,30 +56,28 @@ APP.MainView = ( function( window ) {
 	
 	
 	var _raf = function() {
-		console.log('_mouseMove()');
+		this.v.scrollY = this.$.window[0].scrollY || this.$.window[0].pageYOffset;
 		
-		this.dispatch( this.E.MOUSE_MOVE );
+		this.dispatch( this.E.RAF );
 	};
 	
 	
 	var _mouseMove = function() {
-		console.log('_mouseMove()');
-		
 		this.dispatch( this.E.MOUSE_MOVE );
 	};
 	
 	
 	var _mouseDown = function() {
-		console.log('_mouseDown()');
+		this.dispatch( this.E.MOUSE_DOWN );
 	};
 	
 	
 	var _mouseUp = function() {
-		console.log('_mouseUp');
+		this.dispatch( this.E.MOUSE_UP );
 	};
 	
 	
-	return MainView;
+	return new MainView();
 	
 	
 } ) ( window );

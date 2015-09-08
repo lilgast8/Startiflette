@@ -46,9 +46,9 @@ APP.Main = ( function( window ) {
 	var _routesLoaded = function() {
 		// APP.ViewsManager.init();
 		
-		// APP.MainController.init();
-		this.o.mainController = new APP.MainController();
-		this.o.mainController.init();
+		APP.MainController.init();
+		// this.o.mainController = new APP.MainController();
+		// this.o.mainController.init();
 		
 		
 		/*
