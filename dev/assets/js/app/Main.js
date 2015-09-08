@@ -47,8 +47,8 @@ APP.Main = ( function( window ) {
 		// APP.ViewsManager.init();
 		
 		APP.MainController.init();
-		// this.o.mainController = new APP.MainController();
-		// this.o.mainController.init();
+		// this.mainController = new APP.MainController();
+		// this.mainController.init();
 		
 		
 		/*

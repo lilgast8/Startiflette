@@ -6,9 +6,9 @@ APP.AbstractView = ( function( window ) {
 	function AbstractView() {
 		APP.EventDispatcher.call( this );
 		
-		this.$	= {};
-		this.v	= {};
-		this.o	= {};
+		// this.$	= {};
+		// this.v	= {};
+		// this.o	= {};
 		this.tw	= {};
 		this.tl	= {};
 	}

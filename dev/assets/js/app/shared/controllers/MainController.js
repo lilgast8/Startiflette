@@ -6,7 +6,7 @@ APP.MainController = ( function( window ) {
 	function MainController() {
 		APP.AbstractController.call( this );
 		
-		this.o.view = null;
+		this.view = null;
 	}
 	
 	
@@ -15,29 +15,32 @@ APP.MainController = ( function( window ) {
 	
 	
 	MainController.prototype.init = function() {
+		// this.pageManager = new PageManager();
+		// this.pageManager.init();
+		
 		this.instanceView();
 	};
 	
 	
 	MainController.prototype.instanceView = function() {
-		this.o.view = APP.MainView;
+		this.view = APP.MainView;
 		
 		this.bindEvents();
-		this.o.view.init();
+		this.view.init();
 	};
 	
 	
 	MainController.prototype.bindEvents = function() {
-		this.o.view.buildEvt( this.o.view.E.RESIZE, _resize.bind( this ) );
-		this.o.view.buildEvt( this.o.view.E.RAF, _raf.bind( this ) );
-		this.o.view.buildEvt( this.o.view.E.MOUSE_MOVE, _mouseMove.bind( this ) );
-		this.o.view.buildEvt( this.o.view.E.MOUSE_DOWN, _mouseDown.bind( this ) );
-		this.o.view.buildEvt( this.o.view.E.MOUSE_UP, _mouseUp.bind( this ) );
+		this.view.buildEvt( this.view.E.RESIZE, _resize.bind( this ) );
+		this.view.buildEvt( this.view.E.RAF, _raf.bind( this ) );
+		this.view.buildEvt( this.view.E.MOUSE_MOVE, _mouseMove.bind( this ) );
+		this.view.buildEvt( this.view.E.MOUSE_DOWN, _mouseDown.bind( this ) );
+		this.view.buildEvt( this.view.E.MOUSE_UP, _mouseUp.bind( this ) );
 	};
 	
 	
 	var _resize = function() {
-		console.log('MainController _resize()', this.o.view.v.wW, this.o.view.v.hW);
+		console.log('MainController _resize()', this.view.v.wW, this.view.v.wH);
 	};
 	
 	

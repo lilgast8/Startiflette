@@ -6,8 +6,8 @@ APP.AbstractController = ( function( window ) {
 	function AbstractController() {
 		APP.EventDispatcher.call( this );
 		
-		this.v	= {};
-		this.o	= {};
+		// this.v	= {};
+		// this.o	= {};
 		this.tw	= {};
 		this.tl	= {};
 	}
