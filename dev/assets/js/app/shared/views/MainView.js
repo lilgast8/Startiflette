@@ -13,6 +13,10 @@ APP.MainView = ( function( window ) {
 			MOUSE_DOWN:	'mousedown',
 			MOUSE_UP:	'mouseup'
 		};
+		
+		this.wW			= null;
+		this.wH			= null;
+		this.scrollY	= null;
 	}
 	
 	
@@ -21,10 +25,6 @@ APP.MainView = ( function( window ) {
 	
 	
 	MainView.prototype.init = function() {
-		this.wW			= null;
-		this.wH			= null;
-		this.scrollY	= null;
-		
 		this.initDOM();
 		this.bindEvents();
 	};

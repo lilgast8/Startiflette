@@ -15,8 +15,8 @@ APP.MainController = ( function( window ) {
 	
 	
 	MainController.prototype.init = function() {
-		// this.pageManager = new PageManager();
-		// this.pageManager.init();
+		this.pagesController = APP.PagesController;
+		this.pagesController.init();
 		
 		this.instanceView();
 	};
@@ -40,7 +40,7 @@ APP.MainController = ( function( window ) {
 	
 	
 	var _resize = function() {
-		console.log('MainController _resize()', this.view.v.wW, this.view.v.wH);
+		console.log('MainController _resize()', this.view.wW, this.view.wH);
 	};
 	
 	
