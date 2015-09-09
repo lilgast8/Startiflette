@@ -83,34 +83,17 @@
 		text-align:center; 
 		color:#3a6774; 
 		
-		&.chrome { 
-			left:94px; 
-			background:url(../img/logos/browsers/browser_chrome.png) center top no-repeat; 
-		}
+		&.chrome { left:94px; }
+		&.firefox { left:268px; }
+		&.safari { left:440px; }
+		&.opera { left:608px; }
+		&.ie { left:776px; }
 		
-		&.firefox { 
-			left:268px; 
-			background:url(../img/logos/browsers/browser_firefox.png) center top no-repeat; 
-		}
-		
-		&.safari { 
-			left:440px; 
-			background:url(../img/logos/browsers/browser_safari.png) center top no-repeat; 
-		}
-		
-		&.opera { 
-			left:608px; 
-			background:url(../img/logos/browsers/browser_opera.png) center top no-repeat; 
-		}
-		
-		&.ie { 
-			left:776px; 
-			background:url(../img/logos/browsers/browser_internet_explorer.png) center top no-repeat; 
-		}
+		.alt-logo { display:block; }
 		
 		.alt-subtitle { 
 			color:$alt3; 
-			margin-top:90px; 
+			margin-top:10px; 
 		}
 		
 		p { 
