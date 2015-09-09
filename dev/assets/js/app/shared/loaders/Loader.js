@@ -83,6 +83,7 @@ APP.Loader = ( function( window ) {
 	
 	
 	var _onError = function( e ) {
+		// console.log(e);
 		// this.dispatch( this.E.ERROR, e );
 	};
 	

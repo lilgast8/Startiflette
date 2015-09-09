@@ -10,7 +10,7 @@ APP.Config = ( function( window ) {
 			INIT: 'init'
 		};
 		
-		this.CONFIG_FILE_PATH	= 'assets/json/config/config.json';
+		this.CONFIG_FILE_PATH	= BASE_URL + 'assets/json/config/config.json';
 		
 		this.aJsonFiles			= [
 			{
@@ -40,6 +40,7 @@ APP.Config = ( function( window ) {
 	
 	
 	var _onComplete = function( data ) {
+		console.log(data.config);
 		_destroyJsonLoader.call( this );
 		
 		_setConfig.call( this, data );

@@ -78,11 +78,25 @@ class Main
 	
 	public function renderView()
 	{
-		include_once Path::$FILE->viewsPartials . 'header.php';
+		$viewPath = $this->getViewPath();
 		
-		include_once Path::$FILE->viewsPage . RoutesController::$PHP_VIEW . '.php';
+		if ( !RoutesController::$IS_ALT_CONTENT )
+			include_once Path::$FILE->viewsPartials . 'header.php';
 		
-		include_once Path::$FILE->viewsPartials . 'footer.php';
+		include_once $viewPath . RoutesController::$PHP_VIEW . '.php';
+		
+		if ( !RoutesController::$IS_ALT_CONTENT )
+			include_once Path::$FILE->viewsPartials . 'footer.php';
+	}
+	
+	
+	private function getViewPath()
+	{
+		$viewPath = !RoutesController::$IS_ALT_CONTENT ?
+					Path::$FILE->viewsPage :
+					Path::$FILE->viewsAlt;
+		
+		return $viewPath;
 	}
 	
 }

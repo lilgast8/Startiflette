@@ -55,7 +55,8 @@ class Path
 		// url paths
 		self::$URL			= new stdClass();
 		
-		self::$URL->base	= Config::$BASE_URL_DEV;
+		// self::$URL->base	= Config::$BASE_URL_DEV;
+		self::$URL->base	= $this->getBaseUrl();
 		self::$URL->assets	= self::$URL->base		. 'assets/';
 		self::$URL->css		= self::$URL->assets	. 'css/';
 		self::$URL->img		= self::$URL->assets	. 'img/';
@@ -89,6 +90,14 @@ class Path
 		self::$PAGE_URL->full		= $this->getFullPageUrl();
 		self::$PAGE_URL->params		= $this->getParamsPageUrl();
 		self::$PAGE_URL->aParams	= explode( '/', self::$PAGE_URL->params );
+	}
+	
+	
+	private function getBaseUrl()
+	{
+		$baseUrl = Config::$BASE_URL_DEV;
+		
+		return $baseUrl;
 	}
 	
 	

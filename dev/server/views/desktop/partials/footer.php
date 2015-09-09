@@ -29,6 +29,9 @@
 
 <?php
 
+/* JS var */
+include_once Path::$FILE->shared . 'js-var.php';
+
 /* JS scripts */
 echo $this->path->getJsFilesUrl( 'scripts-desktop' );
 

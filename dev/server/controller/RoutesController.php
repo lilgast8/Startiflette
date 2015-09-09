@@ -11,6 +11,9 @@ class RoutesController
 	static $PAGE_URL		= null;
 	static $ALT_LANG_URL	= null;
 	
+	static $IS_ALT_CONTENT	= null;
+	static $IS_AJAX_CONTENT	= null;
+	
 	static $PHP_VIEW		= null;
 	static $TITLE			= null;
 	static $DESC			= null;
@@ -29,14 +32,19 @@ class RoutesController
 		$this->path = Path::getInstance();
 		
 		$this->setRoutes();
-		$this->checkLangExistence();
+		// $this->checkLangExistence();
 		// $this->checkPageExistence();
-		if ( !$this->isAltContent() )
+		
+		/*if ( !$this->isAltContent() )
 			$this->checkPageExistence();
 		else
-			echo 'SET ALT CONTENT';
+			$this->setAltContent();
 		
-		$this->path->setLinks();
+		$this->path->setLinks();*/
+		
+		$this->setIsAltContent();
+		
+		$this->setContentInfos();
 	}
 	
 	
@@ -71,6 +79,31 @@ class RoutesController
 			self::$ROUTES->$fileName = new stdClass();
 			self::$ROUTES->$fileName = $routes;
 		}
+	}
+	
+	
+	private function setIsAltContent()
+	{
+		if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' )
+			self::$IS_ALT_CONTENT = true;
+		else
+			self::$IS_ALT_CONTENT = false;
+	}
+	
+	
+	private function setContentInfos()
+	{
+		if ( !self::$IS_ALT_CONTENT ) { // first load
+			$this->checkLangExistence();
+			$this->checkPageExistence();
+			$this->path->setLinks();
+		}
+		else if ( self::$IS_ALT_CONTENT ) { // alternative content
+			$this->checkLangExistence();
+			$this->setAltContent();
+		}
+		else // ajax load
+			echo 'other (ajax) load';
 	}
 	
 	
@@ -113,24 +146,6 @@ class RoutesController
 			$this->setIsHomepage();
 			$this->setAltLangUrl();
 		}
-	}
-	
-	
-	private function isAltContent()
-	{
-		$isAltContent = false;
-		
-		/*
-		echo '-------- '.Path::$PAGE_URL->current.' --------';
-		echo strstr( Path::$PAGE_URL->current, 'alt-content' );
-		// echo strpos( Path::$PAGE_URL->current, 'alt-contentasdsa' );
-		echo '----------------------';
-		*/
-		
-		if ( strstr( Path::$PAGE_URL->current, 'alt-content' ) )
-			$isAltContent = true;
-		
-		return $isAltContent;
 	}
 	
 	
@@ -184,6 +199,12 @@ class RoutesController
 			}
 			
 		}
+	}
+	
+	
+	private function setAltContent()
+	{
+		self::$PHP_VIEW = Path::$PAGE_URL->current;
 	}
 	
 }
