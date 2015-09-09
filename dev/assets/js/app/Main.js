@@ -53,7 +53,7 @@ APP.Main = ( function( window ) {
 		APP.OldBrowser.init();
 		
 		
-		APP.RoutesController.init2();
+		APP.RoutesController.initRouting();
 		
 		
 		/*

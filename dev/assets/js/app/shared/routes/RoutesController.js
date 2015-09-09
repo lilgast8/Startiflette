@@ -26,7 +26,25 @@ APP.RoutesController = ( function( window ) {
 		// this.activeUrl				= null;
 		// this.isPageChange			= true;
 		
-		this.routes = {};
+		this.ROUTES				= {};
+		
+		// this.PAGE_URL			= null;
+		this.ALT_LANG_URL		= {};
+		
+		this.IS_ALT_CONTENT		= null;
+		this.IS_AJAX_CONTENT	= null;
+		
+		this.JS_VIEW			= null;
+		this.TITLE				= null;
+		this.DESC				= null;
+		
+		// this.path				= null;
+		
+		// this.pageId				= null;
+		// this.pageParams			= null;
+		
+		// this.is404				= null;
+		// this.isHomepage			= null;
 	}
 	
 	
@@ -79,14 +97,135 @@ APP.RoutesController = ( function( window ) {
 	
 	var _setRoutes = function( data ) {
 		for ( var routesName in data )
-			this.routes[ routesName ] = data[routesName];
+			this.ROUTES[ routesName ] = data[ routesName ];
 	};
 	
 	
-	RoutesController.prototype.init2 = function() {
-		console.log('RoutesController.init2');
+	RoutesController.prototype.initRouting = function() {
+		_bindEvents.call( this );
+		
+		_initFirstView.call( this );
 	};
 	
+	
+	var _bindEvents = function() {
+		History.Adapter.bind( window, 'statechange', _onStateChange.bind( this ) );
+	};
+	
+	
+	var _initFirstView = function() {
+		
+		// console.log(APP.Path);
+		_checkLangExistence.call( this );
+		_checkPageExistence.call( this );
+		
+		
+		/*_setPageInfos.call(this, null);*/
+		
+		// this.currentView = _getView.call(this);
+		
+		/*_updateMenu.call(this);*/
+		
+		/*this.currentView.buildEvt(this.currentView.E.SHOWN, _enablePageChange.bind(this, true));
+		APP.Views.Static.MainLoader.hidePreloader();*/
+	};
+	
+	
+	var _onStateChange = function() {
+		console.log('_onStateChange');
+		
+		// if( !this.isPageChange )
+	};
+	
+	
+	var _checkLangExistence = function() {
+		if ( APP.Lang.ALL_LANG.indexOf( APP.Lang.LANG ) == -1 ) {
+			APP.Lang.LANG = APP.Lang.DEFAULT_LANG;
+			
+			_set404.call( this, 'Show 404 - Language not available' );
+		}
+	};
+	
+	
+	var _checkPageExistence = function() {
+		var doesPageExist = false;
+		var routesGroupName, routesGroup, pageId, pageParams;
+		
+		for ( routesGroupName in this.ROUTES ) { // parse all routes group
+			routesGroup = this.ROUTES[ routesGroupName ];
+			
+			for ( pageId in routesGroup ) { // parse all pages
+				pageParams = routesGroup[ pageId ];
+				
+				if ( pageParams[ APP.Lang.LANG ].url == APP.Path.PAGE_URL.current ) { // if url exist
+					doesPageExist = true;
+					
+					break; // break second foreach
+				}
+			}
+			
+			if ( doesPageExist )
+				break; // break first foreach
+			
+		}
+		
+		
+		if ( !doesPageExist )
+			_set404.call( this, 'Show 404 - Page not available' );
+		else {
+			_setPageInfos.call( this, pageId, pageParams );
+			_setIsHomepage.call( this );
+			_setAltLangUrl.call( this );
+		}
+	};
+	
+	
+	var _set404 = function( status ) {
+		console.log( status );
+	};
+	
+	
+	var _setPageInfos = function( pageId, pageParams )
+	{
+		this.pageId		= pageId;
+		this.pageParams	= pageParams;
+		
+		this.JS_VIEW	= this.pageParams.jsView;
+		this.TITLE		= this.pageParams[ APP.Lang.LANG ].title;
+		this.DESC		= this.pageParams[ APP.Lang.LANG ].desc;
+	};
+	
+	
+	var _setIsHomepage = function()
+	{
+		this.isHomepage = this.pageId == 'home' ? true : false;
+	};
+	
+	
+	var _setAltLangUrl = function()
+	{
+		var currentUrl, urlPart, altLangUrl;
+		
+		for ( var i in APP.Lang.ALL_LANG ) {
+			var lang = APP.Lang.ALL_LANG[i];
+			
+			if ( lang !== APP.Lang.LANG ) {
+				currentUrl = this.pageParams[ lang ].url;
+				
+				if ( this.isHomepage && lang == APP.Lang.DEFAULT_LANG )
+					urlPart = '';
+				else if ( this.isHomepage )
+					urlPart = lang;
+				else
+					urlPart = lang + '/' + this.pageParams[ lang ].url;
+				
+				altLangUrl = APP.Path.URL.base + urlPart;
+				
+				this.ALT_LANG_URL[ lang ] = altLangUrl;
+			}
+			
+		}
+	};
 	
 	
 	

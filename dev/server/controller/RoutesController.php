@@ -8,7 +8,7 @@ class RoutesController
 	protected static $instance;
 	
 	static $ROUTES			= null;
-	static $PAGE_URL		= null;
+	// static $PAGE_URL		= null;
 	static $ALT_LANG_URL	= null;
 	
 	static $IS_ALT_CONTENT	= null;
@@ -110,9 +110,9 @@ class RoutesController
 	{
 		$doesPageExist = false;
 		
-		foreach ( self::$ROUTES as $routesGroup => $pages ) { // parse all routes group
+		foreach ( self::$ROUTES as $routesGroup ) { // parse all routes group
 			
-			foreach ( $pages as $pageId => $pageParams ) { // parse all pages
+			foreach ( $routesGroup as $pageId => $pageParams ) { // parse all pages
 				
 				if ( $pageParams->{ Lang::$LANG }->url == Path::$PAGE_URL->current ) { // if url exist
 					$doesPageExist = true;
