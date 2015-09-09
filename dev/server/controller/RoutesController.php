@@ -32,18 +32,7 @@ class RoutesController
 		$this->path = Path::getInstance();
 		
 		$this->setRoutes();
-		// $this->checkLangExistence();
-		// $this->checkPageExistence();
-		
-		/*if ( !$this->isAltContent() )
-			$this->checkPageExistence();
-		else
-			$this->setAltContent();
-		
-		$this->path->setLinks();*/
-		
 		$this->setIsAltContent();
-		
 		$this->setContentInfos();
 	}
 	
