@@ -40,7 +40,6 @@ APP.Config = ( function( window ) {
 	
 	
 	var _onComplete = function( data ) {
-		console.log(data.config);
 		_destroyJsonLoader.call( this );
 		
 		_setConfig.call( this, data );
