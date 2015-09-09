@@ -53,6 +53,9 @@ APP.Main = ( function( window ) {
 		APP.OldBrowser.init();
 		
 		
+		APP.RoutesManager.init2();
+		
+		
 		/*
 		APP.MainController.init();
 			-> APP.MainView.init();

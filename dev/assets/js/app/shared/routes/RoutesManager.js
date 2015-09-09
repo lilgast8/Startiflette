@@ -40,11 +40,11 @@ APP.RoutesManager = ( function( window ) {
 	
 	
 	var _loadRoutesFile = function() {
-		this.jsonLoader = new APP.Loader( false );
+		this.jsonLoader	= new APP.Loader( false );
 		
 		this.jsonLoader.buildEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
 		
-		var aJsonFiles = [];
+		var aJsonFiles	= [];
 		var fileName, filePath;
 		
 		for ( var key in APP.Config.ROUTES_FILES ) {
@@ -80,6 +80,11 @@ APP.RoutesManager = ( function( window ) {
 	var _setRoutes = function( data ) {
 		for ( var routesName in data )
 			this.routes[ routesName ] = data[routesName];
+	};
+	
+	
+	RoutesManager.prototype.init2 = function() {
+		console.log('RoutesManager.init2');
 	};
 	
 	
