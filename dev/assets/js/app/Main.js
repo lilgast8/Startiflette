@@ -38,8 +38,8 @@ APP.Main = ( function( window ) {
 	
 	
 	var _loadRoutes = function() {
-		APP.RoutesManager.buildEvt( APP.RoutesManager.E.INIT, _routesLoaded.bind( this ) );
-		APP.RoutesManager.init();
+		APP.RoutesController.buildEvt( APP.RoutesController.E.INIT, _routesLoaded.bind( this ) );
+		APP.RoutesController.init();
 	};
 	
 	
@@ -53,7 +53,7 @@ APP.Main = ( function( window ) {
 		APP.OldBrowser.init();
 		
 		
-		APP.RoutesManager.init2();
+		APP.RoutesController.init2();
 		
 		
 		/*
@@ -82,11 +82,11 @@ APP.Main = ( function( window ) {
 		// APP.Views.Static.Header.resize();
 		// APP.Views.Static.Footer.resize();
 		
-		if(APP.RoutesManager.isPageChange) // stop the resize if page is changing (is in transition)
+		if(APP.RoutesController.isPageChange) // stop the resize if page is changing (is in transition)
 			return false; 
 		
-		if(APP.RoutesManager.currentView !== null) // if current page exist, resize it
-			APP.RoutesManager.currentView.resize();
+		if(APP.RoutesController.currentView !== null) // if current page exist, resize it
+			APP.RoutesController.currentView.resize();
 	};*/
 	
 	
@@ -126,7 +126,7 @@ APP.Main = ( function( window ) {
 		
 		this.resize();
 		
-		setTimeout(function() { APP.RoutesManager.init(); }, 0);
+		setTimeout(function() { APP.RoutesController.init(); }, 0);
 	};
 	
 	

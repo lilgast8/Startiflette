@@ -1,9 +1,9 @@
 
 
-APP.RoutesManager = ( function( window ) {
+APP.RoutesController = ( function( window ) {
 	
 	
-	function RoutesManager() {
+	function RoutesController() {
 		APP.EventDispatcher.call( this );
 		
 		this.E = {
@@ -30,11 +30,11 @@ APP.RoutesManager = ( function( window ) {
 	}
 	
 	
-	RoutesManager.prototype				= Object.create( APP.EventDispatcher.prototype );
-	RoutesManager.prototype.constructor	= RoutesManager;
+	RoutesController.prototype				= Object.create( APP.EventDispatcher.prototype );
+	RoutesController.prototype.constructor	= RoutesController;
 	
 	
-	RoutesManager.prototype.init = function() {
+	RoutesController.prototype.init = function() {
 		_loadRoutesFile.call( this );
 	};
 	
@@ -83,8 +83,8 @@ APP.RoutesManager = ( function( window ) {
 	};
 	
 	
-	RoutesManager.prototype.init2 = function() {
-		console.log('RoutesManager.init2');
+	RoutesController.prototype.init2 = function() {
+		console.log('RoutesController.init2');
 	};
 	
 	
@@ -96,7 +96,7 @@ APP.RoutesManager = ( function( window ) {
 	
 	
 	/*
-	RoutesManager.prototype.init = function() {
+	RoutesController.prototype.init = function() {
 		History.options.disableSuid = true;
 		
 		_setRootPageName.call(this);
@@ -110,7 +110,7 @@ APP.RoutesManager = ( function( window ) {
 	};
 	
 	
-	RoutesManager.prototype.goToPage = function(url) {
+	RoutesController.prototype.goToPage = function(url) {
 		this.isPageChangedByClick = true;
 		
 		_setPageInfos.call(this, url);
@@ -121,7 +121,7 @@ APP.RoutesManager = ( function( window ) {
 	};
 	
 	
-	RoutesManager.prototype.updateGA = function() {
+	RoutesController.prototype.updateGA = function() {
 		var pageUrl = this.pageId !== 0 ? '/'+this.pageUrl : '';
 		var gaPageName = APP.Config.LANG == APP.Config.DEFAULT_LANG && this.pageId === 0 ? '' : APP.Config.LANG+pageUrl;
 		
@@ -387,7 +387,7 @@ APP.RoutesManager = ( function( window ) {
 	*/
 	
 	
-	return new RoutesManager();
+	return new RoutesController();
 	
 	
 } ) ( window );
