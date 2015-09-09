@@ -27,6 +27,7 @@ class Main
 		$this->setPath();
 		$this->setLang();
 		$this->setRoutes();
+		$this->setContents();
 	}
 	
 	
@@ -66,6 +67,22 @@ class Main
 	private function setRoutes()
 	{
 		$this->routes = RoutesController::getInstance();
+	}
+	
+	
+	private function setContents()
+	{
+		$this->contents = getContents();
+	}
+	
+	
+	public function renderView()
+	{
+		include_once Path::$FILE->viewsPartials . 'header.php';
+		
+		include_once Path::$FILE->viewsPage . RoutesController::$PHP_VIEW . '.php';
+		
+		include_once Path::$FILE->viewsPartials . 'footer.php';
 	}
 	
 }

@@ -18,7 +18,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<?php
 	
-	echo $main->path->getAltLangUrl();
+	// print_r($this);
+	// $this->main = Main::getInstance();
+	// echo $main->path->getAltLangUrl();
+	echo $this->path->getAltLangUrl();
 	
 	/* Social share */
 	include_once Path::$FILE->shared . 'social-share.php';
@@ -34,7 +37,8 @@
 	<?php
 	
 	/* Modernirz & Detectizr */
-	echo $main->path->getJsFilesUrl('header');
+	// echo $main->path->getJsFilesUrl('header');
+	echo $this->path->getJsFilesUrl( 'header' );
 	
 	/* Google Analytics */
 	include_once Path::$FILE->shared . 'google-analytics.php';
@@ -60,17 +64,17 @@
 			<ul>
 				<li>
 					<a href="<?php echo Path::$LINK->static->home; ?>" class="menu-link">
-						<?php echo $contents->global->menu->home; ?>
+						<?php echo $this->contents->global->menu->home; ?>
 					</a>
 				</li>
 				<li>
 					<a href="<?php echo Path::$LINK->static->about; ?>" class="menu-link">
-						<?php echo $contents->global->menu->about; ?>
+						<?php echo $this->contents->global->menu->about; ?>
 					</a>
 				</li>
 				<li>
 					<a href="<?php echo Path::$LINK->static->projects; ?>" class="menu-link">
-						<?php echo $contents->global->menu->projects; ?>
+						<?php echo $this->contents->global->menu->projects; ?>
 					</a>
 				</li>
 			</ul>

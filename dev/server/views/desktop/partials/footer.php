@@ -3,9 +3,9 @@
 	
 	<!-- Footer -->
 	<footer id="footer">
-		<?php if (Lang::$MULTI_LANG) { ?>
+		<?php if ( Lang::$MULTI_LANG ) { ?>
 		<nav class="footer-lg">
-			<?php foreach (RoutesController::$ALT_LANG_URL as $lang => $altLangUrl) { ?>
+			<?php foreach ( RoutesController::$ALT_LANG_URL as $lang => $altLangUrl ) { ?>
 			<a href="<?php echo $altLangUrl; ?>" class="footer-lg-link" data-lg="<?php echo $lang; ?>"><?php echo $lang; ?></a>
 			<?php } ?>
 		</nav>
@@ -14,7 +14,7 @@
 			<ul>
 				<li>
 					<a href="<?php echo Path::$LINK->static->legal_notices; ?>" class="footer-link">
-						<?php echo $contents->global->menu->legals; ?>
+						<?php echo $this->contents->global->menu->legals; ?>
 					</a>
 				</li>
 			</ul>
@@ -30,7 +30,7 @@
 <?php
 
 /* JS scripts */
-echo $main->path->getJsFilesUrl('scripts-desktop');
+echo $this->path->getJsFilesUrl( 'scripts-desktop' );
 
 ?>
 
