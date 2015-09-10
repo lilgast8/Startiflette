@@ -9,7 +9,6 @@ class Path
 	
 	static $URL			= null;
 	static $FILE		= null;
-	static $PAGE_URL	= null;
 	static $LINK		= null;
 	
 	private $deviceDir	= null;
@@ -55,7 +54,6 @@ class Path
 		// url paths
 		self::$URL			= new stdClass();
 		
-		// self::$URL->base	= Config::$BASE_URL_DEV;
 		self::$URL->base	= $this->getBaseUrl();
 		self::$URL->assets	= self::$URL->base		. 'assets/';
 		self::$URL->css		= self::$URL->assets	. 'css/';
@@ -82,68 +80,16 @@ class Path
 		self::$FILE->viewsPage		= self::$FILE->views	. $this->deviceDir . 'pages/';
 		self::$FILE->viewsPartials	= self::$FILE->views	. $this->deviceDir . 'partials/';
 		self::$FILE->viewsAlt		= self::$FILE->views	. 'alt/';
-		
-		
-		// page url paths - à mettre dans Routes
-		self::$PAGE_URL				= new stdClass();
-		
-		self::$PAGE_URL->full		= $this->getFullPageUrl();
-		self::$PAGE_URL->params		= $this->getParamsPageUrl();
-		self::$PAGE_URL->aParams	= explode( '/', self::$PAGE_URL->params );
 	}
 	
 	
 	private function getBaseUrl()
 	{
+		// to manage depending on environment
+		
 		$baseUrl = Config::$BASE_URL_DEV;
 		
 		return $baseUrl;
-	}
-	
-	
-	private function getFullPageUrl()
-	{
-		$protocol = ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ) ? 'https://' : 'http://';
-		
-		return $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-	}
-	
-	
-	private function getParamsPageUrl()
-	{
-		$paramsPageUrl = str_replace( self::$URL->base, '', self::$PAGE_URL->full );
-		
-		if ( substr( $paramsPageUrl, 0, 1 ) == '/' ) // if / is first character, remove it
-			$paramsPageUrl = substr( $paramsPageUrl, 1 );
-		
-		if ( substr( $paramsPageUrl, -1, 1 ) == '/' ) // if / is last character, remove it
-			$paramsPageUrl = substr( $paramsPageUrl, 0, -1 );
-		
-		// remove ?params
-		$aParamsPageUrl	= explode( '?', $paramsPageUrl );
-		$paramsPageUrl	= $aParamsPageUrl[0];
-		
-		
-		return $paramsPageUrl;
-	}
-	
-	
-	public function setCurrentPageUrl()
-	{
-		self::$PAGE_URL->current	= $this->getCurrentPageUrl();
-		self::$PAGE_URL->aCurrent	= explode( '/', self::$PAGE_URL->current );
-	}
-	
-	
-	private function getCurrentPageUrl()
-	{
-		$currentPageUrl = preg_replace( '/' . Lang::$LANG . '/', '', self::$PAGE_URL->params, 1 );
-		
-		if ( substr( $currentPageUrl, 0, 1 ) == '/' ) // if / is first character, remove it
-			$currentPageUrl = substr( $currentPageUrl, 1 );
-		
-		
-		return $currentPageUrl;
 	}
 	
 	
@@ -169,7 +115,7 @@ class Path
 	}
 	
 	
-	public function getAltLangUrl()
+	public function getAltLangUrlMeta()
 	{
 		if ( !Lang::$MULTI_LANG )
 			return false;

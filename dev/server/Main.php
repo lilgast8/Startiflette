@@ -52,21 +52,34 @@ class Main
 	}
 	
 	
-	private function setLang()
-	{
-		$this->lang = Lang::getInstance();
-	}
-	
-	
 	private function setPath()
 	{
 		$this->path = Path::getInstance();
 	}
 	
 	
+	private function setLang()
+	{
+		$this->lang = Lang::getInstance();
+	}
+	
+	
 	private function setRoutes()
 	{
 		$this->routes = RoutesController::getInstance();
+		$this->routes->init();
+	}
+	
+	
+	private function initRoutes()
+	{
+		$this->routes->init();
+	}
+	
+	
+	private function initLang()
+	{
+		$this->lang->init();
 	}
 	
 	

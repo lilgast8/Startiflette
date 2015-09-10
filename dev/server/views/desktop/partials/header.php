@@ -21,7 +21,7 @@
 	// print_r($this);
 	// $this->main = Main::getInstance();
 	// echo $main->path->getAltLangUrl();
-	echo $this->path->getAltLangUrl();
+	echo $this->path->getAltLangUrlMeta();
 	
 	/* Social share */
 	include_once Path::$FILE->shared . 'social-share.php';

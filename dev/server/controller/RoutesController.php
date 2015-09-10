@@ -8,7 +8,7 @@ class RoutesController
 	protected static $instance;
 	
 	static $ROUTES			= null;
-	// static $PAGE_URL		= null;
+	static $PAGE_URL		= null;
 	static $ALT_LANG_URL	= null;
 	
 	static $IS_ALT_CONTENT	= null;
@@ -29,11 +29,7 @@ class RoutesController
 	
 	protected function __construct()
 	{
-		$this->path = Path::getInstance();
-		
 		$this->setRoutes();
-		$this->setIsAltContent();
-		$this->setContentInfos();
 	}
 	
 	
@@ -68,6 +64,73 @@ class RoutesController
 			self::$ROUTES->$fileName = new stdClass();
 			self::$ROUTES->$fileName = $routes;
 		}
+	}
+	
+	
+	public function init()
+	{
+		$this->path = Path::getInstance();
+		
+		$this->setIsAltContent();
+		$this->setContentInfos();
+	}
+	
+	
+	public function setPageUrl()
+	{
+		self::$PAGE_URL				= new stdClass();
+		
+		self::$PAGE_URL->full		= $this->getFullPageUrl();
+		self::$PAGE_URL->params		= $this->getParamsPageUrl();
+		self::$PAGE_URL->aParams	= explode( '/', self::$PAGE_URL->params );
+		self::$PAGE_URL->current	= null;
+		self::$PAGE_URL->aCurrent	= null;
+	}
+	
+	
+	private function getFullPageUrl()
+	{
+		$protocol = ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ) ? 'https://' : 'http://';
+		
+		return $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	}
+	
+	
+	private function getParamsPageUrl()
+	{
+		$paramsPageUrl = str_replace( Path::$URL->base, '', self::$PAGE_URL->full );
+		
+		if ( substr( $paramsPageUrl, 0, 1 ) == '/' ) // if / is first character, remove it
+			$paramsPageUrl = substr( $paramsPageUrl, 1 );
+		
+		if ( substr( $paramsPageUrl, -1, 1 ) == '/' ) // if / is last character, remove it
+			$paramsPageUrl = substr( $paramsPageUrl, 0, -1 );
+		
+		// remove ?params
+		$aParamsPageUrl	= explode( '?', $paramsPageUrl );
+		$paramsPageUrl	= $aParamsPageUrl[0];
+		
+		
+		return $paramsPageUrl;
+	}
+	
+	
+	public function setCurrentPageUrl()
+	{
+		self::$PAGE_URL->current	= $this->getCurrentPageUrl();
+		self::$PAGE_URL->aCurrent	= explode( '/', self::$PAGE_URL->current );
+	}
+	
+	
+	private function getCurrentPageUrl()
+	{
+		$currentPageUrl = preg_replace( '/' . Lang::$LANG . '/', '', self::$PAGE_URL->params, 1 );
+		
+		if ( substr( $currentPageUrl, 0, 1 ) == '/' ) // if / is first character, remove it
+			$currentPageUrl = substr( $currentPageUrl, 1 );
+		
+		
+		return $currentPageUrl;
 	}
 	
 	
@@ -114,7 +177,7 @@ class RoutesController
 			
 			foreach ( $routesGroup as $pageId => $pageParams ) { // parse all pages
 				
-				if ( $pageParams->{ Lang::$LANG }->url == Path::$PAGE_URL->current ) { // if url exist
+				if ( $pageParams->{ Lang::$LANG }->url == self::$PAGE_URL->current ) { // if url exist
 					$doesPageExist = true;
 					
 					break; // break second foreach
@@ -168,8 +231,6 @@ class RoutesController
 	
 	private function setAltLangUrl()
 	{
-		$ALT_LANG_URL = array();
-		
 		foreach ( Lang::$ALL_LANG as $lang ) {
 			
 			if ( $lang !== Lang::$LANG ) {
@@ -193,7 +254,7 @@ class RoutesController
 	
 	private function setAltContent()
 	{
-		self::$PHP_VIEW = Path::$PAGE_URL->current;
+		self::$PHP_VIEW = self::$PAGE_URL->current;
 	}
 	
 }
