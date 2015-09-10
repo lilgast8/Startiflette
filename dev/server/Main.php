@@ -6,7 +6,7 @@ include_once 'server/vendors/Mobile_Detect.php';
 include_once 'server/configs/Config.php';
 include_once 'server/configs/Lang.php';
 include_once 'server/configs/Path.php';
-include_once 'server/controller/RoutesController.php';
+include_once 'server/routes/Router.php';
 
 
 
@@ -66,7 +66,7 @@ class Main
 	
 	private function setRoutes()
 	{
-		$this->routes = RoutesController::getInstance();
+		$this->routes = Router::getInstance();
 		$this->routes->init();
 	}
 	
@@ -93,19 +93,19 @@ class Main
 	{
 		$viewPath = $this->getViewPath();
 		
-		if ( !RoutesController::$IS_ALT_CONTENT )
+		if ( !Router::$IS_ALT_CONTENT )
 			include_once Path::$FILE->viewsPartials . 'header.php';
 		
-		include_once $viewPath . RoutesController::$PHP_VIEW . '.php';
+		include_once $viewPath . Router::$PHP_VIEW . '.php';
 		
-		if ( !RoutesController::$IS_ALT_CONTENT )
+		if ( !Router::$IS_ALT_CONTENT )
 			include_once Path::$FILE->viewsPartials . 'footer.php';
 	}
 	
 	
 	private function getViewPath()
 	{
-		$viewPath = !RoutesController::$IS_ALT_CONTENT ?
+		$viewPath = !Router::$IS_ALT_CONTENT ?
 					Path::$FILE->viewsPage :
 					Path::$FILE->viewsAlt;
 		

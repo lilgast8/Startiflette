@@ -97,7 +97,7 @@ class Path
 	{
 		self::$LINK = new stdClass();
 		
-		foreach ( RoutesController::$ROUTES as $routesGroup => $pages ) { // parse all routes group
+		foreach ( Router::$ROUTES as $routesGroup => $pages ) { // parse all routes group
 			
 			self::$LINK->$routesGroup = new stdClass();
 			
@@ -123,7 +123,7 @@ class Path
 		
 		$altLangUrlList = '';
 		
-		foreach ( RoutesController::$ALT_LANG_URL as $lang => $altLangUrl )
+		foreach ( Router::$ALT_LANG_URL as $lang => $altLangUrl )
 			$altLangUrlList .= '<link rel="alternate" href="' . $altLangUrl . '" hreflang="' . $lang . '" />' . "\n\t";
 		
 		

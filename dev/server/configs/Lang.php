@@ -18,7 +18,7 @@ class Lang
 	
 	protected function __construct()
 	{
-		$this->routes = RoutesController::getInstance();
+		$this->routes = Router::getInstance();
 		
 		$this->setGlobalInfos();
 		$this->routes->setPageUrl();
@@ -61,10 +61,10 @@ class Lang
 	
 	private function setCurrentLang()
 	{
-		if ( !self::$MULTI_LANG || strlen( RoutesController::$PAGE_URL->params ) == 0 )
+		if ( !self::$MULTI_LANG || strlen( Router::$PAGE_URL->params ) == 0 )
 			self::$LANG = self::$DEFAULT_LANG;
 		else
-			self::$LANG = RoutesController::$PAGE_URL->aParams[0];
+			self::$LANG = Router::$PAGE_URL->aParams[0];
 	}
 	
 	

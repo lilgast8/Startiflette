@@ -2,7 +2,7 @@
 
 
 
-class RoutesController
+class Router
 {
 	
 	protected static $instance;

@@ -8,8 +8,8 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 	
-	<title><?php echo RoutesController::$TITLE; ?></title>
-	<meta name="description" content="<?php echo RoutesController::$DESC; ?>" />
+	<title><?php echo Router::$TITLE; ?></title>
+	<meta name="description" content="<?php echo Router::$DESC; ?>" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
 	<meta name="author" content="Gaston Bouchayer" />
