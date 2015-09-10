@@ -188,11 +188,8 @@ class Router
 		
 		if ( !$doesPageExist )
 			$this->set404( '<b>Show 404 - Page not available</b> <br><br>' );
-		else {
-			$this->setCurrentInfos( $pageId, $pageParams );
-			$this->setIsHomepage();
-			$this->setAltLangUrl();
-		}
+		else
+			$this->setPage( $pageId, $pageParams );
 	}
 	
 	
@@ -200,19 +197,27 @@ class Router
 	{
 		echo $status; // $status param to remove
 		
-		// header( 'Status: 404 NOT FOUND', false, 404 );
+		// header( 'Status: 404 NOT FOUND', false, 404 ); -> to confirm
 		
 		// self::$IS_404 = true;
 		// $this->is404 = true;
 	}
 	
 	
-	private function setCurrentInfos( $pageId, $pageParams )
+	private function setPage( $pageId, $pageParams )
+	{
+		$this->setPageInfos( $pageId, $pageParams );
+		$this->setIsHomepage();
+		$this->setAltLangUrl();
+		
+		$this->pagesController->setPageInfos( $pageId, $pageParams->phpView, $pageParams->{ Lang::$LANG }->title, $pageParams->{ Lang::$LANG }->desc );
+	}
+	
+	
+	private function setPageInfos( $pageId, $pageParams )
 	{
 		$this->pageId		= $pageId;
 		$this->pageParams	= $pageParams;
-		
-		$this->pagesController->setPageInfos( $this->pageId, $this->pageParams->phpView, $this->pageParams->{ Lang::$LANG }->title, $this->pageParams->{ Lang::$LANG }->desc );
 	}
 	
 	

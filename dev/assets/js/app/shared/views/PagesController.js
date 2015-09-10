@@ -9,9 +9,9 @@ APP.PagesController = ( function( window ) {
 		this.pages			= {};
 		this.page			= {};
 		
-		// this.prevPage		= null;
-		// this.currentPage	= null;
-		// this.nextPage		= null;
+		this.prevPage		= null;
+		this.currentPage	= null;
+		this.nextPage		= null;
 	}
 	
 	
@@ -43,8 +43,27 @@ APP.PagesController = ( function( window ) {
 		this.page.title		= title;
 		this.page.desc		= desc;
 		
-		console.log(this.page);
+		_setCurrentPage.call( this );
 	};
+	
+	
+	var _setCurrentPage = function() {
+		if ( this.pages[ this.page.id ] === undefined) {
+			console.log('PagesController error: Need to create a controller/view for the "' + this.page.id + '" ID, then set the page in the PageManager.pages object.');
+			return;
+		}
+		
+		this.prevPage = this.currentPage;
+		
+		// if (this.currentPage != null) 
+		// 	_unbindEvents.call(this);
+		
+		this.currentPage = new this.pages[ this.page.id ]();
+		
+		// console.log(this.currentPage);
+	};
+	
+	
 	
 	
 	

@@ -21,7 +21,7 @@ APP.Views.Pages.HomeController = ( function( window ) {
 	};
 	
 	
-	return new HomeController();
+	return HomeController;
 	
 	
 } ) ( window );

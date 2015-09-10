@@ -36,7 +36,7 @@ APP.Views.Pages.HomeView = ( function( window ) {
 	};
 	
 	
-	return new HomeView();
+	return HomeView;
 	
 	
 } ) ( window );
