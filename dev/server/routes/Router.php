@@ -10,13 +10,10 @@ class Router
 	static $ROUTES			= null;
 	static $PAGE_URL		= null;
 	static $ALT_LANG_URL	= null;
+	static $LINK			= null;
 	
 	static $IS_ALT_CONTENT	= null;
 	static $IS_AJAX_CONTENT	= null;
-	
-	static $PHP_VIEW		= null;
-	static $TITLE			= null;
-	static $DESC			= null;
 	
 	private $path			= null;
 	
@@ -69,7 +66,7 @@ class Router
 	
 	public function init()
 	{
-		$this->path = Path::getInstance();
+		$this->pagesController = PagesController::getInstance();
 		
 		$this->setIsAltContent();
 		$this->setContentInfos();
@@ -148,7 +145,7 @@ class Router
 		if ( !self::$IS_ALT_CONTENT ) { // first load
 			$this->checkLangExistence();
 			$this->checkPageExistence();
-			$this->path->setLinks();
+			$this->setLinks();
 		}
 		else if ( self::$IS_ALT_CONTENT ) { // alternative content
 			$this->checkLangExistence();
@@ -194,7 +191,7 @@ class Router
 		if ( !$doesPageExist )
 			$this->set404( '<b>Show 404 - Page not available</b> <br><br>' );
 		else {
-			$this->setPageInfos( $pageId, $pageParams );
+			$this->setCurrentInfos( $pageId, $pageParams );
 			$this->setIsHomepage();
 			$this->setAltLangUrl();
 		}
@@ -212,14 +209,12 @@ class Router
 	}
 	
 	
-	private function setPageInfos( $pageId, $pageParams )
+	private function setCurrentInfos( $pageId, $pageParams )
 	{
 		$this->pageId		= $pageId;
 		$this->pageParams	= $pageParams;
 		
-		self::$PHP_VIEW		= $this->pageParams->phpView;
-		self::$TITLE		= $this->pageParams->{ Lang::$LANG }->title;
-		self::$DESC			= $this->pageParams->{ Lang::$LANG }->desc;
+		$this->pagesController->setPageInfos( $this->pageId, $this->pageParams->phpView, $this->pageParams->{ Lang::$LANG }->title, $this->pageParams->{ Lang::$LANG }->desc );
 	}
 	
 	
@@ -241,11 +236,33 @@ class Router
 				else if ( $this->isHomepage )
 					$urlPart = $lang;
 				else
-					$urlPart = $lang . '/' . $this->pageParams->$lang->url;
+					$urlPart = $lang . '/' . $currentUrl;
 				
 				$altLangUrl = Path::$URL->base . $urlPart;
 				
 				self::$ALT_LANG_URL[ $lang ] = $altLangUrl;
+			}
+			
+		}
+	}
+	
+	
+	private function setLinks()
+	{
+		self::$LINK = new stdClass();
+		
+		foreach ( Router::$ROUTES as $routesGroup => $pages ) { // parse all routes group
+			
+			self::$LINK->$routesGroup = new stdClass();
+			
+			foreach ( $pages as $pageId => $pageParams ) { // parse all pages
+				
+				if ( $pageId !== 'error404' && $pageId == 'home' )
+					self::$LINK->$routesGroup->$pageId = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageParams->{ Lang::$LANG }->url;
+				
+				else if ( $pageId !== 'error404' )
+					self::$LINK->$routesGroup->$pageId = Path::$URL->base . Lang::$LANG_LINK . $pageParams->{ Lang::$LANG }->url;
+				
 			}
 			
 		}

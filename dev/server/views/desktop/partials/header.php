@@ -8,8 +8,8 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 	
-	<title><?php echo Router::$TITLE; ?></title>
-	<meta name="description" content="<?php echo Router::$DESC; ?>" />
+	<title><?php echo PagesController::$PAGE->title; ?></title>
+	<meta name="description" content="<?php echo PagesController::$PAGE->DESC; ?>" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
 	<meta name="author" content="Gaston Bouchayer" />
@@ -63,17 +63,17 @@
 		<nav id="menu">
 			<ul>
 				<li>
-					<a href="<?php echo Path::$LINK->static->home; ?>" class="menu-link">
+					<a href="<?php echo Router::$LINK->static->home; ?>" class="menu-link">
 						<?php echo $this->contents->global->menu->home; ?>
 					</a>
 				</li>
 				<li>
-					<a href="<?php echo Path::$LINK->static->about; ?>" class="menu-link">
+					<a href="<?php echo Router::$LINK->static->about; ?>" class="menu-link">
 						<?php echo $this->contents->global->menu->about; ?>
 					</a>
 				</li>
 				<li>
-					<a href="<?php echo Path::$LINK->static->projects; ?>" class="menu-link">
+					<a href="<?php echo Router::$LINK->static->projects; ?>" class="menu-link">
 						<?php echo $this->contents->global->menu->projects; ?>
 					</a>
 				</li>

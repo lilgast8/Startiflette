@@ -92,7 +92,7 @@ class Main
 		if ( !Router::$IS_ALT_CONTENT )
 			include_once Path::$FILE->viewsPartials . 'header.php';
 		
-		include_once $viewPath . Router::$PHP_VIEW . '.php';
+		include_once $viewPath . PagesController::$PAGE->phpView . '.php';
 		
 		if ( !Router::$IS_ALT_CONTENT )
 			include_once Path::$FILE->viewsPartials . 'footer.php';

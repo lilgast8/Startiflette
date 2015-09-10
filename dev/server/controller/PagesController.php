@@ -7,17 +7,7 @@ class PagesController
 	
 	protected static $instance;
 	
-	static $PHP_VIEW		= null;
-	static $TITLE			= null;
-	static $DESC			= null;
-	
-	// private $path			= null;
-	
-	// private $pageId			= null;
-	// private $pageParams		= null;
-	
-	// private $is404			= null;
-	// private $isHomepage		= null;
+	static $PAGE = null;
 	
 	
 	protected function __construct()
@@ -38,6 +28,17 @@ class PagesController
 			self::$instance = new self;
 		
 		return self::$instance;
+	}
+	
+	
+	public function setPageInfos( $pageId, $phpView, $title, $desc )
+	{
+		self::$PAGE = new stdClass();
+		
+		self::$PAGE->id			= $pageId;
+		self::$PAGE->phpView	= $phpView;
+		self::$PAGE->title		= $title;
+		self::$PAGE->desc		= $desc;
 	}
 	
 }

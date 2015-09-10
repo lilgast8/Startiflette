@@ -9,7 +9,6 @@ class Path
 	
 	static $URL			= null;
 	static $FILE		= null;
-	static $LINK		= null;
 	
 	private $deviceDir	= null;
 	
@@ -90,28 +89,6 @@ class Path
 		$baseUrl = Config::$BASE_URL_DEV;
 		
 		return $baseUrl;
-	}
-	
-	
-	public function setLinks()
-	{
-		self::$LINK = new stdClass();
-		
-		foreach ( Router::$ROUTES as $routesGroup => $pages ) { // parse all routes group
-			
-			self::$LINK->$routesGroup = new stdClass();
-			
-			foreach ( $pages as $pageId => $pageParams ) { // parse all pages
-				
-				if ( $pageId !== 'error404' && $pageId == 'home' )
-					self::$LINK->$routesGroup->$pageId = self::$URL->base . Lang::$LANG_LINK_ROOT . $pageParams->{Lang::$LANG}->url;
-				
-				else if ( $pageId !== 'error404' )
-					self::$LINK->$routesGroup->$pageId = self::$URL->base . Lang::$LANG_LINK . $pageParams->{Lang::$LANG}->url;
-				
-			}
-			
-		}
 	}
 	
 	

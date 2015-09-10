@@ -13,7 +13,7 @@
 		<nav>
 			<ul>
 				<li>
-					<a href="<?php echo Path::$LINK->static->legal_notices; ?>" class="footer-link">
+					<a href="<?php echo Router::$LINK->static->legal_notices; ?>" class="footer-link">
 						<?php echo $this->contents->global->menu->legals; ?>
 					</a>
 				</li>
