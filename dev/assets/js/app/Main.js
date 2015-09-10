@@ -38,8 +38,8 @@ APP.Main = ( function( window ) {
 	
 	
 	var _loadRoutes = function() {
-		APP.RoutesController.buildEvt( APP.RoutesController.E.INIT, _routesLoaded.bind( this ) );
-		APP.RoutesController.init();
+		APP.Router.buildEvt( APP.Router.E.INIT, _routesLoaded.bind( this ) );
+		APP.Router.init();
 	};
 	
 	
@@ -53,7 +53,7 @@ APP.Main = ( function( window ) {
 		APP.OldBrowser.init();
 		
 		
-		APP.RoutesController.initRouting();
+		APP.Router.initRouting();
 		
 		
 		/*

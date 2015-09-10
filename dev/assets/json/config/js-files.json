@@ -34,7 +34,7 @@
 			"app/shared/configs/Lang.js",
 			"app/shared/configs/OldBrowser.js",
 			
-			"app/shared/routes/RoutesController.js",
+			"app/shared/routes/Router.js",
 			
 			"app/shared/loaders/Loader.js",
 			

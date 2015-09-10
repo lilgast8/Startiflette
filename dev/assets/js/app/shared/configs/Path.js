@@ -5,7 +5,6 @@ APP.Path = ( function( window ) {
 	
 	function Path() {
 		this.URL		= null;
-		this.PAGE_URL	= null;
 		
 		this.PAGE_URL = {
 			full:		null,
@@ -37,12 +36,13 @@ APP.Path = ( function( window ) {
 		
 		
 		// page url paths
-		this.PAGE_URL.full		= History.getState().url;
-		this.PAGE_URL.params	= _getParamsPageUrl.call( this );
-		this.PAGE_URL.aParams	= this.PAGE_URL.params.split( '/' );
+		// this.PAGE_URL.full		= History.getState().url;
+		// this.PAGE_URL.params	= _getParamsPageUrl.call( this );
+		// this.PAGE_URL.aParams	= this.PAGE_URL.params.split( '/' );
 	};
 	
 	
+	/*
 	Path.prototype.setCurrentPageUrl = function() {
 		this.PAGE_URL.current	= _getCurrentPageUrl.call( this );
 		this.PAGE_URL.aCurrent	= this.PAGE_URL.current.split( '/' );
@@ -75,6 +75,7 @@ APP.Path = ( function( window ) {
 		
 		return currentPageUrl;
 	};
+	*/
 	
 	
 	return new Path();

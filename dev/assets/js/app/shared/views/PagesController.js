@@ -6,11 +6,12 @@ APP.PagesController = ( function( window ) {
 	function PagesController() {
 		APP.AbstractController.call( this );
 		
-		this.prevPage		= null;
-		this.currentPage	= null;
-		this.nextPage		= null;
-		
 		this.pages			= {};
+		this.page			= {};
+		
+		// this.prevPage		= null;
+		// this.currentPage	= null;
+		// this.nextPage		= null;
 	}
 	
 	
@@ -35,6 +36,15 @@ APP.PagesController = ( function( window ) {
 	};
 	
 	
+	PagesController.prototype.setPageInfos = function( pageId, jsView, title, desc )
+	{
+		this.page.id		= pageId;
+		this.page.jsView	= jsView;
+		this.page.title		= title;
+		this.page.desc		= desc;
+		
+		console.log(this.page);
+	};
 	
 	
 	

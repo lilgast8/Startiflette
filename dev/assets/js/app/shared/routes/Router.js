@@ -1,9 +1,9 @@
 
 
-APP.RoutesController = ( function( window ) {
+APP.Router = ( function( window ) {
 	
 	
-	function RoutesController() {
+	function Router() {
 		APP.EventDispatcher.call( this );
 		
 		this.E = {
@@ -27,32 +27,26 @@ APP.RoutesController = ( function( window ) {
 		// this.isPageChange			= true;
 		
 		this.ROUTES				= {};
-		
-		// this.PAGE_URL			= null;
+		this.PAGE_URL			= {};
 		this.ALT_LANG_URL		= {};
+		this.LINK				= {};
 		
 		this.IS_ALT_CONTENT		= null;
 		this.IS_AJAX_CONTENT	= null;
 		
-		this.JS_VIEW			= null;
-		this.TITLE				= null;
-		this.DESC				= null;
+		this.pageId				= null;
+		this.pageParams			= null;
 		
-		// this.path				= null;
-		
-		// this.pageId				= null;
-		// this.pageParams			= null;
-		
-		// this.is404				= null;
-		// this.isHomepage			= null;
+		this.is404				= null;
+		this.isHomepage			= null;
 	}
 	
 	
-	RoutesController.prototype				= Object.create( APP.EventDispatcher.prototype );
-	RoutesController.prototype.constructor	= RoutesController;
+	Router.prototype				= Object.create( APP.EventDispatcher.prototype );
+	Router.prototype.constructor	= Router;
 	
 	
-	RoutesController.prototype.init = function() {
+	Router.prototype.init = function() {
 		_loadRoutesFile.call( this );
 	};
 	
@@ -101,7 +95,51 @@ APP.RoutesController = ( function( window ) {
 	};
 	
 	
-	RoutesController.prototype.initRouting = function() {
+	Router.prototype.setPageUrl = function()
+	{
+		this.PAGE_URL.full		= History.getState().url;
+		this.PAGE_URL.params	= _getParamsPageUrl.call( this );
+		this.PAGE_URL.aParams	= this.PAGE_URL.params.split( '/' );
+		this.PAGE_URL.current	= null;
+		this.PAGE_URL.aCurrent	= null;
+	};
+	
+	
+	var _getParamsPageUrl = function() {
+		var paramsPageUrl = this.PAGE_URL.full.replace( APP.Path.URL.base, '' );
+		
+		if ( paramsPageUrl.substr( 0, 1 ) == '/' ) // if / is first character, remove it
+			paramsPageUrl = paramsPageUrl.substr( 1 );
+		
+		if ( paramsPageUrl.substr( paramsPageUrl.length-1, 1 ) == '/' ) // if / is last character, remove it
+			paramsPageUrl = paramsPageUrl.substr( 0, paramsPageUrl.length-1 );
+		
+		paramsPageUrl = paramsPageUrl.split( '?' )[0]; // remove ?params
+		
+		
+		return paramsPageUrl;
+	};
+	
+	
+	Router.prototype.setCurrentPageUrl = function() {
+		this.PAGE_URL.current	= _getCurrentPageUrl.call( this );
+		this.PAGE_URL.aCurrent	= this.PAGE_URL.current.split( '/' );
+	};
+	
+	
+	var _getCurrentPageUrl = function()
+	{
+		var currentPageUrl = this.PAGE_URL.params.replace( APP.Lang.LANG, '' );
+		
+		if ( currentPageUrl.substr( 0, 1 ) == '/' ) // if / is first character, remove it
+			currentPageUrl = currentPageUrl.substr( 1 );
+		
+		
+		return currentPageUrl;
+	};
+	
+	
+	Router.prototype.initRouting = function() {
 		_bindEvents.call( this );
 		
 		_initFirstView.call( this );
@@ -157,7 +195,7 @@ APP.RoutesController = ( function( window ) {
 			for ( pageId in routesGroup ) { // parse all pages
 				pageParams = routesGroup[ pageId ];
 				
-				if ( pageParams[ APP.Lang.LANG ].url == APP.Path.PAGE_URL.current ) { // if url exist
+				if ( pageParams[ APP.Lang.LANG ].url == this.PAGE_URL.current ) { // if url exist
 					doesPageExist = true;
 					
 					break; // break second foreach
@@ -173,7 +211,7 @@ APP.RoutesController = ( function( window ) {
 		if ( !doesPageExist )
 			_set404.call( this, 'Show 404 - Page not available' );
 		else {
-			_setPageInfos.call( this, pageId, pageParams );
+			_setCurrentInfos.call( this, pageId, pageParams );
 			_setIsHomepage.call( this );
 			_setAltLangUrl.call( this );
 		}
@@ -185,14 +223,12 @@ APP.RoutesController = ( function( window ) {
 	};
 	
 	
-	var _setPageInfos = function( pageId, pageParams )
+	var _setCurrentInfos = function( pageId, pageParams )
 	{
 		this.pageId		= pageId;
 		this.pageParams	= pageParams;
 		
-		this.JS_VIEW	= this.pageParams.jsView;
-		this.TITLE		= this.pageParams[ APP.Lang.LANG ].title;
-		this.DESC		= this.pageParams[ APP.Lang.LANG ].desc;
+		APP.PagesController.setPageInfos( pageId, this.pageParams.jsView, this.pageParams[ APP.Lang.LANG ].title, this.pageParams[ APP.Lang.LANG ].desc );
 	};
 	
 	
@@ -526,7 +562,7 @@ APP.RoutesController = ( function( window ) {
 	*/
 	
 	
-	return new RoutesController();
+	return new Router();
 	
 	
 } ) ( window );
