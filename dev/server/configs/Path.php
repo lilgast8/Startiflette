@@ -84,7 +84,7 @@ class Path
 		self::$FILE->viewsAlt		= self::$FILE->views	. 'alt/';
 		
 		
-		// page url paths
+		// page url paths - à mettre dans Routes
 		self::$PAGE_URL				= new stdClass();
 		
 		self::$PAGE_URL->full		= $this->getFullPageUrl();
