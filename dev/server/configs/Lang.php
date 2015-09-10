@@ -15,15 +15,17 @@ class Lang
 	static $LANG_LINK_ROOT	= null;
 	static $LANG_LINK		= null;
 	
+	private $routes			= null;
+	
 	
 	protected function __construct()
 	{
-		$this->routes = Router::getInstance();
+		$this->router = Router::getInstance();
 		
 		$this->setGlobalInfos();
-		$this->routes->setPageUrl();
+		$this->router->setPageUrl();
 		$this->setCurrentLang();
-		$this->routes->setCurrentPageUrl();
+		$this->router->setCurrentPageUrl();
 		$this->setLangLinks();
 	}
 	

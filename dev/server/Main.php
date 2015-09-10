@@ -7,6 +7,7 @@ include_once 'server/configs/Config.php';
 include_once 'server/configs/Lang.php';
 include_once 'server/configs/Path.php';
 include_once 'server/routes/Router.php';
+include_once 'server/controller/PagesController.php';
 
 
 
@@ -27,6 +28,7 @@ class Main
 		$this->setPath();
 		$this->setLang();
 		$this->setRoutes();
+		$this->setPagesController();
 		$this->setContents();
 	}
 	
@@ -66,20 +68,14 @@ class Main
 	
 	private function setRoutes()
 	{
-		$this->routes = Router::getInstance();
-		$this->routes->init();
+		$this->router = Router::getInstance();
+		$this->router->init();
 	}
 	
 	
-	private function initRoutes()
+	private function setPagesController()
 	{
-		$this->routes->init();
-	}
-	
-	
-	private function initLang()
-	{
-		$this->lang->init();
+		$this->pagesController = PagesController::getInstance();
 	}
 	
 	
