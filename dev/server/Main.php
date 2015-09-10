@@ -89,19 +89,19 @@ class Main
 	{
 		$viewPath = $this->getViewPath();
 		
-		if ( !Router::$IS_ALT_CONTENT )
+		if ( Router::$CONTENT_TYPE == 'default' )
 			include_once Path::$FILE->viewsPartials . 'header.php';
 		
 		include_once $viewPath . PagesController::$PAGE->phpView . '.php';
 		
-		if ( !Router::$IS_ALT_CONTENT )
+		if ( Router::$CONTENT_TYPE == 'default' )
 			include_once Path::$FILE->viewsPartials . 'footer.php';
 	}
 	
 	
 	private function getViewPath()
 	{
-		$viewPath = !Router::$IS_ALT_CONTENT ?
+		$viewPath = Router::$CONTENT_TYPE == 'default' || Router::$CONTENT_TYPE == 'ajax' ?
 					Path::$FILE->viewsPage :
 					Path::$FILE->viewsAlt;
 		

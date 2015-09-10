@@ -12,8 +12,7 @@ class Router
 	static $ALT_LANG_URL	= null;
 	static $LINK			= null;
 	
-	static $IS_ALT_CONTENT	= null;
-	static $IS_AJAX_CONTENT	= null;
+	static $CONTENT_TYPE	= null;
 	
 	private $pageId			= null;
 	private $pageParams		= null;
@@ -124,33 +123,37 @@ class Router
 	{
 		$this->pagesController = PagesController::getInstance();
 		
-		$this->setIsAltContent();
+		$this->setContentType();
 		$this->setContentInfos();
 	}
 	
 	
-	private function setIsAltContent()
+	private function setContentType()
 	{
-		if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' )
-			self::$IS_ALT_CONTENT = true;
+		if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'alt' )
+			self::$CONTENT_TYPE = 'alt';
+		else if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' )
+			self::$CONTENT_TYPE = 'ajax';
 		else
-			self::$IS_ALT_CONTENT = false;
+			self::$CONTENT_TYPE = 'default';
 	}
 	
 	
 	private function setContentInfos()
 	{
-		if ( !self::$IS_ALT_CONTENT ) { // first load
+		if ( self::$CONTENT_TYPE == 'default' ) { // first load
 			$this->checkLangExistence();
 			$this->checkPageExistence();
 			$this->setLinks();
 		}
-		else if ( self::$IS_ALT_CONTENT ) { // alternative content
-			$this->checkLangExistence();
-			$this->setAltContent();
-		}
-		else // ajax load
+		
+		else if ( self::$CONTENT_TYPE == 'ajax' ) // ajax load
 			echo 'other (ajax) load';
+		
+		else if ( self::$CONTENT_TYPE == 'alt' ) { // alternative content
+			$this->checkLangExistence();
+			$this->pagesController->setPageInfos( null, self::$PAGE_URL->current, null, null );
+		}
 	}
 	
 	
@@ -269,12 +272,6 @@ class Router
 			}
 			
 		}
-	}
-	
-	
-	private function setAltContent()
-	{
-		self::$PHP_VIEW = self::$PAGE_URL->current;
 	}
 	
 }

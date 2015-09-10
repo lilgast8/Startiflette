@@ -22,7 +22,8 @@ APP.OldBrowser = ( function( window ) {
 				url:		APP.Path.URL.base + APP.Lang.LANG + '/old-browser',
 				type:		'POST',
 				data:		{
-								ajax: 'true'
+								ajax: 'true',
+								type: 'alt'
 							},
 				dataType:	'html',
 				success:	_successAjax.bind(this),
@@ -38,7 +39,7 @@ APP.OldBrowser = ( function( window ) {
 	
 	
 	var _errorAjax = function( XMLHttpRequest, textStatus, errorThrows ) {
-	//	alert('ERROR');
+		// alert('ERROR');
 	};
 	
 	
