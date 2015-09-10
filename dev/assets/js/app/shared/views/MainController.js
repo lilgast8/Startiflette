@@ -18,6 +18,9 @@ APP.MainController = ( function( window ) {
 		this.pagesController = APP.PagesController;
 		this.pagesController.init();
 		
+		// this.mainLoader = APP.MainLoader;
+		// this.mainLoader.init();
+		
 		this.instanceView();
 	};
 	

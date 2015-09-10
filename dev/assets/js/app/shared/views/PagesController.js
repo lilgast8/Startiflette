@@ -21,6 +21,9 @@ APP.PagesController = ( function( window ) {
 	
 	PagesController.prototype.init = function() {
 		_initPages.call( this );
+		
+		// this.mainLoader = APP.MainLoader;
+		// this.mainLoader.init();
 	};
 	
 	

@@ -31,8 +31,8 @@ APP.Router = ( function( window ) {
 		this.ALT_LANG_URL		= {};
 		this.LINK				= {};
 		
-		this.IS_ALT_CONTENT		= null;
-		this.IS_AJAX_CONTENT	= null;
+		// this.IS_ALT_CONTENT		= null;
+		// this.IS_AJAX_CONTENT	= null;
 		
 		this.pageId				= null;
 		this.pageParams			= null;
