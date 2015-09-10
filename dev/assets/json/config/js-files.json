@@ -29,10 +29,10 @@
 			
 			"app/shared/events/EventDispatcher.js",
 			
-			"app/shared/config/Config.js",
-			"app/shared/config/Path.js",
-			"app/shared/config/Lang.js",
-			"app/shared/config/OldBrowser.js",
+			"app/shared/configs/Config.js",
+			"app/shared/configs/Path.js",
+			"app/shared/configs/Lang.js",
+			"app/shared/configs/OldBrowser.js",
 			
 			"app/shared/routes/RoutesController.js",
 			
