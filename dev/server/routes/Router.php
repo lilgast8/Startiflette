@@ -15,8 +15,6 @@ class Router
 	static $IS_ALT_CONTENT	= null;
 	static $IS_AJAX_CONTENT	= null;
 	
-	private $path			= null;
-	
 	private $pageId			= null;
 	private $pageParams		= null;
 	
@@ -61,15 +59,6 @@ class Router
 			self::$ROUTES->$fileName = new stdClass();
 			self::$ROUTES->$fileName = $routes;
 		}
-	}
-	
-	
-	public function init()
-	{
-		$this->pagesController = PagesController::getInstance();
-		
-		$this->setIsAltContent();
-		$this->setContentInfos();
 	}
 	
 	
@@ -128,6 +117,15 @@ class Router
 		
 		
 		return $currentPageUrl;
+	}
+	
+	
+	public function init()
+	{
+		$this->pagesController = PagesController::getInstance();
+		
+		$this->setIsAltContent();
+		$this->setContentInfos();
 	}
 	
 	
