@@ -149,6 +149,13 @@ APP.PagesController = ( function( window ) {
 	};
 	
 	
+	/*PagesController.prototype.navigateTo = function( url ) {
+		console.log('PagesController.navigateTo:', url);
+		
+		
+	};*/
+	
+	
 	
 	
 	

@@ -27,7 +27,9 @@ APP.MainView = ( function( window ) {
 	MainView.prototype.init = function() {
 		APP.AbstractView.prototype.init.call( this );
 		
-		_instancePagesController.call( this );
+		// _instancePagesController.call( this );
+		// _instanceStaticViews.call( this );
+		_initStaticsViews.call( this );
 	};
 	
 	
@@ -48,10 +50,22 @@ APP.MainView = ( function( window ) {
 	};
 	
 	
-	var _instancePagesController = function() {
+	var _initStaticsViews = function() {
+		APP.PagesController.init();
+		APP.Views.Statics.HeaderView.init();
+		// APP.Views.Statics.FooterView.init();
+	};
+	
+	
+	/*var _instancePagesController = function() {
 		this.pagesController = APP.PagesController;
 		this.pagesController.init();
-	};
+	};*/
+	
+	
+	/*var _instanceStaticViews = function() {
+		// this.header = 
+	};*/
 	
 	
 	var _resize = function() {

@@ -46,10 +46,12 @@
 			"app/shared/views/MainView.js",
 			"app/shared/views/PagesController.js",
 			
-			"app/desktop/views/statics/Static.MainLoadeView.js",
+			"app/desktop/views/statics/MainLoadeView.js",
+			"app/desktop/views/statics/HeaderView.js",
+			"app/desktop/views/statics/FooterView.js",
 			
-			"app/desktop/views/pages/Page.HomeController.js",
-			"app/desktop/views/pages/Page.HomeView.js",
+			"app/desktop/views/pages/HomeController.js",
+			"app/desktop/views/pages/HomeView.js",
 			
 			"app/Main.js"
 		]

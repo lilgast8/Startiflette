@@ -95,18 +95,30 @@ APP.Router = ( function( window ) {
 	};
 	
 	
-	Router.prototype.setPageUrl = function()
+	Router.prototype.setPageUrl = function( url )
 	{
-		this.PAGE_URL.full		= _getFullPageUrl.call( this );
+		this.PAGE_URL.full		= _getFullPageUrl.call( this, url );
 		this.PAGE_URL.params	= _getParamsPageUrl.call( this );
 		this.PAGE_URL.aParams	= this.PAGE_URL.params.split( '/' );
-		this.PAGE_URL.current	= null;
-		this.PAGE_URL.aCurrent	= null;
+		
+		if ( url === null) { // init
+			this.PAGE_URL.current	= null;
+			this.PAGE_URL.aCurrent	= null;
+		}
+		else // page change
+			this.setCurrentPageUrl();
 	};
 	
 	
-	var _getFullPageUrl = function() {
-		return History.getState().url;
+	var _getFullPageUrl = function( url ) {
+		var fullPageUrl;
+		
+		if ( url === null) // init
+			fullPageUrl = History.getState().url;
+		else // page change
+			fullPageUrl = url;
+		
+		return fullPageUrl;
 	};
 	
 	
@@ -260,7 +272,23 @@ APP.Router = ( function( window ) {
 		// console.log( this.PAGE_URL.full, _getFullPageUrl.call( this ) );
 		
 		if ( this.PAGE_URL.full != _getFullPageUrl.call( this ) )
-			_onStateChange.call(this);
+			_onStateChange.call( this );
+	};
+	
+	
+	Router.prototype.navigateTo = function( url ) {
+		console.log('Router.navigateTo():', url);
+		
+		this.setPageUrl( url );
+		
+		console.log(this.PAGE_URL);
+		
+		
+		
+		// _checkLangExistence.call( this );
+		// _checkPageExistence.call( this );
+		
+		// History.pushState( null, null, url );
 	};
 	
 	

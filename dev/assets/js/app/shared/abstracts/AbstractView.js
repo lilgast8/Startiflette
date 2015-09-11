@@ -114,15 +114,17 @@ APP.AbstractView = ( function( window ) {
 	};
 	
 	
-	/*AbstractView.prototype.changePage = function(e) {
-		if(APP.Config.HAS_PUSHSTATE) { // if pushstate supported
+	AbstractView.prototype.changePage = function(e) {
+		if (APP.Config.HAS_PUSHSTATE ) { // if pushstate supported
 			e.preventDefault();
 			
 			var url = e.currentTarget.href;
 			
-			APP.RoutesManager.goToPage(url);
+			// APP.Router.goToPage(url);
+			APP.Router.navigateTo( url );
+			// APP.PagesController.navigateTo( url );
 		}
-	};*/
+	};
 	
 	
 	return AbstractView;

@@ -10,7 +10,7 @@ APP.Lang = ( function( window ) {
 	
 	Lang.prototype.init = function() {
 		_setGlobalInfos.call( this );
-		APP.Router.setPageUrl();
+		APP.Router.setPageUrl( null );
 		_setCurrentLang.call( this );
 		APP.Router.setCurrentPageUrl();
 		_setLangLinks.call( this );
