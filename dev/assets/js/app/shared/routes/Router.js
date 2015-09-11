@@ -97,11 +97,16 @@ APP.Router = ( function( window ) {
 	
 	Router.prototype.setPageUrl = function()
 	{
-		this.PAGE_URL.full		= History.getState().url;
+		this.PAGE_URL.full		= _getFullPageUrl.call( this );
 		this.PAGE_URL.params	= _getParamsPageUrl.call( this );
 		this.PAGE_URL.aParams	= this.PAGE_URL.params.split( '/' );
 		this.PAGE_URL.current	= null;
 		this.PAGE_URL.aCurrent	= null;
+	};
+	
+	
+	var _getFullPageUrl = function() {
+		return History.getState().url;
 	};
 	
 	
@@ -251,7 +256,12 @@ APP.Router = ( function( window ) {
 	};
 	
 	
-	
+	Router.prototype.checkUrlSimilarity = function() {
+		// console.log( this.PAGE_URL.full, _getFullPageUrl.call( this ) );
+		
+		if ( this.PAGE_URL.full != _getFullPageUrl.call( this ) )
+			_onStateChange.call(this);
+	};
 	
 	
 	
