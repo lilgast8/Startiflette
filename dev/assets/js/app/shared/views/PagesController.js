@@ -9,6 +9,8 @@ APP.PagesController = ( function( window ) {
 		this.pages			= {};
 		this.page			= {};
 		
+		this.firstLoad		= true;
+		
 		this.prevPage		= null;
 		this.currentPage	= null;
 		this.nextPage		= null;
@@ -21,9 +23,7 @@ APP.PagesController = ( function( window ) {
 	
 	PagesController.prototype.init = function() {
 		_initPages.call( this );
-		
-		// this.mainLoader = APP.MainLoader;
-		// this.mainLoader.init();
+		_instanceMainLoader.call( this );
 	};
 	
 	
@@ -36,6 +36,12 @@ APP.PagesController = ( function( window ) {
 			// 'project':			APP.Views.Controllers.Project,
 			// 'legal_notices':	APP.Views.Controllers.LegalNotices
 		};
+	};
+	
+	
+	var _instanceMainLoader = function() {
+		this.mainLoader = new APP.Views.Statics.MainLoaderController();
+		this.mainLoader.init();
 	};
 	
 	
@@ -64,6 +70,41 @@ APP.PagesController = ( function( window ) {
 		this.currentPage = new this.pages[ this.page.id ]();
 		
 		// console.log(this.currentPage);
+		
+		
+		
+		_loadAssets.call( this );
+		
+	};
+	
+	
+	var _loadAssets = function() {
+		var aAssets = [];
+		
+		// first load
+		if ( this.firstLoad ) {
+			this.firstLoad = false;
+			
+			aAssets = [ 'global', this.page.id ];
+			
+			// this.mainLoader.loadAssets( this.page.id );
+			
+			this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
+			
+			this.mainLoader.loadAssets( aAssets );
+		}
+		
+		// page change load
+		else {
+			console.log('page change load');
+		}
+	};
+	
+	
+	var _onAssetsLoaded = function() {
+		console.log('PagesController _onAssetsLoaded()');
+		
+		this.mainLoader.destroyEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
 	};
 	
 	

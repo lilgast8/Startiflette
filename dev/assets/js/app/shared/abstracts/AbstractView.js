@@ -18,7 +18,24 @@ APP.AbstractView = ( function( window ) {
 	AbstractView.prototype.constructor	= AbstractView;
 	
 	
+	AbstractView.prototype.init = function() {
+		this.initDOM();
+		this.bindEvents();
+		this.initTl();
+	};
+	
+	
 	AbstractView.prototype.initDOM = function() {
+		
+	};
+	
+	
+	AbstractView.prototype.bindEvents = function() {
+		
+	};
+	
+	
+	AbstractView.prototype.unbindEvents = function() {
 		
 	};
 	
@@ -39,16 +56,6 @@ APP.AbstractView = ( function( window ) {
 	
 	
 	AbstractView.prototype.hideView = function() {
-		
-	};
-	
-	
-	AbstractView.prototype.bindEvents = function() {
-		
-	};
-	
-	
-	AbstractView.prototype.unbindEvents = function() {
 		
 	};
 	

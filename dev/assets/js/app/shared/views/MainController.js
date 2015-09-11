@@ -26,9 +26,10 @@ APP.MainController = ( function( window ) {
 	
 	
 	MainController.prototype.instanceView = function() {
-		this.view = APP.MainView;
+		this.view = new APP.MainView();
 		
 		this.bindEvents();
+		
 		this.view.init();
 	};
 	

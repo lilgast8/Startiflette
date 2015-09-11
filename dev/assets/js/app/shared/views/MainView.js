@@ -77,7 +77,7 @@ APP.MainView = ( function( window ) {
 	};
 	
 	
-	return new MainView();
+	return MainView;
 	
 	
 } ) ( window );

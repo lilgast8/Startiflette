@@ -52,9 +52,10 @@
 <!-- Main container -->
 <div id="main-container" class="preload">
 	
-	<!-- Loader -->
-	<div id="loader">
-		<div class="loader-progress"></div>
+	<!-- Main loader -->
+	<div id="main-loader">
+		<div class="main-loader-percentage"></div>
+		<div class="main-loader-progress"></div>
 	</div>
 	
 	<!-- Header -->

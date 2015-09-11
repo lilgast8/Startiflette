@@ -10,6 +10,7 @@ APP.Loader = ( function( window ) {
 		
 		this.E = {
 			STARTED:	'started',
+			PROGRESS:	'progress',
 			FILE_LOAD:	'fileload',
 			COMPLETE:	'complete',
 			ERROR:		'error'
@@ -35,10 +36,10 @@ APP.Loader = ( function( window ) {
 	
 	Loader.prototype.bindEvents = function() {
 		this.queue.addEventListener( 'loadstart', $.proxy( _onLoadStart, this ) );
-		this.queue.addEventListener( 'progress', $.proxy(_onProgress, this) );
-		this.queue.addEventListener( 'fileload', $.proxy(_onFileLoad, this) );
-		this.queue.addEventListener( 'complete', $.proxy(_onComplete, this) );
-		this.queue.addEventListener( 'error', $.proxy(_onError, this) );
+		this.queue.addEventListener( 'progress', $.proxy( _onProgress, this ) );
+		this.queue.addEventListener( 'fileload', $.proxy( _onFileLoad, this ) );
+		this.queue.addEventListener( 'complete', $.proxy( _onComplete, this ) );
+		this.queue.addEventListener( 'error', $.proxy( _onError, this ) );
 	};
 	
 	
@@ -67,7 +68,7 @@ APP.Loader = ( function( window ) {
 	
 	var _onProgress = function( e ) {
 		if ( this.isOnProgress )
-			this.dispatch( this.E.PROGRESS, e );
+			this.dispatch( this.E.PROGRESS, e.progress * 100 );
 	};
 	
 	
