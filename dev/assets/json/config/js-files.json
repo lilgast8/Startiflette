@@ -46,7 +46,7 @@
 			"app/shared/views/MainView.js",
 			"app/shared/views/PagesController.js",
 			
-			"app/shared/views/statics/Static.MainLoadeView.js",
+			"app/desktop/views/statics/Static.MainLoadeView.js",
 			
 			"app/desktop/views/pages/Page.HomeController.js",
 			"app/desktop/views/pages/Page.HomeView.js",
