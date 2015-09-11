@@ -89,7 +89,7 @@ APP.PagesController = ( function( window ) {
 			
 			// this.mainLoader.loadAssets( this.page.id );
 			
-			this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
+			this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this, true ) );
 			
 			this.mainLoader.loadAssets( aAssets );
 		}
@@ -101,10 +101,21 @@ APP.PagesController = ( function( window ) {
 	};
 	
 	
-	var _onAssetsLoaded = function() {
-		console.log('PagesController _onAssetsLoaded()');
+	var _onAssetsLoaded = function( isInit ) {
+		console.log('PagesController _onAssetsLoaded()', isInit);
 		
 		this.mainLoader.destroyEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
+		
+		if ( isInit ) {
+			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
+			this.mainLoader.hideInit();
+		}
+		
+	};
+	
+	
+	var _onMainLoaderHidden = function() {
+		this.mainLoader.destroyEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 	};
 	
 	

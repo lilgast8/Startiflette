@@ -19,22 +19,22 @@
 
 .main-loader-percentage {
 	position:absolute; 
-	left:50%; 
+	left:0; 
 	top:50%; 
-	height:25px; 
-	width:100px; 
-	margin:-35px 0 0 -50px; 
+	height:100px; 
+	width:100%; 
+	margin-top:-50px; 
 	text-align:center; 
-	font:bold 25px/25px 'Arial'; 
+	font:bold 100px/100px 'Arial'; 
 	color:$peach; 
 }
 
 .main-loader-progress {
 	position:absolute; 
 	left:0; 
-	top:50%; 
+	bottom:0; 
 	width:100%; 
-	height:1px; 
+	height:200px; 
 	background-color:$alt3; 
 	@include translateX(-100%); 
 }

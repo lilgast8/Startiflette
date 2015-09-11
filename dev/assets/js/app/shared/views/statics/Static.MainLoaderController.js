@@ -112,6 +112,13 @@ APP.Views.Statics.MainLoaderController = ( function( window ) {
 	};
 	
 	
+	MainLoaderController.prototype.hideInit = function() {
+		
+		
+		this.view.showViewInit();
+	};
+	
+	
 	return MainLoaderController;
 	
 	
