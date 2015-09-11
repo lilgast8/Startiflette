@@ -10,7 +10,7 @@ APP.PagesController = ( function( window ) {
 		this.page			= {};
 		
 		this.firstLoad		= true;
-		
+		this.isPageChange	= true;
 		this.prevPage		= null;
 		this.currentPage	= null;
 		this.nextPage		= null;
@@ -40,7 +40,8 @@ APP.PagesController = ( function( window ) {
 	
 	
 	var _instanceMainLoader = function() {
-		this.mainLoader = new APP.Views.Statics.MainLoaderController();
+		// this.mainLoader = new APP.Views.Statics.MainLoaderController();
+		this.mainLoader = new APP.Views.Statics.MainLoader();
 		this.mainLoader.init();
 	};
 	
@@ -87,8 +88,6 @@ APP.PagesController = ( function( window ) {
 			
 			aAssets = [ 'global', this.page.id ];
 			
-			// this.mainLoader.loadAssets( this.page.id );
-			
 			this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this, true ) );
 			
 			this.mainLoader.loadAssets( aAssets );
@@ -115,6 +114,7 @@ APP.PagesController = ( function( window ) {
 	
 	
 	var _onMainLoaderHidden = function() {
+		console.log('_onMainLoaderHidden');
 		this.mainLoader.destroyEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 	};
 	
