@@ -43,7 +43,6 @@
 			"app/shared/abstracts/AbstractController.js",
 			"app/shared/abstracts/AbstractView.js",
 			
-			"app/shared/views/MainController.js",
 			"app/shared/views/MainView.js",
 			"app/shared/views/PagesController.js",
 			

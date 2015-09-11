@@ -25,8 +25,9 @@ APP.MainView = ( function( window ) {
 	
 	
 	MainView.prototype.init = function() {
-		this.initDOM();
-		this.bindEvents();
+		APP.AbstractView.prototype.init.call( this );
+		
+		_instancePagesController.call( this );
 	};
 	
 	
@@ -47,37 +48,43 @@ APP.MainView = ( function( window ) {
 	};
 	
 	
+	var _instancePagesController = function() {
+		this.pagesController = APP.PagesController;
+		this.pagesController.init();
+	};
+	
+	
 	var _resize = function() {
 		this.wW = this.$window.width();
 		this.wH = this.$window.height();
 		
-		this.dispatch( this.E.RESIZE );
+		console.log('MainView _resize()', this.wW, this.wH);
 	};
 	
 	
 	var _raf = function() {
 		this.scrollY = this.$window[0].scrollY || this.$window[0].pageYOffset;
 		
-		this.dispatch( this.E.RAF );
+		console.log('MainView _raf()');
 	};
 	
 	
 	var _mouseMove = function() {
-		this.dispatch( this.E.MOUSE_MOVE );
+		console.log('MainView _mouseMove()');
 	};
 	
 	
 	var _mouseDown = function() {
-		this.dispatch( this.E.MOUSE_DOWN );
+		console.log('MainView _mouseDown()');
 	};
 	
 	
 	var _mouseUp = function() {
-		this.dispatch( this.E.MOUSE_UP );
+		console.log('MainView _mouseUp()');
 	};
 	
 	
-	return MainView;
+	return new MainView();
 	
 	
 } ) ( window );
