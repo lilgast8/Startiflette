@@ -9,8 +9,10 @@ APP.PagesController = ( function( window ) {
 		this.pages			= {};
 		this.page			= {};
 		
+		this.LOADING_MODE	= 'allStatic'; // can be allStatic, byPageStatic, byPageDynamic
 		this.firstLoad		= true;
 		this.isPageChange	= true;
+		
 		this.prevPage		= null;
 		this.currentPage	= null;
 		this.nextPage		= null;
@@ -80,17 +82,19 @@ APP.PagesController = ( function( window ) {
 	
 	
 	var _loadAssets = function() {
-		var aAssets = [];
+		var aAssetsList = [];
 		
 		// first load
 		if ( this.firstLoad ) {
 			this.firstLoad = false;
 			
-			aAssets = [ 'global', this.page.id ];
+			// aAssetsList = [ 'global' ];
+			aAssetsList = _getAssetsList.call( this, true );
+			console.log(aAssetsList);
 			
 			this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this, true ) );
 			
-			this.mainLoader.loadAssets( aAssets );
+			this.mainLoader.loadAssets( aAssetsList );
 		}
 		
 		// page change load
@@ -100,12 +104,35 @@ APP.PagesController = ( function( window ) {
 	};
 	
 	
-	var _onAssetsLoaded = function( isInit ) {
-		console.log('PagesController _onAssetsLoaded()', isInit);
+	var _getAssetsList = function( init ) {
+		var aAssetsList = [];
+		
+		/* Init */
+		if ( init && this.LOADING_MODE == 'allStatic')
+			aAssetsList = [ 'global' ];
+		else if ( init && this.LOADING_MODE == 'byPageStatic')
+			aAssetsList = [ 'global', this.page.id ];
+		else if ( init && this.LOADING_MODE == 'byPageDynamic')
+			aAssetsList = [ 'global', this.page.id ];
+		
+		/* Change page */
+		// else if ( !init && this.LOADING_MODE == 'allStatic')
+		// 	aAssetsList = [ ];
+		// else if ( !init && this.LOADING_MODE == 'byPageStatic')
+		// 	aAssetsList = [ this.page.id ];
+		// else if ( !init && this.LOADING_MODE == 'byPageDynamic')
+		// 	aAssetsList = [ this.page.id ];
+		
+		return aAssetsList;
+	};
+	
+	
+	var _onAssetsLoaded = function( init ) {
+		console.log('PagesController _onAssetsLoaded()', init);
 		
 		this.mainLoader.destroyEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
 		
-		if ( isInit ) {
+		if ( init ) {
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 			this.mainLoader.hideInit();
 		}
@@ -116,7 +143,12 @@ APP.PagesController = ( function( window ) {
 	var _onMainLoaderHidden = function() {
 		console.log('_onMainLoaderHidden');
 		this.mainLoader.destroyEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
+		
+		this.isPageChange = false;
+		// APP.Router.checkUrlSimilarity();
 	};
+	
+	
 	
 	
 	
