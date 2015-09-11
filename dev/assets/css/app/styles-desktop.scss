@@ -18,12 +18,38 @@
 
 
 
+/**************************************/
+/* -------- SHARED - STATICS -------- */
+/**************************************/
+
+
+// @import 'shared/statics/_PARTIAL';
+
+
+
+
+
 /***************************************/
 /* -------- SHARED - PARTIALS -------- */
 /***************************************/
 
 
-//@import 'shared/partials/_PARTIALS';
+// @import 'shared/partials/_PARTIAL';
+
+
+
+
+
+/*****************************/
+/* -------- STATICS -------- */
+/*****************************/
+
+
+@import 'desktop/statics/_global';
+@import 'desktop/statics/_main-loader';
+@import 'desktop/statics/_containers';
+@import 'desktop/statics/_header';
+@import 'desktop/statics/_footer';
 
 
 
@@ -34,11 +60,7 @@
 /******************************/
 
 
-@import 'desktop/partials/_global';
-@import 'desktop/partials/_loader';
-@import 'desktop/partials/_containers';
-@import 'desktop/partials/_header';
-@import 'desktop/partials/_footer';
+// @import 'desktop/partials/_PARTIAL';
 
 
 
