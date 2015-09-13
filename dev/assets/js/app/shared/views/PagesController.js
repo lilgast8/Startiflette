@@ -31,12 +31,12 @@ APP.PagesController = ( function( window ) {
 	
 	var _initPages = function() {
 		this.pages = {
-			// 'error-404':		APP.Views.Controllers.Error404,
+			'error-404':		APP.Views.Pages.Error404View,
 			'home':				APP.Views.Pages.HomeView,
-			// 'about':			APP.Views.Controllers.About,
-			// 'projects':			APP.Views.Controllers.Projects,
-			// 'project':			APP.Views.Controllers.Project,
-			// 'legal_notices':	APP.Views.Controllers.LegalNotices
+			'about':			APP.Views.Pages.AboutView,
+			'projects':			APP.Views.Pages.ProjectsView,
+			'project':			APP.Views.Pages.ProjectView,
+			'legal-notices':	APP.Views.Pages.LegalNoticesView
 		};
 	};
 	
@@ -61,13 +61,13 @@ APP.PagesController = ( function( window ) {
 	
 	var _setCurrentPage = function() {
 		if ( this.pages[ this.page.id ] === undefined) {
-			console.log('PagesController error: Need to create a controller/view for the "' + this.page.id + '" ID, then set the page in the PageManager.pages object.');
+			console.log('PagesController error: Need to create a view for the "' + this.page.id + '" ID, then set the view in the PageManager.pages object.');
 			return;
 		}
 		
 		this.prevPage = this.currentPage;
 		
-		// if (this.currentPage != null) 
+		// if ( this.currentPage != null )
 		// 	_unbindEvents.call(this);
 		
 		this.currentPage = new this.pages[ this.page.id ]();
@@ -90,7 +90,7 @@ APP.PagesController = ( function( window ) {
 			
 			// aAssetsList = [ 'global' ];
 			aAssetsList = _getAssetsList.call( this, true );
-			console.log(aAssetsList);
+			// console.log(aAssetsList);
 			
 			this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this, true ) );
 			
@@ -147,6 +147,34 @@ APP.PagesController = ( function( window ) {
 		this.isPageChange = false;
 		// APP.Router.checkUrlSimilarity();
 	};
+	
+	
+	PagesController.prototype.changePage = function() {
+		console.log('changePage', this.isPageChange);
+		
+		if ( !this.isPageChange ) {
+			/*
+			_disablePageChange.call(this);
+			
+			if(this.isPageChangedByClick) // if page is changed by a click
+				this.isPageChangedByClick = false;
+			else // if page is changed by a prev/next
+				_setPageInfos.call(this, null);
+			
+			this.nextView = _getView.call(this);
+			
+			this.currentView.buildEvt(this.currentView.E.HIDDEN, _initNextView.bind(this));
+			this.currentView.hide();
+			
+			this.nextView.load(this.pageUrl);
+			*/
+		}
+	};
+	
+	
+	/*PagesController.prototype.hideCurrentView = function() {
+		console.log('hideCurrentView');
+	};*/
 	
 	
 	/*PagesController.prototype.navigateTo = function( url ) {
