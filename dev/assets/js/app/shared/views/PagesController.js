@@ -82,7 +82,7 @@ APP.PagesController = ( function( window ) {
 	
 	
 	// var _loadAssets = function() {
-	PagesController.prototype.loadAssets = function(ARGS) {
+	PagesController.prototype.loadAssets = function() {
 		var aAssetsList = [];
 		
 		// first load
@@ -151,6 +151,7 @@ APP.PagesController = ( function( window ) {
 	
 	var _enablePageChange = function() {
 		this.isPageChange = false;
+		
 		if ( this.firstLoad )
 			this.firstLoad = false;
 		
@@ -158,8 +159,19 @@ APP.PagesController = ( function( window ) {
 	};
 	
 	
+	var _disablePageChange = function() {
+		this.isPageChange = true;
+	};
+	
+	
 	PagesController.prototype.changePage = function() {
 		console.log('changePage', this.isPageChange);
+		
+		_disablePageChange.call( this );
+		
+		this.mainLoader.buildEvt( this.mainLoader.E.SHOWN, _onMainLoaderShown.bind( this ) );
+		this.mainLoader.show();
+		
 		
 		// if ( !this.isPageChange ) {
 			/*
@@ -179,6 +191,14 @@ APP.PagesController = ( function( window ) {
 			*/
 		// }
 	};
+	
+	
+	var _onMainLoaderShown = function() {
+		console.log('PagesController _onMainLoaderShown()');
+	};
+	
+	
+	
 	
 	
 	/*PagesController.prototype.hideCurrentView = function() {

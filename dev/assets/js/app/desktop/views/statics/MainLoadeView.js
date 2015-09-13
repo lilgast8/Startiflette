@@ -58,12 +58,22 @@ APP.Views.Statics.MainLoader = ( function( window ) {
 	
 	
 	MainLoader.prototype.initTl = function() {
+		/* Hide init */
 		this.tl.hideInit = new TimelineLite( { paused:true, onComplete:function(){
 			this.dispatch( this.E.HIDDEN );
 		}.bind(this) } );
 		
 		this.tl.hideInit.to( this.$mainLoader, 1.5, { xPercent:100, ease:Quart.easeInOut }, 0 );
 		this.tl.hideInit.to( this.$percentage, 1.5, { xPercent:-100, ease:Quart.easeInOut }, 0 );
+		
+		
+		/* Show */
+		this.tl.show = new TimelineLite( { paused:true, onComplete:function(){
+			this.dispatch( this.E.SHOWN );
+		}.bind(this) } );
+		
+		this.tl.show.to( this.$mainLoader, 1.5, { xPercent:0, ease:Quart.easeInOut }, 0 );
+		this.tl.show.to( this.$percentage, 1.5, { xPercent:0, ease:Quart.easeInOut }, 0 );
 	};
 	
 	
@@ -131,6 +141,16 @@ APP.Views.Statics.MainLoader = ( function( window ) {
 	
 	MainLoader.prototype.hideInit = function() {
 		this.tl.hideInit.play();
+	};
+	
+	
+	MainLoader.prototype.show = function() {
+		this.tl.show.play();
+	};
+	
+	
+	MainLoader.prototype.hide = function() {
+		this.tl.hide.play();
 	};
 	
 	

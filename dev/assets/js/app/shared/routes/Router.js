@@ -303,8 +303,6 @@ APP.Router = ( function( window ) {
 		else // if navigate by prev/next browser
 			_setInfos.call( this, null );
 		
-		console.log( '_onStateChange():', APP.PagesController.page );
-		
 		APP.PagesController.changePage();
 	};
 	
