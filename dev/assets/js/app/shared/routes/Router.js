@@ -159,8 +159,9 @@ APP.Router = ( function( window ) {
 	Router.prototype.initRouting = function() {
 		_bindEvents.call( this );
 		
-		_checkLangExistence.call( this );
-		_checkPageExistence.call( this );
+		// _checkLangExistence.call( this );
+		// _checkPageExistence.call( this );
+		_checkUrl.call( this );
 	};
 	
 	
@@ -176,7 +177,7 @@ APP.Router = ( function( window ) {
 	};
 	
 	
-	var _checkLangExistence = function() {
+	/*var _checkLangExistence = function() {
 		if ( APP.Lang.ALL_LANG.indexOf( APP.Lang.LANG ) == -1 ) {
 			APP.Lang.LANG = APP.Lang.DEFAULT_LANG;
 			
@@ -212,6 +213,64 @@ APP.Router = ( function( window ) {
 			_set404.call( this, 'Show 404 - Page not available' );
 		else
 			_setPage.call( this, pageId, pageParams );
+	};*/
+	
+	
+	var _checkUrl = function() {
+		var langExist = _getLangExistence.call( this );
+		var pageExist = _getPageExistence.call( this );
+		
+		console.log(langExist + ' / ' + pageExist);
+		if ( langExist && pageExist )
+			console.log('_setPage()');
+		else
+			console.log('_set404()');
+	};
+	
+	
+	var _getLangExistence = function() {
+		var langExist = true;
+		
+		if ( APP.Lang.ALL_LANG.indexOf( APP.Lang.LANG ) == -1 ) {
+			APP.Lang.LANG = APP.Lang.DEFAULT_LANG;
+			
+			langExist = false;
+		}
+		
+		
+		return langExist;
+	};
+	
+	
+	var _getPageExistence = function() {
+		var pageExist = false;
+		var routesGroupName, routesGroup, pageId, pageParams;
+		
+		for ( routesGroupName in this.ROUTES ) { // parse all routes group
+			routesGroup = this.ROUTES[ routesGroupName ];
+			
+			for ( pageId in routesGroup ) { // parse all pages
+				pageParams = routesGroup[ pageId ];
+				
+				if ( pageParams[ APP.Lang.LANG ].url == this.PAGE_URL.current ) { // if url exist
+					pageExist = true;
+					
+					break; // break second foreach
+				}
+			}
+			
+			if ( pageExist )
+				break; // break first foreach
+			
+		}
+		
+		
+		return pageExist;
+		
+		/*if ( !doesPageExist )
+			_set404.call( this, 'Show 404 - Page not available' );
+		else
+			_setPage.call( this, pageId, pageParams );*/
 	};
 	
 	
@@ -226,6 +285,7 @@ APP.Router = ( function( window ) {
 		_setAltLangUrl.call( this );
 		
 		APP.PagesController.setPageInfos( pageId, pageParams.jsView, pageParams[ APP.Lang.LANG ].title, pageParams[ APP.Lang.LANG ].desc );
+		console.log(APP.PagesController.page);
 	};
 	
 	
@@ -281,14 +341,18 @@ APP.Router = ( function( window ) {
 		
 		this.setPageUrl( url );
 		
-		console.log(this.PAGE_URL);
+		console.log( this.PAGE_URL );
 		
 		
 		
 		// _checkLangExistence.call( this );
 		// _checkPageExistence.call( this );
 		
+		// _setPage.call( this );
+		// console.log( APP.PagesController.page.title );
+		
 		// History.pushState( null, null, url );
+		History.pushState( null, APP.PagesController.page.title, url );
 	};
 	
 	
