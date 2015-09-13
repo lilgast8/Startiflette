@@ -15,7 +15,7 @@ class Lang
 	static $LANG_LINK_ROOT	= null;
 	static $LANG_LINK		= null;
 	
-	private $routes			= null;
+	private $router			= null;
 	
 	
 	protected function __construct()
@@ -74,6 +74,14 @@ class Lang
 	{
 		self::$LANG_LINK_ROOT	= self::$LANG == self::$DEFAULT_LANG ? '' : self::$LANG;
 		self::$LANG_LINK		= self::$MULTI_LANG ? self::$LANG . '/' : '';
+	}
+	
+	
+	public function forceDefaultLang()
+	{
+		self::$LANG = self::$DEFAULT_LANG;
+		
+		$this->setLangLinks();
 	}
 	
 }

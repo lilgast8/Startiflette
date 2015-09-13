@@ -7,18 +7,21 @@ class Router
 	
 	protected static $instance;
 	
-	static $ROUTES			= null;
-	static $PAGE_URL		= null;
-	static $ALT_LANG_URL	= null;
-	static $LINK			= null;
+	static $ROUTES				= null;
+	static $PAGE_URL			= null;
+	static $ALT_LANG_URL		= null;
+	static $LINK				= null;
 	
-	static $CONTENT_TYPE	= null;
+	static $CONTENT_TYPE		= null;
 	
-	private $pageId			= null;
-	private $pageParams		= null;
+	private $pageId				= null;
+	private $pageParams			= null;
 	
-	private $is404			= null;
-	private $isHomepage		= null;
+	private $is404				= null;
+	private $isHomepage			= null;
+	
+	private $lang				= null;
+	private $pagesController	= null;
 	
 	
 	protected function __construct()
@@ -121,7 +124,8 @@ class Router
 	
 	public function init()
 	{
-		$this->pagesController = PagesController::getInstance();
+		$this->lang				= Lang::getInstance();
+		$this->pagesController	= PagesController::getInstance();
 		
 		$this->setContentType();
 		$this->setContentInfos();
@@ -160,7 +164,7 @@ class Router
 	private function checkLangExistence()
 	{
 		if ( !in_array( Lang::$LANG, Lang::$ALL_LANG ) ) {
-			Lang::$LANG = Lang::$DEFAULT_LANG;
+			$this->lang->forceDefaultLang();
 			
 			$this->set404( '<b>Show 404 - Language not available</b> <br><br>' );
 		}
