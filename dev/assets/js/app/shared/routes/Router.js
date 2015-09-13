@@ -31,12 +31,6 @@ APP.Router = ( function( window ) {
 		this.ALT_LANG_URL		= {};
 		this.LINK				= {};
 		
-		// this.IS_ALT_CONTENT	= null;
-		// this.IS_AJAX_CONTENT	= null;
-		
-		// this.pageId			= null;
-		// this.pageParams		= null;
-		
 		this.is404				= null;
 		this.isHomepage			= null;
 		
@@ -97,13 +91,13 @@ APP.Router = ( function( window ) {
 	};
 	
 	
-	Router.prototype.setPageUrl = function( init, url )
+	Router.prototype.setPageUrl = function( isInit, url )
 	{
 		this.PAGE_URL.full		= _getFullPageUrl.call( this, url );
 		this.PAGE_URL.params	= _getParamsPageUrl.call( this );
 		this.PAGE_URL.aParams	= this.PAGE_URL.params.split( '/' );
 		
-		if ( init ) { // init
+		if ( isInit ) { // init
 			this.PAGE_URL.current	= null;
 			this.PAGE_URL.aCurrent	= null;
 		}
@@ -117,10 +111,11 @@ APP.Router = ( function( window ) {
 	var _getFullPageUrl = function( url ) {
 		var fullPageUrl;
 		
-		if ( url === null) // init
+		if ( url === null ) // init
 			fullPageUrl = History.getState().url;
 		else // page change
 			fullPageUrl = url;
+		
 		
 		return fullPageUrl;
 	};
@@ -163,11 +158,9 @@ APP.Router = ( function( window ) {
 	Router.prototype.initRouting = function() {
 		_bindEvents.call( this );
 		
-		// _checkLangExistence.call( this );
-		// _checkPageExistence.call( this );
+		_setPageInfos.call( this );
 		
-		// _checkUrl.call( this );
-		_setPage.call( this );
+		APP.PagesController.loadAssets();
 	};
 	
 	
@@ -176,30 +169,21 @@ APP.Router = ( function( window ) {
 	};
 	
 	
-	// var _checkUrl = function() {
-	var _setPage = function() {
+	var _setPageInfos = function() {
 		var langExist	= _getLangExistence.call( this );
 		var page		= _getPageInfos.call( this );
 		
-		// if ( langExist && page.exist )
-		// 	_setPage.call( this, page.id, page.params );
-		// else
-		// 	console.log('_set404()');
-		
-		console.log(page);
-		if ( langExist && page.exist ) {
+		if ( langExist && page.exist ) { // page exist
 			_setIsHomepage.call( this, page.id );
 			_setAltLangUrl.call( this, page.params );
 		}
-		else {
-			// console.log('404');
+		else { // 404
 			page.id		= 'error404';
 			page.params	= APP.Router.ROUTES.static.error404;
-			
-		}	
-		console.log(page);
+		}
 		
 		APP.PagesController.setPageInfos( page.id, page.params.jsView, page.params[ APP.Lang.LANG ].title, page.params[ APP.Lang.LANG ].desc );
+		console.log(APP.PagesController.page);
 	};
 	
 	
@@ -218,12 +202,12 @@ APP.Router = ( function( window ) {
 	
 	
 	var _getPageInfos = function() {
+		var routesGroupName, routesGroup, pageId, pageParams;
 		var page = {
 			exist:	false,
 			id:		null,
 			params:	null
 		};
-		var routesGroupName, routesGroup, pageId, pageParams;
 		
 		for ( routesGroupName in this.ROUTES ) { // parse all routes group
 			routesGroup = this.ROUTES[ routesGroupName ];
@@ -236,33 +220,17 @@ APP.Router = ( function( window ) {
 					page.id		= pageId;
 					page.params	= pageParams;
 					
-					break; // break second foreach
+					break; // break second for
 				}
 			}
 			
 			if ( page.exist )
-				break; // break first foreach
+				break; // break first for
 			
 		}
 		
 		
 		return page;
-	};
-	
-	
-	/*var _setPage = function( pageId, pageParams ) {
-		// console.log('_setPage()');
-		
-		_setIsHomepage.call( this, pageId );
-		_setAltLangUrl.call( this, pageParams );
-		
-		APP.PagesController.setPageInfos( pageId, pageParams.jsView, pageParams[ APP.Lang.LANG ].title, pageParams[ APP.Lang.LANG ].desc );
-		// console.log(APP.PagesController.page);
-	};*/
-	
-	
-	var _set404 = function( status ) {
-		console.log( status );
 	};
 	
 	
@@ -298,8 +266,8 @@ APP.Router = ( function( window ) {
 	};
 	
 	
-	Router.prototype.checkUrlSimilarity = function() {
-		console.log( 'Router.checkUrlSimilarity():', this.PAGE_URL.full, _getFullPageUrl.call( this, null ) );
+	Router.prototype.checkUrlCorrespondence = function() {
+		console.log( 'Router.checkUrlCorrespondence():', this.PAGE_URL.full, _getFullPageUrl.call( this, null ) );
 		
 		if ( this.PAGE_URL.full != _getFullPageUrl.call( this, null ) ) {
 			console.log( 'force _onStateChange()' );
@@ -312,17 +280,14 @@ APP.Router = ( function( window ) {
 		if ( APP.PagesController.isPageChange )
 			return;
 		
-		if ( _getUrlSimilarity.call( this, url ) )
+		if ( _isSameUrl.call( this, url ) )
 			return;
 		
 		this.navigateByClick = true;
 		
 		console.log('———————— Router.navigateTo():', url, '————————');
 		
-		/*this.setPageUrl( false, url );
-		_checkUrl.call( this );*/
-		
-		_checkPage.call( this, url );
+		_setInfos.call( this, url );
 		
 		// console.log( 'navTo:', APP.PagesController.page.title, url );
 		History.pushState( null, APP.PagesController.page.title, url );
@@ -335,14 +300,8 @@ APP.Router = ( function( window ) {
 		
 		if ( this.navigateByClick ) // if navigate by click
 			this.navigateByClick = false; // reset it
-		else { // if navigate by prev/next browser
-			// _setPageInfos.call( this, null );
-			
-			// this.setPageUrl( false, null );
-			// _checkUrl.call( this );
-			_checkPage.call( this, null );
-		}
-		
+		else // if navigate by prev/next browser
+			_setInfos.call( this, null );
 		
 		console.log( '_onStateChange():', APP.PagesController.page );
 		
@@ -350,7 +309,7 @@ APP.Router = ( function( window ) {
 	};
 	
 	
-	var _getUrlSimilarity = function( url ) {
+	var _isSameUrl = function( url ) {
 		var fullPageUrl = this.PAGE_URL.full;
 		
 		if ( fullPageUrl.substr( fullPageUrl.length-1, 1 ) == '/' ) // if slash is last character, remove it
@@ -359,15 +318,15 @@ APP.Router = ( function( window ) {
 		if ( url.substr( url.length-1, 1 ) == '/' ) // if slash is last character, remove it
 			url = url.substr( 0, url.length-1 );
 		
+		
 		return url == fullPageUrl;
 	};
 	
 	
-	var _checkPage = function( url ) {
+	var _setInfos = function( url ) {
 		this.setPageUrl( false, url );
 		
-		// _checkUrl.call( this );
-		_setPage.call( this );
+		_setPageInfos.call( this );
 	};
 	
 	

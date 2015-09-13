@@ -76,12 +76,13 @@ APP.PagesController = ( function( window ) {
 		
 		
 		
-		_loadAssets.call( this );
+		// _loadAssets.call( this );
 		
 	};
 	
 	
-	var _loadAssets = function() {
+	// var _loadAssets = function() {
+	PagesController.prototype.loadAssets = function(ARGS) {
 		var aAssetsList = [];
 		
 		// first load
@@ -104,35 +105,35 @@ APP.PagesController = ( function( window ) {
 	};
 	
 	
-	var _getAssetsList = function( init ) {
+	var _getAssetsList = function( isInit ) {
 		var aAssetsList = [];
 		
 		/* Init */
-		if ( init && this.LOADING_MODE == 'allStatic')
+		if ( isInit && this.LOADING_MODE == 'allStatic')
 			aAssetsList = [ 'global' ];
-		else if ( init && this.LOADING_MODE == 'byPageStatic')
+		else if ( isInit && this.LOADING_MODE == 'byPageStatic')
 			aAssetsList = [ 'global', this.page.id ];
-		else if ( init && this.LOADING_MODE == 'byPageDynamic')
+		else if ( isInit && this.LOADING_MODE == 'byPageDynamic')
 			aAssetsList = [ 'global', this.page.id ];
 		
 		/* Change page */
-		// else if ( !init && this.LOADING_MODE == 'allStatic')
+		// else if ( !isInit && this.LOADING_MODE == 'allStatic')
 		// 	aAssetsList = [ ];
-		// else if ( !init && this.LOADING_MODE == 'byPageStatic')
+		// else if ( !isInit && this.LOADING_MODE == 'byPageStatic')
 		// 	aAssetsList = [ this.page.id ];
-		// else if ( !init && this.LOADING_MODE == 'byPageDynamic')
+		// else if ( !isInit && this.LOADING_MODE == 'byPageDynamic')
 		// 	aAssetsList = [ this.page.id ];
 		
 		return aAssetsList;
 	};
 	
 	
-	var _onAssetsLoaded = function( init ) {
-		console.log('PagesController _onAssetsLoaded()', init);
+	var _onAssetsLoaded = function( isInit ) {
+		console.log('PagesController _onAssetsLoaded()', isInit);
 		
 		this.mainLoader.destroyEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
 		
-		if ( init ) {
+		if ( isInit ) {
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 			this.mainLoader.hideInit();
 		}
@@ -153,7 +154,7 @@ APP.PagesController = ( function( window ) {
 		if ( this.firstLoad )
 			this.firstLoad = false;
 		
-		APP.Router.checkUrlSimilarity();
+		APP.Router.checkUrlCorrespondence();
 	};
 	
 	
