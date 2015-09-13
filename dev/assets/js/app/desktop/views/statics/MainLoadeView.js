@@ -8,7 +8,7 @@ APP.Views.Statics.MainLoader = ( function( window ) {
 	
 	
 	function MainLoader() {
-		APP.AbstractView.call(this);
+		APP.AbstractView.call( this );
 		
 		this.E		= {
 			PROGRESS:	'progress',

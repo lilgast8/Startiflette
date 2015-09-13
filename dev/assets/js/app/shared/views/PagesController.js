@@ -32,7 +32,7 @@ APP.PagesController = ( function( window ) {
 	var _initPages = function() {
 		this.pages = {
 			// 'error-404':		APP.Views.Controllers.Error404,
-			'home':				APP.Views.Pages.HomeController,
+			'home':				APP.Views.Pages.HomeView,
 			// 'about':			APP.Views.Controllers.About,
 			// 'projects':			APP.Views.Controllers.Projects,
 			// 'project':			APP.Views.Controllers.Project,

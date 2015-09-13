@@ -16,7 +16,7 @@ APP.Views.Pages.HomeView = ( function( window ) {
 	HomeView.prototype.constructor	= HomeView;
 	
 	
-	HomeView.prototype.initEl = function() {
+	HomeView.prototype.initDOM = function() {
 		this.$.page = $( document.getElementById( 'page-content' ) );
 	};
 	

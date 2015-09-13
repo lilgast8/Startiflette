@@ -26,37 +26,37 @@ APP.AbstractView = ( function( window ) {
 	
 	
 	AbstractView.prototype.initDOM = function() {
-		// console.log('AbstractView.initDOM');
+		// console.log('AbstractView.initDOM()');
 	};
 	
 	
 	AbstractView.prototype.bindEvents = function() {
-		// console.log('AbstractView.bindEvents');
+		// console.log('AbstractView.bindEvents()');
 	};
 	
 	
 	AbstractView.prototype.unbindEvents = function() {
-		// console.log('AbstractView.unbindEvents');
+		// console.log('AbstractView.unbindEvents()');
 	};
 	
 	
 	AbstractView.prototype.initTl = function() {
-		// console.log('AbstractView.initTl');
+		// console.log('AbstractView.initTl()');
 	};
 	
 	
 	AbstractView.prototype.initView = function() {
-		// console.log('AbstractView.initView');
+		// console.log('AbstractView.initView()');
 	};
 	
 	
 	AbstractView.prototype.showView = function() {
-		// console.log('AbstractView.showView');
+		// console.log('AbstractView.showView()');
 	};
 	
 	
 	AbstractView.prototype.hideView = function() {
-		// console.log('AbstractView.hideView');
+		// console.log('AbstractView.hideView()');
 	};
 	
 	
@@ -110,7 +110,7 @@ APP.AbstractView = ( function( window ) {
 	
 	
 	AbstractView.prototype.resize = function() {
-		// console.log('AbstractView.resize');
+		// console.log('AbstractView.resize()');
 	};
 	
 	

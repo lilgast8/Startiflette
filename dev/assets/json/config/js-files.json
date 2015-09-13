@@ -50,7 +50,6 @@
 			"app/desktop/views/statics/HeaderView.js",
 			"app/desktop/views/statics/FooterView.js",
 			
-			"app/desktop/views/pages/HomeController.js",
 			"app/desktop/views/pages/HomeView.js",
 			
 			"app/Main.js"
