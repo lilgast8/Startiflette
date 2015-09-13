@@ -60,8 +60,8 @@ APP.PagesController = ( function( window ) {
 	
 	
 	var _setCurrentPage = function() {
-		if ( this.pages[ this.page.id ] === undefined) {
-			console.log('PagesController error: Need to create a view for the "' + this.page.id + '" ID, then set the view in the PageManager.pages object.');
+		if ( this.pages[ this.page.jsView ] === undefined) {
+			console.log('PagesController error: Need to create a view for the "' + this.page.jsView + '" ID, then set the view in the PageManager.pages object.');
 			return;
 		}
 		
@@ -70,7 +70,7 @@ APP.PagesController = ( function( window ) {
 		// if ( this.currentPage != null )
 		// 	_unbindEvents.call(this);
 		
-		this.currentPage = new this.pages[ this.page.id ]();
+		this.currentPage = new this.pages[ this.page.jsView ]();
 		
 		// console.log(this.currentPage);
 		
@@ -86,7 +86,7 @@ APP.PagesController = ( function( window ) {
 		
 		// first load
 		if ( this.firstLoad ) {
-			this.firstLoad = false;
+			// this.firstLoad = false; // TO SET IN enablePageChange()
 			
 			// aAssetsList = [ 'global' ];
 			aAssetsList = _getAssetsList.call( this, true );
@@ -144,15 +144,23 @@ APP.PagesController = ( function( window ) {
 		console.log('_onMainLoaderHidden');
 		this.mainLoader.destroyEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 		
+		_enablePageChange.call( this );
+	};
+	
+	
+	var _enablePageChange = function() {
 		this.isPageChange = false;
-		// APP.Router.checkUrlSimilarity();
+		if ( this.firstLoad )
+			this.firstLoad = false;
+		
+		APP.Router.checkUrlSimilarity();
 	};
 	
 	
 	PagesController.prototype.changePage = function() {
 		console.log('changePage', this.isPageChange);
 		
-		if ( !this.isPageChange ) {
+		// if ( !this.isPageChange ) {
 			/*
 			_disablePageChange.call(this);
 			
@@ -168,7 +176,7 @@ APP.PagesController = ( function( window ) {
 			
 			this.nextView.load(this.pageUrl);
 			*/
-		}
+		// }
 	};
 	
 	

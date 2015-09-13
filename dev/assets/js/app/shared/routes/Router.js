@@ -110,7 +110,7 @@ APP.Router = ( function( window ) {
 		else // page change
 			this.setCurrentPageUrl();
 		
-		console.log('PAGE_URL:', this.PAGE_URL);
+		// console.log('PAGE_URL:', this.PAGE_URL);
 	};
 	
 	
@@ -129,10 +129,10 @@ APP.Router = ( function( window ) {
 	var _getParamsPageUrl = function() {
 		var paramsPageUrl = this.PAGE_URL.full.replace( APP.Path.URL.base, '' );
 		
-		if ( paramsPageUrl.substr( 0, 1 ) == '/' ) // if / is first character, remove it
+		if ( paramsPageUrl.substr( 0, 1 ) == '/' ) // if slash is first character, remove it
 			paramsPageUrl = paramsPageUrl.substr( 1 );
 		
-		if ( paramsPageUrl.substr( paramsPageUrl.length-1, 1 ) == '/' ) // if / is last character, remove it
+		if ( paramsPageUrl.substr( paramsPageUrl.length-1, 1 ) == '/' ) // if slash is last character, remove it
 			paramsPageUrl = paramsPageUrl.substr( 0, paramsPageUrl.length-1 );
 		
 		paramsPageUrl = paramsPageUrl.split( '?' )[0]; // remove ?params
@@ -152,7 +152,7 @@ APP.Router = ( function( window ) {
 	{
 		var currentPageUrl = this.PAGE_URL.params.replace( APP.Lang.LANG, '' );
 		
-		if ( currentPageUrl.substr( 0, 1 ) == '/' ) // if / is first character, remove it
+		if ( currentPageUrl.substr( 0, 1 ) == '/' ) // if slash is first character, remove it
 			currentPageUrl = currentPageUrl.substr( 1 );
 		
 		
@@ -165,7 +165,9 @@ APP.Router = ( function( window ) {
 		
 		// _checkLangExistence.call( this );
 		// _checkPageExistence.call( this );
-		_checkUrl.call( this );
+		
+		// _checkUrl.call( this );
+		_setPage.call( this );
 	};
 	
 	
@@ -174,55 +176,30 @@ APP.Router = ( function( window ) {
 	};
 	
 	
-	/*var _checkLangExistence = function() {
-		if ( APP.Lang.ALL_LANG.indexOf( APP.Lang.LANG ) == -1 ) {
-			APP.Lang.LANG = APP.Lang.DEFAULT_LANG;
-			
-			_set404.call( this, 'Show 404 - Language not available' );
-		}
-	};
-	
-	
-	var _checkPageExistence = function() {
-		var doesPageExist = false;
-		var routesGroupName, routesGroup, pageId, pageParams;
-		
-		for ( routesGroupName in this.ROUTES ) { // parse all routes group
-			routesGroup = this.ROUTES[ routesGroupName ];
-			
-			for ( pageId in routesGroup ) { // parse all pages
-				pageParams = routesGroup[ pageId ];
-				
-				if ( pageParams[ APP.Lang.LANG ].url == this.PAGE_URL.current ) { // if url exist
-					doesPageExist = true;
-					
-					break; // break second foreach
-				}
-			}
-			
-			if ( doesPageExist )
-				break; // break first foreach
-			
-		}
-		
-		
-		if ( !doesPageExist )
-			_set404.call( this, 'Show 404 - Page not available' );
-		else
-			_setPage.call( this, pageId, pageParams );
-	};*/
-	
-	
-	var _checkUrl = function() {
+	// var _checkUrl = function() {
+	var _setPage = function() {
 		var langExist	= _getLangExistence.call( this );
-		// var page		= _getPageExistence.call( this );
 		var page		= _getPageInfos.call( this );
 		
-		if ( langExist && page.exist )
-			// console.log('_setPage()');
-			_setPage.call( this, page.id, page.params );
-		else
-			console.log('_set404()');
+		// if ( langExist && page.exist )
+		// 	_setPage.call( this, page.id, page.params );
+		// else
+		// 	console.log('_set404()');
+		
+		console.log(page);
+		if ( langExist && page.exist ) {
+			_setIsHomepage.call( this, page.id );
+			_setAltLangUrl.call( this, page.params );
+		}
+		else {
+			// console.log('404');
+			page.id		= 'error404';
+			page.params	= APP.Router.ROUTES.static.error404;
+			
+		}	
+		console.log(page);
+		
+		APP.PagesController.setPageInfos( page.id, page.params.jsView, page.params[ APP.Lang.LANG ].title, page.params[ APP.Lang.LANG ].desc );
 	};
 	
 	
@@ -240,9 +217,7 @@ APP.Router = ( function( window ) {
 	};
 	
 	
-	// var _getPageExistence = function() {
 	var _getPageInfos = function() {
-		// var pageExist = false;
 		var page = {
 			exist:	false,
 			id:		null,
@@ -257,8 +232,6 @@ APP.Router = ( function( window ) {
 				pageParams = routesGroup[ pageId ];
 				
 				if ( pageParams[ APP.Lang.LANG ].url == this.PAGE_URL.current ) { // if url exist
-					// pageExist = true;
-					
 					page.exist	= true;
 					page.id		= pageId;
 					page.params	= pageParams;
@@ -267,22 +240,25 @@ APP.Router = ( function( window ) {
 				}
 			}
 			
-			// if ( pageExist )
 			if ( page.exist )
 				break; // break first foreach
 			
 		}
 		
 		
-		// console.log(pageId, ' — ', pageParams);
-		// return pageExist;
 		return page;
-		
-		/*if ( !doesPageExist )
-			_set404.call( this, 'Show 404 - Page not available' );
-		else
-			_setPage.call( this, pageId, pageParams );*/
 	};
+	
+	
+	/*var _setPage = function( pageId, pageParams ) {
+		// console.log('_setPage()');
+		
+		_setIsHomepage.call( this, pageId );
+		_setAltLangUrl.call( this, pageParams );
+		
+		APP.PagesController.setPageInfos( pageId, pageParams.jsView, pageParams[ APP.Lang.LANG ].title, pageParams[ APP.Lang.LANG ].desc );
+		// console.log(APP.PagesController.page);
+	};*/
 	
 	
 	var _set404 = function( status ) {
@@ -290,29 +266,8 @@ APP.Router = ( function( window ) {
 	};
 	
 	
-	var _setPage = function( pageId, pageParams ) {
-		// console.log('_setPage()');
-		
-		// _setCurrentInfos.call( this, pageId, pageParams );
-		_setIsHomepage.call( this, pageId );
-		_setAltLangUrl.call( this, pageParams );
-		
-		APP.PagesController.setPageInfos( pageId, pageParams.jsView, pageParams[ APP.Lang.LANG ].title, pageParams[ APP.Lang.LANG ].desc );
-		// console.log(APP.PagesController.page);
-	};
-	
-	
-	/*var _setCurrentInfos = function( pageId, pageParams )
-	{
-		this.pageId		= pageId;
-		this.pageParams	= pageParams;
-	};*/
-	
-	
-	// var _setIsHomepage = function()
 	var _setIsHomepage = function( pageId )
 	{
-		// this.isHomepage = this.pageId == 'home' ? true : false;
 		this.isHomepage = pageId == 'home' ? true : false;
 	};
 	
@@ -344,41 +299,39 @@ APP.Router = ( function( window ) {
 	
 	
 	Router.prototype.checkUrlSimilarity = function() {
-		// console.log( this.PAGE_URL.full, _getFullPageUrl.call( this ) );
+		console.log( 'Router.checkUrlSimilarity():', this.PAGE_URL.full, _getFullPageUrl.call( this, null ) );
 		
-		if ( this.PAGE_URL.full != _getFullPageUrl.call( this ) )
+		if ( this.PAGE_URL.full != _getFullPageUrl.call( this, null ) ) {
+			console.log( 'force _onStateChange()' );
 			_onStateChange.call( this );
+		}
 	};
 	
 	
 	Router.prototype.navigateTo = function( url ) {
+		if ( APP.PagesController.isPageChange )
+			return;
+		
+		if ( _getUrlSimilarity.call( this, url ) )
+			return;
+		
 		this.navigateByClick = true;
 		
 		console.log('———————— Router.navigateTo():', url, '————————');
 		
-		/*this.setPageUrl( false, url );*/
-		
-		// console.log( this.PAGE_URL );
-		
-		
-		
-		// _checkLangExistence.call( this );
-		// _checkPageExistence.call( this );
-		
-		/*_checkUrl.call( this );*/
-		// _setPage.call( this );
-		// console.log( APP.PagesController.page.title );
+		/*this.setPageUrl( false, url );
+		_checkUrl.call( this );*/
 		
 		_checkPage.call( this, url );
 		
 		// console.log( 'navTo:', APP.PagesController.page.title, url );
-		// History.pushState( null, null, url );
 		History.pushState( null, APP.PagesController.page.title, url );
 	};
 	
 	
 	var _onStateChange = function() {
-		// console.log('_onStateChange');
+		if ( APP.PagesController.isPageChange )
+			return;
 		
 		if ( this.navigateByClick ) // if navigate by click
 			this.navigateByClick = false; // reset it
@@ -397,11 +350,28 @@ APP.Router = ( function( window ) {
 	};
 	
 	
+	var _getUrlSimilarity = function( url ) {
+		var fullPageUrl = this.PAGE_URL.full;
+		
+		if ( fullPageUrl.substr( fullPageUrl.length-1, 1 ) == '/' ) // if slash is last character, remove it
+			fullPageUrl = fullPageUrl.substr( 0, fullPageUrl.length-1 );
+		
+		if ( url.substr( url.length-1, 1 ) == '/' ) // if slash is last character, remove it
+			url = url.substr( 0, url.length-1 );
+		
+		return url == fullPageUrl;
+	};
+	
+	
 	var _checkPage = function( url ) {
 		this.setPageUrl( false, url );
 		
-		_checkUrl.call( this );
+		// _checkUrl.call( this );
+		_setPage.call( this );
 	};
+	
+	
+	
 	
 	
 	
