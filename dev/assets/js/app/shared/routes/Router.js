@@ -31,14 +31,16 @@ APP.Router = ( function( window ) {
 		this.ALT_LANG_URL		= {};
 		this.LINK				= {};
 		
-		// this.IS_ALT_CONTENT		= null;
+		// this.IS_ALT_CONTENT	= null;
 		// this.IS_AJAX_CONTENT	= null;
 		
-		// this.pageId				= null;
-		// this.pageParams			= null;
+		// this.pageId			= null;
+		// this.pageParams		= null;
 		
 		this.is404				= null;
 		this.isHomepage			= null;
+		
+		this.navigateByClick	= null; // used to avoid to set page infos two times
 	}
 	
 	
@@ -95,18 +97,20 @@ APP.Router = ( function( window ) {
 	};
 	
 	
-	Router.prototype.setPageUrl = function( url )
+	Router.prototype.setPageUrl = function( init, url )
 	{
 		this.PAGE_URL.full		= _getFullPageUrl.call( this, url );
 		this.PAGE_URL.params	= _getParamsPageUrl.call( this );
 		this.PAGE_URL.aParams	= this.PAGE_URL.params.split( '/' );
 		
-		if ( url === null) { // init
+		if ( init ) { // init
 			this.PAGE_URL.current	= null;
 			this.PAGE_URL.aCurrent	= null;
 		}
 		else // page change
 			this.setCurrentPageUrl();
+		
+		console.log('PAGE_URL:', this.PAGE_URL);
 	};
 	
 	
@@ -348,9 +352,11 @@ APP.Router = ( function( window ) {
 	
 	
 	Router.prototype.navigateTo = function( url ) {
-		// console.log('———————— Router.navigateTo():', url, '————————');
+		this.navigateByClick = true;
 		
-		this.setPageUrl( url );
+		console.log('———————— Router.navigateTo():', url, '————————');
+		
+		/*this.setPageUrl( false, url );*/
 		
 		// console.log( this.PAGE_URL );
 		
@@ -359,9 +365,11 @@ APP.Router = ( function( window ) {
 		// _checkLangExistence.call( this );
 		// _checkPageExistence.call( this );
 		
-		_checkUrl.call( this );
+		/*_checkUrl.call( this );*/
 		// _setPage.call( this );
 		// console.log( APP.PagesController.page.title );
+		
+		_checkPage.call( this, url );
 		
 		// console.log( 'navTo:', APP.PagesController.page.title, url );
 		// History.pushState( null, null, url );
@@ -372,7 +380,27 @@ APP.Router = ( function( window ) {
 	var _onStateChange = function() {
 		// console.log('_onStateChange');
 		
+		if ( this.navigateByClick ) // if navigate by click
+			this.navigateByClick = false; // reset it
+		else { // if navigate by prev/next browser
+			// _setPageInfos.call( this, null );
+			
+			// this.setPageUrl( false, null );
+			// _checkUrl.call( this );
+			_checkPage.call( this, null );
+		}
+		
+		
+		console.log( '_onStateChange():', APP.PagesController.page );
+		
 		APP.PagesController.changePage();
+	};
+	
+	
+	var _checkPage = function( url ) {
+		this.setPageUrl( false, url );
+		
+		_checkUrl.call( this );
 	};
 	
 	
