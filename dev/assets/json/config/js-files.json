@@ -50,7 +50,12 @@
 			"app/desktop/views/statics/HeaderView.js",
 			"app/desktop/views/statics/FooterView.js",
 			
+			"app/desktop/views/pages/Error404View.js",
 			"app/desktop/views/pages/HomeView.js",
+			"app/desktop/views/pages/AboutView.js",
+			"app/desktop/views/pages/ProjectsView.js",
+			"app/desktop/views/pages/ProjectView.js",
+			"app/desktop/views/pages/LegalNoticesView.js",
 			
 			"app/Main.js"
 		]

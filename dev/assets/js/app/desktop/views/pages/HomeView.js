@@ -8,7 +8,7 @@ APP.Views.Pages.HomeView = ( function( window ) {
 	
 	
 	function HomeView() {
-		APP.AbstractView.call(this);
+		APP.AbstractView.call( this );
 	}
 	
 	
@@ -17,7 +17,7 @@ APP.Views.Pages.HomeView = ( function( window ) {
 	
 	
 	HomeView.prototype.initDOM = function() {
-		this.$.page = $( document.getElementById( 'page-content' ) );
+		this.$page = $( document.getElementById( 'page-content' ) );
 	};
 	
 	
