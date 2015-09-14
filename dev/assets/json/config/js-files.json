@@ -36,6 +36,8 @@
 			
 			"app/shared/routes/Router.js",
 			
+			"app/desktop/models/AssetsModel.js",
+			
 			"app/shared/loaders/Loader.js",
 			
 			"app/shared/utils/Utils.Global.js",

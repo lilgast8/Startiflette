@@ -183,7 +183,7 @@ APP.Router = ( function( window ) {
 		}
 		
 		APP.PagesController.setPageInfos( page.id, page.params.jsView, page.params[ APP.Lang.LANG ].title, page.params[ APP.Lang.LANG ].desc );
-		console.log(APP.PagesController.page);
+		// console.log(APP.PagesController.page);
 	};
 	
 	
@@ -267,10 +267,10 @@ APP.Router = ( function( window ) {
 	
 	
 	Router.prototype.checkUrlCorrespondence = function() {
-		console.log( 'Router.checkUrlCorrespondence():', this.PAGE_URL.full, _getFullPageUrl.call( this, null ) );
+		// console.log( 'Router.checkUrlCorrespondence():', this.PAGE_URL.full, _getFullPageUrl.call( this, null ) );
 		
 		if ( this.PAGE_URL.full != _getFullPageUrl.call( this, null ) ) {
-			console.log( 'force _onStateChange()' );
+			// console.log( 'force _onStateChange()' );
 			_onStateChange.call( this );
 		}
 	};
@@ -285,7 +285,7 @@ APP.Router = ( function( window ) {
 		
 		this.navigateByClick = true;
 		
-		console.log('———————— Router.navigateTo():', url, '————————');
+		// console.log('———————— Router.navigateTo():', url, '————————');
 		
 		_setInfos.call( this, url );
 		

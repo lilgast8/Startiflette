@@ -10,12 +10,14 @@ APP.PagesController = ( function( window ) {
 		this.page			= {};
 		
 		this.LOADING_MODE	= 'allStatic'; // can be allStatic, byPageStatic, byPageDynamic
-		this.firstLoad		= true;
+		this.isFirstLoad	= true;
 		this.isPageChange	= true;
 		
 		this.prevPage		= null;
 		this.currentPage	= null;
 		this.nextPage		= null;
+		
+		this.aImgs			= null;
 	}
 	
 	
@@ -25,6 +27,8 @@ APP.PagesController = ( function( window ) {
 	
 	PagesController.prototype.init = function() {
 		_initPages.call( this );
+		
+		_instanceAssetsModel.call( this );
 		_instanceMainLoader.call( this );
 	};
 	
@@ -41,9 +45,13 @@ APP.PagesController = ( function( window ) {
 	};
 	
 	
+	var _instanceAssetsModel = function() {
+		this.assetsModel = new APP.Models.AssetsModel();
+	};
+	
+	
 	var _instanceMainLoader = function() {
-		// this.mainLoader = new APP.Views.Statics.MainLoaderController();
-		this.mainLoader = new APP.Views.Statics.MainLoader();
+		this.mainLoader = new APP.Views.Statics.MainLoaderView();
 		this.mainLoader.init();
 	};
 	
@@ -81,22 +89,16 @@ APP.PagesController = ( function( window ) {
 	};
 	
 	
-	// var _loadAssets = function() {
 	PagesController.prototype.loadAssets = function() {
-		var aAssetsList = [];
+		var aImgsListIds, aImgsToLoad;
 		
 		// first load
-		if ( this.firstLoad ) {
-			// this.firstLoad = false; // TO SET IN enablePageChange()
+		if ( this.isFirstLoad ) {
+			aImgsListIds	= _getImgsListIds.call( this );
+			aImgsToLoad		= this.assetsModel.getImgsToLoad( aImgsListIds );
 			
-			// aAssetsList = [ 'global' ];
-			aAssetsList = _getAssetsList.call( this, true );
-			// console.log(aAssetsList);
-			
-			this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this, true ) );
-			
-			// this.mainLoader.loadAssets( aAssetsList );
-			this.mainLoader.loadAssets( true, this.page.id );
+			this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this, this.isFirstLoad ) );
+			this.mainLoader.loadAssets( aImgsToLoad );
 		}
 		
 		// page change load
@@ -106,35 +108,35 @@ APP.PagesController = ( function( window ) {
 	};
 	
 	
-	var _getAssetsList = function( isInit ) {
-		var aAssetsList = [];
+	var _getImgsListIds = function() {
+		var aIds = [];
 		
-		/* Init */
-		if ( isInit && this.LOADING_MODE == 'allStatic')
-			aAssetsList = [ 'global' ];
-		else if ( isInit && this.LOADING_MODE == 'byPageStatic')
-			aAssetsList = [ 'global', this.page.id ];
-		else if ( isInit && this.LOADING_MODE == 'byPageDynamic')
-			aAssetsList = [ 'global', this.page.id ];
+		/* First load */
+		if ( this.isFirstLoad && this.LOADING_MODE == 'allStatic')
+			aIds = this.assetsModel.getAllStaticImgsListIds();
+		else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageStatic')
+			aIds = [ 'global', this.page.id ];
+		else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic')
+			aIds = [ 'global', this.page.id ];
 		
 		/* Change page */
-		// else if ( !isInit && this.LOADING_MODE == 'allStatic')
-		// 	aAssetsList = [ ];
-		// else if ( !isInit && this.LOADING_MODE == 'byPageStatic')
-		// 	aAssetsList = [ this.page.id ];
-		// else if ( !isInit && this.LOADING_MODE == 'byPageDynamic')
-		// 	aAssetsList = [ this.page.id ];
+		// else if ( !this.isFirstLoad && this.LOADING_MODE == 'allStatic')
+		// 	aIds = [ ];
+		// else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageStatic')
+		// 	aIds = [ this.page.id ];
+		// else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic')
+		// 	aIds = [ this.page.id ];
 		
-		return aAssetsList;
+		return aIds;
 	};
 	
 	
-	var _onAssetsLoaded = function( isInit ) {
-		console.log('PagesController _onAssetsLoaded()', isInit);
+	var _onAssetsLoaded = function( isFirstLoad ) {
+		// console.log('PagesController _onAssetsLoaded()', isFirstLoad, this.isFirstLoad);
 		
 		this.mainLoader.destroyEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
 		
-		if ( isInit ) {
+		if ( isFirstLoad ) {
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 			this.mainLoader.hideInit();
 		}
@@ -143,7 +145,7 @@ APP.PagesController = ( function( window ) {
 	
 	
 	var _onMainLoaderHidden = function() {
-		console.log('_onMainLoaderHidden');
+		// console.log('_onMainLoaderHidden');
 		this.mainLoader.destroyEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 		
 		_enablePageChange.call( this );
@@ -153,8 +155,8 @@ APP.PagesController = ( function( window ) {
 	var _enablePageChange = function() {
 		this.isPageChange = false;
 		
-		if ( this.firstLoad )
-			this.firstLoad = false;
+		if ( this.isFirstLoad )
+			this.isFirstLoad = false;
 		
 		APP.Router.checkUrlCorrespondence();
 	};
@@ -166,7 +168,7 @@ APP.PagesController = ( function( window ) {
 	
 	
 	PagesController.prototype.changePage = function() {
-		console.log('changePage', this.isPageChange);
+		// console.log('changePage', this.isPageChange);
 		
 		_disablePageChange.call( this );
 		
