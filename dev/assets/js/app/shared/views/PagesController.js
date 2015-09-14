@@ -6,18 +6,20 @@ APP.PagesController = ( function( window ) {
 	function PagesController() {
 		APP.AbstractController.call( this );
 		
-		this.pages			= {};
-		this.page			= {};
+		this.pages				= {};
+		this.page				= {};
 		
-		this.LOADING_MODE	= 'allStatic'; // can be allStatic, byPageStatic, byPageDynamic
-		this.isFirstLoad	= true;
-		this.isPageChange	= true;
+		this.LOADING_MODE		= 'allStatic'; // can be allStatic, byPageStatic, byPageDynamic
+		this.isFirstLoad		= true;
+		this.isPageChange		= true;
 		
-		this.prevPage		= null;
-		this.currentPage	= null;
-		this.nextPage		= null;
+		this.isContentLoaded	= false;
+		this.isPrevPageHidden	= false;
+		this.isMainLoaderHidden	= false;
 		
-		this.aImgs			= null;
+		this.prevPage			= null;
+		this.currentPage		= null;
+		this.nextPage			= null;
 	}
 	
 	
@@ -167,10 +169,13 @@ APP.PagesController = ( function( window ) {
 	};
 	
 	
-	PagesController.prototype.changePage = function() {
+	PagesController.prototype.changePage = function( pageUrl ) {
 		// console.log('changePage', this.isPageChange);
 		
 		_disablePageChange.call( this );
+		_initPageChangeValues.call( this );
+		
+		_loadContent.call( this, pageUrl );
 		
 		this.mainLoader.buildEvt( this.mainLoader.E.SHOWN, _onMainLoaderShown.bind( this ) );
 		this.mainLoader.show();
@@ -196,9 +201,76 @@ APP.PagesController = ( function( window ) {
 	};
 	
 	
+	var _initPageChangeValues = function() {
+		this.isContentLoaded	= false;
+		this.isPrevPageHidden	= false;
+		this.isMainLoaderHidden	= false;
+	};
+	
+	
+	// PagesController.prototype.load = function(pageUrl) {
+	var _loadContent = function( pageUrl ) {
+		console.log( '_loadContent', pageUrl );
+		
+		$.ajax({
+			context:	this,
+			url:		pageUrl,
+			type:		'POST',
+			data:		{
+							ajax: 'true',
+							type: 'pageChange'
+						},
+						// useful if need a different behavior on PHP file when AJAX load
+						// can be detected with if(isset($_POST['ajax']))
+			dataType:	'html',
+			success:	_contentLoaded.bind( this ),
+			error:		_contentError.bind( this )
+		});
+		
+		
+		
+		// this.initTransitionValues();
+		
+		/*var urlPage = APP.Config.MULTI_LANG ? 
+						APP.Config.WEB_ROOT + APP.Config.LANG + '/ajax-content/' + pageUrl : 
+						APP.Config.WEB_ROOT + 'ajax-content/'+ pageUrl;
+		
+		$.ajax({
+			context		: this,
+			url			: urlPage,
+			type		: 'POST',
+			data		: { ajax:pageUrl },	// useful if need a different behavior on PHP file when AJAX load
+									 		// can be detected with if(isset($_POST['ajax']))
+			dataType	: 'html',
+			success		: this.loaded,
+			error		: this.error
+		});*/
+	};
+	
+	
+	var _contentLoaded = function( data ) {
+		console.log( data );
+		// this.v.data = data;
+		
+		// this.v.isAjaxLoaded = true;
+		
+		// this.checkInit();
+	};
+	
+	
+	var _contentError = function() {
+		console.log( 'ajax load error' );
+		// window.location.href = APP.Config.WEB_ROOT + APP.RoutesManager.pageUrl;
+	};
+	
+	
 	var _onMainLoaderShown = function() {
 		console.log('PagesController _onMainLoaderShown()');
 	};
+	
+	
+	
+	
 	
 	
 	
@@ -217,31 +289,6 @@ APP.PagesController = ( function( window ) {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	PagesController.prototype.load = function(pageUrl) {
-		this.initTransitionValues();
-		
-		var urlPage = APP.Config.MULTI_LANG ? 
-						APP.Config.WEB_ROOT + APP.Config.LANG + '/ajax-content/' + pageUrl : 
-						APP.Config.WEB_ROOT + 'ajax-content/'+ pageUrl;
-		
-		$.ajax({
-			context		: this,
-			url			: urlPage,
-			type		: 'POST',
-			data		: { ajax:pageUrl },	// useful if need a different behavior on PHP file when AJAX load
-									 		// can be detected with if(isset($_POST['ajax']))
-			dataType	: 'html',
-			success		: this.loaded,
-			error		: this.error
-		});
-	};
 	
 	
 	PagesController.prototype.loaded = function(data) {

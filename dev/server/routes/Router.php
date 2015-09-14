@@ -136,23 +136,27 @@ class Router
 	{
 		if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'alt' )
 			self::$CONTENT_TYPE = 'alt';
-		else if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' )
-			self::$CONTENT_TYPE = 'ajax';
+		else if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'pageChange' )
+			self::$CONTENT_TYPE = 'pageChange';
 		else
-			self::$CONTENT_TYPE = 'default';
+			self::$CONTENT_TYPE = 'firstLoad';
 	}
 	
 	
 	private function setContentInfos()
 	{
-		if ( self::$CONTENT_TYPE == 'default' ) { // first load
+		if ( self::$CONTENT_TYPE == 'firstLoad' ) { // first load
 			$this->checkLangExistence();
 			$this->checkPageExistence();
 			$this->setLinks();
 		}
 		
-		else if ( self::$CONTENT_TYPE == 'ajax' ) // ajax load
+		else if ( self::$CONTENT_TYPE == 'pageChange' ) { // page change with ajax
 			echo 'other (ajax) load';
+			
+			$this->checkLangExistence();
+			$this->checkPageExistence();
+		}
 		
 		else if ( self::$CONTENT_TYPE == 'alt' ) { // alternative content
 			$this->checkLangExistence();

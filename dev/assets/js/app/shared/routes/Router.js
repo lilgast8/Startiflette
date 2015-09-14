@@ -303,7 +303,7 @@ APP.Router = ( function( window ) {
 		else // if navigate by prev/next browser
 			_setInfos.call( this, null );
 		
-		APP.PagesController.changePage();
+		APP.PagesController.changePage( this.PAGE_URL.full );
 	};
 	
 	
