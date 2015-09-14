@@ -67,6 +67,7 @@ class Config
 		$config	= file_get_contents( self::CONFIG_FILE_PATH );
 		$config	= json_decode( $config );
 		
+		
 		return $config;
 	}
 	

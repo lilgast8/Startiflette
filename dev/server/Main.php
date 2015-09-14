@@ -105,6 +105,7 @@ class Main
 					Path::$FILE->viewsPage :
 					Path::$FILE->viewsAlt;
 		
+		
 		return $viewPath;
 	}
 	
