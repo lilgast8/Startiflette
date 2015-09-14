@@ -14,8 +14,8 @@ class Router
 	
 	static $CONTENT_TYPE		= null;
 	
-	private $pageId				= null;
-	private $pageParams			= null;
+	// private $pageId				= null;
+	// private $pageParams			= null;
 	
 	private $is404				= null;
 	private $isHomepage			= null;
@@ -80,6 +80,7 @@ class Router
 	{
 		$protocol = ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ) ? 'https://' : 'http://';
 		
+		
 		return $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 	}
 	
@@ -128,7 +129,8 @@ class Router
 		$this->pagesController	= PagesController::getInstance();
 		
 		$this->setContentType();
-		$this->setContentInfos();
+		$this->setPageInfos();
+		$this->setLinks();
 	}
 	
 	
@@ -143,107 +145,82 @@ class Router
 	}
 	
 	
-	private function setContentInfos()
+	private function setPageInfos()
 	{
-		if ( self::$CONTENT_TYPE == 'firstLoad' ) { // first load
-			$this->checkLangExistence();
-			$this->checkPageExistence();
-			$this->setLinks();
+		$langExist	= $this->getLangExistence();
+		$page		= $this->getPageInfos();
+		
+		if ( $langExist && $page->exist ) { // page exist
+			$this->setIsHomepage( $page->id );
+			$this->setAltLangUrl( $page->params );
+		}
+		else { // 404
+			$page->id		= 'error404';
+			$page->params	= self::$ROUTES->static->error404;
 		}
 		
-		else if ( self::$CONTENT_TYPE == 'pageChange' ) { // page change with ajax
-			echo 'other (ajax) load';
-			
-			$this->checkLangExistence();
-			$this->checkPageExistence();
-		}
-		
-		else if ( self::$CONTENT_TYPE == 'alt' ) { // alternative content
-			$this->checkLangExistence();
-			$this->pagesController->setPageInfos( null, self::$PAGE_URL->current, null, null );
-		}
+		$this->pagesController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
 	}
 	
 	
-	private function checkLangExistence()
+	private function getLangExistence()
 	{
+		$langExist = true;
+		
 		if ( !in_array( Lang::$LANG, Lang::$ALL_LANG ) ) {
 			$this->lang->forceDefaultLang();
 			
-			$this->set404( '<b>Show 404 - Language not available</b> <br><br>' );
+			$langExist = false;
 		}
+		
+		
+		return $langExist;
 	}
 	
 	
-	private function checkPageExistence()
+	private function getPageInfos()
 	{
-		$doesPageExist = false;
+		$page = new stdClass();
+		$page->exist	= false;
+		$page->id		= null;
+		$page->params	= null;
 		
-		foreach ( self::$ROUTES as $routesGroup ) { // parse all routes group
+		foreach ( self::$ROUTES as $routesGroupName ) { // parse all routes group
 			
-			foreach ( $routesGroup as $pageId => $pageParams ) { // parse all pages
+			foreach ( $routesGroupName as $pageId => $pageParams ) { // parse all pages
 				
 				if ( $pageParams->{ Lang::$LANG }->url == self::$PAGE_URL->current ) { // if url exist
-					$doesPageExist = true;
+					$page->exist	= true;
+					$page->id		= $pageId;
+					$page->params	= $pageParams;
 					
 					break; // break second foreach
 				}
 				
 			}
 			
-			if ( $doesPageExist )
+			if ( $page->exist )
 				break; // break first foreach
 			
 		}
 		
 		
-		if ( !$doesPageExist )
-			$this->set404( '<b>Show 404 - Page not available</b> <br><br>' );
-		else
-			$this->setPage( $pageId, $pageParams );
+		return $page;
 	}
 	
 	
-	private function set404( $status )
+	private function setIsHomepage( $pageId )
 	{
-		echo $status; // $status param to remove
-		
-		// header( 'Status: 404 NOT FOUND', false, 404 ); -> to confirm
-		
-		// self::$IS_404 = true;
-		// $this->is404 = true;
+		$this->isHomepage = $pageId == 'home' ? true : false;
 	}
 	
 	
-	private function setPage( $pageId, $pageParams )
-	{
-		$this->setPageInfos( $pageId, $pageParams );
-		$this->setIsHomepage();
-		$this->setAltLangUrl();
-		
-		$this->pagesController->setPageInfos( $pageId, $pageParams->phpView, $pageParams->{ Lang::$LANG }->title, $pageParams->{ Lang::$LANG }->desc );
-	}
-	
-	
-	private function setPageInfos( $pageId, $pageParams )
-	{
-		$this->pageId		= $pageId;
-		$this->pageParams	= $pageParams;
-	}
-	
-	
-	private function setIsHomepage()
-	{
-		$this->isHomepage = $this->pageId == 'home' ? true : false;
-	}
-	
-	
-	private function setAltLangUrl()
+	private function setAltLangUrl( $pageParams )
 	{
 		foreach ( Lang::$ALL_LANG as $lang ) {
 			
 			if ( $lang !== Lang::$LANG ) {
-				$currentUrl = $this->pageParams->$lang->url;
+				$currentUrl = $pageParams->$lang->url;
 				
 				if ( $this->isHomepage && $lang == Lang::$DEFAULT_LANG )
 					$urlPart = '';
