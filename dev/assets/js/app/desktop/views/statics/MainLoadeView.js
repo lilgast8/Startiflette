@@ -17,23 +17,35 @@ APP.Views.Statics.MainLoader = ( function( window ) {
 			HIDDEN:		'hidden'
 		};
 		
+		this.LOADING_MODE	= 'allStatic'; // can be allStatic, byPageStatic, byPageDynamic
+		
 		this.aImgs	= {
 			'global': [
 				/* bgs */
-				APP.Path.URL.img + '/bgs/pattern_black_transparent.png',
+				APP.Path.URL.img + 'bgs/pattern_black_transparent.png',
 				
 				/* btns */
 				
 				/* icons */
 				
 				/* logos */
-				APP.Path.URL.img + '/logos/browsers/browser_chrome.png',
-				APP.Path.URL.img + '/logos/browsers/browser_firefox.png',
-				APP.Path.URL.img + '/logos/browsers/browser_internet_explorer.png',
-				APP.Path.URL.img + '/logos/browsers/browser_opera.png',
-				APP.Path.URL.img + '/logos/browsers/browser_safari.png'
+				APP.Path.URL.img + 'logos/browsers/browser_chrome.png',
+				APP.Path.URL.img + 'logos/browsers/browser_firefox.png',
+				APP.Path.URL.img + 'logos/browsers/browser_internet_explorer.png',
+				APP.Path.URL.img + 'logos/browsers/browser_opera.png',
+				APP.Path.URL.img + 'logos/browsers/browser_safari.png',
 				
 				/* others */
+			],
+			
+			'error404': [
+				/* others */
+				APP.Path.URL.img + 'others/404.jpg',
+			],
+			
+			'home': [
+				/* others */
+				APP.Path.URL.img + 'others/404.jpg',
 			]
 		};
 	}
@@ -52,7 +64,7 @@ APP.Views.Statics.MainLoader = ( function( window ) {
 	
 	MainLoader.prototype.initDOM = function() {
 		this.$mainLoader	= $( document.getElementById( 'main-loader' ) );
-		this.$percentage	= this.$mainLoader.find('.main-loader-percentage');
+		this.$percentage	= this.$mainLoader.find( '.main-loader-percentage' );
 		this.$progress		= this.$mainLoader.find( '.main-loader-progress' );
 	};
 	
@@ -87,12 +99,47 @@ APP.Views.Statics.MainLoader = ( function( window ) {
 	};
 	
 	
-	MainLoader.prototype.loadAssets = function( aAssets ) {
-		// console.log('pageId:', aAssets );
+	// MainLoader.prototype.loadAssets = function( aAssets ) {
+	MainLoader.prototype.loadAssets = function( isInit, pageId ) {
+		console.log('MainLoader.loadAssets():', isInit, pageId );
 		
-		var aImgsToLoad = _getImgs.call( this, aAssets );
+		var aIds		= _getIds.call( this, isInit, pageId );
+		var aImgsToLoad	= _getImgs.call( this, aIds );
 		
 		this.assetsLoader.startLoad( aImgsToLoad );
+	};
+	
+	
+	var _getIds = function( isInit, pageId ) {
+		var aIds = [];
+		
+		/* Init */
+		if ( isInit && this.LOADING_MODE == 'allStatic')
+			aIds = _getAllStaticIds.call( this );
+		else if ( isInit && this.LOADING_MODE == 'byPageStatic')
+			aIds = [ 'global', pageId ];
+		else if ( isInit && this.LOADING_MODE == 'byPageDynamic')
+			aIds = [ 'global', pageId ];
+		
+		/* Change page */
+		// else if ( !isInit && this.LOADING_MODE == 'allStatic')
+		// 	aIds = [ ];
+		// else if ( !isInit && this.LOADING_MODE == 'byPageStatic')
+		// 	aIds = [ this.page.id ];
+		// else if ( !isInit && this.LOADING_MODE == 'byPageDynamic')
+		// 	aIds = [ this.page.id ];
+		
+		return aIds;
+	};
+	
+	
+	var _getAllStaticIds = function() {
+		var aIds = [];
+		
+		for ( var name in this.aImgs )
+			aIds.push( name );
+		
+		return aIds;
 	};
 	
 	

@@ -95,7 +95,8 @@ APP.PagesController = ( function( window ) {
 			
 			this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this, true ) );
 			
-			this.mainLoader.loadAssets( aAssetsList );
+			// this.mainLoader.loadAssets( aAssetsList );
+			this.mainLoader.loadAssets( true, this.page.id );
 		}
 		
 		// page change load
