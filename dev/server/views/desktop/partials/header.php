@@ -18,9 +18,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<?php
 	
-	// print_r($this);
-	// $this->main = Main::getInstance();
-	// echo $main->path->getAltLangUrl();
 	echo $this->path->getAltLangUrlMeta();
 	
 	/* Social share */
@@ -37,7 +34,6 @@
 	<?php
 	
 	/* Modernirz & Detectizr */
-	// echo $main->path->getJsFilesUrl('header');
 	echo $this->path->getJsFilesUrl( 'header' );
 	
 	/* Google Analytics */
