@@ -49,9 +49,16 @@
 <div id="main-container" class="preload">
 	
 	<!-- Main loader -->
-	<div id="main-loader">
+	<div id="main-loader" class="init">
 		<div class="main-loader-percentage"></div>
 		<div class="main-loader-progress"></div>
+		<div class="main-loader-loading">
+			<div class="main-loader-loading-square-container">
+				<div class="main-loader-loading-square"></div>
+				<div class="main-loader-loading-square"></div>
+				<div class="main-loader-loading-square"></div>
+			</div>
+		</div>
 	</div>
 	
 	<!-- Header -->

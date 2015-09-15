@@ -6,9 +6,12 @@ APP.AbstractView = ( function( window ) {
 	function AbstractView() {
 		APP.EventDispatcher.call( this );
 		
-		// this.$	= {};
-		// this.v	= {};
-		// this.o	= {};
+		this.E = {
+			// INIT:	'init',
+			SHOWN:	'shown',
+			HIDDEN:	'hidden'
+		};
+		
 		this.tw	= {};
 		this.tl	= {};
 	}
@@ -50,27 +53,33 @@ APP.AbstractView = ( function( window ) {
 	};
 	
 	
-	AbstractView.prototype.showView = function() {
-		// console.log('AbstractView.showView()');
+	AbstractView.prototype.show = function() {
+		// console.log('AbstractView.show()');
+		
+		// console.log(this);
+		this.dispatch( this.E.SHOWN );
 	};
 	
 	
-	AbstractView.prototype.hideView = function() {
-		// console.log('AbstractView.hideView()');
+	AbstractView.prototype.hide = function() {
+		// console.log('AbstractView.hide()');
+		
+		// console.log(this);
+		this.dispatch( this.E.HIDDEN );
 	};
 	
 	
 	AbstractView.prototype.destroyGSAP = function() {
 		/* tween */
-		for(var tween in this.tw) {
-			var tw = this.tw[tween];
+		for ( var tween in this.tw ) {
+			var tw = this.tw[ tween ];
 			
 			tw.kill();
 		}
 		
 		/* timeline */
-		for(var timeline in this.tl) {
-			var tl = this.tl[timeline];
+		for ( var timeline in this.tl ) {
+			var tl = this.tl[ timeline ];
 			
 			tl.stop();
 			tl.clear();
@@ -82,19 +91,19 @@ APP.AbstractView = ( function( window ) {
 	};
 	
 	
-	AbstractView.prototype.killTween = function(twName) {
-		this.tw[twName].kill();
+	AbstractView.prototype.killTween = function( twName ) {
+		this.tw[ twName ].kill();
 		
-		this.tw[twName] = null;
+		this.tw[ twName ] = null;
 	};
 	
 	
-	AbstractView.prototype.killTimeline = function(tlName) {
-		this.tl[tlName].stop();
-		this.tl[tlName].clear();
-		this.tl[tlName].kill();
+	AbstractView.prototype.killTimeline = function( tlName ) {
+		this.tl[ tlName ].stop();
+		this.tl[ tlName ].clear();
+		this.tl[ tlName ].kill();
 		
-		this.tl[tlName] = null;
+		this.tl[ tlName ] = null;
 	};
 	
 	
@@ -114,8 +123,8 @@ APP.AbstractView = ( function( window ) {
 	};
 	
 	
-	AbstractView.prototype.changePage = function(e) {
-		if (APP.Config.HAS_PUSHSTATE ) { // if pushstate supported
+	AbstractView.prototype.changePage = function( e ) {
+		if ( APP.Config.HAS_PUSHSTATE ) { // if pushstate supported
 			e.preventDefault();
 			
 			var url = e.currentTarget.href;

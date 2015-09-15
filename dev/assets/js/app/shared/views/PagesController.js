@@ -20,6 +20,8 @@ APP.PagesController = ( function( window ) {
 		this.prevPage			= null;
 		this.currentPage		= null;
 		this.nextPage			= null;
+		
+		this.data				= null;
 	}
 	
 	
@@ -139,14 +141,14 @@ APP.PagesController = ( function( window ) {
 		this.mainLoader.destroyEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
 		
 		if ( isFirstLoad ) {
-			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
+			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHiddenInit.bind( this ) );
 			this.mainLoader.hideInit();
 		}
 		
 	};
 	
 	
-	var _onMainLoaderHidden = function() {
+	var _onMainLoaderHiddenInit = function() {
 		// console.log('_onMainLoaderHidden');
 		this.mainLoader.destroyEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 		
@@ -170,12 +172,15 @@ APP.PagesController = ( function( window ) {
 	
 	
 	PagesController.prototype.changePage = function( pageUrl ) {
-		// console.log('changePage', this.isPageChange);
+		console.log('changePage', this.isPageChange);
 		
 		_disablePageChange.call( this );
 		_initPageChangeValues.call( this );
 		
 		_loadContent.call( this, pageUrl );
+		
+		this.prevPage.buildEvt( this.prevPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
+		this.prevPage.hide();
 		
 		this.mainLoader.buildEvt( this.mainLoader.E.SHOWN, _onMainLoaderShown.bind( this ) );
 		this.mainLoader.show();
@@ -217,55 +222,97 @@ APP.PagesController = ( function( window ) {
 			url:		pageUrl,
 			type:		'POST',
 			data:		{
+							// useful if need differents behavior on PHP file when AJAX load
+							// can be got with $_POST['ajax'] & $_POST['type']
 							ajax: 'true',
 							type: 'pageChange'
 						},
-						// useful if need a different behavior on PHP file when AJAX load
-						// can be detected with if(isset($_POST['ajax']))
 			dataType:	'html',
-			success:	_contentLoaded.bind( this ),
-			error:		_contentError.bind( this )
+			success:	_onContentLoaded.bind( this ),
+			error:		_onContentError.bind( this )
 		});
-		
-		
-		
-		// this.initTransitionValues();
-		
-		/*var urlPage = APP.Config.MULTI_LANG ? 
-						APP.Config.WEB_ROOT + APP.Config.LANG + '/ajax-content/' + pageUrl : 
-						APP.Config.WEB_ROOT + 'ajax-content/'+ pageUrl;
-		
-		$.ajax({
-			context		: this,
-			url			: urlPage,
-			type		: 'POST',
-			data		: { ajax:pageUrl },	// useful if need a different behavior on PHP file when AJAX load
-									 		// can be detected with if(isset($_POST['ajax']))
-			dataType	: 'html',
-			success		: this.loaded,
-			error		: this.error
-		});*/
 	};
 	
 	
-	var _contentLoaded = function( data ) {
-		console.log( data );
-		// this.v.data = data;
+	var _onContentLoaded = function( data ) {
+		this.data = data;
+		console.log( this.data );
 		
-		// this.v.isAjaxLoaded = true;
-		
-		// this.checkInit();
+		this.isContentLoaded = true;
+		_checkPrevPageHidden.call( this );
 	};
 	
 	
-	var _contentError = function() {
+	var _onContentError = function() {
 		console.log( 'ajax load error' );
 		// window.location.href = APP.Config.WEB_ROOT + APP.RoutesManager.pageUrl;
 	};
 	
 	
+	var _onPrevPageHidden = function() {
+		console.log('PagesController _onPrevPageHidden()');
+		
+		this.prevPage.destroyEvt( this.prevPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
+		
+		this.isMainLoaderHidden = true;
+		_checkPrevPageHidden.call( this );
+	};
+	
+	
 	var _onMainLoaderShown = function() {
 		console.log('PagesController _onMainLoaderShown()');
+		
+		this.mainLoader.destroyEvt( this.mainLoader.E.SHOWN, _onMainLoaderShown.bind( this ) );
+		
+		this.isPrevPageHidden = true;
+		_checkPrevPageHidden.call( this );
+	};
+	
+	
+	var _onMainLoaderHidden = function() {
+		this.mainLoader.destroyEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
+		
+		_checkCurrentPageShown.call( this );
+	};
+	
+	
+	var _checkPrevPageHidden = function() {
+		console.log('PagesController _checkPrevPageHidden():', this.isContentLoaded, this.isPrevPageHidden, this.isMainLoaderHidden);
+		
+		if ( this.isContentLoaded && this.isPrevPageHidden && this.isMainLoaderHidden ) {
+			// APP.RoutesManager.updateGA(); // update Google Analytics
+			
+			APP.MainView.$pageCont[0].innerHTML = this.data;
+			
+			this.data = null;
+			
+			_initPageChangeValues.call( this );
+			
+			// this.init();
+			// this.show();
+			
+			
+			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
+			this.mainLoader.hide();
+			
+			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
+			this.currentPage.show();
+		}
+	};
+	
+	
+	var _onCurrentPageShown = function() {
+		console.log( '_onCurrentPageShown' );
+		
+		this.currentPage.destroyEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
+		
+		_checkCurrentPageShown.call( this );
+	};
+	
+	
+	var _checkCurrentPageShown = function() {
+		console.log( 'PagesController _checkCurrentPageShown()' );
+		
 	};
 	
 	
@@ -291,7 +338,7 @@ APP.PagesController = ( function( window ) {
 	
 	
 	
-	PagesController.prototype.loaded = function(data) {
+	/*PagesController.prototype.loaded = function(data) {
 		this.v.data = data;
 		
 		this.v.isAjaxLoaded = true;
@@ -310,10 +357,10 @@ APP.PagesController = ( function( window ) {
 		this.v.isTransitionHideEnded = true;
 		
 		this.checkInit();
-	};
+	};*/
 	
 	
-	PagesController.prototype.checkInit = function() {
+	/*PagesController.prototype.checkInit = function() {
 		if(this.v.isAjaxLoaded && this.v.isTransitionHideEnded) {
 			APP.RoutesManager.updateGA(); // update Google Analytics
 			
@@ -326,13 +373,13 @@ APP.PagesController = ( function( window ) {
 			this.init();
 			this.show();
 		}
-	};
+	};*/
 	
 	
-	PagesController.prototype.initTransitionValues = function() {
+	/*PagesController.prototype.initTransitionValues = function() {
 		this.v.isAjaxLoaded				= false;
 		this.v.isTransitionHideEnded	= false;
-	};
+	};*/
 	
 	
 	return new PagesController();
