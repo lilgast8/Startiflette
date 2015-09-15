@@ -9,7 +9,7 @@ APP.PagesController = ( function( window ) {
 		this.pages				= {};
 		this.page				= {};
 		
-		this.LOADING_MODE		= 'byPageStatic'; // can be allStatic, byPageStatic, byPageDynamic
+		this.LOADING_MODE		= 'byPageDynamic'; // can be allStatic, byPageStatic, byPageDynamic
 		this.isFirstLoad		= true;
 		this.isPageChange		= true;
 		
@@ -91,7 +91,6 @@ APP.PagesController = ( function( window ) {
 	PagesController.prototype.initPage = function() {
 		_initPageChangeValues.call( this );
 		
-		// this.loadAssets();
 		_loadAssets.call( this );
 	};
 	
@@ -111,40 +110,78 @@ APP.PagesController = ( function( window ) {
 	var _loadAssets = function() {
 		var aImgsListIds, aImgsToLoad;
 		
+		
 		/* First load */
-		if ( this.isFirstLoad ) {
-			aImgsListIds	= _getImgsListIds.call( this );
-			aImgsToLoad		= this.assetsModel.getImgsToLoad( aImgsListIds );
+		/*if ( this.isFirstLoad ) {
+			console.log( 'SLP-8-1' );
+			// aImgsListIds	= _getImgsListIds.call( this );
+			// aImgsToLoad		= this.assetsModel.getImgsToLoad( aImgsListIds );
 			
-			this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
-			this.mainLoader.loadAssets( aImgsToLoad );
-		}
+			// this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
+			// this.mainLoader.loadAssets( aImgsToLoad );
+		}*/
 		
 		/* Page change load */
-		else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ) {
-			console.log('page change load - byPageStatic');
+		/*else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ) {
+			console.log( 'SLP-8-2' );
+			// console.log('page change load - byPageStatic');
 			
 			aImgsListIds	= _getImgsListIds.call( this );
 			aImgsToLoad		= this.assetsModel.getImgsToLoad( aImgsListIds );
 			
 			this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
 			this.mainLoader.loadAssets( aImgsToLoad );
-		}
+		}*/
+		
+		/*else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ) {
+			console.log( 'SLP-8-3' );
+			
+			// aImgsListIds	= _getImgsListIds.call( this );
+			aImgsToLoad = this.assetsModel.getImgsToLoad( this.isFirstLoad, this.LOADING_MODE );
+			
+			this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
+			this.mainLoader.loadAssets( aImgsToLoad );
+		}*/
+		
+		var dynamicImgsList = _getDynamicImgsListToLoad.call( this );
+		
+		aImgsToLoad = this.assetsModel.getImgsToLoad( this.page.id, this.isFirstLoad, this.LOADING_MODE, dynamicImgsList );
+		
+		this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
+		this.mainLoader.loadAssets( aImgsToLoad );
 	};
 	
 	
-	var _getImgsListIds = function() {
+	var _getDynamicImgsListToLoad = function() {
+		var dynamicImgsList;
+		
+		if ( this.LOADING_MODE !== 'byPageDynamic' )
+			dynamicImgsList = null;
+		
+		else if ( this.isFirstLoad )
+			dynamicImgsList = APP.MainView.$pageCont.find( 'img' );
+		
+		else if ( !this.isFirstLoad )
+			dynamicImgsList = $( this.data ).find( 'img' );
+		
+		
+		return dynamicImgsList;
+	};
+	
+	
+	/*var _getImgsListIds = function() {
 		var aIds = [];
 		
-		/* First load */
+		/* First load *
 		if ( this.isFirstLoad && this.LOADING_MODE == 'allStatic')
 			aIds = this.assetsModel.getAllStaticImgsListIds();
 		else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageStatic')
 			aIds = [ 'global', this.page.id ];
-		// else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic')
-		// 	aIds = [ 'global', this.page.id ];
+		else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic')
+			// aIds = [ 'global', this.page.id ];
+			aIds = this.assetsModel.getByPageDynamicImgsListIds();
 		
-		/* Page change load */
+		/* Page change load *
 		// else if ( !this.isFirstLoad && this.LOADING_MODE == 'allStatic')
 		// 	aIds = [ ];
 		else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageStatic')
@@ -153,7 +190,7 @@ APP.PagesController = ( function( window ) {
 		// 	aIds = [ this.page.id ];
 		
 		return aIds;
-	};
+	};*/
 	
 	
 	PagesController.prototype.changePage = function( pageUrl ) {
@@ -182,7 +219,7 @@ APP.PagesController = ( function( window ) {
 		
 		this.mainLoader.destroyEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
 		
-		// LOADING MODE: all static
+		/* First load */
 		if ( this.isFirstLoad && this.LOADING_MODE == 'allStatic' ) {
 			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
 			this.currentPage.show();
@@ -191,8 +228,6 @@ APP.PagesController = ( function( window ) {
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 			this.mainLoader.hideInit();
 		}
-		
-		// LOADING MODE: by page static
 		else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ) {
 			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
 			this.currentPage.show();
@@ -200,7 +235,23 @@ APP.PagesController = ( function( window ) {
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 			this.mainLoader.hide();
 		}
+		else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic' ) {
+			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
+			this.currentPage.show();
+			
+			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
+			this.mainLoader.hide();
+		}
+		
+		
+		/* Page change load */
 		else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ) {
+			this.isAssetsLoaded = true;
+			
+			_checkPrevPageHidden.call( this );
+		}
+		else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic' ) {
+			console.log( 'YAAAAAAAAAAAAAAAAAAAAAALAAA!!!' );
 			this.isAssetsLoaded = true;
 			
 			_checkPrevPageHidden.call( this );
@@ -242,6 +293,9 @@ APP.PagesController = ( function( window ) {
 		
 		this.isContentLoaded = true;
 		_checkPrevPageHidden.call( this );
+		
+		if ( this.LOADING_MODE == 'byPageDynamic' )
+			_loadAssets.call( this );
 	};
 	
 	
