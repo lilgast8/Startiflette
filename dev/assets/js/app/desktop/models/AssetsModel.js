@@ -50,51 +50,18 @@ APP.Models.AssetsModel = ( function( window ) {
 	}
 	
 	
-	/*AssetsModel.prototype.getAllStaticImgsListIds = function() {
+	AssetsModel.prototype.getAllStaticImgsListIds = function() {
 		var aIds = [];
 		
 		for ( var id in this.aImgs )
 			aIds.push( id );
 		
-		return aIds;
-	};*/
-	
-	
-	/*AssetsModel.prototype.getByPageDynamicImgsListIds = function() {
-		var aIds = [ 'global' ];
-		
-		for ( var id in this.aImgs )
-			aIds.push( id );
 		
 		return aIds;
-	};*/
+	};
 	
 	
-	/*AssetsModel.prototype.getImgsToLoad = function( aImgsListIds ) {
-		var aImgs = [];
-		var imgsList;
-		
-		for ( var i = 0; i < aImgsListIds.length; i++ ) {
-			imgsList = this.aImgs[ aImgsListIds[i] ];
-			
-			if ( imgsList !== undefined ) {
-				
-				for ( var j = 0; j < imgsList.length; j++ )
-					aImgs.push( imgsList[j] );
-				
-			}
-		}
-		
-		return aImgs;
-	};*/
-	
-	
-	AssetsModel.prototype.getImgsToLoad = function( pageId, isFirstLoad, loadingMode, dynamicImgsList ) {
-		// console.log( 'RASDASDA', data );
-		// console.log( 'RASDASDA', dynamicImgsList );
-		
-		var aImgsListIds = _getImgsListIds.call( this, pageId, isFirstLoad, loadingMode );
-		
+	AssetsModel.prototype.getImgsToLoad = function( aImgsListIds, dynamicImgsList ) {
 		var aImgsToLoad = [];
 		var imgsList;
 		
@@ -109,16 +76,6 @@ APP.Models.AssetsModel = ( function( window ) {
 			}
 		}
 		
-		/*if ( isFirstLoad && loadingMode == 'byPageDynamic' ) {
-			var imgs = APP.MainView.$pageCont.find( 'img' );
-			
-			for ( i = 0; i < imgs.length; i++ )
-				aImgsToLoad.push( imgs[i].src );
-		}
-		else if ( !isFirstLoad && loadingMode == 'byPageDynamic' ) {
-			var img = $( data ).find( 'img' );
-			console.log( img.length );
-		}*/
 		
 		// add dynamic images
 		if ( dynamicImgsList !== null ) {
@@ -130,41 +87,6 @@ APP.Models.AssetsModel = ( function( window ) {
 		
 		
 		return aImgsToLoad;
-	};
-	
-	
-	var _getImgsListIds = function( pageId, isFirstLoad, loadingMode ) {
-		console.log( pageId, isFirstLoad, loadingMode );
-		
-		var aIds = [];
-		
-		/* First load */
-		if ( isFirstLoad && loadingMode == 'allStatic')
-			aIds = _getAllStaticImgsListIds.call( this );
-		else if ( isFirstLoad && loadingMode == 'byPageStatic')
-			aIds = [ 'global', pageId ];
-		else if ( isFirstLoad && loadingMode == 'byPageDynamic')
-			aIds = [ 'global' ];
-		
-		/* Page change load */
-		// else if ( !isFirstLoad && loadingMode == 'allStatic')
-		// 	aIds = [ ];
-		else if ( !isFirstLoad && loadingMode == 'byPageStatic')
-			aIds = [ this.page.id ];
-		// else if ( !isFirstLoad && loadingMode == 'byPageDynamic')
-		// 	aIds = [ this.page.id ];
-		
-		return aIds;
-	};
-	
-	
-	var _getAllStaticImgsListIds = function() {
-		var aIds = [];
-		
-		for ( var id in this.aImgs )
-			aIds.push( id );
-		
-		return aIds;
 	};
 	
 	
