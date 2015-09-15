@@ -65,6 +65,7 @@ APP.Models.AssetsModel = ( function( window ) {
 		var aImgsToLoad = [];
 		var imgsList;
 		
+		// static images
 		for ( var i = 0; i < aImgsListIds.length; i++ ) {
 			imgsList = this.aImgs[ aImgsListIds[i] ];
 			
@@ -76,11 +77,8 @@ APP.Models.AssetsModel = ( function( window ) {
 			}
 		}
 		
-		
-		// add dynamic images
+		// dynamic images
 		if ( dynamicImgsList !== null ) {
-			console.log( 'ASDSADS' );
-			
 			for ( i = 0; i < dynamicImgsList.length; i++ )
 				aImgsToLoad.push( dynamicImgsList[i].src );
 		}

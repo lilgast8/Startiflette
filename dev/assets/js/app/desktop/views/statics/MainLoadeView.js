@@ -74,13 +74,13 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 	
 	
 	MainLoaderView.prototype.loadAssets = function( aImgsToLoad ) {
-		console.log( aImgsToLoad );
+		// console.log( aImgsToLoad );
+		
 		this.assetsLoader.startLoad( aImgsToLoad );
 	};
 	
 	
 	var _onProgress = function( percentage ) {
-		console.log( percentage );
 		var posX = percentage - 100;
 		
 		this.$percentage[0].innerHTML					= parseInt( percentage ) + ' %';
@@ -105,9 +105,8 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 	
 	
 	MainLoaderView.prototype.hideInit = function() {
-		// console.log( 'HIDE INIT' );
-		
 		this.tl.hideInit.play();
+		
 		
 		// this.$loader[0].style.display = 'none';
 		// this.dispatch( this.E.HIDDEN );
@@ -115,8 +114,6 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 	
 	
 	MainLoaderView.prototype.show = function() {
-		// console.log( 'SHOW' );
-		
 		this.$loader[0].style.display = 'block';
 		this.$loader.offsetHeight; // jshint ignore:line
 		
@@ -125,8 +122,6 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 	
 	
 	MainLoaderView.prototype.hide = function() {
-		// console.log( 'HIDE' );
-		
 		this.tl.hide.play(0);
 	};
 	
@@ -147,7 +142,7 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 	
 	
 	var _onHideComplete = function() {
-		// LOADING_MODE == 'byPageStatic'
+		// LOADING_MODE == 'byPageStatic' && LOADING_MODE == 'byPageDynamic'
 		this.$percentage[0].innerHTML					= '0 %';
 		this.$progress[0].style[ APP.Config.TRANSFORM ]	= 'translate( -100%, 0% )';
 		
