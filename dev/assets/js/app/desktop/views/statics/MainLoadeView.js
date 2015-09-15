@@ -31,10 +31,11 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 	
 	
 	MainLoaderView.prototype.initDOM = function() {
-		this.$mainLoader	= $( document.getElementById( 'main-loader' ) );
-		this.$percentage	= this.$mainLoader.find( '.main-loader-percentage' );
-		this.$progress		= this.$mainLoader.find( '.main-loader-progress' );
-		this.$loading		= this.$mainLoader.find( '.main-loader-loading' );
+		this.$loader		= $( document.getElementById( 'main-loader' ) );
+		this.$loaderCont	= this.$loader.find( '.main-loader-container' );
+		this.$percentage	= this.$loader.find( '.main-loader-percentage' );
+		this.$progress		= this.$loader.find( '.main-loader-progress' );
+		this.$loading		= this.$loader.find( '.main-loader-loading' );
 	};
 	
 	
@@ -42,24 +43,24 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 		/* Hide init */
 		this.tl.hideInit = new TimelineLite( { paused:true, onComplete:_onHideInitComplete.bind( this ) } );
 		
-		this.tl.hideInit.to( this.$mainLoader, 1.5, { xPercent:100, ease:Quart.easeInOut }, 0 );
-		this.tl.hideInit.to( this.$percentage, 1.5, { xPercent:-100, ease:Quart.easeInOut }, 0 );
+		this.tl.hideInit.to( this.$loader, 1.5, { xPercent:100, ease:Quart.easeInOut }, 0 );
+		this.tl.hideInit.to( this.$loaderCont, 1.5, { xPercent:-100, ease:Quart.easeInOut }, 0 );
 		
 		
 		/* Show */
 		this.tl.show = new TimelineLite( { paused:true, onComplete:_onShowComplete.bind( this ) } );
 		
-		this.tl.show.set( this.$mainLoader, { xPercent:-100 }, 0 );
-		this.tl.show.set( this.$loading, { xPercent:100 }, 0 );
-		this.tl.show.to( this.$mainLoader, 1, { xPercent:0, ease:Quart.easeInOut }, 0 );
-		this.tl.show.to( this.$loading, 1, { xPercent:0, ease:Quart.easeInOut }, 0 );
+		this.tl.show.set( this.$loader, { xPercent:-100 }, 0 );
+		this.tl.show.set( this.$loaderCont, { xPercent:100 }, 0 );
+		this.tl.show.to( this.$loader, 1, { xPercent:0, ease:Quart.easeInOut }, 0 );
+		this.tl.show.to( this.$loaderCont, 1, { xPercent:0, ease:Quart.easeInOut }, 0 );
 		
 		
 		/* Hide */
 		this.tl.hide = new TimelineLite( { paused:true, onComplete:_onHideComplete.bind( this ) } );
 		
-		this.tl.hide.to( this.$mainLoader, 1, { xPercent:100, ease:Quart.easeInOut }, 0 );
-		this.tl.hide.to( this.$loading, 1, { xPercent:-100, ease:Quart.easeInOut }, 0 );
+		this.tl.hide.to( this.$loader, 1, { xPercent:100, ease:Quart.easeInOut }, 0 );
+		this.tl.hide.to( this.$loaderCont, 1, { xPercent:-100, ease:Quart.easeInOut }, 0 );
 	};
 	
 	
@@ -79,27 +80,28 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 	
 	
 	var _onProgress = function( percentage ) {
+		console.log( percentage );
 		var posX = percentage - 100;
 		
-		this.$percentage[0].innerHTML = parseInt( percentage ) + '%';
-		this.$progress[0].style[ APP.Config.TRANSFORM ] = 'translate(' + posX + '%, 0%)';
+		this.$percentage[0].innerHTML					= parseInt( percentage ) + ' %';
+		this.$progress[0].style[ APP.Config.TRANSFORM ]	= 'translate(' + posX + '%, 0% )';
 	};
 	
 	
 	var _onComplete = function() {
-		_destroyAssetsLoader.call( this );
+		// _destroyAssetsLoader.call( this );
 		
 		this.dispatch( this.E.COMPLETE, this.data );
 	};
 	
 	
-	var _destroyAssetsLoader = function() {
+	/*var _destroyAssetsLoader = function() {
 		this.assetsLoader.destroyEvt( this.assetsLoader.E.PROGRESS, _onProgress.bind( this ) );
 		this.assetsLoader.destroyEvt( this.assetsLoader.E.COMPLETE, _onComplete.bind( this ) );
 		
 		this.assetsLoader.destroy();
 		this.assetsLoader = null;
-	};
+	};*/
 	
 	
 	MainLoaderView.prototype.hideInit = function() {
@@ -107,7 +109,7 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 		
 		this.tl.hideInit.play();
 		
-		// this.$mainLoader[0].style.display = 'none';
+		// this.$loader[0].style.display = 'none';
 		// this.dispatch( this.E.HIDDEN );
 	};
 	
@@ -115,8 +117,8 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 	MainLoaderView.prototype.show = function() {
 		// console.log( 'SHOW' );
 		
-		this.$mainLoader[0].style.display = 'block';
-		this.$mainLoader.offsetHeight; // jshint ignore:line
+		this.$loader[0].style.display = 'block';
+		this.$loader.offsetHeight; // jshint ignore:line
 		
 		this.tl.show.play(0);
 	};
@@ -132,8 +134,8 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 	var _onHideInitComplete = function() {
 		this.killTimeline( 'hideInit' );
 		
-		removeClass( this.$mainLoader[0], 'init' );
-		this.$mainLoader[0].style.display = 'none';
+		removeClass( this.$loader[0], 'init' );
+		this.$loader[0].style.display = 'none';
 		
 		this.dispatch( this.E.HIDDEN );
 	};
@@ -145,6 +147,11 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 	
 	
 	var _onHideComplete = function() {
+		// LOADING_MODE == 'byPageStatic'
+		this.$percentage[0].innerHTML					= '0 %';
+		this.$progress[0].style[ APP.Config.TRANSFORM ]	= 'translate( -100%, 0% )';
+		
+		
 		this.dispatch( this.E.HIDDEN );
 	};
 	
