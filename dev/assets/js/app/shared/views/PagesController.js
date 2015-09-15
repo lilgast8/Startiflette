@@ -6,22 +6,23 @@ APP.PagesController = ( function( window ) {
 	function PagesController() {
 		APP.AbstractController.call( this );
 		
-		this.pages				= {};
-		this.page				= {};
+		this.pages					= {};
+		this.page					= {};
 		
-		this.LOADING_MODE		= 'allStatic'; // can be allStatic, byPageStatic, byPageDynamic
-		this.isFirstLoad		= true;
-		this.isPageChange		= true;
+		this.LOADING_MODE			= 'byPageDynamic'; // can be allStatic, byPageStatic, byPageDynamic
+		this.DYNAMIC_IMG_TO_LOAD	= 'img'; // used when LOADING_MODE == 'byPageDynamic', can be img.class for selective preload
+		this.isFirstLoad			= true;
+		this.isPageChange			= true;
 		
-		this.isContentLoaded	= false;
-		this.isPrevPageHidden	= false;
-		this.isMainLoaderHidden	= false;
+		this.isContentLoaded		= false;
+		this.isPrevPageHidden		= false;
+		this.isMainLoaderHidden		= false;
 		
-		this.prevPage			= null;
-		this.currentPage		= null;
-		this.nextPage			= null;
+		this.prevPage				= null;
+		this.currentPage			= null;
+		this.nextPage				= null;
 		
-		this.data				= null;
+		this.data					= null;
 	}
 	
 	
@@ -110,6 +111,7 @@ APP.PagesController = ( function( window ) {
 		var aImgsListIds	= _getImgsListIds.call( this );
 		var dynamicImgsList	= _getDynamicImgsListToLoad.call( this );
 		var aImgsToLoad		= this.assetsModel.getImgsToLoad( aImgsListIds, dynamicImgsList );
+		// console.log( aImgsToLoad );
 		
 		this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
 		this.mainLoader.loadAssets( aImgsToLoad );
@@ -147,10 +149,10 @@ APP.PagesController = ( function( window ) {
 			dynamicImgsList = null;
 		
 		else if ( this.isFirstLoad )
-			dynamicImgsList = APP.MainView.$pageCont.find( 'img' );
+			dynamicImgsList = APP.MainView.$pageCont.find( this.DYNAMIC_IMG_TO_LOAD );
 		
 		else if ( !this.isFirstLoad )
-			dynamicImgsList = $( this.data ).find( 'img' );
+			dynamicImgsList = $( this.data ).find( this.DYNAMIC_IMG_TO_LOAD );
 		
 		
 		return dynamicImgsList;
