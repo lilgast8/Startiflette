@@ -111,7 +111,7 @@ APP.PagesController = ( function( window ) {
 	var _loadAssets = function() {
 		var aImgsListIds, aImgsToLoad;
 		
-		// first load
+		/* First load */
 		if ( this.isFirstLoad ) {
 			aImgsListIds	= _getImgsListIds.call( this );
 			aImgsToLoad		= this.assetsModel.getImgsToLoad( aImgsListIds );
@@ -120,8 +120,8 @@ APP.PagesController = ( function( window ) {
 			this.mainLoader.loadAssets( aImgsToLoad );
 		}
 		
-		// page change load
-		else if ( this.LOADING_MODE == 'byPageStatic' ) {
+		/* Page change load */
+		else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ) {
 			console.log('page change load - byPageStatic');
 			
 			aImgsListIds	= _getImgsListIds.call( this );
@@ -144,7 +144,7 @@ APP.PagesController = ( function( window ) {
 		// else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic')
 		// 	aIds = [ 'global', this.page.id ];
 		
-		/* Change page */
+		/* Page change load */
 		// else if ( !this.isFirstLoad && this.LOADING_MODE == 'allStatic')
 		// 	aIds = [ ];
 		else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageStatic')
@@ -178,10 +178,11 @@ APP.PagesController = ( function( window ) {
 	
 	
 	var _onAssetsLoaded = function() {
-		console.log('PagesController _onAssetsLoaded()', this.isFirstLoad);
+		// console.log('PagesController _onAssetsLoaded()', this.isFirstLoad);
 		
 		this.mainLoader.destroyEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
 		
+		// LOADING MODE: all static
 		if ( this.isFirstLoad && this.LOADING_MODE == 'allStatic' ) {
 			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
 			this.currentPage.show();
@@ -190,6 +191,8 @@ APP.PagesController = ( function( window ) {
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 			this.mainLoader.hideInit();
 		}
+		
+		// LOADING MODE: by page static
 		else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ) {
 			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
 			this.currentPage.show();
@@ -197,13 +200,20 @@ APP.PagesController = ( function( window ) {
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 			this.mainLoader.hide();
 		}
-		else {
+		else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ) {
+			this.isAssetsLoaded = true;
+			
+			_checkPrevPageHidden.call( this );
+		}
+		
+		
+		/*else {
 			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
 			this.currentPage.show();
 			
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 			this.mainLoader.hide();
-		}
+		}*/
 	};
 	
 	
@@ -229,7 +239,6 @@ APP.PagesController = ( function( window ) {
 	
 	var _onContentLoaded = function( data ) {
 		this.data = data;
-		console.log( this.data );
 		
 		this.isContentLoaded = true;
 		_checkPrevPageHidden.call( this );
@@ -272,6 +281,7 @@ APP.PagesController = ( function( window ) {
 		if ( this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
 			// APP.RoutesManager.updateGA(); // update Google Analytics
 			
+			console.log( this.data );
 			APP.MainView.$pageCont[0].innerHTML = this.data;
 			
 			this.data = null;
