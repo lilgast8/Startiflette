@@ -160,7 +160,7 @@ APP.Router = ( function( window ) {
 		
 		_setPageInfos.call( this );
 		
-		APP.PagesController.loadAssets();
+		APP.PagesController.initPage();
 	};
 	
 	
