@@ -78,19 +78,17 @@ APP.PagesController = ( function( window ) {
 			return;
 		}
 		
-		this.prevPage = this.currentPage;
+		this.prevPage		= this.currentPage;
+		this.currentPage	= new this.pages[ this.page.jsView ]();
 		
-		// if ( this.currentPage != null )
-		// 	_unbindEvents.call(this);
-		
-		this.currentPage = new this.pages[ this.page.jsView ]();
-		
-		// console.log( this.currentPage );
+		// console.log( this.prevPage, this.currentPage );
 	};
 	
 	
 	PagesController.prototype.initPage = function() {
 		_initPageChangeValues.call( this );
+		
+		this.currentPage.init();
 		
 		_loadAssets.call( this );
 	};
@@ -232,7 +230,7 @@ APP.PagesController = ( function( window ) {
 	
 	var _onContentError = function() {
 		console.log( 'ajax load error' );
-		// window.location.href = APP.Config.WEB_ROOT + APP.RoutesManager.pageUrl;
+		// window.location.href = APP.Routes.PAGE_URL.full;
 	};
 	
 	
@@ -263,7 +261,10 @@ APP.PagesController = ( function( window ) {
 			
 			APP.MainView.$pageCont[0].innerHTML = this.data;
 			
+			_destroyPrevPage.call( this );
 			this.data = null;
+			
+			this.currentPage.init();
 			
 			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
 			this.currentPage.show();
@@ -274,6 +275,12 @@ APP.PagesController = ( function( window ) {
 		
 		else if ( this.LOADING_MODE == 'byPageDynamic' && this.isContentLoaded && this.isPrevPageHidden && this.isMainLoaderShown )
 			_loadAssets.call( this );
+	};
+	
+	
+	var _destroyPrevPage = function() {
+		this.prevPage.destroy();
+		this.prevPage = null;
 	};
 	
 	
