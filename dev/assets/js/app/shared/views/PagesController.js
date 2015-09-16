@@ -9,7 +9,7 @@ APP.PagesController = ( function( window ) {
 		this.pages					= {};
 		this.page					= {};
 		
-		this.LOADING_MODE			= 'byPageDynamic'; // can be allStatic, byPageStatic, byPageDynamic
+		this.LOADING_MODE			= 'allStatic'; // can be allStatic, byPageStatic, byPageDynamic
 		this.DYNAMIC_IMG_TO_LOAD	= 'img'; // used when LOADING_MODE == 'byPageDynamic', can be img.class for selective preload
 		this.isFirstLoad			= true;
 		this.isPageChange			= true;
@@ -199,7 +199,7 @@ APP.PagesController = ( function( window ) {
 		else if ( !this.isFirstLoad && ( this.LOADING_MODE == 'byPageStatic' || this.LOADING_MODE == 'byPageDynamic' ) ) {
 			this.isAssetsLoaded = true;
 			
-			_checkPrevPageHidden.call( this );
+			_checkFirstStepPageChange.call( this );
 		}
 	};
 	
@@ -226,10 +226,7 @@ APP.PagesController = ( function( window ) {
 		this.data = data;
 		
 		this.isContentLoaded = true;
-		_checkPrevPageHidden.call( this );
-		
-		if ( this.LOADING_MODE == 'byPageDynamic' )
-			_loadAssets.call( this );
+		_checkFirstStepPageChange.call( this );
 	};
 	
 	
@@ -243,7 +240,7 @@ APP.PagesController = ( function( window ) {
 		this.prevPage.destroyEvt( this.prevPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
 		
 		this.isPrevPageHidden = true;
-		_checkPrevPageHidden.call( this );
+		_checkFirstStepPageChange.call( this );
 	};
 	
 	
@@ -251,16 +248,15 @@ APP.PagesController = ( function( window ) {
 		this.mainLoader.destroyEvt( this.mainLoader.E.SHOWN, _onMainLoaderShown.bind( this ) );
 		
 		this.isMainLoaderShown = true;
-		_checkPrevPageHidden.call( this );
+		_checkFirstStepPageChange.call( this );
 		
-		if ( this. LOADING_MODE == 'byPageStatic' ) {
+		if ( this. LOADING_MODE == 'byPageStatic' )
 			_loadAssets.call( this );
-		}
 	};
 	
 	
-	var _checkPrevPageHidden = function() {
-		// console.log( 'PagesController _checkPrevPageHidden():', this.isContentLoaded, this.isAssetsLoaded, this.isPrevPageHidden, this.isMainLoaderShown );
+	var _checkFirstStepPageChange = function() {
+		// console.log( 'PagesController _checkFirstStepPageChange():', this.isContentLoaded, this.isAssetsLoaded, this.isPrevPageHidden, this.isMainLoaderShown );
 		
 		if ( this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
 			// APP.RoutesManager.updateGA(); // update Google Analytics
@@ -275,6 +271,9 @@ APP.PagesController = ( function( window ) {
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 			this.mainLoader.hide();
 		}
+		
+		else if ( this.LOADING_MODE == 'byPageDynamic' && this.isContentLoaded && this.isPrevPageHidden && this.isMainLoaderShown )
+			_loadAssets.call( this );
 	};
 	
 	
@@ -282,7 +281,7 @@ APP.PagesController = ( function( window ) {
 		this.currentPage.destroyEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
 		
 		this.isCurrentPageShow = true;
-		_checkCurrentPageShown.call( this );
+		_checkSecondStepPageChange.call( this );
 	};
 	
 	
@@ -290,12 +289,12 @@ APP.PagesController = ( function( window ) {
 		this.mainLoader.destroyEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 		
 		this.isMainLoaderHidden = true;
-		_checkCurrentPageShown.call( this );
+		_checkSecondStepPageChange.call( this );
 	};
 	
 	
-	var _checkCurrentPageShown = function() {
-		// console.log( 'PagesController _checkCurrentPageShown():', this.isCurrentPageShow, this.isMainLoaderHidden );
+	var _checkSecondStepPageChange = function() {
+		// console.log( 'PagesController _checkSecondStepPageChange():', this.isCurrentPageShow, this.isMainLoaderHidden );
 		
 		if ( this.isCurrentPageShow && this.isMainLoaderHidden )
 			_enablePageChange.call( this );
