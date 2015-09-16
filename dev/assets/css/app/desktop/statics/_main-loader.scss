@@ -81,6 +81,18 @@
 	height:10px; 
 	background-color:$peach; 
 	margin-right:10px; 
+	
+	// remove @import 'compass/css3/animation'; if don't need it
+	&:nth-child(1) { @include animation-delay(0s);  }
+	&:nth-child(2) { @include animation-delay(0.15s); }
+	&:nth-child(3) { @include animation-delay(0.3s); }
+	@include animation(square 1.5s infinite $easeInOutQuart);
+}
+
+@include keyframes(square) {
+	// remove @import 'compass/css3/animation'; if don't need it
+	0%		{ @include rotate(0deg); }
+	100%	{ @include rotate(360deg); }
 }
 
 
