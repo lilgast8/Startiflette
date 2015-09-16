@@ -23,12 +23,12 @@ APP.Views.Pages.ProjectsView = ( function( window ) {
 	
 	
 	ProjectsView.prototype.bindEvents = function() {
-		this.$.projectLink.on( 'click', $.proxy( this.changePage, this ) );
+		this.$projectLink.on( 'click', $.proxy( this.changePage, this ) );
 	};
 	
 	
 	ProjectsView.prototype.unbindEvents = function() {
-		this.$.projectLink.off( 'click', $.proxy( this.changePage, this ) );
+		this.$projectLink.off( 'click', $.proxy( this.changePage, this ) );
 	};
 	
 	
