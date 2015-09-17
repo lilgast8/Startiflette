@@ -42,7 +42,6 @@
 			
 			"app/shared/utils/Utils.Global.js",
 			
-			"app/shared/abstracts/AbstractController.js",
 			"app/shared/abstracts/AbstractView.js",
 			
 			"app/shared/views/MainView.js",

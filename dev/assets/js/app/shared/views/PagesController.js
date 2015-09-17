@@ -26,7 +26,7 @@ APP.PagesController = ( function( window ) {
 	}
 	
 	
-	PagesController.prototype				= Object.create( APP.AbstractController.prototype );
+	PagesController.prototype				= Object.create( APP.EventDispatcher.prototype );
 	PagesController.prototype.constructor	= PagesController;
 	
 	
