@@ -65,7 +65,6 @@ RewriteRule .* %{REQUEST_URI}? [R=301,L]
 
 DirectoryIndex index.php
 FallbackResource /dev/index.php
-# RewriteRule ^(.*)$ php/controller/RoutesController.php [L]
 # RewriteRule ^(.*)$ index.php [L]
 
 
@@ -76,7 +75,6 @@ FallbackResource /dev/index.php
 # -------- ERRORS -------- #
 # ------------------------ #
 
-# ErrorDocument 403 http://www.URL-DU-SITE.COM
-# ErrorDocument 404 http://www.URL-DU-SITE.COM
-# ErrorDocument 500 "Internal server error, please try again later..."
-# ErrorDocument 503 "Internal server error, please try again later..."
+ErrorDocument 500 "Internal server error, please try again later..."
+ErrorDocument 503 "Internal server error, please try again later..."
+
