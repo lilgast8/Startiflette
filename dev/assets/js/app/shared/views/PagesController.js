@@ -4,7 +4,7 @@ APP.PagesController = ( function( window ) {
 	
 	
 	function PagesController() {
-		APP.AbstractController.call( this );
+		APP.EventDispatcher.call( this );
 		
 		this.pages					= {};
 		this.page					= {};
