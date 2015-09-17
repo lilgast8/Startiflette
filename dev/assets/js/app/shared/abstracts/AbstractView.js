@@ -92,6 +92,9 @@ APP.AbstractView = ( function( window ) {
 	
 	
 	AbstractView.prototype.killTween = function( twName ) {
+		if ( !this.tw[ twName ] )
+			return;
+		
 		this.tw[ twName ].kill();
 		
 		this.tw[ twName ] = null;
@@ -99,6 +102,9 @@ APP.AbstractView = ( function( window ) {
 	
 	
 	AbstractView.prototype.killTimeline = function( tlName ) {
+		if ( !this.tl[ tlName ] )
+			return;
+		
 		this.tl[ tlName ].stop();
 		this.tl[ tlName ].clear();
 		this.tl[ tlName ].kill();
