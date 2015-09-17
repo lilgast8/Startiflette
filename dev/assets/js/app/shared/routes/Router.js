@@ -78,6 +78,7 @@ APP.Router = ( function( window ) {
 	Router.prototype.setPageUrl = function( isInit, url )
 	{
 		this.PAGE_URL.full		= _getFullPageUrl.call( this, url );
+		this.PAGE_URL.hash		= _getHashPageUrl.call( this );
 		this.PAGE_URL.params	= _getParamsPageUrl.call( this );
 		this.PAGE_URL.aParams	= this.PAGE_URL.params.split( '/' );
 		
@@ -87,8 +88,6 @@ APP.Router = ( function( window ) {
 		}
 		else // page change
 			this.setCurrentPageUrl();
-		
-		console.log( this.PAGE_URL );
 	};
 	
 	
@@ -102,6 +101,15 @@ APP.Router = ( function( window ) {
 		
 		
 		return fullPageUrl;
+	};
+	
+	
+	var _getHashPageUrl = function() {
+		var hashPageUrl	= this.PAGE_URL.full.replace( APP.Path.URL.base, '' );
+		
+		hashPageUrl		= hashPageUrl.split( '#' )[1] || '';
+		
+		return hashPageUrl;
 	};
 	
 	
