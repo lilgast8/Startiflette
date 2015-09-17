@@ -150,6 +150,9 @@ class Router
 		if ( $langExist && $page->exist ) { // page exist
 			$this->setIsHomepage( $page->id );
 			$this->setAltLangUrl( $page->params );
+			
+			if ( $this->isHomepage && self::$PAGE_URL->params == Lang::$DEFAULT_LANG )
+				$this->redirectToRoot();
 		}
 		else { // 404
 			$page->id		= 'error404';
@@ -234,6 +237,13 @@ class Router
 			}
 			
 		}
+	}
+	
+	
+	private function redirectToRoot()
+	{
+		header( 'Status: 301 Moved Permanently', true, 301 );
+		header( 'Location: ' . Path::$URL->base );
 	}
 	
 	
