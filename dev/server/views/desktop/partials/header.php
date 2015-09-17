@@ -9,7 +9,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 	
 	<title><?php echo PagesController::$PAGE->title; ?></title>
-	<meta name="description" content="<?php echo PagesController::$PAGE->DESC; ?>" />
+	<meta name="description" content="<?php echo PagesController::$PAGE->desc; ?>" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
 	<meta name="author" content="Gaston Bouchayer" />
