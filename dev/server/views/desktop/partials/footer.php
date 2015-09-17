@@ -5,9 +5,15 @@
 	<footer id="footer">
 		<?php if ( Lang::$MULTI_LANG ) { ?>
 		<nav class="footer-lg">
-			<?php foreach ( Router::$ALT_LANG_URL as $lang => $altLangUrl ) { ?>
+			<?php
+			if ( Router::$ALT_LANG_URL ) {
+				foreach ( Router::$ALT_LANG_URL as $lang => $altLangUrl ) {
+			?>
 			<a href="<?php echo $altLangUrl; ?>" class="footer-lg-link" data-lg="<?php echo $lang; ?>"><?php echo $lang; ?></a>
-			<?php } ?>
+			<?php
+				}
+			}
+			?>
 		</nav>
 		<?php } ?>
 		<nav>

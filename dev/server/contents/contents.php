@@ -7,6 +7,7 @@ function getContents() {
 	include_once Lang::$LANG . '/global.php';
 	include_once Lang::$LANG . '/alt.php';
 	
+	include_once Lang::$LANG . '/error404.php';
 	include_once Lang::$LANG . '/home.php';
 	include_once Lang::$LANG . '/about.php';
 	include_once Lang::$LANG . '/projects.php';
@@ -18,6 +19,7 @@ function getContents() {
 	$contents->global	= getGlobal();
 	$contents->alt		= getAlt();
 	
+	$contents->error404	= getError404();
 	$contents->home		= getHome();
 	$contents->about	= getAbout();
 	$contents->projects	= getProjects();

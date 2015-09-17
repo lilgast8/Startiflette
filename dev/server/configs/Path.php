@@ -95,7 +95,7 @@ class Path
 	
 	public function getAltLangUrlMeta()
 	{
-		if ( !Lang::$MULTI_LANG )
+		if ( !Lang::$MULTI_LANG || !Router::$ALT_LANG_URL )
 			return false;
 		
 		

@@ -154,6 +154,8 @@ class Router
 		else { // 404
 			$page->id		= 'error404';
 			$page->params	= self::$ROUTES->static->error404;
+			
+			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 		}
 		
 		$this->pagesController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
