@@ -1,131 +1,120 @@
 
 
-APP.Video = (function(window){
+APP.Video = ( function( window ) {
 	
 	
-	function Video($video, videoName) {
-		APP.EventDispatcher.call(this);
-		
-		this.$ = {};
-		this.p = {};
-		this.v = {};
+	function Video( $video, videoName ) {
+		APP.EventDispatcher.call( this );
 		
 		this.E = {
-			STARTED : 'started',
-			UPDATE : 'update',
-			ENDED : 'ended',
-			SHOWN : 'shown',
-			HIDDEN : 'hidden'
+			STARTED:	'started',
+			UPDATE:		'update',
+			ENDED:		'ended',
+			SHOWN:		'shown',
+			HIDDEN:		'hidden'
 		};
 		
-		this.$.video = $video;
-		this.v.videoName = videoName;
+		this.$video				= $video;
+		this.videoName			= videoName;
 		
-		this.v.isActive = false;
-		this.v.isPlayed = false;
-		this.v.isCanPlayThrough = false;
+		this.isActive			= false;
+		this.isPlayed			= false;
+		this.isCanPlayThrough	= false;
 		
 		this.initElt();
 	}
 	
 	
-	Video.prototype = Object.create(APP.EventDispatcher.prototype);
-	Video.prototype.constructor = Video;
+	Video.prototype				= Object.create( APP.EventDispatcher.prototype );
+	Video.prototype.constructor	= Video;
 	
 	
 	Video.prototype.initElt = function() {
 		this.bindEvents();
 		
-		this.$.video[0].setAttribute('preload', 'auto');
+		this.$video[0].setAttribute( 'preload', 'auto' );
 	};
 	
 	
 	Video.prototype.bindEvents = function() {
-		this.p.videoPlay = $.proxy(_canPlayThrough, this);
-		this.$.video.on('canplaythrough', this.p.videoPlay);
-		
-		this.p.videoEnded = $.proxy(_ended, this);
-		this.$.video.on('ended', this.p.videoEnded);
+		this.$video.on( 'canplaythrough', $.proxy( _canPlayThrough, this ) );
+		this.$video.on( 'ended', $.proxy( _ended, this ) );
 	};
 	
 	
 	Video.prototype.unbindEvents = function() {
-		this.$.video.off('canplaythrough', this.p.videoPlay);
-		this.$.video.off('ended', this.p.videoEnded);
-		
-		this.p = {};
+		this.$video.off( 'canplaythrough', $.proxy( _canPlayThrough, this ) );
+		this.$video.off( 'ended', $.proxy( _ended, this ) );
 	};
 	
 	
 	Video.prototype.destroy = function() {
 		this.unbindEvents();
-		
-		this.$ = {};
-		this.v = {};
 	};
 	
 	
 	Video.prototype.play = function() {
-		_setActive.call(this);
+		_setActive.call( this );
 		
-		_managePlay.call(this);
+		_managePlay.call( this );
 	};
 	
 	
 	Video.prototype.stop = function() {
-		this.v.isActive = false;
+		this.isActive = false;
 		
-		this.$.video[0].pause();
-		this.$.video[0].currentTime = 0;
+		this.$video[0].pause();
+		this.$video[0].currentTime = 0;
 	};
 	
 	
 	Video.prototype.getProgress = function() {
-		if(!this.v.duration) return false;
+		if ( !this.duration )
+			return;
 		
-		var percentage = Math.round( this.$.video[0].currentTime / this.v.duration * 100 );
+		var percentage = Math.round( this.$video[0].currentTime / this.duration * 100 );
 		
 		return percentage;
 	};
 	
 	
 	var _ended = function() {
-		this.dispatch(this.E.ENDED);
+		this.dispatch( this.E.ENDED );
 		
-		this.$.video[0].currentTime = 0;
+		this.$video[0].currentTime = 0;
 		
-		_setInactive.call(this);
+		_setInactive.call( this );
 	};
 	
 	
 	var _canPlayThrough = function() {
-		this.v.isCanPlayThrough = true;
+		this.isCanPlayThrough = true;
 		
-		if(this.v.isPlayed) 
+		if ( this.isPlayed) 
 			_managePlay.call(this);
 	};
 	
 	
 	var _setActive = function() {
-		this.v.isActive = true;
+		this.isActive = true;
 	};
 	
 	
 	var _setInactive = function() {
-		this.v.isActive = false;
+		this.isActive = false;
 	};
 	
 	
 	var _managePlay = function() {
-		if(!this.v.isActive) 
-			return false;
+		if ( !this.isActive ) 
+			return;
 		
-		if(!this.v.isPlayed);
-			this.v.isPlayed = true;
+		if ( !this.isPlayed );
+			this.isPlayed = true;
 		
-		if(this.v.isCanPlayThrough) {
-			this.$.video[0].play();
-			this.v.duration = this.$.video[0].duration;
+		if ( this.isCanPlayThrough ) {
+			this.$video[0].play();
+			this.duration = this.$video[0].duration;
 		}
 	};
 	
@@ -133,5 +122,5 @@ APP.Video = (function(window){
 	return Video;
 	
 	
-})(window);
+} ) ( window );
 
