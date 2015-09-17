@@ -46,7 +46,7 @@
 
 
 <!-- Main container -->
-<div id="main-container" class="preload">
+<div id="main-container" class="preload lang-<?php echo Lang::$LANG; ?>">
 	
 	<!-- Main loader -->
 	<div id="main-loader" class="init">
