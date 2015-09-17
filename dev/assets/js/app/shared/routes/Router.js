@@ -87,6 +87,8 @@ APP.Router = ( function( window ) {
 		}
 		else // page change
 			this.setCurrentPageUrl();
+		
+		console.log( this.PAGE_URL );
 	};
 	
 	
@@ -112,6 +114,7 @@ APP.Router = ( function( window ) {
 		if ( paramsPageUrl.substr( paramsPageUrl.length-1, 1 ) == '/' ) // if slash is last character, remove it
 			paramsPageUrl = paramsPageUrl.substr( 0, paramsPageUrl.length-1 );
 		
+		paramsPageUrl = paramsPageUrl.split( '#' )[0]; // remove #hash
 		paramsPageUrl = paramsPageUrl.split( '?' )[0]; // remove ?params
 		
 		
