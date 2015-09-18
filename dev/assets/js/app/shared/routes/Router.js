@@ -172,7 +172,7 @@ APP.Router = ( function( window ) {
 		}
 		else { // 404
 			page.id		= 'error404';
-			page.params	= this.ROUTES.static.error404;
+			page.params	= this.ROUTES.statics.error404;
 		}
 		
 		APP.PagesController.setPageInfos( page.id, page.params.jsView, page.params[ APP.Lang.LANG ].title, page.params[ APP.Lang.LANG ].desc );

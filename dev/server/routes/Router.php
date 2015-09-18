@@ -156,7 +156,7 @@ class Router
 		}
 		else { // 404
 			$page->id		= 'error404';
-			$page->params	= self::$ROUTES->static->error404;
+			$page->params	= self::$ROUTES->statics->error404;
 			
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 		}

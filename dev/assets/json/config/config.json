@@ -7,7 +7,7 @@
 	"BASE_URL_PROD":			"http://www.SITE_URL.COM/",
 	"BASE_URL_PROD_ALT":		"http://startiflette:8888/www/",
 	"ROUTES_FILES":				[
-									"static",
+									"statics",
 									"projects"
 								],
 	"ALL_LANG":					[
