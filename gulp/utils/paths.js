@@ -5,7 +5,9 @@ module.exports = {
 		prod:	'www/'
 	},
 	
-	emptyFiles: '**/empty-folder.txt',
+	emptyFiles:	'**/empty-folder.txt',
+	
+	htaccess:	'.htaccess',
 	
 	server: {
 		indexFile:	'index.php',

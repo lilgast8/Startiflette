@@ -3,20 +3,32 @@ var paths	= require( '../utils/paths' );
 
 
 
-options.task			= options._[0] === undefined ? 'default' : options._[0];
-options.subtask			= null;
-options.filePath		= null;
+options.task		= options._[0] === undefined ? 'default' : options._[0];
+options.subtask		= null;
+options.filePath	= null;
 
-options.imageMin		= true;
+// options.flag		= options.prod : false;
+// options.preprod			= options.preprod : false;
+// options.preprod_local	= options.preprod_local : false;
+if ( options.prod )
+	options.env = 'prod';
+else if ( options.preprod )
+	options.env = 'preprod';
+else if ( options.preprod_local )
+	options.env = 'preprod_local';
+else
+	options.env = 'preprod_local';
 
-options.device			= null;
+options.imageMin	= true;
 
-options.cssSrcPath		= null;
-options.jsSrcPath		= null;
-options.jsonSrcPath		= null;
+options.device		= null;
 
-options.deletePath		= null;
-options.movePath		= null;
+options.cssSrcPath	= null;
+options.jsSrcPath	= null;
+options.jsonSrcPath	= null;
+
+options.deletePath	= null;
+options.movePath	= null;
 
 
 
