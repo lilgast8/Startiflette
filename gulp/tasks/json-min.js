@@ -17,7 +17,7 @@ gulp.task( 'json-min', [ 'delete' ], function () {
 	
 	
 	var configFile	= fs.readFileSync( paths.env.dev + paths.assets.json.config.configFile, 'utf8' );
-	var config		= JSON.parse(configFile);
+	var config		= JSON.parse( configFile );
 	
 	for ( var i = 0; i < config.ALL_LANG.length; i++ )
 		jsonSrcPath.push( '!' + paths.env.dev + paths.assets.json.routes.dir + config.ALL_LANG[i] + '/**/*.json' );
@@ -47,11 +47,11 @@ function minifyJsFilesFile() {
 	for ( var name in jsFiles ) {
 		i++;
 		
-		jsFile		= jsFiles[name];
+		jsFile		= jsFiles[ name ];
 		jsFileName	= JSON.stringify( jsFile.name );
 		jsFileDest	= JSON.stringify( jsFile.dest );
 		
-		data += '"'+ name +'":{"name":'+ jsFileName +',"dest":'+ jsFileDest +'}';
+		data += '"' + name + '":{"name":' + jsFileName + ',"dest":' + jsFileDest + '}';
 		
 		if ( i < aLength )
 			data += ',';
