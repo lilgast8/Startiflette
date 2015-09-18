@@ -109,7 +109,7 @@ class Path
 	}
 	
 	
-	public function getJsFilesUrl($listName)
+	public function getJsFilesUrl( $listName )
 	{
 		$jsFiles	= $this->config->getJsFilesFile();
 		$listFiles	= '';
