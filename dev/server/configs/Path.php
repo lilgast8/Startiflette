@@ -53,7 +53,7 @@ class Path
 		// url paths
 		self::$URL			= new stdClass();
 		
-		self::$URL->base	= $this->getBaseUrl();
+		self::$URL->base	= Config::$ENVS->{ Config::$ENV }->base_url;
 		self::$URL->assets	= self::$URL->base		. 'assets/';
 		self::$URL->css		= self::$URL->assets	. 'css/';
 		self::$URL->img		= self::$URL->assets	. 'img/';
@@ -81,17 +81,6 @@ class Path
 		self::$FILE->viewsPage		= self::$FILE->views	. $this->deviceDir . 'pages/';
 		self::$FILE->viewsPartials	= self::$FILE->views	. $this->deviceDir . 'partials/';
 		self::$FILE->viewsAlt		= self::$FILE->views	. 'alt/';
-	}
-	
-	
-	private function getBaseUrl()
-	{
-		// to manage depending on environment
-		
-		$baseUrl = Config::$BASE_URL_DEV;
-		
-		
-		return $baseUrl;
 	}
 	
 	

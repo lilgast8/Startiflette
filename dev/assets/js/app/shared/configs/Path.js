@@ -14,16 +14,18 @@ APP.Path = ( function( window ) {
 	
 	
 	var _setPaths = function() {
+		var baseUrl = APP.Config.ENVS[ APP.Config.ENV ].base_url;
+		
 		// url paths
 		this.URL = {
-			base:	APP.Config.BASE_URL_DEV,
-			assets:	APP.Config.BASE_URL_DEV + 'assets/',
-			css:	APP.Config.BASE_URL_DEV + 'assets/css/',
-			img:	APP.Config.BASE_URL_DEV + 'assets/img/',
-			js:		APP.Config.BASE_URL_DEV + 'assets/js/',
-			json:	APP.Config.BASE_URL_DEV + 'assets/json/',
-			routes:	APP.Config.BASE_URL_DEV + 'assets/json/routes/',
-			server:	APP.Config.BASE_URL_DEV + 'server/',
+			base:	baseUrl,
+			assets:	baseUrl + 'assets/',
+			css:	baseUrl + 'assets/css/',
+			img:	baseUrl + 'assets/img/',
+			js:		baseUrl + 'assets/js/',
+			json:	baseUrl + 'assets/json/',
+			routes:	baseUrl + 'assets/json/routes/',
+			server:	baseUrl + 'server/',
 		};
 	};
 	

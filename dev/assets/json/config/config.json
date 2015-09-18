@@ -1,11 +1,25 @@
 {
 	
 	"ENV":						"dev",
+	"ENVS":						{
+									"dev": {
+										"fallbackresource":	"/dev/",
+										"base_url":			"http://startiflette:8888/dev/"
+									},
+									"preprod": {
+										"fallbackresource":	"/preprod_startiflette/",
+										"base_url":			"http://preprod.SITE_URL.COM/"
+									},
+									"preprod_local": {
+										"fallbackresource":	"/www/",
+										"base_url":			"http://startiflette:8888/www/"
+									},
+									"prod": {
+										"fallbackresource":	"/startiflette/",
+										"base_url":			"http://www.SITE_URL.COM/"
+									}
+								},
 	"LOCALHOST":				true,
-	"BASE_URL_DEV":				"http://startiflette:8888/dev/",
-	"BASE_URL_PREPROD":			"http://preprod.SITE_URL.COM/",
-	"BASE_URL_PROD":			"http://www.SITE_URL.COM/",
-	"BASE_URL_PROD_ALT":		"http://startiflette:8888/www/",
 	"ROUTES_FILES":				[
 									"statics",
 									"projects"

@@ -10,11 +10,12 @@ class Config
 	const CONFIG_FILE_PATH		= 'assets/json/config/config.json';
 	
 	static $ENV					= null;
+	static $ENVS				= null;
 	static $LOCALHOST			= null;
-	static $BASE_URL_DEV		= null;
-	static $BASE_URL_PREPROD	= null;
-	static $BASE_URL_PROD		= null;
-	static $BASE_URL_PROD_ALT	= null;
+	// static $BASE_URL_DEV		= null;
+	// static $BASE_URL_PREPROD	= null;
+	// static $BASE_URL_PROD		= null;
+	// static $BASE_URL_PROD_ALT	= null;
 	static $ROUTES_FILES		= null;
 	static $ALL_LANG			= null;
 	static $HAS_LANG_LANDING	= null;
