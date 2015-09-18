@@ -11,7 +11,7 @@ var rename	= require( 'gulp-rename' );
 
 
 
-gulp.task( 'sass', ['sass:dev'], function() {
+gulp.task( 'sass', [ 'sass:dev' ], function() {
 	
 	if ( options.task == 'sass' )
 		gulp.start( 'move' );
@@ -19,7 +19,7 @@ gulp.task( 'sass', ['sass:dev'], function() {
 });
 
 
-gulp.task( 'sass:dev', ['delete'], function() {
+gulp.task( 'sass:dev', [ 'delete' ], function() {
 	
 	if ( options.cssSrcPath === null )
 		options.cssSrcPath = [

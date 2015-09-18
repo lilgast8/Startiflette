@@ -21,7 +21,7 @@ gulp.task( 'default', [
 
 
 /* Prod */
-gulp.task( 'prod', ['delete'], function() {
+gulp.task( 'prod', [ 'delete' ], function() {
 	
 	options.subtask = 'prod-deleted';
 	

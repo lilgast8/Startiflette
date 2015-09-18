@@ -9,7 +9,7 @@ var uglify	= require( 'gulp-uglify' );
 
 
 
-gulp.task( 'js-min', ['delete'], function() {
+gulp.task( 'js-min', [ 'delete' ], function() {
 	
 	if ( options.task == 'js' || options.task == 'js-min' )
 		gulp.start( 'move' );

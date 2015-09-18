@@ -4,7 +4,7 @@ var options	= require( '../utils/options' );
 
 
 
-gulp.task('image', function() {
+gulp.task( 'image', function() {
 	
 	if ( options.imageMin )
 		gulp.start( 'image-min' );
