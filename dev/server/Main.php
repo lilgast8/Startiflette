@@ -3,11 +3,16 @@
 
 
 include_once 'server/vendors/Mobile_Detect.php';
+
 include_once 'server/configs/Config.php';
 include_once 'server/configs/Lang.php';
 include_once 'server/configs/Path.php';
+
 include_once 'server/routes/Router.php';
+
 include_once 'server/controller/PagesController.php';
+
+include_once 'server/contents/contents.php';
 
 
 
@@ -81,7 +86,8 @@ class Main
 	
 	private function setContents()
 	{
-		$this->contents = getContents();
+		// $this->contents = getContents();
+		$this->contents = Contents::getInstance();
 	}
 	
 	

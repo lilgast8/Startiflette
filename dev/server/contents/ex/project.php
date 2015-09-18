@@ -2,16 +2,22 @@
 
 
 
-function getProject() {
+class ProjectContent
+{
 	
-	$project = new stdClass();
-	
-	
-	$project->title = "— Projet-ex —";
-	
-	
-	
-	return $project;
+	public function getDatas()
+	{
+		
+		$project = new stdClass();
+		
+		
+		$project->title = "— Projet-ex —";
+		
+		
+		
+		return $project;
+		
+	}
 	
 }
 

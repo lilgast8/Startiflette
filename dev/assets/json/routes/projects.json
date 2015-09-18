@@ -1,6 +1,6 @@
 {
 	
-	"project_1" : {
+	"project_1": {
 		"jsView"	: "project",
 		"phpView"	: "project",
 		"fr": {
@@ -20,7 +20,7 @@
 		}
 	},
 	
-	"project_2" : {
+	"project_2": {
 		"jsView"	: "project",
 		"phpView"	: "project",
 		"fr": {
@@ -40,7 +40,7 @@
 		}
 	},
 	
-	"project_3" : {
+	"project_3": {
 		"jsView"	: "project",
 		"phpView"	: "project",
 		"fr": {

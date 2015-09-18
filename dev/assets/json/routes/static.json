@@ -1,6 +1,6 @@
 {
 	
-	"error404" : {
+	"error404": {
 		"jsView"	: "error-404",
 		"phpView"	: "error-404",
 		"fr": {
@@ -20,7 +20,7 @@
 		}
 	},
 	
-	"home" : {
+	"home": {
 		"jsView"	: "home",
 		"phpView"	: "home",
 		"fr": {
@@ -40,7 +40,7 @@
 		}
 	},
 	
-	"about" : {
+	"about": {
 		"jsView"	: "about",
 		"phpView"	: "about",
 		"fr": {
@@ -60,7 +60,7 @@
 		}
 	},
 	
-	"projects" : {
+	"projects": {
 		"jsView"	: "projects",
 		"phpView"	: "projects",
 		"fr": {
@@ -80,7 +80,7 @@
 		}
 	},
 	
-	"legal_notices" : {
+	"legal_notices": {
 		"jsView"	: "legal-notices",
 		"phpView"	: "legal-notices",
 		"fr": {

@@ -72,9 +72,11 @@ class Path
 		self::$FILE->js				= self::$FILE->assets	. 'js/';
 		self::$FILE->json			= self::$FILE->assets	. 'json/';
 		self::$FILE->jsFilesFile	= self::$FILE->json		. 'config/js-files.json';
+		self::$FILE->contentsFile	= self::$FILE->json		. 'config/contents.json';
 		self::$FILE->routes			= self::$FILE->json		. 'routes/';
 		self::$FILE->server			= 'server/';
 		self::$FILE->shared			= self::$FILE->server	. 'shared/';
+		self::$FILE->contents		= self::$FILE->server	. 'contents/';
 		self::$FILE->views			= self::$FILE->server	. 'views/';
 		self::$FILE->viewsPage		= self::$FILE->views	. $this->deviceDir . 'pages/';
 		self::$FILE->viewsPartials	= self::$FILE->views	. $this->deviceDir . 'partials/';

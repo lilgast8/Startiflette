@@ -70,17 +70,17 @@
 			<ul>
 				<li>
 					<a href="<?php echo Router::$LINK->static->home; ?>" class="menu-link">
-						<?php echo $this->contents->global->menu->home; ?>
+						<?php echo Contents::$datas->global->menu->home; ?>
 					</a>
 				</li>
 				<li>
 					<a href="<?php echo Router::$LINK->static->about; ?>" class="menu-link">
-						<?php echo $this->contents->global->menu->about; ?>
+						<?php echo Contents::$datas->global->menu->about; ?>
 					</a>
 				</li>
 				<li>
 					<a href="<?php echo Router::$LINK->static->projects; ?>" class="menu-link">
-						<?php echo $this->contents->global->menu->projects; ?>
+						<?php echo Contents::$datas->global->menu->projects; ?>
 					</a>
 				</li>
 			</ul>

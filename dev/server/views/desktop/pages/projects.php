@@ -3,7 +3,7 @@
 <section id="page-content" class="projects">
 	
 	<br><br><br>
-	<?php echo $this->contents->projects->title; ?><br>
+	<?php echo Contents::$datas->projects->title; ?><br>
 	desktop page content / <?php echo Lang::$LANG; ?>
 	<br><br>
 	<img src="<?php echo Path::$URL->img ?>temp/projects.jpg" alt="Projects">
