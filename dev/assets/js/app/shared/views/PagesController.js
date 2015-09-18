@@ -203,6 +203,9 @@ APP.PagesController = ( function( window ) {
 	
 	
 	var _loadContent = function( pageUrl ) {
+		if ( this.page.id == 'error404' ) // used to avoid that the request return a error on callback if it's a 404 page 
+			pageUrl = APP.Path.URL.base + APP.Lang.LANG + '/' + APP.Router.ROUTES.statics.error404[ APP.Lang.LANG ].url;
+		
 		$.ajax({
 			context:	this,
 			url:		pageUrl,
@@ -228,7 +231,7 @@ APP.PagesController = ( function( window ) {
 	};
 	
 	
-	var _onContentError = function() {
+	var _onContentError = function( e ) {
 		console.log( 'ajax load error' );
 		// window.location.href = APP.Routes.PAGE_URL.full;
 	};
