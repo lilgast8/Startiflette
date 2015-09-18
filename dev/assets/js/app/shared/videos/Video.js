@@ -90,7 +90,7 @@ APP.Video = ( function( window ) {
 	var _canPlayThrough = function() {
 		this.isCanPlayThrough = true;
 		
-		if ( this.isPlayed) 
+		if ( this.isPlayed ) 
 			_managePlay.call(this);
 	};
 	
