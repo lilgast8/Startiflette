@@ -2,12 +2,17 @@
 
 
 
-defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
-
 include_once 'server/vendors/Mobile_Detect.php';
-include_once 'server/Config.php';
-include_once 'server/Path.php';
-include_once 'server/controller/RoutesController.php';
+
+include_once 'server/configs/Config.php';
+include_once 'server/configs/Lang.php';
+include_once 'server/configs/Path.php';
+
+include_once 'server/routes/Router.php';
+
+include_once 'server/controller/PagesController.php';
+
+include_once 'server/contents/contents.php';
 
 
 
@@ -24,7 +29,12 @@ class Main
 	
 	protected function __construct()
 	{
-		
+		$this->setConfig();
+		$this->setPath();
+		$this->setLang();
+		$this->setRoutes();
+		$this->setPagesController();
+		$this->setContents();
 	}
 	
 	
@@ -36,20 +46,10 @@ class Main
 	
 	public static function getInstance()
 	{
-		if(!isset(self::$instance))
+		if ( !isset( self::$instance ) )
 			self::$instance = new self;
 		
 		return self::$instance;
-	}
-	
-	
-	public function init()
-	{
-		$this->setConfig();
-		// $this->setPath();
-		// $this->config->init();
-		// $this->setRoutes();
-		// $this->setContents();
 	}
 	
 	
@@ -65,16 +65,54 @@ class Main
 	}
 	
 	
+	private function setLang()
+	{
+		$this->lang = Lang::getInstance();
+	}
+	
+	
 	private function setRoutes()
 	{
-		$this->routes = RoutesController::getInstance();
+		$this->router = Router::getInstance();
+		$this->router->init();
+	}
+	
+	
+	private function setPagesController()
+	{
+		$this->pagesController = PagesController::getInstance();
 	}
 	
 	
 	private function setContents()
 	{
-		include_once $this->path->file->contents . DS . 'contents.php';
-		$this->contents = getContents();
+		// $this->contents = getContents();
+		$this->contents = Contents::getInstance();
+	}
+	
+	
+	public function renderView()
+	{
+		$viewPath = $this->getViewPath();
+		
+		if ( Router::$CONTENT_TYPE == 'firstLoad' )
+			include_once Path::$FILE->viewsPartials . 'header.php';
+		
+		include_once $viewPath . PagesController::$PAGE->phpView . '.php';
+		
+		if ( Router::$CONTENT_TYPE == 'firstLoad' )
+			include_once Path::$FILE->viewsPartials . 'footer.php';
+	}
+	
+	
+	private function getViewPath()
+	{
+		$viewPath = Router::$CONTENT_TYPE == 'firstLoad' || Router::$CONTENT_TYPE == 'pageChange' ?
+					Path::$FILE->viewsPage :
+					Path::$FILE->viewsAlt;
+		
+		
+		return $viewPath;
 	}
 	
 }

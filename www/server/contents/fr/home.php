@@ -2,16 +2,22 @@
 
 
 
-function getHome() {
+class HomeContent
+{
 	
-	$home = new stdClass();
-	
-	
-	$home->title = "— Accueil —";
-	
-	
-	
-	return $home;
+	public function getDatas()
+	{
+		
+		$home = new stdClass();
+		
+		
+		$home->title = "— Accueil —";
+		
+		
+		
+		return $home;
+		
+	}
 	
 }
 

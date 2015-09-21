@@ -2,30 +2,64 @@
 
 
 
-function getContents() {
+class Contents
+{
 	
-	include_once Config::$LANG . DS . 'global.php';
-	include_once Config::$LANG . DS . 'alt.php';
+	protected static $instance;
 	
-	include_once Config::$LANG . DS . 'home.php';
-	include_once Config::$LANG . DS . 'about.php';
-	include_once Config::$LANG . DS . 'projects.php';
-	include_once Config::$LANG . DS . 'project.php';
+	static $datas = null;
 	
 	
-	$contents = new stdClass();
-	
-	$contents->global	= getGlobal();
-	$contents->alt		= getAlt();
-	
-	$contents->home		= getHome();
-	$contents->about	= getAbout();
-	$contents->projects	= getProjects();
-	$contents->project	= getProject();
+	protected function __construct()
+	{
+		$this->setContentsConfig();
+		$this->setDatas();
+	}
 	
 	
+	public static function getInstance()
+	{
+		if ( !isset( self::$instance ) )
+			self::$instance = new self;
+		
+		return self::$instance;
+	}
 	
-	return $contents;
+	
+	protected function __clone()
+	{
+		
+	}
+	
+	
+	private function setContentsConfig()
+	{
+		$this->contentsConfig = new stdClass();
+		
+		if ( !file_exists( Path::$FILE->contentsFile ) )
+			throw new ErrorException( 'Content infos file is missing!' );
+		
+		$this->contentsConfig	= file_get_contents( Path::$FILE->contentsFile );
+		$this->contentsConfig	= json_decode( $this->contentsConfig );
+	}
+	
+	
+	private function setDatas()
+	{
+		self::$datas = new stdClass();
+		
+		foreach ( $this->contentsConfig as $id => $contentsInfos ) {
+			$langFilePath = Path::$FILE->contents . Lang::$LANG . '/' . $contentsInfos->fileName . '.php';
+			
+			if ( !file_exists( $langFilePath ) )
+				include_once Path::$FILE->contents . 'global/' . $contentsInfos->fileName . '.php';
+			else
+				include_once $langFilePath;
+			
+			$className				= new $contentsInfos->className();
+			self::$datas->{ $id }	= $className->getDatas();
+		}
+	}
 	
 }
 

@@ -2,16 +2,22 @@
 
 
 
-function getAbout() {
+class AboutContent
+{
 	
-	$about = new stdClass();
-	
-	
-	$about->title = "— À propos —";
-	
-	
-	
-	return $about;
+	public function getDatas()
+	{
+		
+		$about = new stdClass();
+		
+		
+		$about->title = "— À propos —";
+		
+		
+		
+		return $about;
+		
+	}
 	
 }
 
