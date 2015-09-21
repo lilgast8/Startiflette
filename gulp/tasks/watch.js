@@ -24,13 +24,13 @@ gulp.task( 'watch', function() {
 		
 		options.filePath	= e.path;
 		ext					= path.extname( options.filePath );
+		options.fileName	= path.basename( options.filePath )
 		
-		desktop	= options.filePath.indexOf( 'desktop/' ) > -1 ? true : false;
-		mobile	= options.filePath.indexOf( 'mobile/' ) > -1 ? true : false;
-		shared	= options.filePath.indexOf( 'shared/' ) > -1 ? true : false;
-		config	= options.filePath.indexOf( 'config/' ) > -1 ? true : false;
-		routes	= options.filePath.indexOf( 'routes/' ) > -1 ? true : false;
-		
+		desktop		= options.filePath.indexOf( 'desktop/' ) > -1 ? true : false;
+		mobile		= options.filePath.indexOf( 'mobile/' ) > -1 ? true : false;
+		shared		= options.filePath.indexOf( 'shared/' ) > -1 ? true : false;
+		config		= options.filePath.indexOf( 'config/' ) > -1 ? true : false;
+		routes		= options.filePath.indexOf( 'routes/' ) > -1 ? true : false;
 		
 		/* SASS */
 		if ( ext == '.scss' ) {

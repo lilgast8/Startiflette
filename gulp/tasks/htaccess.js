@@ -23,7 +23,8 @@ gulp.task( 'htaccess', function() {
 	*/
 	var infos	= getInfos( config.ENVS );
 	
-	console.log( infos );
+	// console.log( infos );
+	
 	// console.log( baseUrlFBR );
 	// console.log( baseUrlFBR, filePath );
 	
@@ -51,23 +52,26 @@ function getInfos( envs ) {
 		dirPath:	''
 	};
 	
+	// console.log( options );
+	
+	
 	/* htaccess */
-	if ( options.task == 'htaccess' && options.dev )
+	if ( options.task == 'htaccess' && options.env == 'dev' )
 		infos = {
 			baseUrlFBR:	envs.dev.fallbackresource,
 			dirPath:	paths.env.dev
 		};
-	else if ( options.task == 'htaccess' && options.prod )
+	else if ( options.task == 'htaccess' && options.env == 'prod' )
 		infos = {
 			baseUrlFBR:	envs.prod.fallbackresource,
 			dirPath:	paths.env.prod
 		};
-	else if ( options.task == 'htaccess' && options.preprod )
+	else if ( options.task == 'htaccess' && options.env == 'preprod' )
 		infos = {
 			baseUrlFBR:	envs.preprod.fallbackresource,
 			dirPath:	paths.env.prod
 		};
-	else if ( options.task == 'htaccess' && options.preprod_local )
+	else if ( options.task == 'htaccess' && options.env == 'preprod_local' )
 		infos = {
 			baseUrlFBR:	envs.preprod_local.fallbackresource,
 			dirPath:	paths.env.prod
@@ -87,13 +91,21 @@ function getInfos( envs ) {
 		};
 	
 	
+	/* Default - Dev */
+	else if ( options.task == 'default' )
+		infos = {
+			baseUrlFBR:	envs.dev.fallbackresource,
+			dirPath:	paths.env.dev
+		};
+	
+	
 	/* Prod */
-	else if ( options.task == 'prod' && options.preprod )
+	else if ( options.task == 'prod' && options.env == 'preprod' )
 		infos = {
 			baseUrlFBR:	envs.preprod.fallbackresource,
 			dirPath:	paths.env.prod
 		};
-	else if ( options.task == 'prod' && options.preprod_local )
+	else if ( options.task == 'prod' && options.env == 'preprod_local' )
 		infos = {
 			baseUrlFBR:	envs.preprod_local.fallbackresource,
 			dirPath:	paths.env.prod
@@ -103,6 +115,61 @@ function getInfos( envs ) {
 			baseUrlFBR:	envs.prod.fallbackresource,
 			dirPath:	paths.env.prod
 		};
+	
+	
+	
+	// /* htaccess */
+	// if ( options.task == 'htaccess' && options.dev )
+	// 	infos = {
+	// 		baseUrlFBR:	envs.dev.fallbackresource,
+	// 		dirPath:	paths.env.dev
+	// 	};
+	// else if ( options.task == 'htaccess' && options.prod )
+	// 	infos = {
+	// 		baseUrlFBR:	envs.prod.fallbackresource,
+	// 		dirPath:	paths.env.prod
+	// 	};
+	// else if ( options.task == 'htaccess' && options.preprod )
+	// 	infos = {
+	// 		baseUrlFBR:	envs.preprod.fallbackresource,
+	// 		dirPath:	paths.env.prod
+	// 	};
+	// else if ( options.task == 'htaccess' && options.preprod_local )
+	// 	infos = {
+	// 		baseUrlFBR:	envs.preprod_local.fallbackresource,
+	// 		dirPath:	paths.env.prod
+	// 	};
+	// else if ( options.task == 'htaccess' )
+	// 	infos = {
+	// 		baseUrlFBR:	envs.preprod_local.fallbackresource,
+	// 		dirPath:	paths.env.prod
+	// 	};
+	
+	
+	// /* Init */
+	// else if ( options.task == 'init' )
+	// 	infos = {
+	// 		baseUrlFBR:	envs.dev.fallbackresource,
+	// 		dirPath:	paths.env.dev
+	// 	};
+	
+	
+	// /* Prod */
+	// else if ( options.task == 'prod' && options.preprod )
+	// 	infos = {
+	// 		baseUrlFBR:	envs.preprod.fallbackresource,
+	// 		dirPath:	paths.env.prod
+	// 	};
+	// else if ( options.task == 'prod' && options.preprod_local )
+	// 	infos = {
+	// 		baseUrlFBR:	envs.preprod_local.fallbackresource,
+	// 		dirPath:	paths.env.prod
+	// 	};
+	// else if ( options.task == 'prod' )
+	// 	infos = {
+	// 		baseUrlFBR:	envs.prod.fallbackresource,
+	// 		dirPath:	paths.env.prod
+	// 	};
 	
 	
 	return infos;
