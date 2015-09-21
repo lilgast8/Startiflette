@@ -5,34 +5,36 @@
 		"className"	: "AltContent"
 	},
 	
-	"error404": {
-		"fileName"	: "error-404",
-		"className"	: "Error404Content"
-	},
-	
 	"global": {
 		"fileName"	: "global",
 		"className"	: "GlobalContent"
 	},
 	
-	"home": {
-		"fileName"	: "home",
-		"className"	: "HomeContent"
-	},
-	
-	"about": {
-		"fileName"	: "about",
-		"className"	: "AboutContent"
-	},
-	
-	"projects": {
-		"fileName"	: "projects",
-		"className"	: "ProjectsContent"
-	},
-	
-	"project": {
-		"fileName"	: "project",
-		"className"	: "ProjectContent"
+	"pages": {
+		"error404": {
+			"fileName"	: "error-404",
+			"className"	: "Error404Content"
+		},
+		
+		"home": {
+			"fileName"	: "home",
+			"className"	: "HomeContent"
+		},
+		
+		"about": {
+			"fileName"	: "about",
+			"className"	: "AboutContent"
+		},
+		
+		"projects": {
+			"fileName"	: "projects",
+			"className"	: "ProjectsContent"
+		},
+		
+		"project": {
+			"fileName"	: "project",
+			"className"	: "ProjectContent"
+		}
 	}
 	
 }
