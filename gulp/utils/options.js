@@ -7,9 +7,6 @@ options.task		= options._[0] === undefined ? 'default' : options._[0];
 options.subtask		= null;
 options.filePath	= null;
 
-// options.flag		= options.prod : false;
-// options.preprod			= options.preprod : false;
-// options.preprod_local	= options.preprod_local : false;
 setEnv();
 
 options.imageMin	= true;
