@@ -16,12 +16,14 @@ gulp.task( 'move', function() {
 				paths.env.dev + paths.assets.css.minAllFiles,
 				paths.env.dev + paths.assets.css.fonts.allFiles,
 				paths.env.dev + paths.assets.js.vendors.HTML5ShivFile,
-				paths.env.dev + paths.server.allFiles,
+				paths.env.dev + paths.server.indexFile,
+				paths.env.dev + paths.server.allFiles
 			],
 			to: [
 				paths.env.prod + paths.assets.css.dir,
 				paths.env.prod + paths.assets.css.fonts.dir,
 				paths.env.prod + paths.assets.js.vendors.dir,
+				paths.env.prod,
 				paths.env.prod + paths.server.dir
 			]
 		};

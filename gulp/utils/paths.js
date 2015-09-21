@@ -1,6 +1,7 @@
 module.exports = {
 	
 	env: {
+		base:	'base/',
 		dev:	'dev/',
 		prod:	'www/'
 	},

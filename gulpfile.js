@@ -10,7 +10,8 @@ var options		= require( './gulp/utils/options' );
 
 /* Init */
 gulp.task( 'init', [
-	'delete'
+	// 'delete',
+	'htaccess'
 ] );
 
 
@@ -30,10 +31,11 @@ gulp.task( 'prod', [ 'delete' ], function() {
 } );
 
 gulp.task( 'prod:move', [
-	'sass',
-	'js',
-	'json',
-	'image'
+	'htaccess',
+	// 'sass',
+	// 'js',
+	// 'json',
+	// 'image'
 ], function() {
 	
 	gulp.start( 'move' );
