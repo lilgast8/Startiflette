@@ -72,58 +72,12 @@ class Contents
 		
 		// page change load
 		else if ( Router::$CONTENT_TYPE == 'pageChange' ) {
-			echo 'PAGE CHANGE';
-			
 			$fileName	= PagesController::$PAGE->phpView;
 			$className	= $this->contentsConfig->pages->{ PagesController::$PAGE->id }->className;
 			$id			= PagesController::$PAGE->id;
 			
 			$this->getDatas( $fileName, $className, $id );
 		}
-		
-		
-		/*
-		foreach ( $this->contentsConfig as $id => $contentsInfos ) {
-			if ( $id != 'pages' ) { // alt, global...
-				$fileName	= $contentsInfos->fileName;
-				$className	= $contentsInfos->className;
-			}
-			else { // pages
-				$fileName	= PagesController::$PAGE->phpView;
-				$className	= $this->contentsConfig->pages->{ PagesController::$PAGE->id }->className;
-				$id			= PagesController::$PAGE->id;
-			}
-			
-			$this->getDatas( $fileName, $className, $id );
-			
-			// $langFilePath = Path::$FILE->contents . Lang::$LANG . '/' . $fileName . '.php';
-			
-			// if ( !file_exists( $langFilePath ) )
-			// 	include_once Path::$FILE->contents . 'global/' . $fileName . '.php';
-			// else
-			// 	include_once $langFilePath;
-			
-			// $class					= new $className();
-			// self::$datas->{ $id }	= $class->getDatas();
-			
-			
-			
-			// $langFilePath = Path::$FILE->contents . Lang::$LANG . '/' . $contentsInfos->fileName . '.php';
-			
-			// if ( !file_exists( $langFilePath ) )
-			// 	include_once Path::$FILE->contents . 'global/' . $contentsInfos->fileName . '.php';
-			// else
-			// 	include_once $langFilePath;
-			
-			// $className				= new $contentsInfos->className();
-			// self::$datas->{ $id }	= $className->getDatas();
-		}
-		*/
-		
-		echo '<pre>';
-		var_dump(self::$datas);
-		echo '</pre>';
-		// print_r(self::$datas);
 	}
 	
 	
