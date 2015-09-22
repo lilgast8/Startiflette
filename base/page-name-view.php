@@ -2,6 +2,6 @@
 <!-- Page name -->
 <section id="page-content" class="pageClassName">
 	
-	PageName
+	Page name
 	
 </section>

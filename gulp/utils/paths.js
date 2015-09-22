@@ -13,7 +13,16 @@ module.exports = {
 	server: {
 		indexFile:	'index.php',
 		dir:		'server/',
-		allFiles:	'server/**/*'
+		allFiles:	'server/**/*',
+		
+		
+		contents: 'server/contents/',
+		
+		views: {
+			desktop: {
+				pages: 'server/views/desktop/pages/'
+			}
+		}
 	},
 	
 	assets: {
@@ -25,7 +34,11 @@ module.exports = {
 			
 			app: {
 				desktopFile:	'assets/css/app/styles-desktop.scss',
-				mobileFile:		'assets/css/app/styles-mobile.scss'
+				mobileFile:		'assets/css/app/styles-mobile.scss',
+				
+				desktop: {
+					pages:		'assets/css/app/desktop/pages/'
+				}
 			},
 			
 			fonts: {
@@ -47,7 +60,13 @@ module.exports = {
 				allFiles:			'assets/js/app/**/*.js',
 				desktopAllFiles:	'assets/js/app/desktop/**/*.js',
 				mobileAllFiles:		'assets/js/app/mobile/**/*.js',
-				sharedAllFiles:		'assets/js/app/shared/**/*.js'
+				sharedAllFiles:		'assets/js/app/shared/**/*.js',
+				
+				desktop: {
+					views: {
+						pages: 'assets/js/app/desktop/views/pages/',
+					}
+				}
 			},
 			
 			vendors: {
