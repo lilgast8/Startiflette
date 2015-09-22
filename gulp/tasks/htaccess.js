@@ -9,12 +9,11 @@ var fs		= require( 'fs' );
 
 gulp.task( 'htaccess', function() {
 	
-	var data			= fs.readFileSync( paths.env.base + paths.htaccess, 'utf8' );
-	
 	var configFile		= fs.readFileSync( paths.env.dev + paths.assets.json.config.configFile, 'utf8' );
 	var config			= JSON.parse( configFile );
 	var infos			= getInfos( config.ENVS );
 	
+	var data			= fs.readFileSync( paths.env.base + paths.htaccess, 'utf8' );
 	var stringToReplace	= 'FallbackResource BASE_URL_FBR';
 	var newString		= 'FallbackResource ' + infos.baseUrlFBR + 'index.php';
 	
