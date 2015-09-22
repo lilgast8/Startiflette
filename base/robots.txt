@@ -2,4 +2,4 @@ User-Agent: *
 Disallow: /assets/
 Disallow: /server/
 
-Sitemap: http://www.SITE_URL.COM/sitemap.xml
+Sitemap: BASE_URL/sitemap.xml

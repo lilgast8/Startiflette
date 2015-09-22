@@ -2,6 +2,7 @@ var gulp	= require( 'gulp' );
 
 var options	= require( '../utils/options' );
 var paths	= require( '../utils/paths' );
+var configs	= require( '../utils/configs' );
 
 var fs		= require( 'fs' );
 
@@ -9,8 +10,7 @@ var fs		= require( 'fs' );
 
 gulp.task( 'htaccess', function() {
 	
-	var configFile		= fs.readFileSync( paths.env.dev + paths.assets.json.config.configFile, 'utf8' );
-	var config			= JSON.parse( configFile );
+	var config			= configs.getConfig();
 	var infos			= getInfos( config.ENVS );
 	
 	var data			= fs.readFileSync( paths.env.base + paths.htaccess, 'utf8' );

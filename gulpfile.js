@@ -32,6 +32,7 @@ gulp.task( 'prod', [ 'delete' ], function() {
 
 gulp.task( 'prod:move', [
 	'htaccess',
+	'robots',
 	'sass',
 	'js',
 	'json',

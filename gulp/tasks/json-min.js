@@ -1,6 +1,7 @@
 var gulp		= require( 'gulp' );
 
 var paths		= require( '../utils/paths' );
+var configs		= require( '../utils/configs' );
 
 var fs			= require( 'fs' );
 var plumber		= require( 'gulp-plumber' );
@@ -15,9 +16,7 @@ gulp.task( 'json-min', [ 'delete' ], function () {
 		'!' + paths.env.dev + paths.assets.json.config.jsFilesFile
 	];
 	
-	
-	var configFile	= fs.readFileSync( paths.env.dev + paths.assets.json.config.configFile, 'utf8' );
-	var config		= JSON.parse( configFile );
+	var config = configs.getConfig();
 	
 	for ( var i = 0; i < config.ALL_LANG.length; i++ )
 		jsonSrcPath.push( '!' + paths.env.dev + paths.assets.json.routes.dir + config.ALL_LANG[i] + '/**/*.json' );
