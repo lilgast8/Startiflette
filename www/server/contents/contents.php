@@ -48,17 +48,50 @@ class Contents
 	{
 		self::$datas = new stdClass();
 		
-		foreach ( $this->contentsConfig as $id => $contentsInfos ) {
-			$langFilePath = Path::$FILE->contents . Lang::$LANG . '/' . $contentsInfos->fileName . '.php';
+		
+		// first load
+		if ( Router::$CONTENT_TYPE == 'firstLoad' ) {
 			
-			if ( !file_exists( $langFilePath ) )
-				include_once Path::$FILE->contents . 'global/' . $contentsInfos->fileName . '.php';
-			else
-				include_once $langFilePath;
+			foreach ( $this->contentsConfig as $id => $contentsInfos ) {
+				
+				if ( $id != 'pages' ) { // alt, global...
+					$fileName	= $contentsInfos->fileName;
+					$className	= $contentsInfos->className;
+				}
+				else { // pages
+					$fileName	= PagesController::$PAGE->phpView;
+					$className	= $this->contentsConfig->pages->{ PagesController::$PAGE->id }->className;
+					$id			= PagesController::$PAGE->id;
+				}
+				
+				$this->getDatas( $fileName, $className, $id );
+				
+			}
 			
-			$className				= new $contentsInfos->className();
-			self::$datas->{ $id }	= $className->getDatas();
 		}
+		
+		// page change load
+		else if ( Router::$CONTENT_TYPE == 'pageChange' ) {
+			$fileName	= PagesController::$PAGE->phpView;
+			$className	= $this->contentsConfig->pages->{ PagesController::$PAGE->id }->className;
+			$id			= PagesController::$PAGE->id;
+			
+			$this->getDatas( $fileName, $className, $id );
+		}
+	}
+	
+	
+	private function getDatas( $fileName, $className, $id )
+	{
+		$langFilePath = Path::$FILE->contents . Lang::$LANG . '/' . $fileName . '.php';
+		
+		if ( !file_exists( $langFilePath ) )
+			include_once Path::$FILE->contents . 'global/' . $fileName . '.php';
+		else
+			include_once $langFilePath;
+		
+		$class					= new $className();
+		self::$datas->{ $id }	= $class->getDatas();
 	}
 	
 }
