@@ -30,76 +30,71 @@ gulp.task( 'newpage', function() {
 				message: 'Create new page?'
 			}
 		], function( answers ) {
-		
-		// Use user feedback for... whatever!!
-		
-		// console.log( 'Do string shit!!!', answers );
-		
-		
-		var fileNameLowerCase			= answers.pageName.toLowerCase();
-		var fileNameUpperCase			= answers.pageName.toUpperCase();
-		var fileNameCapitalize			= upperCaseFirstLetter( answers.pageName );
-		var fileNameTitleCase			= toTitleCase ( answers.pageName );
-		var fileNameTitleCaseNoSpace	= fileNameTitleCase.replace( ' ', '' );
-		var dashedFileName				= fileNameLowerCase.replace( ' ', '-' );
-		var shortPageName				= answers.shortPageName != 'nPage' ? answers.shortPageName : lowerCaseFirstLetter( fileNameTitleCaseNoSpace );
-		
-		// console.log( fileNameLowerCase, '/', fileNameUpperCase, '/', fileNameCapitalize, '/', fileNameTitleCase, '/', fileNameTitleCaseNoSpace, '/', dashedFileName );
-		
-		
-		var cssFileName	= '_' + dashedFileName + '.scss';
-		var phpFileName	= dashedFileName + '.php';
-		var jsFileName	= fileNameTitleCaseNoSpace + '.js';
-		
-		// console.log( cssFileName, '/', fileNameUpperCase, '/', phpFileName, '/', jsFileName );
-		
-		
-		var cssClassName		= lowerCaseFirstLetter( shortPageName );
-		var phpContentClassName	= fileNameTitleCaseNoSpace + 'Content';
-		var phpContentVarName	= '$' + lowerCaseFirstLetter( shortPageName );
-		var jsFileName			= fileNameTitleCaseNoSpace + '.js';
-		var jsClassName			= fileNameTitleCaseNoSpace;
-		
-		// console.log( cssClassName, '/', phpContentClassName, '/', phpContentVarName, '/', jsFileName );
-		
-		
-		
-		// css
-		// createFile( '_page-name.scss',
-		// 			paths.env.dev + paths.assets.css.app.desktop.pages + cssFileName,
-		// 			[ 'PAGE NAME', 'pageClassName' ],
-		// 			[ fileNameUpperCase, cssClassName ] );
-		
-		// php view
-		// createFile( 'page-name-view.php',
-		// 			paths.env.dev + paths.server.views.desktop.pages + phpFileName,
-		// 			[ 'Page name', 'pageClassName', 'Page name' ],
-		// 			[ fileNameCapitalize, cssClassName, fileNameCapitalize ] );
-		
-		// php content
-		// createFile( 'page-name-content.php',
-		// 			paths.env.dev + paths.server.contents + 'LANG/' + phpFileName,
-		// 			[ 'PageNameContent', '$page', 'Page name' ],
-		// 			[ phpContentClassName, phpContentVarName, fileNameCapitalize ] );
-		
-		// js
-		createFile( 'PageName.js',
-					paths.env.dev + paths.assets.js.app.desktop.views.pages + jsFileName,
-					[ 'PageName' ],
-					[ jsClassName ] );
-		
-		// var data = fs.readFileSync( paths.env.base + paths.htaccess, 'utf8' );
-		// var stringToReplace	= 'FallbackResource BASE_URL_FBR';
-		// var newString		= 'FallbackResource ' + infos.baseUrlFBR + 'index.php';
-		
-		// data				= data.replace( stringToReplace, newString );
-		
-		// fs.writeFileSync( infos.dirPath + paths.htaccess, data, 'utf8' );
-		
-	});
+			
+			var fileNameLowerCase			= answers.pageName.toLowerCase();
+			var fileNameUpperCase			= answers.pageName.toUpperCase();
+			var fileNameCapitalize			= upperCaseFirstLetter( answers.pageName );
+			var fileNameTitleCase			= toTitleCase ( answers.pageName );
+			var fileNameTitleCaseNoSpace	= fileNameTitleCase.replace( ' ', '' );
+			var dashedFileName				= fileNameLowerCase.replace( ' ', '-' );
+			var shortPageName				= answers.shortPageName != 'nPage' ? answers.shortPageName : lowerCaseFirstLetter( fileNameTitleCaseNoSpace );
+			
+			var cssFileName	= '_' + dashedFileName + '.scss';
+			var phpFileName	= dashedFileName + '.php';
+			var jsFileName	= fileNameTitleCaseNoSpace + '.js';
+			
+			var cssClassName		= lowerCaseFirstLetter( shortPageName );
+			var phpContentClassName	= fileNameTitleCaseNoSpace + 'Content';
+			var phpContentVarName	= '$' + lowerCaseFirstLetter( shortPageName );
+			var jsFileName			= fileNameTitleCaseNoSpace + '.js';
+			var jsClassName			= fileNameTitleCaseNoSpace;
+			
+			
+			// css
+			createFile( '_page-name.scss',
+						paths.env.dev + paths.assets.css.app.desktop.pages + cssFileName,
+						[ 'PAGE NAME', 'pageClassName' ],
+						[ fileNameUpperCase, cssClassName ] );
+			
+			// php view
+			createFile( 'page-name-view.php',
+						paths.env.dev + paths.server.views.desktop.pages + phpFileName,
+						[ 'Page name', 'pageClassName', 'Page name' ],
+						[ fileNameCapitalize, cssClassName, fileNameCapitalize ] );
+			
+			// php content
+			createFile( 'page-name-content.php',
+						paths.env.dev + paths.server.contents + 'LANG/' + phpFileName,
+						[ 'PageNameContent', '$page', 'Page name' ],
+						[ phpContentClassName, phpContentVarName, fileNameCapitalize ] );
+			
+			// js
+			createFile( 'PageName.js',
+						paths.env.dev + paths.assets.js.app.desktop.views.pages + jsFileName,
+						[ 'PageName' ],
+						[ jsClassName ] );
+		}
+	);
 	
 } );
 
+
+
+function toTitleCase( string ) {
+	return string.replace( /\w\S*/g, function( txt ) {
+		return txt[0].toUpperCase() + txt.substr(1).toLowerCase();
+	});
+}
+
+
+function upperCaseFirstLetter( string ) {
+	return string[0].toUpperCase() + string.slice(1);
+}
+
+
+function lowerCaseFirstLetter( string ) {
+	return string[0].toLowerCase() + string.slice(1);
+}
 
 
 function createFile( file, destFilePath, aStringToReplace, aNewString ) {
@@ -132,21 +127,4 @@ function createFile( file, destFilePath, aStringToReplace, aNewString ) {
 	else
 		fs.writeFileSync( destFilePath, data, 'utf8' );
 	
-}
-
-
-function toTitleCase( string ) {
-	return string.replace( /\w\S*/g, function( txt ) {
-		return txt[0].toUpperCase() + txt.substr(1).toLowerCase();
-	});
-}
-
-
-function upperCaseFirstLetter( string ) {
-	return string[0].toUpperCase() + string.slice(1);
-}
-
-
-function lowerCaseFirstLetter( string ) {
-	return string[0].toLowerCase() + string.slice(1);
 }
