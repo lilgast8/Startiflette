@@ -10,42 +10,50 @@ var fs			= require( 'fs' );
 
 gulp.task( 'newpage', function() {
 	
+	var DEFAULT_NAME		= 'new page';
+	var SHORT_DEFAULT_NAME	= 'n pa';
+	
 	inquirer.prompt(
 		[
 			{
-				type: 'input',
-				name: 'pageName',
-				message: 'Name of the new page:',
-				default: "New page"
+				type:		'input',
+				name:		'pageName',
+				message:	'Name of the new page:',
+				default:	DEFAULT_NAME
 			},
 			{
-				type: 'input',
-				name: 'shortPageName',
-				message: 'Short name of the new page:',
-				default: "nPage"
+				type:		'input',
+				name:		'shortPageName',
+				message:	'Short name of the new page:',
+				default:	SHORT_DEFAULT_NAME
 			},
 			{
-				type: 'confirm',
-				name: 'moveon',
-				message: 'Create new page?'
+				type:		'confirm',
+				name:		'createNewPage',
+				message:	'Create new page?'
 			}
 		], function( answers ) {
+			
+			if ( !answers.createNewPage )
+				return;
 			
 			var fileNameLowerCase			= answers.pageName.toLowerCase();
 			var fileNameUpperCase			= answers.pageName.toUpperCase();
 			var fileNameCapitalize			= upperCaseFirstLetter( answers.pageName );
-			var fileNameTitleCase			= toTitleCase ( answers.pageName );
+			var fileNameTitleCase			= titleCase ( answers.pageName );
 			var fileNameTitleCaseNoSpace	= fileNameTitleCase.replace( ' ', '' );
 			var dashedFileName				= fileNameLowerCase.replace( ' ', '-' );
-			var shortPageName				= answers.shortPageName != 'nPage' ? answers.shortPageName : lowerCaseFirstLetter( fileNameTitleCaseNoSpace );
+			var shortName					= answers.shortPageName != SHORT_DEFAULT_NAME ? answers.shortPageName : answers.pageName;
+			var shortNameTitleCase			= titleCase( shortName );
+			var shortNameTitleCaseNoSpace	= shortNameTitleCase.replace( ' ', '' );
 			
-			var cssFileName	= '_' + dashedFileName + '.scss';
-			var phpFileName	= dashedFileName + '.php';
-			var jsFileName	= fileNameTitleCaseNoSpace + '.js';
+			var cssFileName			= '_' + dashedFileName + '.scss';
+			var phpFileName			= dashedFileName + '.php';
+			var jsFileName			= fileNameTitleCaseNoSpace + '.js';
 			
-			var cssClassName		= lowerCaseFirstLetter( shortPageName );
+			var cssClassName		= lowerCaseFirstLetter( shortNameTitleCaseNoSpace );
 			var phpContentClassName	= fileNameTitleCaseNoSpace + 'Content';
-			var phpContentVarName	= '$' + lowerCaseFirstLetter( shortPageName );
+			var phpContentVarName	= '$' + lowerCaseFirstLetter( shortNameTitleCaseNoSpace );
 			var jsFileName			= fileNameTitleCaseNoSpace + '.js';
 			var jsClassName			= fileNameTitleCaseNoSpace;
 			
@@ -80,7 +88,7 @@ gulp.task( 'newpage', function() {
 
 
 
-function toTitleCase( string ) {
+function titleCase( string ) {
 	return string.replace( /\w\S*/g, function( txt ) {
 		return txt[0].toUpperCase() + txt.substr(1).toLowerCase();
 	});
