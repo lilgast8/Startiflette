@@ -40,12 +40,12 @@ APP.PagesController = ( function( window ) {
 	
 	var _initPages = function() {
 		this.pages = {
-			'error-404':		APP.Views.Pages.Error404View,
-			'home':				APP.Views.Pages.HomeView,
-			'about':			APP.Views.Pages.AboutView,
-			'projects':			APP.Views.Pages.ProjectsView,
-			'project':			APP.Views.Pages.ProjectView,
-			'legal-notices':	APP.Views.Pages.LegalNoticesView
+			'error-404':		APP.Views.Pages.Error404,
+			'home':				APP.Views.Pages.Home,
+			'about':			APP.Views.Pages.About,
+			'projects':			APP.Views.Pages.Projects,
+			'project':			APP.Views.Pages.Project,
+			'legal-notices':	APP.Views.Pages.LegalNotices
 		};
 	};
 	
