@@ -15,8 +15,14 @@ gulp.task( 'watch', function() {
 	
 	/* Tasks management */
 	gulp.watch( [
+		
+		/* Assets */
 		paths.env.dev + paths.assets.allFiles,
-		'!' + paths.env.dev + paths.assets.css.minAllFiles
+		'!' + paths.env.dev + paths.assets.css.minAllFiles,
+		
+		/* Config */
+		paths.env.dev + paths.configs.allFiles
+		
 	], function(e) {
 		
 		var ext, desktop, mobile, shared, config, routes;
@@ -64,9 +70,9 @@ gulp.task( 'watch', function() {
 			taskname = 'json';
 			
 			if ( config )
-				options.jsonSrcPath = paths.env.dev + paths.assets.json.config.allFiles;
+				options.jsonSrcPath = paths.env.dev + paths.configs.config.allFiles;
 			else if ( routes )
-				options.jsonSrcPath = paths.env.dev + paths.assets.json.routes.allFiles;
+				options.jsonSrcPath = paths.env.dev + paths.configs.routes.allFiles;
 		}
 		
 		
@@ -79,7 +85,7 @@ gulp.task( 'watch', function() {
 	/* Livereload */
 	gulp.watch( [
 		
-		/* SASS */
+		/* CSS */
 		paths.env.dev + paths.assets.css.minAllFiles,
 		
 		/* JS */
@@ -87,6 +93,9 @@ gulp.task( 'watch', function() {
 		
 		/* JSON */
 		paths.env.dev + paths.assets.json.allFiles,
+		
+		/* Config */
+		paths.env.dev + paths.configs.allFiles,
 		
 		/* Server */
 		paths.env.dev + paths.server.indexFile,

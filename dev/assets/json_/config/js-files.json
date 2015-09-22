@@ -1,0 +1,108 @@
+{
+	
+	"header": {
+		"name": "header.min.js",
+		"dest": "",
+		"files": [
+			"vendors/modernizr.js",
+			"vendors/detectizr.js"
+		]
+	},
+	
+	"scripts-desktop": {
+		"name": [
+			"scripts-desktop.min.js",
+			"scripts-desktop-oldie.min.js"
+		],
+		"dest": "",
+		"files": [
+			[	
+				"vendors/zepto.js",
+				"vendors/jquery-oldie.js"
+			],
+			"vendors/greensock/TweenMax.js",
+			"vendors/signals.js",
+			"vendors/history.js",
+			"vendors/preloadjs.js",
+			
+			"app/InitApp.js",
+			
+			"app/shared/events/EventDispatcher.js",
+			
+			"app/shared/configs/Config.js",
+			"app/shared/configs/Path.js",
+			"app/shared/configs/Lang.js",
+			"app/shared/configs/OldBrowser.js",
+			
+			"app/shared/routes/Router.js",
+			
+			"app/desktop/models/Assets.js",
+			
+			"app/shared/loaders/Loader.js",
+			
+			"app/shared/utils/Global.js",
+			
+			"app/shared/abstracts/AbstractView.js",
+			
+			"app/shared/views/MainView.js",
+			"app/shared/views/PagesController.js",
+			
+			"app/desktop/views/statics/MainLoader.js",
+			"app/desktop/views/statics/Header.js",
+			"app/desktop/views/statics/Footer.js",
+			
+			"app/desktop/views/pages/Error404.js",
+			"app/desktop/views/pages/Home.js",
+			"app/desktop/views/pages/About.js",
+			"app/desktop/views/pages/Projects.js",
+			"app/desktop/views/pages/Project.js",
+			"app/desktop/views/pages/LegalNotices.js",
+			
+			"app/Main.js"
+		]
+	},
+	
+	"scripts-mobile": {
+		"name": "scripts-mobile.min.js",
+		"dest": "",
+		"files": [
+			"vendors/zepto.js",
+			"vendors/greensock/TweenMax.js",
+			"vendors/signals.js",
+			"vendors/history.js",
+			"vendors/preloadjs.js",
+			
+			"app/InitApp.js",
+			
+			"app/shared/events/EventDispatcher.class.js",
+			
+			"app/shared/config/Config.js",
+			"app/shared/config/Path.js",
+			"app/shared/config/OldBrowser.js",
+			
+			"app/shared/routes/RoutesManager.js",
+			
+			"app/shared/models/Model.Global.js",
+			
+			"app/shared/loaders/Loader.class.js",
+			
+			"app/shared/utils/Utils.Global.js",
+			
+			"app/shared/views/View.class.js",
+			"app/shared/views/ViewPage.class.js",
+			
+			"app/mobile/views/statics/ViewStatic.Header.js",
+			"app/mobile/views/statics/ViewStatic.Footer.js",
+			"app/mobile/views/statics/ViewStatic.MainLoader.js",
+			
+			"app/mobile/views/pages/ViewPage.Home.js",
+			"app/mobile/views/pages/ViewPage.About.js",
+			"app/mobile/views/pages/ViewPage.Projects.js",
+			"app/mobile/views/pages/ViewPage.Project.js",
+			"app/mobile/views/pages/ViewPage.Legals.js",
+			
+			"app/Main.js"
+		]
+	}
+	
+}

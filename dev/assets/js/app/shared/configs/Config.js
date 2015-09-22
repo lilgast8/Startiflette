@@ -10,7 +10,7 @@ APP.Config = ( function( window ) {
 			INIT: 'init'
 		};
 		
-		this.CONFIG_FILE_PATH	= BASE_URL + 'assets/json/config/config.json';
+		this.CONFIG_FILE_PATH	= BASE_URL + 'configs/config/config.json';
 		
 		this.aJsonFiles			= [
 			{

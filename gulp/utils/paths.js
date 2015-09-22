@@ -11,21 +11,6 @@ module.exports = {
 	htaccess:	'.htaccess',
 	robots:		'robots.txt',
 	
-	server: {
-		indexFile:	'index.php',
-		dir:		'server/',
-		allFiles:	'server/**/*',
-		
-		
-		contents: 'server/contents/',
-		
-		views: {
-			desktop: {
-				pages: 'server/views/desktop/pages/'
-			}
-		}
-	},
-	
 	assets: {
 		allFiles: 'assets/**/*',
 		
@@ -72,24 +57,43 @@ module.exports = {
 			
 			vendors: {
 				dir:			'assets/js/vendors/',
-				HTML5ShivFile:	'assets/js/vendors/html5shiv.min.js',
+				HTML5ShivFile:	'assets/js/vendors/html5shiv.min.js'
 			}
 		},
 		
 		json: {
 			dir:		'assets/json/',
-			allFiles:	'assets/json/**/*.json',
-			
-			config: {
-				dir:			'assets/json/config/',
-				allFiles:		'assets/json/config/*.json',
-				configFile:		'assets/json/config/config.json',
-				jsFilesFile:	'assets/json/config/js-files.json'
-			},
-			
-			routes: {
-				dir:		'assets/json/routes/',
-				allFiles:	'assets/json/routes/*.json',
+			allFiles:	'assets/json/**/*.json'
+		}
+	},
+	
+	configs: {
+		dir:		'configs/',
+		allFiles:	'configs/**/*.json',
+		
+		config: {
+				dir:			'configs/config/',
+				allFiles:		'configs/config/*.json',
+				configFile:		'configs/config/config.json',
+				jsFilesFile:	'configs/config/js-files.json'
+		},
+		
+		routes: {
+			dir:		'configs/config/routes/',
+			allFiles:	'configs/config/routes/*.json'
+		}
+	},
+	
+	server: {
+		indexFile:	'index.php',
+		dir:		'server/',
+		allFiles:	'server/**/*',
+		
+		contents: 'server/contents/',
+		
+		views: {
+			desktop: {
+				pages: 'server/views/desktop/pages/'
 			}
 		}
 	}

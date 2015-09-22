@@ -24,7 +24,7 @@ APP.Path = ( function( window ) {
 			img:	baseUrl + 'assets/img/',
 			js:		baseUrl + 'assets/js/',
 			json:	baseUrl + 'assets/json/',
-			routes:	baseUrl + 'assets/json/routes/',
+			routes:	baseUrl + 'configs/routes/',
 			server:	baseUrl + 'server/',
 		};
 	};
