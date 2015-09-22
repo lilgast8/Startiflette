@@ -1,9 +1,9 @@
-var gulp	= require('gulp');
+var gulp	= require( 'gulp' );
 
 var options	= require( '../utils/options' );
-var paths	= require('../utils/paths');
+var paths	= require( '../utils/paths' );
 
-var plumber	= require('gulp-plumber');
+var plumber	= require( 'gulp-plumber' );
 
 
 
