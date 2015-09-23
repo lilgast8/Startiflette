@@ -85,7 +85,7 @@ function renameApp( filePath, currentJsAppName, newJsAppName, isInitFile ) {
 	
 	var data	= fs.readFileSync( filePath, 'utf8' );
 	// data		= data.replace( '/\\' + stringToReplace + '/g', newString + '.' );
-	data		= data.replace( new RegExp( '\\' + stringToReplace, 'g' ), newString + '.' );
+	data		= data.replace( new RegExp( '\\' + stringToReplace, 'g' ), newString );
 	// var regex = new RegExp( '\\' + stringToReplace, 'g' )
 	// console.log( regex );
 	fs.writeFileSync( filePath, data, 'utf8' );
