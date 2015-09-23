@@ -2,15 +2,15 @@ var gulp	= require( 'gulp' );
 
 var options	= require( '../utils/options' );
 var paths	= require( '../utils/paths' );
-var configs	= require( '../utils/configs' );
 
 var fs		= require( 'fs' );
+
+var config	= require( '../../' + paths.env.dev + paths.configs.config.configFile );
 
 
 
 gulp.task( 'htaccess', function() {
 	
-	var config			= configs.getConfig();
 	var infos			= getInfos( config.ENVS );
 	
 	var data			= fs.readFileSync( paths.env.base + paths.htaccess, 'utf8' );
