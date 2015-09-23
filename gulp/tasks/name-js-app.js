@@ -11,7 +11,9 @@ var fs			= require( 'fs' );
 
 
 
-gulp.task( 'name-js-app', function() {
+gulp.task( 'rename-js-app', function() {
+	
+	var currentJsAppName = getJsAppName();
 	
 	inquirer.prompt(
 		[
@@ -19,7 +21,7 @@ gulp.task( 'name-js-app', function() {
 				type:		'input',
 				name:		'jsAppName',
 				message:	'Named the JS app:',
-				default:	'APP'
+				default:	'current name is: ' + currentJsAppName
 			}/*,
 			{
 				type:		'confirm',
@@ -31,7 +33,7 @@ gulp.task( 'name-js-app', function() {
 			// if ( !answers.namedJsApp )
 			// 	return;
 			
-			var jsAppName = answers.jsAppName.toUpperCase();
+			var newJsAppName = answers.jsAppName.toUpperCase();
 			
 			// console.log( answers.jsAppName );
 			// console.log( paths.env.dev + paths.assets.js.app.allFiles );
@@ -47,10 +49,13 @@ gulp.task( 'name-js-app', function() {
 				// Files is an array of filename 
 				// console.log( filesList );
 				
+				var isInitFile;
 				for ( var i = 0; i < filesList.length; i++ ) {
 					console.log( filesList[i] );
 					
-					renameApp( filesList[i], jsAppName );
+					isInitFile = filesList[i] == paths.env.dev + paths.assets.js.app.initFile ? true : false;
+					
+					renameApp( filesList[i], currentJsAppName, newJsAppName, isInitFile );
 				}
 				
 			});
@@ -62,9 +67,25 @@ gulp.task( 'name-js-app', function() {
 
 
 
-function renameApp( filePath, jsAppName ) {
+function getJsAppName() {
+	var data		= fs.readFileSync( paths.env.dev + paths.assets.js.app.initFile, 'utf8' );
+	var startPos	= data.indexOf( 'var ' ) + 4;
+	var endPos		= data.indexOf( ' = ' );
+	var jsAppName	= data.substring( startPos, endPos );
+	
+	return jsAppName;
+}
+
+
+function renameApp( filePath, currentJsAppName, newJsAppName, isInitFile ) {
+	var stringToReplace	= isInitFile ? currentJsAppName : currentJsAppName + '.';
+	var newString		= isInitFile ? newJsAppName : newJsAppName + '.';
+	
+	// console.log( stringToReplace, newString );
+	
 	var data	= fs.readFileSync( filePath, 'utf8' );
-	data		= data.replace( /APP./g, jsAppName + '.' );
+	data		= data.replace( \\/ stringToReplace /g, newString + '.' );
+	// new RegExp( '\\' + aNewString[2], 'g' )
 	
 	fs.writeFileSync( filePath, data, 'utf8' );
 }

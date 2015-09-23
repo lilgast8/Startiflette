@@ -45,6 +45,7 @@ module.exports = {
 			app: {
 				dir:				'assets/js/app/',
 				allFiles:			'assets/js/app/**/*.js',
+				initFile:			'assets/js/app/InitApp.js',
 				desktopAllFiles:	'assets/js/app/desktop/**/*.js',
 				mobileAllFiles:		'assets/js/app/mobile/**/*.js',
 				sharedAllFiles:		'assets/js/app/shared/**/*.js',
