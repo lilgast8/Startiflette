@@ -10,7 +10,7 @@ var config		= require( '../../' + paths.env.dev + paths.configs.config.configFil
 
 
 
-gulp.task( 'newpage', function() {
+gulp.task( 'new-page', function() {
 	
 	var DEFAULT_NAME		= 'new page';
 	var SHORT_DEFAULT_NAME	= 'n pa';
