@@ -1,0 +1,6 @@
+User-Agent: *
+Disallow: /assets/
+Disallow: /configs/
+Disallow: /server/
+
+Sitemap: http://www.SITE_URL.COM/sitemap.xml

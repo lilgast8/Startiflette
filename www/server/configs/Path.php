@@ -60,6 +60,7 @@ class Path
 		self::$URL->js		= self::$URL->assets	. 'js/';
 		self::$URL->json	= self::$URL->assets	. 'json/';
 		self::$URL->routes	= self::$URL->json		. 'routes/';
+		self::$URL->configs	= self::$URL->base		. 'configs/';
 		self::$URL->server	= self::$URL->base		. 'server/';
 		
 		
@@ -71,9 +72,10 @@ class Path
 		self::$FILE->img			= self::$FILE->assets	. 'img/';
 		self::$FILE->js				= self::$FILE->assets	. 'js/';
 		self::$FILE->json			= self::$FILE->assets	. 'json/';
-		self::$FILE->jsFilesFile	= self::$FILE->json		. 'config/js-files.json';
-		self::$FILE->contentsFile	= self::$FILE->json		. 'config/contents.json';
-		self::$FILE->routes			= self::$FILE->json		. 'routes/';
+		self::$FILE->configs		= 'configs/';
+		self::$FILE->jsFilesFile	= self::$FILE->configs	. 'config/js-files.json';
+		self::$FILE->contentsFile	= self::$FILE->configs	. 'config/contents.json';
+		self::$FILE->routes			= self::$FILE->configs	. 'routes/';
 		self::$FILE->server			= 'server/';
 		self::$FILE->shared			= self::$FILE->server	. 'shared/';
 		self::$FILE->contents		= self::$FILE->server	. 'contents/';
