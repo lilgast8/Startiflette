@@ -9,13 +9,8 @@ var del		= require( 'del' );
 
 gulp.task( 'delete', function() {
 	
-	/* Init */
-	if ( options.deletePath === null && options.task == 'init' )
-		options.deletePath = paths.emptyFiles;
-	
-	
 	/* Prod */
-	else if ( options.deletePath === null && options.task == 'prod' )
+	if ( options.deletePath === null && options.task == 'prod' )
 		options.deletePath = [
 			paths.env.dev + paths.assets.css.minAllFiles,
 			paths.env.prod + paths.htaccess,

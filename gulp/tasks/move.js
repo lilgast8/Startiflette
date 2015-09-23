@@ -13,11 +13,17 @@ gulp.task( 'move', function() {
 	if ( options.movePath === null && options.task == 'prod' )
 		options.movePath = {
 			from: [
-				paths.env.dev + paths.assets.css.minAllFiles,
-				paths.env.dev + paths.assets.css.fonts.allFiles,
-				paths.env.dev + paths.assets.js.vendors.HTML5ShivFile,
-				paths.env.dev + paths.server.indexFile,
-				paths.env.dev + paths.server.allFiles
+				[ paths.env.dev + paths.assets.css.minAllFiles ],
+				[
+					paths.env.dev + paths.assets.css.fonts.allFiles,
+					'!' + paths.env.dev + paths.emptyFiles
+				],
+				[ paths.env.dev + paths.assets.js.vendors.HTML5ShivFile ],
+				[ paths.env.dev + paths.server.indexFile ],
+				[
+					paths.env.dev + paths.server.allFiles,
+					'!' + paths.env.dev + paths.emptyFiles
+				]
 			],
 			to: [
 				paths.env.prod + paths.assets.css.dir,
@@ -33,8 +39,11 @@ gulp.task( 'move', function() {
 	else if ( options.movePath === null && options.task == 'sass' )
 		options.movePath = {
 			from: [
-				paths.env.dev + paths.assets.css.minAllFiles,
-				paths.env.dev + paths.assets.css.fonts.allFiles
+				[ paths.env.dev + paths.assets.css.minAllFiles ],
+				[
+					paths.env.dev + paths.assets.css.fonts.allFiles,
+					'!' + paths.env.dev + paths.emptyFiles
+				]
 			],
 			to: [
 				paths.env.prod + paths.assets.css.dir,
@@ -54,7 +63,12 @@ gulp.task( 'move', function() {
 	/* Image */
 	else if ( options.movePath === null && ( options.task == 'image' || options.task == 'image-min' || options.task == 'image-move' ) )
 		options.movePath = {
-			from: [ paths.env.dev + paths.assets.img.allFiles ],
+			from: [
+				[
+					paths.env.dev + paths.assets.img.allFiles,
+					'!' + paths.env.dev + paths.emptyFiles
+				]
+			],
 			to: [ paths.env.prod + paths.assets.img.dir ]
 		};
 	
@@ -62,7 +76,12 @@ gulp.task( 'move', function() {
 	/* Server */
 	else if ( options.movePath === null && options.task == 'server' )
 		options.movePath = {
-			from: [ paths.env.dev + paths.server.allFiles ],
+			from: [
+				[
+					paths.env.dev + paths.server.allFiles,
+					'!' + paths.env.dev + paths.emptyFiles
+				]
+			],
 			to: [ paths.env.prod + paths.server.dir ]
 		};
 	

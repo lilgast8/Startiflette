@@ -9,7 +9,10 @@ var imagemin	= require( 'gulp-imagemin' );
 
 gulp.task( 'image-min', [ 'delete' ], function() {
 	
-	gulp.src( paths.env.dev + paths.assets.img.allFiles )
+	gulp.src( [
+			paths.env.dev + paths.assets.img.allFiles,
+			'!' + paths.env.dev + paths.emptyFiles
+		] )
 		.pipe( plumber() )
 		.pipe( imagemin({
 			optimizationLevel : 3, // png, default 3
