@@ -10,7 +10,8 @@ var options		= require( './gulp/utils/options' );
 
 /* Init */
 gulp.task( 'init', [
-	'htaccess'
+	'htaccess',
+	'name-js-app'
 ] );
 
 
