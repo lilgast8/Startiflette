@@ -7,8 +7,6 @@ var inquirer	= require( 'inquirer' );
 var recursive	= require( 'recursive-readdir' );
 var fs			= require( 'fs' );
 
-// var config		= require( '../../' + paths.env.dev + paths.configs.config.configFile );
-
 
 
 gulp.task( 'rename-js-app', function() {
