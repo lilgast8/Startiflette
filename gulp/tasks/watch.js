@@ -85,6 +85,9 @@ gulp.task( 'watch', function() {
 	/* Livereload */
 	gulp.watch( [
 		
+		/* htaccess */
+		paths.env.dev + paths.htaccess,
+		
 		/* CSS */
 		paths.env.dev + paths.assets.css.minAllFiles,
 		
