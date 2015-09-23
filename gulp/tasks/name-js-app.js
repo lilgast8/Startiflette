@@ -31,6 +31,8 @@ gulp.task( 'name-js-app', function() {
 			// if ( !answers.namedJsApp )
 			// 	return;
 			
+			var jsAppName = answers.jsAppName.toUpperCase();
+			
 			// console.log( answers.jsAppName );
 			// console.log( paths.env.dev + paths.assets.js.app.allFiles );
 			
@@ -48,7 +50,7 @@ gulp.task( 'name-js-app', function() {
 				for ( var i = 0; i < filesList.length; i++ ) {
 					console.log( filesList[i] );
 					
-					renameApp( filesList[i], answers.jsAppName );
+					renameApp( filesList[i], jsAppName );
 				}
 				
 			});
