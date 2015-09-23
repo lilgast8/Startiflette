@@ -73,6 +73,8 @@ gulp.task( 'watch', function() {
 				options.jsonSrcPath = paths.env.dev + paths.configs.config.allFiles;
 			else if ( routes )
 				options.jsonSrcPath = paths.env.dev + paths.configs.routes.allFiles;
+			else
+				options.jsonSrcPath = paths.env.dev + paths.assets.json.allFiles;
 		}
 		
 		

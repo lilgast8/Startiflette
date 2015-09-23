@@ -15,7 +15,7 @@ gulp.task( 'js-min', [ 'delete' ], function() {
 		gulp.start( 'move' );
 	
 	
-	var jsFiles = require( '../../' + paths.env.dev + paths.assets.json.config.jsFilesFile );
+	var jsFiles = require( '../../' + paths.env.dev + paths.configs.config.jsFilesFile );
 	
 	
 	// parse js-files file

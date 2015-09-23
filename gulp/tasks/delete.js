@@ -40,7 +40,10 @@ gulp.task( 'delete', function() {
 	
 	/* JSON & JSON-min */
 	else if ( options.deletePath === null && ( options.task == 'json' || options.task == 'json-min' ) )
-		options.deletePath = [ paths.env.prod + paths.assets.json.dir ];
+		options.deletePath = [
+			paths.env.prod + paths.assets.json.dir,
+			paths.env.prod + paths.configs.dir
+		];
 	
 	
 	/* Image, Image-min & Image-move */

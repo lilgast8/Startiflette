@@ -79,8 +79,8 @@ module.exports = {
 		},
 		
 		routes: {
-			dir:		'configs/config/routes/',
-			allFiles:	'configs/config/routes/*.json'
+			dir:		'configs/routes/',
+			allFiles:	'configs/routes/*.json'
 		}
 	},
 	
