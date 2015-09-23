@@ -51,7 +51,7 @@ gulp.task( 'rename-js-app', function() {
 				
 				var isInitFile;
 				for ( var i = 0; i < filesList.length; i++ ) {
-					console.log( filesList[i] );
+					// console.log( filesList[i] );
 					
 					isInitFile = filesList[i] == paths.env.dev + paths.assets.js.app.initFile ? true : false;
 					
@@ -84,9 +84,10 @@ function renameApp( filePath, currentJsAppName, newJsAppName, isInitFile ) {
 	// console.log( stringToReplace, newString );
 	
 	var data	= fs.readFileSync( filePath, 'utf8' );
-	data		= data.replace( \\/ stringToReplace /g, newString + '.' );
-	// new RegExp( '\\' + aNewString[2], 'g' )
-	
+	// data		= data.replace( '/\\' + stringToReplace + '/g', newString + '.' );
+	data		= data.replace( new RegExp( '\\' + stringToReplace, 'g' ), newString + '.' );
+	// var regex = new RegExp( '\\' + stringToReplace, 'g' )
+	// console.log( regex );
 	fs.writeFileSync( filePath, data, 'utf8' );
 }
 
