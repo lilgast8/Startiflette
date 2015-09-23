@@ -1,6 +1,6 @@
 
 
-APP.Path = ( function( window ) {
+STF.Path = ( function( window ) {
 	
 	
 	function Path() {
@@ -14,7 +14,7 @@ APP.Path = ( function( window ) {
 	
 	
 	var _setPaths = function() {
-		var baseUrl = APP.Config.ENVS[ APP.Config.ENV ].base_url;
+		var baseUrl = STF.Config.ENVS[ STF.Config.ENV ].base_url;
 		
 		// url paths
 		this.URL = {

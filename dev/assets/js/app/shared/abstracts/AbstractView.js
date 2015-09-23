@@ -1,10 +1,10 @@
 
 
-APP.AbstractView = ( function( window ) {
+STF.AbstractView = ( function( window ) {
 	
 	
 	function AbstractView() {
-		APP.EventDispatcher.call( this );
+		STF.EventDispatcher.call( this );
 		
 		this.E = {
 			// INIT:	'init',
@@ -17,7 +17,7 @@ APP.AbstractView = ( function( window ) {
 	}
 	
 	
-	AbstractView.prototype				= Object.create( APP.EventDispatcher.prototype );
+	AbstractView.prototype				= Object.create( STF.EventDispatcher.prototype );
 	AbstractView.prototype.constructor	= AbstractView;
 	
 	
@@ -130,14 +130,14 @@ APP.AbstractView = ( function( window ) {
 	
 	
 	AbstractView.prototype.changePage = function( e ) {
-		if ( APP.Config.HAS_PUSHSTATE ) { // if pushstate supported
+		if ( STF.Config.HAS_PUSHSTATE ) { // if pushstate supported
 			e.preventDefault();
 			
 			var url = e.currentTarget.href;
 			
-			// APP.Router.goToPage(url);
-			APP.Router.navigateTo( url );
-			// APP.PagesController.navigateTo( url );
+			// STF.Router.goToPage(url);
+			STF.Router.navigateTo( url );
+			// STF.PagesController.navigateTo( url );
 		}
 	};
 	

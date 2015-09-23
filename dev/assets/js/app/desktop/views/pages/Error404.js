@@ -1,18 +1,18 @@
 
 
-APP.Views		= APP.Views || {};
-APP.Views.Pages	= APP.Views.Pages || {};
+STF.Views		= STF.Views || {};
+STF.Views.Pages	= STF.Views.Pages || {};
 
 
-APP.Views.Pages.Error404 = ( function( window ) {
+STF.Views.Pages.Error404 = ( function( window ) {
 	
 	
 	function Error404() {
-		APP.AbstractView.call( this );
+		STF.AbstractView.call( this );
 	}
 	
 	
-	Error404.prototype				= Object.create( APP.AbstractView.prototype );
+	Error404.prototype				= Object.create( STF.AbstractView.prototype );
 	Error404.prototype.constructor	= Error404;
 	
 	

@@ -1,4 +1,4 @@
 
 
-var APP = APP || {};
+var STF = STF || {};
 

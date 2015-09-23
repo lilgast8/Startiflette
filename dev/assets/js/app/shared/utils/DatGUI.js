@@ -1,9 +1,9 @@
 
 
-APP.Utils = APP.Utils || {};
+STF.Utils = STF.Utils || {};
 
 
-APP.Utils.DatGUI = (function(window){
+STF.Utils.DatGUI = (function(window){
 	
 	
 	function DatGUI() {
@@ -24,12 +24,12 @@ APP.Utils.DatGUI = (function(window){
 			width : 300
 		});
 		
-		var text		= this.gui.add(APP.Utils.DatGUI.v, 'var1', 10, 100).name('TEXT');
-		var slider		= this.gui.add(APP.Utils.DatGUI.v, 'var2', 10, 100).step(1).name('SLIDER');
-		var select		= this.gui.add(APP.Utils.DatGUI.v, 'var3', ['option 1', 'option 2', 'option 3']).name('SELECT');
-		var checkBox	= this.gui.add(APP.Utils.DatGUI.v, 'var4').name('CHECKBOX');
-		var color		= this.gui.addColor(APP.Utils.DatGUI.v, 'var5').name('COLOR');
-		this.gui.add(APP.Utils.DatGUI, '_function').name('FUNCTION');
+		var text		= this.gui.add(STF.Utils.DatGUI.v, 'var1', 10, 100).name('TEXT');
+		var slider		= this.gui.add(STF.Utils.DatGUI.v, 'var2', 10, 100).step(1).name('SLIDER');
+		var select		= this.gui.add(STF.Utils.DatGUI.v, 'var3', ['option 1', 'option 2', 'option 3']).name('SELECT');
+		var checkBox	= this.gui.add(STF.Utils.DatGUI.v, 'var4').name('CHECKBOX');
+		var color		= this.gui.addColor(STF.Utils.DatGUI.v, 'var5').name('COLOR');
+		this.gui.add(STF.Utils.DatGUI, '_function').name('FUNCTION');
 		
 		text.onChange( _changeText.bind(this) );
 		slider.onChange( _changeSlider.bind(this) );

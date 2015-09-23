@@ -1,13 +1,13 @@
 
 
-APP.Models = APP.Models || {};
+STF.Models = STF.Models || {};
 
 
-APP.Models.Json = (function(window) {
+STF.Models.Json = (function(window) {
 	
 	
 	function Json() {
-		APP.EventDispatcher.call(this);
+		STF.EventDispatcher.call(this);
 		
 		this.E = {
 			INIT : 'init'
@@ -16,11 +16,11 @@ APP.Models.Json = (function(window) {
 		this.aJson = [
 			{
 				id	: 'pages',
-				src	: APP.Config.ASSETS + 'json/pages.json'
+				src	: STF.Config.ASSETS + 'json/pages.json'
 			},
 			{
 				id	: 'projects',
-				src	: APP.Config.ASSETS + 'json/projects.json'
+				src	: STF.Config.ASSETS + 'json/projects.json'
 			}
 		];
 		
@@ -28,12 +28,12 @@ APP.Models.Json = (function(window) {
 	}
 	
 	
-	Json.prototype = Object.create(APP.EventDispatcher.prototype);
+	Json.prototype = Object.create(STF.EventDispatcher.prototype);
 	Json.prototype.constructor = Json;
 	
 	
 	Json.prototype.init = function() {
-		this.jsonLoader = new APP.Loader(true, false);
+		this.jsonLoader = new STF.Loader(true, false);
 		
 		this.jsonLoader.buildEvt(this.jsonLoader.E.FILE_LOAD, _onFileLoad.bind(this));
 		this.jsonLoader.buildEvt(this.jsonLoader.E.COMPLETE, _onComplete.bind(this));
@@ -66,13 +66,13 @@ APP.Models.Json = (function(window) {
 	
 	
 	var _loadImages = function() {
-		APP.Models.Assets.buildEvt(APP.Models.Assets.E.INIT, _imgLoaded.bind(this));
-		APP.Models.Assets.init();
+		STF.Models.Assets.buildEvt(STF.Models.Assets.E.INIT, _imgLoaded.bind(this));
+		STF.Models.Assets.init();
 	};
 	
 	
 	var _imgLoaded = function() {
-		APP.Models.Assets.destroyEvt(APP.Models.Assets.E.INIT, _imgLoaded.bind(this));
+		STF.Models.Assets.destroyEvt(STF.Models.Assets.E.INIT, _imgLoaded.bind(this));
 		
 		this.dispatch(this.E.INIT);
 	};

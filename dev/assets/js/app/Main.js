@@ -1,6 +1,6 @@
 
 
-APP.Main = ( function( window ) {
+STF.Main = ( function( window ) {
 	
 	
 	function Main() {
@@ -14,9 +14,9 @@ APP.Main = ( function( window ) {
 	Main.prototype.init = function() {
 		// console.time('load');
 		
-		// console.log(APP.Config);
-		APP.Config.buildEvt( APP.Config.E.INIT, _configLoaded.bind( this ) );
-		APP.Config.init();
+		// console.log(STF.Config);
+		STF.Config.buildEvt( STF.Config.E.INIT, _configLoaded.bind( this ) );
+		STF.Config.init();
 		
 		// this.$.window = $( window );
 		// this.$.body = $(document.body);
@@ -28,38 +28,38 @@ APP.Main = ( function( window ) {
 	
 	
 	var _configLoaded = function() {
-		APP.Path.init();
-		APP.Lang.init();
+		STF.Path.init();
+		STF.Lang.init();
 		
-		// APP.OldBrowser.init();
+		// STF.OldBrowser.init();
 		
 		_loadRoutes.call( this );
 	};
 	
 	
 	var _loadRoutes = function() {
-		APP.Router.buildEvt( APP.Router.E.INIT, _routesLoaded.bind( this ) );
-		APP.Router.init();
+		STF.Router.buildEvt( STF.Router.E.INIT, _routesLoaded.bind( this ) );
+		STF.Router.init();
 	};
 	
 	
 	var _routesLoaded = function() {
-		// APP.ViewsManager.init();
+		// STF.ViewsManager.init();
 		
-		// APP.MainController.init();
-		// this.mainController = new APP.MainController();
+		// STF.MainController.init();
+		// this.mainController = new STF.MainController();
 		// this.mainController.init();
-		APP.MainView.init();
+		STF.MainView.init();
 		
-		APP.OldBrowser.init();
+		STF.OldBrowser.init();
 		
 		
-		APP.Router.initRouting();
+		STF.Router.initRouting();
 		
 		
 		/*
-		APP.MainController.init();
-			-> APP.MainView.init();
+		STF.MainController.init();
+			-> STF.MainView.init();
 				-> body
 				-> window
 				-> resize()
@@ -80,14 +80,14 @@ APP.Main = ( function( window ) {
 	/*Main.prototype.resize = function() {
 		_setWindowSize.call(this);
 		
-		// APP.Views.Static.Header.resize();
-		// APP.Views.Static.Footer.resize();
+		// STF.Views.Static.Header.resize();
+		// STF.Views.Static.Footer.resize();
 		
-		if(APP.RoutesController.isPageChange) // stop the resize if page is changing (is in transition)
+		if(STF.RoutesController.isPageChange) // stop the resize if page is changing (is in transition)
 			return false; 
 		
-		if(APP.RoutesController.currentView !== null) // if current page exist, resize it
-			APP.RoutesController.currentView.resize();
+		if(STF.RoutesController.currentView !== null) // if current page exist, resize it
+			STF.RoutesController.currentView.resize();
 	};*/
 	
 	
@@ -99,35 +99,35 @@ APP.Main = ( function( window ) {
 		
 		// this.$.mainContainer[0].className = '';
 		
-		// APP.Views.Static.MainLoader.init();
+		// STF.Views.Static.MainLoader.init();
 		
-		// APP.Models.Json.buildEvt(APP.Models.Json.E.INIT, _init.bind(this));
-		// APP.Models.Json.init();
+		// STF.Models.Json.buildEvt(STF.Models.Json.E.INIT, _init.bind(this));
+		// STF.Models.Json.init();
 	};
 	
 	
 	var _init = function() {
-		APP.Models.Json.destroyEvt(APP.Models.Json.E.INIT, _init.bind(this));
+		STF.Models.Json.destroyEvt(STF.Models.Json.E.INIT, _init.bind(this));
 		
-		// if(APP.Config.LOCALHOST && !APP.Config.PROD) // FPS stats
-		// 	APP.Utils.FPSStats.init();
+		// if(STF.Config.LOCALHOST && !STF.Config.PROD) // FPS stats
+		// 	STF.Utils.FPSStats.init();
 		
-		// if(APP.Config.LOCALHOST && !APP.Config.PROD) // memory stats
-		// 	APP.Utils.MemoryStats.init();
+		// if(STF.Config.LOCALHOST && !STF.Config.PROD) // memory stats
+		// 	STF.Utils.MemoryStats.init();
 		
-		// if(APP.Config.LOCALHOST && !APP.Config.PROD) // datGUI
-		// 	APP.Utils.DatGUI.init();
+		// if(STF.Config.LOCALHOST && !STF.Config.PROD) // datGUI
+		// 	STF.Utils.DatGUI.init();
 		
 		_setWindowSize.call(this);
 		
-		APP.Views.Static.Header.init();
-		APP.Views.Static.Footer.init();
+		STF.Views.Static.Header.init();
+		STF.Views.Static.Footer.init();
 		
 		_bindEvents.call(this);
 		
 		this.resize();
 		
-		setTimeout(function() { APP.RoutesController.init(); }, 0);
+		setTimeout(function() { STF.RoutesController.init(); }, 0);
 	};
 	
 	
@@ -150,5 +150,5 @@ APP.Main = ( function( window ) {
 } ) ( window );
 
 
-$( APP.Main.init.bind( APP.Main ) );
+$( STF.Main.init.bind( STF.Main ) );
 

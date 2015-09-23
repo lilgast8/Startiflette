@@ -1,9 +1,9 @@
 
 
-APP.Utils = APP.Utils || {};
+STF.Utils = STF.Utils || {};
 
 
-APP.Utils.FPSStats = (function(window){
+STF.Utils.FPSStats = (function(window){
 	
 	
 	function FPSStats() {

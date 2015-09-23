@@ -1,13 +1,13 @@
 
 
-APP.Models = APP.Models || {};
+STF.Models = STF.Models || {};
 
 
-APP.Models.Assets = (function(window) {
+STF.Models.Assets = (function(window) {
 	
 	
 	function Assets() {
-		APP.EventDispatcher.call(this);
+		STF.EventDispatcher.call(this);
 		
 		this.$ = {};
 		this.v = {};
@@ -18,18 +18,18 @@ APP.Models.Assets = (function(window) {
 		
 		this.aAssets = [
 			/* bgs */
-			APP.Config.WEB_ROOT + 'img/bgs/pattern_black_transparent.png',
+			STF.Config.WEB_ROOT + 'img/bgs/pattern_black_transparent.png',
 			
 			/* btns */
 			
 			/* icons */
 			
 			/* logos */
-			APP.Config.WEB_ROOT + 'img/logos/browsers/browser_chrome.png',
-			APP.Config.WEB_ROOT + 'img/logos/browsers/browser_firefox.png',
-			APP.Config.WEB_ROOT + 'img/logos/browsers/browser_internet_explorer.png',
-			APP.Config.WEB_ROOT + 'img/logos/browsers/browser_opera.png',
-			APP.Config.WEB_ROOT + 'img/logos/browsers/browser_safari.png'
+			STF.Config.WEB_ROOT + 'img/logos/browsers/browser_chrome.png',
+			STF.Config.WEB_ROOT + 'img/logos/browsers/browser_firefox.png',
+			STF.Config.WEB_ROOT + 'img/logos/browsers/browser_internet_explorer.png',
+			STF.Config.WEB_ROOT + 'img/logos/browsers/browser_opera.png',
+			STF.Config.WEB_ROOT + 'img/logos/browsers/browser_safari.png'
 			
 			/* others */
 			
@@ -37,12 +37,12 @@ APP.Models.Assets = (function(window) {
 	}
 	
 	
-	Assets.prototype = Object.create(APP.EventDispatcher.prototype);
+	Assets.prototype = Object.create(STF.EventDispatcher.prototype);
 	Assets.prototype.constructor = Assets;
 	
 	
 	Assets.prototype.init = function() {
-		this.assetsLoader = new APP.Loader(true, true);
+		this.assetsLoader = new STF.Loader(true, true);
 		
 		this.assetsLoader.buildEvt(this.assetsLoader.E.PROGRESS, _onProgress.bind(this));
 		this.assetsLoader.buildEvt(this.assetsLoader.E.FILE_LOAD, _onFileLoad.bind(this));
@@ -55,7 +55,7 @@ APP.Models.Assets = (function(window) {
 	var _onProgress = function(e) {
 		var percentage = Math.round( e.loaded * 100 );
 		
-		APP.Views.Static.MainLoader.progressLoader(percentage);
+		STF.Views.Static.MainLoader.progressLoader(percentage);
 	};
 	
 	

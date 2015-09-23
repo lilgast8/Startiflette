@@ -1,18 +1,18 @@
 
 
-APP.Views			= APP.Views || {};
-APP.Views.Statics	= APP.Views.Statics || {};
+STF.Views			= STF.Views || {};
+STF.Views.Statics	= STF.Views.Statics || {};
 
 
-APP.Views.Statics.HeaderView = ( function( window ) {
+STF.Views.Statics.HeaderView = ( function( window ) {
 	
 	
 	function HeaderView() {
-		APP.AbstractView.call( this );
+		STF.AbstractView.call( this );
 	}
 	
 	
-	HeaderView.prototype				= Object.create( APP.AbstractView.prototype );
+	HeaderView.prototype				= Object.create( STF.AbstractView.prototype );
 	HeaderView.prototype.constructor	= HeaderView;
 	
 	

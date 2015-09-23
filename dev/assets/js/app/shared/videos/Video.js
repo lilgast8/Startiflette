@@ -1,10 +1,10 @@
 
 
-APP.Video = ( function( window ) {
+STF.Video = ( function( window ) {
 	
 	
 	function Video( $video, videoName ) {
-		APP.EventDispatcher.call( this );
+		STF.EventDispatcher.call( this );
 		
 		this.E = {
 			STARTED:	'started',
@@ -25,7 +25,7 @@ APP.Video = ( function( window ) {
 	}
 	
 	
-	Video.prototype				= Object.create( APP.EventDispatcher.prototype );
+	Video.prototype				= Object.create( STF.EventDispatcher.prototype );
 	Video.prototype.constructor	= Video;
 	
 	

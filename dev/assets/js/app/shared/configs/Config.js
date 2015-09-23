@@ -1,10 +1,10 @@
 
 
-APP.Config = ( function( window ) {
+STF.Config = ( function( window ) {
 	
 	
 	function Config() {
-		APP.EventDispatcher.call( this );
+		STF.EventDispatcher.call( this );
 		
 		this.E = {
 			INIT: 'init'
@@ -21,7 +21,7 @@ APP.Config = ( function( window ) {
 	}
 	
 	
-	Config.prototype				= Object.create( APP.EventDispatcher.prototype );
+	Config.prototype				= Object.create( STF.EventDispatcher.prototype );
 	Config.prototype.constructor	= Config;
 	
 	
@@ -31,7 +31,7 @@ APP.Config = ( function( window ) {
 	
 	
 	var _loadConfigFile = function() {
-		this.jsonLoader = new APP.Loader( false );
+		this.jsonLoader = new STF.Loader( false );
 		
 		this.jsonLoader.buildEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
 		
@@ -79,7 +79,7 @@ APP.Config = ( function( window ) {
 		this.BROWSER			= Detectizr.browser.name;
 		this.BROWSER_VERSION	= parseFloat( Detectizr.browser.major + '.' + Detectizr.browser.minor );
 		this.DEVICE				= Detectizr.device.type;
-		this.IS_IE				= APP.Config.BROWSER == 'ie' ? true : false;
+		this.IS_IE				= STF.Config.BROWSER == 'ie' ? true : false;
 	};
 	
 	

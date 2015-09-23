@@ -1,6 +1,6 @@
 
 
-APP.OldBrowser = ( function( window ) {
+STF.OldBrowser = ( function( window ) {
 	
 	
 	function OldBrowser() {
@@ -9,8 +9,8 @@ APP.OldBrowser = ( function( window ) {
 	
 	
 	OldBrowser.prototype.init = function() {
-		var browser			= APP.Config.BROWSER;
-		var browserVersion	= APP.Config.BROWSER_VERSION;
+		var browser			= STF.Config.BROWSER;
+		var browserVersion	= STF.Config.BROWSER_VERSION;
 		
 		if (browser == 'ie'			&& browserVersion < 9 || 
 			browser == 'firefox'	&& browserVersion < 10 || 
@@ -19,7 +19,7 @@ APP.OldBrowser = ( function( window ) {
 			browser == 'chrome'		&& browserVersion < 17 ) {
 			
 			$.ajax( {
-				url:		APP.Path.URL.base + APP.Lang.LANG + '/old-browser',
+				url:		STF.Path.URL.base + STF.Lang.LANG + '/old-browser',
 				type:		'POST',
 				data:		{
 								ajax: 'true',
@@ -34,7 +34,7 @@ APP.OldBrowser = ( function( window ) {
 	
 	
 	var _successAjax = function( data ) {
-		APP.MainController.view.$mainCont[0].innerHTML += data;
+		STF.MainController.view.$mainCont[0].innerHTML += data;
 	};
 	
 	

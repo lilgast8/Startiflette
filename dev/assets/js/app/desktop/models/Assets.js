@@ -1,50 +1,50 @@
 
 
-APP.Models = APP.Models || {};
+STF.Models = STF.Models || {};
 
 
-APP.Models.AssetsModel = ( function( window ) {
+STF.Models.AssetsModel = ( function( window ) {
 	
 	
 	function AssetsModel() {
 		this.aImgs			= {
 			'global': [
 				/* bgs */
-				APP.Path.URL.img + 'bgs/pattern_black_transparent.png',
+				STF.Path.URL.img + 'bgs/pattern_black_transparent.png',
 				
 				/* btns */
 				
 				/* icons */
 				
 				/* logos */
-				APP.Path.URL.img + 'logos/browsers/browser_chrome.png',
-				APP.Path.URL.img + 'logos/browsers/browser_firefox.png',
-				APP.Path.URL.img + 'logos/browsers/browser_internet_explorer.png',
-				APP.Path.URL.img + 'logos/browsers/browser_opera.png',
-				APP.Path.URL.img + 'logos/browsers/browser_safari.png',
+				STF.Path.URL.img + 'logos/browsers/browser_chrome.png',
+				STF.Path.URL.img + 'logos/browsers/browser_firefox.png',
+				STF.Path.URL.img + 'logos/browsers/browser_internet_explorer.png',
+				STF.Path.URL.img + 'logos/browsers/browser_opera.png',
+				STF.Path.URL.img + 'logos/browsers/browser_safari.png',
 				
 				/* others */
 			],
 			
 			'error404': [
 				/* temp */
-				APP.Path.URL.img + 'temp/404.jpg',
+				STF.Path.URL.img + 'temp/404.jpg',
 			],
 			
 			'home': [
 				/* temp */
-				APP.Path.URL.img + 'temp/home.jpg',
+				STF.Path.URL.img + 'temp/home.jpg',
 			],
 			
 			'about': [
 				/* temp */
-				APP.Path.URL.img + 'temp/about-1.jpg',
-				APP.Path.URL.img + 'temp/about-2.jpg',
+				STF.Path.URL.img + 'temp/about-1.jpg',
+				STF.Path.URL.img + 'temp/about-2.jpg',
 			],
 			
 			'projects': [
 				/* temp */
-				APP.Path.URL.img + 'temp/projects.jpg',
+				STF.Path.URL.img + 'temp/projects.jpg',
 			]
 		};
 	}

@@ -1,18 +1,18 @@
 
 
-APP.Views = APP.Views || {};
-APP.Views.Static = APP.Views.Static || {};
+STF.Views = STF.Views || {};
+STF.Views.Static = STF.Views.Static || {};
 
 
-APP.Views.Static.Example = (function(window) {
+STF.Views.Static.Example = (function(window) {
 	
 	
 	function Example() {
-		APP.View.call(this);
+		STF.View.call(this);
 	}
 	
 	
-	Example.prototype = Object.create(APP.View.prototype);
+	Example.prototype = Object.create(STF.View.prototype);
 	Example.prototype.constructor = Example;
 	
 	

@@ -1,18 +1,18 @@
 
 
-APP.Views = APP.Views || {};
-APP.Views.Partial = APP.Views.Partial || {};
+STF.Views = STF.Views || {};
+STF.Views.Partial = STF.Views.Partial || {};
 
 
-APP.Views.Partial.Example = (function(window) {
+STF.Views.Partial.Example = (function(window) {
 	
 	
 	function Example() {
-		APP.View.call(this);
+		STF.View.call(this);
 	}
 	
 	
-	Example.prototype = Object.create(APP.View.prototype);
+	Example.prototype = Object.create(STF.View.prototype);
 	Example.prototype.constructor = Example;
 	
 	

@@ -1,10 +1,10 @@
 
 
-APP.Loader = ( function( window ) {
+STF.Loader = ( function( window ) {
 	
 	
 	function Loader( isOnProgress ) {
-		APP.EventDispatcher.call( this );
+		STF.EventDispatcher.call( this );
 		
 		this.isOnProgress = isOnProgress;
 		
@@ -23,7 +23,7 @@ APP.Loader = ( function( window ) {
 	}
 	
 	
-	Loader.prototype				= Object.create( APP.EventDispatcher.prototype );
+	Loader.prototype				= Object.create( STF.EventDispatcher.prototype );
 	Loader.prototype.constructor	= Loader;
 	
 	

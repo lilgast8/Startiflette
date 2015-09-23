@@ -1,6 +1,6 @@
 
 
-APP.Lang = ( function( window ) {
+STF.Lang = ( function( window ) {
 	
 	
 	function Lang() {
@@ -10,16 +10,16 @@ APP.Lang = ( function( window ) {
 	
 	Lang.prototype.init = function() {
 		_setGlobalInfos.call( this );
-		APP.Router.setPageUrl( true, null );
+		STF.Router.setPageUrl( true, null );
 		_setCurrentLang.call( this );
-		APP.Router.setCurrentPageUrl();
+		STF.Router.setCurrentPageUrl();
 		_setLangLinks.call( this );
 	};
 	
 	
 	var _setGlobalInfos = function() {
 		// all lang
-		this.ALL_LANG = APP.Config.ALL_LANG;
+		this.ALL_LANG = STF.Config.ALL_LANG;
 		
 		// default lang
 		this.DEFAULT_LANG = this.ALL_LANG[0];
@@ -33,10 +33,10 @@ APP.Lang = ( function( window ) {
 	
 	
 	var _setCurrentLang = function() {
-		if ( !this.MULTI_LANG || APP.Router.PAGE_URL.params.length === 0 )
+		if ( !this.MULTI_LANG || STF.Router.PAGE_URL.params.length === 0 )
 			this.LANG = this.DEFAULT_LANG;
 		else
-			this.LANG = APP.Router.PAGE_URL.aParams[0];
+			this.LANG = STF.Router.PAGE_URL.aParams[0];
 	};
 	
 	

@@ -1,10 +1,10 @@
 
 
-APP.ViewPage = (function(window) {
+STF.ViewPage = (function(window) {
 	
 	
 	function ViewPage() {
-		APP.View.call(this);
+		STF.View.call(this);
 		
 		this.name = null;
 		
@@ -17,16 +17,16 @@ APP.ViewPage = (function(window) {
 	}
 	
 	
-	ViewPage.prototype = Object.create(APP.View.prototype);
+	ViewPage.prototype = Object.create(STF.View.prototype);
 	ViewPage.prototype.constructor = ViewPage;
 	
 	
 	ViewPage.prototype.load = function(pageUrl) {
 		this.initTransitionValues();
 		
-		var urlPage = APP.Config.MULTI_LANG ? 
-						APP.Config.WEB_ROOT + APP.Config.LANG + '/ajax-content/' + pageUrl : 
-						APP.Config.WEB_ROOT + 'ajax-content/'+ pageUrl;
+		var urlPage = STF.Config.MULTI_LANG ? 
+						STF.Config.WEB_ROOT + STF.Config.LANG + '/ajax-content/' + pageUrl : 
+						STF.Config.WEB_ROOT + 'ajax-content/'+ pageUrl;
 		
 		$.ajax({
 			context		: this,
@@ -52,7 +52,7 @@ APP.ViewPage = (function(window) {
 	
 	ViewPage.prototype.error = function() {
 	//	console.log('ajax load error');
-		window.location.href = APP.Config.WEB_ROOT+APP.RoutesManager.pageUrl;
+		window.location.href = STF.Config.WEB_ROOT+STF.RoutesManager.pageUrl;
 	};
 	
 	
@@ -65,9 +65,9 @@ APP.ViewPage = (function(window) {
 	
 	ViewPage.prototype.checkInit = function() {
 		if(this.v.isAjaxLoaded && this.v.isTransitionHideEnded) {
-			APP.RoutesManager.updateGA(); // update Google Analytics
+			STF.RoutesManager.updateGA(); // update Google Analytics
 			
-			APP.Main.$.pageContainer[0].innerHTML = this.v.data;
+			STF.Main.$.pageContainer[0].innerHTML = this.v.data;
 			
 			this.v.data = null;
 			
@@ -106,14 +106,14 @@ APP.ViewPage = (function(window) {
 	
 	
 	ViewPage.prototype.show = function() {
-		this.tw.showPage = TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:1, ease:Quad.easeOut, onComplete:function(){
+		this.tw.showPage = TweenLite.to(STF.Main.$.pageContainer, 0.8, {opacity:1, ease:Quad.easeOut, onComplete:function(){
 			this.dispatch(this.E.SHOWN);
 		}.bind(this)});
 	};
 	
 	
 	ViewPage.prototype.hide = function() {
-		this.tw.hidePage = TweenLite.to(APP.Main.$.pageContainer, 0.8, {opacity:0, ease:Quad.easeOut, onComplete:function(){
+		this.tw.hidePage = TweenLite.to(STF.Main.$.pageContainer, 0.8, {opacity:0, ease:Quad.easeOut, onComplete:function(){
 			this.destroy();
 			this.dispatch(this.E.HIDDEN);
 		}.bind(this)});

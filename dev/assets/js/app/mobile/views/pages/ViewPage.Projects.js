@@ -1,20 +1,20 @@
 
 
-APP.Views = APP.Views || {};
-APP.Views.Page = APP.Views.Page || {};
+STF.Views = STF.Views || {};
+STF.Views.Page = STF.Views.Page || {};
 
 
-APP.Views.Page.Projects = (function(window) {
+STF.Views.Page.Projects = (function(window) {
 	
 	
 	function Projects() {
-		APP.ViewPage.call(this);
+		STF.ViewPage.call(this);
 		
 		this.name = 'projects';
 	}
 	
 	
-	Projects.prototype = Object.create(APP.ViewPage.prototype);
+	Projects.prototype = Object.create(STF.ViewPage.prototype);
 	Projects.prototype.constructor = Projects;
 	
 	

@@ -1,9 +1,9 @@
 
 
-APP.Utils = APP.Utils || {};
+STF.Utils = STF.Utils || {};
 
 
-APP.Utils.MemoryStats = (function(window){
+STF.Utils.MemoryStats = (function(window){
 	
 	
 	function MemoryStats() {

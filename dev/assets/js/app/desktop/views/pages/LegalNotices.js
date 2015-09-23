@@ -1,18 +1,18 @@
 
 
-APP.Views		= APP.Views || {};
-APP.Views.Pages	= APP.Views.Pages || {};
+STF.Views		= STF.Views || {};
+STF.Views.Pages	= STF.Views.Pages || {};
 
 
-APP.Views.Pages.LegalNotices = ( function( window ) {
+STF.Views.Pages.LegalNotices = ( function( window ) {
 	
 	
 	function LegalNotices() {
-		APP.AbstractView.call( this );
+		STF.AbstractView.call( this );
 	}
 	
 	
-	LegalNotices.prototype				= Object.create( APP.AbstractView.prototype );
+	LegalNotices.prototype				= Object.create( STF.AbstractView.prototype );
 	LegalNotices.prototype.constructor	= LegalNotices;
 	
 	

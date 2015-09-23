@@ -1,9 +1,9 @@
 
 
-APP.Utils = APP.Utils || {};
+STF.Utils = STF.Utils || {};
 
 
-APP.Utils.Global = (function(window) {
+STF.Utils.Global = (function(window) {
 	
 	
 	this.color = {};

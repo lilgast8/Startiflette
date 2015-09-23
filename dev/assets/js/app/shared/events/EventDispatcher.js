@@ -1,6 +1,6 @@
 
 
-APP.EventDispatcher = ( function( window ) {
+STF.EventDispatcher = ( function( window ) {
 	
 	
 	function EventDispatcher() {

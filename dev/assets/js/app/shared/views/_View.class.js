@@ -1,10 +1,10 @@
 
 
-APP.View = (function(window) {
+STF.View = (function(window) {
 	
 	
 	function View() {
-		APP.EventDispatcher.call(this);
+		STF.EventDispatcher.call(this);
 		
 		this.$	= {};
 		this.p	= {};
@@ -14,7 +14,7 @@ APP.View = (function(window) {
 	}
 	
 	
-	View.prototype = Object.create(APP.EventDispatcher.prototype);
+	View.prototype = Object.create(STF.EventDispatcher.prototype);
 	View.prototype.constructor = View;
 	
 	
@@ -94,12 +94,12 @@ APP.View = (function(window) {
 	
 	
 	View.prototype.changePage = function(e) {
-		if(APP.Config.HAS_PUSHSTATE) { // if pushstate supported
+		if(STF.Config.HAS_PUSHSTATE) { // if pushstate supported
 			e.preventDefault();
 			
 			var url = e.currentTarget.href;
 			
-			APP.RoutesManager.goToPage(url);
+			STF.RoutesManager.goToPage(url);
 		}
 	};
 	

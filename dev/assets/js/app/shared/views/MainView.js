@@ -1,10 +1,10 @@
 
 
-APP.MainView = ( function( window ) {
+STF.MainView = ( function( window ) {
 	
 	
 	function MainView() {
-		APP.AbstractView.call( this );
+		STF.AbstractView.call( this );
 		
 		this.E = {
 			RESIZE:		'resize',
@@ -20,12 +20,12 @@ APP.MainView = ( function( window ) {
 	}
 	
 	
-	MainView.prototype				= Object.create( APP.AbstractView.prototype );
+	MainView.prototype				= Object.create( STF.AbstractView.prototype );
 	MainView.prototype.constructor	= MainView;
 	
 	
 	MainView.prototype.init = function() {
-		APP.AbstractView.prototype.init.call( this );
+		STF.AbstractView.prototype.init.call( this );
 		
 		// _instancePagesController.call( this );
 		// _instanceStaticViews.call( this );
@@ -51,14 +51,14 @@ APP.MainView = ( function( window ) {
 	
 	
 	var _initStaticsViews = function() {
-		APP.PagesController.init();
-		APP.Views.Statics.HeaderView.init();
-		// APP.Views.Statics.FooterView.init();
+		STF.PagesController.init();
+		STF.Views.Statics.HeaderView.init();
+		// STF.Views.Statics.FooterView.init();
 	};
 	
 	
 	/*var _instancePagesController = function() {
-		this.pagesController = APP.PagesController;
+		this.pagesController = STF.PagesController;
 		this.pagesController.init();
 	};*/
 	

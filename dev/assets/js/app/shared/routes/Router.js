@@ -1,10 +1,10 @@
 
 
-APP.Router = ( function( window ) {
+STF.Router = ( function( window ) {
 	
 	
 	function Router() {
-		APP.EventDispatcher.call( this );
+		STF.EventDispatcher.call( this );
 		
 		this.E = {
 			INIT: 'init'
@@ -22,7 +22,7 @@ APP.Router = ( function( window ) {
 	}
 	
 	
-	Router.prototype				= Object.create( APP.EventDispatcher.prototype );
+	Router.prototype				= Object.create( STF.EventDispatcher.prototype );
 	Router.prototype.constructor	= Router;
 	
 	
@@ -32,16 +32,16 @@ APP.Router = ( function( window ) {
 	
 	
 	var _loadRoutesFile = function() {
-		this.jsonLoader	= new APP.Loader( false );
+		this.jsonLoader	= new STF.Loader( false );
 		
 		this.jsonLoader.buildEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
 		
 		var aJsonFiles	= [];
 		var fileName, filePath;
 		
-		for ( var key in APP.Config.ROUTES_FILES ) {
-			fileName = APP.Config.ROUTES_FILES[ key ];
-			filePath = APP.Path.URL.routes + fileName + '.json';
+		for ( var key in STF.Config.ROUTES_FILES ) {
+			fileName = STF.Config.ROUTES_FILES[ key ];
+			filePath = STF.Path.URL.routes + fileName + '.json';
 			
 			aJsonFiles.push( {
 				id:		fileName,
@@ -105,7 +105,7 @@ APP.Router = ( function( window ) {
 	
 	
 	var _getHashPageUrl = function() {
-		var hashPageUrl	= this.PAGE_URL.full.replace( APP.Path.URL.base, '' );
+		var hashPageUrl	= this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
 		
 		hashPageUrl		= hashPageUrl.split( '#' )[1] || '';
 		
@@ -114,7 +114,7 @@ APP.Router = ( function( window ) {
 	
 	
 	var _getParamsPageUrl = function() {
-		var paramsPageUrl = this.PAGE_URL.full.replace( APP.Path.URL.base, '' );
+		var paramsPageUrl = this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
 		
 		if ( paramsPageUrl.substr( 0, 1 ) == '/' ) // if slash is first character, remove it
 			paramsPageUrl = paramsPageUrl.substr( 1 );
@@ -138,7 +138,7 @@ APP.Router = ( function( window ) {
 	
 	var _getCurrentPageUrl = function()
 	{
-		var currentPageUrl = this.PAGE_URL.params.replace( APP.Lang.LANG, '' );
+		var currentPageUrl = this.PAGE_URL.params.replace( STF.Lang.LANG, '' );
 		
 		if ( currentPageUrl.substr( 0, 1 ) == '/' ) // if slash is first character, remove it
 			currentPageUrl = currentPageUrl.substr( 1 );
@@ -153,7 +153,7 @@ APP.Router = ( function( window ) {
 		
 		_setPageInfos.call( this );
 		
-		APP.PagesController.initPage();
+		STF.PagesController.initPage();
 	};
 	
 	
@@ -175,15 +175,15 @@ APP.Router = ( function( window ) {
 			page.params	= this.ROUTES.statics.error404;
 		}
 		
-		APP.PagesController.setPageInfos( page.id, page.params.jsView, page.params[ APP.Lang.LANG ].title, page.params[ APP.Lang.LANG ].desc );
+		STF.PagesController.setPageInfos( page.id, page.params.jsView, page.params[ STF.Lang.LANG ].title, page.params[ STF.Lang.LANG ].desc );
 	};
 	
 	
 	var _getLangExistence = function() {
 		var langExist = true;
 		
-		if ( APP.Lang.ALL_LANG.indexOf( APP.Lang.LANG ) == -1 ) {
-			APP.Lang.LANG = APP.Lang.DEFAULT_LANG;
+		if ( STF.Lang.ALL_LANG.indexOf( STF.Lang.LANG ) == -1 ) {
+			STF.Lang.LANG = STF.Lang.DEFAULT_LANG;
 			
 			langExist = false;
 		}
@@ -207,7 +207,7 @@ APP.Router = ( function( window ) {
 			for ( pageId in routesGroup ) { // parse all pages
 				pageParams = routesGroup[ pageId ];
 				
-				if ( pageParams[ APP.Lang.LANG ].url == this.PAGE_URL.current ) { // if url exist
+				if ( pageParams[ STF.Lang.LANG ].url == this.PAGE_URL.current ) { // if url exist
 					page.exist	= true;
 					page.id		= pageId;
 					page.params	= pageParams;
@@ -236,13 +236,13 @@ APP.Router = ( function( window ) {
 	{
 		var currentUrl, urlPart, altLangUrl;
 		
-		for ( var i in APP.Lang.ALL_LANG ) {
-			var lang = APP.Lang.ALL_LANG[i];
+		for ( var i in STF.Lang.ALL_LANG ) {
+			var lang = STF.Lang.ALL_LANG[i];
 			
-			if ( lang !== APP.Lang.LANG ) {
+			if ( lang !== STF.Lang.LANG ) {
 				currentUrl = pageParams[ lang ].url;
 				
-				if ( this.isHomepage && lang == APP.Lang.DEFAULT_LANG )
+				if ( this.isHomepage && lang == STF.Lang.DEFAULT_LANG )
 					urlPart = '';
 				
 				else if ( this.isHomepage )
@@ -252,7 +252,7 @@ APP.Router = ( function( window ) {
 					urlPart = lang + '/' + pageParams[ lang ].url;
 				
 				
-				altLangUrl = APP.Path.URL.base + urlPart;
+				altLangUrl = STF.Path.URL.base + urlPart;
 				
 				this.ALT_LANG_URL[ lang ] = altLangUrl;
 			}
@@ -268,7 +268,7 @@ APP.Router = ( function( window ) {
 	
 	
 	Router.prototype.navigateTo = function( url ) {
-		if ( APP.PagesController.isPageChange )
+		if ( STF.PagesController.isPageChange )
 			return;
 		
 		if ( _isSameUrl.call( this, url ) )
@@ -278,12 +278,12 @@ APP.Router = ( function( window ) {
 		
 		_setInfos.call( this, url );
 		
-		History.pushState( null, APP.PagesController.page.title, url );
+		History.pushState( null, STF.PagesController.page.title, url );
 	};
 	
 	
 	var _onStateChange = function() {
-		if ( APP.PagesController.isPageChange )
+		if ( STF.PagesController.isPageChange )
 			return;
 		
 		if ( this.navigateByClick ) // if navigate by click
@@ -293,7 +293,7 @@ APP.Router = ( function( window ) {
 			_setInfos.call( this, null );
 		
 		
-		APP.PagesController.changePage( this.PAGE_URL.full );
+		STF.PagesController.changePage( this.PAGE_URL.full );
 	};
 	
 	

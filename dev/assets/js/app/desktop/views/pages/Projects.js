@@ -1,18 +1,18 @@
 
 
-APP.Views		= APP.Views || {};
-APP.Views.Pages	= APP.Views.Pages || {};
+STF.Views		= STF.Views || {};
+STF.Views.Pages	= STF.Views.Pages || {};
 
 
-APP.Views.Pages.Projects = ( function( window ) {
+STF.Views.Pages.Projects = ( function( window ) {
 	
 	
 	function Projects() {
-		APP.AbstractView.call( this );
+		STF.AbstractView.call( this );
 	}
 	
 	
-	Projects.prototype				= Object.create( APP.AbstractView.prototype );
+	Projects.prototype				= Object.create( STF.AbstractView.prototype );
 	Projects.prototype.constructor	= Projects;
 	
 	

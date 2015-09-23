@@ -1,14 +1,14 @@
 
 
-APP.Views			= APP.Views || {};
-APP.Views.Statics	= APP.Views.Statics || {};
+STF.Views			= STF.Views || {};
+STF.Views.Statics	= STF.Views.Statics || {};
 
 
-APP.Views.Statics.MainLoaderView = ( function( window ) {
+STF.Views.Statics.MainLoaderView = ( function( window ) {
 	
 	
 	function MainLoaderView() {
-		APP.AbstractView.call( this );
+		STF.AbstractView.call( this );
 		
 		this.E = {
 			PROGRESS:	'progress',
@@ -19,12 +19,12 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 	}
 	
 	
-	MainLoaderView.prototype				= Object.create( APP.AbstractView.prototype );
+	MainLoaderView.prototype				= Object.create( STF.AbstractView.prototype );
 	MainLoaderView.prototype.constructor	= MainLoaderView;
 	
 	
 	MainLoaderView.prototype.init = function() {
-		APP.AbstractView.prototype.init.call( this );
+		STF.AbstractView.prototype.init.call( this );
 		
 		_instanceAssetsLoader.call( this );
 	};
@@ -65,7 +65,7 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 	
 	
 	var _instanceAssetsLoader = function() {
-		this.assetsLoader = new APP.Loader( true );
+		this.assetsLoader = new STF.Loader( true );
 		this.assetsLoader.init();
 		
 		this.assetsLoader.buildEvt( this.assetsLoader.E.PROGRESS, _onProgress.bind( this ) );
@@ -84,7 +84,7 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 		var posX = percentage - 100;
 		
 		this.$percentage[0].innerHTML					= parseInt( percentage ) + ' %';
-		this.$progress[0].style[ APP.Config.TRANSFORM ]	= 'translate(' + posX + '%, 0% )';
+		this.$progress[0].style[ STF.Config.TRANSFORM ]	= 'translate(' + posX + '%, 0% )';
 	};
 	
 	
@@ -144,7 +144,7 @@ APP.Views.Statics.MainLoaderView = ( function( window ) {
 	var _onHideComplete = function() {
 		// LOADING_MODE == 'byPageStatic' && LOADING_MODE == 'byPageDynamic'
 		this.$percentage[0].innerHTML					= '0 %';
-		this.$progress[0].style[ APP.Config.TRANSFORM ]	= 'translate( -100%, 0% )';
+		this.$progress[0].style[ STF.Config.TRANSFORM ]	= 'translate( -100%, 0% )';
 		
 		
 		this.dispatch( this.E.HIDDEN );

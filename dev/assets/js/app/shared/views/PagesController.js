@@ -1,10 +1,10 @@
 
 
-APP.PagesController = ( function( window ) {
+STF.PagesController = ( function( window ) {
 	
 	
 	function PagesController() {
-		APP.EventDispatcher.call( this );
+		STF.EventDispatcher.call( this );
 		
 		this.pages					= {};
 		this.page					= {};
@@ -26,7 +26,7 @@ APP.PagesController = ( function( window ) {
 	}
 	
 	
-	PagesController.prototype				= Object.create( APP.EventDispatcher.prototype );
+	PagesController.prototype				= Object.create( STF.EventDispatcher.prototype );
 	PagesController.prototype.constructor	= PagesController;
 	
 	
@@ -40,23 +40,23 @@ APP.PagesController = ( function( window ) {
 	
 	var _initPages = function() {
 		this.pages = {
-			'error-404':		APP.Views.Pages.Error404,
-			'home':				APP.Views.Pages.Home,
-			'about':			APP.Views.Pages.About,
-			'projects':			APP.Views.Pages.Projects,
-			'project':			APP.Views.Pages.Project,
-			'legal-notices':	APP.Views.Pages.LegalNotices
+			'error-404':		STF.Views.Pages.Error404,
+			'home':				STF.Views.Pages.Home,
+			'about':			STF.Views.Pages.About,
+			'projects':			STF.Views.Pages.Projects,
+			'project':			STF.Views.Pages.Project,
+			'legal-notices':	STF.Views.Pages.LegalNotices
 		};
 	};
 	
 	
 	var _instanceAssetsModel = function() {
-		this.assetsModel = new APP.Models.AssetsModel();
+		this.assetsModel = new STF.Models.AssetsModel();
 	};
 	
 	
 	var _instanceMainLoader = function() {
-		this.mainLoader = new APP.Views.Statics.MainLoaderView();
+		this.mainLoader = new STF.Views.Statics.MainLoaderView();
 		this.mainLoader.init();
 	};
 	
@@ -147,7 +147,7 @@ APP.PagesController = ( function( window ) {
 			dynamicImgsList = null;
 		
 		else if ( this.isFirstLoad )
-			dynamicImgsList = APP.MainView.$pageCont.find( this.DYNAMIC_IMG_TO_LOAD );
+			dynamicImgsList = STF.MainView.$pageCont.find( this.DYNAMIC_IMG_TO_LOAD );
 		
 		else if ( !this.isFirstLoad )
 			dynamicImgsList = $( this.data ).find( this.DYNAMIC_IMG_TO_LOAD );
@@ -204,7 +204,7 @@ APP.PagesController = ( function( window ) {
 	
 	var _loadContent = function( pageUrl ) {
 		if ( this.page.id == 'error404' ) // used to avoid that the request return a error on callback if it's a 404 page 
-			pageUrl = APP.Path.URL.base + APP.Lang.LANG + '/' + APP.Router.ROUTES.statics.error404[ APP.Lang.LANG ].url;
+			pageUrl = STF.Path.URL.base + STF.Lang.LANG + '/' + STF.Router.ROUTES.statics.error404[ STF.Lang.LANG ].url;
 		
 		$.ajax({
 			context:	this,
@@ -233,7 +233,7 @@ APP.PagesController = ( function( window ) {
 	
 	var _onContentError = function( e ) {
 		console.log( 'ajax load error' );
-		// window.location.href = APP.Routes.PAGE_URL.full;
+		// window.location.href = STF.Routes.PAGE_URL.full;
 	};
 	
 	
@@ -260,9 +260,9 @@ APP.PagesController = ( function( window ) {
 		// console.log( 'PagesController _checkFirstStepPageChange():', this.isContentLoaded, this.isAssetsLoaded, this.isPrevPageHidden, this.isMainLoaderShown );
 		
 		if ( this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
-			// APP.RoutesManager.updateGA(); // update Google Analytics
+			// STF.RoutesManager.updateGA(); // update Google Analytics
 			
-			APP.MainView.$pageCont[0].innerHTML = this.data;
+			STF.MainView.$pageCont[0].innerHTML = this.data;
 			
 			_destroyPrevPage.call( this );
 			this.data = null;
@@ -317,7 +317,7 @@ APP.PagesController = ( function( window ) {
 		if ( this.isFirstLoad )
 			this.isFirstLoad = false;
 		
-		APP.Router.checkUrlCorrespondence();
+		STF.Router.checkUrlCorrespondence();
 	};
 	
 	
