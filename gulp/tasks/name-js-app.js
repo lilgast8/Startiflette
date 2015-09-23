@@ -64,7 +64,7 @@ gulp.task( 'name-js-app', function() {
 
 function renameApp( filePath, jsAppName ) {
 	var data	= fs.readFileSync( filePath, 'utf8' );
-	data		= data.replace( 'APP.', jsAppName + '.' );
+	data		= data.replace( /APP./g, jsAppName + '.' );
 	
 	fs.writeFileSync( filePath, data, 'utf8' );
 }
