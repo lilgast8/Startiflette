@@ -7,7 +7,6 @@ Starter + tartiflette = Startiflette, a starter for HTML5 + JS app with a Savoya
 Made the configurations in the `dev/assets/json/config/config.json` file.
 
 * ENV: @type {string} can be "dev", "preprod" or "prod"
-* LOCALHOST: @type {boolean}
 * BASE_URL_DEV: @type {string}
 * BASE_URL_PREPROD: @type {string}
 * BASE_URL_PROD: @type {string}

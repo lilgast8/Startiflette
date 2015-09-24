@@ -19,7 +19,6 @@
 										"base_url":			"http://www.SITE_URL.COM/"
 									}
 								},
-	"LOCALHOST":				true,
 	"ROUTES_FILES":				[
 									"statics",
 									"projects"

@@ -11,11 +11,6 @@ class Config
 	
 	static $ENV					= null;
 	static $ENVS				= null;
-	static $LOCALHOST			= null;
-	// static $BASE_URL_DEV		= null;
-	// static $BASE_URL_PREPROD	= null;
-	// static $BASE_URL_PROD		= null;
-	// static $BASE_URL_PROD_ALT	= null;
 	static $ROUTES_FILES		= null;
 	static $ALL_LANG			= null;
 	static $HAS_LANG_LANDING	= null;
@@ -95,6 +90,7 @@ class Config
 	public function getJsFilesFile()
 	{
 		if ( !$this->jsFiles ) { // load file if it wasn't already done
+			
 			if ( !file_exists( Path::$FILE->jsFilesFile ) )
 				throw new ErrorException( 'JsFilesFile is missing!' );
 			
