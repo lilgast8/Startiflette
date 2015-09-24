@@ -15,6 +15,7 @@ gulp.task( 'delete', function() {
 			paths.env.dev + paths.assets.css.minAllFiles,
 			paths.env.prod + paths.htaccess,
 			paths.env.prod + paths.assets.allFiles,
+			paths.env.prod + paths.configs.dir,
 			paths.env.prod + paths.server.indexFile,
 			paths.env.prod + paths.server.dir
 		];
