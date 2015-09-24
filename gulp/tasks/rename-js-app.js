@@ -19,7 +19,7 @@ gulp.task( 'rename-js-app', function() {
 				type:		'input',
 				name:		'jsAppName',
 				message:	'Named the JS app:',
-				default:	'current name is: ' + currentJsAppName
+				default:	currentJsAppName
 			},
 			{
 				type:		'confirm',
