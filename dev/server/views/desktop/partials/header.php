@@ -45,7 +45,7 @@
 <body>
 
 
-<?php include_once Path::$FILE->shared . 'svg.php'; // SVG ?>
+<?php // include_once Path::$FILE->shared . 'svg.php'; // SVG ?>
 
 
 <!-- Main container -->
@@ -88,7 +88,6 @@
 				</li>
 			</ul>
 		</nav>
-		<?php Helpers::getSVG('facebook'); ?>
 	</header>
 	
 	<!-- Page container -->
