@@ -87,13 +87,11 @@ function getInfos( envs ) {
 			baseUrlFBR:	envs.preprod_local.fallbackresource,
 			dirPath:	paths.env.prod
 		};
-	else if ( options.task == 'prod' ) {
-		console.log( 'ASDSA' );
+	else if ( options.task == 'prod' )
 		infos = {
 			baseUrlFBR:	envs.prod.fallbackresource,
 			dirPath:	paths.env.prod
 		};
-	}
 	
 	
 	return infos;
