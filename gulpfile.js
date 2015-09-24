@@ -35,6 +35,7 @@ gulp.task( 'prod:move', [
 	'sass',
 	'js',
 	'json',
+	'svg',
 	'image'
 ], function() {
 	

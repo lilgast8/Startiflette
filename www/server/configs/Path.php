@@ -53,15 +53,16 @@ class Path
 		// url paths
 		self::$URL			= new stdClass();
 		
-		self::$URL->base	= Config::$ENVS->{ Config::$ENV }->base_url;
-		self::$URL->assets	= self::$URL->base		. 'assets/';
-		self::$URL->css		= self::$URL->assets	. 'css/';
-		self::$URL->img		= self::$URL->assets	. 'img/';
-		self::$URL->js		= self::$URL->assets	. 'js/';
-		self::$URL->json	= self::$URL->assets	. 'json/';
-		self::$URL->routes	= self::$URL->json		. 'routes/';
-		self::$URL->configs	= self::$URL->base		. 'configs/';
-		self::$URL->server	= self::$URL->base		. 'server/';
+		self::$URL->base		= Config::$ENVS->{ Config::$ENV }->base_url;
+		self::$URL->assets		= self::$URL->base		. 'assets/';
+		self::$URL->css			= self::$URL->assets	. 'css/';
+		self::$URL->img			= self::$URL->assets	. 'img/';
+		self::$URL->js			= self::$URL->assets	. 'js/';
+		self::$URL->json		= self::$URL->assets	. 'json/';
+		self::$URL->svgSprite	= self::$URL->assets	. 'svg/_sprite/';
+		self::$URL->routes		= self::$URL->json		. 'routes/';
+		self::$URL->configs		= self::$URL->base		. 'configs/';
+		self::$URL->server		= self::$URL->base		. 'server/';
 		
 		
 		// file paths

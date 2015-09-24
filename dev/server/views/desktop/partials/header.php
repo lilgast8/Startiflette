@@ -45,6 +45,9 @@
 <body>
 
 
+<?php include_once Path::$FILE->shared . 'svg.php'; // SVG ?>
+
+
 <!-- Main container -->
 <div id="main-container" class="preload lang-<?php echo Lang::$LANG; ?>">
 	
@@ -85,6 +88,7 @@
 				</li>
 			</ul>
 		</nav>
+		<?php Helpers::getSVG('facebook'); ?>
 	</header>
 	
 	<!-- Page container -->

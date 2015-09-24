@@ -20,6 +20,7 @@
     "gulp-plumber": "^0.6.4",
     "gulp-rename": "^1.2.0",
     "gulp-ruby-sass": "^0.7.1",
+    "gulp-svg-sprite": "^1.2.10",
     "gulp-uglify": "^1.0.2",
     "inquirer": "^0.10.0",
     "jshint-stylish": "^1.0.0",

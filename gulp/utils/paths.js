@@ -66,6 +66,17 @@ module.exports = {
 		json: {
 			dir:		'assets/json/',
 			allFiles:	'assets/json/**/*.json'
+		},
+		
+		svg: {
+			dir:		'assets/svg/',
+			allFiles:	'assets/svg/*.svg',
+			
+			sprite: {
+				dir:		'assets/svg/_sprite/',
+				allFiles:	'assets/svg/_sprite/*.svg',
+				spriteFile:	'assets/svg/_sprite/sprite.svg'
+			}
 		}
 	},
 	

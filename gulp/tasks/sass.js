@@ -31,10 +31,10 @@ gulp.task( 'sass:dev', [ 'delete' ], function() {
 	return gulp.src( options.cssSrcPath )
 		.pipe( plumber() )
 		.pipe( sass({
-			style: 'compressed',
-			// style: 'expanded',
-			compass: true,
-			'sourcemap=none': true
+			style:				'compressed',
+			// style:				'expanded',
+			compass:			true,
+			'sourcemap=none':	true
 		}) )
 		.on( 'error', function(error) {
 			console.log( error.message );

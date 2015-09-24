@@ -13,6 +13,7 @@ gulp.task( 'delete', function() {
 	if ( options.deletePath === null && options.task == 'prod' )
 		options.deletePath = [
 			paths.env.dev + paths.assets.css.minAllFiles,
+			paths.env.dev + paths.assets.svg.sprite.allFiles,
 			paths.env.prod + paths.htaccess,
 			paths.env.prod + paths.assets.allFiles,
 			paths.env.prod + paths.configs.dir,
@@ -32,6 +33,14 @@ gulp.task( 'delete', function() {
 	/* JS & JS-min */
 	else if ( options.deletePath === null && ( options.task == 'js' || options.task == 'js-min' ) )
 		options.deletePath = paths.env.prod + paths.assets.js.dir;
+	
+	
+	/* SVG */
+	else if ( options.deletePath === null && ( options.task == 'svg' ) )
+		options.deletePath = [
+			paths.env.dev + paths.assets.svg.sprite.allFiles,
+			paths.env.prod + paths.assets.svg.dir
+		];
 	
 	
 	/* JSON & JSON-min */

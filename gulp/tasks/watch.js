@@ -19,6 +19,7 @@ gulp.task( 'watch', function() {
 		/* Assets */
 		paths.env.dev + paths.assets.allFiles,
 		'!' + paths.env.dev + paths.assets.css.minAllFiles,
+		'!' + paths.env.dev + paths.assets.svg.sprite.spriteFile,
 		
 		/* Config */
 		paths.env.dev + paths.configs.allFiles
@@ -77,6 +78,13 @@ gulp.task( 'watch', function() {
 				options.jsonSrcPath = paths.env.dev + paths.assets.json.allFiles;
 		}
 		
+		/* SVG */
+		else if ( ext == '.svg' ) {
+			taskname = 'svg';
+			
+			options.svgSrcPath = [ paths.env.dev + paths.assets.svg.allFiles ];
+		}
+		
 		
 		if ( taskname )
 			gulp.start( taskname );
@@ -84,6 +92,7 @@ gulp.task( 'watch', function() {
 	} );
 	
 	
+	console.log( paths.env.dev + paths.assets.svg.sprite.allFiles );
 	/* Livereload */
 	gulp.watch( [
 		
@@ -98,6 +107,9 @@ gulp.task( 'watch', function() {
 		
 		/* JSON */
 		paths.env.dev + paths.assets.json.allFiles,
+		
+		/* SVG */
+		paths.env.dev + paths.assets.svg.sprite.allFiles,
 		
 		/* Config */
 		paths.env.dev + paths.configs.allFiles,
