@@ -92,7 +92,6 @@ gulp.task( 'watch', function() {
 	} );
 	
 	
-	console.log( paths.env.dev + paths.assets.svg.sprite.allFiles );
 	/* Livereload */
 	gulp.watch( [
 		
