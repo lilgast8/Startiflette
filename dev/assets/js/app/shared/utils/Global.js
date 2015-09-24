@@ -100,7 +100,7 @@ STF.Utils.Global = ( function( window ) {
 	};
 	
 	
-	this.initMailto = function( el, address, domain, end, replaceContent ) {
+	this.encryptMailto = function( el, address, domain, end, replaceContent ) {
 		var mailto		= 'mailto';
 		var separator	= ':';
 		var at			= '@';

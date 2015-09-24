@@ -20,7 +20,7 @@ STF.Views.Pages.LegalNotices = ( function( window ) {
 		this.$page	= $( document.getElementById( 'page-content' ) );
 		this.$email	= this.$page.find( '.email' );
 		
-		// this.encryptMailto( this.$.email, 'contact', 'domain', 'com', true );
+		// encryptMailto( this.$.email, 'contact', 'domain', 'com', true );
 	};
 	
 	
