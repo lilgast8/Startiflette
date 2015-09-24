@@ -15,7 +15,6 @@ STF.Router = ( function( window ) {
 		this.ALT_LANG_URL		= {};
 		this.LINK				= {};
 		
-		// this.is404				= null;
 		this.isHomepage			= null;
 		
 		this.navigateByClick	= null; // used to avoid to set page infos two times

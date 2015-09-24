@@ -80,8 +80,6 @@ STF.PagesController = ( function( window ) {
 		
 		this.prevPage		= this.currentPage;
 		this.currentPage	= new this.pages[ this.page.jsView ]();
-		
-		// console.log( this.prevPage, this.currentPage );
 	};
 	
 	
@@ -257,8 +255,6 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _checkFirstStepPageChange = function() {
-		// console.log( 'PagesController _checkFirstStepPageChange():', this.isContentLoaded, this.isAssetsLoaded, this.isPrevPageHidden, this.isMainLoaderShown );
-		
 		if ( this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
 			// STF.RoutesManager.updateGA(); // update Google Analytics
 			
@@ -304,8 +300,6 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _checkSecondStepPageChange = function() {
-		// console.log( 'PagesController _checkSecondStepPageChange():', this.isCurrentPageShow, this.isMainLoaderHidden );
-		
 		if ( this.isCurrentPageShow && this.isMainLoaderHidden )
 			_enablePageChange.call( this );
 	};

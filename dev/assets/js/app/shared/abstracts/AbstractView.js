@@ -7,7 +7,6 @@ STF.AbstractView = ( function( window ) {
 		STF.EventDispatcher.call( this );
 		
 		this.E = {
-			// INIT:	'init',
 			SHOWN:	'shown',
 			HIDDEN:	'hidden'
 		};
@@ -117,10 +116,6 @@ STF.AbstractView = ( function( window ) {
 		this.unbindEvents();
 		
 		this.destroyGSAP();
-		
-		this.$ = {};
-		this.p = {};
-		this.v = {};
 	};
 	
 	
@@ -135,9 +130,7 @@ STF.AbstractView = ( function( window ) {
 			
 			var url = e.currentTarget.href;
 			
-			// STF.Router.goToPage(url);
 			STF.Router.navigateTo( url );
-			// STF.PagesController.navigateTo( url );
 		}
 	};
 	

@@ -3,7 +3,7 @@
 STF.Utils = STF.Utils || {};
 
 
-STF.Utils.FPSStats = (function(window){
+STF.Utils.FPSStats = ( function( window ) {
 	
 	
 	function FPSStats() {
@@ -38,5 +38,5 @@ STF.Utils.FPSStats = (function(window){
 	return new FPSStats();
 	
 	
-})(window);
+} ) ( window );
 

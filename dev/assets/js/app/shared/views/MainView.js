@@ -27,8 +27,6 @@ STF.MainView = ( function( window ) {
 	MainView.prototype.init = function() {
 		STF.AbstractView.prototype.init.call( this );
 		
-		// _instancePagesController.call( this );
-		// _instanceStaticViews.call( this );
 		_initStaticsViews.call( this );
 	};
 	
@@ -57,44 +55,33 @@ STF.MainView = ( function( window ) {
 	};
 	
 	
-	/*var _instancePagesController = function() {
-		this.pagesController = STF.PagesController;
-		this.pagesController.init();
-	};*/
-	
-	
-	/*var _instanceStaticViews = function() {
-		// this.header = 
-	};*/
-	
-	
 	var _resize = function() {
 		this.wW = this.$window.width();
 		this.wH = this.$window.height();
 		
-		console.log('MainView _resize()', this.wW, this.wH);
+		console.log( 'MainView _resize()', this.wW, this.wH );
 	};
 	
 	
 	var _raf = function() {
 		this.scrollY = this.$window[0].scrollY || this.$window[0].pageYOffset;
 		
-		console.log('MainView _raf()');
+		console.log( 'MainView _raf()' );
 	};
 	
 	
 	var _mouseMove = function() {
-		console.log('MainView _mouseMove()');
+		console.log( 'MainView _mouseMove()' );
 	};
 	
 	
 	var _mouseDown = function() {
-		console.log('MainView _mouseDown()');
+		console.log( 'MainView _mouseDown()' );
 	};
 	
 	
 	var _mouseUp = function() {
-		console.log('MainView _mouseUp()');
+		console.log( 'MainView _mouseUp()' );
 	};
 	
 	

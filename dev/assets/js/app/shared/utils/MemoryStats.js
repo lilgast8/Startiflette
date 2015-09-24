@@ -3,7 +3,7 @@
 STF.Utils = STF.Utils || {};
 
 
-STF.Utils.MemoryStats = (function(window){
+STF.Utils.MemoryStats = ( function( window ) {
 	
 	
 	function MemoryStats() {
@@ -21,7 +21,7 @@ STF.Utils.MemoryStats = (function(window){
 		
 		document.body.appendChild( this.stats.domElement );
 		
-		TweenLite.ticker.addEventListener('tick', this.update, this);
+		TweenLite.ticker.addEventListener( 'tick', this.update, this );
 	};
 	
 	
@@ -33,5 +33,5 @@ STF.Utils.MemoryStats = (function(window){
 	return new MemoryStats();
 	
 	
-})(window);
+} ) ( window );
 
