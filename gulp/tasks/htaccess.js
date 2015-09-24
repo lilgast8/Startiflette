@@ -11,6 +11,11 @@ var config	= require( '../../' + paths.env.dev + paths.configs.config.configFile
 
 gulp.task( 'htaccess', function() {
 	
+	if ( options.task == 'default' ) { // force reset config by reloading config.json file if there has been change on it
+		var configFile	= fs.readFileSync( paths.env.dev + paths.configs.config.configFile, 'utf8' );
+		config			= JSON.parse( configFile );
+	}
+	
 	var infos			= getInfos( config.ENVS );
 	
 	var data			= fs.readFileSync( paths.env.base + paths.htaccess, 'utf8' );
