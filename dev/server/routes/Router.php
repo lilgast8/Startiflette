@@ -152,6 +152,8 @@ class Router
 			
 			if ( $this->isHomepage && self::$PAGE_URL->params == Lang::$DEFAULT_LANG )
 				$this->redirectToRoot();
+			else if ( !Lang::$MULTI_LANG && self::$PAGE_URL->aParams[0] == Lang::$DEFAULT_LANG )
+				$this->redirectToPageWithoutLang();
 		}
 		else { // 404
 			$page->id		= 'error404';
@@ -243,6 +245,13 @@ class Router
 	{
 		header( 'Status: 301 Moved Permanently', true, 301 );
 		header( 'Location: ' . Path::$URL->base );
+	}
+	
+	
+	private function redirectToPageWithoutLang()
+	{
+		header( 'Status: 301 Moved Permanently', true, 301 );
+		header( 'Location: ' . Path::$URL->base . self::$PAGE_URL->current );
 	}
 	
 	
