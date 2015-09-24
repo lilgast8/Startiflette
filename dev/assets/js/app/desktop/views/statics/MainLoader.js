@@ -5,6 +5,7 @@ STF.Views.Statics	= STF.Views.Statics || {};
 
 
 STF.Views.Statics.MainLoaderView = ( function( window ) {
+	'use strict';
 	
 	
 	function MainLoaderView() {

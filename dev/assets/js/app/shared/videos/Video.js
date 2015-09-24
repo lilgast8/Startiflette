@@ -1,6 +1,7 @@
 
 
 STF.Video = ( function( window ) {
+	'use strict';
 	
 	
 	function Video( $video, videoName ) {

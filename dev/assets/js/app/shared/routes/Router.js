@@ -1,6 +1,7 @@
 
 
 STF.Router = ( function( window ) {
+	'use strict';
 	
 	
 	function Router() {

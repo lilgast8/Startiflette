@@ -1,6 +1,7 @@
 
 
 STF.Lang = ( function( window ) {
+	'use strict';
 	
 	
 	function Lang() {

@@ -4,6 +4,7 @@ STF.Utils = STF.Utils || {};
 
 
 STF.Utils.MemoryStats = ( function( window ) {
+	'use strict';
 	
 	
 	function MemoryStats() {

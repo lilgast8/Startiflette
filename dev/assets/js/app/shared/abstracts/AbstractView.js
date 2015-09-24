@@ -1,6 +1,7 @@
 
 
 STF.AbstractView = ( function( window ) {
+	'use strict';
 	
 	
 	function AbstractView() {

@@ -1,6 +1,7 @@
 
 
 STF.OldBrowser = ( function( window ) {
+	'use strict';
 	
 	
 	function OldBrowser() {

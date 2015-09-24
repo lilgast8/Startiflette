@@ -1,6 +1,7 @@
 
 
 STF.Path = ( function( window ) {
+	'use strict';
 	
 	
 	function Path() {

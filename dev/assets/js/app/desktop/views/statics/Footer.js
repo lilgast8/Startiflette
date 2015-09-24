@@ -5,6 +5,7 @@ STF.Views.Statics	= STF.Views.Statics || {};
 
 
 STF.Views.Statics.FooterView = ( function( window ) {
+	'use strict';
 	
 	
 	function FooterView() {

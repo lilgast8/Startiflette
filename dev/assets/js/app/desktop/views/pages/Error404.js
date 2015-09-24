@@ -5,6 +5,7 @@ STF.Views.Pages	= STF.Views.Pages || {};
 
 
 STF.Views.Pages.Error404 = ( function( window ) {
+	'use strict';
 	
 	
 	function Error404() {

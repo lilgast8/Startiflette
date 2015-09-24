@@ -1,6 +1,7 @@
 
 
 STF.EventDispatcher = ( function( window ) {
+	'use strict';
 	
 	
 	function EventDispatcher() {

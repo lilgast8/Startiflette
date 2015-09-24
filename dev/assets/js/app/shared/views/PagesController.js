@@ -1,6 +1,7 @@
 
 
 STF.PagesController = ( function( window ) {
+	'use strict';
 	
 	
 	function PagesController() {

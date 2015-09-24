@@ -5,6 +5,7 @@ STF.Views.Pages	= STF.Views.Pages || {};
 
 
 STF.Views.Pages.LegalNotices = ( function( window ) {
+	'use strict';
 	
 	
 	function LegalNotices() {

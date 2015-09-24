@@ -1,6 +1,7 @@
 
 
 STF.Main = ( function( window ) {
+	'use strict';
 	
 	
 	function Main() {

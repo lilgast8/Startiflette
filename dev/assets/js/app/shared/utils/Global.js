@@ -4,12 +4,13 @@ STF.Utils = STF.Utils || {};
 
 
 STF.Utils.Global = ( function( window ) {
+	'use strict';
 	
 	
-	this.color = {};
+	window.color = {};
 	
 	
-	this.addClass = function( el, classToAdd ) {
+	window.addClass = function( el, classToAdd ) {
 		if ( el.classList )
 			el.classList.add( classToAdd );
 		else {
@@ -19,7 +20,7 @@ STF.Utils.Global = ( function( window ) {
 	};
 	
 	
-	this.removeClass = function( el, classToRemove ) {
+	window.removeClass = function( el, classToRemove ) {
 		if ( el.classList )
 			el.classList.remove( classToRemove );
 		else {
@@ -32,7 +33,7 @@ STF.Utils.Global = ( function( window ) {
 	};
 	
 	
-	this.hasClass = function( el, classToCheck ) {
+	window.hasClass = function( el, classToCheck ) {
 		var hasClass;
 		
 		if ( el.classList )
@@ -44,12 +45,12 @@ STF.Utils.Global = ( function( window ) {
 	};
 	
 	
-	this.resetStyle = function( el ) {
+	window.resetStyle = function( el ) {
 		el.style.cssText = '';
 	};
 	
 	
-	this.getElSize = function( elW, elH, contW, contH ) {
+	window.getElSize = function( elW, elH, contW, contH ) {
 		var elRatio		= elW / elH;
 		var contRatio	= contW / contH;
 		var sizeEl		= {
@@ -74,17 +75,17 @@ STF.Utils.Global = ( function( window ) {
 	};
 	
 	
-	this.degToRad = function( deg ) {
+	window.degToRad = function( deg ) {
 		return deg * Math.PI / 180;
 	};
 	
 	
-	this.radToDeg = function( rad ) {
+	window.radToDeg = function( rad ) {
 		return rad * 180 / Math.PI;
 	};
 	
 	
-	this.getSupportedPropertyName = function( property ) {
+	window.getSupportedPropertyName = function( property ) {
 		var prefixes = [ '', 'ms', 'Webkit', 'Moz', 'O' ];
 		
 		for ( var i = 0; i < prefixes.length; i++ ) {
@@ -100,7 +101,7 @@ STF.Utils.Global = ( function( window ) {
 	};
 	
 	
-	this.encryptMailto = function( el, address, domain, end, replaceContent ) {
+	window.encryptMailto = function( el, address, domain, end, replaceContent ) {
 		var mailto		= 'mailto';
 		var separator	= ':';
 		var at			= '@';
@@ -113,7 +114,7 @@ STF.Utils.Global = ( function( window ) {
 	};
 	
 	
-	this.getObjSize = function( obj ) {
+	window.getObjSize = function( obj ) {
 		var size = 0;
 		
 		for ( var key in obj )

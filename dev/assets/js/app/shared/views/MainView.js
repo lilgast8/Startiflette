@@ -1,6 +1,7 @@
 
 
 STF.MainView = ( function( window ) {
+	'use strict';
 	
 	
 	function MainView() {

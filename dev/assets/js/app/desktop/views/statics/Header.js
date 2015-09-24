@@ -5,6 +5,7 @@ STF.Views.Statics	= STF.Views.Statics || {};
 
 
 STF.Views.Statics.HeaderView = ( function( window ) {
+	'use strict';
 	
 	
 	function HeaderView() {

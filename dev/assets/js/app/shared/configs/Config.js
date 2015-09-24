@@ -1,6 +1,7 @@
 
 
 STF.Config = ( function( window ) {
+	'use strict';
 	
 	
 	function Config() {

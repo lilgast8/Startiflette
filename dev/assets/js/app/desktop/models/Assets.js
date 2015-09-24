@@ -4,6 +4,7 @@ STF.Models = STF.Models || {};
 
 
 STF.Models.AssetsModel = ( function( window ) {
+	'use strict';
 	
 	
 	function AssetsModel() {

@@ -1,6 +1,7 @@
 
 
 STF.Loader = ( function( window ) {
+	'use strict';
 	
 	
 	function Loader( isOnProgress ) {

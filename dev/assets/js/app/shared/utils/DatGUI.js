@@ -4,6 +4,7 @@ STF.Utils = STF.Utils || {};
 
 
 STF.Utils.DatGUI = ( function( window ) {
+	'use strict';
 	
 	
 	function DatGUI() {

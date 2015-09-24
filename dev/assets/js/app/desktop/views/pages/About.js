@@ -5,6 +5,7 @@ STF.Views.Pages	= STF.Views.Pages || {};
 
 
 STF.Views.Pages.About = ( function( window ) {
+	'use strict';
 	
 	
 	function About() {

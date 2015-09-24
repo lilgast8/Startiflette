@@ -4,6 +4,7 @@ STF.Utils = STF.Utils || {};
 
 
 STF.Utils.FPSStats = ( function( window ) {
+	'use strict';
 	
 	
 	function FPSStats() {

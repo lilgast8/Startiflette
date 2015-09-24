@@ -5,6 +5,7 @@ APP.Views.Pages	= APP.Views.Pages || {};
 
 
 APP.Views.Pages.PageName = ( function( window ) {
+	'use strict';
 	
 	
 	function PageName() {
