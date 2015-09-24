@@ -25,15 +25,20 @@ options.movePath	= null;
 function getEnv() {
 	var environment;
 	
-	var config = require( '../../' + paths.env.dev + paths.configs.config.configFile );
+	if ( options.task == 'init' || options.task == 'default' )
+		environment = 'dev';
 	
-	for ( var env in config.ENVS ) {
-		if ( options[ env ] )
-			environment = env;
+	else {
+		var config = require( '../../' + paths.env.dev + paths.configs.config.configFile );
+		
+		for ( var env in config.ENVS ) {
+			if ( options[ env ] )
+				environment = env;
+		}
+		
+		if ( environment === undefined )
+			environment = 'preprod_local';
 	}
-	
-	if ( environment == undefined )
-		environment = 'preprod_local';
 	
 	
 	return environment;

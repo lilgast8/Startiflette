@@ -7,7 +7,7 @@ var fs		= require( 'fs' );
 
 
 
-gulp.task( 'set-env', function() {
+gulp.task( 'set-env', [ 'htaccess' ], function() {
 	
 	var config	= require( '../../' + paths.env.prod + paths.configs.config.configFile );
 	config.ENV	= options.env;
