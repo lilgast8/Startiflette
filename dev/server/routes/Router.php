@@ -14,7 +14,6 @@ class Router
 	
 	static $CONTENT_TYPE		= null;
 	
-	// private $is404				= null;
 	private $isHomepage			= null;
 	
 	private $lang				= null;
