@@ -1,5 +1,5 @@
 # Startiflette
-Starter + tartiflette = Startiflette, a starter for HTML5 + JS app with a Savoyard touch.
+Starter + tartiflette = Startiflette, a SEO friendly starter for HTML5 + JS app with a Savoyard touch.
 
 
 
