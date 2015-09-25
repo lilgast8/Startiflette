@@ -16,6 +16,9 @@ gulp.task( 'watch', function() {
 	/* Tasks management */
 	gulp.watch( [
 		
+		/* htaccess */
+		paths.env.base + paths.htaccess,
+		
 		/* Assets */
 		paths.env.dev + paths.assets.allFiles,
 		'!' + paths.env.dev + paths.assets.css.minAllFiles,
@@ -39,8 +42,14 @@ gulp.task( 'watch', function() {
 		config		= options.filePath.indexOf( 'config/' ) > -1 ? true : false;
 		routes		= options.filePath.indexOf( 'routes/' ) > -1 ? true : false;
 		
+		
+		/* htaccess */
+		if ( options.fileName == '.htaccess' ) {
+			taskname = 'htaccess';
+		}
+		
 		/* SASS */
-		if ( ext == '.scss' ) {
+		else if ( ext == '.scss' ) {
 			taskname = 'sass';
 			
 			if ( desktop )
