@@ -6,6 +6,18 @@
     "name": "Gaston Bouchayer",
     "url": "http://www.gastonbouchayer.com"
   },
+  "homepage": "https://github.com/LilGast8/Startiflette",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:LilGast8/Startiflette.git"
+  },
+  "licenses": "CC-BY-NC-SA-4.0",
+  "keywords": [
+    "html5",
+    "javascript",
+    "starter",
+    "gulp"
+  ],
   "main": "gulpfile.js",
   "devDependencies": {
     "del": "^1.2.1",
