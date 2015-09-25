@@ -125,5 +125,10 @@ STF.Utils.Global = ( function( window ) {
 	};
 	
 	
+	window.getHypotenuse = function( widthA, widthB ) {
+		return Math.sqrt( widthA * widthA + widthB * widthB );
+	};
+	
+	
 } ) ( window );
 
