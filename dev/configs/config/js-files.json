@@ -41,6 +41,8 @@
 			"app/shared/loaders/Loader.js",
 			
 			"app/shared/utils/Global.js",
+			"app/shared/utils/DOM.js",
+			"app/shared/utils/Math.js",
 			
 			"app/shared/abstracts/AbstractView.js",
 			
