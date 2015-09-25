@@ -15,7 +15,9 @@
 @import 'compass/css3/background-clip';
 @import 'compass/css3/border-radius';
 @import 'compass/css3/text-shadow';
+@import 'compass/css3/box-shadow';
 @import 'compass/css3/inline-block';
+@import 'compass/css3/user-interface';
 @import 'compass/css3/transform';
 @import 'compass/css3/transition';
 @import 'compass/css3/animation';
@@ -23,5 +25,22 @@
 
 
 /* -------- CUSTOM -------- */
+
+@mixin unselectable() {
+	-webkit-touch-callout:none; 
+	@include user-select('none'); 
+	-ms-touch-action:none; 
+	touch-action:none; 
+	// pointer-events:none; 
+	// -webkit-user-drag:none; 
+}
+
+@mixin triangle($top, $right, $bottom, $left, $colorTop, $colorRight, $colorBottom, $colorLeft) {
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: $top $right $bottom $left;
+	border-color: $colorTop $colorRight $colorBottom $colorLeft;
+}
 
 
