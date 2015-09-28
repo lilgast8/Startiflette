@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git@github.com:LilGast8/Startiflette.git"
   },
-  "licenses": "CC-BY-NC-SA-4.0",
+  "license": "CC-BY-NC-SA-4.0",
   "keywords": [
     "html5",
     "javascript",
