@@ -202,8 +202,10 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _loadContent = function( pageUrl ) {
-		if ( this.page.id == 'error404' ) // used to avoid that the request return a error on callback if it's a 404 page 
-			pageUrl = STF.Path.URL.base + STF.Lang.LANG + '/' + STF.Router.ROUTES.statics.error404[ STF.Lang.LANG ].url;
+		if ( this.page.id == 'error404' ) { // used to avoid that the request return a error on callback if it's a 404 page 
+			var lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/'  : '';
+			pageUrl		= STF.Path.URL.base + lang + STF.Router.ROUTES.statics.error404[ STF.Lang.LANG ].url;
+		}
 		
 		$.ajax({
 			context:	this,
