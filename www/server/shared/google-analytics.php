@@ -1,5 +1,5 @@
 
-<?php if (!Config::$LOCALHOST && Config::$ENV == 'prod' && !empty(Config::$GA_ID)) { ?>
+<?php if ( Config::$ENV == 'prod' && !empty( Config::$GA_ID ) ) { ?>
 	<!-- Google Analytics -->
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
