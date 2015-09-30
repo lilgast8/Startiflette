@@ -5,8 +5,7 @@ STF.Main = ( function( window ) {
 	
 	
 	function Main() {
-		this.v = {};
-		this.o = {};
+		
 	}
 	
 	
