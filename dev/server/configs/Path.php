@@ -59,7 +59,9 @@ class Path
 		self::$URL->img			= self::$URL->assets	. 'img/';
 		self::$URL->js			= self::$URL->assets	. 'js/';
 		self::$URL->json		= self::$URL->assets	. 'json/';
-		self::$URL->svgSprite	= self::$URL->assets	. 'svg/_sprite/';
+		self::$URL->svg			= self::$URL->assets	. 'svg/';
+		self::$URL->svgSprite	= self::$URL->svg		. '_sprite/';
+		self::$URL->videos		= self::$URL->assets	. 'videos/';
 		self::$URL->routes		= self::$URL->json		. 'routes/';
 		self::$URL->configs		= self::$URL->base		. 'configs/';
 		self::$URL->server		= self::$URL->base		. 'server/';

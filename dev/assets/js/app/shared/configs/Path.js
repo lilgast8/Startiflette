@@ -26,6 +26,7 @@ STF.Path = ( function( window ) {
 			js:		baseUrl + 'assets/js/',
 			json:	baseUrl + 'assets/json/',
 			svg:	baseUrl + 'assets/svg/',
+			videos:	baseUrl + 'assets/videos/',
 			routes:	baseUrl + 'configs/routes/',
 			server:	baseUrl + 'server/',
 		};
