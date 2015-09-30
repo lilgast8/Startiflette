@@ -57,7 +57,7 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _instanceMainLoader = function() {
-		this.mainLoader = new STF.Views.Statics.MainLoaderView();
+		this.mainLoader = new STF.Views.Statics.MainLoader();
 		this.mainLoader.init();
 	};
 	

@@ -4,32 +4,32 @@ STF.Views			= STF.Views || {};
 STF.Views.Statics	= STF.Views.Statics || {};
 
 
-STF.Views.Statics.HeaderView = ( function( window ) {
+STF.Views.Statics.Header = ( function( window ) {
 	'use strict';
 	
 	
-	function HeaderView() {
+	function Header() {
 		STF.AbstractView.call( this );
 	}
 	
 	
-	HeaderView.prototype				= Object.create( STF.AbstractView.prototype );
-	HeaderView.prototype.constructor	= HeaderView;
+	Header.prototype				= Object.create( STF.AbstractView.prototype );
+	Header.prototype.constructor	= Header;
 	
 	
-	HeaderView.prototype.initDOM = function() {
+	Header.prototype.initDOM = function() {
 		this.$header	= $( document.getElementById( 'header' ) );
 		this.$menu		= $( document.getElementById( 'menu' ) );
 		this.$menuLink	= this.$menu.find( '.menu-link' );
 	};
 	
 	
-	HeaderView.prototype.bindEvents = function() {
+	Header.prototype.bindEvents = function() {
 		this.$menuLink.on( 'click', $.proxy( this.changePage, this ) );
 	};
 	
 	
-	return new HeaderView();
+	return new Header();
 	
 	
 } ) ( window );

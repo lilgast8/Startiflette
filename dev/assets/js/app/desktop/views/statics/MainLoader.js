@@ -4,11 +4,11 @@ STF.Views			= STF.Views || {};
 STF.Views.Statics	= STF.Views.Statics || {};
 
 
-STF.Views.Statics.MainLoaderView = ( function( window ) {
+STF.Views.Statics.MainLoader = ( function( window ) {
 	'use strict';
 	
 	
-	function MainLoaderView() {
+	function MainLoader() {
 		STF.AbstractView.call( this );
 		
 		this.E = {
@@ -20,18 +20,18 @@ STF.Views.Statics.MainLoaderView = ( function( window ) {
 	}
 	
 	
-	MainLoaderView.prototype				= Object.create( STF.AbstractView.prototype );
-	MainLoaderView.prototype.constructor	= MainLoaderView;
+	MainLoader.prototype				= Object.create( STF.AbstractView.prototype );
+	MainLoader.prototype.constructor	= MainLoader;
 	
 	
-	MainLoaderView.prototype.init = function() {
+	MainLoader.prototype.init = function() {
 		STF.AbstractView.prototype.init.call( this );
 		
 		_instanceAssetsLoader.call( this );
 	};
 	
 	
-	MainLoaderView.prototype.initDOM = function() {
+	MainLoader.prototype.initDOM = function() {
 		this.$loader		= $( document.getElementById( 'main-loader' ) );
 		this.$loaderCont	= this.$loader.find( '.main-loader-container' );
 		this.$percentage	= this.$loader.find( '.main-loader-percentage' );
@@ -40,7 +40,7 @@ STF.Views.Statics.MainLoaderView = ( function( window ) {
 	};
 	
 	
-	MainLoaderView.prototype.initTl = function() {
+	MainLoader.prototype.initTl = function() {
 		/* Hide init */
 		this.tl.hideInit = new TimelineLite( { paused:true, onComplete:_onHideInitComplete.bind( this ) } );
 		
@@ -74,7 +74,7 @@ STF.Views.Statics.MainLoaderView = ( function( window ) {
 	};
 	
 	
-	MainLoaderView.prototype.loadAssets = function( aImgsToLoad ) {
+	MainLoader.prototype.loadAssets = function( aImgsToLoad ) {
 		// console.log( aImgsToLoad );
 		
 		this.assetsLoader.startLoad( aImgsToLoad );
@@ -105,7 +105,7 @@ STF.Views.Statics.MainLoaderView = ( function( window ) {
 	};*/
 	
 	
-	MainLoaderView.prototype.hideInit = function() {
+	MainLoader.prototype.hideInit = function() {
 		this.tl.hideInit.play();
 		
 		
@@ -114,7 +114,7 @@ STF.Views.Statics.MainLoaderView = ( function( window ) {
 	};
 	
 	
-	MainLoaderView.prototype.show = function() {
+	MainLoader.prototype.show = function() {
 		this.$loader[0].style.display = 'block';
 		this.$loader.offsetHeight; // jshint ignore:line
 		
@@ -122,7 +122,7 @@ STF.Views.Statics.MainLoaderView = ( function( window ) {
 	};
 	
 	
-	MainLoaderView.prototype.hide = function() {
+	MainLoader.prototype.hide = function() {
 		this.tl.hide.play(0);
 	};
 	
@@ -152,7 +152,7 @@ STF.Views.Statics.MainLoaderView = ( function( window ) {
 	};
 	
 	
-	return MainLoaderView;
+	return MainLoader;
 	
 	
 } ) ( window );
