@@ -23,6 +23,7 @@ STF.AbstractView = ( function( window ) {
 	
 	AbstractView.prototype.init = function() {
 		this.initDOM();
+		this.initEl();
 		this.bindEvents();
 		this.initTl();
 	};
@@ -30,6 +31,11 @@ STF.AbstractView = ( function( window ) {
 	
 	AbstractView.prototype.initDOM = function() {
 		// console.log('AbstractView.initDOM()');
+	};
+	
+	
+	AbstractView.prototype.initEl = function() {
+		// console.log('AbstractView.initEl()');
 	};
 	
 	
