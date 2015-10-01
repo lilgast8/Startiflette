@@ -76,6 +76,7 @@ STF.PagesController = ( function( window ) {
 	var _setCurrentPage = function() {
 		if ( this.pages[ this.page.jsView ] === undefined) {
 			console.log( 'PagesController error: Need to create a view for the "' + this.page.jsView + '" ID, then set the view in the PagesController.pages object.' );
+			
 			return;
 		}
 		
