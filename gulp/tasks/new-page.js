@@ -43,11 +43,11 @@ gulp.task( 'new-page', function() {
 			var fileNameUpperCase			= answers.pageName.toUpperCase();
 			var fileNameCapitalize			= upperCaseFirstLetter( answers.pageName );
 			var fileNameTitleCase			= titleCase ( answers.pageName );
-			var fileNameTitleCaseNoSpace	= fileNameTitleCase.replace( ' ', '' );
-			var dashedFileName				= fileNameLowerCase.replace( ' ', '-' );
+			var fileNameTitleCaseNoSpace	= fileNameTitleCase.replace( / /g, '' );
+			var dashedFileName				= fileNameLowerCase.replace( / /g, '-' );
 			var shortName					= answers.shortPageName != SHORT_DEFAULT_NAME ? answers.shortPageName : answers.pageName;
 			var shortNameTitleCase			= titleCase( shortName );
-			var shortNameTitleCaseNoSpace	= shortNameTitleCase.replace( ' ', '' );
+			var shortNameTitleCaseNoSpace	= shortNameTitleCase.replace( / /g, '' );
 			
 			var cssFileName			= '_' + dashedFileName + '.scss';
 			var phpFileName			= dashedFileName + '.php';
