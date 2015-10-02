@@ -8,7 +8,7 @@ STF.Models.AssetsModel = ( function( window ) {
 	
 	
 	function AssetsModel() {
-		this.aImgs			= {
+		this.aImgs = {
 			'global': [
 				/* bgs */
 				STF.Path.URL.img + 'bgs/pattern-black-transparent.png',
