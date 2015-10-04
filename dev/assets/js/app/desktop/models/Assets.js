@@ -88,21 +88,9 @@ STF.Models.Assets = ( function( window ) {
 	};
 	
 	
-	/*Assets.prototype.getAssetsToLoad = function( aAssetsListIds, dynamicImgList ) {
-		var aAssetsToLoad	= [];
-		
-		aAssetsToLoad		= _addImgToLoad.call( this, aAssetsToLoad, aAssetsListIds, dynamicImgList );
-		aAssetsToLoad		= _addJsonToLoad.call( this, aAssetsToLoad, aAssetsListIds );
-		
-		return aAssetsToLoad;
-	};*/
-	
-	
 	Assets.prototype.getAssetsToLoad = function( aImgListIds, aJsonListIds, dynamicImgList ) {
 		var aAssetsToLoad	= [];
 		
-		// var aImgToLoad		= _addImgToLoad.call( this, aImgListIds, dynamicImgList );
-		// var aJsonToLoad		= _addJsonToLoad.call( this, aJsonListIds );
 		aAssetsToLoad		= _addImgToLoad.call( this, aAssetsToLoad, aImgListIds, dynamicImgList );
 		aAssetsToLoad		= _addJsonToLoad.call( this, aAssetsToLoad, aJsonListIds );
 		
@@ -114,7 +102,6 @@ STF.Models.Assets = ( function( window ) {
 	
 	var _addImgToLoad = function( aAssetsToLoad, aImgListIds, dynamicImgList ) {
 		var imgList;
-		// var aAssetsToLoad = [];
 		
 		// static images
 		for ( var i = 0; i < aImgListIds.length; i++ ) {
@@ -141,7 +128,6 @@ STF.Models.Assets = ( function( window ) {
 	
 	var _addJsonToLoad = function( aAssetsToLoad, aJsonListIds ) {
 		var jsonList;
-		// var aAssetsToLoad = [];
 		
 		for ( var i = 0; i < aJsonListIds.length; i++ ) {
 			jsonList = this.aJson[ aJsonListIds[i] ];
@@ -165,87 +151,9 @@ STF.Models.Assets = ( function( window ) {
 	};
 	
 	
-	/*var _addImgToLoad = function( aAssetsToLoad, aAssetsListIds, dynamicImgList ) {
-		var imgList;
-		
-		// static images
-		for ( var i = 0; i < aAssetsListIds.length; i++ ) {
-			imgList = this.aImg[ aAssetsListIds[i] ];
-			
-			if ( imgList !== undefined ) {
-				
-				for ( var j = 0; j < imgList.length; j++ )
-					aAssetsToLoad.push( imgList[j] );
-				
-			}
-		}
-		
-		// dynamic images
-		if ( dynamicImgList !== null ) {
-			for ( i = 0; i < dynamicImgList.length; i++ )
-				aAssetsToLoad.push( dynamicImgList[i].src );
-		}
-		
-		
-		return aAssetsToLoad;
-	};
-	
-	
-	var _addJsonToLoad = function( aAssetsToLoad, aAssetsListIds ) {
-		var jsonList;
-		
-		for ( var i = 0; i < aAssetsListIds.length; i++ ) {
-			jsonList = this.aJson[ aAssetsListIds[i] ];
-			
-			if ( jsonList !== undefined ) {
-				
-				for ( var id in jsonList ) {
-					
-					aAssetsToLoad.push( {
-						id:		id,
-						src:	jsonList[ id ]
-					} );
-					
-				}
-				
-			}
-		}
-		
-		
-		return aAssetsToLoad;
-	};*/
-	
-	
 	Assets.prototype.setJsonData = function( id, data ) {
 		this.jsonData[ id ] = data;
 	};
-	
-	
-	/*Assets.prototype.getImgToLoad = function( aImgListIds, dynamicImgList ) {
-		var aImgToLoad = [];
-		var imgList;
-		
-		// static images
-		for ( var i = 0; i < aImgListIds.length; i++ ) {
-			imgList = this.aImg[ aImgListIds[i] ];
-			
-			if ( imgList !== undefined ) {
-				
-				for ( var j = 0; j < imgList.length; j++ )
-					aImgToLoad.push( imgList[j] );
-				
-			}
-		}
-		
-		// dynamic images
-		if ( dynamicImgList !== null ) {
-			for ( i = 0; i < dynamicImgList.length; i++ )
-				aImgToLoad.push( dynamicImgList[i].src );
-		}
-		
-		
-		return aImgToLoad;
-	};*/
 	
 	
 	return new Assets();
