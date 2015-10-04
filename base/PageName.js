@@ -1,24 +1,24 @@
 
 
-APP.Views		= APP.Views || {};
-APP.Views.Pages	= APP.Views.Pages || {};
+STF.Views		= STF.Views || {};
+STF.Views.Pages	= STF.Views.Pages || {};
 
 
-APP.Views.Pages.PageName = ( function( window ) {
+STF.Views.Pages.PageName = ( function( window ) {
 	'use strict';
 	
 	
 	function PageName() {
-		APP.AbstractView.call( this );
+		STF.AbstractView.call( this );
 	}
 	
 	
-	PageName.prototype				= Object.create( APP.AbstractView.prototype );
+	PageName.prototype				= Object.create( STF.AbstractView.prototype );
 	PageName.prototype.constructor	= PageName;
 	
 	
 	PageName.prototype.init = function() {
-		APP.AbstractView.prototype.init.call( this );
+		STF.AbstractView.prototype.init.call( this );
 		
 		// init others objects
 	};

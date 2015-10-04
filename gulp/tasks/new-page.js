@@ -79,10 +79,11 @@ gulp.task( 'new-page', function() {
 						[ phpContentClassName, phpContentVarName, fileNameCapitalize ] );
 			
 			// js
+			var currentJsAppName = getJsAppName();
 			createFile( 'PageName.js',
 						paths.env.dev + paths.assets.js.app.desktop.views.pages + jsFileName,
-						[ 'PageName' ],
-						[ jsClassName ] );
+						[ 'STF', 'PageName' ],
+						[ currentJsAppName, jsClassName ] );
 		}
 	);
 	
@@ -134,4 +135,14 @@ function createFile( file, destFilePath, aStringToReplace, aNewString ) {
 	else
 		fs.writeFileSync( destFilePath, data, 'utf8' );
 	
+}
+
+
+function getJsAppName() {
+	var data		= fs.readFileSync( paths.env.dev + paths.assets.js.app.initFile, 'utf8' );
+	var startPos	= data.indexOf( 'var ' ) + 4;
+	var endPos		= data.indexOf( ' = ' );
+	var jsAppName	= data.substring( startPos, endPos );
+	
+	return jsAppName;
 }
