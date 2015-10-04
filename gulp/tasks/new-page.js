@@ -2,6 +2,7 @@ var gulp		= require( 'gulp' );
 
 var options		= require( '../utils/options' );
 var paths		= require( '../utils/paths' );
+var helpers		= require( '../utils/helpers' );
 
 var inquirer	= require( 'inquirer' );
 var fs			= require( 'fs' );
@@ -39,21 +40,23 @@ gulp.task( 'new-page', function() {
 			if ( !answers.createNewPage )
 				return;
 			
+			var currentJsAppName			= helpers.getJsAppName();
+			
 			var fileNameLowerCase			= answers.pageName.toLowerCase();
 			var fileNameUpperCase			= answers.pageName.toUpperCase();
-			var fileNameCapitalize			= upperCaseFirstLetter( answers.pageName );
-			var fileNameTitleCase			= titleCase ( answers.pageName );
+			var fileNameCapitalize			= helpers.upperCaseFirstLetter( answers.pageName );
+			var fileNameTitleCase			= helpers.titleCase( answers.pageName );
 			var fileNameTitleCaseNoSpace	= fileNameTitleCase.replace( / /g, '' );
 			var dashedFileName				= fileNameLowerCase.replace( / /g, '-' );
 			var shortName					= answers.shortPageName != SHORT_DEFAULT_NAME ? answers.shortPageName : answers.pageName;
-			var shortNameTitleCase			= titleCase( shortName );
+			var shortNameTitleCase			= helpers.titleCase( shortName );
 			var shortNameTitleCaseNoSpace	= shortNameTitleCase.replace( / /g, '' );
 			
 			var cssFileName			= '_' + dashedFileName + '.scss';
 			var phpFileName			= dashedFileName + '.php';
 			var jsFileName			= fileNameTitleCaseNoSpace + '.js';
 			
-			var cssClassName		= lowerCaseFirstLetter( shortNameTitleCaseNoSpace );
+			var cssClassName		= helpers.lowerCaseFirstLetter( shortNameTitleCaseNoSpace );
 			var phpContentClassName	= fileNameTitleCaseNoSpace + 'Content';
 			var phpContentVarName	= '$' + lowerCaseFirstLetter( shortNameTitleCaseNoSpace );
 			var jsFileName			= fileNameTitleCaseNoSpace + '.js';
@@ -79,7 +82,6 @@ gulp.task( 'new-page', function() {
 						[ phpContentClassName, phpContentVarName, fileNameCapitalize ] );
 			
 			// js
-			var currentJsAppName = getJsAppName();
 			createFile( 'PageName.js',
 						paths.env.dev + paths.assets.js.app.desktop.views.pages + jsFileName,
 						[ 'STF', 'PageName' ],
@@ -89,23 +91,6 @@ gulp.task( 'new-page', function() {
 	
 } );
 
-
-
-function titleCase( string ) {
-	return string.replace( /\w\S*/g, function( txt ) {
-		return txt[0].toUpperCase() + txt.substr(1).toLowerCase();
-	});
-}
-
-
-function upperCaseFirstLetter( string ) {
-	return string[0].toUpperCase() + string.slice(1);
-}
-
-
-function lowerCaseFirstLetter( string ) {
-	return string[0].toLowerCase() + string.slice(1);
-}
 
 
 function createFile( file, destFilePath, aStringToReplace, aNewString ) {
@@ -135,14 +120,4 @@ function createFile( file, destFilePath, aStringToReplace, aNewString ) {
 	else
 		fs.writeFileSync( destFilePath, data, 'utf8' );
 	
-}
-
-
-function getJsAppName() {
-	var data		= fs.readFileSync( paths.env.dev + paths.assets.js.app.initFile, 'utf8' );
-	var startPos	= data.indexOf( 'var ' ) + 4;
-	var endPos		= data.indexOf( ' = ' );
-	var jsAppName	= data.substring( startPos, endPos );
-	
-	return jsAppName;
 }

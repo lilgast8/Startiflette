@@ -1,6 +1,7 @@
 var gulp		= require( 'gulp' );
 
 var paths		= require( '../utils/paths' );
+var helpers		= require( '../utils/helpers' );
 
 var fs			= require( 'fs' );
 var plumber		= require( 'gulp-plumber' );
@@ -66,13 +67,7 @@ function minifyJsFilesFile() {
 	data += '}';
 	
 	
-	createDir( paths.env.prod + paths.configs.dir );
-	createDir( paths.env.prod + paths.configs.config.dir );
+	helpers.createDir( paths.env.prod + paths.configs.dir );
+	helpers.createDir( paths.env.prod + paths.configs.config.dir );
 	fs.writeFileSync( paths.env.prod + paths.configs.config.jsFilesFile, data, 'utf8' );
-}
-
-
-function createDir( dirPath ) {
-	if ( !fs.existsSync( dirPath ) )
-		fs.mkdirSync( dirPath );
 }

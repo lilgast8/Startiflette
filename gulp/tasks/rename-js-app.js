@@ -2,6 +2,7 @@ var gulp		= require( 'gulp' );
 
 var options		= require( '../utils/options' );
 var paths		= require( '../utils/paths' );
+var helpers		= require( '../utils/helpers' );
 
 var inquirer	= require( 'inquirer' );
 var recursive	= require( 'recursive-readdir' );
@@ -11,7 +12,7 @@ var fs			= require( 'fs' );
 
 gulp.task( 'rename-js-app', function() {
 	
-	var currentJsAppName = getJsAppName();
+	var currentJsAppName = helpers.getJsAppName();
 	
 	inquirer.prompt(
 		[
@@ -50,16 +51,6 @@ gulp.task( 'rename-js-app', function() {
 	
 } );
 
-
-
-function getJsAppName() {
-	var data		= fs.readFileSync( paths.env.dev + paths.assets.js.app.initFile, 'utf8' );
-	var startPos	= data.indexOf( 'var ' ) + 4;
-	var endPos		= data.indexOf( ' = ' );
-	var jsAppName	= data.substring( startPos, endPos );
-	
-	return jsAppName;
-}
 
 
 function renameApp( filePath, currentJsAppName, newJsAppName, isInitFile ) {
