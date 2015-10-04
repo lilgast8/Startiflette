@@ -84,8 +84,6 @@ STF.PagesController = ( function( window ) {
 	PagesController.prototype.initPage = function() {
 		_initPageChangeValues.call( this );
 		
-		this.currentPage.init();
-		
 		_loadAssets.call( this );
 	};
 	
@@ -176,6 +174,8 @@ STF.PagesController = ( function( window ) {
 		
 		// first load
 		if ( this.isFirstLoad ) {
+			this.currentPage.init();
+			
 			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
 			this.currentPage.show();
 			
