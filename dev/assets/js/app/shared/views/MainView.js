@@ -29,6 +29,8 @@ STF.MainView = ( function( window ) {
 		STF.AbstractView.prototype.init.call( this );
 		
 		_initStaticsViews.call( this );
+		
+		_resize.call( this );
 	};
 	
 	
