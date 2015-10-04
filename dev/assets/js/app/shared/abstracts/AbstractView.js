@@ -12,8 +12,10 @@ STF.AbstractView = ( function( window ) {
 			HIDDEN:	'hidden'
 		};
 		
-		this.tw	= {};
-		this.tl	= {};
+		this.tw		= {};
+		this.tl		= {};
+		
+		this.isInit	= false;
 	}
 	
 	
@@ -26,6 +28,10 @@ STF.AbstractView = ( function( window ) {
 		this.initEl();
 		this.bindEvents();
 		this.initTl();
+		
+		this.isInit = true;
+		
+		this.resize();
 	};
 	
 	
