@@ -7,28 +7,53 @@ STF.Utils.Math = ( function( window ) {
 	'use strict';
 	
 	
-	window.getElSize = function( elW, elH, contW, contH ) {
+	window.getElPos = function( elW, elH, contW, contH ) {
 		var elRatio		= elW / elH;
 		var contRatio	= contW / contH;
-		var sizeEl		= {
-			x : 0,
-			y : 0,
-			w : 0,
-			h : 0
+		var pos			= {
+			x: 0,
+			y: 0,
+			w: 0,
+			h: 0
 		};
 		
 		if ( elRatio < contRatio ) {
-			sizeEl.w = contW;
-			sizeEl.h = Math.round( sizeEl.w / elRatio );
-			sizeEl.y = Math.round( - ( sizeEl.h - contH ) / 2 );
+			pos.w = contW;
+			pos.h = Math.round( pos.w / elRatio );
+			pos.y = Math.round( - ( pos.h - contH ) / 2 );
 		}
 		else {
-			sizeEl.h = contH;
-			sizeEl.w = Math.round ( sizeEl.h * elRatio );
-			sizeEl.x = Math.round ( - ( sizeEl.w - contW ) / 2 );
+			pos.h = contH;
+			pos.w = Math.round ( pos.h * elRatio );
+			pos.x = Math.round ( - ( pos.w - contW ) / 2 );
 		}
 		
-		return sizeEl;
+		return pos;
+	};
+	
+	
+	window.getCropPos = function( elW, elH, contW, contH ) {
+		var elRatio		= elW / elH;
+		var contRatio	= contW / contH;
+		var pos			= {
+			x: 0,
+			y: 0,
+			w: 0,
+			h: 0
+		};
+		
+		if ( elRatio < contRatio ) {
+			pos.w = elW;
+			pos.h = Math.round( pos.w / contRatio );
+			pos.y = Math.round( - ( pos.h - elH ) / 2 );
+		}
+		else {
+			pos.h = elH;
+			pos.w = Math.round ( pos.h * contRatio );
+			pos.x = Math.round ( - ( pos.w - elW ) / 2 );
+		}
+		
+		return pos;
 	};
 	
 	
