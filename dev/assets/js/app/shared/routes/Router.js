@@ -32,7 +32,7 @@ STF.Router = ( function( window ) {
 	
 	
 	var _loadRoutesFile = function() {
-		this.jsonLoader	= new STF.Loader( false );
+		this.jsonLoader	= new STF.Loader( false, false );
 		
 		this.jsonLoader.buildEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
 		

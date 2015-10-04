@@ -66,7 +66,7 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 	
 	
 	var _instanceAssetsLoader = function() {
-		this.assetsLoader = new STF.Loader( true );
+		this.assetsLoader = new STF.Loader( true, false ); // replace params to: true, true
 		this.assetsLoader.init();
 		
 		this.assetsLoader.buildEvt( this.assetsLoader.E.PROGRESS, _onProgress.bind( this ) );

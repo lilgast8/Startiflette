@@ -4,15 +4,16 @@ STF.Loader = ( function( window ) {
 	'use strict';
 	
 	
-	function Loader( isOnProgress ) {
+	function Loader( isOnProgress, isOnFileLoad ) {
 		STF.EventDispatcher.call( this );
 		
 		this.isOnProgress = isOnProgress;
+		this.isOnFileLoad = isOnFileLoad;
 		
 		this.E = {
 			STARTED:	'started',
 			PROGRESS:	'progress',
-			FILE_LOAD:	'fileload',
+			FILE_LOAD:	'fileLoad',
 			COMPLETE:	'complete',
 			ERROR:		'error'
 		};
@@ -74,8 +75,11 @@ STF.Loader = ( function( window ) {
 	
 	
 	var _onFileLoad = function( e ) {
-		// this.dispatch( this.E.FILE_LOAD, e );
-		this.data[ e.item.id ] = e.result;
+		if ( this.isOnFileLoad )
+			this.dispatch( this.E.FILE_LOAD, e );
+		
+		else
+			this.data[ e.item.id ] = e.result;
 	};
 	
 	

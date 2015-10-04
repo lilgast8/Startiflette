@@ -32,7 +32,7 @@ STF.Config = ( function( window ) {
 	
 	
 	var _loadConfigFile = function() {
-		this.jsonLoader = new STF.Loader( false );
+		this.jsonLoader = new STF.Loader( false, false );
 		
 		this.jsonLoader.buildEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
 		
