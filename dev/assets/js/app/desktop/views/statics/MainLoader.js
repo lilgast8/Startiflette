@@ -13,6 +13,7 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 		
 		this.E = {
 			PROGRESS:	'progress',
+			FILE_LOAD:	'fileLoad',
 			COMPLETE:	'complete',
 			SHOWN:		'shown',
 			HIDDEN:		'hidden'
@@ -66,18 +67,19 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 	
 	
 	var _instanceAssetsLoader = function() {
-		this.assetsLoader = new STF.Loader( true, false ); // replace params to: true, true
+		this.assetsLoader = new STF.Loader( true, true );
 		this.assetsLoader.init();
 		
 		this.assetsLoader.buildEvt( this.assetsLoader.E.PROGRESS, _onProgress.bind( this ) );
+		this.assetsLoader.buildEvt( this.assetsLoader.E.FILE_LOAD, _onFileLoad.bind( this ) );
 		this.assetsLoader.buildEvt( this.assetsLoader.E.COMPLETE, _onComplete.bind( this ) );
 	};
 	
 	
-	MainLoader.prototype.loadAssets = function( aImgsToLoad ) {
-		// console.log( aImgsToLoad );
+	MainLoader.prototype.loadAssets = function( aAssetsToLoad ) {
+		// console.log( aAssetsToLoad );
 		
-		this.assetsLoader.startLoad( aImgsToLoad );
+		this.assetsLoader.startLoad( aAssetsToLoad );
 	};
 	
 	
@@ -89,10 +91,15 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 	};
 	
 	
-	var _onComplete = function() {
+	var _onFileLoad = function( e ) {
+		this.dispatch( this.E.FILE_LOAD, e );
+	};
+	
+	
+	var _onComplete = function( data ) {
 		// _destroyAssetsLoader.call( this );
 		
-		this.dispatch( this.E.COMPLETE, this.data );
+		this.dispatch( this.E.COMPLETE, data );
 	};
 	
 	

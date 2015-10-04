@@ -1,0 +1,13 @@
+{
+
+	"prod_1": {
+		"title": "Name 1",
+		"desc": "desc 1"
+	},
+	
+	"prod_2": {
+		"title": "Name 2",
+		"desc": "desc 2"
+	}
+
+}
