@@ -8,6 +8,11 @@ STF.Models.Assets = ( function( window ) {
 	
 	
 	function Assets() {
+		this.aImgs = {};
+	}
+	
+	
+	Assets.prototype.init = function() {
 		this.aImgs = {
 			'global': [
 				/* bgs */
@@ -48,7 +53,7 @@ STF.Models.Assets = ( function( window ) {
 				STF.Path.URL.img + 'temp/projects.jpg',
 			]
 		};
-	}
+	};
 	
 	
 	Assets.prototype.getAllStaticImgsListIds = function() {
@@ -89,7 +94,8 @@ STF.Models.Assets = ( function( window ) {
 	};
 	
 	
-	return Assets;
+	// return Assets;
+	return new Assets();
 	
 	
 } ) ( window );

@@ -33,9 +33,7 @@ STF.PagesController = ( function( window ) {
 	
 	PagesController.prototype.init = function() {
 		_initPages.call( this );
-		
-		_instanceAssetsModel.call( this );
-		_instanceMainLoader.call( this );
+		_initEl.call( this );
 	};
 	
 	
@@ -51,12 +49,10 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	var _instanceAssetsModel = function() {
-		this.assetsModel = new STF.Models.AssetsModel();
-	};
-	
-	
-	var _instanceMainLoader = function() {
+	var _initEl = function() {
+		this.assetsModel = STF.Models.Assets;
+		this.assetsModel.init();
+		
 		this.mainLoader = new STF.Views.Statics.MainLoader();
 		this.mainLoader.init();
 	};
