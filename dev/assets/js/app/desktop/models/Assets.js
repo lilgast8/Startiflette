@@ -3,11 +3,11 @@
 STF.Models = STF.Models || {};
 
 
-STF.Models.AssetsModel = ( function( window ) {
+STF.Models.Assets = ( function( window ) {
 	'use strict';
 	
 	
-	function AssetsModel() {
+	function Assets() {
 		this.aImgs = {
 			'global': [
 				/* bgs */
@@ -51,7 +51,7 @@ STF.Models.AssetsModel = ( function( window ) {
 	}
 	
 	
-	AssetsModel.prototype.getAllStaticImgsListIds = function() {
+	Assets.prototype.getAllStaticImgsListIds = function() {
 		var aIds = [];
 		
 		for ( var id in this.aImgs )
@@ -62,7 +62,7 @@ STF.Models.AssetsModel = ( function( window ) {
 	};
 	
 	
-	AssetsModel.prototype.getImgsToLoad = function( aImgsListIds, dynamicImgsList ) {
+	Assets.prototype.getImgsToLoad = function( aImgsListIds, dynamicImgsList ) {
 		var aImgsToLoad = [];
 		var imgsList;
 		
@@ -89,7 +89,7 @@ STF.Models.AssetsModel = ( function( window ) {
 	};
 	
 	
-	return AssetsModel;
+	return Assets;
 	
 	
 } ) ( window );
