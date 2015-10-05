@@ -12,7 +12,7 @@ include_once 'server/controller/PagesController.php';
 
 include_once 'server/utils/Helpers.php';
 
-include_once 'server/contents/contents.php';
+include_once 'server/contents/Contents.php';
 
 include_once 'server/vendors/Mobile_Detect.php';
 
