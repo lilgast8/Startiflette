@@ -94,8 +94,6 @@ STF.Models.Assets = ( function( window ) {
 		aAssetsToLoad		= _addImgToLoad.call( this, aAssetsToLoad, aImgListIds, dynamicImgList );
 		aAssetsToLoad		= _addJsonToLoad.call( this, aAssetsToLoad, aJsonListIds );
 		
-		console.log( aAssetsToLoad );
-		
 		return aAssetsToLoad;
 	};
 	
