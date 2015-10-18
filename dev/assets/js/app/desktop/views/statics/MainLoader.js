@@ -154,6 +154,7 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 		this.$percentage[0].innerHTML					= '0 %';
 		this.$progress[0].style[ STF.Config.TRANSFORM ]	= 'translate( -100%, 0% )';
 		
+		this.$loader[0].style.display					= 'none';
 		
 		this.dispatch( this.E.HIDDEN );
 	};
