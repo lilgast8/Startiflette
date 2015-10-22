@@ -17,7 +17,7 @@ STF.OldBrowser = ( function( window ) {
 			browser == 'firefox'	&& browserVersion < 35 || 
 			browser == 'opera'		&& browserVersion < 30 || 
 			browser == 'safari'		&& browserVersion < 7 || 
-			browser == 'chrome'		&& browserVersion < 130 ) {
+			browser == 'chrome'		&& browserVersion < 30 ) {
 			
 			$.ajax( {
 				url:		STF.Path.URL.base + STF.Lang.LANG + '/old-browser',
