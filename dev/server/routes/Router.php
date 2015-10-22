@@ -132,8 +132,8 @@ class Router
 	
 	private function setContentType()
 	{
-		if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'alt' )
-			self::$CONTENT_TYPE = 'alt';
+		if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'oldBrowser' )
+			self::$CONTENT_TYPE = 'oldBrowser';
 		else if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'pageChange' )
 			self::$CONTENT_TYPE = 'pageChange';
 		else
@@ -154,6 +154,10 @@ class Router
 				$this->redirectToRoot();
 			else if ( !Lang::$MULTI_LANG && self::$PAGE_URL->aParams[0] == Lang::$DEFAULT_LANG )
 				$this->redirectToPageWithoutLang();
+		}
+		else if ( self::$CONTENT_TYPE == 'oldBrowser' ) {
+			$page->id				= 'alt';
+			$page->params->phpView	= 'old-browser';
 		}
 		else { // 404
 			$page->id		= 'error404';

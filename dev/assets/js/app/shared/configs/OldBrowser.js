@@ -13,18 +13,18 @@ STF.OldBrowser = ( function( window ) {
 		var browser			= STF.Config.BROWSER;
 		var browserVersion	= STF.Config.BROWSER_VERSION;
 		
-		if (browser == 'ie'			&& browserVersion < 9 || 
-			browser == 'firefox'	&& browserVersion < 10 || 
-			browser == 'opera'		&& browserVersion < 11 || 
-			browser == 'safari'		&& browserVersion < 5 || 
-			browser == 'chrome'		&& browserVersion < 17 ) {
+		if (browser == 'ie'			&& browserVersion < 10 || 
+			browser == 'firefox'	&& browserVersion < 35 || 
+			browser == 'opera'		&& browserVersion < 30 || 
+			browser == 'safari'		&& browserVersion < 7 || 
+			browser == 'chrome'		&& browserVersion < 130 ) {
 			
 			$.ajax( {
 				url:		STF.Path.URL.base + STF.Lang.LANG + '/old-browser',
 				type:		'POST',
 				data:		{
 								ajax: 'true',
-								type: 'alt'
+								type: 'oldBrowser'
 							},
 				dataType:	'html',
 				success:	_successAjax.bind(this),
@@ -35,7 +35,7 @@ STF.OldBrowser = ( function( window ) {
 	
 	
 	var _successAjax = function( data ) {
-		STF.MainController.view.$mainCont[0].innerHTML += data;
+		STF.MainView.$mainCont[0].innerHTML += data;
 	};
 	
 	
