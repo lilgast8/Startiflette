@@ -20,6 +20,26 @@
 		}
 	},
 	
+	"legal_notices": {
+		"jsView"	: "legal-notices",
+		"phpView"	: "legal-notices",
+		"fr": {
+			"url"		: "mentions-legales",
+			"title"		: "Mentions légales",
+			"desc"		: "Mentions légales"
+		},
+		"en": {
+			"url"		: "legal-notices",
+			"title"		: "Legal notices",
+			"desc"		: "Legal notices"
+		},
+		"ex": {
+			"url"		: "legal-notices-ex",
+			"title"		: "Legal notice - ex",
+			"desc"		: "Legal notice - ex"
+		}
+	},
+	
 	"home": {
 		"jsView"	: "home",
 		"phpView"	: "home",
@@ -77,26 +97,6 @@
 			"url"		: "projects-ex",
 			"title"		: "Projects - ex",
 			"desc"		: "Projects - ex"
-		}
-	},
-	
-	"legal_notices": {
-		"jsView"	: "legal-notices",
-		"phpView"	: "legal-notices",
-		"fr": {
-			"url"		: "mentions-legales",
-			"title"		: "Mentions légales",
-			"desc"		: "Mentions légales"
-		},
-		"en": {
-			"url"		: "legal-notices",
-			"title"		: "Legal notices",
-			"desc"		: "Legal notices"
-		},
-		"ex": {
-			"url"		: "legal-notices-ex",
-			"title"		: "Legal notice - ex",
-			"desc"		: "Legal notice - ex"
 		}
 	}
 	
