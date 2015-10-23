@@ -8,7 +8,9 @@ STF.AbstractView = ( function( window ) {
 		STF.EventDispatcher.call( this );
 		
 		this.E = {
+			SHOW:	'show',
 			SHOWN:	'shown',
+			HIDE:	'hide',
 			HIDDEN:	'hidden'
 		};
 		
@@ -28,8 +30,6 @@ STF.AbstractView = ( function( window ) {
 		this.initEl();
 		this.bindEvents();
 		this.initTl();
-		
-		this.isInit = true;
 		
 		this.resize();
 	};
@@ -62,6 +62,8 @@ STF.AbstractView = ( function( window ) {
 	
 	AbstractView.prototype.initView = function() {
 		// console.log('AbstractView.initView()');
+		
+		this.isInit = true;
 	};
 	
 	
@@ -126,6 +128,8 @@ STF.AbstractView = ( function( window ) {
 	
 	
 	AbstractView.prototype.destroy = function() {
+		this.isInit = false;
+		
 		this.unbindEvents();
 		
 		this.destroyGSAP();
