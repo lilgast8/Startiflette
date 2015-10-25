@@ -78,6 +78,15 @@ class Contents
 			
 			$this->getDatas( $fileName, $className, $id );
 		}
+		
+		// old browser
+		else if ( Router::$CONTENT_TYPE == 'oldBrowser' ) {
+			$fileName	= 'alt';
+			$className	= $this->contentsConfig->{ PagesController::$PAGE->id }->className;
+			$id			= PagesController::$PAGE->id;
+			
+			$this->getDatas( $fileName, $className, $id );
+		}
 	}
 	
 	
