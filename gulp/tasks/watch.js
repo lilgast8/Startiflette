@@ -43,6 +43,14 @@ gulp.task( 'watch', function() {
 		config		= options.filePath.indexOf( 'config/' ) > -1 ? true : false;
 		routes		= options.filePath.indexOf( 'routes/' ) > -1 ? true : false;
 		
+		//  options.device: used for SASS error notification
+		if ( desktop )
+			options.device = 'desktop';
+		else if ( mobile )
+			options.device = 'mobile';
+		else if ( shared )
+			options.device = 'shared';
+		
 		
 		/* htaccess */
 		if ( options.fileName == '.htaccess' ) {

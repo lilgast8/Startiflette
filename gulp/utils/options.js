@@ -6,6 +6,7 @@ var paths	= require( '../utils/paths' );
 options.task		= options._[0] === undefined ? 'default' : options._[0];
 options.subtask		= null;
 options.filePath	= null;
+options.fileName	= null;
 
 options.env			= getEnv();
 
