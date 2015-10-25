@@ -114,10 +114,14 @@ gulp.task( 'move', function() {
 			from: [
 				[
 					paths.env.dev + paths.server.allFiles,
-					'!' + paths.env.dev + paths.emptyFiles
-				]
+					'!' + paths.env.dev + paths.emptyFiles,
+				],
+				[ paths.env.dev + paths.server.indexFile ]
 			],
-			to: [ paths.env.prod + paths.server.dir ]
+			to: [
+				paths.env.prod + paths.server.dir,
+				paths.env.prod
+			]
 		};
 	
 	

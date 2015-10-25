@@ -5,6 +5,8 @@ var requireDir	= require( 'require-dir' );
 var dir			= requireDir( './gulp/tasks/' );
 
 var options		= require( './gulp/utils/options' );
+var paths		= require( './gulp/utils/paths' );
+var helpers		= require( './gulp/utils/helpers' );
 
 
 
@@ -23,6 +25,8 @@ gulp.task( 'default', [
 
 /* Prod */
 gulp.task( 'prod', [ 'delete' ], function() {
+	
+	helpers.createDir( paths.env.prod );
 	
 	options.subtask = 'prod-deleted';
 	

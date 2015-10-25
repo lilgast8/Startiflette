@@ -14,11 +14,7 @@ gulp.task( 'delete', function() {
 		options.deletePath = [
 			paths.env.dev + paths.assets.css.minAllFiles,
 			paths.env.dev + paths.assets.svg.sprite.allFiles,
-			paths.env.prod + paths.htaccess,
-			paths.env.prod + paths.assets.allFiles,
-			paths.env.prod + paths.configs.dir,
-			paths.env.prod + paths.server.indexFile,
-			paths.env.prod + paths.server.dir
+			paths.env.prod
 		];
 	
 	
@@ -58,7 +54,10 @@ gulp.task( 'delete', function() {
 	
 	/* Server */
 	else if ( options.deletePath === null && options.task == 'server' )
-		options.deletePath = paths.env.prod + paths.server.dir;
+		options.deletePath = [
+			paths.env.prod + paths.server.dir,
+			paths.env.prod + paths.server.indexFile
+		];
 	
 	
 	
