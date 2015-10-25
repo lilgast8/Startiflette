@@ -19,7 +19,9 @@ gulp.task( 'move', function() {
 					'!' + paths.env.dev + paths.emptyFiles
 				],
 				[ paths.env.dev + paths.assets.js.vendors.HTML5ShivFile ],
+				[ paths.env.dev + paths.assets.sounds.allFiles ],
 				[ paths.env.dev + paths.assets.svg.sprite.spriteFile ],
+				[ paths.env.dev + paths.assets.videos.allFiles ],
 				[ paths.env.dev + paths.server.indexFile ],
 				[
 					paths.env.dev + paths.server.allFiles,
@@ -30,7 +32,9 @@ gulp.task( 'move', function() {
 				paths.env.prod + paths.assets.css.dir,
 				paths.env.prod + paths.assets.css.fonts.dir,
 				paths.env.prod + paths.assets.js.vendors.dir,
+				paths.env.prod + paths.assets.sounds.dir,
 				paths.env.prod + paths.assets.svg.sprite.dir,
+				paths.env.prod + paths.assets.videos.dir,
 				paths.env.prod,
 				paths.env.prod + paths.server.dir
 			]

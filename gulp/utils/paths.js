@@ -68,6 +68,11 @@ module.exports = {
 			allFiles:	'assets/json/**/*.json'
 		},
 		
+		sounds: {
+			dir:		'assets/sounds/',
+			allFiles:	'assets/sounds/**/*'
+		},
+		
 		svg: {
 			dir:		'assets/svg/',
 			allFiles:	'assets/svg/*.svg',
@@ -77,6 +82,11 @@ module.exports = {
 				allFiles:	'assets/svg/_sprite/*.svg',
 				spriteFile:	'assets/svg/_sprite/sprite.svg'
 			}
+		},
+		
+		videos: {
+			dir:		'assets/videos/',
+			allFiles:	'assets/videos/**/*'
 		}
 	},
 	
