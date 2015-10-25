@@ -6,7 +6,7 @@ Starter + tartiflette = Startiflette, a SEO friendly starter for HTML5 + JS app 
 
 1. Install gulp: `$ npm install -g gulp`
 2. Install NPM dependencies: `$ npm install`
-3. Set your config environment in `dev/configs/config/config.json` file
+3. Set your config environment in `dev/configs/config/config.json`
 4. Execute init gulp task: `$ gulp init`
 
 
@@ -53,7 +53,7 @@ List of gulp tasks & what they do:
 
 
 
-The 3 main tasks (you can find them in the `gulpfile.js`) are:
+The 3 main tasks (you can find them in `gulpfile.js`) are:
 
 * `init`: First task you need to execute, executes `htaccess` & `rename-js-app`.
 * `default`: Executes `watch`.
