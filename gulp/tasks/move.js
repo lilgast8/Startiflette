@@ -10,18 +10,37 @@ var plumber	= require( 'gulp-plumber' );
 gulp.task( 'move', function() {
 	
 	/* Prod */
-	if ( options.movePath === null && options.task == 'prod' )
+	if ( options.movePath === null && options.task == 'prod' ) {
+		
+		var imgPathFrom;
+		
+		if ( options.imageMin )
+			imgPathFrom = [];
+		else
+			imgPathFrom = [
+				paths.env.dev + paths.assets.img.allFiles,
+				'!' + paths.env.dev + paths.emptyFiles
+			];
+		
+		
 		options.movePath = {
 			from: [
 				[ paths.env.dev + paths.assets.css.minAllFiles ],
+				imgPathFrom,
 				[
 					paths.env.dev + paths.assets.css.fonts.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles
 				],
 				[ paths.env.dev + paths.assets.js.vendors.HTML5ShivFile ],
-				[ paths.env.dev + paths.assets.sounds.allFiles ],
+				[
+					paths.env.dev + paths.assets.sounds.allFiles,
+					'!' + paths.env.dev + paths.emptyFiles
+				],
 				[ paths.env.dev + paths.assets.svg.sprite.spriteFile ],
-				[ paths.env.dev + paths.assets.videos.allFiles ],
+				[
+					paths.env.dev + paths.assets.videos.allFiles,
+					'!' + paths.env.dev + paths.emptyFiles
+				],
 				[ paths.env.dev + paths.server.indexFile ],
 				[
 					paths.env.dev + paths.server.allFiles,
@@ -30,6 +49,7 @@ gulp.task( 'move', function() {
 			],
 			to: [
 				paths.env.prod + paths.assets.css.dir,
+				paths.env.prod + paths.assets.img.dir,
 				paths.env.prod + paths.assets.css.fonts.dir,
 				paths.env.prod + paths.assets.js.vendors.dir,
 				paths.env.prod + paths.assets.sounds.dir,
@@ -39,6 +59,7 @@ gulp.task( 'move', function() {
 				paths.env.prod + paths.server.dir
 			]
 		};
+	}
 	
 	
 	/* SASS */

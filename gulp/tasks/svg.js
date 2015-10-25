@@ -41,7 +41,7 @@ gulp.task( 'svg:dev', [ 'delete' ], function() {
 		}
 	};
 	
-	gulp.src( options.svgSrcPath )
+	return gulp.src( options.svgSrcPath )
 		.pipe( plumber() )
 		.pipe( svgSprite( config ) )
 		.on( 'error', function( error ) {
