@@ -10,7 +10,7 @@ options.fileName	= null;
 
 options.env			= getEnv();
 
-options.imageMin	= true;
+options.imageMin	= false;
 
 options.device		= null;
 
