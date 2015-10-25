@@ -11,35 +11,47 @@ var config		= require( '../../' + paths.env.dev + paths.configs.config.configFil
 
 
 
-gulp.task( 'json-min', [ 'delete' ], function () {
+gulp.task( 'json-min', [ 'json-min:json', 'json-min:configs' ], function () {
+	
+	gulp.start( 'set-env' );
+	
+} );
+
+
+gulp.task( 'json-min:json', [ 'delete' ], function() {
+	
+	var jsonSrcPath = [ paths.env.dev + paths.assets.json.allFiles ];
+	var jsonDestPath = paths.env.prod + paths.assets.json.dir;
+	
+	
+	return minifyJson( jsonSrcPath, jsonDestPath );
+	
+} );
+
+
+gulp.task( 'json-min:configs', [ 'delete' ], function() {
 	
 	var jsonSrcPath = [
-		[ paths.env.dev + paths.assets.json.allFiles ],
-		[
-			paths.env.dev + paths.configs.allFiles,
-			'!' + paths.env.dev + paths.configs.config.jsFilesFile
-		]
+		paths.env.dev + paths.configs.allFiles,
+		'!' + paths.env.dev + paths.configs.config.jsFilesFile
 	];
-	var jsonDestPath = [
-		paths.env.prod + paths.assets.json.dir,
-		paths.env.prod + paths.configs.dir
-	];
-	
-	
-	for ( var i = 0; i < jsonSrcPath.length; i++ ) {
-		
-		gulp.src( jsonSrcPath[i] )
-			.pipe( plumber() )
-			.pipe( jsonminify() )
-			.pipe( gulp.dest( jsonDestPath[i] ) );
-			
-	}
+	var jsonDestPath = paths.env.prod + paths.configs.dir;
 	
 	
 	minifyJsFilesFile(); // js-files file
 	
+	return minifyJson( jsonSrcPath, jsonDestPath );
+	
 } );
 
+
+
+function minifyJson( scrPath, destPath ) {
+	return gulp.src( scrPath )
+		.pipe( plumber() )
+		.pipe( jsonminify() )
+		.pipe( gulp.dest( destPath ) );
+}
 
 
 function minifyJsFilesFile() {

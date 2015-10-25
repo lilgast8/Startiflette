@@ -39,7 +39,6 @@ gulp.task( 'prod:move', [
 	'image'
 ], function() {
 	
-	gulp.start( 'set-env' );
 	gulp.start( 'move' );
 	
 } );
