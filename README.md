@@ -1,5 +1,16 @@
 # Startiflette
-Starter + tartiflette = Startiflette, a SEO friendly starter for HTML5 + JS app with a Savoyard touch.
+> Starter + tartiflette = Startiflette, a SEO friendly starter for HTML5 + JS app with a Savoyard touch.
+
+
+
+## Gulp
+List of gulp tasks & what they do:
+
+The 3 main tasks (you can find them in the `gulpfile.js`) are:
+
+* init
+* default
+* prod
 
 
 
