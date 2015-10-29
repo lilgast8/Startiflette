@@ -47,6 +47,8 @@ List of gulp tasks & what they do:
 * `image-min`: Minifies images in `www/`. If directly called, `delete` which deletes all images in `www/` is executed before.
 * `image-move`: Moves images in `www/`. If directly called, `delete` which deletes all images in `www/` is executed before.
 * `server`: Removes all PHP files in `www/` & moves all PHP files from `dev/` to `www/`.
+* `sounds`: Removes all sounds files in `www/` & moves all sounds files from `dev/` to `www/`.
+* `videos`: Removes all sounds files in `www/` & moves all videos files from `dev/` to `www/`.
 * `robots`: Sets the `robots.txt` file in `www/`;
 * `new-page`: Creates all the necessary files (CSS, PHP, content & JS) for a new page template. All the same need to add by hand the route in `configs/routes/statics.json`, the content connection in `configs/config/contents.json` & the JS view in `PagesController.js`. *(TODO: automated this)*
 * `set-env`: Executes `htaccess` then sets the environment on `config.json`.
