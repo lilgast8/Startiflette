@@ -52,6 +52,16 @@ gulp.task( 'delete', function() {
 		options.deletePath = paths.env.prod + paths.assets.img.dir;
 	
 	
+	/* Sounds */
+	else if ( options.deletePath === null && options.task == 'sounds' )
+		options.deletePath = paths.env.prod + paths.assets.sounds.dir;
+	
+	
+	/* Videos */
+	else if ( options.deletePath === null && options.task == 'videos' )
+		options.deletePath = paths.env.prod + paths.assets.videos.dir;
+	
+	
 	/* Server */
 	else if ( options.deletePath === null && options.task == 'server' )
 		options.deletePath = [

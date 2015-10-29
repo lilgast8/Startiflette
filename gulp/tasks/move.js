@@ -108,6 +108,32 @@ gulp.task( 'move', function() {
 		};
 	
 	
+	/* Sounds */
+	else if ( options.movePath === null && ( options.task == 'sounds' ) )
+		options.movePath = {
+			from: [
+				[
+					paths.env.dev + paths.assets.sounds.allFiles,
+					'!' + paths.env.dev + paths.emptyFiles
+				]
+			],
+			to: [ paths.env.prod + paths.assets.sounds.dir ]
+		};
+	
+	
+	/* Videos */
+	else if ( options.movePath === null && ( options.task == 'videos' ) )
+		options.movePath = {
+			from: [
+				[
+					paths.env.dev + paths.assets.videos.allFiles,
+					'!' + paths.env.dev + paths.emptyFiles
+				]
+			],
+			to: [ paths.env.prod + paths.assets.videos.dir ]
+		};
+	
+	
 	/* Server */
 	else if ( options.movePath === null && options.task == 'server' )
 		options.movePath = {
