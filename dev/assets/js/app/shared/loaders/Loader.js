@@ -84,6 +84,8 @@ STF.Loader = ( function( window ) {
 	
 	
 	var _onComplete = function( e ) {
+		this.queue.removeAll();
+		
 		this.dispatch( this.E.COMPLETE, this.data );
 	};
 	
