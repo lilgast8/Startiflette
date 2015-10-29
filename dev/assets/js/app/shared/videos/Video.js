@@ -4,63 +4,94 @@ STF.Video = ( function( window ) {
 	'use strict';
 	
 	
-	function Video( $video, videoName ) {
-		STF.EventDispatcher.call( this );
+	function Video( idVideo, isFireLoadStart, isFireCanPlay, isFireCanPlayThrough ) {
+		MFC.AbstractView.call( this );
 		
 		this.E = {
-			STARTED:	'started',
-			UPDATE:		'update',
-			ENDED:		'ended',
-			SHOWN:		'shown',
-			HIDDEN:		'hidden'
+			LOAD_START:			'loadStart',
+			CAN_PLAY:			'canPlay',
+			CAN_PLAY_THROUGH:	'canPlayThrough',
+			LOADING_PROGRESS:	'loadingProgress',
+			ENDED:				'ended'
 		};
 		
-		this.$video				= $video;
-		this.videoName			= videoName;
+		this.idVideo				= idVideo;
+		this.isFireLoadStart		= isFireLoadStart;
+		this.isFireCanPlay			= isFireCanPlay;
+		this.isFireCanPlayThrough	= isFireCanPlayThrough;
 		
-		this.isActive			= false;
-		this.isPlayed			= false;
-		this.isCanPlayThrough	= false;
+		this.duration				= null;
+		this.isLoadStart			= false;
+		this.isCanPlay				= false;
+		this.isCanPlayThrough		= false;
 		
 		this.initElt();
 	}
 	
 	
-	Video.prototype				= Object.create( STF.EventDispatcher.prototype );
+	Video.prototype				= Object.create( MFC.AbstractView.prototype );
 	Video.prototype.constructor	= Video;
 	
 	
+	Video.prototype.setUrl = function( url ) {
+		this.$video[0].src = url;
+	};
+	
+	
 	Video.prototype.initElt = function() {
-		this.bindEvents();
+		this.$video = $( document.getElementById( this.idVideo ) );
 		
-		this.$video[0].setAttribute( 'preload', 'auto' );
+		this.bindEvents();
 	};
 	
 	
 	Video.prototype.bindEvents = function() {
+		this.$video.on( 'loadstart', $.proxy( _loadStart, this ) );
+		this.$video.on( 'canplay', $.proxy( _canPlay, this ) );
 		this.$video.on( 'canplaythrough', $.proxy( _canPlayThrough, this ) );
-		this.$video.on( 'ended', $.proxy( _ended, this ) );
 	};
 	
 	
 	Video.prototype.unbindEvents = function() {
+		this.$video.off( 'loadstart', $.proxy( _loadStart, this ) );
+		this.$video.off( 'canplay', $.proxy( _canPlay, this ) );
 		this.$video.off( 'canplaythrough', $.proxy( _canPlayThrough, this ) );
-		this.$video.off( 'ended', $.proxy( _ended, this ) );
+	};
+	
+	
+	Video.prototype.load = function() {
+		this.$video[0].load();
+		this.$video[0].setAttribute( 'preload', 'auto' );
 	};
 	
 	
 	Video.prototype.play = function() {
-		_setActive.call( this );
-		
-		_managePlay.call( this );
+		this.$video[0].play();
 	};
 	
 	
-	Video.prototype.stop = function() {
-		this.isActive = false;
-		
+	Video.prototype.pause = function() {
 		this.$video[0].pause();
-		this.$video[0].currentTime = 0;
+	};
+	
+	
+	Video.prototype.getDuration = function() {
+		return this.duration;
+	};
+	
+	
+	Video.prototype.getCurrentTime = function() {
+		return this.$video[0].currentTime;
+	};
+	
+	
+	Video.prototype.setCurrentTime = function( currentTime ) {
+		this.$video[0].currentTime = currentTime;
+	};
+	
+	
+	Video.prototype.setVolume = function( volume ) {
+		this.$video[0].volume = volume;
 	};
 	
 	
@@ -74,43 +105,37 @@ STF.Video = ( function( window ) {
 	};
 	
 	
-	var _ended = function() {
-		this.dispatch( this.E.ENDED );
-		
-		this.$video[0].currentTime = 0;
-		
-		_setInactive.call( this );
+	var _loadStart = function() {
+		if ( this.isFireLoadStart && !this.isLoadStart && MFC.Config.DEVICE == 'desktop' ) {
+			// console.log( '_loadStart' );
+			
+			this.isLoadStart = true;
+			
+			this.dispatch( this.E.LOAD_START );
+		}
+	};
+	
+	
+	var _canPlay = function() {
+		if ( this.isFireCanPlay && !this.isCanPlay && MFC.Config.DEVICE == 'desktop' ) {
+			// console.log( '_canPlay' );
+			
+			this.isCanPlay	= true;
+			this.duration	= this.$video[0].duration;
+			
+			this.dispatch( this.E.CAN_PLAY );
+		}
 	};
 	
 	
 	var _canPlayThrough = function() {
-		this.isCanPlayThrough = true;
-		
-		if ( this.isPlayed ) 
-			_managePlay.call(this);
-	};
-	
-	
-	var _setActive = function() {
-		this.isActive = true;
-	};
-	
-	
-	var _setInactive = function() {
-		this.isActive = false;
-	};
-	
-	
-	var _managePlay = function() {
-		if ( !this.isActive ) 
-			return;
-		
-		if ( !this.isPlayed );
-			this.isPlayed = true;
-		
-		if ( this.isCanPlayThrough ) {
-			this.$video[0].play();
-			this.duration = this.$video[0].duration;
+		if ( this.isFireCanPlayThrough && !this.isCanPlayThrough ) {
+			// console.log( '_canPlayThrough' );
+			
+			this.isCanPlayThrough = true;
+			
+			if ( MFC.Config.DEVICE == 'desktop' )
+				this.dispatch( this.E.CAN_PLAY_THROUGH );
 		}
 	};
 	
