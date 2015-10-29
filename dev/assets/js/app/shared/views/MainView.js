@@ -15,9 +15,13 @@ STF.MainView = ( function( window ) {
 			MOUSE_UP:	'mouseup'
 		};
 		
-		this.wW			= null;
-		this.wH			= null;
-		this.scrollY	= null;
+		this.wW = null;
+		this.wH = null;
+		this.cX = null;
+		this.cY = null;
+		this.sY = null;
+		this.mX = null;
+		this.mY = null;
 	}
 	
 	
@@ -61,20 +65,25 @@ STF.MainView = ( function( window ) {
 	var _resize = function() {
 		this.wW = this.$window.width();
 		this.wH = this.$window.height();
+		this.cX = Math.round( this.wW / 2 );
+		this.cY = Math.round( this.wH / 2 );
 		
 		console.log( 'MainView _resize()', this.wW, this.wH );
 	};
 	
 	
 	var _raf = function() {
-		this.scrollY = this.$window[0].scrollY || this.$window[0].pageYOffset;
+		this.sY = this.$window[0].scrollY || this.$window[0].pageYOffset;
 		
 		console.log( 'MainView _raf()' );
 	};
 	
 	
-	var _mouseMove = function() {
-		console.log( 'MainView _mouseMove()' );
+	var _mouseMove = function( e ) {
+		this.mX = e.clientX;
+		this.mY = e.clientY;
+		
+		console.log( 'MainView _mouseMove()', this.mX, this.mY );
 	};
 	
 	
