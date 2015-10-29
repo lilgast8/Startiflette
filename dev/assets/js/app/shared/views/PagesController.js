@@ -54,6 +54,8 @@ STF.PagesController = ( function( window ) {
 		this.assetsModel.init();
 		
 		this.mainLoader = new STF.Views.Statics.MainLoader();
+		this.mainLoader.buildEvt( this.mainLoader.E.FILE_LOAD, _onFileLoad.bind( this ) );
+		this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
 		this.mainLoader.init();
 	};
 	
@@ -105,8 +107,6 @@ STF.PagesController = ( function( window ) {
 		var dynamicImgList	= _getDynamicImgListToLoad.call( this );
 		var aAssetsToLoad	= this.assetsModel.getAssetsToLoad( aImgListIds, aJsonListIds, dynamicImgList );
 		
-		this.mainLoader.buildEvt( this.mainLoader.E.FILE_LOAD, _onFileLoad.bind( this ) );
-		this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
 		this.mainLoader.loadAssets( aAssetsToLoad );
 	};
 	
@@ -178,10 +178,6 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _onAssetsLoaded = function() {
-		this.mainLoader.destroyEvt( this.mainLoader.E.FILE_LOAD, _onFileLoad.bind( this ) );
-		this.mainLoader.destroyEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
-		
-		
 		// first load
 		if ( this.isFirstLoad ) {
 			this.currentPage.init();
