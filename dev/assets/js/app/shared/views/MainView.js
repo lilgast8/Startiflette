@@ -22,6 +22,8 @@ STF.MainView = ( function( window ) {
 		this.sY = null;
 		this.mX = null;
 		this.mY = null;
+		
+		this.isWindowFocused = true;
 	}
 	
 	
@@ -52,6 +54,8 @@ STF.MainView = ( function( window ) {
 		// this.$window.on( 'mousemove', $.proxy( _mouseMove, this ) );
 		// this.$window.on( 'mousedown', $.proxy( _mouseDown, this ) );
 		// this.$window.on( 'mouseup', $.proxy( _mouseUp, this ) );
+		// this.$window.on( 'blur', $.proxy( _windowOut, this ) );
+		// this.$window.on( 'focus', $.proxy( _windowIn, this ) );
 	};
 	
 	
@@ -94,6 +98,20 @@ STF.MainView = ( function( window ) {
 	
 	var _mouseUp = function() {
 		console.log( 'MainView _mouseUp()' );
+	};
+	
+	
+	var _windowOut = function() {
+		this.isWindowFocused = false;
+		
+		console.log( 'MainView _windowOut', this.isWindowFocused );
+	};
+	
+	
+	var _windowIn = function() {
+		this.isWindowFocused = true;
+		
+		console.log( 'MainView _windowOut', this.isWindowFocused );
 	};
 	
 	
