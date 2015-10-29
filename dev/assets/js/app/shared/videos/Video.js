@@ -49,11 +49,6 @@ STF.Video = ( function( window ) {
 	};
 	
 	
-	Video.prototype.destroy = function() {
-		this.unbindEvents();
-	};
-	
-	
 	Video.prototype.play = function() {
 		_setActive.call( this );
 		
