@@ -27,6 +27,7 @@ STF.Utils.Global = ( function( window ) {
 	
 	
 	window.encryptMailto = function( el, address, domain, end, replaceContent ) {
+		var className	= el.className;
 		var mailto		= 'mailto';
 		var separator	= ':';
 		var at			= '@';
@@ -35,7 +36,7 @@ STF.Utils.Global = ( function( window ) {
 		var content		= replaceContent ? address + at + domain + dot + end : el.innerHTML;
 		var email		= mailto + separator + address + at + domain + dot + end;
 		
-		el.outerHTML	= '<a href="' + email + '">' + content + '</a>';
+		el.outerHTML	= '<a href="' + email + '" class="' + className + '">' + content + '</a>';
 	};
 	
 	
