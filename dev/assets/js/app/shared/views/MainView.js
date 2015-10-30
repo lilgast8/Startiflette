@@ -72,7 +72,7 @@ STF.MainView = ( function( window ) {
 		this.cX = Math.round( this.wW / 2 );
 		this.cY = Math.round( this.wH / 2 );
 		
-		console.log( 'MainView _resize()', this.wW, this.wH );
+		// console.log( 'MainView _resize()', this.wW, this.wH );
 	};
 	
 	
