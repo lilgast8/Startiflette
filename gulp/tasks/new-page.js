@@ -58,7 +58,7 @@ gulp.task( 'new-page', function() {
 			
 			var cssClassName		= helpers.lowerCaseFirstLetter( shortNameTitleCaseNoSpace );
 			var phpContentClassName	= fileNameTitleCaseNoSpace + 'Content';
-			var phpContentVarName	= '$' + lowerCaseFirstLetter( shortNameTitleCaseNoSpace );
+			var phpContentVarName	= '$' + helpers.lowerCaseFirstLetter( shortNameTitleCaseNoSpace );
 			var jsFileName			= fileNameTitleCaseNoSpace + '.js';
 			var jsClassName			= fileNameTitleCaseNoSpace;
 			
