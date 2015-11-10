@@ -40,11 +40,11 @@ STF.PagesController = ( function( window ) {
 	var _initPages = function() {
 		this.pages = {
 			'error-404':		STF.Views.Pages.Error404,
+			'legal-notices':	STF.Views.Pages.LegalNotices,
 			'home':				STF.Views.Pages.Home,
 			'about':			STF.Views.Pages.About,
 			'projects':			STF.Views.Pages.Projects,
 			'project':			STF.Views.Pages.Project,
-			'legal-notices':	STF.Views.Pages.LegalNotices
 		};
 	};
 	
