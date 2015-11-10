@@ -32,11 +32,6 @@ STF.Main = ( function( window ) {
 	
 	
 	var _routesLoaded = function() {
-		STF.MainView.init();
-		
-		STF.OldBrowser.init();
-		
-		
 		/* Debug */
 		// if ( STF.Config.ENV == 'dev' || STF.Config.ENV == 'preprod_local' ) // FPS stats
 		// 	STF.Utils.FPSStats.init();
@@ -47,6 +42,10 @@ STF.Main = ( function( window ) {
 		// if ( STF.Config.ENV == 'dev' || STF.Config.ENV == 'preprod_local' ) // datGUI
 		// 	STF.Utils.DatGUI.init();
 		
+		
+		STF.MainView.init();
+		
+		STF.OldBrowser.init();
 		
 		STF.Router.initRouting();
 	};
