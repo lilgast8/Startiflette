@@ -88,7 +88,7 @@ gulp.task( 'move', function() {
 	
 	
 	/* SVG */
-	else if ( options.movePath === null && ( options.task == 'svg' ) )
+	else if ( options.movePath === null && options.task == 'svg' )
 		options.movePath = {
 			from: [ paths.env.dev + paths.assets.svg.sprite.allFiles ],
 			to: [ paths.env.prod + paths.assets.svg.sprite.dir ]
@@ -109,7 +109,7 @@ gulp.task( 'move', function() {
 	
 	
 	/* Sounds */
-	else if ( options.movePath === null && ( options.task == 'sounds' ) )
+	else if ( options.movePath === null && options.task == 'sounds' )
 		options.movePath = {
 			from: [
 				[
@@ -122,7 +122,7 @@ gulp.task( 'move', function() {
 	
 	
 	/* Videos */
-	else if ( options.movePath === null && ( options.task == 'videos' ) )
+	else if ( options.movePath === null && options.task == 'videos' )
 		options.movePath = {
 			from: [
 				[
