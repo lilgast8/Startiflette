@@ -72,6 +72,11 @@ STF.MainView = ( function( window ) {
 		this.cX = Math.round( this.wW / 2 );
 		this.cY = Math.round( this.wH / 2 );
 		
+		if ( this.mX === null && this.mY === null ) {
+			this.mX = this.cX;
+			this.mY = this.cY;
+		}
+		
 		// console.log( 'MainView _resize()', this.wW, this.wH );
 		
 		STF.Views.Statics.Header.resize();
