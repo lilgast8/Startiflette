@@ -77,8 +77,8 @@ STF.MainView = ( function( window ) {
 		STF.Views.Statics.Header.resize();
 		STF.Views.Statics.Footer.resize();
 		
-		if ( TCP.PagesController.currentPage !== null )
-			TCP.PagesController.currentPage.resize();
+		if ( STF.PagesController.currentPage !== null )
+			STF.PagesController.currentPage.resize();
 	};
 	
 	
@@ -90,8 +90,8 @@ STF.MainView = ( function( window ) {
 		STF.Views.Statics.Header.raf();
 		STF.Views.Statics.Footer.raf();
 		
-		if ( CCB.PagesController.currentPage !== null )
-			CCB.PagesController.currentPage.raf();
+		if ( STF.PagesController.currentPage !== null )
+			STF.PagesController.currentPage.raf();
 	};
 	
 	
