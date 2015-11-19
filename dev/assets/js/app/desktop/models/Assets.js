@@ -18,18 +18,12 @@ STF.Models.Assets = ( function( window ) {
 		this.aImg = {
 			'global': [
 				/* bgs */
-				STF.Path.URL.img + 'bgs/pattern-black-transparent.png',
 				
 				/* btns */
 				
 				/* icons */
 				
 				/* logos */
-				STF.Path.URL.img + 'logos/browsers/browser-chrome.png',
-				STF.Path.URL.img + 'logos/browsers/browser-firefox.png',
-				STF.Path.URL.img + 'logos/browsers/browser-internet-explorer.png',
-				STF.Path.URL.img + 'logos/browsers/browser-opera.png',
-				STF.Path.URL.img + 'logos/browsers/browser-safari.png',
 				
 				/* others */
 			],
