@@ -85,6 +85,7 @@ class Path
 		self::$FILE->views			= self::$FILE->server	. 'views/';
 		self::$FILE->viewsPage		= self::$FILE->views	. $this->deviceDir . 'pages/';
 		self::$FILE->viewsPartials	= self::$FILE->views	. $this->deviceDir . 'partials/';
+		self::$FILE->viewsStatics	= self::$FILE->views	. $this->deviceDir . 'statics/';
 		self::$FILE->viewsAlt		= self::$FILE->views	. 'alt/';
 	}
 	

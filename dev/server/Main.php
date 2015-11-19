@@ -98,12 +98,12 @@ class Main
 		$viewPath = $this->getViewPath();
 		
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			include_once Path::$FILE->viewsPartials . 'header.php';
+			include_once Path::$FILE->viewsStatics . 'header.php';
 		
 		include_once $viewPath . PagesController::$PAGE->phpView . '.php';
 		
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			include_once Path::$FILE->viewsPartials . 'footer.php';
+			include_once Path::$FILE->viewsStatics . 'footer.php';
 	}
 	
 	
