@@ -11,7 +11,7 @@ class PageNameContent
 		$page = new stdClass();
 		
 		
-		$page->title = "— Page name —";
+		$page->title = "— Page name / LANG —";
 		
 		
 		

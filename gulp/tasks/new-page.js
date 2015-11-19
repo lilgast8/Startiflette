@@ -112,7 +112,7 @@ function createFile( file, destFilePath, aStringToReplace, aNewString ) {
 			lang = config.ALL_LANG[i];
 			
 			destFilePathTemp	= destFilePath.replace( 'LANG', lang );
-			dataTemp			= data.replace( new RegExp( '\\' + aNewString[2], 'g' ), aNewString[2] + ' / ' + lang );
+			dataTemp			= data.replace( '/ LANG', ' / ' + lang );
 			
 			fs.writeFileSync( destFilePathTemp, dataTemp, 'utf8' );
 		}
