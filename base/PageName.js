@@ -69,6 +69,11 @@ STF.Views.Pages.PageName = ( function( window ) {
 	};
 	
 	
+	PageName.prototype.raf = function() {
+		
+	};
+	
+	
 	return PageName;
 	
 	

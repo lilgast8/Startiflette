@@ -90,6 +90,11 @@ STF.AbstractView = ( function( window ) {
 	};
 	
 	
+	AbstractView.prototype.raf = function() {
+		// console.log('AbstractView.raf()');
+	};
+	
+	
 	AbstractView.prototype.destroy = function() {
 		this.isInit = false;
 		
