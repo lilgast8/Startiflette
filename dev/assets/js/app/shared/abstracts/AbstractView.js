@@ -28,8 +28,8 @@ STF.AbstractView = ( function( window ) {
 	AbstractView.prototype.init = function() {
 		this.initDOM();
 		this.initEl();
-		this.bindEvents();
 		this.initTl();
+		this.bindEvents();
 		
 		this.resize();
 	};
@@ -37,11 +37,18 @@ STF.AbstractView = ( function( window ) {
 	
 	AbstractView.prototype.initDOM = function() {
 		// console.log('AbstractView.initDOM()');
+		
+		this.$page = $( document.getElementById( 'page-content' ) );
 	};
 	
 	
 	AbstractView.prototype.initEl = function() {
 		// console.log('AbstractView.initEl()');
+	};
+	
+	
+	AbstractView.prototype.initTl = function() {
+		// console.log('AbstractView.initTl()');
 	};
 	
 	
@@ -52,11 +59,6 @@ STF.AbstractView = ( function( window ) {
 	
 	AbstractView.prototype.unbindEvents = function() {
 		// console.log('AbstractView.unbindEvents()');
-	};
-	
-	
-	AbstractView.prototype.initTl = function() {
-		// console.log('AbstractView.initTl()');
 	};
 	
 	
@@ -80,6 +82,20 @@ STF.AbstractView = ( function( window ) {
 		
 		// console.log(this);
 		this.dispatch( this.E.HIDDEN );
+	};
+	
+	
+	AbstractView.prototype.resize = function() {
+		// console.log('AbstractView.resize()');
+	};
+	
+	
+	AbstractView.prototype.destroy = function() {
+		this.isInit = false;
+		
+		this.unbindEvents();
+		
+		this.destroyGSAP();
 	};
 	
 	
@@ -124,20 +140,6 @@ STF.AbstractView = ( function( window ) {
 		this.tl[ tlName ].kill();
 		
 		this.tl[ tlName ] = null;
-	};
-	
-	
-	AbstractView.prototype.destroy = function() {
-		this.isInit = false;
-		
-		this.unbindEvents();
-		
-		this.destroyGSAP();
-	};
-	
-	
-	AbstractView.prototype.resize = function() {
-		// console.log('AbstractView.resize()');
 	};
 	
 	

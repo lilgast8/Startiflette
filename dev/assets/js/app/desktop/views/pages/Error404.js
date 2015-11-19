@@ -18,7 +18,7 @@ STF.Views.Pages.Error404 = ( function( window ) {
 	
 	
 	Error404.prototype.initDOM = function() {
-		this.$page = $( document.getElementById( 'page-content' ) );
+		STF.AbstractView.prototype.initDOM.call( this );
 	};
 	
 	

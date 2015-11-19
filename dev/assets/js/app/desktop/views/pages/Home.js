@@ -18,7 +18,7 @@ STF.Views.Pages.Home = ( function( window ) {
 	
 	
 	Home.prototype.initDOM = function() {
-		this.$page = $( document.getElementById( 'page-content' ) );
+		STF.AbstractView.prototype.initDOM.call( this );
 	};
 	
 	

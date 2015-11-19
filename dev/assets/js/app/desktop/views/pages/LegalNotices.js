@@ -18,7 +18,8 @@ STF.Views.Pages.LegalNotices = ( function( window ) {
 	
 	
 	LegalNotices.prototype.initDOM = function() {
-		this.$page	= $( document.getElementById( 'page-content' ) );
+		STF.AbstractView.prototype.initDOM.call( this );
+		
 		this.$email	= this.$page.find( '.email' );
 		
 		// encryptMailto( this.$.email, 'contact', 'domain', 'com', true );

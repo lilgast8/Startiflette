@@ -25,7 +25,17 @@ STF.Views.Pages.PageName = ( function( window ) {
 	
 	
 	PageName.prototype.initDOM = function() {
-		this.$page = $( document.getElementById( 'page-content' ) );
+		STF.AbstractView.prototype.initDOM.call( this );
+	};
+	
+	
+	PageName.prototype.initEl = function() {
+		
+	};
+	
+	
+	PageName.prototype.initTl = function() {
+		
 	};
 	
 	
@@ -39,7 +49,17 @@ STF.Views.Pages.PageName = ( function( window ) {
 	};
 	
 	
-	PageName.prototype.initTl = function() {
+	PageName.prototype.initView = function() {
+		this.isInit = true;
+	};
+	
+	
+	PageName.prototype.show = function() {
+		
+	};
+	
+	
+	PageName.prototype.hide = function() {
 		
 	};
 	

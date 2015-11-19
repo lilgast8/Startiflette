@@ -18,7 +18,8 @@ STF.Views.Pages.Projects = ( function( window ) {
 	
 	
 	Projects.prototype.initDOM = function() {
-		this.$page			= $( document.getElementById( 'page-content' ) );
+		STF.AbstractView.prototype.initDOM.call( this );
+		
 		this.$projectLink	= this.$page.find( '.project-link' );
 	};
 	
