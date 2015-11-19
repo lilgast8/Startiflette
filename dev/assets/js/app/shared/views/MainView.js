@@ -73,13 +73,25 @@ STF.MainView = ( function( window ) {
 		this.cY = Math.round( this.wH / 2 );
 		
 		// console.log( 'MainView _resize()', this.wW, this.wH );
+		
+		STF.Views.Statics.Header.resize();
+		STF.Views.Statics.Footer.resize();
+		
+		if ( TCP.PagesController.currentPage !== null )
+			TCP.PagesController.currentPage.resize();
 	};
 	
 	
 	var _raf = function() {
+		console.log( 'MainView _raf()' );
+		
 		this.sY = this.$window[0].scrollY || this.$window[0].pageYOffset;
 		
-		console.log( 'MainView _raf()' );
+		STF.Views.Statics.Header.raf();
+		STF.Views.Statics.Footer.raf();
+		
+		if ( CCB.PagesController.currentPage !== null )
+			CCB.PagesController.currentPage.raf();
 	};
 	
 	
