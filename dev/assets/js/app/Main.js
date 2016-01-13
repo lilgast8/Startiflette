@@ -47,6 +47,7 @@ STF.Main = ( function( window ) {
 		
 		STF.OldBrowser.init();
 		
+		STF.PagesController.init();
 		STF.Router.initRouting();
 	};
 	
