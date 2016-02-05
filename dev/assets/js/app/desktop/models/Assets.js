@@ -97,12 +97,12 @@ STF.Models.Assets = ( function( window ) {
 		
 		// static images
 		for ( var i = 0; i < aImgListIds.length; i++ ) {
-			imgList = this.aImg[ aImgListIds[i] ];
+			imgList = this.aImg[ aImgListIds[ i ] ];
 			
 			if ( imgList !== undefined ) {
 				
 				for ( var j = 0; j < imgList.length; j++ )
-					aAssetsToLoad.push( imgList[j] );
+					aAssetsToLoad.push( imgList[ j ] );
 				
 			}
 		}
@@ -110,7 +110,7 @@ STF.Models.Assets = ( function( window ) {
 		// dynamic images
 		if ( dynamicImgList !== null ) {
 			for ( i = 0; i < dynamicImgList.length; i++ )
-				aAssetsToLoad.push( dynamicImgList[i].src );
+				aAssetsToLoad.push( dynamicImgList[ i ].src );
 		}
 		
 		
@@ -122,7 +122,7 @@ STF.Models.Assets = ( function( window ) {
 		var jsonList;
 		
 		for ( var i = 0; i < aJsonListIds.length; i++ ) {
-			jsonList = this.aJson[ aJsonListIds[i] ];
+			jsonList = this.aJson[ aJsonListIds[ i ] ];
 			
 			if ( jsonList !== undefined ) {
 				

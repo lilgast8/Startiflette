@@ -237,7 +237,7 @@ STF.Router = ( function( window ) {
 		var currentUrl, urlPart, altLangUrl;
 		
 		for ( var i in STF.Lang.ALL_LANG ) {
-			var lang = STF.Lang.ALL_LANG[i];
+			var lang = STF.Lang.ALL_LANG[ i ];
 			
 			if ( lang !== STF.Lang.LANG ) {
 				currentUrl = pageParams[ lang ].url;

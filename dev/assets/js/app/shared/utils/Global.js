@@ -14,7 +14,7 @@ STF.Utils.Global = ( function( window ) {
 		var prefixes = [ '', 'ms', 'Webkit', 'Moz', 'O' ];
 		
 		for ( var i = 0; i < prefixes.length; i++ ) {
-			var prefix	= prefixes[i];
+			var prefix	= prefixes[ i ];
 			property	= prefix === '' ? property : property.charAt(0).toUpperCase() + property.substring(1).toLowerCase();
 			var prop	= prefix + property;
 			
