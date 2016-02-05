@@ -6,13 +6,13 @@
 										"fallbackresource":	"/dev/",
 										"base_url":			"http://startiflette:8888/dev/"
 									},
-									"preprod": {
-										"fallbackresource":	"/preprod_startiflette/",
-										"base_url":			"http://preprod.SITE_URL.COM/"
-									},
 									"preprod_local": {
 										"fallbackresource":	"/www/",
 										"base_url":			"http://startiflette:8888/www/"
+									},
+									"preprod": {
+										"fallbackresource":	"/preprod_startiflette/",
+										"base_url":			"http://preprod.SITE_URL.COM/"
 									},
 									"prod": {
 										"fallbackresource":	"/startiflette/",
