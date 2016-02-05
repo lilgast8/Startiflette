@@ -1,4 +1,5 @@
 User-Agent: *
+Allow: /assets/img/
 Disallow: /assets/
 Disallow: /configs/
 Disallow: /server/
