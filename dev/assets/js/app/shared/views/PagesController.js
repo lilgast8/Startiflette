@@ -83,7 +83,7 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	PagesController.prototype.initPage = function() {
+	PagesController.prototype.initFirstPage = function() {
 		_initPageChangeValues.call( this );
 		
 		_loadAssets.call( this );

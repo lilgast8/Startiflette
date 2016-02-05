@@ -153,7 +153,7 @@ STF.Router = ( function( window ) {
 		
 		_setPageInfos.call( this );
 		
-		STF.PagesController.initPage();
+		STF.PagesController.initFirstPage();
 	};
 	
 	
