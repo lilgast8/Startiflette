@@ -59,9 +59,9 @@ class Contents
 					$className	= $contentsInfos->className;
 				}
 				else { // pages
-					$fileName	= PagesController::$PAGE->phpView;
-					$className	= $this->contentsConfig->pages->{ PagesController::$PAGE->id }->className;
-					$id			= PagesController::$PAGE->id;
+					$fileName	= PagesController::$PAGE_INFOS->phpView;
+					$className	= $this->contentsConfig->pages->{ PagesController::$PAGE_INFOS->id }->className;
+					$id			= PagesController::$PAGE_INFOS->id;
 				}
 				
 				$this->getDatas( $fileName, $className, $id );
@@ -72,9 +72,9 @@ class Contents
 		
 		// page change load
 		else if ( Router::$CONTENT_TYPE == 'pageChange' ) {
-			$fileName	= PagesController::$PAGE->phpView;
-			$className	= $this->contentsConfig->pages->{ PagesController::$PAGE->id }->className;
-			$id			= PagesController::$PAGE->id;
+			$fileName	= PagesController::$PAGE_INFOS->phpView;
+			$className	= $this->contentsConfig->pages->{ PagesController::$PAGE_INFOS->id }->className;
+			$id			= PagesController::$PAGE_INFOS->id;
 			
 			$this->getDatas( $fileName, $className, $id );
 		}
@@ -82,8 +82,8 @@ class Contents
 		// old browser
 		else if ( Router::$CONTENT_TYPE == 'oldBrowser' ) {
 			$fileName	= 'alt';
-			$className	= $this->contentsConfig->{ PagesController::$PAGE->id }->className;
-			$id			= PagesController::$PAGE->id;
+			$className	= $this->contentsConfig->{ PagesController::$PAGE_INFOS->id }->className;
+			$id			= PagesController::$PAGE_INFOS->id;
 			
 			$this->getDatas( $fileName, $className, $id );
 		}

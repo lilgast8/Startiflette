@@ -100,7 +100,7 @@ class Main
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
 			include_once Path::$FILE->viewsStatics . 'header.php';
 		
-		include_once $viewPath . PagesController::$PAGE->phpView . '.php';
+		include_once $viewPath . PagesController::$PAGE_INFOS->phpView . '.php';
 		
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
 			include_once Path::$FILE->viewsStatics . 'footer.php';
