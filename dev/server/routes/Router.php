@@ -254,6 +254,7 @@ class Router
 	{
 		header( 'Status: 301 Moved Permanently', true, 301 );
 		header( 'Location: ' . Path::$URL->base );
+		exit();
 	}
 	
 	
@@ -261,6 +262,7 @@ class Router
 	{
 		header( 'Status: 301 Moved Permanently', true, 301 );
 		header( 'Location: ' . Path::$URL->base . self::$PAGE_URL->current );
+		exit();
 	}
 	
 	
