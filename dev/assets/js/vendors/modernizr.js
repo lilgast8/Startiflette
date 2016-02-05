@@ -1,6 +1,6 @@
 /*!
  * modernizr v3.3.1
- * Build http://modernizr.com/download?-cssanimations-csspointerevents-csstransforms-csstransforms3d-csstransitions-history-preserve3d-webgl-addtest-atrule-domprefixes-hasevent-mq-prefixed-prefixedcss-prefixedcssvalue-prefixes-setclasses-testallprops-testprop-teststyles-dontmin
+ * Build http://modernizr.com/download?-cssanimations-csspointerevents-csstransforms-csstransforms3d-csstransitions-history-preserve3d-svg-webgl-addtest-atrule-domprefixes-hasevent-mq-prefixed-prefixedcss-prefixedcssvalue-prefixes-setclasses-testallprops-testprop-teststyles-dontmin
  *
  * Copyright (c)
  *  Faruk Ates
@@ -1719,17 +1719,6 @@ Detects whether or not elements can be animated using CSS
 
 /*!
 {
-  "name": "CSS Transitions",
-  "property": "csstransitions",
-  "caniuse": "css-transitions",
-  "tags": ["css"]
-}
-!*/
-
-  Modernizr.addTest('csstransitions', testAllProps('transition', 'all', true));
-
-/*!
-{
   "name": "CSS Transform Style preserve-3d",
   "property": "preserve3d",
   "authors": ["edmellum"],
@@ -1748,6 +1737,42 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
 */
 
   Modernizr.addTest('preserve3d', testAllProps('transformStyle', 'preserve-3d'));
+
+/*!
+{
+  "name": "CSS Transitions",
+  "property": "csstransitions",
+  "caniuse": "css-transitions",
+  "tags": ["css"]
+}
+!*/
+
+  Modernizr.addTest('csstransitions', testAllProps('transition', 'all', true));
+
+/*!
+{
+  "name": "SVG",
+  "property": "svg",
+  "caniuse": "svg",
+  "tags": ["svg"],
+  "authors": ["Erik Dahlstrom"],
+  "polyfills": [
+    "svgweb",
+    "raphael",
+    "amplesdk",
+    "canvg",
+    "svg-boilerplate",
+    "sie",
+    "dojogfx",
+    "fabricjs"
+  ]
+}
+!*/
+/* DOC
+Detects support for SVG in `<embed>` or `<object>` elements.
+*/
+
+  Modernizr.addTest('svg', !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect);
 
 
   // Run each test
