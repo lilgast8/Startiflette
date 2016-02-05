@@ -278,7 +278,7 @@ STF.Router = ( function( window ) {
 		
 		_setInfos.call( this, url );
 		
-		History.pushState( null, STF.PagesController.page.title, url );
+		History.pushState( null, STF.PagesController.pageInfos.title, url );
 	};
 	
 	

@@ -8,7 +8,7 @@ STF.PagesController = ( function( window ) {
 		STF.EventDispatcher.call( this );
 		
 		this.pages					= {};
-		this.page					= {};
+		this.pageInfos				= {};
 		
 		this.LOADING_MODE			= 'allStatic'; // can be allStatic, byPageStatic, byPageDynamic
 		this.DYNAMIC_IMG_TO_LOAD	= 'img'; // used when LOADING_MODE == 'byPageDynamic', can be img.class for selective preload
@@ -62,24 +62,24 @@ STF.PagesController = ( function( window ) {
 	
 	PagesController.prototype.setPageInfos = function( pageId, jsView, title, desc )
 	{
-		this.page.id		= pageId;
-		this.page.jsView	= jsView;
-		this.page.title		= title;
-		this.page.desc		= desc;
+		this.pageInfos.id		= pageId;
+		this.pageInfos.jsView	= jsView;
+		this.pageInfos.title	= title;
+		this.pageInfos.desc		= desc;
 		
 		_setCurrentPage.call( this );
 	};
 	
 	
 	var _setCurrentPage = function() {
-		if ( this.pages[ this.page.jsView ] === undefined) {
-			console.error( 'PagesController error: Need to create a view for the "' + this.page.jsView + '" ID, then set the view in the PagesController.pages object.' );
+		if ( this.pages[ this.pageInfos.jsView ] === undefined) {
+			console.error( 'PagesController error: Need to create a view for the "' + this.pageInfos.jsView + '" ID, then set the view in the PagesController.pages object.' );
 			
 			return;
 		}
 		
 		this.prevPage		= this.currentPage;
-		this.currentPage	= new this.pages[ this.page.jsView ]();
+		this.currentPage	= new this.pages[ this.pageInfos.jsView ]();
 	};
 	
 	
@@ -121,7 +121,7 @@ STF.PagesController = ( function( window ) {
 		
 		else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ||
 				  this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic' && type == 'json' )
-			aIds = [ 'global', this.page.id ];
+			aIds = [ 'global', this.pageInfos.id ];
 		
 		else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic' && type == 'img' )
 			aIds = [ 'global' ];
@@ -130,7 +130,7 @@ STF.PagesController = ( function( window ) {
 		// page change load
 		else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ||
 				  !this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic' && type == 'json' )
-			aIds = [ this.page.id ];
+			aIds = [ this.pageInfos.id ];
 		
 		
 		return aIds;
@@ -205,7 +205,7 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _loadContent = function( pageUrl ) {
-		if ( this.page.id == 'error404' ) { // used to avoid that the request return a error on callback if it's a 404 page 
+		if ( this.pageInfos.id == 'error404' ) { // used to avoid that the request return a error on callback if it's a 404 page 
 			var lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/'  : '';
 			pageUrl		= STF.Path.URL.base + lang + STF.Router.ROUTES.statics.error404[ STF.Lang.LANG ].url;
 		}
