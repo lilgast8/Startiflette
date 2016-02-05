@@ -10,22 +10,6 @@ STF.Utils.Global = ( function( window ) {
 	window.color = {};
 	
 	
-	window.getSupportedPropertyName = function( property ) {
-		var prefixes = [ '', 'ms', 'Webkit', 'Moz', 'O' ];
-		
-		for ( var i = 0; i < prefixes.length; i++ ) {
-			var prefix	= prefixes[ i ];
-			property	= prefix === '' ? property : property.charAt(0).toUpperCase() + property.substring(1).toLowerCase();
-			var prop	= prefix + property;
-			
-			if ( typeof document.body.style[ prop ] != 'undefined' )
-				return prop;
-		}
-		
-		return null;
-	};
-	
-	
 	window.encryptMailto = function( el, address, domain, end, replaceContent ) {
 		var className	= el.className;
 		var mailto		= 'mailto';
