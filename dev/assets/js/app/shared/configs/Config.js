@@ -85,8 +85,11 @@ STF.Config = ( function( window ) {
 	
 	
 	var _setProperties = function() {
-		this.HAS_PUSHSTATE	= Modernizr.history;
-		this.TRANSFORM		= getSupportedPropertyName( 'transform' );
+		this.HAS_PUSHSTATE		= Modernizr.history;
+		this.TRANSFORM			= Modernizr.prefixed( 'transform' );
+		this.HAS_TRANSFORM_3D	= Modernizr.csstransforms3d;
+		this.HAS_TRANSITION		= Modernizr.csstransitions;
+		this.HAS_ANIMATIONS		= Modernizr.cssanimations;
 	};
 	
 	
