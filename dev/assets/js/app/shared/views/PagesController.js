@@ -8,6 +8,7 @@ STF.PagesController = ( function( window ) {
 		STF.EventDispatcher.call( this );
 		
 		this.pages					= {};
+		this.prevPageInfos			= {};
 		this.pageInfos				= {};
 		
 		this.LOADING_MODE			= 'allStatic'; // can be allStatic, byPageStatic, byPageDynamic
@@ -62,10 +63,15 @@ STF.PagesController = ( function( window ) {
 	
 	PagesController.prototype.setPageInfos = function( pageId, jsView, title, desc )
 	{
-		this.pageInfos.id		= pageId;
-		this.pageInfos.jsView	= jsView;
-		this.pageInfos.title	= title;
-		this.pageInfos.desc		= desc;
+		this.prevPageInfos.id		= this.pageInfos.id;
+		this.prevPageInfos.jsView	= this.pageInfos.jsView;
+		this.prevPageInfos.title	= this.pageInfos.title;
+		this.prevPageInfos.desc		= this.pageInfos.desc;
+		
+		this.pageInfos.id			= pageId;
+		this.pageInfos.jsView		= jsView;
+		this.pageInfos.title		= title;
+		this.pageInfos.desc			= desc;
 		
 		_setCurrentPage.call( this );
 	};
