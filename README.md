@@ -95,7 +95,7 @@ Made the configurations in the `dev/configs/config/config.json` file.
 * HAS_MOBILE_VERSION: @type {boolean}
 * FORCE_DEVICE: @type {boolean or string} can be false, "desktop", "tablet" or "mobile"
 * HAS_AJAX: @type {boolean}
-* GA_ID: @type {array of string} list of Google Analytics ID
+* GA_ID: @type {object} trackerName: gaID, default tracker name is "null"
 
 
 

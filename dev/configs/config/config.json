@@ -36,6 +36,6 @@
 	"HAS_MOBILE_VERSION":		true,
 	"FORCE_DEVICE":				false,
 	"HAS_AJAX":					true,
-	"GA_ID":					[]
+	"GA_ID":					{}
 	
 }
