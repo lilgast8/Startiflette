@@ -187,6 +187,8 @@ STF.PagesController = ( function( window ) {
 	var _onAssetsLoaded = function() {
 		// first load
 		if ( this.isFirstLoad ) {
+			_updateMenuLinks.call( this );
+			
 			this.currentPage.init();
 			
 			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
@@ -315,6 +317,12 @@ STF.PagesController = ( function( window ) {
 	var _checkSecondStepPageChange = function() {
 		if ( this.isCurrentPageShow && this.isMainLoaderHidden )
 			_enablePageChange.call( this );
+	};
+	
+	
+	var _updateMenuLinks = function() {
+		// CCB.Views.Statics.Header.updateMenuLinks( CCB.Router.PAGE_URL.full );
+		// CCB.Views.Statics.Footer.updateMenuLinks( CCB.Router.PAGE_URL.full );
 	};
 	
 	
