@@ -13,6 +13,7 @@ STF.PagesController = ( function( window ) {
 		
 		this.LOADING_MODE			= 'allStatic'; // can be allStatic, byPageStatic, byPageDynamic
 		this.DYNAMIC_IMG_TO_LOAD	= 'img'; // used when LOADING_MODE == 'byPageDynamic', can be img.class for selective preload
+		this.IS_HIDE_INIT			= true; // set to true if need a different behavior when hide loader on init
 		this.isFirstLoad			= true;
 		this.isPageChange			= true;
 		
@@ -193,10 +194,10 @@ STF.PagesController = ( function( window ) {
 			
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 			
-			if ( this.LOADING_MODE == 'allStatic' )
+			if ( this.IS_HIDE_INIT )
 				this.mainLoader.hideInit();
 			
-			else if ( this.LOADING_MODE == 'byPageStatic' || this.LOADING_MODE == 'byPageDynamic' )
+			else
 				this.mainLoader.hide();
 		}
 		
