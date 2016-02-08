@@ -93,6 +93,10 @@ STF.MainView = ( function( window ) {
 	
 	
 	var _raf = function() {
+		// if ( STF.Config.ENV == 'dev' || STF.Config.ENV == 'preprod_local' )
+		// 	STF.Utils.FPSStats.begin();
+		
+		
 		console.log( 'MainView _raf()' );
 		
 		this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
@@ -103,6 +107,10 @@ STF.MainView = ( function( window ) {
 		
 		if ( STF.PagesController.currentPage !== null )
 			STF.PagesController.currentPage.raf();
+		
+		
+		// if ( STF.Config.ENV == 'dev' || STF.Config.ENV == 'preprod_local' )
+		// 	STF.Utils.FPSStats.end();
 	};
 	
 	
