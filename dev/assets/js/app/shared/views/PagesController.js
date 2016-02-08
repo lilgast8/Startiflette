@@ -159,7 +159,7 @@ STF.PagesController = ( function( window ) {
 	
 	
 	PagesController.prototype.changePage = function( pageUrl ) {
-		CCB.Router.updateGA();
+		STF.Router.updateGA();
 		
 		_disablePageChange.call( this );
 		_initPageChangeValues.call( this );
@@ -270,8 +270,6 @@ STF.PagesController = ( function( window ) {
 	
 	var _checkFirstStepPageChange = function() {
 		if ( this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
-			// STF.RoutesManager.updateGA(); // update Google Analytics
-			
 			STF.MainView.$pageCont[0].innerHTML = this.data;
 			
 			_destroyPrevPage.call( this );
@@ -320,8 +318,8 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _updateMenuLinks = function() {
-		// CCB.Views.Statics.Header.updateMenuLinks( CCB.Router.PAGE_URL.full );
-		// CCB.Views.Statics.Footer.updateMenuLinks( CCB.Router.PAGE_URL.full );
+		// STF.Views.Statics.Header.updateMenuLinks( STF.Router.PAGE_URL.full );
+		// STF.Views.Statics.Footer.updateMenuLinks( STF.Router.PAGE_URL.full );
 	};
 	
 	
