@@ -14,7 +14,6 @@
 	<meta name="robots" content="index, follow" />
 	<meta name="author" content="Gaston Bouchayer" />
 	<meta name="designer" content="Gaston Bouchayer" />
-	<meta name="format-detection" content="telephone=no">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<?php
 	
