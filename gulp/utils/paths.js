@@ -33,6 +33,11 @@ module.exports = {
 			}
 		},
 		
+		files: {
+			dir:		'assets/files/',
+			allFiles:	'assets/files/**/*'
+		},
+		
 		img: {
 			dir:		'assets/img/',
 			allFiles:	'assets/img/**/*'

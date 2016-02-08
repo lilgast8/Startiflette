@@ -26,6 +26,11 @@ gulp.task( 'delete', function() {
 		];
 	
 	
+	/* Files */
+	else if ( options.deletePath === null && options.task == 'files' )
+		options.deletePath = paths.env.prod + paths.assets.files.dir;
+	
+	
 	/* JS & JS-min */
 	else if ( options.deletePath === null && ( options.task == 'js' || options.task == 'js-min' ) )
 		options.deletePath = paths.env.prod + paths.assets.js.dir;
