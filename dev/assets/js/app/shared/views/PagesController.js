@@ -162,6 +162,9 @@ STF.PagesController = ( function( window ) {
 		_updateMenuLinks.call( this );
 		STF.Router.updateGA();
 		
+		if ( STF.Lang.MULTI_LANG )
+			_changeLgLink.call( this );
+		
 		_disablePageChange.call( this );
 		_initPageChangeValues.call( this );
 		
@@ -321,6 +324,11 @@ STF.PagesController = ( function( window ) {
 	var _updateMenuLinks = function() {
 		// STF.Views.Statics.Header.updateMenuLinks( STF.Router.PAGE_URL.full );
 		// STF.Views.Statics.Footer.updateMenuLinks( STF.Router.PAGE_URL.full );
+	};
+	
+	
+	var _changeLgLink = function() {
+		// STF.Views.Statics.Header.changeLgLink( STF.Router.ALT_LANG_URL );
 	};
 	
 	
