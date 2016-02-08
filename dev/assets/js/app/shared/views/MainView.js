@@ -15,15 +15,20 @@ STF.MainView = ( function( window ) {
 			MOUSE_UP:	'mouseup'
 		};
 		
-		this.wW = null;
-		this.wH = null;
-		this.cX = null;
-		this.cY = null;
-		this.sY = null;
-		this.mX = null;
-		this.mY = null;
+		this.bW		= null; // body width
+		this.bH		= null; // body height
+		this.wW		= null; // window width
+		this.wH		= null; // window height
+		this.cX		= null; // center X
+		this.cY		= null; // center Y
+		this.sY		= null; // scroll Y
+		this.siY	= null; // scroll inertia Y
+		this.mX		= null; // mouse X
+		this.mY		= null; // mouse Y
 		
-		this.isWindowFocused = true;
+		this.SCROLL_INERTIA		= 0.07;
+		
+		this.isWindowFocused	= true;
 	}
 	
 	
@@ -69,7 +74,7 @@ STF.MainView = ( function( window ) {
 	var _resize = function() {
 		this.wW = this.$window.width();
 		this.wH = this.$window.height();
-		this.cX = Math.round( this.wW / 2 );
+		this.cX = Math.round( this.bW / 2 );
 		this.cY = Math.round( this.wH / 2 );
 		
 		if ( this.mX === null && this.mY === null ) {
@@ -90,7 +95,8 @@ STF.MainView = ( function( window ) {
 	var _raf = function() {
 		console.log( 'MainView _raf()' );
 		
-		this.sY = this.$window[0].scrollY || this.$window[0].pageYOffset;
+		this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
+		this.siY	+= ( this.sY - this.siY ) * this.SCROLL_INERTIA;
 		
 		STF.Views.Statics.Header.raf();
 		STF.Views.Statics.Footer.raf();
