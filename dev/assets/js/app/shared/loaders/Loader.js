@@ -51,7 +51,10 @@ STF.Loader = ( function( window ) {
 	
 	
 	Loader.prototype.startLoad = function( items ) {
-		this.queue.loadManifest( items );
+		if ( items.length !== 0 )
+			this.queue.loadManifest( items );
+		else
+			_onComplete.call( this, null );
 	};
 	
 	
