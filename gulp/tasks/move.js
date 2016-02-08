@@ -106,7 +106,7 @@ gulp.task( 'move', function() {
 	
 	
 	/* SVG */
-	else if ( options.movePath === null && options.task == 'svg' )
+	else if ( options.movePath === null && options.task == 'svg' && options.env != 'dev' )
 		options.movePath = {
 			from: [ paths.env.dev + paths.assets.svg.sprite.allFiles ],
 			to: [ paths.env.prod + paths.assets.svg.sprite.dir ]
