@@ -318,6 +318,18 @@ STF.Router = ( function( window ) {
 	};
 	
 	
+	Router.prototype.updateGA = function() {
+		if ( CCB.Config.ENV == 'prod' && Object.keys( CCB.Config.GA_ID ).length > 0 ) {
+			for ( var gaName in CCB.Config.GA_ID ) {
+				if ( gaName == 'null' )
+					ga( 'send', 'pageview', '/' + this.PAGE_URL.params );
+				else
+					ga( gaName + '.send', 'pageview', '/' + this.PAGE_URL.params );
+			}
+		}
+	};
+	
+	
 	return new Router();
 	
 	

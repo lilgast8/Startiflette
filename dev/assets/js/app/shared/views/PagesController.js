@@ -159,6 +159,8 @@ STF.PagesController = ( function( window ) {
 	
 	
 	PagesController.prototype.changePage = function( pageUrl ) {
+		CCB.Router.updateGA();
+		
 		_disablePageChange.call( this );
 		_initPageChangeValues.call( this );
 		
