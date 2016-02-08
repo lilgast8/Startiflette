@@ -159,6 +159,7 @@ STF.PagesController = ( function( window ) {
 	
 	
 	PagesController.prototype.changePage = function( pageUrl ) {
+		_updateMenuLinks.call( this );
 		STF.Router.updateGA();
 		
 		_disablePageChange.call( this );
