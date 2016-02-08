@@ -127,16 +127,13 @@ STF.PagesController = ( function( window ) {
 			aIds = this.assetsModel.getAllStaticAssetsListIds();
 		
 		else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ||
-				  this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic' && type == 'json' )
+				  this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic' )
 			aIds = [ 'global', this.pageInfos.id ];
-		
-		else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic' && type == 'img' )
-			aIds = [ 'global' ];
 		
 		
 		// page change load
 		else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ||
-				  !this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic' && type == 'json' )
+				  !this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic' )
 			aIds = [ this.pageInfos.id ];
 		
 		
