@@ -21,7 +21,7 @@
   "main": "gulpfile.js",
   "devDependencies": {
     "del": "^1.2.1",
-    "gulp": "^3.8.10",
+    "gulp": "^3.9.1",
     "gulp-concat": "^2.3.4",
     "gulp-imagemin": "^2.4.0",
     "gulp-jshint": "^1.8.4",
@@ -34,17 +34,13 @@
     "gulp-ruby-sass": "^0.7.1",
     "gulp-svg-sprite": "^1.2.10",
     "gulp-uglify": "^1.0.2",
+    "imagemin-jpeg-recompress": "^4.3.0",
+    "imagemin-pngquant": "^4.2.0",
     "inquirer": "^0.10.0",
     "jshint-stylish": "^1.0.0",
     "minimist": "^1.1.0",
     "path": "^0.4.9",
     "recursive-readdir": "^1.2.1",
     "require-dir": "^0.1.0"
-  },
-  "dependencies": {
-    "imagemin-jpeg-recompress": "^4.3.0",
-    "imagemin-jpegoptim": "^4.1.0",
-    "imagemin-mozjpeg": "^5.1.0",
-    "imagemin-pngquant": "^4.2.0"
   }
 }
