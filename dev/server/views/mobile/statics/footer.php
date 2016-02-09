@@ -3,25 +3,31 @@
 	
 	<!-- Footer -->
 	<footer id="footer">
-		<?php if(Config::$MULTI_LANG) { ?>
+		<?php if ( Lang::$MULTI_LANG ) { ?>
 		<nav class="footer-lg">
-			<?php foreach ( $main->router->altUrl as $lang => $urlAlt ) { ?>
-			<a href="<?php echo $urlAlt; ?>" class="footer-lg-link" data-lg="<?php echo $lang; ?>"><?php echo $lang; ?></a>
-			<?php } ?>
+			<?php
+			if ( Router::$ALT_LANG_URL ) {
+				foreach ( Router::$ALT_LANG_URL as $lang => $altLangUrl ) {
+			?>
+			<a href="<?php echo $altLangUrl; ?>" class="footer-lg-link" data-lg="<?php echo $lang; ?>"><?php echo $lang; ?></a>
+			<?php
+				}
+			}
+			?>
 		</nav>
 		<?php } ?>
 		<nav>
 			<ul>
 				<li>
-					<a href="<?php echo $main->router->url->legals; ?>" class="footer-link" data-url="<?php echo $main->router->url->legals_ID; ?>">
-						<?php echo $main->contents->global->menu->legals; ?>
+					<a href="<?php echo Router::$LINK->statics->legal_notices; ?>" class="footer-link">
+						<?php echo Contents::$datas->global->menu->legals; ?>
 					</a>
 				</li>
 			</ul>
 		</nav>
 	</footer>
 	
-	<?php include_once $main->path->file->base.'server/views/alt/no-js.php'; // no JS ?>
+	<?php include_once Path::$FILE->viewsAlt . 'no-js.php'; // no JS ?>
 	
 </div> <!-- End #main-container -->
 
@@ -30,10 +36,10 @@
 <?php
 
 /* JS var */
-include_once $main->path->file->base.'server/shared/js-var.php';
+include_once Path::$FILE->shared . 'js-var.php';
 
 /* JS scripts */
-echo $main->config->listJsFiles('scripts-mobile');
+echo $this->path->getJsFilesUrl( 'scripts-mobile' );
 
 ?>
 
