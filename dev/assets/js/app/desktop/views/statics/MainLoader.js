@@ -9,7 +9,7 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 	
 	
 	function MainLoader() {
-		STF.AbstractView.call( this );
+		STF.AbstractMainLoader.call( this );
 		
 		this.E = {
 			PROGRESS:	'progress',
@@ -21,15 +21,13 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 	}
 	
 	
-	MainLoader.prototype				= Object.create( STF.AbstractView.prototype );
+	MainLoader.prototype				= Object.create( STF.AbstractMainLoader.prototype );
 	MainLoader.prototype.constructor	= MainLoader;
 	
 	
-	MainLoader.prototype.init = function() {
-		STF.AbstractView.prototype.init.call( this );
-		
-		_instanceAssetsLoader.call( this );
-	};
+	/*MainLoader.prototype.init = function() {
+		STF.AbstractMainLoader.prototype.init.call( this );
+	};*/
 	
 	
 	MainLoader.prototype.initDOM = function() {
@@ -64,52 +62,6 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 		this.tl.hide.to( this.$loader, 1, { xPercent:100, ease:Quart.easeInOut }, 0 );
 		this.tl.hide.to( this.$loaderCont, 1, { xPercent:-100, ease:Quart.easeInOut }, 0 );
 	};
-	
-	
-	var _instanceAssetsLoader = function() {
-		this.assetsLoader = new STF.Loader( true, true );
-		this.assetsLoader.init();
-		
-		this.assetsLoader.buildEvt( this.assetsLoader.E.PROGRESS, _onProgress.bind( this ) );
-		this.assetsLoader.buildEvt( this.assetsLoader.E.FILE_LOAD, _onFileLoad.bind( this ) );
-		this.assetsLoader.buildEvt( this.assetsLoader.E.COMPLETE, _onComplete.bind( this ) );
-	};
-	
-	
-	MainLoader.prototype.loadAssets = function( aAssetsToLoad ) {
-		// console.log( aAssetsToLoad );
-		
-		this.assetsLoader.startLoad( aAssetsToLoad );
-	};
-	
-	
-	var _onProgress = function( percentage ) {
-		var posX = percentage - 100;
-		
-		this.$percentage[0].innerHTML					= parseInt( percentage ) + ' %';
-		this.$progress[0].style[ STF.Config.TRANSFORM ]	= 'translate(' + posX + '%, 0% )';
-	};
-	
-	
-	var _onFileLoad = function( e ) {
-		this.dispatch( this.E.FILE_LOAD, e );
-	};
-	
-	
-	var _onComplete = function( data ) {
-		// _destroyAssetsLoader.call( this );
-		
-		this.dispatch( this.E.COMPLETE, data );
-	};
-	
-	
-	/*var _destroyAssetsLoader = function() {
-		this.assetsLoader.destroyEvt( this.assetsLoader.E.PROGRESS, _onProgress.bind( this ) );
-		this.assetsLoader.destroyEvt( this.assetsLoader.E.COMPLETE, _onComplete.bind( this ) );
-		
-		this.assetsLoader.destroy();
-		this.assetsLoader = null;
-	};*/
 	
 	
 	MainLoader.prototype.hideInit = function() {

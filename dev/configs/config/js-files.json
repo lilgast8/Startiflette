@@ -37,6 +37,7 @@
 			"app/shared/abstracts/models/AbstractAssets.js",
 			"app/shared/abstracts/views/AbstractView.js",
 			"app/shared/abstracts/views/AbstractMainView.js",
+			"app/shared/abstracts/views/AbstractMainLoader.js",
 			
 			"app/shared/routes/Router.js",
 			
