@@ -23,7 +23,7 @@
     "del": "^1.2.1",
     "gulp": "^3.8.10",
     "gulp-concat": "^2.3.4",
-    "gulp-imagemin": "^0.6.2",
+    "gulp-imagemin": "^2.4.0",
     "gulp-jshint": "^1.8.4",
     "gulp-jsonlint": "^0.1.0",
     "gulp-jsonminify": "0.0.1",
