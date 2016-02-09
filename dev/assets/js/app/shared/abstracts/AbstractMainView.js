@@ -1,0 +1,183 @@
+
+
+STF.AbsctractMainView = ( function( window ) {
+	'use strict';
+	
+	
+	function AbsctractMainView() {
+		STF.AbstractView.call( this );
+		
+		this.E = {
+			RESIZE:		'resize',
+			RAF:		'raf',
+			MOUSE_MOVE:	'mousemouse',
+			MOUSE_DOWN:	'mousedown',
+			MOUSE_UP:	'mouseup'
+		};
+		
+		this.bW		= null; // body width
+		this.bH		= null; // body height
+		this.wW		= null; // window width
+		this.wH		= null; // window height
+		this.cX		= null; // center X
+		this.cY		= null; // center Y
+		this.sY		= null; // scroll Y
+		this.siY	= null; // scroll inertia Y
+		this.mX		= null; // mouse X
+		this.mY		= null; // mouse Y
+		
+		this.SCROLL_INERTIA		= 0.07;
+		
+		this.isWindowFocused	= true;
+	}
+	
+	
+	AbsctractMainView.prototype				= Object.create( STF.AbstractView.prototype );
+	AbsctractMainView.prototype.constructor	= AbsctractMainView;
+	
+	
+	AbsctractMainView.prototype.init = function() {
+		STF.AbstractView.prototype.init.call( this );
+		
+		this.initStaticsViews();
+		
+		_resize.call( this );
+	};
+	
+	
+	AbsctractMainView.prototype.initDOM = function() {
+		this.$window	= $( window );
+		this.$body		= $( document.body );
+		this.$mainCont	= $( document.getElementById( 'main-container' ) );
+		this.$pageCont	= $( document.getElementById( 'page-container' ) );
+	};
+	
+	
+	AbsctractMainView.prototype.bindEvents = function() {
+		this.$window.on( 'resize', $.proxy( _resize, this ) );
+		// this.$window.on( 'resize', $.proxy( this.resize, this ) );
+		// TweenLite.ticker.addEventListener( 'tick', _raf, this );
+		// this.$window.on( 'mousemove', $.proxy( _mouseMove, this ) );
+		// this.$window.on( 'mousedown', $.proxy( _mouseDown, this ) );
+		// this.$window.on( 'mouseup', $.proxy( _mouseUp, this ) );
+		// this.$window.on( 'blur', $.proxy( _windowOut, this ) );
+		// this.$window.on( 'focus', $.proxy( _windowIn, this ) );
+	};
+	
+	
+	/*var _initStaticsViews = function() {
+		// STF.PagesController.init();
+		STF.Views.Statics.Header.init();
+		// STF.Views.Statics.Footer.init();
+	};*/
+	
+	
+	var _resize = function() {
+		_setResizeProps.call( this );
+		
+		this.resizeStaticsViews();
+		
+		_resizeCurrentPage.call( this );
+	};
+	
+	
+	var _setResizeProps = function() {
+		this.wW = this.$window.width();
+		this.wH = this.$window.height();
+		this.cX = Math.round( this.bW / 2 );
+		this.cY = Math.round( this.wH / 2 );
+		
+		if ( this.mX === null && this.mY === null ) {
+			this.mX = this.cX;
+			this.mY = this.cY;
+		}
+		
+		// console.log( 'AbsctractMainView _setResizeProps()', this.wW, this.wH );
+	};
+	
+	
+	AbsctractMainView.prototype.resizeStaticsViews = function() {
+		STF.Views.Statics.Header.resize();
+		STF.Views.Statics.Footer.resize();
+	};
+	
+	
+	var _resizeCurrentPage = function() {
+		if ( STF.PagesController.currentPage !== null )
+			STF.PagesController.currentPage.resize();
+	};
+	
+	
+	var _raf = function() {
+		// if ( STF.Config.ENV == 'dev' || STF.Config.ENV == 'preprod_local' )
+		// 	STF.Utils.FPSStats.begin();
+		
+		
+		_setRafProps.call( this );
+		
+		this.rafStaticsViews();
+		
+		_rafCurrentPage.call( this );
+		
+		
+		// if ( STF.Config.ENV == 'dev' || STF.Config.ENV == 'preprod_local' )
+		// 	STF.Utils.FPSStats.end();
+	};
+	
+	
+	var _setRafProps = function() {
+		this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
+		this.siY	+= ( this.sY - this.siY ) * this.SCROLL_INERTIA;
+	};
+	
+	
+	AbsctractMainView.prototype.rafStaticsViews = function() {
+		STF.Views.Statics.Header.raf();
+		STF.Views.Statics.Footer.raf();
+	};
+	
+	
+	var _rafCurrentPage = function() {
+		if ( STF.PagesController.currentPage !== null )
+			STF.PagesController.currentPage.raf();
+	};
+	
+	
+	var _mouseMove = function( e ) {
+		this.mX = e.clientX;
+		this.mY = e.clientY;
+		
+		console.log( 'AbsctractMainView _mouseMove()', this.mX, this.mY );
+	};
+	
+	
+	var _mouseDown = function() {
+		console.log( 'AbsctractMainView _mouseDown()' );
+	};
+	
+	
+	var _mouseUp = function() {
+		console.log( 'AbsctractMainView _mouseUp()' );
+	};
+	
+	
+	var _windowOut = function() {
+		this.isWindowFocused = false;
+		
+		console.log( 'AbsctractMainView _windowOut', this.isWindowFocused );
+	};
+	
+	
+	var _windowIn = function() {
+		this.isWindowFocused = true;
+		
+		console.log( 'AbsctractMainView _windowOut', this.isWindowFocused );
+	};
+	
+	
+	// return new AbsctractMainView();
+	return AbsctractMainView;
+	
+	
+} ) ( window );
+

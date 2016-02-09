@@ -45,8 +45,10 @@
 			"app/shared/utils/Math.js",
 			
 			"app/shared/abstracts/AbstractView.js",
+			"app/shared/abstracts/AbstractMainView.js",
 			
-			"app/shared/views/MainView.js",
+			"app/desktop/views/MainView.js",
+			
 			"app/shared/views/PagesController.js",
 			
 			"app/desktop/views/statics/MainLoader.js",
