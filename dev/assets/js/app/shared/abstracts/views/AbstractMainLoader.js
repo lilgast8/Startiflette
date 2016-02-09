@@ -42,7 +42,7 @@ STF.AbstractMainLoader = ( function( window ) {
 		this.assetsLoader = new STF.Loader( true, true );
 		this.assetsLoader.init();
 		
-		this.assetsLoader.buildEvt( this.assetsLoader.E.PROGRESS, _onProgress.bind( this ) );
+		this.assetsLoader.buildEvt( this.assetsLoader.E.PROGRESS, this.onProgress.bind( this ) );
 		this.assetsLoader.buildEvt( this.assetsLoader.E.FILE_LOAD, _onFileLoad.bind( this ) );
 		this.assetsLoader.buildEvt( this.assetsLoader.E.COMPLETE, _onComplete.bind( this ) );
 	};
@@ -55,11 +55,8 @@ STF.AbstractMainLoader = ( function( window ) {
 	};
 	
 	
-	var _onProgress = function( percentage ) {
-		var posX = percentage - 100;
+	AbstractMainLoader.prototype.onProgress = function( percentage ) {
 		
-		this.$percentage[0].innerHTML					= parseInt( percentage ) + ' %';
-		this.$progress[0].style[ STF.Config.TRANSFORM ]	= 'translate(' + posX + '%, 0% )';
 	};
 	
 	

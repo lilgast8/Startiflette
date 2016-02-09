@@ -46,7 +46,7 @@
 <div id="main-container" class="preload">
 	
 	<!-- Loader -->
-	<div id="loader">
+	<div id="main-loader" class="init">
 		
 	</div>
 	

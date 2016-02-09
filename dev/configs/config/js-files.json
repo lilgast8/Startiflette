@@ -80,32 +80,42 @@
 			
 			"app/InitApp.js",
 			
-			"app/shared/events/EventDispatcher.class.js",
+			"app/shared/events/EventDispatcher.js",
 			
-			"app/shared/config/Config.js",
-			"app/shared/config/Path.js",
-			"app/shared/config/OldBrowser.js",
+			"app/shared/configs/Config.js",
+			"app/shared/configs/Path.js",
+			"app/shared/configs/Lang.js",
+			"app/shared/configs/OldBrowser.js",
 			
-			"app/shared/routes/RoutesManager.js",
+			"app/shared/abstracts/models/AbstractAssets.js",
+			"app/shared/abstracts/views/AbstractView.js",
+			"app/shared/abstracts/views/AbstractMainView.js",
+			"app/shared/abstracts/views/AbstractMainLoader.js",
 			
-			"app/shared/models/Model.Global.js",
+			"app/shared/routes/Router.js",
 			
-			"app/shared/loaders/Loader.class.js",
+			"app/mobile/models/Assets.js",
 			
-			"app/shared/utils/Utils.Global.js",
+			"app/shared/loaders/Loader.js",
 			
-			"app/shared/views/View.class.js",
-			"app/shared/views/ViewPage.class.js",
+			"app/shared/utils/Global.js",
+			"app/shared/utils/DOM.js",
+			"app/shared/utils/Math.js",
 			
-			"app/mobile/views/statics/ViewStatic.Header.js",
-			"app/mobile/views/statics/ViewStatic.Footer.js",
-			"app/mobile/views/statics/ViewStatic.MainLoader.js",
+			"app/mobile/views/MainView.js",
 			
-			"app/mobile/views/pages/ViewPage.Home.js",
-			"app/mobile/views/pages/ViewPage.About.js",
-			"app/mobile/views/pages/ViewPage.Projects.js",
-			"app/mobile/views/pages/ViewPage.Project.js",
-			"app/mobile/views/pages/ViewPage.Legals.js",
+			"app/shared/controllers/PagesController.js",
+			
+			"app/mobile/views/statics/MainLoader.js",
+			"app/mobile/views/statics/Header.js",
+			"app/mobile/views/statics/Footer.js",
+			
+			"app/mobile/views/pages/Error404.js",
+			"app/mobile/views/pages/Home.js",
+			"app/mobile/views/pages/About.js",
+			"app/mobile/views/pages/Projects.js",
+			"app/mobile/views/pages/Project.js",
+			"app/mobile/views/pages/LegalNotices.js",
 			
 			"app/Main.js"
 		]

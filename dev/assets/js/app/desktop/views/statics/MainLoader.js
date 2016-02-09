@@ -64,6 +64,14 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 	};
 	
 	
+	MainLoader.prototype.onProgress = function( percentage ) {
+		var posX = percentage - 100;
+		
+		this.$percentage[0].innerHTML					= parseInt( percentage ) + ' %';
+		this.$progress[0].style[ STF.Config.TRANSFORM ]	= 'translate(' + posX + '%, 0% )';
+	};
+	
+	
 	MainLoader.prototype.hideInit = function() {
 		this.tl.hideInit.play();
 		
