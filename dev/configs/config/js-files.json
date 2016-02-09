@@ -34,6 +34,10 @@
 			"app/shared/configs/Lang.js",
 			"app/shared/configs/OldBrowser.js",
 			
+			"app/shared/abstracts/models/AbstractAssets.js",
+			"app/shared/abstracts/AbstractView.js",
+			"app/shared/abstracts/AbstractMainView.js",
+			
 			"app/shared/routes/Router.js",
 			
 			"app/desktop/models/Assets.js",
@@ -43,9 +47,6 @@
 			"app/shared/utils/Global.js",
 			"app/shared/utils/DOM.js",
 			"app/shared/utils/Math.js",
-			
-			"app/shared/abstracts/AbstractView.js",
-			"app/shared/abstracts/AbstractMainView.js",
 			
 			"app/desktop/views/MainView.js",
 			
