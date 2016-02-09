@@ -35,8 +35,8 @@
 			"app/shared/configs/OldBrowser.js",
 			
 			"app/shared/abstracts/models/AbstractAssets.js",
-			"app/shared/abstracts/AbstractView.js",
-			"app/shared/abstracts/AbstractMainView.js",
+			"app/shared/abstracts/views/AbstractView.js",
+			"app/shared/abstracts/views/AbstractMainView.js",
 			
 			"app/shared/routes/Router.js",
 			
@@ -50,7 +50,7 @@
 			
 			"app/desktop/views/MainView.js",
 			
-			"app/shared/views/PagesController.js",
+			"app/shared/controllers/PagesController.js",
 			
 			"app/desktop/views/statics/MainLoader.js",
 			"app/desktop/views/statics/Header.js",
