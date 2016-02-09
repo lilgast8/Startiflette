@@ -42,6 +42,7 @@
     "require-dir": "^0.1.0"
   },
   "dependencies": {
-    "imagemin-pngquant": "^4.2.0"
+    "imagemin-pngquant": "^4.2.0",
+    "imagemin-zopfli": "^4.1.0"
   }
 }
