@@ -5,16 +5,16 @@ STF.MainView = ( function( window ) {
 	
 	
 	function MainView() {
-		STF.AbsctractMainView.call( this );
+		STF.AbstractMainView.call( this );
 	}
 	
 	
-	MainView.prototype				= Object.create( STF.AbsctractMainView.prototype );
+	MainView.prototype				= Object.create( STF.AbstractMainView.prototype );
 	MainView.prototype.constructor	= MainView;
 	
 	
 	MainView.prototype.init = function() {
-		STF.AbsctractMainView.prototype.init.call( this );
+		STF.AbstractMainView.prototype.init.call( this );
 	};
 	
 	
@@ -35,12 +35,12 @@ STF.MainView = ( function( window ) {
 	
 	
 	MainView.prototype.resizeStaticsViews = function() {
-		STF.AbsctractMainView.prototype.resizeStaticsViews.call( this );
+		STF.AbstractMainView.prototype.resizeStaticsViews.call( this );
 	};
 	
 	
 	MainView.prototype.rafStaticsViews = function() {
-		STF.AbsctractMainView.prototype.rafStaticsViews.call( this );
+		STF.AbstractMainView.prototype.rafStaticsViews.call( this );
 	};
 	
 	

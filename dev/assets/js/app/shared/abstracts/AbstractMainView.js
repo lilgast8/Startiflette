@@ -1,10 +1,10 @@
 
 
-STF.AbsctractMainView = ( function( window ) {
+STF.AbstractMainView = ( function( window ) {
 	'use strict';
 	
 	
-	function AbsctractMainView() {
+	function AbstractMainView() {
 		STF.AbstractView.call( this );
 		
 		this.E = {
@@ -32,11 +32,11 @@ STF.AbsctractMainView = ( function( window ) {
 	}
 	
 	
-	AbsctractMainView.prototype				= Object.create( STF.AbstractView.prototype );
-	AbsctractMainView.prototype.constructor	= AbsctractMainView;
+	AbstractMainView.prototype				= Object.create( STF.AbstractView.prototype );
+	AbstractMainView.prototype.constructor	= AbstractMainView;
 	
 	
-	AbsctractMainView.prototype.init = function() {
+	AbstractMainView.prototype.init = function() {
 		STF.AbstractView.prototype.init.call( this );
 		
 		this.initStaticsViews();
@@ -45,7 +45,7 @@ STF.AbsctractMainView = ( function( window ) {
 	};
 	
 	
-	AbsctractMainView.prototype.initDOM = function() {
+	AbstractMainView.prototype.initDOM = function() {
 		this.$window	= $( window );
 		this.$body		= $( document.body );
 		this.$mainCont	= $( document.getElementById( 'main-container' ) );
@@ -53,7 +53,7 @@ STF.AbsctractMainView = ( function( window ) {
 	};
 	
 	
-	AbsctractMainView.prototype.bindEvents = function() {
+	AbstractMainView.prototype.bindEvents = function() {
 		this.$window.on( 'resize', $.proxy( _resize, this ) );
 		// this.$window.on( 'resize', $.proxy( this.resize, this ) );
 		// TweenLite.ticker.addEventListener( 'tick', _raf, this );
@@ -92,11 +92,11 @@ STF.AbsctractMainView = ( function( window ) {
 			this.mY = this.cY;
 		}
 		
-		// console.log( 'AbsctractMainView _setResizeProps()', this.wW, this.wH );
+		// console.log( 'AbstractMainView _setResizeProps()', this.wW, this.wH );
 	};
 	
 	
-	AbsctractMainView.prototype.resizeStaticsViews = function() {
+	AbstractMainView.prototype.resizeStaticsViews = function() {
 		STF.Views.Statics.Header.resize();
 		STF.Views.Statics.Footer.resize();
 	};
@@ -131,7 +131,7 @@ STF.AbsctractMainView = ( function( window ) {
 	};
 	
 	
-	AbsctractMainView.prototype.rafStaticsViews = function() {
+	AbstractMainView.prototype.rafStaticsViews = function() {
 		STF.Views.Statics.Header.raf();
 		STF.Views.Statics.Footer.raf();
 	};
@@ -147,36 +147,35 @@ STF.AbsctractMainView = ( function( window ) {
 		this.mX = e.clientX;
 		this.mY = e.clientY;
 		
-		console.log( 'AbsctractMainView _mouseMove()', this.mX, this.mY );
+		console.log( 'AbstractMainView _mouseMove()', this.mX, this.mY );
 	};
 	
 	
 	var _mouseDown = function() {
-		console.log( 'AbsctractMainView _mouseDown()' );
+		console.log( 'AbstractMainView _mouseDown()' );
 	};
 	
 	
 	var _mouseUp = function() {
-		console.log( 'AbsctractMainView _mouseUp()' );
+		console.log( 'AbstractMainView _mouseUp()' );
 	};
 	
 	
 	var _windowOut = function() {
 		this.isWindowFocused = false;
 		
-		console.log( 'AbsctractMainView _windowOut', this.isWindowFocused );
+		console.log( 'AbstractMainView _windowOut', this.isWindowFocused );
 	};
 	
 	
 	var _windowIn = function() {
 		this.isWindowFocused = true;
 		
-		console.log( 'AbsctractMainView _windowOut', this.isWindowFocused );
+		console.log( 'AbstractMainView _windowOut', this.isWindowFocused );
 	};
 	
 	
-	// return new AbsctractMainView();
-	return AbsctractMainView;
+	return AbstractMainView;
 	
 	
 } ) ( window );
