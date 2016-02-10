@@ -99,7 +99,7 @@ class Config
 			 $whichBrowser->isBrowser( 'Firefox', '<', '35' ) ||
 			 $whichBrowser->isBrowser( 'Opera', '<', '30' ) ||
 			 $whichBrowser->isBrowser( 'Safari', '<', '6' ) ||
-			 $whichBrowser->isBrowser( 'Chrome', '<', '300' ) )
+			 $whichBrowser->isBrowser( 'Chrome', '<', '30' ) )
 			self::$IS_OLD_BROWSER = true;
 		else
 			self::$IS_OLD_BROWSER = false;
