@@ -2,6 +2,9 @@
 
 
 
+require 'vendor/autoload.php';
+
+
 include_once 'server/configs/Config.php';
 include_once 'server/configs/Lang.php';
 include_once 'server/configs/Path.php';
@@ -13,8 +16,6 @@ include_once 'server/controllers/PagesController.php';
 include_once 'server/utils/Helpers.php';
 
 include_once 'server/contents/Contents.php';
-
-include_once 'server/vendor/Mobile_Detect.php';
 
 
 
