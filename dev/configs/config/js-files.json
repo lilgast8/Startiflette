@@ -32,7 +32,6 @@
 			"app/shared/configs/Config.js",
 			"app/shared/configs/Path.js",
 			"app/shared/configs/Lang.js",
-			"app/shared/configs/OldBrowser.js",
 			
 			"app/shared/abstracts/models/AbstractAssets.js",
 			"app/shared/abstracts/views/AbstractView.js",
@@ -85,7 +84,6 @@
 			"app/shared/configs/Config.js",
 			"app/shared/configs/Path.js",
 			"app/shared/configs/Lang.js",
-			"app/shared/configs/OldBrowser.js",
 			
 			"app/shared/abstracts/models/AbstractAssets.js",
 			"app/shared/abstracts/views/AbstractView.js",
