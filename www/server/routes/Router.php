@@ -154,19 +154,24 @@ class Router
 				$this->redirectToRoot();
 			else if ( !Lang::$MULTI_LANG && self::$PAGE_URL->aParams[0] == Lang::$DEFAULT_LANG )
 				$this->redirectToPageWithoutLang();
+			
+			$this->pagesController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
 		}
 		else if ( self::$CONTENT_TYPE == 'oldBrowser' ) {
 			$page->id				= 'alt';
+			$page->params			= new stdClass();
 			$page->params->phpView	= 'old-browser';
+			
+			$this->pagesController->setPageInfos( $page->id, $page->params->phpView, '', '' );
 		}
 		else { // 404
 			$page->id		= 'error404';
 			$page->params	= self::$ROUTES->statics->error404;
 			
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
+			
+			$this->pagesController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
 		}
-		
-		$this->pagesController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
 	}
 	
 	
@@ -249,6 +254,7 @@ class Router
 	{
 		header( 'Status: 301 Moved Permanently', true, 301 );
 		header( 'Location: ' . Path::$URL->base );
+		exit();
 	}
 	
 	
@@ -256,6 +262,7 @@ class Router
 	{
 		header( 'Status: 301 Moved Permanently', true, 301 );
 		header( 'Location: ' . Path::$URL->base . self::$PAGE_URL->current );
+		exit();
 	}
 	
 	

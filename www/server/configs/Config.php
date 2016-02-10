@@ -20,6 +20,7 @@ class Config
 	static $GA_ID				= null;
 	
 	static $DEVICE				= null;
+	static $IS_OLD_BROWSER		= null;
 	
 	private $jsFiles			= null;
 	
@@ -28,6 +29,7 @@ class Config
 	{
 		$this->setConfig();
 		$this->setDevice();
+		$this->setOldBrowser();
 	}
 	
 	
@@ -84,6 +86,23 @@ class Config
 			self::$DEVICE = 'tablet';
 		else if ( $desktop )
 			self::$DEVICE = 'desktop';
+	}
+	
+	
+	private function setOldBrowser()
+	{
+		$whichBrowser = new WhichBrowser\Parser( getallheaders() );
+		
+		// echo $whichBrowser->browser->name . ' — ' . $whichBrowser->browser->version->value.'<br>';
+		
+		if ( $whichBrowser->isBrowser( 'Internet Explorer', '<', '9' ) ||
+			 $whichBrowser->isBrowser( 'Firefox', '<', '35' ) ||
+			 $whichBrowser->isBrowser( 'Opera', '<', '30' ) ||
+			 $whichBrowser->isBrowser( 'Safari', '<', '6' ) ||
+			 $whichBrowser->isBrowser( 'Chrome', '<', '30' ) )
+			self::$IS_OLD_BROWSER = true;
+		else
+			self::$IS_OLD_BROWSER = false;
 	}
 	
 	

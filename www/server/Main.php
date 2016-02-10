@@ -2,19 +2,20 @@
 
 
 
+require 'vendor/autoload.php';
+
+
 include_once 'server/configs/Config.php';
 include_once 'server/configs/Lang.php';
 include_once 'server/configs/Path.php';
 
 include_once 'server/routes/Router.php';
 
-include_once 'server/controller/PagesController.php';
+include_once 'server/controllers/PagesController.php';
 
 include_once 'server/utils/Helpers.php';
 
 include_once 'server/contents/Contents.php';
-
-include_once 'server/vendors/Mobile_Detect.php';
 
 
 
@@ -98,12 +99,12 @@ class Main
 		$viewPath = $this->getViewPath();
 		
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			include_once Path::$FILE->viewsPartials . 'header.php';
+			include_once Path::$FILE->viewsStatics . 'header.php';
 		
-		include_once $viewPath . PagesController::$PAGE->phpView . '.php';
+		include_once $viewPath . PagesController::$PAGE_INFOS->phpView . '.php';
 		
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			include_once Path::$FILE->viewsPartials . 'footer.php';
+			include_once Path::$FILE->viewsStatics . 'footer.php';
 	}
 	
 	

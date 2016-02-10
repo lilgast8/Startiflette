@@ -13,7 +13,13 @@ class Helpers
 		$html .= '	<use xlink:href="#' . $name . '" />';
 		$html .= '</svg>';
 		
-		echo $html;
+		return $html;
+	}
+	
+	
+	public static function echoSVG( $name )
+	{
+		echo Helpers::getSVG( $name );
 	}
 	
 }

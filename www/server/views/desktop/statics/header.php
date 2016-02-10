@@ -8,13 +8,12 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 	
-	<title><?php echo PagesController::$PAGE->title; ?></title>
-	<meta name="description" content="<?php echo PagesController::$PAGE->desc; ?>" />
+	<title><?php echo PagesController::$PAGE_INFOS->title; ?></title>
+	<meta name="description" content="<?php echo PagesController::$PAGE_INFOS->desc; ?>" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
 	<meta name="author" content="Gaston Bouchayer" />
 	<meta name="designer" content="Gaston Bouchayer" />
-	<meta name="format-detection" content="telephone=no">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<?php
 	
@@ -30,7 +29,7 @@
 	
 	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo Path::$URL->css; ?>styles-desktop.min.css" />
 	
-	<!--[if lt IE 9]><script src="<?php echo Path::$URL->js; ?>vendors/html5shiv.min.js"></script><![endif]-->
+	<!-- [if lt IE 9]><script src="<?php echo Path::$URL->js; ?>vendor/html5shiv.min.js"></script><![endif] -->
 	<?php
 	
 	/* Modernirz & Detectizr */

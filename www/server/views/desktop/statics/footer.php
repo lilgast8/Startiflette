@@ -27,7 +27,13 @@
 		</nav>
 	</footer>
 	
-	<?php include_once Path::$FILE->viewsAlt . 'no-js.php'; // no JS ?>
+	<?php
+	
+	include_once Path::$FILE->viewsAlt . 'no-js.php'; // no JS
+	
+	include_once Path::$FILE->viewsAlt . 'old-browser.php'; // old browser
+	
+	?>
 	
 </div> <!-- End #main-container -->
 

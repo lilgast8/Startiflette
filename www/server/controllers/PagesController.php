@@ -7,7 +7,7 @@ class PagesController
 	
 	protected static $instance;
 	
-	static $PAGE = null;
+	static $PAGE_INFOS = null;
 	
 	
 	protected function __construct()
@@ -33,12 +33,12 @@ class PagesController
 	
 	public function setPageInfos( $pageId, $phpView, $title, $desc )
 	{
-		self::$PAGE = new stdClass();
+		self::$PAGE_INFOS = new stdClass();
 		
-		self::$PAGE->id			= $pageId;
-		self::$PAGE->phpView	= $phpView;
-		self::$PAGE->title		= $title;
-		self::$PAGE->desc		= $desc;
+		self::$PAGE_INFOS->id			= $pageId;
+		self::$PAGE_INFOS->phpView	= $phpView;
+		self::$PAGE_INFOS->title		= $title;
+		self::$PAGE_INFOS->desc		= $desc;
 	}
 	
 }
