@@ -6,8 +6,14 @@ Starter + tartiflette = Startiflette, a SEO friendly starter for HTML5 + JS app 
 
 1. Install gulp: `$ npm install -g gulp`
 2. Install NPM dependencies: `$ npm install`
-3. Set your config environment in `dev/configs/config/config.json`
-4. Execute init gulp task: `$ gulp init`
+3. Install composer:
+	* for Mac user:
+		* `$ curl -sS https://getcomposer.org/installer | php`
+		* `mv composer.phar /usr/local/bin/composer`
+	* if didn't work or for Windows user: [how to install composer?](https://getcomposer.org/doc/00-intro.md)
+4. Install composer dependencies from `dev/server` directory: `$ composer install`
+5. Set your config environment in `dev/configs/config/config.json`
+6. Execute init gulp task: `$ gulp init`
 
 
 
