@@ -65,11 +65,9 @@ STF.AbstractMainView = ( function( window ) {
 	};
 	
 	
-	/*var _initStaticsViews = function() {
-		// STF.PagesController.init();
-		STF.Views.Statics.Header.init();
-		// STF.Views.Statics.Footer.init();
-	};*/
+	AbstractMainView.prototype.initStaticsViews = function() {
+		removeClass( STF.MainView.$mainCont[0], 'preload' );
+	};
 	
 	
 	var _resize = function() {

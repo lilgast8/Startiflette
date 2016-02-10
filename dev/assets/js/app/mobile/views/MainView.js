@@ -31,6 +31,8 @@ STF.MainView = ( function( window ) {
 	MainView.prototype.initStaticsViews = function() {
 		STF.Views.Statics.Header.init();
 		STF.Views.Statics.Footer.init();
+		
+		STF.AbstractMainView.prototype.initStaticsViews.call( this );
 	};
 	
 	
