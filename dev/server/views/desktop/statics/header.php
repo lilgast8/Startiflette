@@ -29,7 +29,7 @@
 	
 	<link media="screen" rel="stylesheet" type="text/css" href="<?php echo Path::$URL->css; ?>styles-desktop.min.css" />
 	
-	<!-- [if lt IE 9]><script src="<?php echo Path::$URL->js; ?>vendors/html5shiv.min.js"></script><![endif] -->
+	<!-- [if lt IE 9]><script src="<?php echo Path::$URL->js; ?>vendor/html5shiv.min.js"></script><![endif] -->
 	<?php
 	
 	/* Modernirz & Detectizr */

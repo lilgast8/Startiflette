@@ -14,7 +14,7 @@ include_once 'server/utils/Helpers.php';
 
 include_once 'server/contents/Contents.php';
 
-include_once 'server/vendors/Mobile_Detect.php';
+include_once 'server/vendor/Mobile_Detect.php';
 
 
 

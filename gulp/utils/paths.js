@@ -62,9 +62,9 @@ module.exports = {
 				}
 			},
 			
-			vendors: {
-				dir:			'assets/js/vendors/',
-				HTML5ShivFile:	'assets/js/vendors/html5shiv.min.js'
+			vendor: {
+				dir:			'assets/js/vendor/',
+				HTML5ShivFile:	'assets/js/vendor/html5shiv.min.js'
 			}
 		},
 		
