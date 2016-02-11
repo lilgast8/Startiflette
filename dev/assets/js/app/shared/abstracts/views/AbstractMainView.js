@@ -80,6 +80,8 @@ STF.AbstractMainView = ( function( window ) {
 	
 	
 	var _setResizeProps = function() {
+		this.bW = this.$body.width();
+		this.bH = this.$body.height();
 		this.wW = this.$window.width();
 		this.wH = this.$window.height();
 		this.cX = Math.round( this.bW / 2 );
