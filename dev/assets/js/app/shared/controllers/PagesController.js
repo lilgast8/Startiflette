@@ -109,7 +109,7 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _loadAssets = function() {
-		var aImgListIds	= _getAssetsListIds.call( this, 'img' );
+		var aImgListIds		= _getAssetsListIds.call( this, 'img' );
 		var aJsonListIds	= _getAssetsListIds.call( this, 'json' );
 		var dynamicImgList	= _getDynamicImgListToLoad.call( this );
 		var aAssetsToLoad	= this.assetsModel.getAssetsToLoad( aImgListIds, aJsonListIds, dynamicImgList );
