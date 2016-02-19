@@ -5,9 +5,14 @@
 		"className"	: "AltContent"
 	},
 	
-	"global": {
-		"fileName"	: "global",
-		"className"	: "GlobalContent"
+	"static": {
+		"fileName"	: "static",
+		"className"	: "StaticContent"
+	},
+	
+	"partial": {
+		"fileName"	: "partial",
+		"className"	: "PartialContent"
 	},
 	
 	"pages": {

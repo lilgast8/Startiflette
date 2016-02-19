@@ -20,7 +20,7 @@
 			<ul>
 				<li>
 					<a href="<?php echo Router::$LINK->statics->legal_notices; ?>" class="footer-link">
-						<?php echo Contents::$datas->global->menu->legals; ?>
+						<?php echo Contents::$datas->partial->menu->legals; ?>
 					</a>
 				</li>
 			</ul>

@@ -49,12 +49,12 @@ class Contents
 		self::$datas = new stdClass();
 		
 		
-		// first load
+		/* first load */
 		if ( Router::$CONTENT_TYPE == 'firstLoad' ) {
 			
 			foreach ( $this->contentsConfig as $id => $contentsInfos ) {
 				
-				if ( $id != 'pages' ) { // alt, global...
+				if ( $id != 'pages' ) { // alt, static, partial...
 					$fileName	= $contentsInfos->fileName;
 					$className	= $contentsInfos->className;
 				}
@@ -70,8 +70,17 @@ class Contents
 			
 		}
 		
-		// page change load
+		/* page change load */
 		else if ( Router::$CONTENT_TYPE == 'pageChange' ) {
+			// get partial datas
+			$id			= 'partial';
+			$fileName	= $this->contentsConfig->{ $id }->fileName;
+			$className	= $this->contentsConfig->{ $id }->className;
+			
+			$this->getDatas( $fileName, $className, $id );
+			
+			
+			// get page datas
 			$fileName	= PagesController::$PAGE_INFOS->phpView;
 			$className	= $this->contentsConfig->pages->{ PagesController::$PAGE_INFOS->id }->className;
 			$id			= PagesController::$PAGE_INFOS->id;
@@ -79,14 +88,14 @@ class Contents
 			$this->getDatas( $fileName, $className, $id );
 		}
 		
-		// old browser
+		/*// old browser
 		else if ( Router::$CONTENT_TYPE == 'oldBrowser' ) {
 			$fileName	= 'alt';
 			$className	= $this->contentsConfig->{ PagesController::$PAGE_INFOS->id }->className;
 			$id			= PagesController::$PAGE_INFOS->id;
 			
 			$this->getDatas( $fileName, $className, $id );
-		}
+		}*/
 	}
 	
 	
