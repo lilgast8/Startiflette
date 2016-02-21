@@ -132,9 +132,7 @@ class Router
 	
 	private function setContentType()
 	{
-		if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'oldBrowser' )
-			self::$CONTENT_TYPE = 'oldBrowser';
-		else if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'pageChange' )
+		if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'pageChange' )
 			self::$CONTENT_TYPE = 'pageChange';
 		else
 			self::$CONTENT_TYPE = 'firstLoad';
@@ -156,13 +154,6 @@ class Router
 				$this->redirectToPageWithoutLang();
 			
 			$this->pagesController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
-		}
-		else if ( self::$CONTENT_TYPE == 'oldBrowser' ) {
-			$page->id				= 'alt';
-			$page->params			= new stdClass();
-			$page->params->phpView	= 'old-browser';
-			
-			$this->pagesController->setPageInfos( $page->id, $page->params->phpView, '', '' );
 		}
 		else { // 404
 			$page->id		= 'error404';
