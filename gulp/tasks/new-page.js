@@ -77,7 +77,7 @@ gulp.task( 'new-page', function() {
 			
 			// php content
 			createFile( 'page-name-content.php',
-						paths.env.dev + paths.server.contents + 'LANG/' + phpFileName,
+						paths.env.dev + paths.server.contents + 'LANG/pages/' + phpFileName,
 						[ 'PageNameContent', '$page', 'Page name' ],
 						[ phpContentClassName, phpContentVarName, fileNameCapitalize ] );
 			
