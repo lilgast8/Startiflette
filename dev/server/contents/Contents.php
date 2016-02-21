@@ -52,22 +52,22 @@ class Contents
 		/* first load */
 		if ( Router::$CONTENT_TYPE == 'firstLoad' ) {
 			
-			foreach ( $this->contentsConfig as $id => $contentsInfos ) {
+			foreach ( $this->contentsConfig as $contentId => $contentsInfos ) {
 				
-				if ( $id != 'pages' ) { // alt, static, partial...
+				if ( $contentId != 'page' ) { // alt, static, partial...
 					$fileName	= $contentsInfos->fileName;
 					$className	= $contentsInfos->className;
+					$id			= $contentId;
 				}
 				else { // pages
 					$fileName	= PagesController::$PAGE_INFOS->phpView;
-					$className	= $this->contentsConfig->pages->{ PagesController::$PAGE_INFOS->id }->className;
+					$className	= $this->contentsConfig->page->{ PagesController::$PAGE_INFOS->id }->className;
 					$id			= PagesController::$PAGE_INFOS->id;
 				}
 				
-				$this->getDatas( $fileName, $className, $id );
+				$this->getDatas( $contentId, $fileName, $className, $id );
 				
 			}
-			
 		}
 		
 		/* page change load */
@@ -77,22 +77,24 @@ class Contents
 			$fileName	= $this->contentsConfig->{ $id }->fileName;
 			$className	= $this->contentsConfig->{ $id }->className;
 			
-			$this->getDatas( $fileName, $className, $id );
+			$this->getDatas( 'partial', $fileName, $className, $id );
 			
 			
 			// get page datas
 			$fileName	= PagesController::$PAGE_INFOS->phpView;
-			$className	= $this->contentsConfig->pages->{ PagesController::$PAGE_INFOS->id }->className;
+			$className	= $this->contentsConfig->page->{ PagesController::$PAGE_INFOS->id }->className;
 			$id			= PagesController::$PAGE_INFOS->id;
 			
-			$this->getDatas( $fileName, $className, $id );
+			$this->getDatas( 'page', $fileName, $className, $id );
 		}
 	}
 	
 	
-	private function getDatas( $fileName, $className, $id )
+	private function getDatas( $fileType, $fileName, $className, $id )
 	{
-		$langFilePath = Path::$FILE->contents . Lang::$LANG . '/' . $fileName . '.php';
+		$dirFile = $fileType == 'page' ? 'pages/' : '';
+		
+		$langFilePath = Path::$FILE->contents . Lang::$LANG . '/' . $dirFile . $fileName . '.php';
 		
 		if ( !file_exists( $langFilePath ) )
 			include_once Path::$FILE->contents . 'global/' . $fileName . '.php';

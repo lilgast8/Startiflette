@@ -15,7 +15,7 @@
 		"className"	: "PartialContent"
 	},
 	
-	"pages": {
+	"page": {
 		"error404": {
 			"fileName"	: "error-404",
 			"className"	: "Error404Content"
