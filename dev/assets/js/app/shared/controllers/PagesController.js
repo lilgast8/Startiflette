@@ -103,7 +103,7 @@ STF.PagesController = ( function( window ) {
 		this.isPrevPageHidden	= false;
 		this.isMainLoaderShown	= false;
 		
-		this.isCurrentPageShow	= false;
+		this.isCurrentPageShown	= false;
 		this.isMainLoaderHidden	= false;
 	};
 	
@@ -302,7 +302,7 @@ STF.PagesController = ( function( window ) {
 	var _onCurrentPageShown = function() {
 		this.currentPage.destroyEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
 		
-		this.isCurrentPageShow = true;
+		this.isCurrentPageShown = true;
 		_checkSecondStepPageChange.call( this );
 	};
 	
@@ -316,7 +316,7 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _checkSecondStepPageChange = function() {
-		if ( this.isCurrentPageShow && this.isMainLoaderHidden )
+		if ( this.isCurrentPageShown && this.isMainLoaderHidden )
 			_enablePageChange.call( this );
 	};
 	
