@@ -83,7 +83,7 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 	
 	MainLoader.prototype.show = function() {
 		this.$loader[0].style.display = 'block';
-		this.$loader.offsetHeight; // jshint ignore:line
+		this.$loader[0].offsetHeight; // jshint ignore:line
 		
 		this.tl.show.play(0);
 	};
