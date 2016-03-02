@@ -85,15 +85,15 @@ class Router
 	{
 		$paramsPageUrl = str_replace( Path::$URL->base, '', self::$PAGE_URL->full );
 		
+		// remove ?params
+		$aParamsPageUrl	= explode( '?', $paramsPageUrl );
+		$paramsPageUrl	= $aParamsPageUrl[0];
+		
 		if ( substr( $paramsPageUrl, 0, 1 ) == '/' ) // if / is first character, remove it
 			$paramsPageUrl = substr( $paramsPageUrl, 1 );
 		
 		if ( substr( $paramsPageUrl, -1, 1 ) == '/' ) // if / is last character, remove it
 			$paramsPageUrl = substr( $paramsPageUrl, 0, -1 );
-		
-		// remove ?params
-		$aParamsPageUrl	= explode( '?', $paramsPageUrl );
-		$paramsPageUrl	= $aParamsPageUrl[0];
 		
 		
 		return $paramsPageUrl;
@@ -113,6 +113,9 @@ class Router
 		
 		if ( substr( $currentPageUrl, 0, 1 ) == '/' ) // if / is first character, remove it
 			$currentPageUrl = substr( $currentPageUrl, 1 );
+		
+		if ( substr( $currentPageUrl, -1, 1 ) == '/' ) // if / is last character, remove it
+			$currentPageUrl = substr( $currentPageUrl, 0, -1 );
 		
 		
 		return $currentPageUrl;

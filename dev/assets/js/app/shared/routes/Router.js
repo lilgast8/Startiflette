@@ -116,14 +116,14 @@ STF.Router = ( function( window ) {
 	var _getParamsPageUrl = function() {
 		var paramsPageUrl = this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
 		
+		paramsPageUrl = paramsPageUrl.split( '#' )[0]; // remove #hash
+		paramsPageUrl = paramsPageUrl.split( '?' )[0]; // remove ?params
+		
 		if ( paramsPageUrl.substr( 0, 1 ) == '/' ) // if slash is first character, remove it
 			paramsPageUrl = paramsPageUrl.substr( 1 );
 		
 		if ( paramsPageUrl.substr( paramsPageUrl.length-1, 1 ) == '/' ) // if slash is last character, remove it
 			paramsPageUrl = paramsPageUrl.substr( 0, paramsPageUrl.length-1 );
-		
-		paramsPageUrl = paramsPageUrl.split( '#' )[0]; // remove #hash
-		paramsPageUrl = paramsPageUrl.split( '?' )[0]; // remove ?params
 		
 		
 		return paramsPageUrl;
@@ -142,6 +142,9 @@ STF.Router = ( function( window ) {
 		
 		if ( currentPageUrl.substr( 0, 1 ) == '/' ) // if slash is first character, remove it
 			currentPageUrl = currentPageUrl.substr( 1 );
+		
+		if ( currentPageUrl.substr( currentPageUrl.length-1, 1 ) == '/' ) // if slash is last character, remove it
+			currentPageUrl = currentPageUrl.substr( 0, currentPageUrl.length-1 );
 		
 		
 		return currentPageUrl;
