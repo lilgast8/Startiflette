@@ -27,14 +27,18 @@ gulp.task( 'move', function() {
 			from: [
 				[ paths.env.dev + paths.assets.css.minAllFiles ],
 				[
+					paths.env.dev + paths.assets.css.fonts.allFiles,
+					'!' + paths.env.dev + paths.emptyFiles
+				],
+				[
+					paths.env.dev + paths.assets.favicons.allFiles,
+					'!' + paths.env.dev + paths.emptyFiles
+				],
+				[
 					paths.env.dev + paths.assets.files.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles
 				],
 				imgPathFrom,
-				[
-					paths.env.dev + paths.assets.css.fonts.allFiles,
-					'!' + paths.env.dev + paths.emptyFiles
-				],
 				[ paths.env.dev + paths.assets.js.vendor.HTML5ShivFile ],
 				[
 					paths.env.dev + paths.assets.sounds.allFiles,
@@ -53,9 +57,10 @@ gulp.task( 'move', function() {
 			],
 			to: [
 				paths.env.prod + paths.assets.css.dir,
+				paths.env.prod + paths.assets.css.fonts.dir,
+				paths.env.prod + paths.assets.favicons.dir,
 				paths.env.prod + paths.assets.files.dir,
 				paths.env.prod + paths.assets.img.dir,
-				paths.env.prod + paths.assets.css.fonts.dir,
 				paths.env.prod + paths.assets.js.vendor.dir,
 				paths.env.prod + paths.assets.sounds.dir,
 				paths.env.prod + paths.assets.svg.sprite.dir,
@@ -81,6 +86,19 @@ gulp.task( 'move', function() {
 				paths.env.prod + paths.assets.css.dir,
 				paths.env.prod + paths.assets.css.fonts.dir
 			]
+		};
+	
+	
+	/* Favicons */
+	else if ( options.movePath === null && options.task == 'favicons' )
+		options.movePath = {
+			from: [
+				[
+					paths.env.dev + paths.assets.favicons.allFiles,
+					'!' + paths.env.dev + paths.emptyFiles
+				]
+			],
+			to: [ paths.env.prod + paths.assets.favicons.dir ]
 		};
 	
 	

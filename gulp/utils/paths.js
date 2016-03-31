@@ -34,7 +34,8 @@ module.exports = {
 		},
 		
 		favicons:	{
-			dir: 'assets/favicons/'
+			dir: 		'assets/favicons/',
+			allFiles:	'assets/favicons/**/*'
 		},
 		
 		files: {

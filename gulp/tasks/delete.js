@@ -26,6 +26,14 @@ gulp.task( 'delete', function() {
 		];
 	
 	
+	/* Favicons */
+	else if ( options.deletePath === null && options.task == 'favicons' )
+		options.deletePath = [
+			paths.env.dev + paths.assets.favicons.dir,
+			paths.env.prod + paths.assets.favicons.dir
+		];
+	
+	
 	/* Files */
 	else if ( options.deletePath === null && options.task == 'files' )
 		options.deletePath = paths.env.prod + paths.assets.files.dir;

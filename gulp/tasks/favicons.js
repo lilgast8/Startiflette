@@ -1,5 +1,6 @@
 var gulp			= require( 'gulp' );
 
+var options			= require( '../utils/options' );
 var paths			= require( '../utils/paths' );
 
 var plumber			= require( 'gulp-plumber' );
@@ -10,9 +11,18 @@ var globalConfig	= require( '../../' + paths.env.dev + paths.configs.config.conf
 
 
 
-gulp.task( 'favicon', [ 'favicon:generate' ], function() {
+gulp.task( 'favicons', [ 'favicons:generate' ], function() {
 	
-	gulp.start( 'favicon:manage-markups' );
+	// gulp.start( 'favicons:manage-markups' );
+	gulp.start( 'favicons:move' );
+	
+});
+
+
+gulp.task( 'favicons:move', [ 'favicons:manage-markups' ], function() {
+	
+	if ( options.task == 'favicons' )
+		gulp.start( 'move' );
 	
 });
 
@@ -20,8 +30,8 @@ gulp.task( 'favicon', [ 'favicon:generate' ], function() {
 // Generate the icons. This task takes a few seconds to complete. 
 // You should run it at least once to create the icons. Then, 
 // you should run it whenever RealFaviconGenerator updates its 
-// package (see the check-for-favicon-update task below).
-gulp.task( 'favicon:generate', function( done ) {
+// package (see the favicon:check-update task below).
+gulp.task( 'favicons:generate', [ 'delete' ], function( done ) {
 	
 	var configFile			= fs.readFileSync( paths.env.dev + paths.configs.favicons.configFile, 'utf8' );
 	var config				= JSON.parse( configFile );
@@ -92,7 +102,7 @@ gulp.task( 'favicon:generate', function( done ) {
 });
 
 
-gulp.task( 'favicon:manage-markups', [ 'favicon:inject-markups' ], function() {
+gulp.task( 'favicons:manage-markups', [ 'favicons:inject-markups' ], function() {
 	
 	var filePath	= paths.env.dev + paths.server.shared.dir + 'favicons.php';
 	var data		= fs.readFileSync( filePath, 'utf8' );
@@ -111,7 +121,7 @@ gulp.task( 'favicon:manage-markups', [ 'favicon:inject-markups' ], function() {
 // Inject the favicon markups in your HTML pages. You should run 
 // this task whenever you modify a page. You can keep this task 
 // as is or refactor your existing HTML pipeline.
-gulp.task( 'favicon:inject-markups', function() {
+gulp.task( 'favicons:inject-markups', function() {
 	
 	return gulp.src( paths.env.dev + paths.configs.favicons.srcFile )
 		.pipe( plumber() )
@@ -127,7 +137,7 @@ gulp.task( 'favicon:inject-markups', function() {
 // released a new Touch icon along with the latest version of iOS).
 // Run this task from time to time. Ideally, make it part of your 
 // continuous integration system.
-gulp.task( 'favicon:check-update', function( done ) {
+gulp.task( 'favicons:check-update', function( done ) {
 	
 	var currentVersion = JSON.parse( fs.readFileSync( paths.env.dev + paths.configs.favicons.dataFile ) ).version;
 	
