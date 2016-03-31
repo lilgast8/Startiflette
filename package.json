@@ -30,6 +30,7 @@
     "gulp-livereload": "^2.1.0",
     "gulp-notify": "^1.4.1",
     "gulp-plumber": "^0.6.4",
+    "gulp-real-favicon": "^0.2.1",
     "gulp-rename": "^1.2.0",
     "gulp-ruby-sass": "^0.7.1",
     "gulp-svg-sprite": "^1.2.10",

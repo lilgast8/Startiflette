@@ -1,0 +1,22 @@
+{
+	
+	"url":		"favicon.png",
+	"ios":		{
+					"url":	"favicon.png",
+					"bg":	"#ffffff"
+				},
+	"windows":	{
+					"url":	"favicon.png",
+					"bg":	"#ffffff"
+				},
+	"android":	{
+					"url":		"favicon.png",
+					"bg":		"#ffffff",
+					"theme":	"#fe7373",
+					"name":		"Startiflette"
+				},
+	"safari":	{
+					"theme":	"#fe7373"
+				}
+	
+}

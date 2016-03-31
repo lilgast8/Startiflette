@@ -33,6 +33,10 @@ module.exports = {
 			}
 		},
 		
+		favicons:	{
+			dir: 'assets/favicons/'
+		},
+		
 		files: {
 			dir:		'assets/files/',
 			allFiles:	'assets/files/**/*'
@@ -106,6 +110,13 @@ module.exports = {
 				jsFilesFile:	'configs/config/js-files.json'
 		},
 		
+		favicons: {
+			dir:		'configs/favicons/',
+			configFile:	'configs/favicons/config.json',
+			dataFile:	'configs/favicons/faviconData.json',
+			srcFile:	'configs/favicons/favicons.php'
+		},
+		
 		routes: {
 			dir:		'configs/routes/',
 			allFiles:	'configs/routes/*.json'
@@ -118,6 +129,10 @@ module.exports = {
 		allFiles:	'server/**/*',
 		
 		contents: 'server/contents/',
+		
+		shared: {
+			dir: 'server/shared/'
+		},
 		
 		views: {
 			desktop: {
