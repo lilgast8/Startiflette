@@ -14,7 +14,7 @@ STF.Utils.DatGUI = ( function( window ) {
 		this.var2	= 23;
 		this.var3	= null;
 		this.var4	= false;
-		this.var5	= '#fe7272';
+		this.var5	= '#fe7373';
 	}
 	
 	
