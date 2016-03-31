@@ -19,7 +19,7 @@
 	include_once Path::$FILE->shared . 'social-share.php';
 	
 	/* Favicons */
-	// include_once Path::$FILE->shared . 'favicons.php';
+	include_once Path::$FILE->shared . 'favicons.php';
 	
 	?>
 	
@@ -57,17 +57,17 @@
 			<ul>
 				<li>
 					<a href="<?php echo Router::$LINK->statics->home; ?>" class="menu-link">
-						<?php echo Contents::$datas->global->menu->home; ?>
+						<?php echo Contents::$datas->partial->menu->home; ?>
 					</a>
 				</li>
 				<li>
 					<a href="<?php echo Router::$LINK->statics->about; ?>" class="menu-link">
-						<?php echo Contents::$datas->global->menu->about; ?>
+						<?php echo Contents::$datas->partial->menu->about; ?>
 					</a>
 				</li>
 				<li>
 					<a href="<?php echo Router::$LINK->statics->projects; ?>" class="menu-link">
-						<?php echo Contents::$datas->global->menu->projects; ?>
+						<?php echo Contents::$datas->partial->menu->projects; ?>
 					</a>
 				</li>
 			</ul>

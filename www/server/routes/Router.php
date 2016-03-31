@@ -85,15 +85,15 @@ class Router
 	{
 		$paramsPageUrl = str_replace( Path::$URL->base, '', self::$PAGE_URL->full );
 		
+		// remove ?params
+		$aParamsPageUrl	= explode( '?', $paramsPageUrl );
+		$paramsPageUrl	= $aParamsPageUrl[0];
+		
 		if ( substr( $paramsPageUrl, 0, 1 ) == '/' ) // if / is first character, remove it
 			$paramsPageUrl = substr( $paramsPageUrl, 1 );
 		
 		if ( substr( $paramsPageUrl, -1, 1 ) == '/' ) // if / is last character, remove it
 			$paramsPageUrl = substr( $paramsPageUrl, 0, -1 );
-		
-		// remove ?params
-		$aParamsPageUrl	= explode( '?', $paramsPageUrl );
-		$paramsPageUrl	= $aParamsPageUrl[0];
 		
 		
 		return $paramsPageUrl;
@@ -114,6 +114,9 @@ class Router
 		if ( substr( $currentPageUrl, 0, 1 ) == '/' ) // if / is first character, remove it
 			$currentPageUrl = substr( $currentPageUrl, 1 );
 		
+		if ( substr( $currentPageUrl, -1, 1 ) == '/' ) // if / is last character, remove it
+			$currentPageUrl = substr( $currentPageUrl, 0, -1 );
+		
 		
 		return $currentPageUrl;
 	}
@@ -132,9 +135,7 @@ class Router
 	
 	private function setContentType()
 	{
-		if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'oldBrowser' )
-			self::$CONTENT_TYPE = 'oldBrowser';
-		else if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'pageChange' )
+		if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'pageChange' )
 			self::$CONTENT_TYPE = 'pageChange';
 		else
 			self::$CONTENT_TYPE = 'firstLoad';
@@ -156,13 +157,6 @@ class Router
 				$this->redirectToPageWithoutLang();
 			
 			$this->pagesController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
-		}
-		else if ( self::$CONTENT_TYPE == 'oldBrowser' ) {
-			$page->id				= 'alt';
-			$page->params			= new stdClass();
-			$page->params->phpView	= 'old-browser';
-			
-			$this->pagesController->setPageInfos( $page->id, $page->params->phpView, '', '' );
 		}
 		else { // 404
 			$page->id		= 'error404';
