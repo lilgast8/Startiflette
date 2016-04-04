@@ -114,6 +114,7 @@ module.exports = {
 		
 		favicons: {
 			dir:		'configs/favicons/',
+			allFiles:	'configs/favicons/*.json',
 			configFile:	'configs/favicons/config.json',
 			dataFile:	'configs/favicons/faviconData.json',
 			srcFile:	'configs/favicons/favicons.php'
