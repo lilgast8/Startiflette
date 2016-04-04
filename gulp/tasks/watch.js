@@ -24,7 +24,6 @@ gulp.task( 'watch', function() {
 		'!' + paths.env.dev + paths.assets.css.minAllFiles,
 		'!' + paths.env.dev + paths.assets.css.fonts.allFiles,
 		'!' + paths.env.dev + paths.assets.favicons.allFiles,
-		// '!' + paths.env.dev + paths.assets.svg.sprite.spriteFile,
 		'!' + paths.env.dev + paths.assets.svg.sprite.allFiles,
 		
 		/* Config */

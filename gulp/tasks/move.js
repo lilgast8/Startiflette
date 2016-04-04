@@ -44,7 +44,10 @@ gulp.task( 'move', function() {
 					paths.env.dev + paths.assets.sounds.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles
 				],
-				[ paths.env.dev + paths.assets.svg.sprite.spriteFile ],
+				[
+					paths.env.dev + paths.assets.svg.sprite.allFiles,
+					'!' + paths.env.dev + paths.emptyFiles
+				],
 				[
 					paths.env.dev + paths.assets.videos.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles

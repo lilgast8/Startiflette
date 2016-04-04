@@ -89,8 +89,7 @@ module.exports = {
 			
 			sprite: {
 				dir:		'assets/svg/_sprite/',
-				allFiles:	'assets/svg/_sprite/*.svg',
-				spriteFile:	'assets/svg/_sprite/sprite.svg'
+				allFiles:	'assets/svg/_sprite/*.svg'
 			}
 		},
 		
