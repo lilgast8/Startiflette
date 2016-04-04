@@ -1,12 +1,7 @@
 {
 	
-	"ENV":						"gaston",
+	"ENV":						"dev",
 	"ENVS":						{
-									"gaston": {
-										"fallbackresource":	"/gaston/",
-										"base_url":			"http://startiflette:8888/gaston/",
-										"base_url_cms":		"http://startiflette:8888/gaston-cms/"
-									},
 									"dev": {
 										"fallbackresource":	"/dev/",
 										"base_url":			"http://startiflette:8888/dev/",
