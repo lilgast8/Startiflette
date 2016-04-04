@@ -16,6 +16,11 @@ gulp.task( 'favicons', [ 'favicons:generate' ], function() {
 	// gulp.start( 'favicons:manage-markups' );
 	gulp.start( 'favicons:move' );
 	
+	/*if ( options.task == 'favicons' )
+		gulp.start( 'favicons:move' );
+	else
+		gulp.start( 'favicons:manage-markups' );*/
+	
 });
 
 
