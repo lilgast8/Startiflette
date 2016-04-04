@@ -10,7 +10,6 @@ options.subtask		= null;
 
 options.isProd		= null;
 options.env			= getEnv();
-console.log( 'OPTIONS.ENV:', options.env );
 options.device		= options.device === undefined ? 'desktop' : options.device;
 
 options.filePath	= null;
