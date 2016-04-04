@@ -76,14 +76,8 @@ gulp.task( 'watch', function() {
 		}
 		
 		/* Favicons */
-		// if ( favicons && ( ext == '.png' || ext == '.jpg' ) ) {
-		if ( favicons ) {
-			console.log( 'FAVICONS' );
-			
-			// if ( options.fileName != 'faviconData.json' )
-				taskname = 'favicons';
-				// console.log( 'launch favicons' );
-		}
+		if ( favicons )
+			taskname = 'favicons';
 		
 		/* JS */
 		else if ( ext == '.js' ) {
