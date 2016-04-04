@@ -23,14 +23,18 @@ gulp.task( 'watch', function() {
 		paths.env.dev + paths.assets.allFiles,
 		'!' + paths.env.dev + paths.assets.css.minAllFiles,
 		'!' + paths.env.dev + paths.assets.css.fonts.allFiles,
-		'!' + paths.env.dev + paths.assets.svg.sprite.spriteFile,
+		// '!' + paths.env.dev + paths.assets.svg.sprite.spriteFile,
+		'!' + paths.env.dev + paths.assets.svg.sprite.allFiles,
 		
 		/* Config */
-		paths.env.dev + paths.configs.allFiles
+		paths.env.dev + paths.configs.allFiles,
+		// paths.env.dev + paths.configs.allJsonFiles,
+		'!' + paths.env.dev + paths.configs.favicons.dataFile,
+		// paths.env.dev + paths.configs.favicons.allImgFiles
 		
 	], function(e) {
 		
-		var ext, desktop, mobile, shared, config, routes;
+		var ext, desktop, mobile, shared, config, favicons, routes;
 		var taskname = null;
 		
 		options.filePath	= e.path;
@@ -41,7 +45,9 @@ gulp.task( 'watch', function() {
 		mobile		= options.filePath.indexOf( 'mobile/' ) > -1 ? true : false;
 		shared		= options.filePath.indexOf( 'shared/' ) > -1 ? true : false;
 		config		= options.filePath.indexOf( 'config/' ) > -1 ? true : false;
+		favicons	= options.filePath.indexOf( 'favicons/' ) > -1 ? true : false;
 		routes		= options.filePath.indexOf( 'routes/' ) > -1 ? true : false;
+		console.log( 'favicons:', favicons, '—', options.filePath, '—', options.fileName, ext );
 		
 		//  options.device: used for SASS error notification
 		if ( desktop )
@@ -70,6 +76,15 @@ gulp.task( 'watch', function() {
 					paths.env.dev + paths.assets.css.app.desktopFile,
 					paths.env.dev + paths.assets.css.app.mobileFile
 				];
+		}
+		
+		/* Favicons */
+		// if ( favicons && ( ext == '.png' || ext == '.jpg' ) ) {
+		if ( favicons ) {
+			
+			// if ( options.fileName != 'faviconData.json' )
+				// taskname = 'favicons';
+				console.log( 'launch favicons' );
 		}
 		
 		/* JS */
@@ -130,6 +145,9 @@ gulp.task( 'watch', function() {
 		
 		/* Config */
 		paths.env.dev + paths.configs.allFiles,
+		// paths.env.dev + paths.configs.allJsonFiles,
+		'!' + paths.env.dev + paths.configs.favicons.dataFile,
+		// paths.env.dev + paths.configs.favicons.allImgFiles,
 		
 		/* Server */
 		paths.env.dev + paths.server.indexFile,

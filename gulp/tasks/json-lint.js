@@ -14,7 +14,7 @@ gulp.task( 'json-lint', function() {
 	if ( options.jsonSrcPath === null )
 		options.jsonSrcPath = [
 			paths.env.dev + paths.assets.json.allFiles,
-			paths.env.dev + paths.configs.allFiles
+			paths.env.dev + paths.configs.allJsonFiles
 		];
 	
 	
