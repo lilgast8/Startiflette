@@ -24,6 +24,10 @@ module.exports = {
 				
 				desktop: {
 					pages:		'assets/css/app/desktop/pages/'
+				},
+				
+				mobile: {
+					pages:		'assets/css/app/mobile/pages/'
 				}
 			},
 			
@@ -63,6 +67,12 @@ module.exports = {
 				desktop: {
 					views: {
 						pages: 'assets/js/app/desktop/views/pages/',
+					}
+				},
+				
+				mobile: {
+					views: {
+						pages: 'assets/js/app/mobile/views/pages/',
 					}
 				}
 			},

@@ -46,13 +46,13 @@ gulp.task( 'watch', function() {
 		favicons	= options.filePath.indexOf( 'configs/favicons/' ) > -1 ? true : false;
 		routes		= options.filePath.indexOf( 'routes/' ) > -1 ? true : false;
 		
-		//  options.device: used for SASS error notification
+		//  options.devicePath: used for SASS error notification
 		if ( desktop )
-			options.device = 'desktop';
+			options.devicePath = 'desktop';
 		else if ( mobile )
-			options.device = 'mobile';
+			options.devicePath = 'mobile';
 		else if ( shared )
-			options.device = 'shared';
+			options.devicePath = 'shared';
 		
 		
 		/* htaccess */

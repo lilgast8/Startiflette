@@ -38,7 +38,7 @@ gulp.task( 'sass:dev', [ 'delete' ], function() {
 		}) )
 		.on( 'error', function(error) {
 			console.log( error.message );
-			return notify().write( options.device + ': ' + path.basename( error.message ) );
+			return notify().write( options.devicePath + ': ' + path.basename( error.message ) );
 		} )
 		.pipe( rename( {suffix : '.min'} ) )
 		.pipe( gulp.dest( paths.env.dev + paths.assets.css.dir ) );

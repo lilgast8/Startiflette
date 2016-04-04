@@ -12,8 +12,9 @@ options.env			= getEnv();
 
 options.imageMin	= false;
 
-options.device		= null;
+options.device		= options.device === undefined ? 'desktop' : options.device;
 
+options.devicePath	= null;
 options.cssSrcPath	= null;
 options.jsSrcPath	= null;
 options.jsonSrcPath	= null;

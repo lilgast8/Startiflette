@@ -65,13 +65,13 @@ gulp.task( 'new-page', function() {
 			
 			// css
 			createFile( '_page-name.scss',
-						paths.env.dev + paths.assets.css.app.desktop.pages + cssFileName,
+						paths.env.dev + paths.assets.css.app[ options.device ].pages + cssFileName,
 						[ 'PAGE NAME', 'pageClassName' ],
 						[ fileNameUpperCase, cssClassName ] );
 			
 			// php view
 			createFile( 'page-name-view.php',
-						paths.env.dev + paths.server.views.desktop.pages + phpFileName,
+						paths.env.dev + paths.server.views[ options.device ].pages + phpFileName,
 						[ 'Page name', 'pageClassName', 'Page name' ],
 						[ fileNameCapitalize, cssClassName, fileNameCapitalize ] );
 			
@@ -83,7 +83,7 @@ gulp.task( 'new-page', function() {
 			
 			// js
 			createFile( 'PageName.js',
-						paths.env.dev + paths.assets.js.app.desktop.views.pages + jsFileName,
+						paths.env.dev + paths.assets.js.app[ options.device ].views.pages + jsFileName,
 						[ 'STF', 'PageName' ],
 						[ currentJsAppName, jsClassName ] );
 		}
@@ -114,10 +114,16 @@ function createFile( file, destFilePath, aStringToReplace, aNewString ) {
 			destFilePathTemp	= destFilePath.replace( 'LANG', lang );
 			dataTemp			= data.replace( '/ LANG', ' / ' + lang );
 			
-			fs.writeFileSync( destFilePathTemp, dataTemp, 'utf8' );
+			if ( !fs.existsSync( destFilePathTemp ) )
+				fs.writeFileSync( destFilePathTemp, dataTemp, 'utf8' );
+			else {
+				console.log( 'WARNING!: ' + destFilePathTemp + ' file wasn\'t created because it already exists.' );
+			}
 		}
 	}
-	else
+	else if ( !fs.existsSync( destFilePath ) )
 		fs.writeFileSync( destFilePath, data, 'utf8' );
+	else
+		console.log( 'WARNING!: ' + destFilePath + ' file wasn\'t created because it already exists.' );
 	
 }
