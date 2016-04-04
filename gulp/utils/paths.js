@@ -113,11 +113,10 @@ module.exports = {
 		},
 		
 		favicons: {
-			dir:			'configs/favicons/',
-			allImgFiles:	'configs/favicons/*[.png|.jpg]',
-			configFile:		'configs/favicons/config.json',
-			dataFile:		'configs/favicons/faviconData.json',
-			srcFile:		'configs/favicons/favicons.php'
+			dir:		'configs/favicons/',
+			configFile:	'configs/favicons/config.json',
+			dataFile:	'configs/favicons/faviconData.json',
+			srcFile:	'configs/favicons/favicons.php'
 		},
 		
 		routes: {

@@ -28,9 +28,7 @@ gulp.task( 'watch', function() {
 		
 		/* Config */
 		paths.env.dev + paths.configs.allFiles,
-		// paths.env.dev + paths.configs.allJsonFiles,
 		'!' + paths.env.dev + paths.configs.favicons.dataFile,
-		// paths.env.dev + paths.configs.favicons.allImgFiles
 		
 	], function(e) {
 		
@@ -45,7 +43,7 @@ gulp.task( 'watch', function() {
 		mobile		= options.filePath.indexOf( 'mobile/' ) > -1 ? true : false;
 		shared		= options.filePath.indexOf( 'shared/' ) > -1 ? true : false;
 		config		= options.filePath.indexOf( 'config/' ) > -1 ? true : false;
-		favicons	= options.filePath.indexOf( 'favicons/' ) > -1 ? true : false;
+		favicons	= options.filePath.indexOf( 'configs/favicons/' ) > -1 ? true : false;
 		routes		= options.filePath.indexOf( 'routes/' ) > -1 ? true : false;
 		console.log( 'favicons:', favicons, '—', options.filePath, '—', options.fileName, ext );
 		
@@ -145,9 +143,7 @@ gulp.task( 'watch', function() {
 		
 		/* Config */
 		paths.env.dev + paths.configs.allFiles,
-		// paths.env.dev + paths.configs.allJsonFiles,
 		'!' + paths.env.dev + paths.configs.favicons.dataFile,
-		// paths.env.dev + paths.configs.favicons.allImgFiles,
 		
 		/* Server */
 		paths.env.dev + paths.server.indexFile,
