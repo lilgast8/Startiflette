@@ -33,6 +33,9 @@ gulp.task( 'prod', [ 'delete' ], function() {
 	gulp.start( 'prod:move' );
 	
 } );
+// gulp.task( 'prod', function() {
+// 	console.log( 'PROD' );
+// } );
 
 gulp.task( 'prod:move', [
 	'robots',

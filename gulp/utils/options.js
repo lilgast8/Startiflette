@@ -3,17 +3,18 @@ var paths	= require( '../utils/paths' );
 
 
 
-options.task		= options._[0] === undefined ? 'default' : options._[0];
-options.subtask		= null;
-options.filePath	= null;
-options.fileName	= null;
-
-options.env			= getEnv();
-
 options.imageMin	= false;
 
+options.task		= options._[0] === undefined ? 'default' : options._[0];
+options.subtask		= null;
+
+options.isProd		= null;
+options.env			= getEnv();
+console.log( 'OPTIONS.ENV:', options.env );
 options.device		= options.device === undefined ? 'desktop' : options.device;
 
+options.filePath	= null;
+options.fileName	= null;
 options.devicePath	= null;
 options.cssSrcPath	= null;
 options.jsSrcPath	= null;
@@ -26,25 +27,29 @@ options.movePath	= null;
 
 
 function getEnv() {
-	var environment;
+	var env;
+	var envTemp = options.env;
 	
-	if ( options.task == 'init' || options.task == 'default' )
-		environment = 'dev';
+	if ( envTemp == 'dev' || options.task == 'init' || options.task == 'default' ) {
+		var config	= require( '../../' + paths.env.dev + paths.configs.config.configFile );
+		env			= config.ENV;
+		
+		options.isProd = false;
+	}
 	
 	else {
 		var config = require( '../../' + paths.env.dev + paths.configs.config.configFile );
 		
-		for ( var env in config.ENVS ) {
-			if ( options[ env ] )
-				environment = env;
-		}
+		if ( envTemp == 'preprod_local' || envTemp == 'preprod' || envTemp == 'prod' )
+			env =  envTemp;
+		else
+			env =  'prod';
 		
-		if ( environment === undefined )
-			environment = 'preprod_local';
+		options.isProd = true;
 	}
 	
 	
-	return environment;
+	return env;
 }
 
 

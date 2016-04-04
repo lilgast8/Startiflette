@@ -35,7 +35,7 @@ RewriteRule .* %{REQUEST_URI}? [R=301,L]
 # ------------------------ #
 
 DirectoryIndex index.php
-FallbackResource /dev/index.php
+FallbackResource /gaston/index.php
 
 
 
