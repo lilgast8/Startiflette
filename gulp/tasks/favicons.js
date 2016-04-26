@@ -42,10 +42,9 @@ gulp.task( 'favicons:generate', [ 'delete' ], function( done ) {
 		design:			{
 			
 			ios: {
-				// masterPicture:		{
-				// 	type:	'url',
-					// url:	paths.env.dev + paths.assets.favicons.dir + config.ios.url
-				// },
+				master_picture: {
+					content:		paths.env.dev + paths.configs.favicons.dir + config.ios.url
+				},
 				pictureAspect:		'backgroundAndMargin',
 				backgroundColor:	 config.ios.bg,
 				margin:				'28%'
@@ -54,20 +53,18 @@ gulp.task( 'favicons:generate', [ 'delete' ], function( done ) {
 			desktopBrowser: {},
 			
 			windows: {
-				// masterPicture:		{
-				// 	type:	'url',
-				// 	url:	paths.env.dev + paths.assets.favicons.dir + config.windows.url
-				// },
+				master_picture: {
+					content:		paths.env.dev + paths.configs.favicons.dir + config.windows.url
+				},
 				pictureAspect:		'noChange',
 				backgroundColor:	config.windows.bg,
 				onConflict:			'override'
 			},
 			
 			androidChrome: {
-				// masterPicture:		{
-				// 	type:	'url',
-				// 	url:	paths.env.dev + paths.assets.favicons.dir + config.android.url
-				// },
+				master_picture: {
+					content: 		paths.env.dev + paths.configs.favicons.dir + config.android.url
+				},
 				pictureAspect:		'backgroundAndMargin',
 				margin:				'20%',
 				backgroundColor:	config.android.bg,
