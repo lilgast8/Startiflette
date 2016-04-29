@@ -37,8 +37,8 @@ gulp.task( 'sass:dev', [ 'delete' ], function() {
 			compass:			true,
 			'sourcemap=none':	true
 		}) )
-		.on( 'error', function(error) {
-			gutil.color.red( error.message );
+		.on( 'error', function( error ) {
+			console.log( gutil.colors.red( error.message ) );
 			return notify().write( options.devicePath + ': ' + path.basename( error.message ) );
 		} )
 		.pipe( rename( {suffix : '.min'} ) )

@@ -46,7 +46,7 @@ gulp.task( 'svg:dev', [ 'delete' ], function() {
 		.pipe( plumber() )
 		.pipe( svgSprite( config ) )
 		.on( 'error', function( error ) {
-			gutil.color.red( error );
+			console.log( gutil.colors.red( error ) );
 		})
 		.pipe( gulp.dest( paths.env.dev + paths.assets.svg.sprite.dir ) );
 	

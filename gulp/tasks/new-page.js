@@ -22,19 +22,19 @@ gulp.task( 'new-page', function() {
 			{
 				type:		'input',
 				name:		'pageName',
-				message:	gutil.color.green( 'Name of the new page:' ),
+				message:	gutil.colors.green( 'Name of the new page:' ),
 				default:	DEFAULT_NAME
 			},
 			{
 				type:		'input',
 				name:		'shortPageName',
-				message:	gutil.color.green( 'Short name of the new page:' ),
+				message:	gutil.colors.green( 'Short name of the new page:' ),
 				default:	SHORT_DEFAULT_NAME
 			},
 			{
 				type:		'confirm',
 				name:		'createNewPage',
-				message:	gutil.color.green( 'Create new page?' )
+				message:	gutil.colors.green( 'Create new page?' )
 			}
 		], function( answers ) {
 			
@@ -118,13 +118,13 @@ function createFile( file, destFilePath, aStringToReplace, aNewString ) {
 			if ( !fs.existsSync( destFilePathTemp ) )
 				fs.writeFileSync( destFilePathTemp, dataTemp, 'utf8' );
 			else {
-				gutil.color.red( 'WARNING!: ' + destFilePathTemp + ' file wasn\'t created because it already exists.' );
+				console.log( gutil.colors.red( 'WARNING!: ' + destFilePathTemp + ' file wasn\'t created because it already exists.' ) );
 			}
 		}
 	}
 	else if ( !fs.existsSync( destFilePath ) )
 		fs.writeFileSync( destFilePath, data, 'utf8' );
 	else
-		gutil.color.red( 'WARNING!: ' + destFilePath + ' file wasn\'t created because it already exists.' );
+		console.log( gutil.colors.red( 'WARNING!: ' + destFilePath + ' file wasn\'t created because it already exists.' ) );
 	
 }
