@@ -10,7 +10,6 @@ options.subtask		= null;
 
 options.isProd		= null;
 options.env			= getEnv();
-console.log( 'ENV:', options.env, 'isProd:', options.isProd );
 options.device		= options.device === undefined ? 'desktop' : options.device;
 
 options.filePath	= null;
@@ -30,9 +29,8 @@ function getEnv() {
 	var env;
 	var envTemp = options.env;
 	
-	// if ( envTemp == 'dev' || options.task == 'init' || options.task == 'default' ) {
 	// dev
-	if ( envTemp != 'preprod-local' && envTemp != 'preprod' || envTemp != 'prod' || options.task == 'init' || options.task == 'default' ) {
+	if ( envTemp != 'preprod-local' && envTemp != 'preprod' && envTemp != 'prod' || options.task == 'init' || options.task == 'default' ) {
 		var config	= require( '../../' + paths.env.dev + paths.configs.config.configFile );
 		env			= config.ENV;
 		
