@@ -37,7 +37,7 @@
     "gulp-uglify": "^1.0.2",
     "imagemin-jpeg-recompress": "^4.3.0",
     "imagemin-pngquant": "^4.2.0",
-    "inquirer": "^0.10.0",
+    "inquirer": "^0.10.1",
     "jshint-stylish": "^1.0.0",
     "minimist": "^1.1.0",
     "path": "^0.4.9",
