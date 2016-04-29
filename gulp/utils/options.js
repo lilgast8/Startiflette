@@ -26,13 +26,14 @@ options.movePath	= null;
 
 
 function getEnv() {
+	var config		= require( '../../' + paths.env.dev + paths.configs.config.configFile );
+	var defaultEnv	= config.ENV;
+	var envTemp		= options.env;
 	var env;
-	var envTemp = options.env;
 	
 	// dev
-	if ( envTemp != 'preprod-local' && envTemp != 'preprod' && envTemp != 'prod' || options.task == 'init' || options.task == 'default' ) {
-		var config	= require( '../../' + paths.env.dev + paths.configs.config.configFile );
-		env			= config.ENV;
+	if ( envTemp == defaultEnv || options.task == 'init' || options.task == 'default' ) {
+		env = config.ENV;
 		
 		options.isProd = false;
 	}
