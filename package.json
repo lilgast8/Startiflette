@@ -35,6 +35,7 @@
     "gulp-ruby-sass": "^0.7.1",
     "gulp-svg-sprite": "^1.2.10",
     "gulp-uglify": "^1.0.2",
+    "gulp-util": "^3.0.7",
     "imagemin-jpeg-recompress": "^4.3.0",
     "imagemin-pngquant": "^4.2.0",
     "inquirer": "^0.10.1",
