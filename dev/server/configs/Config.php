@@ -16,7 +16,6 @@ class Config
 	static $HAS_LANG_LANDING	= null;
 	static $HAS_MOBILE_VERSION	= null;
 	static $FORCE_DEVICE		= null;
-	static $HAS_AJAX			= null;
 	static $GA_ID				= null;
 	
 	static $DEVICE				= null;
