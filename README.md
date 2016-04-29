@@ -2,7 +2,7 @@
 Starter + tartiflette = Startiflette, a SEO friendly starter for HTML5 + JS app with a Savoyard touch.
 
 
-##Starting
+## Starting
 
 1. Install gulp: `$ npm install -g gulp`
 2. Install NPM dependencies: `$ npm install`
@@ -17,12 +17,12 @@ Starter + tartiflette = Startiflette, a SEO friendly starter for HTML5 + JS app 
 
 
 
-##Environments
+## Environments
 
 There is 4 environments:
 
 * `dev`: used for development, the targeted directory is `dev/`.
-* `preprod_local`: used to test prod in local, the targeted directory is `www/`.
+* `preprod-local`: used to test prod in local, the targeted directory is `www/`.
 * `preprod`: used to test prod online, the targeted directory is `www/`.
 * `prod`: used for production, the targeted directory is `www/`.
 
@@ -31,8 +31,8 @@ There is 4 environments:
 ## Gulp
 
 Some tasks need the environment.
-The default environment is `preprod_local` for all tasks except for `init` & `default` for which is `dev`.
-You can force a specific environment by adding a flag before the gulp task name `gulp task --env`.
+The default environment is `prod` for all tasks except for `init` & `default` for which is the default environment.
+You can force a specific environment by adding a flag before the gulp task name `gulp task --env=ENV_NAME`.
 
 List of gulp tasks & what they do:
 
@@ -90,7 +90,7 @@ If, for some reasons, you need or want to execute a task separately, here is the
 ## Config
 Made the configurations in the `dev/configs/config/config.json` file.
 
-* ENV: @type {string} can be "dev", "preprod" or "prod"
+* ENV: @type {string}
 * BASE_URL_DEV: @type {string}
 * BASE_URL_PREPROD: @type {string}
 * BASE_URL_PROD: @type {string}
