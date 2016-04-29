@@ -5,6 +5,7 @@ var paths		= require( '../utils/paths' );
 var helpers		= require( '../utils/helpers' );
 
 var inquirer	= require( 'inquirer' );
+var gutil		= require( 'gulp-util' );
 var recursive	= require( 'recursive-readdir' );
 var fs			= require( 'fs' );
 
@@ -14,12 +15,19 @@ gulp.task( 'rename-js-app', function() {
 	
 	var currentJsAppName = helpers.getJsAppName();
 	
+	setTimeout( showDialogue.bind( this, currentJsAppName ), 0 );
+	
+} );
+
+
+
+function showDialogue( currentJsAppName ) {
 	inquirer.prompt(
 		[
 			{
 				type:		'input',
 				name:		'jsAppName',
-				message:	'Named the JS app:',
+				message:	gutil.colors.green( 'Named the JS app:' ),
 				default:	currentJsAppName
 			},
 			{
@@ -48,9 +56,7 @@ gulp.task( 'rename-js-app', function() {
 			
 		}
 	);
-	
-} );
-
+}
 
 
 function renameApp( filePath, currentJsAppName, newJsAppName, isInitFile ) {
