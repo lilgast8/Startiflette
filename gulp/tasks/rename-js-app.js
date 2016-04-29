@@ -33,7 +33,7 @@ function showDialogue( currentJsAppName ) {
 			{
 				type:		'confirm',
 				name:		'namedJsApp',
-				message:	'Rename JS app?'
+				message:	gutil.colors.green( 'Rename JS app?' )
 			}
 		], function( answers ) {
 			
