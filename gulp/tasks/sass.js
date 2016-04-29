@@ -5,6 +5,7 @@ var options	= require( '../utils/options' );
 var paths	= require( '../utils/paths' );
 
 var plumber	= require( 'gulp-plumber' );
+var gutil	= require( 'gulp-util' );
 var sass	= require( 'gulp-ruby-sass' );
 var notify	= require( 'gulp-notify' );
 var rename	= require( 'gulp-rename' );
@@ -37,7 +38,7 @@ gulp.task( 'sass:dev', [ 'delete' ], function() {
 			'sourcemap=none':	true
 		}) )
 		.on( 'error', function(error) {
-			console.log( error.message );
+			gutil.color.red( error.message );
 			return notify().write( options.devicePath + ': ' + path.basename( error.message ) );
 		} )
 		.pipe( rename( {suffix : '.min'} ) )

@@ -4,8 +4,8 @@ var options		= require( '../utils/options' );
 var paths		= require( '../utils/paths' );
 var helpers		= require( '../utils/helpers' );
 
-var inquirer	= require( 'inquirer' );
 var gutil		= require( 'gulp-util' );
+var inquirer	= require( 'inquirer' );
 var recursive	= require( 'recursive-readdir' );
 var fs			= require( 'fs' );
 

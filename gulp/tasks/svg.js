@@ -4,6 +4,7 @@ var options		= require( '../utils/options' );
 var paths		= require( '../utils/paths' );
 
 var plumber		= require( 'gulp-plumber' );
+var gutil		= require( 'gulp-util' );
 var svgSprite	= require( 'gulp-svg-sprite' );
 
 
@@ -45,7 +46,7 @@ gulp.task( 'svg:dev', [ 'delete' ], function() {
 		.pipe( plumber() )
 		.pipe( svgSprite( config ) )
 		.on( 'error', function( error ) {
-			console.log( error );
+			gutil.color.red( error );
 		})
 		.pipe( gulp.dest( paths.env.dev + paths.assets.svg.sprite.dir ) );
 	

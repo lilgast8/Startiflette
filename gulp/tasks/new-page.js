@@ -4,6 +4,7 @@ var options		= require( '../utils/options' );
 var paths		= require( '../utils/paths' );
 var helpers		= require( '../utils/helpers' );
 
+var gutil		= require( 'gulp-util' );
 var inquirer	= require( 'inquirer' );
 var fs			= require( 'fs' );
 
@@ -21,19 +22,19 @@ gulp.task( 'new-page', function() {
 			{
 				type:		'input',
 				name:		'pageName',
-				message:	'Name of the new page:',
+				message:	gutil.color.green( 'Name of the new page:' ),
 				default:	DEFAULT_NAME
 			},
 			{
 				type:		'input',
 				name:		'shortPageName',
-				message:	'Short name of the new page:',
+				message:	gutil.color.green( 'Short name of the new page:' ),
 				default:	SHORT_DEFAULT_NAME
 			},
 			{
 				type:		'confirm',
 				name:		'createNewPage',
-				message:	'Create new page?'
+				message:	gutil.color.green( 'Create new page?' )
 			}
 		], function( answers ) {
 			
@@ -117,13 +118,13 @@ function createFile( file, destFilePath, aStringToReplace, aNewString ) {
 			if ( !fs.existsSync( destFilePathTemp ) )
 				fs.writeFileSync( destFilePathTemp, dataTemp, 'utf8' );
 			else {
-				console.log( 'WARNING!: ' + destFilePathTemp + ' file wasn\'t created because it already exists.' );
+				gutil.color.red( 'WARNING!: ' + destFilePathTemp + ' file wasn\'t created because it already exists.' );
 			}
 		}
 	}
 	else if ( !fs.existsSync( destFilePath ) )
 		fs.writeFileSync( destFilePath, data, 'utf8' );
 	else
-		console.log( 'WARNING!: ' + destFilePath + ' file wasn\'t created because it already exists.' );
+		gutil.color.red( 'WARNING!: ' + destFilePath + ' file wasn\'t created because it already exists.' );
 	
 }
