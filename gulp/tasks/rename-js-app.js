@@ -54,6 +54,8 @@ function showDialogue( currentJsAppName ) {
 				
 			});
 			
+			console.log( gutil.colors.cyan( 'App renamed from ' ), gutil.colors.bold( gutil.colors.magenta( currentJsAppName ) ), gutil.colors.cyan( ' to ' ), gutil.colors.bold( gutil.colors.magenta( newJsAppName ) ) );
+			
 		}
 	);
 }
