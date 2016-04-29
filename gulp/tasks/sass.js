@@ -33,6 +33,7 @@ gulp.task( 'sass:dev', [ 'delete' ], function() {
 		.pipe( plumber() )
 		.pipe( sass({
 			style:				'compressed',
+			precision:			3,
 			// style:				'expanded',
 			compass:			true,
 			'sourcemap=none':	true
