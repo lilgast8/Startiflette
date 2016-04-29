@@ -47,5 +47,16 @@ STF.Utils.DOM = ( function( window ) {
 	};
 	
 	
+	window.setTranslate = function( $obj, x, y ) {
+		x = x === null ? 0 : x;
+		y = y === null ? 0 : y;
+		
+		if ( STF.Config.HAS_TRANSFORMS_3D )
+			$obj[0].style[ STF.Config.TRANSFORM ] = 'translate3d(' + x + 'px, ' + y + 'px, 0px)';
+		else
+			$obj[0].style[ STF.Config.TRANSFORM ] = 'translate(' + x + 'px, ' + y + 'px)';
+	};
+	
+	
 } ) ( window );
 
