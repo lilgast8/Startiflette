@@ -118,7 +118,7 @@ class Path
 		$jsFiles	= $this->config->getJsFilesFile();
 		$listFiles	= '';
 		
-		if ( Config::$ENV == 'dev' ) {
+		if ( Config::$ENV != 'preprod-local' || Config::$ENV != 'preprod' || Config::$ENV != 'prod' ) {
 			$files = $jsFiles->$listName->files;
 			
 			foreach ( $files as $filePath ) {

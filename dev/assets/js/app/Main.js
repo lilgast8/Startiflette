@@ -33,13 +33,13 @@ STF.Main = ( function( window ) {
 	
 	var _routesLoaded = function() {
 		/* Debug */
-		// if ( STF.Config.ENV == 'dev' || STF.Config.ENV == 'preprod_local' ) // FPS stats
+		// if ( STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' ) // FPS stats
 		// 	STF.Utils.FPSStats.init();
 		
-		// if ( STF.Config.ENV == 'dev' || STF.Config.ENV == 'preprod_local' ) // memory stats
+		// if ( STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' ) // memory stats
 		// 	STF.Utils.MemoryStats.init();
 		
-		// if ( STF.Config.ENV == 'dev' || STF.Config.ENV == 'preprod_local' ) // datGUI
+		// if ( STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' ) // datGUI
 		// 	STF.Utils.DatGUI.init();
 		
 		

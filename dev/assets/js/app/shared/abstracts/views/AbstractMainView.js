@@ -109,7 +109,7 @@ STF.AbstractMainView = ( function( window ) {
 	
 	
 	var _raf = function() {
-		// if ( STF.Config.ENV == 'dev' || STF.Config.ENV == 'preprod_local' )
+		// if ( STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
 		// 	STF.Utils.FPSStats.begin();
 		
 		
@@ -120,7 +120,7 @@ STF.AbstractMainView = ( function( window ) {
 		_rafCurrentPage.call( this );
 		
 		
-		// if ( STF.Config.ENV == 'dev' || STF.Config.ENV == 'preprod_local' )
+		// if ( STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
 		// 	STF.Utils.FPSStats.end();
 	};
 	
