@@ -20,8 +20,8 @@ gulp.task( 'image-min', [ 'delete' ], function() {
 		.pipe( imagemin({
 			use:	[
 						jpegRecompress({
-							min: 60,
-							max: 60
+							min: 80,
+							max: 80
 						}),
 						
 						pngquant(/*{

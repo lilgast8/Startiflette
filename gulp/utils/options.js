@@ -3,7 +3,7 @@ var paths	= require( '../utils/paths' );
 
 
 
-options.imageMin	= false;
+options.imageMin	= true;
 
 options.task		= options._[0] === undefined ? 'default' : options._[0];
 options.subtask		= null;
