@@ -1,6 +1,6 @@
 {
 	
-	"ENV":						"dev",
+	"ENV":						"gaston",
 	"ENVS":						{
 									"gaston": {
 										"fallbackresource":	"/dev/",
@@ -12,7 +12,7 @@
 										"base_url":			"http://startiflette:8888/dev/",
 										"base_url_cms":		"http://startiflette:8888/cms/"
 									},
-									"preprod_local": {
+									"preprod-local": {
 										"fallbackresource":	"/www/",
 										"base_url":			"http://startiflette:8888/www/",
 										"base_url_cms":		"http://startiflette:8888/cms/"
