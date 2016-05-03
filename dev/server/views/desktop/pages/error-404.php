@@ -1,6 +1,6 @@
 
 <!-- 404 error -->
-<section id="page-content" class="error404">
+<section id="page" class="error404">
 	
 	<br><br><br>
 	<?php echo Contents::$datas->error404->title; ?><br>

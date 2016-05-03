@@ -1,6 +1,6 @@
 
 <!-- Legals -->
-<section id="page-content" class="legals">
+<section id="page" class="legals">
 	
 	<div class="logo">
 		<img src="<?php echo $main->path->url->img; ?>logos/LOGO.JPG" alt="Logo" />

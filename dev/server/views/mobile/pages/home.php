@@ -1,6 +1,6 @@
 
 <!-- Home -->
-<section id="page-content" class="home">
+<section id="page" class="home">
 	
 	<br><br><br>
 	<?php echo Contents::$datas->home->title; ?><br>

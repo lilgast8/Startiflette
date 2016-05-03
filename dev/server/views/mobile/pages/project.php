@@ -1,6 +1,6 @@
 
 <!-- Project -->
-<section id="page-content" class="project">
+<section id="page" class="project">
 	
 	<br><br><br>
 	<?php echo Contents::$datas->project->title; ?><br>

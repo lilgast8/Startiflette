@@ -1,6 +1,6 @@
 
 <!-- About -->
-<section id="page-content" class="about">
+<section id="page" class="about">
 	
 	<br><br><br>
 	<?php echo Contents::$datas->about->title; ?><br>

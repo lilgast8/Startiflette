@@ -38,7 +38,7 @@ STF.AbstractView = ( function( window ) {
 	AbstractView.prototype.initDOM = function() {
 		// console.log('AbstractView.initDOM()');
 		
-		this.$page = $( document.getElementById( 'page-content' ) );
+		this.$page = $( document.getElementById( 'page' ) );
 	};
 	
 	

@@ -1,6 +1,6 @@
 
 <!-- Page name -->
-<section id="page-content" class="pageClassName">
+<section id="page" class="pageClassName">
 	
 	Page name
 	
