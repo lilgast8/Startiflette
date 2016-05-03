@@ -5,6 +5,11 @@
 		"className"	: "AltContent"
 	},
 	
+	"staticGl": {
+		"fileName"	: "static-global",
+		"className"	: "StaticGlobalContent"
+	},
+	
 	"static": {
 		"fileName"	: "static",
 		"className"	: "StaticContent"

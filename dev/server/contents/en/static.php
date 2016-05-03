@@ -27,8 +27,6 @@ class StaticContent
 		
 		$static->tw->title		= "Titre Twitter";
 		$static->tw->desc		= "Desc Twitter";
-		$static->tw->id_site	= "@LilGast8";
-		$static->tw->id_creator	= "@LilGast8";
 		
 		
 		

@@ -98,7 +98,7 @@ class Contents
 		$langFilePath = Path::$FILE->contents . Lang::$LANG . '/' . $dirFile . $fileName . '.php';
 		
 		if ( !file_exists( $langFilePath ) )
-			include_once Path::$FILE->contents . 'global/' . $dirFile . $fileName . '.php';
+			include_once Path::$FILE->contents . 'shared/' . $dirFile . $fileName . '.php';
 		else
 			include_once $langFilePath;
 		

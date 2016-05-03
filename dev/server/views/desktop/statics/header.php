@@ -12,8 +12,8 @@
 	<meta name="description" content="<?php echo PagesController::$PAGE_INFOS->desc; ?>" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
-	<meta name="author" content="<?php echo Config::$CREDITS->author; ?>" />
-	<meta name="designer" content="<?php echo Config::$CREDITS->designer; ?>" />
+	<meta name="author" content="<?php echo Contents::$datas->staticGl->metas->author; ?>" />
+	<meta name="designer" content="<?php echo Contents::$datas->staticGl->metas->designer; ?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<?php
 	
