@@ -62,7 +62,7 @@ function showDialogue( currentJsAppName ) {
 
 
 function renameApp( filePath, currentJsAppName, newJsAppName, isInitFile ) {
-	var stringToReplace	= isInitFile ? currentJsAppName : currentJsAppName + '.';
+	var stringToReplace	= isInitFile ? currentJsAppName : currentJsAppName + '\\.';
 	var newString		= isInitFile ? newJsAppName : newJsAppName + '.';
 	
 	var data			= fs.readFileSync( filePath, 'utf8' );
