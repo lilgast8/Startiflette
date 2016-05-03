@@ -74,6 +74,11 @@ STF.Config = ( function( window ) {
 			this.DEVICE = this.FORCE_DEVICE;
 		else
 			this.DEVICE = Detectizr.device.type;
+		
+		
+		this.IS_DESKTOP			= this.DEVICE == 'desktop';
+		this.IS_TABLET			= this.DEVICE == 'tablet';
+		this.IS_MOBILE			= this.DEVICE == 'mobile';
 	};
 	
 	

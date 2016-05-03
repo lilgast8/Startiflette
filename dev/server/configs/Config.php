@@ -20,6 +20,9 @@ class Config
 	static $CREDITS				= null;
 	
 	static $DEVICE				= null;
+	static $IS_DESKTOP			= null;
+	static $IS_TABLET			= null;
+	static $IS_MOBILE			= null;
 	static $IS_OLD_BROWSER		= null;
 	
 	private $jsFiles			= null;
@@ -86,6 +89,11 @@ class Config
 			self::$DEVICE = 'tablet';
 		else if ( $desktop )
 			self::$DEVICE = 'desktop';
+		
+		
+		self::$IS_DESKTOP	= self::$DEVICE == 'desktop';
+		self::$IS_TABLET	= self::$DEVICE == 'tablet';
+		self::$IS_MOBILE	= self::$DEVICE == 'mobile';
 	}
 	
 	
