@@ -11,10 +11,10 @@
 			if ( $gaName == 'null' ) {
 		?>
 		ga( 'create', '<?php echo $gaId; ?>', 'auto' );
-		ga( 'send', 'pageview' );
+		ga( 'send', 'pageview', '<?php echo '/' . Router::$PAGE_URL->fullGa; ?>' );
 		<?php } else { ?>
 		ga( 'create', '<?php echo $gaId; ?>', 'auto', '<?php echo $gaName; ?>' );
-		ga( '<?php echo $gaName; ?>.send', 'pageview' );
+		ga( '<?php echo $gaName; ?>.send', 'pageview', '<?php echo '/' . Router::$PAGE_URL->fullGa; ?>' );
 		<?php
 			}
 		}

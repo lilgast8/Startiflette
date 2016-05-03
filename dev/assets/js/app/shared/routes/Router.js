@@ -81,6 +81,7 @@ STF.Router = ( function( window ) {
 		this.PAGE_URL.hash		= _getHashPageUrl.call( this );
 		this.PAGE_URL.params	= _getParamsPageUrl.call( this );
 		this.PAGE_URL.aParams	= this.PAGE_URL.params.split( '/' );
+		this.PAGE_URL.fullGA	= _getFullPageUrlGA.call( this );
 		
 		if ( isInit ) { // init
 			this.PAGE_URL.current	= null;
@@ -127,6 +128,14 @@ STF.Router = ( function( window ) {
 		
 		
 		return paramsPageUrl;
+	};
+	
+	
+	var _getFullPageUrlGA = function () {
+		var fullGA = this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
+		
+		
+		return fullGA;
 	};
 	
 	
@@ -325,9 +334,9 @@ STF.Router = ( function( window ) {
 		if ( STF.Config.ENV == 'prod' && Object.keys( STF.Config.GA_ID ).length > 0 ) {
 			for ( var gaName in STF.Config.GA_ID ) {
 				if ( gaName == 'null' )
-					ga( 'send', 'pageview', '/' + this.PAGE_URL.params );
+					ga( 'send', 'pageview', '/' + this.PAGE_URL.fullGA );
 				else
-					ga( gaName + '.send', 'pageview', '/' + this.PAGE_URL.params );
+					ga( gaName + '.send', 'pageview', '/' + this.PAGE_URL.fullGA );
 			}
 		}
 	};

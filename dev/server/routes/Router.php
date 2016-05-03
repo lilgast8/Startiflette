@@ -69,6 +69,7 @@ class Router
 		self::$PAGE_URL->aParams	= explode( '/', self::$PAGE_URL->params );
 		self::$PAGE_URL->current	= null;
 		self::$PAGE_URL->aCurrent	= null;
+		self::$PAGE_URL->fullGa		= $this->getFullPageUrlGA();
 	}
 	
 	
@@ -97,6 +98,15 @@ class Router
 		
 		
 		return $paramsPageUrl;
+	}
+	
+	
+	private function getFullPageUrlGA()
+	{
+		$fullGA = str_replace( Path::$URL->base, '', self::$PAGE_URL->full );
+		
+		
+		return $fullGA;
 	}
 	
 	
