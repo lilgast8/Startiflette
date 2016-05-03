@@ -13,6 +13,34 @@ STF.Config = ( function( window ) {
 		
 		this.CONFIG_FILE_PATH	= BASE_URL + 'configs/config/config.json';
 		
+		this.ENV				= null;
+		this.ENVS				= null;
+		this.ROUTES_FILES		= null;
+		this.ALL_LANG			= null;
+		this.HAS_LANG_LANDING	= null;
+		this.HAS_MOBILE_VERSION	= null;
+		this.FORCE_DEVICE		= null;
+		this.GA_ID				= null;
+		this.CREDITS			= null;
+		
+		this.DEVICE				= null;
+		this.IS_DESKTOP			= null;
+		this.IS_TABLET			= null;
+		this.IS_MOBILE			= null;
+		this.IS_OLD_BROWSER		= null;
+		
+		this.BROWSER			= null;
+		this.BROWSER_VERSION	= null;
+		this.DEVICE				= null;
+		this.IS_IE				= null;
+		
+		this.HAS_PUSHSTATE		= null;
+		this.TRANSFORM			= null;
+		this.HAS_TRANSFORMS		= null;
+		this.HAS_TRANSFORMS_3D	= null;
+		this.HAS_TRANSITIONS	= null;
+		this.HAS_ANIMATIONS		= null;
+		
 		this.aJsonFiles			= [
 			{
 				id:		'config',
