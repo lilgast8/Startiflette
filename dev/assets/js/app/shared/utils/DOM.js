@@ -30,6 +30,11 @@ STF.Utils.DOM = ( function( window ) {
 	};
 	
 	
+	window.resetClass = function( el ) {
+		el.className = '';
+	};
+	
+	
 	window.hasClass = function( el, classToCheck ) {
 		var hasClass;
 		
