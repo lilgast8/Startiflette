@@ -47,6 +47,7 @@ STF.Config = ( function( window ) {
 		_setDevice.call( this );
 		_setBrowser.call( this );
 		_setProperties.call( this );
+		_showCreditsLog.call( this );
 		
 		this.dispatch( this.E.INIT );
 	};
@@ -91,6 +92,16 @@ STF.Config = ( function( window ) {
 		this.HAS_TRANSFORMS_3D	= Modernizr.csstransforms3d;
 		this.HAS_TRANSITIONS	= Modernizr.csstransitions;
 		this.HAS_ANIMATIONS		= Modernizr.cssanimations;
+	};
+	
+	
+	var _showCreditsLog = function() {
+		console.log(
+			'%cmade by %c— ' + this.CREDITS.author + ' —%c ' + this.CREDITS.authorUrl,
+			'padding:8px 5px; color:' + this.CREDITS.color1 + '; line-height:25px;',
+			'padding:8px 15px; color:' + this.CREDITS.color2 + '; background-color:' + this.CREDITS.color3 + '; line-height:25px;',
+			'padding:8px 5px; color:' + this.CREDITS.color3 + '; line-height:25px;'
+		);
 	};
 	
 	

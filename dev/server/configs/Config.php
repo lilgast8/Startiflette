@@ -17,6 +17,7 @@ class Config
 	static $HAS_MOBILE_VERSION	= null;
 	static $FORCE_DEVICE		= null;
 	static $GA_ID				= null;
+	static $CREDITS				= null;
 	
 	static $DEVICE				= null;
 	static $IS_OLD_BROWSER		= null;

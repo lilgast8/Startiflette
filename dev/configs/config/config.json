@@ -35,6 +35,13 @@
 	"HAS_LANG_LANDING":			false,
 	"HAS_MOBILE_VERSION":		true,
 	"FORCE_DEVICE":				false,
-	"GA_ID":					{}
+	"GA_ID":					{},
+	"CREDITS":					{
+									"author":		"Gaston Bouchayer",
+									"authorUrl":	"www.gastonbouchayer.com",
+									"color1":		"#000",
+									"color2":		"#fff",
+									"color3":		"#fe7373"
+	}
 	
 }
