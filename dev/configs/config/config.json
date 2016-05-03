@@ -38,6 +38,7 @@
 	"GA_ID":					{},
 	"CREDITS":					{
 									"author":		"Gaston Bouchayer",
+									"designer":		"Gaston Bouchayer",
 									"authorUrl":	"www.gastonbouchayer.com",
 									"color1":		"#000",
 									"color2":		"#fff",
