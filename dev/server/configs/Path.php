@@ -41,7 +41,7 @@ class Path
 	{
 		if ( !Config::$HAS_MOBILE_VERSION )
 			$this->deviceDir = 'desktop/';
-		else if ( Config::$HAS_MOBILE_VERSION && ( Config::$DEVICE == 'desktop' || Config::$DEVICE == 'tablet' ) )
+		else if ( Config::$HAS_MOBILE_VERSION && ( Config::$IS_DESKTOP || Config::$IS_TABLET ) )
 			$this->deviceDir = 'desktop/';
 		else if ( Config::$HAS_MOBILE_VERSION && Config::$DEVICE == 'mobile' )
 			$this->deviceDir = 'mobile/';

@@ -106,7 +106,7 @@ STF.Video = ( function( window ) {
 	
 	
 	var _loadStart = function() {
-		if ( this.isFireLoadStart && !this.isLoadStart && MFC.Config.DEVICE == 'desktop' ) {
+		if ( this.isFireLoadStart && !this.isLoadStart && MFC.Config.IS_DESKTOP ) {
 			// console.log( '_loadStart' );
 			
 			this.isLoadStart = true;
@@ -117,7 +117,7 @@ STF.Video = ( function( window ) {
 	
 	
 	var _canPlay = function() {
-		if ( this.isFireCanPlay && !this.isCanPlay && MFC.Config.DEVICE == 'desktop' ) {
+		if ( this.isFireCanPlay && !this.isCanPlay && MFC.Config.IS_DESKTOP ) {
 			// console.log( '_canPlay' );
 			
 			this.isCanPlay	= true;
@@ -134,7 +134,7 @@ STF.Video = ( function( window ) {
 			
 			this.isCanPlayThrough = true;
 			
-			if ( MFC.Config.DEVICE == 'desktop' )
+			if ( MFC.Config.IS_DESKTOP )
 				this.dispatch( this.E.CAN_PLAY_THROUGH );
 		}
 	};
