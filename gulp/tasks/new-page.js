@@ -40,7 +40,7 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 					}
 					
 					else if ( helpers.checkSpecialChars( input ) ) {
-						console.log( gutil.colors.red( '\nWARNING!: Name should not contain any special characters or symbols! Use only alphanumeric characters.' ) )
+						console.log( gutil.colors.red( '\nWARNING!: Name should not contain any special characters or symbols! Use only alphanumeric characters.' ) );
 						return;
 					}
 					
@@ -62,7 +62,7 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 					}
 					
 					else if ( helpers.checkSpecialChars( input ) ) {
-						console.log( gutil.colors.red( '\nWARNING!: Name should not contain any special characters or symbols! Use only alphanumeric characters.' ) )
+						console.log( gutil.colors.red( '\nWARNING!: Name should not contain any special characters or symbols! Use only alphanumeric characters.' ) );
 						return;
 					}
 					
