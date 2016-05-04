@@ -39,7 +39,7 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 						return;
 					}
 					
-					else if ( checkSpecialChars( input ) ) {
+					else if ( helpers.checkSpecialChars( input ) ) {
 						console.log( gutil.colors.red( '\nWARNING!: Name should not contain any special characters or symbols! Use only alphanumeric characters.' ) )
 						return;
 					}
@@ -61,7 +61,7 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 						return;
 					}
 					
-					else if ( checkSpecialChars( input ) ) {
+					else if ( helpers.checkSpecialChars( input ) ) {
 						console.log( gutil.colors.red( '\nWARNING!: Name should not contain any special characters or symbols! Use only alphanumeric characters.' ) )
 						return;
 					}
@@ -132,25 +132,6 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 								[ currentJsAppName, jsClassName ] );
 		}
 	);
-}
-
-
-function checkSpecialChars( string ) {
-	var hasSpecialChars	= false;
-	var allowedChars	= [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ];
-	var char;
-	
-	for ( var i = 0; i < string.length; i++ ) {
-		char = string[ i ];
-		
-		if ( char != ' ' && allowedChars.indexOf( char.toLowerCase() ) < 0 ) {
-			hasSpecialChars = true;
-			
-			break;
-		}
-	}
-	
-	return hasSpecialChars;
 }
 
 
