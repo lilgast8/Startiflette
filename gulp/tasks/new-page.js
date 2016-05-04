@@ -112,19 +112,26 @@ function createFile( file, destFilePath, aStringToReplace, aNewString ) {
 	
 	
 	if ( file == 'page-name-content.php' ) { // necessary to create a file for each language
-		var lang, destFilePathTemp, dataTemp;
+		var lang, destFilePathTemp, destDirPath, dataTemp;
 		
 		for ( var i = 0; i < config.ALL_LANG.length; i++ ) {
 			lang = config.ALL_LANG[i];
 			
 			destFilePathTemp	= destFilePath.replace( 'LANG', lang );
+			destDirPath			= destFilePathTemp.split( '/pages/' )[0] + '/';
 			dataTemp			= data.replace( '/ LANG', ' / ' + lang );
+			
+			if ( !fs.existsSync( destDirPath ) ) {
+				fs.mkdirSync( destDirPath );
+				fs.mkdirSync( destDirPath + 'pages/' );
+				
+				console.log( gutil.colors.cyan( 'INFO: ' + destDirPath + ' directory was created because it didn\'t exist.' ) );
+			}
 			
 			if ( !fs.existsSync( destFilePathTemp ) )
 				fs.writeFileSync( destFilePathTemp, dataTemp, 'utf8' );
-			else {
+			else
 				console.log( gutil.colors.red( 'WARNING!: ' + destFilePathTemp + ' file wasn\'t created because it already exists.' ) );
-			}
 		}
 	}
 	
