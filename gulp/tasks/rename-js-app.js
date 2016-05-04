@@ -28,12 +28,29 @@ function showDialogue( currentJsAppName ) {
 				type:		'input',
 				name:		'jsAppName',
 				message:	gutil.colors.green( 'Named the JS app:' ),
-				default:	currentJsAppName
+				default:	currentJsAppName,
+				validate:	function( input ) {
+					var done = this.async();
+					
+					if ( input == currentJsAppName ) {
+						console.log( gutil.colors.red( '\nWARNING!: You need to provide a name!' ) );
+						return;
+					}
+					
+					else if ( helpers.checkSpecialChars( input, false ) ) {
+						console.log( gutil.colors.red( '\nWARNING!: Name should not contain any special characters, symbols or spaces! Use only alphanumeric characters.' ) );
+						return;
+					}
+					
+					else
+						done( true );
+				}
 			},
 			{
 				type:		'confirm',
 				name:		'namedJsApp',
-				message:	gutil.colors.green( 'Rename JS app?' )
+				message:	gutil.colors.green( 'Rename JS app?' ),
+				default:	false
 			}
 		], function( answers ) {
 			

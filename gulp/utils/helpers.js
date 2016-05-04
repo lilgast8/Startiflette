@@ -40,7 +40,7 @@ var helpers = {
 	},
 	
 	
-	checkSpecialChars: function( string ) {
+	checkSpecialChars: function( string, isSpacesAllowed ) {
 		var hasSpecialChars	= false;
 		var allowedChars	= [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ];
 		var char;
@@ -48,7 +48,8 @@ var helpers = {
 		for ( var i = 0; i < string.length; i++ ) {
 			char = string[ i ];
 			
-			if ( char != ' ' && allowedChars.indexOf( char.toLowerCase() ) < 0 ) {
+			if ( isSpacesAllowed && char != ' ' && allowedChars.indexOf( char.toLowerCase() ) < 0 ||
+				 !isSpacesAllowed && allowedChars.indexOf( char.toLowerCase() ) < 0 ) {
 				hasSpecialChars = true;
 				
 				break;
