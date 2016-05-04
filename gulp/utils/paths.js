@@ -149,6 +149,9 @@ module.exports = {
 		views: {
 			desktop: {
 				pages: 'server/views/desktop/pages/'
+			},
+			mobile: {
+				pages: 'server/views/mobile/pages/'
 			}
 		}
 	}
