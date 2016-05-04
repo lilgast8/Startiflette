@@ -34,7 +34,7 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 				validate:	function( input ) {
 					var done = this.async();
 					
-					if ( input == 'new page' ) {
+					if ( input == DEFAULT_NAME ) {
 						console.log( gutil.colors.red( '\nWARNING!: You need to provide a name!' ) );
 						return;
 					}
@@ -56,7 +56,7 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 				validate:	function( input ) {
 					var done = this.async();
 					
-					if ( input == 'n pa' ) {
+					if ( input == SHORT_DEFAULT_NAME ) {
 						console.log( gutil.colors.red( '\nWARNING!: You need to provide a short name!' ) );
 						return;
 					}
