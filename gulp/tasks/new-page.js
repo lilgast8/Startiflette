@@ -72,34 +72,34 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 			
 			
 			// css
-			createFile( '_page-name.scss',
-						paths.env.dev + paths.assets.css.app[ options.device ].pages + cssFileName,
-						[ 'PAGE NAME', 'pageClassName' ],
-						[ fileNameUpperCase, cssClassName ] );
+			manageFileCreation(	'_page-name.scss',
+								paths.env.dev + paths.assets.css.app[ options.device ].pages + cssFileName,
+								[ 'PAGE NAME', 'pageClassName' ],
+								[ fileNameUpperCase, cssClassName ] );
 			
 			// php view
-			createFile( 'page-name-view.php',
-						paths.env.dev + paths.server.views[ options.device ].pages + phpFileName,
-						[ 'Page name', 'pageClassName', 'Page name' ],
-						[ fileNameCapitalize, cssClassName, fileNameCapitalize ] );
+			manageFileCreation(	'page-name-view.php',
+								paths.env.dev + paths.server.views[ options.device ].pages + phpFileName,
+								[ 'Page name', 'pageClassName', 'Page name' ],
+								[ fileNameCapitalize, cssClassName, fileNameCapitalize ] );
 			
 			// php content
-			createFile( 'page-name-content.php',
-						paths.env.dev + paths.server.contents + 'LANG/pages/' + phpFileName,
-						[ 'PageNameContent', '$page', 'Page name' ],
-						[ phpContentClassName, phpContentVarName, fileNameCapitalize ] );
+			manageFileCreation(	'page-name-content.php',
+								paths.env.dev + paths.server.contents + 'LANG/pages/' + phpFileName,
+								[ 'PageNameContent', '$page', 'Page name' ],
+								[ phpContentClassName, phpContentVarName, fileNameCapitalize ] );
 			
 			// js
-			createFile( 'PageName.js',
-						paths.env.dev + paths.assets.js.app[ options.device ].views.pages + jsFileName,
-						[ 'STF', 'PageName' ],
-						[ currentJsAppName, jsClassName ] );
+			manageFileCreation(	'PageName.js',
+								paths.env.dev + paths.assets.js.app[ options.device ].views.pages + jsFileName,
+								[ 'STF', 'PageName' ],
+								[ currentJsAppName, jsClassName ] );
 		}
 	);
 }
 
 
-function createFile( file, destFilePath, aStringToReplace, aNewString ) {
+function manageFileCreation( file, destFilePath, aStringToReplace, aNewString ) {
 	var data	= fs.readFileSync( paths.env.base + file, 'utf8' );
 	var stringToReplace, newString;
 	
@@ -128,17 +128,20 @@ function createFile( file, destFilePath, aStringToReplace, aNewString ) {
 				console.log( gutil.colors.cyan( 'INFO: ' + destDirPath + ' directory was created because it didn\'t exist.' ) );
 			}
 			
-			if ( !fs.existsSync( destFilePathTemp ) )
-				fs.writeFileSync( destFilePathTemp, dataTemp, 'utf8' );
-			else
-				console.log( gutil.colors.red( 'WARNING!: ' + destFilePathTemp + ' file wasn\'t created because it already exists.' ) );
+			createFile( destFilePathTemp, dataTemp );
 		}
 	}
 	
-	else if ( !fs.existsSync( destFilePath ) ) // create file
+	else
+		createFile( destFilePath, data );
+	
+}
+
+
+function createFile( destFilePath, data ) {
+	if ( !fs.existsSync( destFilePath ) ) // create file
 		fs.writeFileSync( destFilePath, data, 'utf8' );
 	
 	else // if file already exists
 		console.log( gutil.colors.red( 'WARNING!: ' + destFilePath + ' file wasn\'t created because it already exists.' ) );
-	
 }
