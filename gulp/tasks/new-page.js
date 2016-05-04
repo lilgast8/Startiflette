@@ -17,6 +17,13 @@ gulp.task( 'new-page', function() {
 	var DEFAULT_NAME		= 'new page';
 	var SHORT_DEFAULT_NAME	= 'n pa';
 	
+	setTimeout( showDialogue.bind( this, DEFAULT_NAME, SHORT_DEFAULT_NAME ), 0 );
+	
+} );
+
+
+
+function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 	inquirer.prompt(
 		[
 			{
@@ -89,9 +96,7 @@ gulp.task( 'new-page', function() {
 						[ currentJsAppName, jsClassName ] );
 		}
 	);
-	
-} );
-
+}
 
 
 function createFile( file, destFilePath, aStringToReplace, aNewString ) {
@@ -122,9 +127,11 @@ function createFile( file, destFilePath, aStringToReplace, aNewString ) {
 			}
 		}
 	}
-	else if ( !fs.existsSync( destFilePath ) )
+	
+	else if ( !fs.existsSync( destFilePath ) ) // create file
 		fs.writeFileSync( destFilePath, data, 'utf8' );
-	else
+	
+	else // if file already exists
 		console.log( gutil.colors.red( 'WARNING!: ' + destFilePath + ' file wasn\'t created because it already exists.' ) );
 	
 }
