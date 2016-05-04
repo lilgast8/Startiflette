@@ -30,23 +30,49 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 				type:		'input',
 				name:		'pageName',
 				message:	gutil.colors.green( 'Name of the new page:' ),
-				default:	DEFAULT_NAME
+				default:	DEFAULT_NAME,
+				validate:	function( input ) {
+					var done = this.async();
+					
+					if ( input != 'new page' )
+						done( true );
+					
+					else {
+						console.log( gutil.colors.red( 'WARNING!: You need to provide a name!' ) );
+						return;
+					}
+				}
 			},
 			{
 				type:		'input',
 				name:		'shortPageName',
 				message:	gutil.colors.green( 'Short name of the new page:' ),
-				default:	SHORT_DEFAULT_NAME
+				default:	SHORT_DEFAULT_NAME,
+				validate:	function( input ) {
+					var done = this.async();
+					
+					if ( input != 'n pa' )
+						done( true );
+					
+					else {
+						console.log( gutil.colors.red( 'WARNING!: You need to provide a short name!' ) );
+						return;
+					}
+				}
 			},
 			{
 				type:		'confirm',
 				name:		'createNewPage',
-				message:	gutil.colors.green( 'Create new page?' )
+				message:	gutil.colors.green( 'Create new page?' ),
+				default:	false
 			}
 		], function( answers ) {
 			
-			if ( !answers.createNewPage )
+			if ( !answers.createNewPage ) {
+				console.log( gutil.colors.cyan( 'New files wasn\'t created.' ) );
+				
 				return;
+			}
 			
 			var currentJsAppName			= helpers.getJsAppName();
 			
