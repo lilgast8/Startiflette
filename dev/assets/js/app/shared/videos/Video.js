@@ -4,8 +4,8 @@ STF.Video = ( function( window ) {
 	'use strict';
 	
 	
-	function Video( idVideo, isFireLoadStart, isFireCanPlay, isFireCanPlayThrough ) {
-		MFC.AbstractView.call( this );
+	function Video( id, url, isFireLoadStart, isFireCanPlay, isFireCanPlayThrough ) {
+		STF.AbstractView.call( this );
 		
 		this.E = {
 			LOAD_START:			'loadStart',
@@ -15,7 +15,8 @@ STF.Video = ( function( window ) {
 			ENDED:				'ended'
 		};
 		
-		this.idVideo				= idVideo;
+		this.id						= id;
+		this.url					= url;
 		this.isFireLoadStart		= isFireLoadStart;
 		this.isFireCanPlay			= isFireCanPlay;
 		this.isFireCanPlayThrough	= isFireCanPlayThrough;
@@ -24,24 +25,20 @@ STF.Video = ( function( window ) {
 		this.isLoadStart			= false;
 		this.isCanPlay				= false;
 		this.isCanPlayThrough		= false;
-		
-		this.initElt();
 	}
 	
 	
-	Video.prototype				= Object.create( MFC.AbstractView.prototype );
+	Video.prototype				= Object.create( STF.AbstractView.prototype );
 	Video.prototype.constructor	= Video;
 	
 	
-	Video.prototype.setUrl = function( url ) {
-		this.$video[0].src = url;
+	Video.prototype.initDOM = function() {
+		this.$video = $( document.getElementById( this.id ) );
 	};
 	
 	
-	Video.prototype.initElt = function() {
-		this.$video = $( document.getElementById( this.idVideo ) );
-		
-		this.bindEvents();
+	Video.prototype.initEl = function() {
+		this.setUrl( null );
 	};
 	
 	
@@ -56,6 +53,14 @@ STF.Video = ( function( window ) {
 		this.$video.off( 'loadstart', $.proxy( _loadStart, this ) );
 		this.$video.off( 'canplay', $.proxy( _canPlay, this ) );
 		this.$video.off( 'canplaythrough', $.proxy( _canPlayThrough, this ) );
+	};
+	
+	
+	Video.prototype.setUrl = function( url ) {
+		if ( url !== null )
+			this.url = url;
+		
+		this.$video[0].src = this.url;
 	};
 	
 	
@@ -106,9 +111,7 @@ STF.Video = ( function( window ) {
 	
 	
 	var _loadStart = function() {
-		if ( this.isFireLoadStart && !this.isLoadStart && MFC.Config.IS_DESKTOP ) {
-			// console.log( '_loadStart' );
-			
+		if ( this.isFireLoadStart && !this.isLoadStart && STF.Config.IS_DESKTOP ) {
 			this.isLoadStart = true;
 			
 			this.dispatch( this.E.LOAD_START );
@@ -117,9 +120,7 @@ STF.Video = ( function( window ) {
 	
 	
 	var _canPlay = function() {
-		if ( this.isFireCanPlay && !this.isCanPlay && MFC.Config.IS_DESKTOP ) {
-			// console.log( '_canPlay' );
-			
+		if ( this.isFireCanPlay && !this.isCanPlay && STF.Config.IS_DESKTOP ) {
 			this.isCanPlay	= true;
 			this.duration	= this.$video[0].duration;
 			
@@ -130,11 +131,9 @@ STF.Video = ( function( window ) {
 	
 	var _canPlayThrough = function() {
 		if ( this.isFireCanPlayThrough && !this.isCanPlayThrough ) {
-			// console.log( '_canPlayThrough' );
-			
 			this.isCanPlayThrough = true;
 			
-			if ( MFC.Config.IS_DESKTOP )
+			if ( STF.Config.IS_DESKTOP )
 				this.dispatch( this.E.CAN_PLAY_THROUGH );
 		}
 	};
