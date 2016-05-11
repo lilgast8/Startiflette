@@ -2,21 +2,23 @@
 
 
 
-class HomeContent
+class HomeContent extends AbstractContent
 {
 	
-	public function getDatas()
+	public function setDatas()
 	{
-		
-		$home = new stdClass();
-		
-		
-		$home->title = "— Accueil —";
+		$d					= new stdClass();
 		
 		
+		$d->title			= "— Accueil —";
 		
-		return $home;
+		$d->infos			= new stdClass();
+		$d->infos->title	= 'Titre infos';
+		$d->infos->desc		= 'Description infos';
 		
+		
+		
+		$this->datas = $d;
 	}
 	
 }

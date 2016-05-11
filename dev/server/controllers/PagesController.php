@@ -3,6 +3,7 @@
 
 
 include_once 'server/controllers/AbstractViewController.php';
+include_once 'server/contents/AbstractContent.php';
 
 
 
@@ -16,7 +17,7 @@ class PagesController
 	
 	protected function __construct()
 	{
-		
+		$this->setTwig();
 	}
 	
 	
@@ -32,6 +33,15 @@ class PagesController
 			self::$instance = new self;
 		
 		return self::$instance;
+	}
+	
+	
+	private function setTwig()
+	{
+		$loader	= new Twig_Loader_Filesystem( Path::$FILE->viewsPage );
+		$this->twig	= new Twig_Environment( $loader, array(
+			// 'debug' => true,
+		) );
 	}
 	
 	
@@ -58,6 +68,8 @@ class PagesController
 		// echo $controllerClass;
 		
 		// $this->controller = new Home();
+		
+		
 		$this->controller = new $controllerClassName( self::$PAGE_INFOS->phpView );
 		
 		// print_r( $this->controller );
