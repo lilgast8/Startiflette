@@ -16,6 +16,9 @@ class AbstractViewController
 		$this->id = $id;
 		
 		$this->getStaticDatas();
+		$this->getDynamicDatas();
+		$this->getTemplate();
+		$this->renderView();
 	}
 	
 	
@@ -45,9 +48,9 @@ class AbstractViewController
 		$contentClassName	= ucfirst( PagesController::$PAGE_INFOS->phpView ) . 'Content';
 		$contentClass		= new $contentClassName();
 		
-		$this->content = $contentClass->getDatas();
+		$this->content		= $contentClass->getDatas();
 		
-		print_r( $this->content );
+		// print_r( $this->content );
 		// echo '<pre>';
 		// var_dump( $this->content );
 		// echo '</pre>';
@@ -78,13 +81,35 @@ class AbstractViewController
 	
 	protected function getTemplate()
 	{
-		
+		// require_once '/path/to/lib/Twig/Autoloader.php';
+		// Twig_Autoloader::register();
+
+		// $loader	= new Twig_Loader_Filesystem( Path::$FILE->contents );
+		$loader	= new Twig_Loader_Filesystem( Path::$FILE->viewsPage );
+		$this->twig	= new Twig_Environment( $loader, array(
+			// 'debug' => true,
+			// 'cache' => '/path/to/compilation_cache',
+			// 'cache' => Path::$FILE->viewsPage . 'pages-cache/'
+		) );
 	}
 	
 	
 	protected function renderView()
 	{
+		// print_r( Path::$FILE );
+		$template = $this->twig->loadTemplate( 'home.html.twig' );
 		
+		
+		$lang = array (
+			'ALL_LANG'		=> LANG::$ALL_LANG,
+			'MULTI_LANG'	=> LANG::$MULTI_LANG,
+			'DEFAULT_LANG'	=> LANG::$DEFAULT_LANG,
+			'LANG'			=> LANG::$LANG,
+		);
+		
+		echo $template->render( array( 'title' => 'Homepage', 'lang' => $lang ) );
+		// echo $template->render( array( 'title' => 'Title', 'lang' => $lang ) );
+		// $template->display( array( 'title' => 'Title', 'test' => 'title') );
 	}
 	
 }
