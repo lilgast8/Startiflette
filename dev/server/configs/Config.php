@@ -26,6 +26,7 @@ class Config
 	static $IS_OLD_BROWSER		= null;
 	
 	private $jsFiles			= null;
+	private $params				= null;
 	
 	
 	protected function __construct()
@@ -33,6 +34,8 @@ class Config
 		$this->setConfig();
 		$this->setDevice();
 		$this->setOldBrowser();
+		
+		$this->setParams();
 	}
 	
 	
@@ -127,6 +130,34 @@ class Config
 		
 		
 		return $this->jsFiles;
+	}
+	
+	
+	private function setParams()
+	{
+		$this->params = new stdClass();
+		
+		$this->params->ENV					= self::$ENV;
+		$this->params->ENVS					= self::$ENVS;
+		$this->params->ROUTES_FILES			= self::$ROUTES_FILES;
+		$this->params->ALL_LANG				= self::$ALL_LANG;
+		$this->params->HAS_LANG_LANDING		= self::$HAS_LANG_LANDING;
+		$this->params->HAS_MOBILE_VERSION	= self::$HAS_MOBILE_VERSION;
+		$this->params->FORCE_DEVICE			= self::$FORCE_DEVICE;
+		$this->params->GA_ID				= self::$GA_ID;
+		$this->params->CREDITS				= self::$CREDITS;
+		
+		$this->params->DEVICE				= self::$DEVICE;
+		$this->params->IS_DESKTOP			= self::$IS_DESKTOP;
+		$this->params->IS_TABLET			= self::$IS_TABLET;
+		$this->params->IS_MOBILE			= self::$IS_MOBILE;
+		$this->params->IS_OLD_BROWSER		= self::$IS_OLD_BROWSER;
+	}
+	
+	
+	public function getParams()
+	{
+		return $this->params;
 	}
 	
 }

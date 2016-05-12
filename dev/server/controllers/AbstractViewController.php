@@ -8,6 +8,7 @@ class AbstractViewController
 	protected static $instance;
 	
 	// static $STATIC = null;
+	private $content = array();
 	
 	
 	// protected function __construct()
@@ -18,14 +19,32 @@ class AbstractViewController
 		
 		$this->pagesController	= PagesController::getInstance();
 		
-		$this->content			= array();
+		$this->getParams();
 		
-		$this->getStaticGlobalDatas();
+		if ( Router::$CONTENT_TYPE == 'firstLoad' )
+			$this->getStaticGlobalDatas();
 		$this->getGlobalDatas();
 		$this->getStaticDatas();
 		$this->getDynamicDatas();
+		
 		$this->getTemplate();
 		$this->renderView();
+		
+		// print_r( $this->content );
+	}
+	
+	
+	private function getParams()
+	{
+		// $configParams = Config::getParams();
+		
+		$this->config = Config::getInstance();
+		$configParams = new stdClass();
+		$configParams->Config = $this->config->getParams();
+		
+		// print_r( $configParams );
+		
+		$this->content	=  array_merge ( $this->content, (array) $configParams );
 	}
 	
 	
@@ -50,28 +69,19 @@ class AbstractViewController
 	
 	private function getGlobalDatas()
 	{
-		include_once Path::$FILE->contents . Lang::$LANG . '/global.php';
+		$phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/global.php';
+		$contentClassName	= 'GlobalContent';
 		
-		$contentClass	= new GlobalContent();
-		
-		$this->content	=  array_merge ( $this->content, (array) $contentClass->getDatas() );
+		$this->getContent( $phpFilePath, $contentClassName );
 	}
 	
 	
 	private function getStaticDatas()
 	{
-		// include_once Path::$FILE->contents . Lang::$LANG . '/pages/' . PagesController::$PAGE_INFOS->phpView . '.php';
-		// echo Path::$FILE->contents . Lang::$LANG . '/' . $this->type . 's/' . $this->id . '.php <br>';
-		include_once Path::$FILE->contents . Lang::$LANG . '/' . $this->type . 's/' . $this->id . '.php';
-		
-		// $contentClassName	= ucfirst( PagesController::$PAGE_INFOS->phpView ) . 'Content';
+		$phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/' . $this->type . 's/' . $this->id . '.php';
 		$contentClassName	= ucfirst( $this->id ) . 'Content';
-		$contentClass		= new $contentClassName();
 		
-		$this->content		=  array_merge ( $this->content, (array) $contentClass->getDatas() );
-		
-		// print_r( $this->content );
-		// exit();
+		$this->getContent( $phpFilePath, $contentClassName );
 	}
 	
 	
@@ -83,9 +93,6 @@ class AbstractViewController
 	
 	private function getTemplate()
 	{
-		// $template = $this->twig->loadTemplate( 'home.html.twig' );
-		// echo $this->id.'<br>';
-		// $this->template = $this->pagesController->twig->loadTemplate( 'home.twig' );
 		$this->template = $this->pagesController->twig->loadTemplate( $this->id . '.twig' );
 	}
 	
@@ -93,8 +100,6 @@ class AbstractViewController
 	private function renderView()
 	{
 		$this->view = $this->template->render( $this->content );
-		
-		// echo $this->view;
 	}
 	
 	
