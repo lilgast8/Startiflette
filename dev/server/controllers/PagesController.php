@@ -47,7 +47,7 @@ class PagesController
 			Path::$FILE->viewsPages,
 			Path::$FILE->viewsPartials,
 			Path::$FILE->viewsStatics,
-			'assets/svg/_sprite'
+			Path::$FILE->svgSprite
 		) );
 		$this->twig	= new Twig_Environment( $loader, array(
 			// 'debug' => true,

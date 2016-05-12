@@ -81,6 +81,7 @@ class Path
 		self::$FILE->json			= self::$FILE->assets	. 'json/';
 		self::$FILE->sounds			= self::$FILE->assets	. 'sounds/';
 		self::$FILE->svg			= self::$FILE->assets	. 'svg/';
+		self::$FILE->svgSprite		= self::$FILE->svg		. '_sprite/';
 		self::$FILE->videos			= self::$FILE->assets	. 'videos/';
 		self::$FILE->configs		= 'configs/';
 		self::$FILE->jsFilesFile	= self::$FILE->configs	. 'config/js-files.json';
@@ -89,6 +90,7 @@ class Path
 		self::$FILE->server			= 'server/';
 		self::$FILE->shared			= self::$FILE->server	. 'shared/';
 		self::$FILE->contents		= self::$FILE->server	. 'contents/';
+		self::$FILE->contentsShared	= self::$FILE->contents	. 'shared/';
 		self::$FILE->views			= self::$FILE->server	. 'views/';
 		self::$FILE->viewsPages		= self::$FILE->views	. $this->deviceDir . 'pages/';
 		self::$FILE->viewsPartials	= self::$FILE->views	. $this->deviceDir . 'partials/';

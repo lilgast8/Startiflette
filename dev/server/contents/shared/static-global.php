@@ -2,27 +2,26 @@
 
 
 
-class StaticGlobalContent
+class StaticGlobalContent extends AbstractContent
 {
 	
-	
-	public function getDatas()
+	public function setDatas()
 	{
-		$staticGl = new stdClass();
+		$d = new stdClass();
 		
 		
-		$staticGl->metas = new stdClass();
+		$d->metas				= new stdClass();
 		
-		$staticGl->metas->author		= "Gaston Bouchayer";
-		$staticGl->metas->designer		= "Gaston Bouchayer";
+		$d->metas->author		= "Gaston Bouchayer";
+		$d->metas->designer		= "Gaston Bouchayer";
 		
-		$staticGl->metas->fbType		= "website";
-		$staticGl->metas->twSiteId		= "@LilGast8";
-		$staticGl->metas->twCreatorId	= "@LilGast8";
+		$d->metas->fbType		= "website";
+		$d->metas->twSiteId		= "@LilGast8";
+		$d->metas->twCreatorId	= "@LilGast8";
 		
 		
 		
-		return $staticGl;
+		$this->datas = $d;
 	}
 	
 }

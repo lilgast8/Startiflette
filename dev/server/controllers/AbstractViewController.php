@@ -16,8 +16,12 @@ class AbstractViewController
 		$this->id	= $id;
 		$this->type	= $type;
 		
-		$this->pagesController = PagesController::getInstance();
+		$this->pagesController	= PagesController::getInstance();
 		
+		$this->content			= array();
+		
+		$this->getStaticGlobalDatas();
+		$this->getGlobalDatas();
 		$this->getStaticDatas();
 		$this->getDynamicDatas();
 		$this->getTemplate();
@@ -25,9 +29,32 @@ class AbstractViewController
 	}
 	
 	
+	private function getContent( $phpFilePath, $contentClassName )
+	{
+		include_once $phpFilePath;
+		
+		$contentClass	= new $contentClassName();
+		
+		$this->content	=  array_merge ( $this->content, (array) $contentClass->getDatas() );
+	}
+	
+	
+	private function getStaticGlobalDatas()
+	{
+		$phpFilePath		= Path::$FILE->contentsShared . 'static-global.php';
+		$contentClassName	= 'StaticGlobalContent';
+		
+		$this->getContent( $phpFilePath, $contentClassName );
+	}
+	
+	
 	private function getGlobalDatas()
 	{
+		include_once Path::$FILE->contents . Lang::$LANG . '/global.php';
 		
+		$contentClass	= new GlobalContent();
+		
+		$this->content	=  array_merge ( $this->content, (array) $contentClass->getDatas() );
 	}
 	
 	
@@ -41,7 +68,10 @@ class AbstractViewController
 		$contentClassName	= ucfirst( $this->id ) . 'Content';
 		$contentClass		= new $contentClassName();
 		
-		$this->content		=  (array) $contentClass->getDatas();
+		$this->content		=  array_merge ( $this->content, (array) $contentClass->getDatas() );
+		
+		// print_r( $this->content );
+		// exit();
 	}
 	
 	

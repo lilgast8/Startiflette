@@ -12,8 +12,8 @@
 	<meta name="description" content="<?php echo PagesController::$PAGE_INFOS->desc; ?>" />
 	<meta name="keywords" content="" />
 	<meta name="robots" content="index, follow" />
-	<meta name="author" content="<?php echo Contents::$datas->staticGl->metas->author; ?>" />
-	<meta name="designer" content="<?php echo Contents::$datas->staticGl->metas->designer; ?>" />
+	<meta name="author" content="{{ metas.author }}" />
+	<meta name="designer" content="{{ metas.designer }}" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	
 	<!-- echo $this- path- getAltLangUrlMeta(); -->
@@ -67,17 +67,17 @@
 			<ul>
 				<li>
 					<a href="<?php echo Router::$LINK->statics->home; ?>" class="menu-link">
-						<?php echo Contents::$datas->partial->menu->home; ?>
+						{{ menu.home }}
 					</a>
 				</li>
 				<li>
 					<a href="<?php echo Router::$LINK->statics->about; ?>" class="menu-link">
-						<?php echo Contents::$datas->partial->menu->about; ?>
+						{{ menu.about }}
 					</a>
 				</li>
 				<li>
 					<a href="<?php echo Router::$LINK->statics->projects; ?>" class="menu-link">
-						<?php echo Contents::$datas->partial->menu->projects; ?>
+						{{ menu.projects }}
 					</a>
 				</li>
 			</ul>

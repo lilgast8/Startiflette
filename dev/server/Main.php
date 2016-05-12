@@ -15,7 +15,7 @@ include_once 'server/controllers/PagesController.php';
 
 include_once 'server/utils/Helpers.php';
 
-include_once 'server/contents/Contents.php';
+// include_once 'server/contents/Contents.php';
 
 
 
@@ -37,7 +37,7 @@ class Main
 		$this->setLang();
 		$this->setRoutes();
 		$this->setPagesController();
-		$this->setContents();
+		// $this->setContents();
 	}
 	
 	
