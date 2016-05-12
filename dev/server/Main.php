@@ -96,7 +96,7 @@ class Main
 	
 	public function renderView()
 	{
-		$viewPath = $this->getViewPath();
+		/*$viewPath = $this->getViewPath();
 		
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
 			include_once Path::$FILE->viewsStatics . 'header.php';
@@ -104,14 +104,16 @@ class Main
 		include_once $viewPath . PagesController::$PAGE_INFOS->phpView . '.php';
 		
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			include_once Path::$FILE->viewsStatics . 'footer.php';
+			include_once Path::$FILE->viewsStatics . 'footer.php';*/
+		
+		$this->pagesController->renderView();
 	}
 	
 	
 	private function getViewPath()
 	{
 		$viewPath = Router::$CONTENT_TYPE == 'firstLoad' || Router::$CONTENT_TYPE == 'pageChange' ?
-					Path::$FILE->viewsPage :
+					Path::$FILE->viewsPages :
 					Path::$FILE->viewsAlt;
 		
 		

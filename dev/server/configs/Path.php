@@ -90,7 +90,7 @@ class Path
 		self::$FILE->shared			= self::$FILE->server	. 'shared/';
 		self::$FILE->contents		= self::$FILE->server	. 'contents/';
 		self::$FILE->views			= self::$FILE->server	. 'views/';
-		self::$FILE->viewsPage		= self::$FILE->views	. $this->deviceDir . 'pages/';
+		self::$FILE->viewsPages		= self::$FILE->views	. $this->deviceDir . 'pages/';
 		self::$FILE->viewsPartials	= self::$FILE->views	. $this->deviceDir . 'partials/';
 		self::$FILE->viewsStatics	= self::$FILE->views	. $this->deviceDir . 'statics/';
 		self::$FILE->viewsAlt		= self::$FILE->views	. 'alt/';

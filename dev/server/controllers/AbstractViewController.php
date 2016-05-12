@@ -11,9 +11,10 @@ class AbstractViewController
 	
 	
 	// protected function __construct()
-	public function __construct( $id )
+	public function __construct( $id, $type )
 	{
-		$this->id = $id;
+		$this->id	= $id;
+		$this->type	= $type;
 		
 		$this->pagesController = PagesController::getInstance();
 		
@@ -24,36 +25,51 @@ class AbstractViewController
 	}
 	
 	
-	protected function getStaticDatas()
+	private function getGlobalDatas()
 	{
-		$this->staticDatas = 'null';
 		
-		include_once Path::$FILE->contents . Lang::$LANG . '/pages/' . PagesController::$PAGE_INFOS->phpView . '.php';
+	}
+	
+	
+	private function getStaticDatas()
+	{
+		// include_once Path::$FILE->contents . Lang::$LANG . '/pages/' . PagesController::$PAGE_INFOS->phpView . '.php';
+		// echo Path::$FILE->contents . Lang::$LANG . '/' . $this->type . 's/' . $this->id . '.php <br>';
+		include_once Path::$FILE->contents . Lang::$LANG . '/' . $this->type . 's/' . $this->id . '.php';
 		
-		$contentClassName	= ucfirst( PagesController::$PAGE_INFOS->phpView ) . 'Content';
+		// $contentClassName	= ucfirst( PagesController::$PAGE_INFOS->phpView ) . 'Content';
+		$contentClassName	= ucfirst( $this->id ) . 'Content';
 		$contentClass		= new $contentClassName();
 		
 		$this->content		=  (array) $contentClass->getDatas();
 	}
 	
 	
-	protected function getDynamicDatas()
+	private function getDynamicDatas()
 	{
 		
 	}
 	
 	
-	protected function getTemplate()
+	private function getTemplate()
 	{
 		// $template = $this->twig->loadTemplate( 'home.html.twig' );
-		$this->template = $this->pagesController->twig->loadTemplate( 'home.html.twig' );
+		// echo $this->id.'<br>';
+		// $this->template = $this->pagesController->twig->loadTemplate( 'home.twig' );
+		$this->template = $this->pagesController->twig->loadTemplate( $this->id . '.twig' );
 	}
 	
 	
-	protected function renderView()
+	private function renderView()
 	{
 		$this->view = $this->template->render( $this->content );
 		
+		// echo $this->view;
+	}
+	
+	
+	public function displayView()
+	{
 		echo $this->view;
 	}
 	

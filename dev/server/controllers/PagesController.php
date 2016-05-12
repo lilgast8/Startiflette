@@ -12,7 +12,9 @@ class PagesController
 	
 	protected static $instance;
 	
-	static $PAGE_INFOS = null;
+	static $PAGE_INFOS	= null;
+	
+	private $controller	= null;
 	
 	
 	protected function __construct()
@@ -38,7 +40,15 @@ class PagesController
 	
 	private function setTwig()
 	{
-		$loader	= new Twig_Loader_Filesystem( Path::$FILE->viewsPage );
+		// print_r( Path::$FILE );
+		// exit;
+		// $loader	= new Twig_Loader_Filesystem( Path::$FILE->viewsPages );
+		$loader	= new Twig_Loader_Filesystem( array(
+			Path::$FILE->viewsPages,
+			Path::$FILE->viewsPartials,
+			Path::$FILE->viewsStatics,
+			'assets/svg/_sprite'
+		) );
 		$this->twig	= new Twig_Environment( $loader, array(
 			// 'debug' => true,
 		) );
@@ -55,7 +65,16 @@ class PagesController
 		self::$PAGE_INFOS->desc		= $desc;
 		
 		
+		$this->setStaticViewController();
 		$this->setController();
+	}
+	
+	
+	private function setStaticViewController()
+	{
+		// Header
+		// include_once 'server/controllers/AbstractViewController.php';
+		$this->headerController = new AbstractViewController( 'header', 'static' );
 	}
 	
 	
@@ -70,13 +89,27 @@ class PagesController
 		// $this->controller = new Home();
 		
 		
-		$this->controller = new $controllerClassName( self::$PAGE_INFOS->phpView );
+		$this->controller = new $controllerClassName( self::$PAGE_INFOS->phpView, 'page' );
 		
 		// print_r( $this->controller );
-		exit;
+		// exit;
 		
 		// $controllerClass = "controller\\" . ucfirst($this->route->controller->php);
 		// $this->controller = new $controllerClass($this->params);
+	}
+	
+	
+	public function renderView()
+	{
+		// if ( Router::$CONTENT_TYPE == 'firstLoad' )
+		// 	include_once Path::$FILE->viewsStatics . 'header.php';
+		
+		$this->headerController->displayView();
+		
+		$this->controller->displayView();
+		
+		// if ( Router::$CONTENT_TYPE == 'firstLoad' )
+		// 	include_once Path::$FILE->viewsStatics . 'footer.php';*/
 	}
 	
 }
