@@ -38,13 +38,34 @@ class AbstractViewController
 	{
 		// $configParams = Config::getParams();
 		
-		$this->config = Config::getInstance();
+		/*$this->config = Config::getInstance();
 		$configParams = new stdClass();
 		$configParams->Config = $this->config->getParams();
 		
-		// print_r( $configParams );
-		
 		$this->content	=  array_merge ( $this->content, (array) $configParams );
+		
+		
+		$this->path = Path::getInstance();
+		$pathParams = new stdClass();
+		$pathParams->Path = $this->path->getParams();
+		
+		$this->content	=  array_merge ( $this->content, (array) $pathParams );*/
+		
+		
+		$this->getParamsFromClass( 'Config' );
+		
+		
+		$this->content = json_decode( json_encode( $this->content ), true );
+	}
+	
+	
+	private function getParamsFromClass( $className )
+	{
+		$class				= $className::getInstance();
+		$params				= new stdClass();
+		$params->$className	= $class->getParams();
+		
+		$this->content		=  array_merge ( $this->content, (array) $params );
 	}
 	
 	
