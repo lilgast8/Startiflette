@@ -12,9 +12,11 @@ class PagesController
 	
 	protected static $instance;
 	
-	static $PAGE_INFOS	= null;
+	static $PAGE_INFOS			= null;
 	
-	private $controller	= null;
+	private $headerController	= null;
+	private $footerController	= null;
+	private $pageController		= null;
 	
 	
 	protected function __construct()
@@ -44,6 +46,7 @@ class PagesController
 			Path::$FILE->viewsPages,
 			Path::$FILE->viewsPartials,
 			Path::$FILE->viewsStatics,
+			Path::$FILE->viewsAlt,
 			Path::$FILE->viewsShared,
 			Path::$FILE->svgSprite
 		) );
@@ -81,6 +84,9 @@ class PagesController
 	{
 		// Header
 		$this->headerController = new AbstractViewController( 'header', 'static' );
+		
+		// Footer
+		$this->footerController = new AbstractViewController( 'footer', 'static' );
 	}
 	
 	
@@ -90,7 +96,7 @@ class PagesController
 		
 		include_once 'server/controllers/pages/' . $controllerClassName . '.php';
 		
-		$this->controller = new $controllerClassName( self::$PAGE_INFOS->phpView, 'page' );
+		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->phpView, 'page' );
 	}
 	
 	
@@ -101,7 +107,9 @@ class PagesController
 		
 		$this->headerController->displayView();
 		
-		$this->controller->displayView();
+		$this->pageController->displayView();
+		
+		$this->footerController->displayView();
 		
 		// if ( Router::$CONTENT_TYPE == 'firstLoad' )
 		// 	include_once Path::$FILE->viewsStatics . 'footer.php';*/

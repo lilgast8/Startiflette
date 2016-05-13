@@ -15,6 +15,7 @@ class GlobalContent extends AbstractContent
 		$d->menu->home		= "Accueil";
 		$d->menu->about		= "À propos";
 		$d->menu->projects	= "Projets";
+		$d->menu->legals	= "Mentions légales";
 		
 		
 		
