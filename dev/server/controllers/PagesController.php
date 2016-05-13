@@ -92,9 +92,16 @@ class PagesController
 	
 	private function setPageViewController()
 	{
-		$controllerClassName = ucfirst( self::$PAGE_INFOS->phpView );
+		$controllerClassName	= ucfirst( self::$PAGE_INFOS->phpView );
 		
-		include_once 'server/controllers/pages/' . $controllerClassName . '.php';
+		$phpFilePath			= 'server/controllers/pages/' . $controllerClassName . '.php';
+		
+		if ( !file_exists( $phpFilePath ) ) {
+			$controllerClassName	= 'AbstractViewController';
+			$phpFilePath			= 'server/controllers/AbstractViewController.php';
+		}
+		
+		include_once $phpFilePath;
 		
 		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->phpView, 'page' );
 	}
