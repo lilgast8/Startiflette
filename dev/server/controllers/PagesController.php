@@ -44,6 +44,7 @@ class PagesController
 			Path::$FILE->viewsPages,
 			Path::$FILE->viewsPartials,
 			Path::$FILE->viewsStatics,
+			Path::$FILE->viewsShared,
 			Path::$FILE->svgSprite
 		) );
 		
