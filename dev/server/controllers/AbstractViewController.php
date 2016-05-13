@@ -5,13 +5,9 @@
 class AbstractViewController
 {
 	
-	protected static $instance;
-	
-	// static $STATIC = null;
 	private $content = array();
 	
 	
-	// protected function __construct()
 	public function __construct( $id, $type )
 	{
 		$this->id	= $id;
@@ -29,41 +25,17 @@ class AbstractViewController
 		
 		$this->getTemplate();
 		$this->renderView();
-		
-		// print_r( $this->content );
 	}
 	
 	
 	private function getParams()
 	{
-		// $configParams = Config::getParams();
-		
-		/*$this->config = Config::getInstance();
-		$configParams = new stdClass();
-		$configParams->Config = $this->config->getParams();
-		
-		$this->content	=  array_merge ( $this->content, (array) $configParams );
-		
-		
-		$this->path = Path::getInstance();
-		$pathParams = new stdClass();
-		$pathParams->Path = $this->path->getParams();
-		
-		$this->content	=  array_merge ( $this->content, (array) $pathParams );*/
-		
-		
 		$this->getParamsFromClass( 'Config' );
 		$this->getParamsFromClass( 'Path' );
 		$this->getParamsFromClass( 'Lang' );
 		$this->getParamsFromClass( 'Router' );
 		
-		
 		$this->content = json_decode( json_encode( $this->content ), true );
-		
-		// echo '<pre>';
-		// var_dump( $this->content );
-		// echo '</pre>';
-		// exit;
 	}
 	
 	

@@ -80,7 +80,6 @@ class PagesController
 	private function setStaticViewController()
 	{
 		// Header
-		// include_once 'server/controllers/AbstractViewController.php';
 		$this->headerController = new AbstractViewController( 'header', 'static' );
 	}
 	
@@ -91,18 +90,7 @@ class PagesController
 		
 		include_once 'server/controllers/pages/' . $controllerClassName . '.php';
 		
-		// echo $controllerClass;
-		
-		// $this->controller = new Home();
-		
-		
 		$this->controller = new $controllerClassName( self::$PAGE_INFOS->phpView, 'page' );
-		
-		// print_r( $this->controller );
-		// exit;
-		
-		// $controllerClass = "controller\\" . ucfirst($this->route->controller->php);
-		// $this->controller = new $controllerClass($this->params);
 	}
 	
 	

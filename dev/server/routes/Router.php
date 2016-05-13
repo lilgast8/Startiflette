@@ -306,9 +306,6 @@ class Router
 		$this->params->LINK			= self::$LINK;
 		
 		$this->params->CONTENT_TYPE	= self::$CONTENT_TYPE;
-		
-		// print_r( $this->params );
-		// exit;
 	}
 	
 	
