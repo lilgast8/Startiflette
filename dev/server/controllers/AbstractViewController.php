@@ -53,6 +53,7 @@ class AbstractViewController
 		
 		
 		$this->getParamsFromClass( 'Config' );
+		$this->getParamsFromClass( 'Path' );
 		
 		
 		$this->content = json_decode( json_encode( $this->content ), true );

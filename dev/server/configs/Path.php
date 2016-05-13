@@ -11,6 +11,7 @@ class Path
 	static $FILE		= null;
 	
 	private $deviceDir	= null;
+	private $params		= null;
 	
 	
 	protected function __construct()
@@ -19,6 +20,8 @@ class Path
 		
 		$this->setDeviceDir();
 		$this->setPaths();
+		
+		$this->setParams();
 	}
 	
 	
@@ -97,6 +100,21 @@ class Path
 		self::$FILE->viewsStatics	= self::$FILE->views	. $this->deviceDir . 'statics/';
 		self::$FILE->viewsShared	= self::$FILE->views	. 'shared/';
 		self::$FILE->viewsAlt		= self::$FILE->views	. 'alt/';
+	}
+	
+	
+	private function setParams()
+	{
+		$this->params = new stdClass();
+		
+		$this->params->URL	= self::$URL;
+		$this->params->FILE	= self::$FILE;
+	}
+	
+	
+	public function getParams()
+	{
+		return $this->params;
 	}
 	
 	
