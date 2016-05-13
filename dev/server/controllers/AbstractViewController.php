@@ -52,7 +52,7 @@ class AbstractViewController
 	private function getContent( $phpFilePath, $phpSharedFilePath, $contentClassName )
 	{
 		if ( !file_exists( $phpFilePath ) )
-			$phpFilePath = Path::$FILE->contentsShared . 'alt.php';
+			$phpFilePath = $phpSharedFilePath;
 		
 		include_once $phpFilePath;
 		
@@ -93,9 +93,11 @@ class AbstractViewController
 	{
 		$phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/' . $this->type . 's/' . $this->id . '.php';
 		$phpSharedFilePath	= Path::$FILE->contentsShared . $this->type . 's/' . $this->id . '.php';
-		$contentClassName	= ucfirst( $this->id ) . 'Content';
+		$contentClassName	= str_replace( '-', ' ', $this->id );
+		$contentClassName	= ucwords( $contentClassName );
+		$contentClassName	= str_replace( ' ', '', $contentClassName ) . 'Content';
 		
-		$this->getContent( $phpFilePath, null, $contentClassName );
+		$this->getContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
 	}
 	
 	
