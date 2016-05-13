@@ -152,6 +152,9 @@ class Config
 		$this->params->IS_TABLET			= self::$IS_TABLET;
 		$this->params->IS_MOBILE			= self::$IS_MOBILE;
 		$this->params->IS_OLD_BROWSER		= self::$IS_OLD_BROWSER;
+		
+		
+		$this->params = json_decode( json_encode( $this->params ), true );
 	}
 	
 	
