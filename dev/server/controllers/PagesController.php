@@ -40,18 +40,21 @@ class PagesController
 	
 	private function setTwig()
 	{
-		// print_r( Path::$FILE );
-		// exit;
-		// $loader	= new Twig_Loader_Filesystem( Path::$FILE->viewsPages );
 		$loader	= new Twig_Loader_Filesystem( array(
 			Path::$FILE->viewsPages,
 			Path::$FILE->viewsPartials,
 			Path::$FILE->viewsStatics,
 			Path::$FILE->svgSprite
 		) );
-		$this->twig	= new Twig_Environment( $loader, array(
-			// 'debug' => true,
-		) );
+		
+		if ( Config::$ENV == 'dev' ) {
+			$this->twig	= new Twig_Environment( $loader, array(
+				'debug' => true
+			) );
+			$this->twig->addExtension( new Twig_Extension_Debug() );
+		}
+		else
+			$this->twig	= new Twig_Environment( $loader );
 	}
 	
 	
