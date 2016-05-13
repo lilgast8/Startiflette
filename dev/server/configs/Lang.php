@@ -16,6 +16,7 @@ class Lang
 	static $LANG_LINK		= null;
 	
 	private $router			= null;
+	private $params			= null;
 	
 	
 	protected function __construct()
@@ -27,6 +28,8 @@ class Lang
 		$this->setCurrentLang();
 		$this->router->setCurrentPageUrl();
 		$this->setLangLinks();
+		
+		$this->setParams();
 	}
 	
 	
@@ -82,6 +85,27 @@ class Lang
 		self::$LANG = self::$DEFAULT_LANG;
 		
 		$this->setLangLinks();
+		$this->setParams();
+	}
+	
+	
+	private function setParams()
+	{
+		$this->params = new stdClass();
+		
+		$this->params->ALL_LANG			= self::$ALL_LANG;
+		$this->params->MULTI_LANG		= self::$MULTI_LANG;
+		$this->params->DEFAULT_LANG		= self::$DEFAULT_LANG;
+		$this->params->LANG				= self::$LANG;
+		
+		$this->params->LANG_LINK_ROOT	= self::$LANG_LINK_ROOT;
+		$this->params->LANG_LINK		= self::$LANG_LINK;
+	}
+	
+	
+	public function getParams()
+	{
+		return $this->params;
 	}
 	
 }
