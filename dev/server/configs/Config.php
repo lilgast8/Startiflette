@@ -26,6 +26,7 @@ class Config
 	static $IS_OLD_BROWSER		= null;
 	
 	private $jsFiles			= null;
+	
 	private $params				= null;
 	
 	

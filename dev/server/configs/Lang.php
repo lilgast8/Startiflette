@@ -16,6 +16,7 @@ class Lang
 	static $LANG_LINK		= null;
 	
 	private $router			= null;
+	
 	private $params			= null;
 	
 	
