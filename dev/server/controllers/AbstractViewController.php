@@ -55,6 +55,7 @@ class AbstractViewController
 		$this->getParamsFromClass( 'Config' );
 		$this->getParamsFromClass( 'Path' );
 		$this->getParamsFromClass( 'Lang' );
+		$this->getParamsFromClass( 'Router' );
 		
 		
 		$this->content = json_decode( json_encode( $this->content ), true );

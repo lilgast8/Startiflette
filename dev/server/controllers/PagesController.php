@@ -67,10 +67,13 @@ class PagesController
 		self::$PAGE_INFOS->phpView	= $phpView;
 		self::$PAGE_INFOS->title	= $title;
 		self::$PAGE_INFOS->desc		= $desc;
-		
-		
+	}
+	
+	
+	public function setContoller()
+	{
 		$this->setStaticViewController();
-		$this->setController();
+		$this->setPageViewController();
 	}
 	
 	
@@ -82,7 +85,7 @@ class PagesController
 	}
 	
 	
-	private function setController()
+	private function setPageViewController()
 	{
 		$controllerClassName = ucfirst( self::$PAGE_INFOS->phpView );
 		

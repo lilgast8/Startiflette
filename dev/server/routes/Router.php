@@ -19,6 +19,8 @@ class Router
 	private $lang				= null;
 	private $pagesController	= null;
 	
+	private $params				= null;
+	
 	
 	protected function __construct()
 	{
@@ -140,6 +142,8 @@ class Router
 		$this->setContentType();
 		$this->setPageInfos();
 		$this->setLinks();
+		
+		$this->setParams();
 	}
 	
 	
@@ -289,6 +293,28 @@ class Router
 			}
 			
 		}
+	}
+	
+	
+	private function setParams()
+	{
+		$this->params = new stdClass();
+		
+		$this->params->ROUTES		= self::$ROUTES;
+		$this->params->PAGE_URL		= self::$PAGE_URL;
+		$this->params->ALT_LANG_URL	= self::$ALT_LANG_URL;
+		$this->params->LINK			= self::$LINK;
+		
+		$this->params->CONTENT_TYPE	= self::$CONTENT_TYPE;
+		
+		// print_r( $this->params );
+		// exit;
+	}
+	
+	
+	public function getParams()
+	{
+		return $this->params;
 	}
 	
 }

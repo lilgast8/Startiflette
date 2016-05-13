@@ -84,14 +84,15 @@ class Main
 	private function setPagesController()
 	{
 		$this->pagesController = PagesController::getInstance();
+		$this->pagesController->setContoller();
 	}
 	
 	
-	private function setContents()
+	/*private function setContents()
 	{
 		// $this->contents = getContents();
 		$this->contents = Contents::getInstance();
-	}
+	}*/
 	
 	
 	public function renderView()
