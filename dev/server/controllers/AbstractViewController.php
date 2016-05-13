@@ -65,6 +65,13 @@ class AbstractViewController
 		$contentClassName	= 'StaticGlobalContent';
 		
 		$this->getContent( $phpFilePath, $contentClassName );
+		
+		if ( $this->id == 'footer' ) {
+			$phpFilePath		= Path::$FILE->contentsShared . 'alt.php';
+			$contentClassName	= 'AltContent';
+			
+			$this->getContent( $phpFilePath, $contentClassName );
+		}
 	}
 	
 	
