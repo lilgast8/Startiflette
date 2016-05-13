@@ -2,21 +2,19 @@
 
 
 
-class ProjectsContent
+class ProjectsContent extends AbstractContent
 {
 	
-	public function getDatas()
+	public function setDatas()
 	{
-		
-		$projects = new stdClass();
-		
-		
-		$projects->title = "— Projets —";
+		$d = new stdClass();
 		
 		
+		$d->title = "— Projets —";
 		
-		return $projects;
 		
+		
+		$this->datas = $d;
 	}
 	
 }

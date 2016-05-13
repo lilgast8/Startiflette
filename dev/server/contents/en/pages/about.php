@@ -2,21 +2,19 @@
 
 
 
-class AboutContent
+class AboutContent extends AbstractContent
 {
 	
-	public function getDatas()
+	public function setDatas()
 	{
-		
-		$about = new stdClass();
-		
-		
-		$about->title = "— About —";
+		$d = new stdClass();
 		
 		
+		$d->title = "— About —";
 		
-		return $about;
 		
+		
+		$this->datas = $d;
 	}
 	
 }

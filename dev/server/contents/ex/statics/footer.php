@@ -2,7 +2,7 @@
 
 
 
-class ProjectsContent extends AbstractContent
+class FooterContent extends AbstractContent
 {
 	
 	public function setDatas()
@@ -10,7 +10,7 @@ class ProjectsContent extends AbstractContent
 		$d = new stdClass();
 		
 		
-		$d->title = "— Projects —";
+		// $d->data = new stdClass();
 		
 		
 		

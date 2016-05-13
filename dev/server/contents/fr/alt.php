@@ -2,30 +2,29 @@
 
 
 
-class AltContent
+class AltContent extends AbstractContent
 {
 	
-	
-	public function getDatas()
+	public function setDatas()
 	{
-		$alt = new stdClass();
+		$d = new stdClass();
 		
 		
-		$alt->noJS = new stdClass();
+		$d->noJS		= new stdClass();
 		
-		$alt->noJS->title	= "JavaScript est désactivé.";
-		$alt->noJS->desc	= "Pour visionner ce site, veuillez activer JavaScript dans les préférences de votre navigateur. <br/>Une fois JavaScript activé veuillez recharger la page.";
-		
-		
-		$alt->oldB = new stdClass();
-		
-		$alt->oldB->title		= "Votre navigateur est obsolète.";
-		$alt->oldB->desc		= "Veuillez le mettre à jour gratuitement, afin d'améliorer ses performances <br />et ainsi avoir un meilleur confort de navigation.";
-		$alt->oldB->download	= "Télécharger";
+		$d->noJS->title	= "JavaScript est désactivé.";
+		$d->noJS->desc	= "Pour visionner ce site, veuillez activer JavaScript dans les préférences de votre navigateur. <br/>Une fois JavaScript activé veuillez recharger la page.";
 		
 		
+		$d->oldB		= new stdClass();
 		
-		return $alt;
+		$d->oldB->title	= "Votre navigateur est obsolète.";
+		$d->oldB->desc	= "Veuillez le mettre à jour gratuitement, afin d'améliorer ses performances <br />et ainsi avoir un meilleur confort de navigation.";
+		$d->oldB->dl	= "Télécharger";
+		
+		
+		
+		$this->datas = $d;
 	}
 	
 }

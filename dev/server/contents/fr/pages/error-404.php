@@ -2,24 +2,22 @@
 
 
 
-class Error404Content
+class Error404Content extends AbstractContent
 {
 	
-	public function getDatas()
+	public function setDatas()
 	{
-		
-		$error404 = new stdClass();
-		
-		
-		$error404->title	= "Erreur 404";
-		
-		$error404->txt		= "La page que vous cherchez n'est pas disponible ou n'existe plus.";
-		$error404->back		= "Retour à l'accueil";
+		$d = new stdClass();
 		
 		
+		$d->title	= "Erreur 404";
 		
-		return $error404;
+		$d->txt		= "La page que vous cherchez n'est pas disponible ou n'existe plus.";
+		$d->back	= "Retour à l'accueil";
 		
+		
+		
+		$this->datas = $d;
 	}
 	
 }
