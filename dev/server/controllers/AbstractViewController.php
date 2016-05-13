@@ -20,8 +20,8 @@ class AbstractViewController
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
 			$this->getStaticGlobalDatas();
 		$this->getGlobalDatas();
-		$this->getStaticDatas();
-		$this->getDynamicDatas();
+		$this->getViewDatas();
+		$this->getViewDynamicDatas();
 		
 		$this->getTemplate();
 		$this->renderView();
@@ -49,8 +49,11 @@ class AbstractViewController
 	}
 	
 	
-	private function getContent( $phpFilePath, $contentClassName )
+	private function getContent( $phpFilePath, $phpSharedFilePath, $contentClassName )
 	{
+		if ( !file_exists( $phpFilePath ) )
+			$phpFilePath = Path::$FILE->contentsShared . 'alt.php';
+		
 		include_once $phpFilePath;
 		
 		$contentClass	= new $contentClassName();
@@ -64,13 +67,14 @@ class AbstractViewController
 		$phpFilePath		= Path::$FILE->contentsShared . 'static-global.php';
 		$contentClassName	= 'StaticGlobalContent';
 		
-		$this->getContent( $phpFilePath, $contentClassName );
+		$this->getContent( $phpFilePath, null, $contentClassName );
 		
 		if ( $this->id == 'footer' ) {
-			$phpFilePath		= Path::$FILE->contentsShared . 'alt.php';
+			$phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/alt.php';
+			$phpSharedFilePath	= Path::$FILE->contentsShared . 'alt.php';
 			$contentClassName	= 'AltContent';
 			
-			$this->getContent( $phpFilePath, $contentClassName );
+			$this->getContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
 		}
 	}
 	
@@ -78,22 +82,24 @@ class AbstractViewController
 	private function getGlobalDatas()
 	{
 		$phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/global.php';
+		$phpSharedFilePath	= Path::$FILE->contentsShared . 'global.php';
 		$contentClassName	= 'GlobalContent';
 		
-		$this->getContent( $phpFilePath, $contentClassName );
+		$this->getContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
 	}
 	
 	
-	private function getStaticDatas()
+	private function getViewDatas()
 	{
 		$phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/' . $this->type . 's/' . $this->id . '.php';
+		$phpSharedFilePath	= Path::$FILE->contentsShared . $this->type . 's/' . $this->id . '.php';
 		$contentClassName	= ucfirst( $this->id ) . 'Content';
 		
-		$this->getContent( $phpFilePath, $contentClassName );
+		$this->getContent( $phpFilePath, null, $contentClassName );
 	}
 	
 	
-	private function getDynamicDatas()
+	private function getViewDynamicDatas()
 	{
 		
 	}
