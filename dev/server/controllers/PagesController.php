@@ -109,17 +109,13 @@ class PagesController
 	
 	public function renderView()
 	{
-		// if ( Router::$CONTENT_TYPE == 'firstLoad' )
-		// 	include_once Path::$FILE->viewsStatics . 'header.php';
-		
-		$this->headerController->displayView();
+		if ( Router::$CONTENT_TYPE == 'firstLoad' )
+			$this->headerController->displayView();
 		
 		$this->pageController->displayView();
 		
-		$this->footerController->displayView();
-		
-		// if ( Router::$CONTENT_TYPE == 'firstLoad' )
-		// 	include_once Path::$FILE->viewsStatics . 'footer.php';*/
+		if ( Router::$CONTENT_TYPE == 'firstLoad' )
+			$this->footerController->displayView();
 	}
 	
 }
