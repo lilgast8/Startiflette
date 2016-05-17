@@ -85,7 +85,6 @@ class Path
 		self::$FILE->videos			= self::$FILE->assets	. 'videos/';
 		self::$FILE->configs		= 'configs/';
 		self::$FILE->jsFilesFile	= self::$FILE->configs	. 'config/js-files.json';
-		self::$FILE->contentsFile	= self::$FILE->configs	. 'config/contents.json';
 		self::$FILE->routes			= self::$FILE->configs	. 'routes/';
 		self::$FILE->server			= 'server/';
 		self::$FILE->shared			= self::$FILE->server	. 'shared/';

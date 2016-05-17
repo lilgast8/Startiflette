@@ -16,8 +16,6 @@ include_once 'server/controllers/PagesController.php';
 
 include_once 'server/utils/Helpers.php';
 
-// include_once 'server/contents/Contents.php';
-
 
 
 class Main
@@ -39,7 +37,6 @@ class Main
 		$this->setLang();
 		$this->setRoutes();
 		$this->setPagesController();
-		// $this->setContents();
 	}
 	
 	
@@ -90,25 +87,8 @@ class Main
 	}
 	
 	
-	/*private function setContents()
-	{
-		// $this->contents = getContents();
-		$this->contents = Contents::getInstance();
-	}*/
-	
-	
 	public function renderView()
 	{
-		/*$viewPath = $this->getViewPath();
-		
-		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			include_once Path::$FILE->viewsStatics . 'header.php';
-		
-		include_once $viewPath . PagesController::$PAGE_INFOS->phpView . '.php';
-		
-		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			include_once Path::$FILE->viewsStatics . 'footer.php';*/
-		
 		$this->pagesController->renderView();
 	}
 	
