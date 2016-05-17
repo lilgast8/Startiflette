@@ -94,9 +94,7 @@ class AbstractViewController
 	{
 		$phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/' . $this->type . 's/' . $this->id . '.php';
 		$phpSharedFilePath	= Path::$FILE->contentsShared . $this->type . 's/' . $this->id . '.php';
-		$contentClassName	= str_replace( '-', ' ', $this->id );
-		$contentClassName	= ucwords( $contentClassName );
-		$contentClassName	= str_replace( ' ', '', $contentClassName ) . 'Content';
+		$contentClassName	= Helpers::titleCase( $this->id ) . 'Content';
 		
 		$this->getContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
 	}

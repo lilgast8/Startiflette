@@ -5,6 +5,17 @@
 class Helpers
 {
 	
+	public static function titleCase( $string )
+	{
+		$string	= str_replace( '-', ' ', $string );
+		$string	= str_replace( '_', ' ', $string );
+		$string	= ucwords( $string );
+		$string	= str_replace( ' ', '', $string );
+		
+		return $string;
+	}
+	
+	
 	public static function getSVG( $name )
 	{
 		$html = '';
