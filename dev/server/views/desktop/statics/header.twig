@@ -31,7 +31,7 @@
 	<!-- [if lt IE 9]><script src="{{ Path.URL.js }}vendor/html5shiv.min.js"></script><![endif] -->
 	
 	<!-- Modernirz & Detectizr -->
-	<!-- echo $this- path- getJsFilesUrl( 'header' ); -->
+	{{ Path.JS_FILES.header|raw }}
 	
 	{# Google Analytics #}
 	{{ include( 'google-analytics.twig' ) }}

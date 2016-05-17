@@ -28,19 +28,11 @@
 </div> <!-- End #main-container -->
 
 
+{# JS var #}
+{{ include( 'js-var.twig' ) }}
 
-{{ include( 'js-var.twig' ) }} {# JS var #}
-
-{#<?php
-
-/* JS var */
-include_once Path::$FILE->shared . 'js-var.php';
-
-/* JS scripts */
-echo $this->path->getJsFilesUrl( 'scripts-desktop' );
-
-?>
-#}
+{# JS scripts #}
+{{ Path.JS_FILES[ 'scripts-desktop' ]|raw }} 
 
 
 </body>

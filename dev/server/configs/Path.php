@@ -9,6 +9,7 @@ class Path
 	
 	static $URL			= null;
 	static $FILE		= null;
+	static $JS_FILES	= null;
 	
 	private $deviceDir	= null;
 	
@@ -21,6 +22,7 @@ class Path
 		
 		$this->setDeviceDir();
 		$this->setPaths();
+		$this->setJsFilesUrl();
 		
 		$this->setParams();
 	}
@@ -104,53 +106,59 @@ class Path
 	}
 	
 	
+	private function setJsFilesUrl()
+	{
+		self::$JS_FILES	= array();
+		$jsFiles		= $this->config->getJsFilesFile();
+		
+		foreach ( $jsFiles as $fileId => $fileInfos ) { // parse JsFiles infos
+			$listFiles	= '';
+			
+			/* dev */
+			if ( Config::$ENV != 'preprod-local' || Config::$ENV != 'preprod' || Config::$ENV != 'prod' ) {
+				$files = $jsFiles->$fileId->files;
+				
+				foreach ( $files as $filePath ) { // parse files list
+					if ( is_array( $filePath ) ) {
+						$listFiles .= '<!--[if lt IE 9]><script src="' . self::$URL->js . $filePath[1] . '"></script><![endif]-->' . "\n";
+						$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . self::$URL->js . $filePath[0] . '"></script><!--<![endif]-->' . "\n";
+					}
+					else
+						$listFiles .= '<script src="' . self::$URL->js . $filePath . '"></script>' . "\n";
+				}
+			}
+			
+			/* preprod-local, preprod or prod */
+			else {
+				$fileName	= $jsFiles->$fileId->name;
+				$fileDest	= $jsFiles->$fileId->dest;
+				
+				if ( is_array( $fileName ) ) {
+						$listFiles .= '<!--[if lt IE 9]><script src="' . self::$URL->js . $fileName[1] . '"></script><![endif]-->' . "\n";
+						$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . self::$URL->js . $fileName[0] . '"></script><!--<![endif]-->' . "\n";
+					}
+					else
+						$listFiles .= '<script src="' . self::$URL->js . $fileDest . $fileName . '"></script>' . "\n";
+			}
+			
+			self::$JS_FILES[ $fileId ] = $listFiles;
+		}
+	}
+	
+	
 	private function setParams()
 	{
 		$this->params = new stdClass();
 		
-		$this->params->URL	= self::$URL;
-		$this->params->FILE	= self::$FILE;
+		$this->params->URL		= self::$URL;
+		$this->params->FILE		= self::$FILE;
+		$this->params->JS_FILES	= self::$JS_FILES;
 	}
 	
 	
 	public function getParams()
 	{
 		return $this->params;
-	}
-	
-	
-	public function getJsFilesUrl( $listName )
-	{
-		$jsFiles	= $this->config->getJsFilesFile();
-		$listFiles	= '';
-		
-		if ( Config::$ENV != 'preprod-local' || Config::$ENV != 'preprod' || Config::$ENV != 'prod' ) {
-			$files = $jsFiles->$listName->files;
-			
-			foreach ( $files as $filePath ) {
-				
-				if ( is_array( $filePath ) ) {
-					$listFiles .= '<!--[if lt IE 9]><script src="' . self::$URL->js . $filePath[1] . '"></script><![endif]-->' . "\n";
-					$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . self::$URL->js . $filePath[0] . '"></script><!--<![endif]-->' . "\n";
-				}
-				else
-					$listFiles .= '<script src="' . self::$URL->js . $filePath . '"></script>' . "\n";
-			}
-		}
-		else {
-			$fileName	= $jsFiles->$listName->name;
-			$fileDest	= $jsFiles->$listName->dest;
-			
-			if ( is_array( $fileName ) ) {
-					$listFiles .= '<!--[if lt IE 9]><script src="' . self::$URL->js . $fileName[1] . '"></script><![endif]-->' . "\n";
-					$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . self::$URL->js . $fileName[0] . '"></script><!--<![endif]-->' . "\n";
-				}
-				else
-					$listFiles .= '<script src="' . self::$URL->js . $fileDest . $fileName . '"></script>' . "\n";
-		}
-		
-		
-		return $listFiles;
 	}
 	
 }
