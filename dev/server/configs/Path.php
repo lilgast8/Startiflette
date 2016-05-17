@@ -119,22 +119,6 @@ class Path
 	}
 	
 	
-	public function getAltLangUrlMeta()
-	{
-		if ( !Lang::$MULTI_LANG || !Router::$ALT_LANG_URL )
-			return false;
-		
-		
-		$altLangUrlList = '';
-		
-		foreach ( Router::$ALT_LANG_URL as $lang => $altLangUrl )
-			$altLangUrlList .= '<link rel="alternate" href="' . $altLangUrl . '" hreflang="' . $lang . '" />' . "\n\t";
-		
-		
-		return $altLangUrlList;
-	}
-	
-	
 	public function getJsFilesUrl( $listName )
 	{
 		$jsFiles	= $this->config->getJsFilesFile();

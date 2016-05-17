@@ -16,7 +16,9 @@
 	<meta name="designer" content="{{ metas.designer }}" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	
-	<!-- echo $this- path- getAltLangUrlMeta(); -->
+	{% for lang, altLangUrl in Router.ALT_LANG_URL %}
+	<link rel="alternate" href="{{ altLangUrl }}" hreflang="{{ lang }}" />
+	{% endfor %}
 	
 	<!-- Social share -->
 	{{ include( 'social-share.twig' ) }}
