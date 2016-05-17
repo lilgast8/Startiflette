@@ -6,6 +6,7 @@ require 'vendor/autoload.php';
 
 
 include_once 'server/configs/Config.php';
+include_once 'server/configs/Device.php';
 include_once 'server/configs/Lang.php';
 include_once 'server/configs/Path.php';
 
@@ -33,6 +34,7 @@ class Main
 	protected function __construct()
 	{
 		$this->setConfig();
+		$this->setDevice();
 		$this->setPath();
 		$this->setLang();
 		$this->setRoutes();
@@ -53,6 +55,12 @@ class Main
 	private function setConfig()
 	{
 		$this->config = Config::getInstance();
+	}
+	
+	
+	private function setDevice()
+	{
+		$this->device = Device::getInstance();
 	}
 	
 	

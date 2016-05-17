@@ -31,6 +31,7 @@ class AbstractViewController
 	private function getParams()
 	{
 		$this->getParamsFromClass( 'Config' );
+		$this->getParamsFromClass( 'Device' );
 		$this->getParamsFromClass( 'Path' );
 		$this->getParamsFromClass( 'Lang' );
 		$this->getParamsFromClass( 'Router' );

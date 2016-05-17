@@ -39,11 +39,11 @@ class Path
 	
 	private function setDeviceDir()
 	{
-		if ( !Config::$HAS_MOBILE_VERSION )
+		if ( !Device::$HAS_MOBILE_VERSION )
 			$this->deviceDir = 'desktop/';
-		else if ( Config::$HAS_MOBILE_VERSION && ( Config::$IS_DESKTOP || Config::$IS_TABLET ) )
+		else if ( Device::$HAS_MOBILE_VERSION && ( Device::$IS_DESKTOP || Device::$IS_TABLET ) )
 			$this->deviceDir = 'desktop/';
-		else if ( Config::$HAS_MOBILE_VERSION && Config::$DEVICE == 'mobile' )
+		else if ( Device::$HAS_MOBILE_VERSION && Device::$DEVICE == 'mobile' )
 			$this->deviceDir = 'mobile/';
 	}
 	

@@ -23,17 +23,6 @@ STF.Config = ( function( window ) {
 		this.GA_ID				= null;
 		this.CREDITS			= null;
 		
-		this.DEVICE				= null;
-		this.IS_DESKTOP			= null;
-		this.IS_TABLET			= null;
-		this.IS_MOBILE			= null;
-		this.IS_OLD_BROWSER		= null;
-		
-		this.BROWSER			= null;
-		this.BROWSER_VERSION	= null;
-		this.DEVICE				= null;
-		this.IS_IE				= null;
-		
 		this.HAS_PUSHSTATE		= null;
 		this.TRANSFORM			= null;
 		this.HAS_TRANSFORMS		= null;
@@ -72,8 +61,6 @@ STF.Config = ( function( window ) {
 		_destroyJsonLoader.call( this );
 		
 		_setConfig.call( this, data );
-		_setDevice.call( this );
-		_setBrowser.call( this );
 		_setProperties.call( this );
 		_showCreditsLog.call( this );
 		
@@ -94,27 +81,6 @@ STF.Config = ( function( window ) {
 		
 		for ( var varName in config )
 			this[ varName ] = config[ varName ];
-	};
-	
-	
-	var _setDevice = function() {
-		if ( this.FORCE_DEVICE )
-			this.DEVICE = this.FORCE_DEVICE;
-		else
-			this.DEVICE = Detectizr.device.type;
-		
-		
-		this.IS_DESKTOP			= this.DEVICE == 'desktop';
-		this.IS_TABLET			= this.DEVICE == 'tablet';
-		this.IS_MOBILE			= this.DEVICE == 'mobile';
-	};
-	
-	
-	var _setBrowser = function() {
-		this.BROWSER			= Detectizr.browser.name;
-		this.BROWSER_VERSION	= parseFloat( Detectizr.browser.major + '.' + Detectizr.browser.minor );
-		this.DEVICE				= Detectizr.device.type;
-		this.IS_IE				= STF.Config.BROWSER == 'ie' ? true : false;
 	};
 	
 	

@@ -111,7 +111,7 @@ STF.Video = ( function( window ) {
 	
 	
 	var _loadStart = function() {
-		if ( this.isFireLoadStart && !this.isLoadStart && STF.Config.IS_DESKTOP ) {
+		if ( this.isFireLoadStart && !this.isLoadStart && STF.Device.IS_DESKTOP ) {
 			this.isLoadStart = true;
 			
 			this.dispatch( this.E.LOAD_START );
@@ -120,7 +120,7 @@ STF.Video = ( function( window ) {
 	
 	
 	var _canPlay = function() {
-		if ( this.isFireCanPlay && !this.isCanPlay && STF.Config.IS_DESKTOP ) {
+		if ( this.isFireCanPlay && !this.isCanPlay && STF.Device.IS_DESKTOP ) {
 			this.isCanPlay	= true;
 			this.duration	= this.$video[0].duration;
 			
@@ -133,7 +133,7 @@ STF.Video = ( function( window ) {
 		if ( this.isFireCanPlayThrough && !this.isCanPlayThrough ) {
 			this.isCanPlayThrough = true;
 			
-			if ( STF.Config.IS_DESKTOP )
+			if ( STF.Device.IS_DESKTOP )
 				this.dispatch( this.E.CAN_PLAY_THROUGH );
 		}
 	};

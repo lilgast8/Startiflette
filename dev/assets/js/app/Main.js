@@ -18,6 +18,7 @@ STF.Main = ( function( window ) {
 	
 	
 	var _configLoaded = function() {
+		STF.Device.init();
 		STF.Path.init();
 		STF.Lang.init();
 		
