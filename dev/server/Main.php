@@ -12,7 +12,7 @@ include_once 'server/configs/Path.php';
 
 include_once 'server/routes/Router.php';
 
-include_once 'server/controllers/PagesController.php';
+include_once 'server/controllers/MainViewController.php';
 
 include_once 'server/utils/Helpers.php';
 
@@ -23,10 +23,12 @@ class Main
 	
 	protected static $instance;
 	
-	public $path		= null;
-	public $config		= null;
-	public $routes		= null;
-	public $contents	= null;
+	public $config				= null;
+	public $device				= null;
+	public $path				= null;
+	public $lang				= null;
+	public $router				= null;
+	public $mainViewController	= null;
 	
 	
 	protected function __construct()
@@ -36,7 +38,7 @@ class Main
 		$this->setPath();
 		$this->setLang();
 		$this->setRoutes();
-		$this->setPagesController();
+		$this->setMainViewController();
 	}
 	
 	
@@ -80,16 +82,16 @@ class Main
 	}
 	
 	
-	private function setPagesController()
+	private function setMainViewController()
 	{
-		$this->pagesController = PagesController::getInstance();
-		$this->pagesController->setContoller();
+		$this->mainViewController = MainViewController::getInstance();
+		$this->mainViewController->setContoller();
 	}
 	
 	
 	public function renderView()
 	{
-		$this->pagesController->renderView();
+		$this->mainViewController->renderView();
 	}
 	
 }

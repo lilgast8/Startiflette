@@ -13,7 +13,7 @@ class AbstractViewController
 		$this->id	= $id;
 		$this->type	= $type;
 		
-		$this->pagesController	= PagesController::getInstance();
+		$this->mainViewController = MainViewController::getInstance();
 		
 		$this->getParams();
 		
@@ -110,7 +110,7 @@ class AbstractViewController
 	
 	private function getTemplate()
 	{
-		$this->template = $this->pagesController->twig->loadTemplate( $this->id . '.twig' );
+		$this->template = $this->mainViewController->twig->loadTemplate( $this->id . '.twig' );
 	}
 	
 	

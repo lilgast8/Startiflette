@@ -7,7 +7,7 @@ include_once 'server/contents/AbstractContent.php';
 
 
 
-class PagesController
+class MainViewController
 {
 	
 	protected static $instance;
@@ -58,7 +58,7 @@ class PagesController
 	
 	public function setPageInfos( $pageId, $phpView, $title, $desc )
 	{
-		self::$PAGE_INFOS = new stdClass();
+		self::$PAGE_INFOS			= new stdClass();
 		
 		self::$PAGE_INFOS->id		= $pageId;
 		self::$PAGE_INFOS->phpView	= $phpView;
