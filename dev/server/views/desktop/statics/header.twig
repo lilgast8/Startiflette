@@ -20,10 +20,10 @@
 	<link rel="alternate" href="{{ altLangUrl }}" hreflang="{{ lang }}" />
 	{% endfor %}
 	
-	<!-- Social share -->
+	{# Social share #}
 	{{ include( 'social-share.twig' ) }}
 	
-	<!-- Favicons -->
+	{# Favicons #}
 	{{ include( 'favicons.twig' ) }}
 	
 	<link media="screen" rel="stylesheet" type="text/css" href="{{ Path.URL.css }}styles-desktop.min.css" />
@@ -33,7 +33,7 @@
 	<!-- Modernirz & Detectizr -->
 	<!-- echo $this- path- getJsFilesUrl( 'header' ); -->
 	
-	<!-- Google Analytics -->
+	{# Google Analytics #}
 	{{ include( 'google-analytics.twig' ) }}
 	
 </head>
