@@ -112,17 +112,6 @@ class Main
 		$this->pagesController->renderView();
 	}
 	
-	
-	private function getViewPath()
-	{
-		$viewPath = Router::$CONTENT_TYPE == 'firstLoad' || Router::$CONTENT_TYPE == 'pageChange' ?
-					Path::$FILE->viewsPages :
-					Path::$FILE->viewsAlt;
-		
-		
-		return $viewPath;
-	}
-	
 }
 
 
