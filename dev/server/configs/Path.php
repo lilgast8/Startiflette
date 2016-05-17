@@ -37,12 +37,6 @@ class Path
 	}
 	
 	
-	protected function __clone()
-	{
-		
-	}
-	
-	
 	private function setDeviceDir()
 	{
 		if ( !Config::$HAS_MOBILE_VERSION )

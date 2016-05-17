@@ -26,12 +26,6 @@ class Contents
 	}
 	
 	
-	protected function __clone()
-	{
-		
-	}
-	
-	
 	private function setContentsConfig()
 	{
 		$this->contentsConfig = new stdClass();
