@@ -23,12 +23,12 @@ class Main
 	
 	protected static $instance;
 	
-	public $config				= null;
-	public $device				= null;
-	public $path				= null;
-	public $lang				= null;
-	public $router				= null;
-	public $mainViewController	= null;
+	private $config				= null;
+	private $device				= null;
+	private $path				= null;
+	private $lang				= null;
+	private $router				= null;
+	private $mainViewController	= null;
 	
 	
 	protected function __construct()
