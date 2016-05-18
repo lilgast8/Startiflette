@@ -5,7 +5,7 @@
 class Home extends AbstractViewController
 {
 	
-	public function getDynamicDatas()
+	protected function getViewDynamicDatas()
 	{
 		
 	}

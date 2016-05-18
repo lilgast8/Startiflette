@@ -90,7 +90,7 @@ class AbstractViewController
 	}
 	
 	
-	private function getViewDatas()
+	protected function getViewDatas()
 	{
 		$phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/' . $this->type . 's/' . $this->id . '.php';
 		$phpSharedFilePath	= Path::$FILE->contentsShared . $this->type . 's/' . $this->id . '.php';
@@ -100,7 +100,7 @@ class AbstractViewController
 	}
 	
 	
-	private function getViewDynamicDatas()
+	protected function getViewDynamicDatas()
 	{
 		
 	}
