@@ -5,6 +5,9 @@
 class AbstractContent
 {
 	
+	protected $datas = null;
+	
+	
 	public function __construct()
 	{
 		$this->setDatas();
