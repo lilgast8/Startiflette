@@ -2,6 +2,7 @@
     "require": {
         "mobiledetect/mobiledetectlib": "^2.8",
         "whichbrowser/parser": "^2.0",
-        "twig/twig": "~1.0"
+        "twig/twig": "~1.0",
+        "filp/whoops": "^2.*"
     }
 }

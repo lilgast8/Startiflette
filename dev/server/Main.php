@@ -33,6 +33,7 @@ class Main
 	
 	protected function __construct()
 	{
+		$this->setWhoops();
 		$this->setConfig();
 		$this->setDevice();
 		$this->setPath();
@@ -48,6 +49,14 @@ class Main
 			self::$instance = new self;
 		
 		return self::$instance;
+	}
+	
+	
+	private function setWhoops()
+	{
+		$whoops = new \Whoops\Run;
+		$whoops->pushHandler( new \Whoops\Handler\PrettyPageHandler );
+		$whoops->register();
 	}
 	
 	
