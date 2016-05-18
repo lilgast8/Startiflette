@@ -2,7 +2,8 @@
 
 
 
-include_once 'server/controllers/AbstractViewController.php';
+include_once 'server/core/controllers/AbstractViewController.php';
+
 include_once 'server/contents/AbstractContent.php';
 
 
@@ -88,11 +89,11 @@ class MainViewController
 	{
 		$controllerClassName	= ucfirst( self::$PAGE_INFOS->phpView );
 		
-		$phpFilePath			= 'server/controllers/pages/' . $controllerClassName . '.php';
+		$phpFilePath			= 'server/core/controllers/pages/' . $controllerClassName . '.php';
 		
 		if ( !file_exists( $phpFilePath ) ) {
 			$controllerClassName	= 'AbstractViewController';
-			$phpFilePath			= 'server/controllers/AbstractViewController.php';
+			$phpFilePath			= 'server/core/controllers/AbstractViewController.php';
 		}
 		
 		include_once $phpFilePath;

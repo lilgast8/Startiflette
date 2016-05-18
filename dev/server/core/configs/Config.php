@@ -55,8 +55,8 @@ class Config
 		if ( !file_exists( self::CONFIG_FILE_PATH ) )
 			throw new ErrorException( 'Config file is missing!' );
 		
-		$config	= file_get_contents( self::CONFIG_FILE_PATH );
-		$config	= json_decode( $config );
+		$config = file_get_contents( self::CONFIG_FILE_PATH );
+		$config = json_decode( $config );
 		
 		
 		return $config;

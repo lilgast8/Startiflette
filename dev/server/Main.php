@@ -5,16 +5,16 @@
 require 'vendor/autoload.php';
 
 
-include_once 'server/configs/Config.php';
-include_once 'server/configs/Device.php';
-include_once 'server/configs/Lang.php';
-include_once 'server/configs/Path.php';
+include_once 'server/core/configs/Config.php';
+include_once 'server/core/configs/Device.php';
+include_once 'server/core/configs/Lang.php';
+include_once 'server/core/configs/Path.php';
 
-include_once 'server/routes/Router.php';
+include_once 'server/core/routes/Router.php';
 
-include_once 'server/controllers/MainViewController.php';
+include_once 'server/core/controllers/MainViewController.php';
 
-include_once 'server/utils/Helpers.php';
+include_once 'server/core/utils/Helpers.php';
 
 
 
