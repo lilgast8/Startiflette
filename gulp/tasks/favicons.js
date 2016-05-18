@@ -100,13 +100,13 @@ gulp.task( 'favicons:generate', [ 'delete' ], function( done ) {
 
 gulp.task( 'favicons:manage-markups', [ 'favicons:inject-markups' ], function() {
 	
-	var filePath	= paths.env.dev + paths.server.shared.dir + 'favicons.php';
+	var filePath	= paths.env.dev + paths.server.views.shared.dir + 'favicons.twig';
 	var data		= fs.readFileSync( filePath, 'utf8' );
 	
-	data			= data.replace( new RegExp( '\\' + globalConfig.ENVS.prod.base_url + 'assets/favicons/', 'g' ), '<?php echo Path::$URL->favicons; ?>' );	
-	data			= data.replace( new RegExp( '\\' + '<!--', 'g' ), '\n	<!--' );	
-	data			= data.replace( new RegExp( '\\' + '<link', 'g' ), '	<link' );	
-	data			= data.replace( new RegExp( '\\' + '<meta', 'g' ), '	<meta' );	
+	data			= data.replace( new RegExp( '\\' + globalConfig.ENVS.prod.base_url + 'assets/favicons/', 'g' ), '{{ Path.URL.favicons }}' );
+	data			= data.replace( new RegExp( '\\' + '<!--', 'g' ), '\n	<!--' );
+	data			= data.replace( new RegExp( '\\' + '<link', 'g' ), '	<link' );
+	data			= data.replace( new RegExp( '\\' + '<meta', 'g' ), '	<meta' );
 	data			+= '\n';
 	
 	fs.writeFileSync( filePath, data, 'utf8' );
@@ -124,7 +124,7 @@ gulp.task( 'favicons:inject-markups', function() {
 		.pipe( realFavicon.injectFaviconMarkups(
 			JSON.parse( fs.readFileSync( paths.env.dev + paths.configs.favicons.dataFile ) ).favicon.html_code
 		) )
-		.pipe( gulp.dest( paths.env.dev + paths.server.shared.dir ) );
+		.pipe( gulp.dest( paths.env.dev + paths.server.views.shared.dir ) );
 	
 });
 

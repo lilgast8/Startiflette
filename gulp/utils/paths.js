@@ -126,7 +126,7 @@ module.exports = {
 			allFiles:	'configs/favicons/*.json',
 			configFile:	'configs/favicons/config.json',
 			dataFile:	'configs/favicons/faviconData.json',
-			srcFile:	'configs/favicons/favicons.php'
+			srcFile:	'configs/favicons/favicons.twig'
 		},
 		
 		routes: {
@@ -142,16 +142,15 @@ module.exports = {
 		
 		contents: 'server/contents/',
 		
-		shared: {
-			dir: 'server/shared/'
-		},
-		
 		views: {
 			desktop: {
 				pages: 'server/views/desktop/pages/'
 			},
 			mobile: {
 				pages: 'server/views/mobile/pages/'
+			},
+			shared: {
+				dir: 'server/views/shared/'
 			}
 		}
 	}
