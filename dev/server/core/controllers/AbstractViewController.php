@@ -55,11 +55,13 @@ class AbstractViewController
 		if ( !file_exists( $phpFilePath ) )
 			$phpFilePath = $phpSharedFilePath;
 		
-		include_once $phpFilePath;
-		
-		$contentClass	= new $contentClassName();
-		
-		$this->content	=  array_merge ( $this->content, (array) $contentClass->getDatas() );
+		if ( file_exists( $phpFilePath ) ) {
+			include_once $phpFilePath;
+			
+			$contentClass	= new $contentClassName();
+			
+			$this->content	=  array_merge ( $this->content, (array) $contentClass->getDatas() );
+		}
 	}
 	
 	
