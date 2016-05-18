@@ -89,9 +89,9 @@ class Main
 	}
 	
 	
-	public function renderView()
+	public function displayView()
 	{
-		$this->mainViewController->renderView();
+		$this->mainViewController->displayView();
 	}
 	
 }

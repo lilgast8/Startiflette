@@ -101,7 +101,7 @@ class MainViewController
 	}
 	
 	
-	public function renderView()
+	public function displayView()
 	{
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
 			$this->headerController->displayView();
