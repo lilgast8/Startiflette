@@ -23,11 +23,15 @@ module.exports = {
 				mobileFile:		'assets/css/app/styles-mobile.scss',
 				
 				desktop: {
-					pages:		'assets/css/app/desktop/pages/'
+					pages:		'assets/css/app/desktop/pages/',
+					partials:	'assets/css/app/desktop/partials/',
+					statics:	'assets/css/app/desktop/statics/'
 				},
 				
 				mobile: {
-					pages:		'assets/css/app/mobile/pages/'
+					pages:		'assets/css/app/mobile/pages/',
+					partials:	'assets/css/app/mobile/partials/',
+					statics:	'assets/css/app/mobile/statics/'
 				}
 			},
 			
@@ -66,13 +70,17 @@ module.exports = {
 				
 				desktop: {
 					views: {
-						pages: 'assets/js/app/desktop/views/pages/',
+						pages:		'assets/js/app/desktop/views/pages/',
+						partials:	'assets/js/app/desktop/views/partials/',
+						statics:	'assets/js/app/desktop/views/statics/'
 					}
 				},
 				
 				mobile: {
 					views: {
-						pages: 'assets/js/app/mobile/views/pages/',
+						pages:		'assets/js/app/mobile/views/pages/',
+						partials:	'assets/js/app/mobile/views/partials/',
+						statics:	'assets/js/app/mobile/views/statics/'
 					}
 				}
 			},
@@ -142,12 +150,24 @@ module.exports = {
 		
 		contents: 'server/contents/',
 		
+		core: {
+			controllers: {
+				pages:		'server/core/controllers/pages/',
+				partials:	'server/core/controllers/partials/',
+				statics:	'server/core/controllers/statics/'
+			}
+		},
+		
 		views: {
 			desktop: {
-				pages: 'server/views/desktop/pages/'
+				pages:		'server/views/desktop/pages/',
+				partials:	'server/views/desktop/partials/',
+				statics:	'server/views/desktop/statics/'
 			},
 			mobile: {
-				pages: 'server/views/mobile/pages/'
+				pages:		'server/views/mobile/pages/',
+				partials:	'server/views/mobile/partials/',
+				statics:	'server/views/mobile/statics/'
 			},
 			shared: {
 				dir: 'server/views/shared/'
