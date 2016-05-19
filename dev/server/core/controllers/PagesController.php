@@ -8,7 +8,7 @@ include_once 'server/contents/AbstractContent.php';
 
 
 
-class MainViewController
+class PagesController
 {
 	
 	protected static $instance;

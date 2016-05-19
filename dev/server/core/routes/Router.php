@@ -17,7 +17,7 @@ class Router
 	private $isHomepage			= null;
 	
 	private $lang				= null;
-	private $mainViewController	= null;
+	private $pagesController	= null;
 	
 	private $params				= null;
 	
@@ -130,8 +130,8 @@ class Router
 	
 	public function init()
 	{
-		$this->lang					= Lang::getInstance();
-		$this->mainViewController	= MainViewController::getInstance();
+		$this->lang				= Lang::getInstance();
+		$this->pagesController	= PagesController::getInstance();
 		
 		$this->setContentType();
 		$this->setPageInfos();
@@ -164,7 +164,7 @@ class Router
 			else if ( !Lang::$MULTI_LANG && self::$PAGE_URL->aParams[0] == Lang::$DEFAULT_LANG )
 				$this->redirectToPageWithoutLang();
 			
-			$this->mainViewController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
+			$this->pagesController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
 		}
 		else { // 404
 			$page->id		= 'error404';
@@ -172,7 +172,7 @@ class Router
 			
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
-			$this->mainViewController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
+			$this->pagesController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
 		}
 	}
 	

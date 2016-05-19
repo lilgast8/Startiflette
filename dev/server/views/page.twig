@@ -4,7 +4,7 @@
 {{ include( 'header.twig' ) }}
 {% endif %}
 
-{{ include( MainViewController.PAGE_INFOS.id ~ '.twig' ) }}
+{{ include( PagesController.PAGE_INFOS.id ~ '.twig' ) }}
 
 {% if Router.CONTENT_TYPE == 'firstLoad' %}
 {{ include( 'footer.twig' ) }}

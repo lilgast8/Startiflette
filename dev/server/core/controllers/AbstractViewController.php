@@ -14,7 +14,7 @@ class AbstractViewController
 		$this->id	= $id;
 		$this->type	= $type;
 		
-		$this->mainViewController = MainViewController::getInstance();
+		$this->pagesController = PagesController::getInstance();
 		
 		$this->setStaticViews();
 		$this->getParams();
@@ -63,7 +63,7 @@ class AbstractViewController
 		$this->getParamsFromClass( 'Path' );
 		$this->getParamsFromClass( 'Lang' );
 		$this->getParamsFromClass( 'Router' );
-		$this->getParamsFromClass( 'MainViewController' );
+		$this->getParamsFromClass( 'PagesController' );
 		
 		$this->content = json_decode( json_encode( $this->content ), true );
 	}
@@ -129,7 +129,7 @@ class AbstractViewController
 	
 	private function getTemplate()
 	{
-		$this->template = $this->mainViewController->twig->loadTemplate( $this->type . '.twig' );
+		$this->template = $this->pagesController->twig->loadTemplate( $this->type . '.twig' );
 	}
 	
 	
