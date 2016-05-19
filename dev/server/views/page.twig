@@ -1,0 +1,11 @@
+
+
+{% if Router.CONTENT_TYPE == 'firstLoad' %}
+{{ include( 'header.twig' ) }}
+{% endif %}
+
+{{ include( MainViewController.PAGE_INFOS.id ~ '.twig' ) }}
+
+{% if Router.CONTENT_TYPE == 'firstLoad' %}
+{{ include( 'footer.twig' ) }}
+{% endif %}

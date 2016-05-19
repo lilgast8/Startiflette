@@ -5,7 +5,8 @@
 class AbstractViewController
 {
 	
-	private $content = array();
+	private $content			= array();
+	private $staticViewsInfos	= null;
 	
 	
 	public function __construct( $id, $type )
@@ -15,16 +16,43 @@ class AbstractViewController
 		
 		$this->mainViewController = MainViewController::getInstance();
 		
+		$this->setStaticViews();
 		$this->getParams();
 		
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			$this->getStaticGlobalDatas();
+			$this->getStaticViewsDatas();
 		$this->getGlobalDatas();
-		$this->getViewDatas();
-		$this->getViewDynamicDatas();
+		$this->getPageViewDatas();
+		$this->getPageViewDynamicDatas();
 		
 		$this->getTemplate();
 		$this->renderView();
+	}
+	
+	
+	private function setStaticViews()
+	{
+		$this->staticViewsInfos = new stdClass();
+		
+		$this->staticViewsInfos->staticGlobal						= new stdClass();
+		$this->staticViewsInfos->staticGlobal->contentClassName		= 'StaticGlobalContent';
+		$this->staticViewsInfos->staticGlobal->phpFilePath			= Path::$FILE->contentsShared . 'static-global.php';
+		$this->staticViewsInfos->staticGlobal->phpSharedFilePath	= null;
+		
+		$this->staticViewsInfos->header						= new stdClass();
+		$this->staticViewsInfos->header->contentClassName	= 'HeaderContent';
+		$this->staticViewsInfos->header->phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/statics/' . 'header.php';
+		$this->staticViewsInfos->header->phpSharedFilePath	= null;
+		
+		$this->staticViewsInfos->footer						= new stdClass();
+		$this->staticViewsInfos->footer->contentClassName	= 'FooterContent';
+		$this->staticViewsInfos->footer->phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/statics/' . 'footer.php';
+		$this->staticViewsInfos->footer->phpSharedFilePath	= null;
+		
+		$this->staticViewsInfos->alt					= new stdClass();
+		$this->staticViewsInfos->alt->contentClassName	= 'AltContent';
+		$this->staticViewsInfos->alt->phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/alt.php';
+		$this->staticViewsInfos->alt->phpSharedFilePath	= Path::$FILE->contentsShared . 'alt.php';
 	}
 	
 	
@@ -35,6 +63,7 @@ class AbstractViewController
 		$this->getParamsFromClass( 'Path' );
 		$this->getParamsFromClass( 'Lang' );
 		$this->getParamsFromClass( 'Router' );
+		$this->getParamsFromClass( 'MainViewController' );
 		
 		$this->content = json_decode( json_encode( $this->content ), true );
 	}
@@ -65,20 +94,10 @@ class AbstractViewController
 	}
 	
 	
-	private function getStaticGlobalDatas()
+	private function getStaticViewsDatas()
 	{
-		$phpFilePath		= Path::$FILE->contentsShared . 'static-global.php';
-		$contentClassName	= 'StaticGlobalContent';
-		
-		$this->getContent( $phpFilePath, null, $contentClassName );
-		
-		if ( $this->id == 'footer' ) {
-			$phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/alt.php';
-			$phpSharedFilePath	= Path::$FILE->contentsShared . 'alt.php';
-			$contentClassName	= 'AltContent';
-			
-			$this->getContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
-		}
+		foreach ( $this->staticViewsInfos as $viewInfos )
+			$this->getContent( $viewInfos->phpFilePath, $viewInfos->phpSharedFilePath, $viewInfos->contentClassName );
 	}
 	
 	
@@ -92,7 +111,7 @@ class AbstractViewController
 	}
 	
 	
-	protected function getViewDatas()
+	protected function getPageViewDatas()
 	{
 		$phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/' . $this->type . 's/' . $this->id . '.php';
 		$phpSharedFilePath	= Path::$FILE->contentsShared . $this->type . 's/' . $this->id . '.php';
@@ -102,7 +121,7 @@ class AbstractViewController
 	}
 	
 	
-	protected function getViewDynamicDatas()
+	protected function getPageViewDynamicDatas()
 	{
 		
 	}
@@ -110,7 +129,7 @@ class AbstractViewController
 	
 	private function getTemplate()
 	{
-		$this->template = $this->mainViewController->twig->loadTemplate( $this->id . '.twig' );
+		$this->template = $this->mainViewController->twig->loadTemplate( $this->type . '.twig' );
 	}
 	
 	

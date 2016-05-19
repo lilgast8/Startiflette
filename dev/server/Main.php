@@ -94,7 +94,7 @@ class Main
 	private function setMainViewController()
 	{
 		$this->mainViewController = MainViewController::getInstance();
-		$this->mainViewController->setContoller();
+		$this->mainViewController->init();
 	}
 	
 	

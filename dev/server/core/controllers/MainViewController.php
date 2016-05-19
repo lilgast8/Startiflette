@@ -19,6 +19,8 @@ class MainViewController
 	private $footerController	= null;
 	private $pageController		= null;
 	
+	public $params				= null;
+	
 	
 	protected function __construct()
 	{
@@ -38,6 +40,7 @@ class MainViewController
 	private function setTwig()
 	{
 		$loader	= new Twig_Loader_Filesystem( array(
+			Path::$FILE->views,
 			Path::$FILE->viewsPages,
 			Path::$FILE->viewsPartials,
 			Path::$FILE->viewsStatics,
@@ -68,20 +71,11 @@ class MainViewController
 	}
 	
 	
-	public function setContoller()
+	public function init()
 	{
-		$this->setStaticViewController();
-		$this->setPageViewController();
-	}
-	
-	
-	private function setStaticViewController()
-	{
-		// Header
-		$this->headerController = new AbstractViewController( 'header', 'static' );
+		$this->setParams();
 		
-		// Footer
-		$this->footerController = new AbstractViewController( 'footer', 'static' );
+		$this->setPageViewController();
 	}
 	
 	
@@ -102,15 +96,23 @@ class MainViewController
 	}
 	
 	
+	private function setParams()
+	{
+		$this->params = new stdClass();
+		
+		$this->params->PAGE_INFOS = self::$PAGE_INFOS;
+	}
+	
+	
+	public function getParams()
+	{
+		return $this->params;
+	}
+	
+	
 	public function displayView()
 	{
-		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			$this->headerController->displayView();
-		
 		$this->pageController->displayView();
-		
-		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			$this->footerController->displayView();
 	}
 	
 }
