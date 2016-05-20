@@ -41,17 +41,17 @@ class AbstractViewController
 		
 		$this->staticViewsInfos->header						= new stdClass();
 		$this->staticViewsInfos->header->contentClassName	= 'HeaderContent';
-		$this->staticViewsInfos->header->phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/statics/' . 'header.php';
+		$this->staticViewsInfos->header->phpFilePath		= Path::$FILE->contentsStatics . 'header.php';
 		$this->staticViewsInfos->header->phpSharedFilePath	= null;
 		
 		$this->staticViewsInfos->footer						= new stdClass();
 		$this->staticViewsInfos->footer->contentClassName	= 'FooterContent';
-		$this->staticViewsInfos->footer->phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/statics/' . 'footer.php';
+		$this->staticViewsInfos->footer->phpFilePath		= Path::$FILE->contentsStatics . 'footer.php';
 		$this->staticViewsInfos->footer->phpSharedFilePath	= null;
 		
 		$this->staticViewsInfos->alt					= new stdClass();
 		$this->staticViewsInfos->alt->contentClassName	= 'AltContent';
-		$this->staticViewsInfos->alt->phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/alt.php';
+		$this->staticViewsInfos->alt->phpFilePath		= Path::$FILE->contentsLang . 'alt.php';
 		$this->staticViewsInfos->alt->phpSharedFilePath	= Path::$FILE->contentsShared . 'alt.php';
 	}
 	
@@ -103,7 +103,7 @@ class AbstractViewController
 	
 	private function getGlobalDatas()
 	{
-		$phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/global.php';
+		$phpFilePath		= Path::$FILE->contentsLang . 'global.php';
 		$phpSharedFilePath	= Path::$FILE->contentsShared . 'global.php';
 		$contentClassName	= 'GlobalContent';
 		
@@ -113,7 +113,7 @@ class AbstractViewController
 	
 	protected function getPageViewDatas()
 	{
-		$phpFilePath		= Path::$FILE->contents . Lang::$LANG . '/' . $this->type . 's/' . $this->id . '.php';
+		$phpFilePath		= Path::$FILE->contentsLang . $this->type . 's/' . $this->id . '.php';
 		$phpSharedFilePath	= Path::$FILE->contentsShared . $this->type . 's/' . $this->id . '.php';
 		$contentClassName	= Helpers::titleCase( $this->id ) . 'Content';
 		

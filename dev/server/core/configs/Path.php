@@ -72,30 +72,43 @@ class Path
 		// file paths
 		self::$FILE					= new stdClass();
 		
-		self::$FILE->assets			= 'assets/';
-		self::$FILE->css			= self::$FILE->assets	. 'css/';
-		self::$FILE->favicons		= self::$FILE->assets	. 'favicons/';
-		self::$FILE->files			= self::$FILE->assets	. 'files/';
-		self::$FILE->img			= self::$FILE->assets	. 'img/';
-		self::$FILE->js				= self::$FILE->assets	. 'js/';
-		self::$FILE->json			= self::$FILE->assets	. 'json/';
-		self::$FILE->sounds			= self::$FILE->assets	. 'sounds/';
-		self::$FILE->svg			= self::$FILE->assets	. 'svg/';
-		self::$FILE->svgSprite		= self::$FILE->svg		. '_sprite/';
-		self::$FILE->videos			= self::$FILE->assets	. 'videos/';
-		self::$FILE->configs		= 'configs/';
-		self::$FILE->jsFilesFile	= self::$FILE->configs	. 'config/js-files.json';
-		self::$FILE->routes			= self::$FILE->configs	. 'routes/';
-		self::$FILE->server			= 'server/';
-		self::$FILE->shared			= self::$FILE->server	. 'shared/';
-		self::$FILE->contents		= self::$FILE->server	. 'contents/';
-		self::$FILE->contentsShared	= self::$FILE->contents	. 'shared/';
-		self::$FILE->views			= self::$FILE->server	. 'views/';
-		self::$FILE->viewsPages		= self::$FILE->views	. $this->deviceDir . 'pages/';
-		self::$FILE->viewsPartials	= self::$FILE->views	. $this->deviceDir . 'partials/';
-		self::$FILE->viewsStatics	= self::$FILE->views	. $this->deviceDir . 'statics/';
-		self::$FILE->viewsAlt		= self::$FILE->views	. 'alt/';
-		self::$FILE->viewsShared	= self::$FILE->views	. 'shared/';
+		self::$FILE->assets					= 'assets/';
+		self::$FILE->css					= self::$FILE->assets	. 'css/';
+		self::$FILE->favicons				= self::$FILE->assets	. 'favicons/';
+		self::$FILE->files					= self::$FILE->assets	. 'files/';
+		self::$FILE->img					= self::$FILE->assets	. 'img/';
+		self::$FILE->js						= self::$FILE->assets	. 'js/';
+		self::$FILE->json					= self::$FILE->assets	. 'json/';
+		self::$FILE->sounds					= self::$FILE->assets	. 'sounds/';
+		self::$FILE->svg					= self::$FILE->assets	. 'svg/';
+		self::$FILE->svgSprite				= self::$FILE->svg		. '_sprite/';
+		self::$FILE->videos					= self::$FILE->assets	. 'videos/';
+		self::$FILE->configs				= 'configs/';
+		self::$FILE->jsFilesFile			= self::$FILE->configs	. 'config/js-files.json';
+		self::$FILE->routes					= self::$FILE->configs	. 'routes/';
+		self::$FILE->server					= 'server/';
+		self::$FILE->contents				= self::$FILE->server	. 'contents/';
+		self::$FILE->contentsLang			= null;
+		self::$FILE->contentsPages			= null;
+		self::$FILE->contentsPartials		= null;
+		self::$FILE->contentsStatics		= null;
+		self::$FILE->contentsShared			= self::$FILE->contents	. 'shared/';
+		self::$FILE->contentsSharedPages	= self::$FILE->contentsShared	. 'pages/';
+		self::$FILE->views					= self::$FILE->server	. 'views/';
+		self::$FILE->viewsPages				= self::$FILE->views	. $this->deviceDir . 'pages/';
+		self::$FILE->viewsPartials			= self::$FILE->views	. $this->deviceDir . 'partials/';
+		self::$FILE->viewsStatics			= self::$FILE->views	. $this->deviceDir . 'statics/';
+		self::$FILE->viewsAlt				= self::$FILE->views	. 'alt/';
+		self::$FILE->viewsShared			= self::$FILE->views	. 'shared/';
+	}
+	
+	
+	public function setFileLangVar()
+	{
+		self::$FILE->contentsLang		= self::$FILE->contents	. Lang::$LANG . '/';
+		self::$FILE->contentsPages		= self::$FILE->contentsLang . 'pages/';
+		self::$FILE->contentsPartials	= self::$FILE->contentsLang . 'partials/';
+		self::$FILE->contentsStatics	= self::$FILE->contentsLang . 'statics/';
 	}
 	
 	
