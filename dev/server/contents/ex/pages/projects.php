@@ -10,6 +10,11 @@ class ProjectsContent extends AbstractContent
 		$d = new stdClass();
 		
 		
+		$d->metas			= new stdClass();
+		$d->metas->title	= "Projects - ex";
+		$d->metas->desc		= "Projects - ex";
+		
+		
 		$d->title = "— Projects-ex —";
 		
 		
