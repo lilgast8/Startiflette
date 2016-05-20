@@ -11,6 +11,7 @@ class ViewNameContent extends AbstractContent
 		
 		
 		$d->metas			= new stdClass();
+		
 		$d->metas->title	= "View name — Title";
 		$d->metas->desc		= "View name — Description";
 		
