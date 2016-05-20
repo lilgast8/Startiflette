@@ -94,6 +94,8 @@ class Path
 		self::$FILE->contentsStatics		= null;
 		self::$FILE->contentsShared			= self::$FILE->contents	. 'shared/';
 		self::$FILE->contentsSharedPages	= self::$FILE->contentsShared	. 'pages/';
+		self::$FILE->contentsSharedPartials	= self::$FILE->contentsShared	. 'partials/';
+		self::$FILE->contentsSharedStatics	= self::$FILE->contentsShared	. 'statics/';
 		self::$FILE->views					= self::$FILE->server	. 'views/';
 		self::$FILE->viewsPages				= self::$FILE->views	. $this->deviceDir . 'pages/';
 		self::$FILE->viewsPartials			= self::$FILE->views	. $this->deviceDir . 'partials/';

@@ -51,8 +51,8 @@ class AbstractViewController
 		
 		$this->staticViewsInfos->alt					= new stdClass();
 		$this->staticViewsInfos->alt->contentClassName	= 'AltContent';
-		$this->staticViewsInfos->alt->phpFilePath		= Path::$FILE->contentsLang . 'alt.php';
-		$this->staticViewsInfos->alt->phpSharedFilePath	= Path::$FILE->contentsShared . 'alt.php';
+		$this->staticViewsInfos->alt->phpFilePath		= Path::$FILE->contentsPartials . 'alt.php';
+		$this->staticViewsInfos->alt->phpSharedFilePath	= Path::$FILE->contentsSharedPartials . 'alt.php';
 	}
 	
 	
