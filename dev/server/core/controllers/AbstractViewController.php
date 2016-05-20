@@ -88,8 +88,9 @@ class AbstractViewController
 			include_once $phpFilePath;
 			
 			$contentClass	= new $contentClassName();
+			$datas			= $contentClass->getDatas();
 			
-			$this->content	=  array_merge ( $this->content, (array) $contentClass->getDatas() );
+			$this->content	=  array_merge_recursive ( $this->content, (array) $datas );
 		}
 	}
 	
