@@ -16,7 +16,7 @@ class AbstractViewController
 		
 		$this->pagesController = PagesController::getInstance();
 		
-		$this->setStaticViews();
+		$this->setStaticViewsInfos();
 		$this->getParams();
 		
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
@@ -30,7 +30,7 @@ class AbstractViewController
 	}
 	
 	
-	private function setStaticViews()
+	private function setStaticViewsInfos()
 	{
 		$this->staticViewsInfos = new stdClass();
 		
@@ -66,32 +66,6 @@ class AbstractViewController
 		$this->getParamsFromClass( 'PagesController' );
 		
 		$this->content = json_decode( json_encode( $this->content ), true );
-	}
-	
-	
-	private function getParamsFromClass( $className )
-	{
-		$class				= $className::getInstance();
-		$params				= new stdClass();
-		$params->$className	= $class->getParams();
-		
-		$this->content		=  array_merge ( $this->content, (array) $params );
-	}
-	
-	
-	private function getContent( $phpFilePath, $phpSharedFilePath, $contentClassName )
-	{
-		if ( !file_exists( $phpFilePath ) )
-			$phpFilePath = $phpSharedFilePath;
-		
-		if ( file_exists( $phpFilePath ) ) {
-			include_once $phpFilePath;
-			
-			$contentClass	= new $contentClassName();
-			$datas			= $contentClass->getDatas();
-			
-			$this->content	=  array_merge_recursive ( $this->content, (array) $datas );
-		}
 	}
 	
 	
@@ -143,6 +117,32 @@ class AbstractViewController
 	public function displayView()
 	{
 		echo $this->view;
+	}
+	
+	
+	private function getParamsFromClass( $className )
+	{
+		$class				= $className::getInstance();
+		$params				= new stdClass();
+		$params->$className	= $class->getParams();
+		
+		$this->content		=  array_merge ( $this->content, (array) $params );
+	}
+	
+	
+	private function getContent( $phpFilePath, $phpSharedFilePath, $contentClassName )
+	{
+		if ( !file_exists( $phpFilePath ) )
+			$phpFilePath = $phpSharedFilePath;
+		
+		if ( file_exists( $phpFilePath ) ) {
+			include_once $phpFilePath;
+			
+			$contentClass	= new $contentClassName();
+			$datas			= $contentClass->getDatas();
+			
+			$this->content	=  array_merge_recursive ( $this->content, (array) $datas );
+		}
 	}
 	
 }
