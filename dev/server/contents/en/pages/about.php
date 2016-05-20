@@ -10,6 +10,11 @@ class AboutContent extends AbstractContent
 		$d = new stdClass();
 		
 		
+		$d->metas			= new stdClass();
+		$d->metas->title	= "About";
+		$d->metas->desc		= "About";
+		
+		
 		$d->title = "— About —";
 		
 		
