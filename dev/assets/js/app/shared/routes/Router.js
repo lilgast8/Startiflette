@@ -183,8 +183,8 @@ STF.Router = ( function( window ) {
 			_setAltLangUrl.call( this, page.params );
 		}
 		else { // 404
-			page.id		= 'error404';
-			page.params	= this.ROUTES.statics.error404;
+			page.id		= 'error-404';
+			page.params	= this.ROUTES.statics[ page.id ];
 		}
 		
 		STF.PagesController.setPageInfos( page.id, page.params.jsView, page.params[ STF.Lang.LANG ].title, page.params[ STF.Lang.LANG ].desc );

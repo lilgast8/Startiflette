@@ -17,7 +17,7 @@ class AbstractViewController
 		$this->pagesController = PagesController::getInstance();
 		
 		$this->setStaticViewsInfos();
-		$this->getParams();
+		$this->setParams();
 		
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
 			$this->getStaticViewsDatas();
@@ -56,7 +56,7 @@ class AbstractViewController
 	}
 	
 	
-	private function getParams()
+	private function setParams()
 	{
 		$this->getParamsFromClass( 'Config' );
 		$this->getParamsFromClass( 'Device' );

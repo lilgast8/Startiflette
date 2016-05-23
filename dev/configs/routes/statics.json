@@ -1,6 +1,6 @@
 {
 	
-	"error404": {
+	"error-404": {
 		"jsView"	: "error-404",
 		"phpView"	: "error-404",
 		"fr": {
@@ -20,7 +20,7 @@
 		}
 	},
 	
-	"legal_notices": {
+	"legal-notices": {
 		"jsView"	: "legal-notices",
 		"phpView"	: "legal-notices",
 		"fr": {

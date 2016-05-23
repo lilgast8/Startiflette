@@ -60,14 +60,12 @@ class PagesController
 	}
 	
 	
-	public function setPageInfos( $pageId, $phpView, $title, $desc )
+	public function setPageInfos( $pageId, $pageParams )
 	{
 		self::$PAGE_INFOS			= new stdClass();
 		
 		self::$PAGE_INFOS->id		= $pageId;
-		self::$PAGE_INFOS->phpView	= $phpView;
-		self::$PAGE_INFOS->title	= $title;
-		self::$PAGE_INFOS->desc		= $desc;
+		self::$PAGE_INFOS->name		= Helpers::camelCase( self::$PAGE_INFOS->id );
 	}
 	
 	
@@ -81,7 +79,7 @@ class PagesController
 	
 	private function setPageViewController()
 	{
-		$controllerClassName	= ucfirst( self::$PAGE_INFOS->phpView );
+		$controllerClassName	= ucfirst( self::$PAGE_INFOS->id );
 		
 		$phpFilePath			= 'server/core/controllers/pages/' . $controllerClassName . '.php';
 		
@@ -92,7 +90,7 @@ class PagesController
 		
 		include_once $phpFilePath;
 		
-		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->phpView, 'page' );
+		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->id, 'page' );
 	}
 	
 	

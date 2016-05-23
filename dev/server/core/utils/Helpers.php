@@ -16,6 +16,15 @@ class Helpers
 	}
 	
 	
+	public static function camelCase( $string )
+	{
+		$string	= Helpers::titleCase( $string );
+		$string = lcfirst( $string );
+		
+		return $string;
+	}
+	
+	
 	public static function getSVG( $name )
 	{
 		$html = '';
