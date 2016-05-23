@@ -169,6 +169,8 @@ class Router
 			$page->id		= 'error-404';
 			$page->params	= self::$ROUTES->statics->{ $page->id };
 			
+			$this->setAltLangUrl( self::$ROUTES->statics->home );
+			
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
 			$this->pagesController->setPageInfos( $page->id, $page->params );
