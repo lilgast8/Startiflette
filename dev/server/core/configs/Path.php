@@ -122,7 +122,7 @@ class Path
 		foreach ( $jsFiles as $fileId => $fileInfos ) { // parse JsFiles infos
 			$listFiles	= '';
 			
-			/* dev */
+			// dev 
 			if ( Config::$ENV != 'preprod-local' || Config::$ENV != 'preprod' || Config::$ENV != 'prod' ) {
 				$files = $jsFiles->$fileId->files;
 				
@@ -136,17 +136,17 @@ class Path
 				}
 			}
 			
-			/* preprod-local, preprod or prod */
+			// preprod-local, preprod or prod 
 			else {
-				$fileName	= $jsFiles->$fileId->name;
-				$fileDest	= $jsFiles->$fileId->dest;
+				$fileName = $jsFiles->$fileId->name;
+				$fileDest = $jsFiles->$fileId->dest;
 				
 				if ( is_array( $fileName ) ) {
-						$listFiles .= '<!--[if lt IE 9]><script src="' . self::$URL->js . $fileName[1] . '"></script><![endif]-->' . "\n";
-						$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . self::$URL->js . $fileName[0] . '"></script><!--<![endif]-->' . "\n";
-					}
-					else
-						$listFiles .= '<script src="' . self::$URL->js . $fileDest . $fileName . '"></script>' . "\n";
+					$listFiles .= '<!--[if lt IE 9]><script src="' . self::$URL->js . $fileName[1] . '"></script><![endif]-->' . "\n";
+					$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . self::$URL->js . $fileName[0] . '"></script><!--<![endif]-->' . "\n";
+				}
+				else
+					$listFiles .= '<script src="' . self::$URL->js . $fileDest . $fileName . '"></script>' . "\n";
 			}
 			
 			self::$JS_FILES[ $fileId ] = $listFiles;
