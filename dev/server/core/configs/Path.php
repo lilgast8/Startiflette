@@ -51,7 +51,7 @@ class Path
 	private function setPaths()
 	{
 		// url paths
-		self::$URL			= new stdClass();
+		self::$URL				= new stdClass();
 		
 		self::$URL->base		= Config::$ENVS->{ Config::$ENV }->base_url;
 		self::$URL->assets		= self::$URL->base		. 'assets/';
@@ -70,7 +70,7 @@ class Path
 		
 		
 		// file paths
-		self::$FILE					= new stdClass();
+		self::$FILE							= new stdClass();
 		
 		self::$FILE->assets					= 'assets/';
 		self::$FILE->css					= self::$FILE->assets	. 'css/';
