@@ -152,10 +152,11 @@ class Router
 	
 	private function setPageInfos()
 	{
-		$langExist	= $this->getLangExistence();
+		// $langExist	= $this->getLangExistence();
 		$page		= $this->getPageInfos();
 		
-		if ( $langExist && $page->exist ) { // page exist
+		// if ( $langExist && $page->exist ) { // page exist
+		if ( Lang::$LANG_EXIST && $page->exist ) { // page exist
 			$this->setIsHomepage( $page->id );
 			$this->setAltLangUrl( $page->params );
 			
@@ -164,20 +165,22 @@ class Router
 			else if ( !Lang::$MULTI_LANG && self::$PAGE_URL->aParams[0] == Lang::$DEFAULT_LANG )
 				$this->redirectToPageWithoutLang();
 			
-			$this->pagesController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
+			// $this->pagesController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
+			$this->pagesController->setPageInfos( $page->id, $page->params );
 		}
 		else { // 404
-			$page->id		= 'error404';
-			$page->params	= self::$ROUTES->statics->error404;
+			$page->id		= 'error-404';
+			// $page->params	= self::$ROUTES->statics->error404;
+			$page->params	= self::$ROUTES->statics->{ $page->id };
 			
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
-			$this->pagesController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
+			$this->pagesController->setPageInfos( $page->id, $page->params );
 		}
 	}
 	
 	
-	private function getLangExistence()
+	/*private function getLangExistence()
 	{
 		$langExist = true;
 		
@@ -189,7 +192,7 @@ class Router
 		
 		
 		return $langExist;
-	}
+	}*/
 	
 	
 	private function getPageInfos()
@@ -277,13 +280,13 @@ class Router
 			self::$LINK->$routesGroup = new stdClass();
 			
 			foreach ( $pages as $pageId => $pageParams ) { // parse all pages
+				$pageName = Helpers::camelCase( $pageId );
 				
-				if ( $pageId !== 'error404' && $pageId == 'home' )
-					self::$LINK->$routesGroup->$pageId = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageParams->{ Lang::$LANG }->url;
+				if ( $pageName !== 'error404' && $pageName == 'home' )
+					self::$LINK->$routesGroup->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageParams->{ Lang::$LANG }->url;
 				
-				else if ( $pageId !== 'error404' )
-					self::$LINK->$routesGroup->$pageId = Path::$URL->base . Lang::$LANG_LINK . $pageParams->{ Lang::$LANG }->url;
-				
+				else if ( $pageName !== 'error404' )
+					self::$LINK->$routesGroup->$pageName = Path::$URL->base . Lang::$LANG_LINK . $pageParams->{ Lang::$LANG }->url;
 			}
 			
 		}

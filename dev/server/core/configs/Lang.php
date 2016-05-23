@@ -11,6 +11,7 @@ class Lang
 	static $MULTI_LANG		= null;
 	static $DEFAULT_LANG	= null;
 	static $LANG			= null;
+	static $LANG_EXIST		= null;
 	
 	static $LANG_LINK_ROOT	= null;
 	static $LANG_LINK		= null;
@@ -29,6 +30,7 @@ class Lang
 		$this->setGlobalInfos();
 		$this->router->setPageUrl();
 		$this->setCurrentLang();
+		$this->setLangExistence();
 		$this->router->setCurrentPageUrl();
 		$this->setLangLinks();
 		
@@ -72,19 +74,28 @@ class Lang
 	}
 	
 	
+	private function setLangExistence()
+	{
+		self::$LANG_EXIST = true;
+		
+		if ( !in_array( Lang::$LANG, Lang::$ALL_LANG ) ) {
+			$this->forceDefaultLang();
+			
+			self::$LANG_EXIST = false;
+		}
+	}
+	
+	
+	private function forceDefaultLang()
+	{
+		self::$LANG = self::$DEFAULT_LANG;
+	}
+	
+	
 	private function setLangLinks()
 	{
 		self::$LANG_LINK_ROOT	= self::$LANG == self::$DEFAULT_LANG ? '' : self::$LANG;
 		self::$LANG_LINK		= self::$MULTI_LANG ? self::$LANG . '/' : '';
-	}
-	
-	
-	public function forceDefaultLang()
-	{
-		self::$LANG = self::$DEFAULT_LANG;
-		
-		$this->setLangLinks();
-		$this->setParams();
 	}
 	
 	
