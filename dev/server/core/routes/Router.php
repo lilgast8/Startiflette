@@ -152,10 +152,8 @@ class Router
 	
 	private function setPageInfos()
 	{
-		// $langExist	= $this->getLangExistence();
-		$page		= $this->getPageInfos();
+		$page = $this->getPageInfos();
 		
-		// if ( $langExist && $page->exist ) { // page exist
 		if ( Lang::$LANG_EXIST && $page->exist ) { // page exist
 			$this->setIsHomepage( $page->id );
 			$this->setAltLangUrl( $page->params );
@@ -165,12 +163,10 @@ class Router
 			else if ( !Lang::$MULTI_LANG && self::$PAGE_URL->aParams[0] == Lang::$DEFAULT_LANG )
 				$this->redirectToPageWithoutLang();
 			
-			// $this->pagesController->setPageInfos( $page->id, $page->params->phpView, $page->params->{ Lang::$LANG }->title, $page->params->{ Lang::$LANG }->desc );
 			$this->pagesController->setPageInfos( $page->id, $page->params );
 		}
 		else { // 404
 			$page->id		= 'error-404';
-			// $page->params	= self::$ROUTES->statics->error404;
 			$page->params	= self::$ROUTES->statics->{ $page->id };
 			
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
@@ -178,21 +174,6 @@ class Router
 			$this->pagesController->setPageInfos( $page->id, $page->params );
 		}
 	}
-	
-	
-	/*private function getLangExistence()
-	{
-		$langExist = true;
-		
-		if ( !in_array( Lang::$LANG, Lang::$ALL_LANG ) ) {
-			$this->lang->forceDefaultLang();
-			
-			$langExist = false;
-		}
-		
-		
-		return $langExist;
-	}*/
 	
 	
 	private function getPageInfos()
