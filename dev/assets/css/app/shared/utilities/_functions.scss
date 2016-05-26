@@ -27,12 +27,12 @@
 /* -------- CUSTOM -------- */
 
 @mixin unselectable() {
-	-webkit-touch-callout:none; 
-	@include user-select('none'); 
-	-ms-touch-action:none; 
-	touch-action:none; 
-	// pointer-events:none; 
-	// -webkit-user-drag:none; 
+	-webkit-touch-callout: none;
+	@include user-select('none');
+	-ms-touch-action: none;
+	touch-action: none;
+	// pointer-events: none;
+	// -webkit-user-drag: none;
 }
 
 @mixin triangle($top, $right, $bottom, $left, $colorTop, $colorRight, $colorBottom, $colorLeft) {

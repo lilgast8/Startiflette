@@ -12,7 +12,6 @@
 @import 'shared/utilities/_variables';
 @import 'shared/utilities/_easing';
 @import 'shared/utilities/_functions';
-@import 'shared/utilities/_alt';
 
 
 
@@ -24,6 +23,7 @@
 
 
 @import 'shared/statics/_svg';
+@import 'shared/statics/_alt';
 
 
 
@@ -46,8 +46,8 @@
 
 
 @import 'desktop/statics/_global';
-@import 'desktop/statics/_main-loader';
 @import 'desktop/statics/_containers';
+@import 'desktop/statics/_main-loader';
 @import 'desktop/statics/_header';
 @import 'desktop/statics/_footer';
 

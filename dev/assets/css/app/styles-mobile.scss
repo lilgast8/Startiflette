@@ -12,7 +12,18 @@
 @import 'shared/utilities/_variables';
 @import 'shared/utilities/_easing';
 @import 'shared/utilities/_functions';
-@import 'shared/utilities/_alt';
+
+
+
+
+
+/**************************************/
+/* -------- SHARED - STATICS -------- */
+/**************************************/
+
+
+@import 'shared/statics/_svg';
+@import 'shared/statics/_alt';
 
 
 
@@ -23,7 +34,22 @@
 /***************************************/
 
 
-//@import 'shared/partials/_PARTIALS';
+// @import 'shared/partials/_PARTIALS';
+
+
+
+
+
+/*****************************/
+/* -------- STATICS -------- */
+/*****************************/
+
+
+@import 'mobile/statics/_global';
+@import 'mobile/statics/_containers';
+@import 'mobile/statics/_main-loader';
+@import 'mobile/statics/_header';
+@import 'mobile/statics/_footer';
 
 
 
@@ -34,11 +60,7 @@
 /******************************/
 
 
-@import 'mobile/partials/_global';
-@import 'mobile/partials/_loader';
-@import 'mobile/partials/_containers';
-@import 'mobile/partials/_header';
-@import 'mobile/partials/_footer';
+// @import 'desktop/partials/_PARTIAL';
 
 
 
@@ -49,8 +71,8 @@
 /***************************/
 
 
+@import 'mobile/pages/_legals';
 @import 'mobile/pages/_home';
 @import 'mobile/pages/_about';
-@import 'mobile/pages/_legals';
 
 

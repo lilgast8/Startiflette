@@ -7,83 +7,83 @@
 
 
 #main-loader {
-	position:fixed; 
-	left:0; 
-	top:0; 
-	width:100%; 
-	height:100%; 
-	z-index:88; 
-	background-color:rgba(0, 0, 0, 0.8); 
-	overflow:hidden; 
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 88;
+	background-color: rgba(0, 0, 0, 0.8);
+	overflow: hidden;
 	
 	&.init {
-		.main-loader-percentage { display:block; }
-		.main-loader-progress { display:block; }
-		.main-loader-loading { display:none; }
+		.main-loader-percentage { display: block; }
+		.main-loader-progress { display: block; }
+		.main-loader-loading { display: none; }
 	}
 }
 
-.no-js #main-loader { display:none; }
+.no-js #main-loader { display: none; }
 
 .main-loader-container {
-	position:absolute; 
-	left:0; 
-	top:0; 
-	width:100%; 
-	height:100%; 
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
 }
 
 .main-loader-percentage {
-	display:none; 
-	position:absolute; 
-	left:0; 
-	top:50%; 
-	width:100%; 
-	height:100px; 
-	margin-top:-50px; 
-	text-align:center; 
-	font:bold 100px/100px 'Arial'; 
-	color:$peach; 
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 100%;
+	height: 100px;
+	margin-top: -50px;
+	text-align: center;
+	font: bold 100px/100px 'Arial';
+	color: $peach;
 }
 
 .main-loader-progress {
-	display:none; 
-	position:absolute; 
-	left:0; 
-	bottom:0; 
-	width:100%; 
-	height:200px; 
-	background-color:$alt3; 
-	@include translateX(-100%); 
+	display: none;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 200px;
+	background-color: $alt3;
+	@include translateX(-100%);
 }
 
 .main-loader-loading {
-	position:absolute; 
-	left:0; 
-	top:50%; 
-	width:100%; 
-	height:10px; 
-	margin-top:-5px; 
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 100%;
+	height: 10px;
+	margin-top: -5px;
 }
 
 .main-loader-loading-square-container {
-	position:absolute; 
-	left:50%; 
-	top:50%; 
-	width:60px; 
-	height:10px; 
-	margin:-5px 0 0 -25px; 
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 60px;
+	height: 10px;
+	margin: -5px 0 0 -25px;
 }
 
 .main-loader-loading-square {
-	float:left; 
-	width:10px; 
-	height:10px; 
-	background-color:$peach; 
-	margin-right:10px; 
+	float: left;
+	width: 10px;
+	height: 10px;
+	background-color: $peach;
+	margin-right: 10px;
 	
 	// remove @import 'compass/css3/animation'; if don't need it
-	&:nth-child(1) { @include animation-delay(0s);  }
+	&:nth-child(1) { @include animation-delay(0s); }
 	&:nth-child(2) { @include animation-delay(0.15s); }
 	&:nth-child(3) { @include animation-delay(0.3s); }
 	@include animation(square 1.5s infinite $easeInOutQuart);
