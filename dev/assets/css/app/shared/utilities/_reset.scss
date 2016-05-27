@@ -14,7 +14,11 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	border: 0;
 }
 
-body { line-height: 1; }
+body {
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
 
 table {
 	border-collapse: collapse;
@@ -65,7 +69,7 @@ input[type=submit], input[type=checkbox] { cursor: pointer; }
 
 input[type=submit]  { background: 0; }
 
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, canvas, img { display: block; }
 
 
 
