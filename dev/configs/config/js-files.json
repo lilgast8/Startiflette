@@ -22,7 +22,6 @@
 			],
 			"vendor/greensock/TweenMax.js",
 			"vendor/signals.js",
-			"vendor/history.js",
 			"vendor/preloadjs.js",
 			
 			"app/InitApp.js",
@@ -76,7 +75,6 @@
 			"vendor/zepto.js",
 			"vendor/greensock/TweenMax.js",
 			"vendor/signals.js",
-			"vendor/history.js",
 			"vendor/preloadjs.js",
 			
 			"app/InitApp.js",

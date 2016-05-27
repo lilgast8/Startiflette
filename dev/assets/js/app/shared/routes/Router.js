@@ -18,7 +18,7 @@ STF.Router = ( function( window ) {
 		
 		this.isHomepage			= null;
 		
-		this.navigateByClick	= null; // used to avoid to set page infos two times
+		// this.navigateByClick	= null; // used to avoid to set page infos two times
 	}
 	
 	
@@ -96,10 +96,13 @@ STF.Router = ( function( window ) {
 		var fullPageUrl;
 		
 		if ( url === null ) // init
-			fullPageUrl = History.getState().url;
+			// fullPageUrl = History.getState().url;
+			// fullPageUrl = 'http://startiflette:8888/dev/fr/a-propos';
+			fullPageUrl = window.location.href;
 		else // page change
 			fullPageUrl = url;
 		
+		// console.log( 'fullPageUrl:', fullPageUrl );
 		
 		return fullPageUrl;
 	};
@@ -170,7 +173,11 @@ STF.Router = ( function( window ) {
 	
 	
 	var _bindEvents = function() {
-		History.Adapter.bind( window, 'statechange', _onStateChange.bind( this ) );
+		console.log( '_bindEvents' );
+		// History.Adapter.bind( window, 'statechange', _onPopState.bind( this ) );
+		
+		STF.MainView.$window.on( 'popstate', $.proxy( _onPopState, this ) );
+		// STF.MainView.$window.on( 'hashchange', $.proxy( _onHashChange, this ) );
 	};
 	
 	
@@ -275,37 +282,64 @@ STF.Router = ( function( window ) {
 	
 	Router.prototype.checkUrlCorrespondence = function() {
 		if ( this.PAGE_URL.full != _getFullPageUrl.call( this, null ) )
-			_onStateChange.call( this );
+			_onPopState.call( this );
 	};
 	
 	
 	Router.prototype.navigateTo = function( url ) {
+		console.log( 'navigateTo:', url );
+		
 		if ( STF.PagesController.isPageChange )
 			return;
 		
 		if ( _isSameUrl.call( this, url ) )
 			return;
 		
-		this.navigateByClick = true;
+		// this.navigateByClick = true;
 		
+		// history.pushState( null, '', url );
+		
+		// console.log( STF.PagesController.pageInfos.id );
 		_setInfos.call( this, url );
+		// console.log( STF.PagesController.pageInfos.id );
+		// History.pushState( null, STF.PagesController.pageInfos.title, url );
+		var data = {
+			'page': STF.PagesController.pageInfos.id
+		};
 		
-		History.pushState( null, STF.PagesController.pageInfos.title, url );
+		history.pushState( data, '', url );
+		
+		STF.PagesController.changePage( this.PAGE_URL.full );
 	};
 	
 	
-	var _onStateChange = function() {
+	var _onPopState = function( e ) {
+		console.log( e );
+		console.log( '_onPopState:', e.state );
+		
+		
+		if ( e !== undefined )
+			if ( e.state === null ) // prevent hash change
+				return false;
+		
 		if ( STF.PagesController.isPageChange )
 			return;
 		
-		if ( this.navigateByClick ) // if navigate by click
+		/*if ( this.navigateByClick ) // if navigate by click
 			this.navigateByClick = false; // reset it
 		
 		else // if navigate by prev/next browser
-			_setInfos.call( this, null );
+			_setInfos.call( this, null );*/
+		
+		_setInfos.call( this, null );
 		
 		
 		STF.PagesController.changePage( this.PAGE_URL.full );
+	};
+	
+	
+	var _onHashChange = function() {
+		console.log( '_onHashChange', location.hash );
 	};
 	
 	
@@ -318,12 +352,13 @@ STF.Router = ( function( window ) {
 		if ( url.substr( url.length-1, 1 ) == '/' ) // if slash is last character, remove it
 			url = url.substr( 0, url.length-1 );
 		
-		
+		console.log( '_isSameUrl:', url, this.PAGE_URL.full );
 		return url == fullPageUrl;
 	};
 	
 	
 	var _setInfos = function( url ) {
+		console.log( '_setInfos' );
 		this.setPageUrl( false, url );
 		
 		_setPageInfos.call( this );
