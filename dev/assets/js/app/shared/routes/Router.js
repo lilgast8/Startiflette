@@ -170,7 +170,7 @@ STF.Router = ( function( window ) {
 	
 	var _bindEvents = function() {
 		STF.MainView.$window.on( 'popstate', $.proxy( _onPopState, this ) );
-		// STF.MainView.$window.on( 'hashchange', $.proxy( _onHashChange, this ) );
+		STF.MainView.$window.on( 'hashchange', $.proxy( _onHashChange, this ) );
 	};
 	
 	
@@ -280,13 +280,18 @@ STF.Router = ( function( window ) {
 	
 	
 	Router.prototype.navigateTo = function( url ) {
-		console.log( 'navigateTo:', url );
+		// console.log( 'navigateTo:', url );
 		
 		if ( STF.PagesController.isPageChange )
 			return;
 		
 		if ( _isSameUrl.call( this, url ) )
 			return;
+		/*if ( _isPageChanged.call ( this, url ) ) {
+			console.log( 'SAME URL' );
+			return;
+		}*/
+			
 		
 		_setInfos.call( this, url );
 		
@@ -302,38 +307,85 @@ STF.Router = ( function( window ) {
 	
 	var _onPopState = function( e ) {
 		console.log( e );
-		console.log( '_onPopState:', e.state );
+		// console.log( '_onPopState:', e.state );
 		
 		
+		// if ( e !== undefined )
+		// 	if ( e.state === null ) // prevent hash change
+		// 		return false;
+		
+		console.log( 'SLP:', this.PAGE_URL.full, window.location.href );
+		console.log( '_isPageChanged:', _isPageChanged.call( this ) );
 		if ( e !== undefined )
-			if ( e.state === null ) // prevent hash change
+			if ( e.state === null && !_isPageChanged.call( this ) ) { // prevent hash change
+				console.log( 'ramon' );
 				return false;
+			}
+		
 		
 		if ( STF.PagesController.isPageChange )
 			return;
 		
+		// if ( _isPageChanged.call ( this, url ) ) {
+		// 	console.log( 'SAME URL' );
+		// 	return;
+		// }
+		
 		_setInfos.call( this, null );
 		
+		// if ( STF.PagesController.prevPageInfos.id == STF.PagesController.pageInfos.id ) {}
+		// console.log( '--->', STF.PagesController.prevPageInfos.id, '/', STF.PagesController.pageInfos.id );
 		
 		STF.PagesController.changePage( this.PAGE_URL.full );
 	};
 	
 	
-	var _onHashChange = function() {
-		console.log( '_onHashChange', location.hash );
+	var _onHashChange = function( e ) {
+		console.log( e );
+		// console.log( e.oldURL, e.newURL );
+		
+		STF.PagesController.currentPage.onHashChange();
+	};
+	
+	
+	var _isPageChanged = function( url ) {
+		var oldlink		= document.createElement( 'a' );
+		oldlink.href	= this.PAGE_URL.full;
+		
+		var link		= document.createElement( 'a' );
+		link.href		= url;
+		
+		var oldPagePath	= oldlink.pathname;
+		var pagePath	= link.pathname;
+		
+		oldPagePath		= oldPagePath.removeFirstSpecificChar( '/' );
+		oldPagePath		= oldPagePath.removeLastSpecificChar( '/' );
+		pagePath		= pagePath.removeFirstSpecificChar( '/' );
+		pagePath		= pagePath.removeLastSpecificChar( '/' );
+		
+		console.log( oldPagePath, pagePath );
+		console.log( 'CABRON:', oldPagePath == pagePath );
+		return oldPagePath == pagePath;
+	};
+	
+	
+	var _isParamsChanged = function( url ) {
+		// BODY
+	};
+	
+	
+	var _isHashChanged = function( url ) {
+		// BODY
 	};
 	
 	
 	var _isSameUrl = function( url ) {
 		var fullPageUrl = this.PAGE_URL.full;
 		
-		if ( fullPageUrl.substr( fullPageUrl.length-1, 1 ) == '/' ) // if slash is last character, remove it
-			fullPageUrl = fullPageUrl.substr( 0, fullPageUrl.length-1 );
+		fullPageUrl	= fullPageUrl.removeLastSpecificChar( '/' );
+		url			= url.removeLastSpecificChar( '/' );
 		
-		if ( url.substr( url.length-1, 1 ) == '/' ) // if slash is last character, remove it
-			url = url.substr( 0, url.length-1 );
-		
-		console.log( '_isSameUrl:', url, this.PAGE_URL.full );
+		// console.log( '_isSameUrl:', url, fullPageUrl );
 		return url == fullPageUrl;
 	};
 	
