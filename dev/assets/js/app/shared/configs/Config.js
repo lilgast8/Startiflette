@@ -23,13 +23,6 @@ STF.Config = ( function( window ) {
 		this.GA_ID				= null;
 		this.CREDITS			= null;
 		
-		this.HAS_PUSHSTATE		= null;
-		this.TRANSFORM			= null;
-		this.HAS_TRANSFORMS		= null;
-		this.HAS_TRANSFORMS_3D	= null;
-		this.HAS_TRANSITIONS	= null;
-		this.HAS_ANIMATIONS		= null;
-		
 		this.aJsonFiles			= [
 			{
 				id:		'config',
@@ -61,7 +54,6 @@ STF.Config = ( function( window ) {
 		_destroyJsonLoader.call( this );
 		
 		_setConfig.call( this, data );
-		_setProperties.call( this );
 		_showCreditsLog.call( this );
 		
 		this.dispatch( this.E.INIT );
@@ -81,16 +73,6 @@ STF.Config = ( function( window ) {
 		
 		for ( var varName in config )
 			this[ varName ] = config[ varName ];
-	};
-	
-	
-	var _setProperties = function() {
-		this.HAS_PUSHSTATE		= Modernizr.history;
-		this.TRANSFORM			= Modernizr.prefixed( 'transform' );
-		this.HAS_TRANSFORMS		= Modernizr.csstransforms;
-		this.HAS_TRANSFORMS_3D	= Modernizr.csstransforms3d;
-		this.HAS_TRANSITIONS	= Modernizr.csstransitions;
-		this.HAS_ANIMATIONS		= Modernizr.cssanimations;
 	};
 	
 	

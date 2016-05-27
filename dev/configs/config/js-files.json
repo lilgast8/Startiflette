@@ -30,6 +30,7 @@
 			"app/shared/events/EventDispatcher.js",
 			
 			"app/shared/configs/Config.js",
+			"app/shared/configs/Props.js",
 			"app/shared/configs/Device.js",
 			"app/shared/configs/Path.js",
 			"app/shared/configs/Lang.js",
@@ -83,6 +84,7 @@
 			"app/shared/events/EventDispatcher.js",
 			
 			"app/shared/configs/Config.js",
+			"app/shared/configs/Props.js",
 			"app/shared/configs/Device.js",
 			"app/shared/configs/Path.js",
 			"app/shared/configs/Lang.js",

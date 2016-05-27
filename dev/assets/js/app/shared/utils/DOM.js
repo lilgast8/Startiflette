@@ -56,10 +56,10 @@ STF.Utils.DOM = ( function( window ) {
 		x = x === null ? 0 : x;
 		y = y === null ? 0 : y;
 		
-		if ( STF.Config.HAS_TRANSFORMS_3D )
-			$obj[0].style[ STF.Config.TRANSFORM ] = 'translate3d(' + x + 'px, ' + y + 'px, 0px)';
+		if ( STF.Props.HAS_TRANSFORMS_3D )
+			$obj[0].style[ STF.Props.TRANSFORM ] = 'translate3d(' + x + 'px, ' + y + 'px, 0px)';
 		else
-			$obj[0].style[ STF.Config.TRANSFORM ] = 'translate(' + x + 'px, ' + y + 'px)';
+			$obj[0].style[ STF.Props.TRANSFORM ] = 'translate(' + x + 'px, ' + y + 'px)';
 	};
 	
 	

@@ -12,6 +12,7 @@ STF.Main = ( function( window ) {
 	Main.prototype.init = function() {
 		STF.Config.buildEvt( STF.Config.E.INIT, _configLoaded.bind( this ) );
 		STF.Config.init();
+		STF.Props.init();
 		
 		// this.$window.on( 'load', $.proxy( _windowLoad, this ) );
 	};

@@ -149,7 +149,7 @@ STF.AbstractView = ( function( window ) {
 	
 	
 	AbstractView.prototype.changePage = function( e ) {
-		if ( STF.Config.HAS_PUSHSTATE ) { // if pushstate supported
+		if ( STF.Props.HAS_PUSHSTATE ) { // if pushstate supported
 			e.preventDefault();
 			
 			var url = e.currentTarget.href;
