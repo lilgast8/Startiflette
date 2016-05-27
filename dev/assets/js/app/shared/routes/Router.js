@@ -11,14 +11,12 @@ STF.Router = ( function( window ) {
 			INIT: 'init'
 		};
 		
-		this.ROUTES				= {};
-		this.PAGE_URL			= {};
-		this.ALT_LANG_URL		= {};
-		this.LINK				= {};
+		this.ROUTES			= {};
+		this.PAGE_URL		= {};
+		this.ALT_LANG_URL	= {};
+		this.LINK			= {};
 		
-		this.isHomepage			= null;
-		
-		// this.navigateByClick	= null; // used to avoid to set page infos two times
+		this.isHomepage		= null;
 	}
 	
 	
@@ -96,13 +94,10 @@ STF.Router = ( function( window ) {
 		var fullPageUrl;
 		
 		if ( url === null ) // init
-			// fullPageUrl = History.getState().url;
-			// fullPageUrl = 'http://startiflette:8888/dev/fr/a-propos';
 			fullPageUrl = window.location.href;
 		else // page change
 			fullPageUrl = url;
 		
-		// console.log( 'fullPageUrl:', fullPageUrl );
 		
 		return fullPageUrl;
 	};
@@ -112,6 +107,7 @@ STF.Router = ( function( window ) {
 		var hashPageUrl	= this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
 		
 		hashPageUrl		= hashPageUrl.split( '#' )[1] || '';
+		
 		
 		return hashPageUrl;
 	};
@@ -173,9 +169,6 @@ STF.Router = ( function( window ) {
 	
 	
 	var _bindEvents = function() {
-		console.log( '_bindEvents' );
-		// History.Adapter.bind( window, 'statechange', _onPopState.bind( this ) );
-		
 		STF.MainView.$window.on( 'popstate', $.proxy( _onPopState, this ) );
 		// STF.MainView.$window.on( 'hashchange', $.proxy( _onHashChange, this ) );
 	};
@@ -295,14 +288,8 @@ STF.Router = ( function( window ) {
 		if ( _isSameUrl.call( this, url ) )
 			return;
 		
-		// this.navigateByClick = true;
-		
-		// history.pushState( null, '', url );
-		
-		// console.log( STF.PagesController.pageInfos.id );
 		_setInfos.call( this, url );
-		// console.log( STF.PagesController.pageInfos.id );
-		// History.pushState( null, STF.PagesController.pageInfos.title, url );
+		
 		var data = {
 			'page': STF.PagesController.pageInfos.id
 		};
@@ -324,12 +311,6 @@ STF.Router = ( function( window ) {
 		
 		if ( STF.PagesController.isPageChange )
 			return;
-		
-		/*if ( this.navigateByClick ) // if navigate by click
-			this.navigateByClick = false; // reset it
-		
-		else // if navigate by prev/next browser
-			_setInfos.call( this, null );*/
 		
 		_setInfos.call( this, null );
 		
