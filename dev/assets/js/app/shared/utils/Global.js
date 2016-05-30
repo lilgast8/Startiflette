@@ -57,16 +57,5 @@ STF.Utils.Global = ( function( window ) {
 	};
 	
 	
-	String.prototype.convertToUrl = function() {
-		var string = this;
-		
-		var link	= document.createElement( 'a' );
-		link.href	= string;
-		
-		
-		return link;
-	};
-	
-	
 } ) ( window );
 
