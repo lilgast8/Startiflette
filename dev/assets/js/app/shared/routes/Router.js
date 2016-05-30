@@ -142,10 +142,18 @@ STF.Router = ( function( window ) {
 		// var searchPageUrl	= this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
 		
 		// searchPageUrl		= searchPageUrl.split( '#' )[1] || '';
-		var searchPageUrl	= window.location.search.split( '?' )[1] || '';
+		
+		var url				= this.PAGE_URL.full.convertToUrl();
+		var searchPageUrl	= url.search.split( '?' )[1] || '';
 		
 		searchPageUrl		= searchPageUrl.removeFirstSpecificChar( '/' );
 		searchPageUrl		= searchPageUrl.removeLastSpecificChar( '/' );
+		
+		
+		/*var searchPageUrl	= window.location.search.split( '?' )[1] || '';
+		
+		searchPageUrl		= searchPageUrl.removeFirstSpecificChar( '/' );
+		searchPageUrl		= searchPageUrl.removeLastSpecificChar( '/' );*/
 		
 		
 		/*var oParametre = {};
@@ -183,10 +191,20 @@ STF.Router = ( function( window ) {
 		
 		hashPageUrl		= hashPageUrl.split( '#' )[1] || '';*/
 		
-		var hashPageUrl	= window.location.hash.split( '#' )[1] || '';
+		
+		/*var link		= document.createElement( 'a' );
+		link.href		= this.PAGE_URL.full;*/
+		
+		var url			= this.PAGE_URL.full.convertToUrl();
+		var hashPageUrl	= url.hash.split( '#' )[1] || '';
 		
 		hashPageUrl		= hashPageUrl.removeFirstSpecificChar( '/' );
 		hashPageUrl		= hashPageUrl.removeLastSpecificChar( '/' );
+		
+		/*var hashPageUrl	= window.location.hash.split( '#' )[1] || '';
+		
+		hashPageUrl		= hashPageUrl.removeFirstSpecificChar( '/' );
+		hashPageUrl		= hashPageUrl.removeLastSpecificChar( '/' );*/
 		
 		
 		return hashPageUrl;
@@ -340,7 +358,7 @@ STF.Router = ( function( window ) {
 	
 	
 	Router.prototype.navigateTo = function( url ) {
-		// console.log( 'navigateTo:', url );
+		console.log( 'navigateTo:', url, '/', window.location.href );
 		
 		if ( STF.PagesController.isPageChange )
 			return;
