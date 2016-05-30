@@ -13,7 +13,6 @@ STF.Router = ( function( window ) {
 		
 		this.ROUTES			= {};
 		this.PAGE_URL		= {};
-		// this.PREV_PAGE_URL	= {};
 		this.ALT_LANG_URL	= {};
 		this.LINK			= {};
 		
@@ -82,27 +81,10 @@ STF.Router = ( function( window ) {
 		// base.com/path?params=param#hash=tag
 		// base.com/params?search=test#hash=tag
 		
-		
-		/*this.PREV_PAGE_URL.full		= this.PAGE_URL.full;
-		// this.PREV_PAGE_URL.params	= this.PAGE_URL.params;
-		// this.PREV_PAGE_URL.aParams	= this.PAGE_URL.aParams;
-		this.PREV_PAGE_URL.path		= this.PAGE_URL.path;
-		this.PREV_PAGE_URL.aPath	= this.PAGE_URL.aPath;
-		this.PREV_PAGE_URL.search	= this.PAGE_URL.search;
-		this.PREV_PAGE_URL.hash		= this.PAGE_URL.hash;
-		this.PREV_PAGE_URL.fullGA	= this.PAGE_URL.fullGA;
-		this.PREV_PAGE_URL.current	= this.PAGE_URL.current;
-		this.PREV_PAGE_URL.aCurrent	= this.PAGE_URL.aCurrent;*/
-		
 		this.PAGE_URL.full			= _getFullPageUrl.call( this, url );
-		// this.PAGE_URL.params		= _getParamsPageUrl.call( this );
-		// this.PAGE_URL.aParams		= this.PAGE_URL.params.split( '/' );
-		// this.PAGE_URL.path			= _getPathPageUrl.call( this, this.PAGE_URL.full );
 		this.PAGE_URL.path			= getPath( this.PAGE_URL.full );
 		this.PAGE_URL.aPath			= this.PAGE_URL.path.split( '/' );
-		// this.PAGE_URL.search		= _getSearchPageUrl.call( this, this.PAGE_URL.full );
 		this.PAGE_URL.search		= getSearch( this.PAGE_URL.full );
-		// this.PAGE_URL.hash			= _getHashPageUrl.call( this, this.PAGE_URL.full );
 		this.PAGE_URL.hash			= getHash( this.PAGE_URL.full );
 		this.PAGE_URL.fullGA		= _getFullPageUrlGA.call( this );
 		
@@ -127,96 +109,6 @@ STF.Router = ( function( window ) {
 		
 		
 		return fullPageUrl;
-	};
-	
-	
-	var _getPathPageUrl = function( url ) {
-		// var pathPageUrl = this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
-		var pathPageUrl	= url.replace( STF.Path.URL.base, '' );
-		
-		pathPageUrl		= pathPageUrl.split( '#' )[0]; // remove #hash
-		pathPageUrl		= pathPageUrl.split( '?' )[0]; // remove ?search
-		
-		pathPageUrl		= pathPageUrl.removeFirstSpecificChar( '/' );
-		pathPageUrl		= pathPageUrl.removeLastSpecificChar( '/' );
-		
-		
-		return pathPageUrl;
-	};
-	
-	
-	var _getSearchPageUrl = function( url ) {
-		// var searchPageUrl	= this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
-		
-		// searchPageUrl		= searchPageUrl.split( '#' )[1] || '';
-		
-		// var url				= this.PAGE_URL.full.convertToUrl();
-		url					= url.convertToUrl();
-		var searchPageUrl	= url.search.split( '?' )[1] || '';
-		
-		searchPageUrl		= searchPageUrl.removeFirstSpecificChar( '/' );
-		searchPageUrl		= searchPageUrl.removeLastSpecificChar( '/' );
-		
-		
-		/*var searchPageUrl	= window.location.search.split( '?' )[1] || '';
-		
-		searchPageUrl		= searchPageUrl.removeFirstSpecificChar( '/' );
-		searchPageUrl		= searchPageUrl.removeLastSpecificChar( '/' );*/
-		
-		
-		/*var oParametre = {};
-		
-		if (window.location.search.length > 1) {
-			for (var aItKey, nKeyId = 0, aCouples = window.location.search.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
-				aItKey = aCouples[nKeyId].split("=");
-				oParametre[unescape(aItKey[0])] = aItKey.length > 1 ? unescape(aItKey[1]) : "";
-			}
-		}
-		console.log( oParametre );*/
-		
-		/*var sRecherche = window.location.search;
-		console.log( sRecherche );
-		sRecherche = sRecherche.removeLastSpecificChar( '/' );
-		console.log( sRecherche );
-		
-		var oParametre = new (function (sRecherche) {
-		if (sRecherche.length > 1) {
-			for (var aItKey, nKeyId = 0, aCouples = sRecherche.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
-				aItKey = aCouples[nKeyId].split("=");
-				this[unescape(aItKey[0])] = aItKey.length > 1 ? unescape(aItKey[1]) : "";
-			}
-		}
-		})(sRecherche);
-		console.log( oParametre );*/
-		
-		
-		return searchPageUrl;
-	};
-	
-	
-	var _getHashPageUrl = function( url ) {
-		/*var hashPageUrl	= this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
-		
-		hashPageUrl		= hashPageUrl.split( '#' )[1] || '';*/
-		
-		
-		/*var link		= document.createElement( 'a' );
-		link.href		= this.PAGE_URL.full;*/
-		
-		// var url			= this.PAGE_URL.full.convertToUrl();
-		url				= url.convertToUrl();
-		var hashPageUrl	= url.hash.split( '#' )[1] || '';
-		
-		hashPageUrl		= hashPageUrl.removeFirstSpecificChar( '/' );
-		hashPageUrl		= hashPageUrl.removeLastSpecificChar( '/' );
-		
-		/*var hashPageUrl	= window.location.hash.split( '#' )[1] || '';
-		
-		hashPageUrl		= hashPageUrl.removeFirstSpecificChar( '/' );
-		hashPageUrl		= hashPageUrl.removeLastSpecificChar( '/' );*/
-		
-		
-		return hashPageUrl;
 	};
 	
 	
@@ -372,11 +264,9 @@ STF.Router = ( function( window ) {
 		if ( STF.PagesController.isPageChange )
 			return;
 		
-		// _setInfos.call( this, url );
 		_setUrlPartChange.call( this, url );
 		
 		console.log( this.isPageChange + ' / ' + this.isSearchChange + ' / ' + this.isHashChange );
-		
 		
 		_setInfos.call( this, url );
 		
@@ -408,7 +298,6 @@ STF.Router = ( function( window ) {
 		if ( STF.PagesController.isPageChange )
 			return;
 		
-		// _setInfos.call( this, null );
 		_setUrlPartChange.call( this, window.location.href );
 		
 		console.log( this.isPageChange + ' / ' + this.isSearchChange + ' / ' + this.isHashChange );
@@ -423,39 +312,6 @@ STF.Router = ( function( window ) {
 			STF.PagesController.changeSearch();
 		// else if ( this.isHashChange )
 		// 	STF.PagesController.changeHash();
-		
-		
-		
-		
-		
-		
-		// if ( e !== undefined )
-		// 	if ( e.state === null ) // prevent hash change
-		// 		return false;
-		
-		/*console.log( 'SLP:', this.PAGE_URL.full, window.location.href );
-		console.log( '_isPageChanged:', _isPageChanged.call( this ) );
-		if ( e !== undefined )
-			if ( e.state === null && !_isPageChanged.call( this ) ) { // prevent hash change
-				console.log( 'ramon' );
-				return false;
-			}
-		
-		
-		if ( STF.PagesController.isPageChange )
-			return;
-		
-		// if ( _isPageChanged.call ( this, url ) ) {
-		// 	console.log( 'SAME URL' );
-		// 	return;
-		// }
-		
-		_setInfos.call( this, null );
-		
-		// if ( STF.PagesController.prevPageInfos.id == STF.PagesController.pageInfos.id ) {}
-		// console.log( '--->', STF.PagesController.prevPageInfos.id, '/', STF.PagesController.pageInfos.id );
-		
-		STF.PagesController.changePage( this.PAGE_URL.full );*/
 	};
 	
 	
@@ -465,17 +321,13 @@ STF.Router = ( function( window ) {
 		// console.log( '_onHashChange:', e.state );
 		// console.log( e.oldURL, e.newURL );
 		
-		// STF.PagesController.currentPage.onHashChange();
-		
 		
 		if ( STF.PagesController.isPageChange )
 			return;
 		
-		// _setInfos.call( this, null );
 		_setUrlPartChange.call( this, window.location.href );
 		
 		console.log( this.isPageChange + ' / ' + this.isSearchChange + ' / ' + this.isHashChange );
-		
 		
 		_setInfos.call( this, null );
 		
