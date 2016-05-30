@@ -13,6 +13,7 @@ STF.Router = ( function( window ) {
 		
 		this.ROUTES			= {};
 		this.PAGE_URL		= {};
+		this.PREV_PAGE_URL	= {};
 		this.ALT_LANG_URL	= {};
 		this.LINK			= {};
 		
@@ -75,11 +76,22 @@ STF.Router = ( function( window ) {
 	
 	Router.prototype.setPageUrl = function( isInit, url )
 	{
-		this.PAGE_URL.full		= _getFullPageUrl.call( this, url );
-		this.PAGE_URL.hash		= _getHashPageUrl.call( this );
-		this.PAGE_URL.params	= _getParamsPageUrl.call( this );
-		this.PAGE_URL.aParams	= this.PAGE_URL.params.split( '/' );
-		this.PAGE_URL.fullGA	= _getFullPageUrlGA.call( this );
+		// base.com/path?params=param#hash=tag
+		
+		
+		this.PREV_PAGE_URL.full		= this.PAGE_URL.full;
+		this.PREV_PAGE_URL.hash		= this.PAGE_URL.hash;
+		this.PREV_PAGE_URL.params	= this.PAGE_URL.params;
+		this.PREV_PAGE_URL.aParams	= this.PAGE_URL.aParams;
+		this.PREV_PAGE_URL.fullGA	= this.PAGE_URL.fullGA;
+		this.PREV_PAGE_URL.current	= this.PAGE_URL.current;
+		this.PREV_PAGE_URL.aCurrent	= this.PAGE_URL.aCurrent;
+		
+		this.PAGE_URL.full			= _getFullPageUrl.call( this, url );
+		this.PAGE_URL.hash			= _getHashPageUrl.call( this );
+		this.PAGE_URL.params		= _getParamsPageUrl.call( this );
+		this.PAGE_URL.aParams		= this.PAGE_URL.params.split( '/' );
+		this.PAGE_URL.fullGA		= _getFullPageUrlGA.call( this );
 		
 		if ( isInit ) { // init
 			this.PAGE_URL.current	= null;
@@ -279,15 +291,19 @@ STF.Router = ( function( window ) {
 		if ( STF.PagesController.isPageChange )
 			return;
 		
-		if ( _isSameUrl.call( this, url ) )
-			return;
-		/*if ( _isPageChanged.call ( this, url ) ) {
-			console.log( 'SAME URL' );
-			return;
-		}*/
-			
+		// if ( _isSameUrl.call( this, url ) )
+		// 	return;
+		// if ( _isPageChanged.call ( this, url ) ) {
 		
 		_setInfos.call( this, url );
+		
+		
+		if ( _isPageChanged.call ( this ) ) {
+			console.log( 'SAME PAGE' );
+			return;
+		}
+		
+		
 		
 		var data = {
 			'page': STF.PagesController.pageInfos.id
@@ -342,10 +358,17 @@ STF.Router = ( function( window ) {
 	};
 	
 	
-	var _isPageChanged = function( url ) {
-		var oldlink		= document.createElement( 'a' );
+	// var _isPageChanged = function( url ) {
+	var _isPageChanged = function() {
+		return this.PREV_PAGE_URL.params == this.PAGE_URL.params;
+		
+		/*var oldlink		= document.createElement( 'a' );
 		oldlink.href	= this.PAGE_URL.full;
 		
+		console.log( oldlink );
+		console.log( oldlink.pathname );
+		
+		var url = this.PREV_PAGE_URL.full;
 		var link		= document.createElement( 'a' );
 		link.href		= url;
 		
@@ -357,9 +380,9 @@ STF.Router = ( function( window ) {
 		pagePath		= pagePath.removeFirstSpecificChar( '/' );
 		pagePath		= pagePath.removeLastSpecificChar( '/' );
 		
-		console.log( oldPagePath, pagePath );
+		console.log( oldPagePath, '-', pagePath );
 		console.log( 'CABRON:', oldPagePath == pagePath );
-		return oldPagePath == pagePath;
+		return oldPagePath == pagePath;*/
 	};
 	
 	
