@@ -23,7 +23,7 @@ STF.Views.Pages.About = ( function( window ) {
 	
 	
 	About.prototype.bindEvents = function() {
-		
+		$( '.search' ).on( 'click', $.proxy( this.changePage, this ) );
 	};
 	
 	
