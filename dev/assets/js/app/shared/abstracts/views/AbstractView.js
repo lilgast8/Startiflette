@@ -148,14 +148,26 @@ STF.AbstractView = ( function( window ) {
 	};
 	
 	
-	AbstractView.prototype.changePage = function( e ) {
+	AbstractView.prototype.changeUrl = function( e ) {
 		if ( STF.Props.HAS_PUSHSTATE ) { // if pushstate supported
 			e.preventDefault();
 			
 			var url = e.currentTarget.href;
 			
-			STF.Router.navigateTo( url );
+			STF.Router.updateUrl( url );
 		}
+	};
+	
+	
+	AbstractView.prototype.updateSearch = function() {
+		if ( STF.Config.ENV != 'prod' )
+			console.error( 'You need to override the updateSearch() method from AbstractView in the current page view.' );
+	};
+	
+	
+	AbstractView.prototype.updateHash = function() {
+		if ( STF.Config.ENV != 'prod' )
+			console.error( 'You need to override the updateHash() method from AbstractView in the current page view.' );
 	};
 	
 	

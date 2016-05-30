@@ -18,6 +18,9 @@ STF.Router = ( function( window ) {
 		this.LINK			= {};
 		
 		this.isHomepage		= null;
+		this.isPageChange	= null;
+		this.isSearchChange	= null;
+		this.isHashChange	= null;
 	}
 	
 	
@@ -357,43 +360,33 @@ STF.Router = ( function( window ) {
 	};
 	
 	
-	Router.prototype.navigateTo = function( url ) {
-		console.log( 'navigateTo:', url, '/', window.location.href );
+	Router.prototype.updateUrl = function( url ) {
+		console.log( 'updateUrl:', url, '/', window.location.href );
 		
 		if ( STF.PagesController.isPageChange )
 			return;
 		
-		// if ( _isSameUrl.call( this, url ) )
-		// 	return;
-		// if ( _isPageChanged.call ( this, url ) ) {
-		
 		_setInfos.call( this, url );
+		_setUrlPartChange.call( this );
 		
-		
-		if ( !_isPageChanged.call ( this ) ) {
-			console.log( 'SAME PAGE' );
-			// return;
-		}
-		
-		else if ( !_isSearchChanged.call ( this ) ) {
-			console.log( 'SAME SEARCH' );
-			// return;
-		}
-		
-		else if ( !_isHashChanged.call ( this ) ) {
-			console.log( 'SAME HASH' );
-			// return;
-		}
-		
+		console.log( this.isPageChange + ' / ' + this.isSearchChange + ' / ' + this.isHashChange );
 		
 		
 		var data = {
-			'page': STF.PagesController.pageInfos.id
+			'isPageChange':		this.isPageChange,
+			'isSearchChange':	this.isSearchChange,
+			'isHashChange':		this.isHashChange
 		};
 		
 		history.pushState( data, '', url );
 		
-		STF.PagesController.changePage( this.PAGE_URL.full );
+		
+		if ( this.isPageChange )
+			STF.PagesController.changePage( this.PAGE_URL.full );
+		else if ( this.isSearchChange )
+			STF.PagesController.changeSearch();
+		else if ( this.isHashChange )
+			STF.PagesController.changeHash();
 	};
 	
 	
@@ -440,52 +433,25 @@ STF.Router = ( function( window ) {
 	};
 	
 	
-	// var _isPageChanged = function( url ) {
+	var _setUrlPartChange = function() {
+		_isPageChanged.call( this );
+		_isSearchChanged.call( this );
+		_isHashChanged.call( this );
+	};
+	
+	
 	var _isPageChanged = function() {
-		return this.PREV_PAGE_URL.path != this.PAGE_URL.path;
-		
-		/*var oldlink		= document.createElement( 'a' );
-		oldlink.href	= this.PAGE_URL.full;
-		
-		console.log( oldlink );
-		console.log( oldlink.pathname );
-		
-		var url = this.PREV_PAGE_URL.full;
-		var link		= document.createElement( 'a' );
-		link.href		= url;
-		
-		var oldPagePath	= oldlink.pathname;
-		var pagePath	= link.pathname;
-		
-		oldPagePath		= oldPagePath.removeFirstSpecificChar( '/' );
-		oldPagePath		= oldPagePath.removeLastSpecificChar( '/' );
-		pagePath		= pagePath.removeFirstSpecificChar( '/' );
-		pagePath		= pagePath.removeLastSpecificChar( '/' );
-		
-		console.log( oldPagePath, '-', pagePath );
-		console.log( 'CABRON:', oldPagePath == pagePath );
-		return oldPagePath == pagePath;*/
+		this.isPageChange = this.PREV_PAGE_URL.path != this.PAGE_URL.path;
 	};
 	
 	
 	var _isSearchChanged = function() {
-		return this.PREV_PAGE_URL.search != this.PAGE_URL.search;
+		this.isSearchChange = this.PREV_PAGE_URL.search != this.PAGE_URL.search;
 	};
 	
 	
 	var _isHashChanged = function() {
-		return this.PREV_PAGE_URL.hash != this.PAGE_URL.hash;
-	};
-	
-	
-	var _isSameUrl = function( url ) {
-		var fullPageUrl = this.PAGE_URL.full;
-		
-		fullPageUrl	= fullPageUrl.removeLastSpecificChar( '/' );
-		url			= url.removeLastSpecificChar( '/' );
-		
-		// console.log( '_isSameUrl:', url, fullPageUrl );
-		return url == fullPageUrl;
+		this.isHashChange = this.PREV_PAGE_URL.hash != this.PAGE_URL.hash;
 	};
 	
 	

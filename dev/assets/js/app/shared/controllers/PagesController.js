@@ -181,6 +181,16 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
+	PagesController.prototype.changeSearch = function() {
+		this.currentPage.updateSearch();
+	};
+	
+	
+	PagesController.prototype.changeHash = function() {
+		this.currentPage.updateHash();
+	};
+	
+	
 	var _onFileLoad = function( e ) {
 		if ( e.item.type == 'json' )
 			this.assetsModel.setJsonData( e.item.id, e.result );

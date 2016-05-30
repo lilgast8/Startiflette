@@ -25,7 +25,7 @@ STF.Views.Statics.Header = ( function( window ) {
 	
 	
 	Header.prototype.bindEvents = function() {
-		this.$menuLink.on( 'click', $.proxy( this.changePage, this ) );
+		this.$menuLink.on( 'click', $.proxy( this.changeUrl, this ) );
 	};
 	
 	

@@ -25,7 +25,7 @@ STF.Views.Statics.Footer = ( function( window ) {
 	
 	
 	Footer.prototype.bindEvents = function() {
-		this.$footerLink.on( 'click', $.proxy( this.changePage, this ) );
+		this.$footerLink.on( 'click', $.proxy( this.changeUrl, this ) );
 	};
 	
 	
