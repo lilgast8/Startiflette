@@ -34,10 +34,10 @@ STF.Lang = ( function( window ) {
 	
 	
 	var _setCurrentLang = function() {
-		if ( !this.MULTI_LANG || STF.Router.PAGE_URL.params.length === 0 )
+		if ( !this.MULTI_LANG || STF.Router.PAGE_URL.path.length === 0 )
 			this.LANG = this.DEFAULT_LANG;
 		else
-			this.LANG = STF.Router.PAGE_URL.aParams[0];
+			this.LANG = STF.Router.PAGE_URL.aPath[0];
 	};
 	
 	

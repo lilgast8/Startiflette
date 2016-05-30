@@ -77,21 +77,30 @@ STF.Router = ( function( window ) {
 	Router.prototype.setPageUrl = function( isInit, url )
 	{
 		// base.com/path?params=param#hash=tag
+		// base.com/params?search=test#hash=tag
 		
 		
 		this.PREV_PAGE_URL.full		= this.PAGE_URL.full;
+		// this.PREV_PAGE_URL.params	= this.PAGE_URL.params;
+		// this.PREV_PAGE_URL.aParams	= this.PAGE_URL.aParams;
+		this.PREV_PAGE_URL.path		= this.PAGE_URL.path;
+		this.PREV_PAGE_URL.aPath	= this.PAGE_URL.aPath;
+		this.PREV_PAGE_URL.search	= this.PAGE_URL.search;
 		this.PREV_PAGE_URL.hash		= this.PAGE_URL.hash;
-		this.PREV_PAGE_URL.params	= this.PAGE_URL.params;
-		this.PREV_PAGE_URL.aParams	= this.PAGE_URL.aParams;
 		this.PREV_PAGE_URL.fullGA	= this.PAGE_URL.fullGA;
 		this.PREV_PAGE_URL.current	= this.PAGE_URL.current;
 		this.PREV_PAGE_URL.aCurrent	= this.PAGE_URL.aCurrent;
 		
 		this.PAGE_URL.full			= _getFullPageUrl.call( this, url );
+		// this.PAGE_URL.params		= _getParamsPageUrl.call( this );
+		// this.PAGE_URL.aParams		= this.PAGE_URL.params.split( '/' );
+		this.PAGE_URL.path			= _getPathPageUrl.call( this );
+		this.PAGE_URL.aPath			= this.PAGE_URL.path.split( '/' );
+		this.PAGE_URL.search		= _getSearchPageUrl.call( this );
 		this.PAGE_URL.hash			= _getHashPageUrl.call( this );
-		this.PAGE_URL.params		= _getParamsPageUrl.call( this );
-		this.PAGE_URL.aParams		= this.PAGE_URL.params.split( '/' );
 		this.PAGE_URL.fullGA		= _getFullPageUrlGA.call( this );
+		
+		console.log( 'PAGE_URL:', STF.Router.PAGE_URL );
 		
 		if ( isInit ) { // init
 			this.PAGE_URL.current	= null;
@@ -115,27 +124,72 @@ STF.Router = ( function( window ) {
 	};
 	
 	
-	var _getHashPageUrl = function() {
-		var hashPageUrl	= this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
+	var _getPathPageUrl = function() {
+		var pathPageUrl = this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
 		
-		hashPageUrl		= hashPageUrl.split( '#' )[1] || '';
+		pathPageUrl = pathPageUrl.split( '#' )[0]; // remove #hash
+		pathPageUrl = pathPageUrl.split( '?' )[0]; // remove ?search
+		
+		pathPageUrl = pathPageUrl.removeFirstSpecificChar( '/' );
+		pathPageUrl = pathPageUrl.removeLastSpecificChar( '/' );
 		
 		
-		return hashPageUrl;
+		return pathPageUrl;
 	};
 	
 	
-	var _getParamsPageUrl = function() {
-		var paramsPageUrl = this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
+	var _getSearchPageUrl = function() {
+		// var searchPageUrl	= this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
 		
-		paramsPageUrl = paramsPageUrl.split( '#' )[0]; // remove #hash
-		paramsPageUrl = paramsPageUrl.split( '?' )[0]; // remove ?params
+		// searchPageUrl		= searchPageUrl.split( '#' )[1] || '';
+		var searchPageUrl	= window.location.search.split( '?' )[1] || '';
 		
-		paramsPageUrl = paramsPageUrl.removeFirstSpecificChar( '/' );
-		paramsPageUrl = paramsPageUrl.removeLastSpecificChar( '/' );
+		searchPageUrl		= searchPageUrl.removeFirstSpecificChar( '/' );
+		searchPageUrl		= searchPageUrl.removeLastSpecificChar( '/' );
 		
 		
-		return paramsPageUrl;
+		/*var oParametre = {};
+		
+		if (window.location.search.length > 1) {
+			for (var aItKey, nKeyId = 0, aCouples = window.location.search.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
+				aItKey = aCouples[nKeyId].split("=");
+				oParametre[unescape(aItKey[0])] = aItKey.length > 1 ? unescape(aItKey[1]) : "";
+			}
+		}
+		console.log( oParametre );*/
+		
+		/*var sRecherche = window.location.search;
+		console.log( sRecherche );
+		sRecherche = sRecherche.removeLastSpecificChar( '/' );
+		console.log( sRecherche );
+		
+		var oParametre = new (function (sRecherche) {
+		if (sRecherche.length > 1) {
+			for (var aItKey, nKeyId = 0, aCouples = sRecherche.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
+				aItKey = aCouples[nKeyId].split("=");
+				this[unescape(aItKey[0])] = aItKey.length > 1 ? unescape(aItKey[1]) : "";
+			}
+		}
+		})(sRecherche);
+		console.log( oParametre );*/
+		
+		
+		return searchPageUrl;
+	};
+	
+	
+	var _getHashPageUrl = function() {
+		/*var hashPageUrl	= this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
+		
+		hashPageUrl		= hashPageUrl.split( '#' )[1] || '';*/
+		
+		var hashPageUrl	= window.location.hash.split( '#' )[1] || '';
+		
+		hashPageUrl		= hashPageUrl.removeFirstSpecificChar( '/' );
+		hashPageUrl		= hashPageUrl.removeLastSpecificChar( '/' );
+		
+		
+		return hashPageUrl;
 	};
 	
 	
@@ -155,7 +209,7 @@ STF.Router = ( function( window ) {
 	
 	var _getCurrentPageUrl = function()
 	{
-		var currentPageUrl = this.PAGE_URL.params.replace( STF.Lang.LANG, '' );
+		var currentPageUrl = this.PAGE_URL.path.replace( STF.Lang.LANG, '' );
 		
 		currentPageUrl = currentPageUrl.removeFirstSpecificChar( '/' );
 		currentPageUrl = currentPageUrl.removeLastSpecificChar( '/' );
@@ -298,9 +352,19 @@ STF.Router = ( function( window ) {
 		_setInfos.call( this, url );
 		
 		
-		if ( _isPageChanged.call ( this ) ) {
+		if ( !_isPageChanged.call ( this ) ) {
 			console.log( 'SAME PAGE' );
-			return;
+			// return;
+		}
+		
+		else if ( !_isSearchChanged.call ( this ) ) {
+			console.log( 'SAME SEARCH' );
+			// return;
+		}
+		
+		else if ( !_isHashChanged.call ( this ) ) {
+			console.log( 'SAME HASH' );
+			// return;
 		}
 		
 		
@@ -360,7 +424,7 @@ STF.Router = ( function( window ) {
 	
 	// var _isPageChanged = function( url ) {
 	var _isPageChanged = function() {
-		return this.PREV_PAGE_URL.params == this.PAGE_URL.params;
+		return this.PREV_PAGE_URL.path != this.PAGE_URL.path;
 		
 		/*var oldlink		= document.createElement( 'a' );
 		oldlink.href	= this.PAGE_URL.full;
@@ -386,13 +450,13 @@ STF.Router = ( function( window ) {
 	};
 	
 	
-	var _isParamsChanged = function( url ) {
-		// BODY
+	var _isSearchChanged = function() {
+		return this.PREV_PAGE_URL.search != this.PAGE_URL.search;
 	};
 	
 	
-	var _isHashChanged = function( url ) {
-		// BODY
+	var _isHashChanged = function() {
+		return this.PREV_PAGE_URL.hash != this.PAGE_URL.hash;
 	};
 	
 	
