@@ -13,7 +13,7 @@ STF.Router = ( function( window ) {
 		
 		this.ROUTES			= {};
 		this.PAGE_URL		= {};
-		this.PREV_PAGE_URL	= {};
+		// this.PREV_PAGE_URL	= {};
 		this.ALT_LANG_URL	= {};
 		this.LINK			= {};
 		
@@ -83,7 +83,7 @@ STF.Router = ( function( window ) {
 		// base.com/params?search=test#hash=tag
 		
 		
-		this.PREV_PAGE_URL.full		= this.PAGE_URL.full;
+		/*this.PREV_PAGE_URL.full		= this.PAGE_URL.full;
 		// this.PREV_PAGE_URL.params	= this.PAGE_URL.params;
 		// this.PREV_PAGE_URL.aParams	= this.PAGE_URL.aParams;
 		this.PREV_PAGE_URL.path		= this.PAGE_URL.path;
@@ -92,15 +92,18 @@ STF.Router = ( function( window ) {
 		this.PREV_PAGE_URL.hash		= this.PAGE_URL.hash;
 		this.PREV_PAGE_URL.fullGA	= this.PAGE_URL.fullGA;
 		this.PREV_PAGE_URL.current	= this.PAGE_URL.current;
-		this.PREV_PAGE_URL.aCurrent	= this.PAGE_URL.aCurrent;
+		this.PREV_PAGE_URL.aCurrent	= this.PAGE_URL.aCurrent;*/
 		
 		this.PAGE_URL.full			= _getFullPageUrl.call( this, url );
 		// this.PAGE_URL.params		= _getParamsPageUrl.call( this );
 		// this.PAGE_URL.aParams		= this.PAGE_URL.params.split( '/' );
-		this.PAGE_URL.path			= _getPathPageUrl.call( this );
+		// this.PAGE_URL.path			= _getPathPageUrl.call( this, this.PAGE_URL.full );
+		this.PAGE_URL.path			= getPath( this.PAGE_URL.full );
 		this.PAGE_URL.aPath			= this.PAGE_URL.path.split( '/' );
-		this.PAGE_URL.search		= _getSearchPageUrl.call( this );
-		this.PAGE_URL.hash			= _getHashPageUrl.call( this );
+		// this.PAGE_URL.search		= _getSearchPageUrl.call( this, this.PAGE_URL.full );
+		this.PAGE_URL.search		= getSearch( this.PAGE_URL.full );
+		// this.PAGE_URL.hash			= _getHashPageUrl.call( this, this.PAGE_URL.full );
+		this.PAGE_URL.hash			= getHash( this.PAGE_URL.full );
 		this.PAGE_URL.fullGA		= _getFullPageUrlGA.call( this );
 		
 		console.log( 'PAGE_URL:', STF.Router.PAGE_URL );
@@ -127,26 +130,28 @@ STF.Router = ( function( window ) {
 	};
 	
 	
-	var _getPathPageUrl = function() {
-		var pathPageUrl = this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
+	var _getPathPageUrl = function( url ) {
+		// var pathPageUrl = this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
+		var pathPageUrl	= url.replace( STF.Path.URL.base, '' );
 		
-		pathPageUrl = pathPageUrl.split( '#' )[0]; // remove #hash
-		pathPageUrl = pathPageUrl.split( '?' )[0]; // remove ?search
+		pathPageUrl		= pathPageUrl.split( '#' )[0]; // remove #hash
+		pathPageUrl		= pathPageUrl.split( '?' )[0]; // remove ?search
 		
-		pathPageUrl = pathPageUrl.removeFirstSpecificChar( '/' );
-		pathPageUrl = pathPageUrl.removeLastSpecificChar( '/' );
+		pathPageUrl		= pathPageUrl.removeFirstSpecificChar( '/' );
+		pathPageUrl		= pathPageUrl.removeLastSpecificChar( '/' );
 		
 		
 		return pathPageUrl;
 	};
 	
 	
-	var _getSearchPageUrl = function() {
+	var _getSearchPageUrl = function( url ) {
 		// var searchPageUrl	= this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
 		
 		// searchPageUrl		= searchPageUrl.split( '#' )[1] || '';
 		
-		var url				= this.PAGE_URL.full.convertToUrl();
+		// var url				= this.PAGE_URL.full.convertToUrl();
+		url					= url.convertToUrl();
 		var searchPageUrl	= url.search.split( '?' )[1] || '';
 		
 		searchPageUrl		= searchPageUrl.removeFirstSpecificChar( '/' );
@@ -189,7 +194,7 @@ STF.Router = ( function( window ) {
 	};
 	
 	
-	var _getHashPageUrl = function() {
+	var _getHashPageUrl = function( url ) {
 		/*var hashPageUrl	= this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
 		
 		hashPageUrl		= hashPageUrl.split( '#' )[1] || '';*/
@@ -198,7 +203,8 @@ STF.Router = ( function( window ) {
 		/*var link		= document.createElement( 'a' );
 		link.href		= this.PAGE_URL.full;*/
 		
-		var url			= this.PAGE_URL.full.convertToUrl();
+		// var url			= this.PAGE_URL.full.convertToUrl();
+		url				= url.convertToUrl();
 		var hashPageUrl	= url.hash.split( '#' )[1] || '';
 		
 		hashPageUrl		= hashPageUrl.removeFirstSpecificChar( '/' );
@@ -361,15 +367,18 @@ STF.Router = ( function( window ) {
 	
 	
 	Router.prototype.updateUrl = function( url ) {
-		console.log( 'updateUrl:', url, '/', window.location.href );
+		console.log( 'updateUrl:' + url + ' — ' + window.location.href );
 		
 		if ( STF.PagesController.isPageChange )
 			return;
 		
-		_setInfos.call( this, url );
-		_setUrlPartChange.call( this );
+		// _setInfos.call( this, url );
+		_setUrlPartChange.call( this, url );
 		
 		console.log( this.isPageChange + ' / ' + this.isSearchChange + ' / ' + this.isHashChange );
+		
+		
+		_setInfos.call( this, url );
 		
 		
 		var data = {
@@ -391,15 +400,40 @@ STF.Router = ( function( window ) {
 	
 	
 	var _onPopState = function( e ) {
-		console.log( e );
+		console.log( '_onPopState:', window.location.href );
+		// console.log( '_onPopState:', e );
 		// console.log( '_onPopState:', e.state );
+		
+		
+		if ( STF.PagesController.isPageChange )
+			return;
+		
+		// _setInfos.call( this, null );
+		_setUrlPartChange.call( this, window.location.href );
+		
+		console.log( this.isPageChange + ' / ' + this.isSearchChange + ' / ' + this.isHashChange );
+		
+		
+		if ( this.isPageChange || this.isSearchChange )
+			_setInfos.call( this, null );
+		
+		if ( this.isPageChange )
+			STF.PagesController.changePage( this.PAGE_URL.full );
+		else if ( this.isSearchChange )
+			STF.PagesController.changeSearch();
+		// else if ( this.isHashChange )
+		// 	STF.PagesController.changeHash();
+		
+		
+		
+		
 		
 		
 		// if ( e !== undefined )
 		// 	if ( e.state === null ) // prevent hash change
 		// 		return false;
 		
-		console.log( 'SLP:', this.PAGE_URL.full, window.location.href );
+		/*console.log( 'SLP:', this.PAGE_URL.full, window.location.href );
 		console.log( '_isPageChanged:', _isPageChanged.call( this ) );
 		if ( e !== undefined )
 			if ( e.state === null && !_isPageChanged.call( this ) ) { // prevent hash change
@@ -421,42 +455,66 @@ STF.Router = ( function( window ) {
 		// if ( STF.PagesController.prevPageInfos.id == STF.PagesController.pageInfos.id ) {}
 		// console.log( '--->', STF.PagesController.prevPageInfos.id, '/', STF.PagesController.pageInfos.id );
 		
-		STF.PagesController.changePage( this.PAGE_URL.full );
+		STF.PagesController.changePage( this.PAGE_URL.full );*/
 	};
 	
 	
 	var _onHashChange = function( e ) {
-		console.log( e );
+		// console.log( '---> _onHashChange' );
+		console.log( '---> _onHashChange:', e );
+		// console.log( '_onHashChange:', e.state );
 		// console.log( e.oldURL, e.newURL );
 		
-		STF.PagesController.currentPage.onHashChange();
+		// STF.PagesController.currentPage.onHashChange();
+		
+		
+		if ( STF.PagesController.isPageChange )
+			return;
+		
+		// _setInfos.call( this, null );
+		_setUrlPartChange.call( this, window.location.href );
+		
+		console.log( this.isPageChange + ' / ' + this.isSearchChange + ' / ' + this.isHashChange );
+		
+		
+		_setInfos.call( this, null );
+		
+		
+		if ( this.isHashChange && !this.isPageChange && !this.isSearchChange )
+			STF.PagesController.changeHash();
 	};
 	
 	
-	var _setUrlPartChange = function() {
-		_isPageChanged.call( this );
-		_isSearchChanged.call( this );
-		_isHashChanged.call( this );
+	var _setUrlPartChange = function( url ) {
+		_isPageChanged.call( this, url );
+		_isSearchChanged.call( this, url );
+		_isHashChanged.call( this, url );
 	};
 	
 	
-	var _isPageChanged = function() {
-		this.isPageChange = this.PREV_PAGE_URL.path != this.PAGE_URL.path;
+	var _isPageChanged = function( url ) {
+		var nextPath		= getPath( url );
+		
+		this.isPageChange	= this.PAGE_URL.path != nextPath;
 	};
 	
 	
-	var _isSearchChanged = function() {
-		this.isSearchChange = this.PREV_PAGE_URL.search != this.PAGE_URL.search;
+	var _isSearchChanged = function( url ) {
+		var nextSearch		= getSearch( url );
+		
+		this.isSearchChange	= this.PAGE_URL.search != nextSearch;
 	};
 	
 	
-	var _isHashChanged = function() {
-		this.isHashChange = this.PREV_PAGE_URL.hash != this.PAGE_URL.hash;
+	var _isHashChanged = function( url ) {
+		var nextHash		= getHash( url );
+		
+		this.isHashChange	= this.PAGE_URL.hash != nextHash;
 	};
 	
 	
 	var _setInfos = function( url ) {
-		console.log( '_setInfos' );
+		// console.log( '_setInfos' );
 		this.setPageUrl( false, url );
 		
 		_setPageInfos.call( this );

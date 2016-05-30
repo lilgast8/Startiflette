@@ -171,11 +171,6 @@ STF.AbstractView = ( function( window ) {
 	};
 	
 	
-	AbstractView.prototype.onHashChange = function() {
-		console.log( window.location.hash );
-	};
-	
-	
 	return AbstractView;
 	
 	
