@@ -78,17 +78,12 @@ STF.Router = ( function( window ) {
 	
 	Router.prototype.setPageUrl = function( isInit, url )
 	{
-		// base.com/path?params=param#hash=tag
-		// base.com/params?search=test#hash=tag
-		
 		this.PAGE_URL.full			= _getFullPageUrl.call( this, url );
 		this.PAGE_URL.path			= this.PAGE_URL.full.STF_getPath();
 		this.PAGE_URL.aPath			= this.PAGE_URL.path.split( '/' );
 		this.PAGE_URL.search		= this.PAGE_URL.full.STF_getSearch();
 		this.PAGE_URL.hash			= this.PAGE_URL.full.STF_getHash();
 		this.PAGE_URL.fullGA		= _getFullPageUrlGA.call( this );
-		
-		console.log( 'PAGE_URL:', STF.Router.PAGE_URL );
 		
 		if ( isInit ) { // init
 			this.PAGE_URL.current	= null;
@@ -265,9 +260,6 @@ STF.Router = ( function( window ) {
 			return;
 		
 		_setUrlPartChange.call( this, url );
-		
-		console.log( this.isPageChange + ' / ' + this.isSearchChange + ' / ' + this.isHashChange );
-		
 		_setInfos.call( this, url );
 		
 		
@@ -290,17 +282,10 @@ STF.Router = ( function( window ) {
 	
 	
 	var _onPopState = function( e ) {
-		console.log( '_onPopState:', window.location.href );
-		// console.log( '_onPopState:', e );
-		// console.log( '_onPopState:', e.state );
-		
-		
 		if ( STF.PagesController.isPageChange )
 			return;
 		
 		_setUrlPartChange.call( this, window.location.href );
-		
-		console.log( this.isPageChange + ' / ' + this.isSearchChange + ' / ' + this.isHashChange );
 		
 		
 		if ( this.isPageChange || this.isSearchChange )
@@ -310,25 +295,14 @@ STF.Router = ( function( window ) {
 			STF.PagesController.changePage( this.PAGE_URL.full );
 		else if ( this.isSearchChange )
 			STF.PagesController.changeSearch();
-		// else if ( this.isHashChange )
-		// 	STF.PagesController.changeHash();
 	};
 	
 	
 	var _onHashChange = function( e ) {
-		// console.log( '---> _onHashChange' );
-		console.log( '---> _onHashChange:', e );
-		// console.log( '_onHashChange:', e.state );
-		// console.log( e.oldURL, e.newURL );
-		
-		
 		if ( STF.PagesController.isPageChange )
 			return;
 		
 		_setUrlPartChange.call( this, window.location.href );
-		
-		console.log( this.isPageChange + ' / ' + this.isSearchChange + ' / ' + this.isHashChange );
-		
 		_setInfos.call( this, null );
 		
 		
@@ -366,7 +340,6 @@ STF.Router = ( function( window ) {
 	
 	
 	var _setInfos = function( url ) {
-		// console.log( '_setInfos' );
 		this.setPageUrl( false, url );
 		
 		_setPageInfos.call( this );
