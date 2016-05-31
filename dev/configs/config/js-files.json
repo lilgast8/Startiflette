@@ -48,7 +48,7 @@
 			"app/shared/utils/Global.js",
 			"app/shared/utils/DOM.js",
 			"app/shared/utils/Math.js",
-			"app/shared/utils/Url.js",
+			"app/shared/utils/String.js",
 			
 			"app/desktop/views/MainView.js",
 			
@@ -102,7 +102,7 @@
 			"app/shared/utils/Global.js",
 			"app/shared/utils/DOM.js",
 			"app/shared/utils/Math.js",
-			"app/shared/utils/Url.js",
+			"app/shared/utils/String.js",
 			
 			"app/mobile/views/MainView.js",
 			

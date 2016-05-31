@@ -3,11 +3,11 @@
 STF.Utils = STF.Utils || {};
 
 
-STF.Utils.Url = ( function( window ) {
+STF.Utils.String = ( function( window ) {
 	'use strict';
 	
 	
-	String.prototype.convertToUrl = function() {
+	String.prototype.STF_convertToUrl = function() {
 		var string = this;
 		
 		var link	= document.createElement( 'a' );
@@ -18,11 +18,11 @@ STF.Utils.Url = ( function( window ) {
 	};
 	
 	
-	window.getPath = function( url, baseUrl ) {
+	String.prototype.STF_getPath = function( baseUrl ) {
 		if ( baseUrl === null || baseUrl === undefined )
 			baseUrl = STF.Path.URL.base;
 		
-		var path	= url.replace( baseUrl, '' );
+		var path	= this.replace( baseUrl, '' );
 		
 		path		= path.split( '#' )[0]; // remove #hash
 		path		= path.split( '?' )[0]; // remove ?search
@@ -35,8 +35,8 @@ STF.Utils.Url = ( function( window ) {
 	};
 	
 	
-	window.getSearch = function( url ) {
-		url			= url.convertToUrl();
+	String.prototype.STF_getSearch = function() {
+		var url		= this.STF_convertToUrl();
 		
 		var search	= url.search.split( '?' )[1] || '';
 		
@@ -48,8 +48,8 @@ STF.Utils.Url = ( function( window ) {
 	};
 	
 	
-	window.getHash = function( url ) {
-		url			= url.convertToUrl();
+	String.prototype.STF_getHash = function() {
+		var url		= this.STF_convertToUrl();
 		
 		var hash	= url.hash.split( '#' )[1] || '';
 		

@@ -82,10 +82,10 @@ STF.Router = ( function( window ) {
 		// base.com/params?search=test#hash=tag
 		
 		this.PAGE_URL.full			= _getFullPageUrl.call( this, url );
-		this.PAGE_URL.path			= getPath( this.PAGE_URL.full );
+		this.PAGE_URL.path			= this.PAGE_URL.full.STF_getPath();
 		this.PAGE_URL.aPath			= this.PAGE_URL.path.split( '/' );
-		this.PAGE_URL.search		= getSearch( this.PAGE_URL.full );
-		this.PAGE_URL.hash			= getHash( this.PAGE_URL.full );
+		this.PAGE_URL.search		= this.PAGE_URL.full.STF_getSearch();
+		this.PAGE_URL.hash			= this.PAGE_URL.full.STF_getHash();
 		this.PAGE_URL.fullGA		= _getFullPageUrlGA.call( this );
 		
 		console.log( 'PAGE_URL:', STF.Router.PAGE_URL );
@@ -345,21 +345,21 @@ STF.Router = ( function( window ) {
 	
 	
 	var _isPageChanged = function( url ) {
-		var nextPath		= getPath( url );
+		var nextPath		= url.STF_getPath();
 		
 		this.isPageChange	= this.PAGE_URL.path != nextPath;
 	};
 	
 	
 	var _isSearchChanged = function( url ) {
-		var nextSearch		= getSearch( url );
+		var nextSearch		= url.STF_getSearch();
 		
 		this.isSearchChange	= this.PAGE_URL.search != nextSearch;
 	};
 	
 	
 	var _isHashChanged = function( url ) {
-		var nextHash		= getHash( url );
+		var nextHash		= url.STF_getHash();
 		
 		this.isHashChange	= this.PAGE_URL.hash != nextHash;
 	};
