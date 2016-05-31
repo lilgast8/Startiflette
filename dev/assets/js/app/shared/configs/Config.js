@@ -7,12 +7,6 @@ STF.Config = ( function( window ) {
 	function Config() {
 		STF.EventDispatcher.call( this );
 		
-		this.E = {
-			INIT: 'init'
-		};
-		
-		this.CONFIG_FILE_PATH	= BASE_URL + 'configs/config/config.json';
-		
 		this.ENV				= null;
 		this.ENVS				= null;
 		this.ROUTES_FILES		= null;
@@ -22,13 +16,6 @@ STF.Config = ( function( window ) {
 		this.FORCE_DEVICE		= null;
 		this.GA_ID				= null;
 		this.CREDITS			= null;
-		
-		this.aJsonFiles			= [
-			{
-				id:		'config',
-				src:	this.CONFIG_FILE_PATH
-			}
-		];
 	}
 	
 	
@@ -37,42 +24,14 @@ STF.Config = ( function( window ) {
 	
 	
 	Config.prototype.init = function() {
-		_loadConfigFile.call(this);
-	};
-	
-	
-	var _loadConfigFile = function() {
-		this.jsonLoader = new STF.Loader( false, false );
-		
-		this.jsonLoader.buildEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
-		
-		this.jsonLoader.startLoad( this.aJsonFiles );
-	};
-	
-	
-	var _onComplete = function( data ) {
-		_destroyJsonLoader.call( this );
-		
-		_setConfig.call( this, data );
+		_setConfig.call( this );
 		_showCreditsLog.call( this );
-		
-		this.dispatch( this.E.INIT );
-	};
-	
-	
-	var _destroyJsonLoader = function() {
-		this.jsonLoader.destroyEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
-		
-		this.jsonLoader.destroy();
-		this.jsonLoader = null;
 	};
 	
 	
 	var _setConfig = function( data ) {
-		var config = data.config;
-		
-		for ( var varName in config )
-			this[ varName ] = config[ varName ];
+		for ( var varName in STF_Config )
+			this[ varName ] = STF_Config[ varName ];
 	};
 	
 	

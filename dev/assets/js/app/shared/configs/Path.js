@@ -15,7 +15,7 @@ STF.Path = ( function( window ) {
 	
 	
 	var _setPaths = function() {
-		var baseUrl = STF.Config.ENVS[ STF.Config.ENV ].base_url;
+		var baseUrl = STF.Config.ENVS.base_url;
 		
 		// url paths
 		this.URL = {

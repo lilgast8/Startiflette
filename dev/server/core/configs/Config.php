@@ -84,7 +84,7 @@ class Config
 		$this->params = new stdClass();
 		
 		$this->params->ENV					= self::$ENV;
-		$this->params->ENVS					= self::$ENVS;
+		$this->params->ENVS					= self::$ENVS->{ $this->params->ENV };
 		$this->params->ROUTES_FILES			= self::$ROUTES_FILES;
 		$this->params->ALL_LANG				= self::$ALL_LANG;
 		$this->params->HAS_LANG_LANDING		= self::$HAS_LANG_LANDING;

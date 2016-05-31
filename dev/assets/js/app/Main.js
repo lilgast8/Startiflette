@@ -10,20 +10,15 @@ STF.Main = ( function( window ) {
 	
 	
 	Main.prototype.init = function() {
-		STF.Config.buildEvt( STF.Config.E.INIT, _configLoaded.bind( this ) );
 		STF.Config.init();
 		STF.Props.init();
-		
-		// this.$window.on( 'load', $.proxy( _windowLoad, this ) );
-	};
-	
-	
-	var _configLoaded = function() {
 		STF.Device.init();
 		STF.Path.init();
 		STF.Lang.init();
 		
 		_loadRoutes.call( this );
+		
+		// this.$window.on( 'load', $.proxy( _windowLoad, this ) );
 	};
 	
 	

@@ -1,5 +1,5 @@
 
 <!-- JS var -->
 <script>
-	var BASE_URL = '{{ Path.URL.base }}';
+	var STF_Config	= JSON.parse( '{{ Config|json_encode|e("js") }}' );
 </script>
