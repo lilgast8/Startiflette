@@ -61,5 +61,32 @@ STF.Utils.String = ( function( window ) {
 	};
 	
 	
+	String.prototype.STF_getParams = function( type ) {
+		var url		= this.STF_convertToUrl();
+		
+		var params	= {};
+		var key, value;
+		
+		if ( url[ type ].length > 1 ) {
+			for ( var aItKey, nKeyId = 0, aCouples = url[ type ].substr(1).split( '&' ); nKeyId < aCouples.length; nKeyId++ ) {
+				aItKey	= aCouples[ nKeyId ].split( '=' );
+				
+				key		= unescape( aItKey[0] );
+				key		= key.removeFirstSpecificChar( '/' );
+				key		= key.removeLastSpecificChar( '/' );
+				
+				value	= aItKey.length > 1 ? unescape( aItKey[1] ) : '';
+				value	= value.removeFirstSpecificChar( '/' );
+				value	= value.removeLastSpecificChar( '/' );
+				
+				params[ key ] = value;
+			}
+		}
+		
+		
+		return params;
+	};
+	
+	
 } ) ( window );
 

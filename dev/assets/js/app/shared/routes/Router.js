@@ -82,7 +82,9 @@ STF.Router = ( function( window ) {
 		this.PAGE_URL.path			= this.PAGE_URL.full.STF_getPath();
 		this.PAGE_URL.aPath			= this.PAGE_URL.path.split( '/' );
 		this.PAGE_URL.search		= this.PAGE_URL.full.STF_getSearch();
+		this.PAGE_URL.searchParams	= this.PAGE_URL.full.STF_getParams( 'search' );
 		this.PAGE_URL.hash			= this.PAGE_URL.full.STF_getHash();
+		this.PAGE_URL.hashParams	= this.PAGE_URL.full.STF_getParams( 'hash' );
 		this.PAGE_URL.fullGA		= _getFullPageUrlGA.call( this );
 		
 		if ( isInit ) { // init
