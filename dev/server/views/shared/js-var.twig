@@ -1,5 +1,5 @@
 
 <!-- JS var -->
 <script>
-	var STF_Config	= JSON.parse( '{{ Config|json_encode|e("js") }}' );
+	var STF_Config	= JSON.parse( '{{ Config|json_encode()|raw }}' );
 </script>
