@@ -23,8 +23,7 @@ STF.Views.Pages.About = ( function( window ) {
 	
 	
 	About.prototype.bindEvents = function() {
-		$( '.hash' ).on( 'click', $.proxy( this.changeUrl, this ) );
-		$( '.search' ).on( 'click', $.proxy( this.changeUrl, this ) );
+		
 	};
 	
 	
