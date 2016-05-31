@@ -7,6 +7,28 @@ STF.Utils.String = ( function( window ) {
 	'use strict';
 	
 	
+	String.prototype.removeFirstSpecificChar = function ( char ) {
+		var string = this;
+		
+		if ( string.substr( 0, 1 ) == char )
+			string = string.substr( 1 );
+		
+		
+		return string;
+	};
+	
+	
+	String.prototype.removeLastSpecificChar = function ( char ) {
+		var string = this;
+		
+		if ( string.substr( string.length - 1, 1 ) == char )
+			string = string.substr( 0, string.length - 1 );
+		
+		
+		return string;
+	};
+	
+	
 	String.prototype.STF_convertToUrl = function() {
 		var string = this;
 		
