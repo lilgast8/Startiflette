@@ -256,8 +256,6 @@ STF.Router = ( function( window ) {
 	
 	
 	Router.prototype.updateUrl = function( url ) {
-		console.log( 'updateUrl:' + url + ' — ' + window.location.href );
-		
 		if ( STF.PagesController.isPageChange )
 			return;
 		
