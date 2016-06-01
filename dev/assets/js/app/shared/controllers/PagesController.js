@@ -62,31 +62,35 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	PagesController.prototype.setPageInfos = function( pageId, jsView, title, desc )
+	// PagesController.prototype.setPageInfos = function( pageId, jsView, title, desc )
+	PagesController.prototype.setPageInfos = function()
 	{
-		this.prevPageInfos.id		= this.pageInfos.id;
-		this.prevPageInfos.jsView	= this.pageInfos.jsView;
-		this.prevPageInfos.title	= this.pageInfos.title;
-		this.prevPageInfos.desc		= this.pageInfos.desc;
+		var $page	= $( document.getElementById( 'page' ) )[0];
+		var id		= $page.getAttribute( 'data-id' );
+		var title	= $page.getAttribute( 'data-title' );
 		
-		this.pageInfos.id			= pageId;
-		this.pageInfos.jsView		= jsView;
+		
+		this.prevPageInfos.id		= this.pageInfos.id;
+		this.prevPageInfos.title	= this.pageInfos.title;
+		
+		this.pageInfos.id			= id;
 		this.pageInfos.title		= title;
-		this.pageInfos.desc			= desc;
 		
 		_setCurrentPage.call( this );
 	};
 	
 	
 	var _setCurrentPage = function() {
-		if ( this.pages[ this.pageInfos.jsView ] === undefined) {
-			console.error( 'PagesController error: Need to create a view for the "' + this.pageInfos.jsView + '" ID, then set the view in the PagesController.pages object.' );
+		if ( this.pages[ this.pageInfos.id ] === undefined) {
+			console.error( 'PagesController error: Need to create a view for the "' + this.pageInfos.id + '" ID, then set the view in the PagesController.pages object.' );
 			
 			return;
 		}
 		
 		this.prevPage		= this.currentPage;
-		this.currentPage	= new this.pages[ this.pageInfos.jsView ]();
+		this.currentPage	= new this.pages[ this.pageInfos.id ]();
+		
+		console.log( 'current page:', this.currentPage );
 	};
 	
 	

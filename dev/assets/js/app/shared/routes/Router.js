@@ -7,9 +7,9 @@ STF.Router = ( function( window ) {
 	function Router() {
 		STF.EventDispatcher.call( this );
 		
-		this.E = {
+		/*this.E = {
 			INIT: 'init'
-		};
+		};*/
 		
 		this.ROUTES			= {};
 		this.PAGE_URL		= {};
@@ -27,7 +27,7 @@ STF.Router = ( function( window ) {
 	Router.prototype.constructor	= Router;
 	
 	
-	Router.prototype.init = function() {
+	/*Router.prototype.init = function() {
 		_loadRoutesFile.call( this );
 	};
 	
@@ -73,7 +73,7 @@ STF.Router = ( function( window ) {
 	var _setRoutes = function( data ) {
 		for ( var routesName in data )
 			this.ROUTES[ routesName ] = data[ routesName ];
-	};
+	};*/
 	
 	
 	Router.prototype.setPageUrl = function( isInit, url )
@@ -135,7 +135,8 @@ STF.Router = ( function( window ) {
 	};
 	
 	
-	Router.prototype.initRouting = function() {
+	// Router.prototype.initRouting = function() {
+	Router.prototype.init = function() {
 		_bindEvents.call( this );
 		
 		_setPageInfos.call( this );
@@ -151,7 +152,7 @@ STF.Router = ( function( window ) {
 	
 	
 	var _setPageInfos = function() {
-		var langExist	= _getLangExistence.call( this );
+		/*var langExist	= _getLangExistence.call( this );
 		var page		= _getPageInfos.call( this );
 		
 		if ( langExist && page.exist ) { // page exist
@@ -163,7 +164,23 @@ STF.Router = ( function( window ) {
 			page.params	= this.ROUTES.statics[ page.id ];
 		}
 		
-		STF.PagesController.setPageInfos( page.id, page.params.jsView, page.params[ STF.Lang.LANG ].title, page.params[ STF.Lang.LANG ].desc );
+		STF.PagesController.setPageInfos( page.id, page.params.jsView, page.params[ STF.Lang.LANG ].title, page.params[ STF.Lang.LANG ].desc );*/
+		
+		console.log( 'Router.setPageInfos()' );
+		
+		
+		// console.log( 'id:', $( document.getElementById( 'page' ) )[0].dataset );
+		// console.log( 'id:', STF.MainView.$mainCont[0].getAttribute( 'data-id' ) );
+		
+		/*var $page	= $( document.getElementById( 'page' ) )[0];
+		var pageId	= $page.getAttribute( 'data-id' );
+		
+		if ( pageId == 'error-404' ) {
+			page.id = 'error-404';
+		}*/
+		
+		
+		STF.PagesController.setPageInfos();
 	};
 	
 	

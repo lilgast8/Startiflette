@@ -16,15 +16,20 @@ STF.Main = ( function( window ) {
 		STF.Path.init();
 		STF.Lang.init();
 		
-		_loadRoutes.call( this );
+		// _loadRoutes.call( this );
+		
+		STF.MainView.init();
+		
+		STF.PagesController.init();
+		STF.Router.init();
 		
 		// this.$window.on( 'load', $.proxy( _windowLoad, this ) );
 	};
 	
 	
 	var _loadRoutes = function() {
-		STF.Router.buildEvt( STF.Router.E.INIT, _routesLoaded.bind( this ) );
-		STF.Router.init();
+		// STF.Router.buildEvt( STF.Router.E.INIT, _routesLoaded.bind( this ) );
+		// STF.Router.init();
 	};
 	
 	
