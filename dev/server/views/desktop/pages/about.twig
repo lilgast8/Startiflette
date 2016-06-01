@@ -1,6 +1,11 @@
 
-<!-- About -->
-<section id="page" class="about">
+{% extends 'page.twig' %}
+
+
+{% block title %}About{% endblock %}
+{% block cssClassName %}about{% endblock %}
+
+{% block content %}
 	
 	<br><br><br>
 	{{ title }}<br>
@@ -11,4 +16,4 @@
 	<img src="{{ Path.URL.img }}temp/about-2.jpg" alt="{{ title }}">
 	<br><br><br><br>
 	
-</section>
+{% endblock %}

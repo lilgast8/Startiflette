@@ -1,10 +1,15 @@
 
-<!-- Project -->
-<section id="page" class="project">
+{% extends 'page.twig' %}
+
+
+{% block title %}Project{% endblock %}
+{% block cssClassName %}project{% endblock %}
+
+{% block content %}
 	
 	<br><br><br>
 	{{ title }}<br>
 	desktop page content / {{ Lang.LANG }}
 	<br><br><br><br>
 	
-</section>
+{% endblock %}

@@ -1,6 +1,11 @@
 
-<!-- 404 error -->
-<section id="page" class="error404">
+{% extends 'page.twig' %}
+
+
+{% block title %}404 error{% endblock %}
+{% block cssClassName %}error404{% endblock %}
+
+{% block content %}
 	
 	<br><br><br>
 	{{ title }}<br>
@@ -9,4 +14,4 @@
 	<img src="{{ Path.URL.img }}temp/404.jpg" alt="404">
 	<br><br><br><br>
 	
-</section>
+{% endblock %}

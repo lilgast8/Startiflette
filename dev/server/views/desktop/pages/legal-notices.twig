@@ -1,6 +1,11 @@
 
-<!-- Legals -->
-<section id="page" class="legals">
+{% extends 'page.twig' %}
+
+
+{% block title %}Legals{% endblock %}
+{% block cssClassName %}legals{% endblock %}
+
+{% block content %}
 	
 	<div class="logo">
 		<img src="{{ Path.URL.img }}logos/LOGO.JPG" alt="Logo" />
@@ -42,4 +47,4 @@
 	<h2>7- Contact</h2>
 	<p>Pour nous contacter par mail : <span class="email">CONTACT</span></p>
 	
-</section>
+{% endblock %}
