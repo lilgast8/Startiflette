@@ -78,7 +78,7 @@ class Lang
 	{
 		self::$LANG_EXIST = true;
 		
-		if ( !in_array( Lang::$LANG, Lang::$ALL_LANG ) ) {
+		if ( !in_array( self::$LANG, self::$ALL_LANG ) ) {
 			$this->forceDefaultLang();
 			
 			self::$LANG_EXIST = false;
