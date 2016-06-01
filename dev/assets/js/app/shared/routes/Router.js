@@ -139,7 +139,8 @@ STF.Router = ( function( window ) {
 	Router.prototype.init = function() {
 		_bindEvents.call( this );
 		
-		_setPageInfos.call( this );
+		// _setPageInfos.call( this );
+		// STF.PagesController.setPageInfos();
 		
 		STF.PagesController.initFirstPage();
 	};
@@ -277,7 +278,8 @@ STF.Router = ( function( window ) {
 			return;
 		
 		_setUrlPartChange.call( this, url );
-		_setInfos.call( this, url );
+		// _setInfos.call( this, url );
+		this.setPageUrl( false, url );
 		
 		
 		var data = {
@@ -306,7 +308,8 @@ STF.Router = ( function( window ) {
 		
 		
 		if ( this.isPageChange || this.isSearchChange )
-			_setInfos.call( this, null );
+			// _setInfos.call( this, null );
+			this.setPageUrl( false, null );
 		
 		if ( this.isPageChange )
 			STF.PagesController.changePage( this.PAGE_URL.full );
@@ -320,7 +323,8 @@ STF.Router = ( function( window ) {
 			return;
 		
 		_setUrlPartChange.call( this, window.location.href );
-		_setInfos.call( this, null );
+		// _setInfos.call( this, null );
+		this.setPageUrl( false, null );
 		
 		
 		if ( this.isHashChange && !this.isPageChange && !this.isSearchChange )
@@ -356,11 +360,11 @@ STF.Router = ( function( window ) {
 	};
 	
 	
-	var _setInfos = function( url ) {
+	/*var _setInfos = function( url ) {
 		this.setPageUrl( false, url );
 		
 		_setPageInfos.call( this );
-	};
+	};*/
 	
 	
 	Router.prototype.updateGA = function() {

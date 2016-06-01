@@ -62,6 +62,15 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
+	PagesController.prototype.initFirstPage = function() {
+		this.setPageInfos();
+		
+		_initPageChangeValues.call( this );
+		
+		_loadAssets.call( this );
+	};
+	
+	
 	// PagesController.prototype.setPageInfos = function( pageId, jsView, title, desc )
 	PagesController.prototype.setPageInfos = function()
 	{
@@ -90,14 +99,7 @@ STF.PagesController = ( function( window ) {
 		this.prevPage		= this.currentPage;
 		this.currentPage	= new this.pages[ this.pageInfos.id ]();
 		
-		console.log( 'current page:', this.currentPage );
-	};
-	
-	
-	PagesController.prototype.initFirstPage = function() {
-		_initPageChangeValues.call( this );
-		
-		_loadAssets.call( this );
+		console.log( '_setCurrentPage():', this.currentPage );
 	};
 	
 	
@@ -162,7 +164,7 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	PagesController.prototype.changePage = function( pageUrl ) {
+	PagesController.prototype.changePage = function( url ) {
 		_updateMenuLinks.call( this );
 		STF.Router.updateGA();
 		
@@ -172,10 +174,13 @@ STF.PagesController = ( function( window ) {
 		_disablePageChange.call( this );
 		_initPageChangeValues.call( this );
 		
-		_loadContent.call( this, pageUrl );
+		_loadContent.call( this, url );
 		
-		this.prevPage.buildEvt( this.prevPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
-		this.prevPage.hide();
+		// this.prevPage.buildEvt( this.prevPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
+		// this.prevPage.hide();
+		console.log( 'changePage:', this.prevPage, this.currentPage );
+		this.currentPage.buildEvt( this.currentPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
+		this.currentPage.hide();
 		
 		this.mainLoader.buildEvt( this.mainLoader.E.SHOWN, _onMainLoaderShown.bind( this ) );
 		this.mainLoader.show();
@@ -230,15 +235,22 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	var _loadContent = function( pageUrl ) {
-		if ( this.pageInfos.id == 'error-404' ) { // used to avoid that the request return a error on callback if it's a 404 page 
+	var _loadContent = function( url ) {
+		// console.log( '_loadContent():', this.pageInfos.id, this.prevPageInfos.id );
+		// if ( this.pageInfos.id == 'error-404' ) { // used to avoid that the request return a error on callback if it's a 404 page 
+		/*if ( this.prevPageInfos.id == 'error-404' ) { // used to avoid that the request return a error on callback if it's a 404 page 
 			var lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/'  : '';
-			pageUrl		= STF.Path.URL.base + lang + STF.Router.ROUTES.statics[ this.pageInfos.id ][ STF.Lang.LANG ].url;
-		}
+			// pageUrl		= STF.Path.URL.base + lang + STF.Router.ROUTES.statics[ this.pageInfos.id ][ STF.Lang.LANG ].url;
+			pageUrl		= STF.Path.URL.base + lang + '404';
+			console.log( pageUrl );
+		}*/
+		
+		
+		// setTimeout( function() { // simulate a very slow connection = very long load
 		
 		$.ajax({
 			context:	this,
-			url:		pageUrl,
+			url:		url,
 			type:		'POST',
 			data:		{
 							// useful if need differents behavior on PHP file when AJAX load
@@ -250,6 +262,8 @@ STF.PagesController = ( function( window ) {
 			success:	_onContentLoaded.bind( this ),
 			error:		_onContentError.bind( this )
 		});
+		
+		// }.bind( this ), 3000 ); // simulate a very slow connection = very long load
 	};
 	
 	
@@ -262,13 +276,31 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _onContentError = function( e ) {
-		console.log( 'ajax load error' );
-		// window.location.href = STF.Routes.PAGE_URL.full;
+		console.log( 'ajax load error', e );
+		
+		if ( e.status == 404 )
+			_force404Load.call( this );
+	};
+	
+	
+	var _force404Load = function() {
+		console.log( 'FORCE 404 LOAD !' );
+		
+		var lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/'  : '';
+		// pageUrl		= STF.Path.URL.base + lang + STF.Router.ROUTES.statics[ this.pageInfos.id ][ STF.Lang.LANG ].url;
+		var url		= STF.Path.URL.base + lang + '404';
+		console.log( url );
+		
+		_loadContent.call( this, url );
 	};
 	
 	
 	var _onPrevPageHidden = function() {
-		this.prevPage.destroyEvt( this.prevPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
+		console.log( '_onPrevPageHidden():', this.prevPage, this.currentPage );
+		// this.prevPage.destroyEvt( this.prevPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
+		this.currentPage.destroyEvt( this.currentPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
+		
+		_destroyPage.call( this );
 		
 		this.isPrevPageHidden = true;
 		_checkFirstStepPageChange.call( this );
@@ -290,9 +322,15 @@ STF.PagesController = ( function( window ) {
 		if ( this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
 			STF.MainView.$pageCont[0].innerHTML = this.data;
 			
-			_destroyPrevPage.call( this );
+			// this.setPageInfos();
+			
+			// _destroyPrevPage.call( this );
+			// _destroyPage.call( this );
 			this.data = null;
 			
+			this.setPageInfos();
+			
+			console.log( 'this.currentPage.init():', this.currentPage );
 			this.currentPage.init();
 			
 			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
@@ -308,8 +346,16 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _destroyPrevPage = function() {
+		console.log( '_destroyPrevPage():', this.prevPage );
+		
 		this.prevPage.destroy();
 		this.prevPage = null;
+	};
+	var _destroyPage = function() {
+		console.log( '_destroyPage():', this.currentPage );
+		
+		this.currentPage.destroy();
+		this.currentPage = null;
 	};
 	
 	

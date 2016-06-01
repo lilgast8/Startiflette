@@ -30,7 +30,7 @@ class Lang
 		$this->setGlobalInfos();
 		$this->router->setPageUrl();
 		$this->setCurrentLang();
-		$this->setLangExistence();
+		$this->checkDefaultLang();
 		$this->router->setCurrentPageUrl();
 		$this->setLangLinks();
 		
@@ -74,7 +74,7 @@ class Lang
 	}
 	
 	
-	private function setLangExistence()
+	private function checkDefaultLang()
 	{
 		self::$LANG_EXIST = true;
 		

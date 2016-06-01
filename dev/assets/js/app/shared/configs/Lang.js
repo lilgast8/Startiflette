@@ -13,6 +13,7 @@ STF.Lang = ( function( window ) {
 		_setGlobalInfos.call( this );
 		STF.Router.setPageUrl( true, null );
 		_setCurrentLang.call( this );
+		_checkDefaultLang.call( this );
 		STF.Router.setCurrentPageUrl();
 		_setLangLinks.call( this );
 	};
@@ -38,6 +39,12 @@ STF.Lang = ( function( window ) {
 			this.LANG = this.DEFAULT_LANG;
 		else
 			this.LANG = STF.Router.PAGE_URL.aPath[0];
+	};
+	
+	
+	var _checkDefaultLang = function() {
+		if ( this.ALL_LANG.indexOf( this.LANG ) < 0 )
+			this.LANG = this.DEFAULT_LANG;
 	};
 	
 	
