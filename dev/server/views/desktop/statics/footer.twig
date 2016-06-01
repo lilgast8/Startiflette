@@ -4,9 +4,9 @@
 	<!-- Footer -->
 	<footer id="footer">
 		{% if Lang.MULTI_LANG %}
-		<nav class="footer-lg">
-			{% for lang, altLangUrl in Router.ALT_LANG_URL %}
-			<a href="{{ altLangUrl }}" class="footer-lg-link" data-lg="{{ lang }}">{{ lang }}</a>
+		<nav class="footer-lang">
+			{% for lang, url in Router.ALT_LANG_URL %}
+			<a href="{{ url }}" class="footer-lang-link" data-lang="{{ lang }}">{{ lang }}</a>
 			{% endfor %}
 		</nav>
 		{% endif %}
