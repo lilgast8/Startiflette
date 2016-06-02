@@ -36,60 +36,60 @@ STF.AbstractView = ( function( window ) {
 	
 	
 	AbstractView.prototype.initDOM = function() {
-		// console.log('AbstractView.initDOM()' );
+		// console.log( 'AbstractView.initDOM() — ', this.constructor.name );
 		
 		this.$page = $( document.getElementById( 'page' ) );
 	};
 	
 	
 	AbstractView.prototype.initEl = function() {
-		// console.log('AbstractView.initEl()');
+		// console.log( 'AbstractView.initEl() — ', this.constructor.name );
 	};
 	
 	
 	AbstractView.prototype.initTl = function() {
-		// console.log('AbstractView.initTl()');
+		// console.log( 'AbstractView.initTl() — ', this.constructor.name );
 	};
 	
 	
 	AbstractView.prototype.bindEvents = function() {
-		// console.log('AbstractView.bindEvents()');
+		// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
 	};
 	
 	
 	AbstractView.prototype.unbindEvents = function() {
-		// console.log('AbstractView.unbindEvents()');
+		// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
 	};
 	
 	
 	AbstractView.prototype.initView = function() {
-		// console.log('AbstractView.initView()');
+		// console.log( 'AbstractView.initView() — ', this.constructor.name );
 		
 		this.isInit = true;
 	};
 	
 	
 	AbstractView.prototype.show = function() {
-		// console.log('AbstractView.show()');
+		// console.log( 'AbstractView.show() — ', this.constructor.name );
 		
 		this.dispatch( this.E.SHOWN );
 	};
 	
 	
 	AbstractView.prototype.hide = function() {
-		// console.log('AbstractView.hide()');
+		// console.log( 'AbstractView.hide() — ', this.constructor.name );
 		
 		this.dispatch( this.E.HIDDEN );
 	};
 	
 	
 	AbstractView.prototype.resize = function() {
-		// console.log('AbstractView.resize()');
+		// console.log( 'AbstractView.resize() — ', this.constructor.name );
 	};
 	
 	
 	AbstractView.prototype.raf = function() {
-		// console.log('AbstractView.raf()');
+		// console.log( 'AbstractView.raf() — ', this.constructor.name );
 	};
 	
 	
