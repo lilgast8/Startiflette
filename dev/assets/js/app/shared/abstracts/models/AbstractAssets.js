@@ -16,7 +16,45 @@ STF.AbstractAssets = ( function( window ) {
 	};
 	
 	
-	AbstractAssets.prototype.getAllStaticAssetsListIds = function() {
+	AbstractAssets.prototype.getAssetsToLoad = function( pageId, isFirstLoad, loadingMode ) {
+		var aListIds		= _getAssetsListIds.call( this, pageId, isFirstLoad, loadingMode );
+		
+		var aAssetsToLoad	= [];
+		aAssetsToLoad		= _addStaticAssetsToLoad.call( this, 'img', aAssetsToLoad, aListIds );
+		aAssetsToLoad		= _addStaticAssetsToLoad.call( this, 'json', aAssetsToLoad, aListIds );
+		
+		if ( loadingMode == 'byPageDynamic' )
+			aAssetsToLoad	= _addDynamicAssetsToLoad.call( this, isFirstLoad, aAssetsToLoad );
+		
+		
+		return aAssetsToLoad;
+	};
+	
+	
+	var _getAssetsListIds = function( pageId, isFirstLoad, loadingMode ) {
+		var aIds = [];
+		
+		
+		// first load
+		if ( isFirstLoad && loadingMode == 'allStatic')
+			aIds = _getAllStaticAssetsListIds.call( this );
+		
+		else if ( isFirstLoad && loadingMode == 'byPageStatic' ||
+				  isFirstLoad && loadingMode == 'byPageDynamic' )
+			aIds = [ 'global', pageId ];
+		
+		
+		// page change load
+		else if ( !isFirstLoad && loadingMode == 'byPageStatic' ||
+				  !isFirstLoad && loadingMode == 'byPageDynamic' )
+			aIds = [ pageId ];
+		
+		
+		return aIds;
+	};
+	
+	
+	var _getAllStaticAssetsListIds = function() {
 		var aIds = [];
 		
 		for ( var id in this.aImg )
@@ -31,35 +69,16 @@ STF.AbstractAssets = ( function( window ) {
 	};
 	
 	
-	AbstractAssets.prototype.getAssetsToLoad = function( aImgListIds, aJsonListIds, dynamicImgList ) {
-		var aAssetsToLoad	= [];
+	var _addStaticAssetsToLoad = function( type, aAssetsToLoad, aListIds ) {
+		var assetsList;
+		var aAssets = type == 'img' ? this.aImg : this.aJson;
 		
-		aAssetsToLoad		= _addImgToLoad.call( this, aAssetsToLoad, aImgListIds, dynamicImgList );
-		aAssetsToLoad		= _addJsonToLoad.call( this, aAssetsToLoad, aJsonListIds );
-		
-		return aAssetsToLoad;
-	};
-	
-	
-	var _addImgToLoad = function( aAssetsToLoad, aImgListIds, dynamicImgList ) {
-		var imgList;
-		
-		// static images
-		for ( var i = 0; i < aImgListIds.length; i++ ) {
-			imgList = this.aImg[ aImgListIds[ i ] ];
+		for ( var i = 0; i < aListIds.length; i++ ) {
+			assetsList = aAssets[ aListIds[ i ] ];
 			
-			if ( imgList !== undefined ) {
-				
-				for ( var j = 0; j < imgList.length; j++ )
-					aAssetsToLoad.push( imgList[ j ] );
-				
-			}
-		}
-		
-		// dynamic images
-		if ( dynamicImgList !== null ) {
-			for ( i = 0; i < dynamicImgList.length; i++ )
-				aAssetsToLoad.push( dynamicImgList[ i ].src );
+			if ( assetsList !== undefined )
+				for ( var id in assetsList )
+					_addAsset.call( this, aAssetsToLoad, assetsList[ id ] );
 		}
 		
 		
@@ -67,28 +86,23 @@ STF.AbstractAssets = ( function( window ) {
 	};
 	
 	
-	var _addJsonToLoad = function( aAssetsToLoad, aJsonListIds ) {
-		var jsonList;
+	var _addDynamicAssetsToLoad = function( isFirstLoad, aAssetsToLoad ) {
+		var $dynamicImgs = isFirstLoad ? STF.MainView.$pageCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD ) :
+										 $( STF.PagesController.data ).find( STF.PagesController.DYNAMIC_IMG_TO_LOAD );
 		
-		for ( var i = 0; i < aJsonListIds.length; i++ ) {
-			jsonList = this.aJson[ aJsonListIds[ i ] ];
-			
-			if ( jsonList !== undefined ) {
-				
-				for ( var id in jsonList ) {
-					
-					aAssetsToLoad.push( {
-						id:		id,
-						src:	jsonList[ id ]
-					} );
-					
-				}
-				
-			}
-		}
+		for ( var i = 0; i < $dynamicImgs.length; i++ )
+			_addAsset.call( this, aAssetsToLoad, $dynamicImgs[ i ].src );
 		
 		
 		return aAssetsToLoad;
+	};
+	
+	
+	var _addAsset = function( aAssetsToLoad, assetUrl ) {
+		if ( aAssetsToLoad.indexOf( assetUrl ) < 0 )
+			return aAssetsToLoad.push( assetUrl );
+		else if ( STF.Config.ENV != 'prod' )
+			console.log( assetUrl + ' already added to the loading assets array!' );
 	};
 	
 	

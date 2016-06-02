@@ -11,7 +11,7 @@ STF.PagesController = ( function( window ) {
 		this.prevPageInfos			= {};
 		this.pageInfos				= {};
 		
-		this.LOADING_MODE			= 'allStatic'; // can be allStatic, byPageStatic, byPageDynamic
+		this.LOADING_MODE			= 'byPageStatic'; // can be allStatic, byPageStatic, byPageDynamic
 		this.DYNAMIC_IMG_TO_LOAD	= 'img'; // used when LOADING_MODE == 'byPageDynamic', can be img.class for selective preload
 		this.IS_HIDE_INIT			= true; // set to true if need a different behavior when hide loader on init
 		this.isFirstLoad			= true;
@@ -118,52 +118,11 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _loadAssets = function() {
-		var aImgListIds		= _getAssetsListIds.call( this, 'img' );
-		var aJsonListIds	= _getAssetsListIds.call( this, 'json' );
-		var dynamicImgList	= _getDynamicImgListToLoad.call( this );
-		var aAssetsToLoad	= this.assetsModel.getAssetsToLoad( aImgListIds, aJsonListIds, dynamicImgList );
+		console.log( '---> _loadAssets()' );
+		var aAssetsToLoad = this.assetsModel.getAssetsToLoad( this.pageInfos.id, this.isFirstLoad, this.LOADING_MODE );
+		console.log( aAssetsToLoad );
 		
 		this.mainLoader.loadAssets( aAssetsToLoad );
-	};
-	
-	
-	var _getAssetsListIds = function( type ) {
-		var aIds = [];
-		
-		
-		// first load
-		if ( this.isFirstLoad && this.LOADING_MODE == 'allStatic')
-			aIds = this.assetsModel.getAllStaticAssetsListIds();
-		
-		else if ( this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ||
-				  this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic' )
-			aIds = [ 'global', this.pageInfos.id ];
-		
-		
-		// page change load
-		else if ( !this.isFirstLoad && this.LOADING_MODE == 'byPageStatic' ||
-				  !this.isFirstLoad && this.LOADING_MODE == 'byPageDynamic' )
-			aIds = [ this.pageInfos.id ];
-		
-		
-		return aIds;
-	};
-	
-	
-	var _getDynamicImgListToLoad = function() {
-		var dynamicImgList;
-		
-		if ( this.LOADING_MODE !== 'byPageDynamic' )
-			dynamicImgList = null;
-		
-		else if ( this.isFirstLoad )
-			dynamicImgList = STF.MainView.$pageCont.find( this.DYNAMIC_IMG_TO_LOAD );
-		
-		else if ( !this.isFirstLoad )
-			dynamicImgList = $( this.data ).find( this.DYNAMIC_IMG_TO_LOAD );
-		
-		
-		return dynamicImgList;
 	};
 	
 	
@@ -297,18 +256,22 @@ STF.PagesController = ( function( window ) {
 		this.isMainLoaderShown = true;
 		_checkFirstStepPageChange.call( this );
 		
-		if ( this. LOADING_MODE == 'byPageStatic' )
-			_loadAssets.call( this );
+		/*if ( this. LOADING_MODE == 'byPageStatic' )
+			_loadAssets.call( this );*/
 	};
 	
 	
 	var _checkFirstStepPageChange = function() {
-		if ( this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
+		console.log( '---> _checkFirstStepPageChange()', this.isContentLoaded, this.isAssetsLoaded, this.isPrevPageHidden, this.isMainLoaderShown );
+		
+		if ( this. LOADING_MODE == 'allStatic' && this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
 			STF.MainView.$pageCont[0].innerHTML = this.data;
 			
-			this.data = null;
+			// this.data = null;
 			
 			this.setPageInfos();
+			
+			this.data = null;
 			
 			console.log( 'this.currentPage.init():', this.currentPage );
 			this.currentPage.init();
@@ -320,8 +283,46 @@ STF.PagesController = ( function( window ) {
 			this.mainLoader.hide();
 		}
 		
-		else if ( this.LOADING_MODE == 'byPageDynamic' && this.isContentLoaded && this.isPrevPageHidden && this.isMainLoaderShown )
+		else if ( this. LOADING_MODE == 'byPageStatic' &&
+				  this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ||
+				  
+				  this. LOADING_MODE == 'byPageDynamic' &&
+				  this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
+			
+			console.log( '--------> OK init page' );
+			
+			console.log( 'this.currentPage.init():', this.currentPage );
+			this.currentPage.init();
+			
+			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
+			this.currentPage.show();
+			
+			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
+			this.mainLoader.hide();
+		}
+		
+		else if ( this. LOADING_MODE == 'byPageStatic' &&
+				  this.isContentLoaded && this.isPrevPageHidden && this.isMainLoaderShown ||
+				  
+				  this. LOADING_MODE == 'byPageDynamic' &&
+				  this.isContentLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
+			
+			// console.log( this.data );
+			console.log( 'SLP' );
+			
+			STF.MainView.$pageCont[0].innerHTML = this.data;
+			
+			// this.data = null;
+			
+			this.setPageInfos();
+			
 			_loadAssets.call( this );
+			
+			this.data = null;
+		}
+		
+		// else if ( this.LOADING_MODE == 'byPageDynamic' && this.isContentLoaded && this.isPrevPageHidden && this.isMainLoaderShown )
+		// 	_loadAssets.call( this );
 	};
 	
 	
