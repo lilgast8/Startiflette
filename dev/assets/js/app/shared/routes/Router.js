@@ -7,10 +7,6 @@ STF.Router = ( function( window ) {
 	function Router() {
 		STF.EventDispatcher.call( this );
 		
-		/*this.E = {
-			INIT: 'init'
-		};*/
-		
 		this.ROUTES			= {};
 		this.PAGE_URL		= {};
 		this.ALT_LANG_URL	= {};
@@ -25,55 +21,6 @@ STF.Router = ( function( window ) {
 	
 	Router.prototype				= Object.create( STF.EventDispatcher.prototype );
 	Router.prototype.constructor	= Router;
-	
-	
-	/*Router.prototype.init = function() {
-		_loadRoutesFile.call( this );
-	};
-	
-	
-	var _loadRoutesFile = function() {
-		this.jsonLoader	= new STF.Loader( false, false );
-		
-		this.jsonLoader.buildEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
-		
-		var aJsonFiles	= [];
-		var fileName, filePath;
-		
-		for ( var key in STF.Config.ROUTES_FILES ) {
-			fileName = STF.Config.ROUTES_FILES[ key ];
-			filePath = STF.Path.URL.routes + fileName + '.json';
-			
-			aJsonFiles.push( {
-				id:		fileName,
-				src:	filePath
-			} );
-		}
-		
-		this.jsonLoader.startLoad( aJsonFiles );
-	};
-	
-	
-	var _onComplete = function( data ) {
-		_destroyJsonLoader.call( this );
-		_setRoutes.call( this, data );
-		
-		this.dispatch( this.E.INIT );
-	};
-	
-	
-	var _destroyJsonLoader = function() {
-		this.jsonLoader.destroyEvt( this.jsonLoader.E.COMPLETE, _onComplete.bind( this ) );
-		
-		this.jsonLoader.destroy();
-		this.jsonLoader = null;
-	};
-	
-	
-	var _setRoutes = function( data ) {
-		for ( var routesName in data )
-			this.ROUTES[ routesName ] = data[ routesName ];
-	};*/
 	
 	
 	Router.prototype.setPageUrl = function( isInit, url )
@@ -99,9 +46,9 @@ STF.Router = ( function( window ) {
 	var _getFullPageUrl = function( url ) {
 		var fullPageUrl;
 		
-		if ( url === null ) // init
+		if ( url === null )
 			fullPageUrl = window.location.href;
-		else // page change
+		else
 			fullPageUrl = url;
 		
 		
@@ -135,12 +82,8 @@ STF.Router = ( function( window ) {
 	};
 	
 	
-	// Router.prototype.initRouting = function() {
 	Router.prototype.init = function() {
 		_bindEvents.call( this );
-		
-		// _setPageInfos.call( this );
-		// STF.PagesController.setPageInfos();
 		
 		STF.PagesController.initFirstPage();
 	};
@@ -149,39 +92,6 @@ STF.Router = ( function( window ) {
 	var _bindEvents = function() {
 		STF.MainView.$window.on( 'popstate', $.proxy( _onPopState, this ) );
 		STF.MainView.$window.on( 'hashchange', $.proxy( _onHashChange, this ) );
-	};
-	
-	
-	var _setPageInfos = function() {
-		/*var langExist	= _getLangExistence.call( this );
-		var page		= _getPageInfos.call( this );
-		
-		if ( langExist && page.exist ) { // page exist
-			_setIsHomepage.call( this, page.id );
-			_setAltLangUrl.call( this, page.params );
-		}
-		else { // 404
-			page.id		= 'error-404';
-			page.params	= this.ROUTES.statics[ page.id ];
-		}
-		
-		STF.PagesController.setPageInfos( page.id, page.params.jsView, page.params[ STF.Lang.LANG ].title, page.params[ STF.Lang.LANG ].desc );*/
-		
-		console.log( 'Router.setPageInfos()' );
-		
-		
-		// console.log( 'id:', $( document.getElementById( 'page' ) )[0].dataset );
-		// console.log( 'id:', STF.MainView.$mainCont[0].getAttribute( 'data-id' ) );
-		
-		/*var $page	= $( document.getElementById( 'page' ) )[0];
-		var pageId	= $page.getAttribute( 'data-id' );
-		
-		if ( pageId == 'error-404' ) {
-			page.id = 'error-404';
-		}*/
-		
-		
-		STF.PagesController.setPageInfos();
 	};
 	
 	
@@ -278,7 +188,6 @@ STF.Router = ( function( window ) {
 			return;
 		
 		_setUrlPartChange.call( this, url );
-		// _setInfos.call( this, url );
 		this.setPageUrl( false, url );
 		
 		
@@ -308,7 +217,6 @@ STF.Router = ( function( window ) {
 		
 		
 		if ( this.isPageChange || this.isSearchChange )
-			// _setInfos.call( this, null );
 			this.setPageUrl( false, null );
 		
 		if ( this.isPageChange )
@@ -323,7 +231,6 @@ STF.Router = ( function( window ) {
 			return;
 		
 		_setUrlPartChange.call( this, window.location.href );
-		// _setInfos.call( this, null );
 		this.setPageUrl( false, null );
 		
 		
@@ -358,13 +265,6 @@ STF.Router = ( function( window ) {
 		
 		this.isHashChange	= this.PAGE_URL.hash != nextHash;
 	};
-	
-	
-	/*var _setInfos = function( url ) {
-		this.setPageUrl( false, url );
-		
-		_setPageInfos.call( this );
-	};*/
 	
 	
 	Router.prototype.updateGA = function() {

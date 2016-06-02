@@ -7,13 +7,13 @@ STF.AbstractMainView = ( function( window ) {
 	function AbstractMainView() {
 		STF.AbstractView.call( this );
 		
-		this.E = {
+		/*this.E = {
 			RESIZE:		'resize',
 			RAF:		'raf',
 			MOUSE_MOVE:	'mousemouse',
 			MOUSE_DOWN:	'mousedown',
 			MOUSE_UP:	'mouseup'
-		};
+		};*/
 		
 		this.bW		= null; // body width
 		this.bH		= null; // body height

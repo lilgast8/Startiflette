@@ -120,7 +120,6 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 	};
 	
 	
-	// return MainLoader;
 	return new MainLoader();
 	
 	

@@ -36,7 +36,7 @@ STF.AbstractView = ( function( window ) {
 	
 	
 	AbstractView.prototype.initDOM = function() {
-		// console.log('AbstractView.initDOM()');
+		// console.log('AbstractView.initDOM()' );
 		
 		this.$page = $( document.getElementById( 'page' ) );
 	};
@@ -72,7 +72,6 @@ STF.AbstractView = ( function( window ) {
 	AbstractView.prototype.show = function() {
 		// console.log('AbstractView.show()');
 		
-		// console.log(this);
 		this.dispatch( this.E.SHOWN );
 	};
 	
@@ -80,7 +79,6 @@ STF.AbstractView = ( function( window ) {
 	AbstractView.prototype.hide = function() {
 		// console.log('AbstractView.hide()');
 		
-		// console.log(this);
 		this.dispatch( this.E.HIDDEN );
 	};
 	

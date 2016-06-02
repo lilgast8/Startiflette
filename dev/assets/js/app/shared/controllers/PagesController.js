@@ -76,7 +76,6 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	// PagesController.prototype.setPageInfos = function( pageId, jsView, title, desc )
 	PagesController.prototype.setPageInfos = function()
 	{
 		var $page	= $( document.getElementById( 'page' ) )[0];
@@ -180,9 +179,6 @@ STF.PagesController = ( function( window ) {
 		
 		_loadContent.call( this, url );
 		
-		// this.prevPage.buildEvt( this.prevPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
-		// this.prevPage.hide();
-		console.log( 'changePage:', this.prevPage, this.currentPage );
 		this.currentPage.buildEvt( this.currentPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
 		this.currentPage.hide();
 		
@@ -240,16 +236,6 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _loadContent = function( url ) {
-		// console.log( '_loadContent():', this.pageInfos.id, this.prevPageInfos.id );
-		// if ( this.pageInfos.id == 'error-404' ) { // used to avoid that the request return a error on callback if it's a 404 page 
-		/*if ( this.prevPageInfos.id == 'error-404' ) { // used to avoid that the request return a error on callback if it's a 404 page 
-			var lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/'  : '';
-			// pageUrl		= STF.Path.URL.base + lang + STF.Router.ROUTES.statics[ this.pageInfos.id ][ STF.Lang.LANG ].url;
-			pageUrl		= STF.Path.URL.base + lang + '404';
-			console.log( pageUrl );
-		}*/
-		
-		
 		// setTimeout( function() { // simulate a very slow connection = very long load
 		
 		$.ajax({
@@ -280,7 +266,7 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _onContentError = function( e ) {
-		console.log( 'ajax load error', e );
+		console.log( 'Ajax loading error', e );
 		
 		if ( e.status == 404 )
 			_force404Load.call( this );
@@ -288,20 +274,14 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _force404Load = function() {
-		console.log( 'FORCE 404 LOAD !' );
-		
 		var lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/'  : '';
-		// pageUrl		= STF.Path.URL.base + lang + STF.Router.ROUTES.statics[ this.pageInfos.id ][ STF.Lang.LANG ].url;
 		var url		= STF.Path.URL.base + lang + '404';
-		console.log( url );
 		
 		_loadContent.call( this, url );
 	};
 	
 	
 	var _onPrevPageHidden = function() {
-		console.log( '_onPrevPageHidden():', this.prevPage, this.currentPage );
-		// this.prevPage.destroyEvt( this.prevPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
 		this.currentPage.destroyEvt( this.currentPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
 		
 		_destroyPage.call( this );
@@ -326,10 +306,6 @@ STF.PagesController = ( function( window ) {
 		if ( this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
 			STF.MainView.$pageCont[0].innerHTML = this.data;
 			
-			// this.setPageInfos();
-			
-			// _destroyPrevPage.call( this );
-			// _destroyPage.call( this );
 			this.data = null;
 			
 			this.setPageInfos();
