@@ -18,7 +18,10 @@ STF.PagesController = ( function( window ) {
 		this.isPageChange			= true;
 		
 		this.isContentLoaded		= false;
+		this.isAssetsLoaded			= false;
 		this.isPrevPageHidden		= false;
+		this.isCurrentPageShown		= false;
+		this.isMainLoaderShown		= false;
 		this.isMainLoaderHidden		= false;
 		
 		this.prevPage				= null;
@@ -36,6 +39,7 @@ STF.PagesController = ( function( window ) {
 	PagesController.prototype.init = function() {
 		_initPages.call( this );
 		_initEl.call( this );
+		_bindEvents.call( this );
 	};
 	
 	
@@ -55,17 +59,18 @@ STF.PagesController = ( function( window ) {
 		this.assetsModel = STF.Models.Assets;
 		this.assetsModel.init();
 		
-		this.mainLoader = new STF.Views.Statics.MainLoader();
+		this.mainLoader = STF.Views.Statics.MainLoader;
+	};
+	
+	
+	var _bindEvents = function() {
 		this.mainLoader.buildEvt( this.mainLoader.E.FILE_LOAD, _onFileLoad.bind( this ) );
 		this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
-		this.mainLoader.init();
 	};
 	
 	
 	PagesController.prototype.initFirstPage = function() {
 		this.setPageInfos();
-		
-		_initPageChangeValues.call( this );
 		
 		_loadAssets.call( this );
 	};
@@ -107,9 +112,8 @@ STF.PagesController = ( function( window ) {
 		this.isContentLoaded	= false;
 		this.isAssetsLoaded		= false;
 		this.isPrevPageHidden	= false;
-		this.isMainLoaderShown	= false;
-		
 		this.isCurrentPageShown	= false;
+		this.isMainLoaderShown	= false;
 		this.isMainLoaderHidden	= false;
 	};
 	

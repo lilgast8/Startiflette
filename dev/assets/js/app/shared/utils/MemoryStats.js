@@ -21,8 +21,6 @@ STF.Utils.MemoryStats = ( function( window ) {
 		this.stats.domElement.style.zIndex		= 88;
 		
 		document.body.appendChild( this.stats.domElement );
-		
-		TweenLite.ticker.addEventListener( 'tick', this.update, this );
 	};
 	
 	

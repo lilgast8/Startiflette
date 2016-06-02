@@ -18,23 +18,53 @@ STF.Main = ( function( window ) {
 		
 		// _loadRoutes.call( this );
 		
-		STF.MainView.init();
+		_initDebug.call( this );
 		
 		STF.PagesController.init();
+		STF.MainView.init();
 		STF.Router.init();
 		
 		// this.$window.on( 'load', $.proxy( _windowLoad, this ) );
 	};
 	
 	
-	var _loadRoutes = function() {
+	var _initDebug = function() {
+		_initFPSStats.call( this, false );
+		_initMemoryStats.call( this, false );
+		_initDatGUI.call( this, false );
+	};
+	
+	
+	var _initFPSStats = function( isSet ) {
+		STF.Config.setFPSStats( isSet );
+		
+		if ( isSet && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' ) // FPS stats
+			STF.Utils.FPSStats.init();
+	};
+	
+	
+	var _initMemoryStats = function( isSet ) {
+		STF.Config.setMemoryStats( isSet );
+		
+		if ( isSet && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' ) // memory stats
+			STF.Utils.MemoryStats.init();
+	};
+	
+	
+	var _initDatGUI = function( isSet ) {
+		if ( isSet && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' ) // datGUI
+			STF.Utils.DatGUI.init();
+	};
+	
+	
+	/*var _loadRoutes = function() {
 		// STF.Router.buildEvt( STF.Router.E.INIT, _routesLoaded.bind( this ) );
 		// STF.Router.init();
 	};
 	
 	
 	var _routesLoaded = function() {
-		/* Debug */
+		/* Debug *
 		// if ( STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' ) // FPS stats
 		// 	STF.Utils.FPSStats.init();
 		
@@ -49,7 +79,7 @@ STF.Main = ( function( window ) {
 		
 		STF.PagesController.init();
 		STF.Router.initRouting();
-	};
+	};*/
 	
 	
 	return new Main();

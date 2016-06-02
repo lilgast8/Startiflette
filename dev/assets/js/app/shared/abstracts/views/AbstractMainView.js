@@ -66,7 +66,11 @@ STF.AbstractMainView = ( function( window ) {
 	
 	
 	AbstractMainView.prototype.initStaticsViews = function() {
-		removeClass( STF.MainView.$mainCont[0], 'preload' );
+		STF.Views.Statics.MainLoader.init();
+		STF.Views.Statics.Header.init();
+		STF.Views.Statics.Footer.init();
+		
+		removeClass( this.$mainCont[0], 'preload' );
 	};
 	
 	
@@ -97,6 +101,7 @@ STF.AbstractMainView = ( function( window ) {
 	
 	
 	AbstractMainView.prototype.resizeStaticsViews = function() {
+		STF.Views.Statics.MainLoader.resize();
 		STF.Views.Statics.Header.resize();
 		STF.Views.Statics.Footer.resize();
 	};
@@ -109,8 +114,8 @@ STF.AbstractMainView = ( function( window ) {
 	
 	
 	var _raf = function() {
-		// if ( STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
-		// 	STF.Utils.FPSStats.begin();
+		if ( STF.Config.HAS_FPS_STATS && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
+			STF.Utils.FPSStats.begin();
 		
 		
 		_setRafProps.call( this );
@@ -120,8 +125,11 @@ STF.AbstractMainView = ( function( window ) {
 		_rafCurrentPage.call( this );
 		
 		
-		// if ( STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
-		// 	STF.Utils.FPSStats.end();
+		if ( STF.Config.HAS_FPS_STATS && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
+			STF.Utils.FPSStats.end();
+		
+		if ( STF.Config.HAS_MEMORY_STATS && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
+			STF.Utils.MemoryStats.update();
 	};
 	
 	
@@ -132,6 +140,7 @@ STF.AbstractMainView = ( function( window ) {
 	
 	
 	AbstractMainView.prototype.rafStaticsViews = function() {
+		STF.Views.Statics.MainLoader.raf();
 		STF.Views.Statics.Header.raf();
 		STF.Views.Statics.Footer.raf();
 	};

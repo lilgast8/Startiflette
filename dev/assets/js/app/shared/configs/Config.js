@@ -16,6 +16,9 @@ STF.Config = ( function( window ) {
 		this.FORCE_DEVICE		= null;
 		this.GA_ID				= null;
 		this.CREDITS			= null;
+		
+		this.HAS_FPS_STATS		= null;
+		this.HAS_MEMORY_STATS	= null;
 	}
 	
 	
@@ -42,6 +45,16 @@ STF.Config = ( function( window ) {
 			'padding:8px 15px; color:' + this.CREDITS.color2 + '; background-color:' + this.CREDITS.color3 + '; line-height:25px;',
 			'padding:8px 5px; color:' + this.CREDITS.color3 + '; line-height:25px;'
 		);
+	};
+	
+	
+	Config.prototype.setFPSStats = function( isSet ) {
+		this.HAS_FPS_STATS = isSet;
+	};
+	
+	
+	Config.prototype.setMemoryStats = function( isSet ) {
+		this.HAS_MEMORY_STATS = isSet;
 	};
 	
 	

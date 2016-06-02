@@ -38,6 +38,11 @@ STF.AbstractMainLoader = ( function( window ) {
 	};
 	
 	
+	AbstractMainLoader.prototype.resize = function() {
+		
+	};
+	
+	
 	var _instanceAssetsLoader = function() {
 		this.assetsLoader = new STF.Loader( true, true );
 		this.assetsLoader.init();
