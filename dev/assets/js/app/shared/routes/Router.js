@@ -33,13 +33,6 @@ STF.Router = ( function( window ) {
 		this.PAGE_URL.hash			= this.PAGE_URL.full.STF_getHash();
 		this.PAGE_URL.hashParams	= this.PAGE_URL.full.STF_getParams( 'hash' );
 		this.PAGE_URL.fullGA		= _getFullPageUrlGA.call( this );
-		
-		if ( isInit ) { // init
-			this.PAGE_URL.current	= null;
-			this.PAGE_URL.aCurrent	= null;
-		}
-		else // page change
-			this.setCurrentPageUrl();
 	};
 	
 	
@@ -61,12 +54,6 @@ STF.Router = ( function( window ) {
 		
 		
 		return fullGA;
-	};
-	
-	
-	Router.prototype.setCurrentPageUrl = function() {
-		this.PAGE_URL.current	= _getCurrentPageUrl.call( this );
-		this.PAGE_URL.aCurrent	= this.PAGE_URL.current.split( '/' );
 	};
 	
 	
@@ -106,39 +93,6 @@ STF.Router = ( function( window ) {
 		
 		
 		return langExist;
-	};
-	
-	
-	var _getPageInfos = function() {
-		var routesGroupName, routesGroup, pageId, pageParams;
-		var page = {
-			exist:	false,
-			id:		null,
-			params:	null
-		};
-		
-		for ( routesGroupName in this.ROUTES ) { // parse all routes group
-			routesGroup = this.ROUTES[ routesGroupName ];
-			
-			for ( pageId in routesGroup ) { // parse all pages
-				pageParams = routesGroup[ pageId ];
-				
-				if ( pageParams[ STF.Lang.LANG ].url == this.PAGE_URL.current ) { // if url exist
-					page.exist	= true;
-					page.id		= pageId;
-					page.params	= pageParams;
-					
-					break; // break second for
-				}
-			}
-			
-			if ( page.exist )
-				break; // break first for
-			
-		}
-		
-		
-		return page;
 	};
 	
 	
@@ -248,21 +202,18 @@ STF.Router = ( function( window ) {
 	
 	var _isPageChanged = function( url ) {
 		var nextPath		= url.STF_getPath();
-		
 		this.isPageChange	= this.PAGE_URL.path != nextPath;
 	};
 	
 	
 	var _isSearchChanged = function( url ) {
 		var nextSearch		= url.STF_getSearch();
-		
 		this.isSearchChange	= this.PAGE_URL.search != nextSearch;
 	};
 	
 	
 	var _isHashChanged = function( url ) {
 		var nextHash		= url.STF_getHash();
-		
 		this.isHashChange	= this.PAGE_URL.hash != nextHash;
 	};
 	

@@ -14,7 +14,6 @@ STF.Lang = ( function( window ) {
 		STF.Router.setPageUrl( true, null );
 		_setCurrentLang.call( this );
 		_checkDefaultLang.call( this );
-		STF.Router.setCurrentPageUrl();
 		_setLangLinks.call( this );
 	};
 	

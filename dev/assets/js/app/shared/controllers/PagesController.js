@@ -67,13 +67,12 @@ STF.PagesController = ( function( window ) {
 	
 	
 	PagesController.prototype.initFirstPage = function() {
-		this.setPageInfos();
-		
+		_setPageInfos.call( this );
 		_loadAssets.call( this );
 	};
 	
 	
-	PagesController.prototype.setPageInfos = function()
+	var _setPageInfos = function()
 	{
 		var $page	= $( document.getElementById( 'page' ) )[0];
 		var id		= $page.getAttribute( 'data-id' );
@@ -281,7 +280,7 @@ STF.PagesController = ( function( window ) {
 	var _setContent = function() {
 		STF.MainView.$pageCont[0].innerHTML = this.data;
 		
-		this.setPageInfos();
+		_setPageInfos.call( this );
 		
 		if ( this. LOADING_MODE != 'allStatic' )
 			_loadAssets.call( this );
