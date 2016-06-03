@@ -12,7 +12,7 @@ STF.PagesController = ( function( window ) {
 		this.prevPageInfos			= {};
 		this.pageInfos				= {};
 		
-		this.LOADING_MODE			= 'byPageStatic'; // can be allStatic, byPageStatic, byPageDynamic
+		this.LOADING_MODE			= 'allStatic'; // can be allStatic, byPageStatic, byPageDynamic
 		this.DYNAMIC_IMG_TO_LOAD	= 'img'; // used when LOADING_MODE == 'byPageDynamic', can be img.class for selective preload
 		this.IS_HIDE_INIT			= true; // set to true if need a different behavior when hide loader on init
 		this.isFirstLoad			= true;
@@ -98,8 +98,6 @@ STF.PagesController = ( function( window ) {
 		}
 		
 		this.page = new this.pages[ this.pageInfos.id ]();
-		
-		console.log( '_setPage():', this.page );
 	};
 	
 	
@@ -114,9 +112,7 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _loadAssets = function() {
-		console.log( '---> _loadAssets()' );
 		var aAssetsToLoad = this.assetsModel.getAssetsToLoad( this.pageInfos.id, this.isFirstLoad, this.LOADING_MODE );
-		console.log( aAssetsToLoad );
 		
 		this.mainLoader.loadAssets( aAssetsToLoad );
 	};
@@ -261,8 +257,6 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _checkPageHiding = function() {
-		console.log( '---> _checkPageHiding()', this.isContentLoaded, this.isAssetsLoaded, this.isPageHidden, this.isMainLoaderShown );
-		
 		if ( this. LOADING_MODE == 'allStatic' &&
 			 this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
 			
@@ -285,7 +279,6 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _setContent = function() {
-		console.log( '---> _setContent()' );
 		STF.MainView.$pageCont[0].innerHTML = this.data;
 		
 		this.setPageInfos();
@@ -298,7 +291,6 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _showPage = function() {
-		console.log( '---> _showPage()' );
 		this.page.init();
 		
 		this.page.buildEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
