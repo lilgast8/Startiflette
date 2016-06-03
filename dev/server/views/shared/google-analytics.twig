@@ -9,10 +9,10 @@
 		{% for gaName, gaId in Config.GA_ID %}
 	    	{% if gaName == 'default' %}
 		    	ga( 'create', '{{ gaId }}', 'auto' );
-				ga( 'send', 'pageview', '/{{ Router.PAGE_URL.fullGa }}' );
+				ga( 'send', 'pageview', '/{{ Router.URL.fullGa }}' );
 	    	{% else %}
 	    		ga( 'create', '{{ gaId }}', 'auto', '{{ gaName }}' );
-				ga( '{{ gaName }}.send', 'pageview', '/{{ Router.PAGE_URL.fullGa }}' );
+				ga( '{{ gaName }}.send', 'pageview', '/{{ Router.URL.fullGa }}' );
 	    	{% endif %}
 		{% endfor %}
 	</script>

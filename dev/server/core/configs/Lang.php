@@ -28,10 +28,10 @@ class Lang
 		$this->path		= Path::getInstance();
 		
 		$this->setGlobalInfos();
-		$this->router->setPageUrl();
+		$this->router->setUrl();
 		$this->setCurrentLang();
 		$this->checkDefaultLang();
-		$this->router->setCurrentPageUrl();
+		$this->router->setPageUrl();
 		$this->setLangLinks();
 		
 		$this->path->setFileLangVar();
@@ -67,10 +67,10 @@ class Lang
 	
 	private function setCurrentLang()
 	{
-		if ( !self::$MULTI_LANG || strlen( Router::$PAGE_URL->params ) == 0 )
+		if ( !self::$MULTI_LANG || strlen( Router::$URL->path ) == 0 )
 			self::$LANG = self::$DEFAULT_LANG;
 		else
-			self::$LANG = Router::$PAGE_URL->aParams[0];
+			self::$LANG = Router::$URL->pathParams[0];
 	}
 	
 	

@@ -8,7 +8,7 @@ STF.Router = ( function( window ) {
 		STF.EventDispatcher.call( this );
 		
 		this.ROUTES			= {};
-		this.PAGE_URL		= {};
+		this.URL			= {};
 		this.ALT_LANG_URL	= {};
 		this.LINK			= {};
 		
@@ -23,49 +23,37 @@ STF.Router = ( function( window ) {
 	Router.prototype.constructor	= Router;
 	
 	
-	Router.prototype.setPageUrl = function( isInit, url )
+	Router.prototype.setUrl = function( isInit, url )
 	{
-		this.PAGE_URL.full			= _getFullPageUrl.call( this, url );
-		this.PAGE_URL.path			= this.PAGE_URL.full.STF_getPath();
-		this.PAGE_URL.aPath			= this.PAGE_URL.path.split( '/' );
-		this.PAGE_URL.search		= this.PAGE_URL.full.STF_getSearch();
-		this.PAGE_URL.searchParams	= this.PAGE_URL.full.STF_getParams( 'search' );
-		this.PAGE_URL.hash			= this.PAGE_URL.full.STF_getHash();
-		this.PAGE_URL.hashParams	= this.PAGE_URL.full.STF_getParams( 'hash' );
-		this.PAGE_URL.fullGA		= _getFullPageUrlGA.call( this );
+		this.URL.full			= _getFullUrl.call( this, url );
+		this.URL.path			= this.URL.full.STF_getPath();
+		this.URL.pathParams		= this.URL.path.split( '/' );
+		this.URL.search			= this.URL.full.STF_getSearch();
+		this.URL.searchParams	= this.URL.full.STF_getParams( 'search' );
+		this.URL.hash			= this.URL.full.STF_getHash();
+		this.URL.hashParams		= this.URL.full.STF_getParams( 'hash' );
+		this.URL.fullGA			= _getFullGaUrl.call( this );
 	};
 	
 	
-	var _getFullPageUrl = function( url ) {
-		var fullPageUrl;
+	var _getFullUrl = function( url ) {
+		var fullUrl;
 		
 		if ( url === null )
-			fullPageUrl = window.location.href;
+			fullUrl = window.location.href;
 		else
-			fullPageUrl = url;
+			fullUrl = url;
 		
 		
-		return fullPageUrl;
+		return fullUrl;
 	};
 	
 	
-	var _getFullPageUrlGA = function () {
-		var fullGA = this.PAGE_URL.full.replace( STF.Path.URL.base, '' );
+	var _getFullGaUrl = function () {
+		var fullGaUrl = this.URL.full.replace( STF.Path.URL.base, '' );
 		
 		
-		return fullGA;
-	};
-	
-	
-	var _getCurrentPageUrl = function()
-	{
-		var currentPageUrl = this.PAGE_URL.path.replace( STF.Lang.LANG, '' );
-		
-		currentPageUrl = currentPageUrl.removeFirstSpecificChar( '/' );
-		currentPageUrl = currentPageUrl.removeLastSpecificChar( '/' );
-		
-		
-		return currentPageUrl;
+		return fullGaUrl;
 	};
 	
 	
@@ -132,7 +120,7 @@ STF.Router = ( function( window ) {
 	
 	
 	Router.prototype.checkUrlCorrespondence = function() {
-		if ( this.PAGE_URL.full != _getFullPageUrl.call( this, null ) )
+		if ( this.URL.full != _getFullUrl.call( this, null ) )
 			_onPopState.call( this );
 	};
 	
@@ -142,7 +130,7 @@ STF.Router = ( function( window ) {
 			return;
 		
 		_setUrlPartChange.call( this, url );
-		this.setPageUrl( false, url );
+		this.setUrl( false, url );
 		
 		
 		var data = {
@@ -155,7 +143,7 @@ STF.Router = ( function( window ) {
 		
 		
 		if ( this.isPageChange )
-			STF.PagesController.changePage( this.PAGE_URL.full );
+			STF.PagesController.changePage( this.URL.full );
 		else if ( this.isSearchChange )
 			STF.PagesController.changeSearch();
 		else if ( this.isHashChange )
@@ -171,10 +159,10 @@ STF.Router = ( function( window ) {
 		
 		
 		if ( this.isPageChange || this.isSearchChange )
-			this.setPageUrl( false, null );
+			this.setUrl( false, null );
 		
 		if ( this.isPageChange )
-			STF.PagesController.changePage( this.PAGE_URL.full );
+			STF.PagesController.changePage( this.URL.full );
 		else if ( this.isSearchChange )
 			STF.PagesController.changeSearch();
 	};
@@ -185,7 +173,7 @@ STF.Router = ( function( window ) {
 			return;
 		
 		_setUrlPartChange.call( this, window.location.href );
-		this.setPageUrl( false, null );
+		this.setUrl( false, null );
 		
 		
 		if ( this.isHashChange && !this.isPageChange && !this.isSearchChange )
@@ -202,19 +190,19 @@ STF.Router = ( function( window ) {
 	
 	var _isPageChanged = function( url ) {
 		var nextPath		= url.STF_getPath();
-		this.isPageChange	= this.PAGE_URL.path != nextPath;
+		this.isPageChange	= this.URL.path != nextPath;
 	};
 	
 	
 	var _isSearchChanged = function( url ) {
 		var nextSearch		= url.STF_getSearch();
-		this.isSearchChange	= this.PAGE_URL.search != nextSearch;
+		this.isSearchChange	= this.URL.search != nextSearch;
 	};
 	
 	
 	var _isHashChanged = function( url ) {
 		var nextHash		= url.STF_getHash();
-		this.isHashChange	= this.PAGE_URL.hash != nextHash;
+		this.isHashChange	= this.URL.hash != nextHash;
 	};
 	
 	
@@ -222,9 +210,9 @@ STF.Router = ( function( window ) {
 		if ( STF.Config.ENV == 'prod' && Object.keys( STF.Config.GA_ID ).length > 0 ) {
 			for ( var gaName in STF.Config.GA_ID ) {
 				if ( gaName == 'null' )
-					ga( 'send', 'pageview', '/' + this.PAGE_URL.fullGA );
+					ga( 'send', 'pageview', '/' + this.URL.fullGA );
 				else
-					ga( gaName + '.send', 'pageview', '/' + this.PAGE_URL.fullGA );
+					ga( gaName + '.send', 'pageview', '/' + this.URL.fullGA );
 			}
 		}
 	};

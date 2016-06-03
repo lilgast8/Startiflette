@@ -8,7 +8,7 @@ class Router
 	protected static $instance;
 	
 	static $ROUTES				= null;
-	static $PAGE_URL			= null;
+	static $URL					= null;
 	static $ALT_LANG_URL		= null;
 	static $LINK				= null;
 	
@@ -56,20 +56,20 @@ class Router
 	}
 	
 	
-	public function setPageUrl()
+	public function setUrl()
 	{
-		self::$PAGE_URL				= new stdClass();
+		self::$URL				= new stdClass();
 		
-		self::$PAGE_URL->full		= $this->getFullPageUrl();
-		self::$PAGE_URL->params		= $this->getParamsPageUrl();
-		self::$PAGE_URL->aParams	= explode( '/', self::$PAGE_URL->params );
-		self::$PAGE_URL->current	= null;
-		self::$PAGE_URL->aCurrent	= null;
-		self::$PAGE_URL->fullGa		= $this->getFullPageUrlGA();
+		self::$URL->full		= $this->getFullUrl();
+		self::$URL->path		= $this->getPath();
+		self::$URL->pathParams	= explode( '/', self::$URL->path );
+		self::$URL->page		= null;
+		self::$URL->pageParams	= null;
+		self::$URL->fullGa		= $this->getFullGaUrl();
 	}
 	
 	
-	private function getFullPageUrl()
+	private function getFullUrl()
 	{
 		$protocol = ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ) ? 'https://' : 'http://';
 		
@@ -78,53 +78,53 @@ class Router
 	}
 	
 	
-	private function getParamsPageUrl()
+	private function getPath()
 	{
-		$paramsPageUrl = str_replace( Path::$URL->base, '', self::$PAGE_URL->full );
+		$paramsUrl	= str_replace( Path::$URL->base, '', self::$URL->full );
 		
 		// remove ?params
-		$aParamsPageUrl	= explode( '?', $paramsPageUrl );
-		$paramsPageUrl	= $aParamsPageUrl[0];
+		$aParamsUrl	= explode( '?', $paramsUrl );
+		$paramsUrl	= $aParamsUrl[0];
 		
-		if ( substr( $paramsPageUrl, 0, 1 ) == '/' ) // if / is first character, remove it
-			$paramsPageUrl = substr( $paramsPageUrl, 1 );
+		if ( substr( $paramsUrl, 0, 1 ) == '/' ) // if / is first character, remove it
+			$paramsUrl = substr( $paramsUrl, 1 );
 		
-		if ( substr( $paramsPageUrl, -1, 1 ) == '/' ) // if / is last character, remove it
-			$paramsPageUrl = substr( $paramsPageUrl, 0, -1 );
+		if ( substr( $paramsUrl, -1, 1 ) == '/' ) // if / is last character, remove it
+			$paramsUrl = substr( $paramsUrl, 0, -1 );
 		
 		
-		return $paramsPageUrl;
+		return $paramsUrl;
 	}
 	
 	
-	private function getFullPageUrlGA()
+	private function getFullGaUrl()
 	{
-		$fullGA = str_replace( Path::$URL->base, '', self::$PAGE_URL->full );
+		$fullGA = str_replace( Path::$URL->base, '', self::$URL->full );
 		
 		
 		return $fullGA;
 	}
 	
 	
-	public function setCurrentPageUrl()
+	public function setPageUrl()
 	{
-		self::$PAGE_URL->current	= $this->getCurrentPageUrl();
-		self::$PAGE_URL->aCurrent	= explode( '/', self::$PAGE_URL->current );
+		self::$URL->page		= $this->getPageUrl();
+		self::$URL->pageParams	= explode( '/', self::$URL->page );
 	}
 	
 	
-	private function getCurrentPageUrl()
+	private function getPageUrl()
 	{
-		$currentPageUrl = preg_replace( '/' . Lang::$LANG . '/', '', self::$PAGE_URL->params, 1 );
+		$currentUrl = preg_replace( '/' . Lang::$LANG . '/', '', self::$URL->path, 1 );
 		
-		if ( substr( $currentPageUrl, 0, 1 ) == '/' ) // if / is first character, remove it
-			$currentPageUrl = substr( $currentPageUrl, 1 );
+		if ( substr( $currentUrl, 0, 1 ) == '/' ) // if / is first character, remove it
+			$currentUrl = substr( $currentUrl, 1 );
 		
-		if ( substr( $currentPageUrl, -1, 1 ) == '/' ) // if / is last character, remove it
-			$currentPageUrl = substr( $currentPageUrl, 0, -1 );
+		if ( substr( $currentUrl, -1, 1 ) == '/' ) // if / is last character, remove it
+			$currentUrl = substr( $currentUrl, 0, -1 );
 		
 		
-		return $currentPageUrl;
+		return $currentUrl;
 	}
 	
 	
@@ -158,9 +158,9 @@ class Router
 			$this->setIsHomepage( $page->id );
 			$this->setAltLangUrl( $page->params );
 			
-			if ( $this->isHomepage && self::$PAGE_URL->params == Lang::$DEFAULT_LANG )
+			if ( $this->isHomepage && self::$URL->path == Lang::$DEFAULT_LANG )
 				$this->redirectToRoot();
-			else if ( !Lang::$MULTI_LANG && self::$PAGE_URL->aParams[0] == Lang::$DEFAULT_LANG )
+			else if ( !Lang::$MULTI_LANG && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG )
 				$this->redirectToPageWithoutLang();
 			
 			$this->pagesController->setPageInfos( $page->id, $page->params );
@@ -189,7 +189,7 @@ class Router
 			
 			foreach ( $routesGroupName as $pageId => $pageParams ) { // parse all pages
 				
-				if ( $pageParams->{ Lang::$LANG }->url == self::$PAGE_URL->current ) { // if url exist
+				if ( $pageParams->{ Lang::$LANG }->url == self::$URL->page ) { // if url exist
 					$page->exist	= true;
 					$page->id		= $pageId;
 					$page->params	= $pageParams;
@@ -249,7 +249,7 @@ class Router
 	private function redirectToPageWithoutLang()
 	{
 		header( 'Status: 301 Moved Permanently', true, 301 );
-		header( 'Location: ' . Path::$URL->base . self::$PAGE_URL->current );
+		header( 'Location: ' . Path::$URL->base . self::$URL->page );
 		exit();
 	}
 	
@@ -281,7 +281,7 @@ class Router
 		$this->params = new stdClass();
 		
 		$this->params->ROUTES		= self::$ROUTES;
-		$this->params->PAGE_URL		= self::$PAGE_URL;
+		$this->params->URL			= self::$URL;
 		$this->params->ALT_LANG_URL	= self::$ALT_LANG_URL;
 		$this->params->LINK			= self::$LINK;
 		

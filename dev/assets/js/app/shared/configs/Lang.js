@@ -11,7 +11,7 @@ STF.Lang = ( function( window ) {
 	
 	Lang.prototype.init = function() {
 		_setGlobalInfos.call( this );
-		STF.Router.setPageUrl( true, null );
+		STF.Router.setUrl( true, null );
 		_setCurrentLang.call( this );
 		_checkDefaultLang.call( this );
 		_setLangLinks.call( this );
@@ -34,10 +34,10 @@ STF.Lang = ( function( window ) {
 	
 	
 	var _setCurrentLang = function() {
-		if ( !this.MULTI_LANG || STF.Router.PAGE_URL.path.length === 0 )
+		if ( !this.MULTI_LANG || STF.Router.URL.path.length === 0 )
 			this.LANG = this.DEFAULT_LANG;
 		else
-			this.LANG = STF.Router.PAGE_URL.aPath[0];
+			this.LANG = STF.Router.URL.pathParams[0];
 	};
 	
 	

@@ -323,8 +323,8 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _updateMenuLinks = function() {
-		// STF.Views.Statics.Header.updateMenuLinks( STF.Router.PAGE_URL.full );
-		// STF.Views.Statics.Footer.updateMenuLinks( STF.Router.PAGE_URL.full );
+		// STF.Views.Statics.Header.updateMenuLinks( STF.Router.URL.full );
+		// STF.Views.Statics.Footer.updateMenuLinks( STF.Router.URL.full );
 	};
 	
 	
