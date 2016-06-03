@@ -79,7 +79,7 @@ STF.AbstractMainView = ( function( window ) {
 		
 		this.resizeStaticsViews();
 		
-		_resizeCurrentPage.call( this );
+		_resizePage.call( this );
 	};
 	
 	
@@ -107,9 +107,9 @@ STF.AbstractMainView = ( function( window ) {
 	};
 	
 	
-	var _resizeCurrentPage = function() {
-		if ( STF.PagesController.currentPage !== null )
-			STF.PagesController.currentPage.resize();
+	var _resizePage = function() {
+		if ( STF.PagesController.page !== null )
+			STF.PagesController.page.resize();
 	};
 	
 	
@@ -122,7 +122,7 @@ STF.AbstractMainView = ( function( window ) {
 		
 		this.rafStaticsViews();
 		
-		_rafCurrentPage.call( this );
+		_rafPage.call( this );
 		
 		
 		if ( STF.Config.HAS_FPS_STATS && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
@@ -146,9 +146,9 @@ STF.AbstractMainView = ( function( window ) {
 	};
 	
 	
-	var _rafCurrentPage = function() {
-		if ( STF.PagesController.currentPage !== null )
-			STF.PagesController.currentPage.raf();
+	var _rafPage = function() {
+		if ( STF.PagesController.page !== null )
+			STF.PagesController.page.raf();
 	};
 	
 	

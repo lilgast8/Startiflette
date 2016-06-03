@@ -8,6 +8,7 @@ STF.PagesController = ( function( window ) {
 		STF.EventDispatcher.call( this );
 		
 		this.pages					= {};
+		this.page					= null;
 		this.prevPageInfos			= {};
 		this.pageInfos				= {};
 		
@@ -19,14 +20,10 @@ STF.PagesController = ( function( window ) {
 		
 		this.isContentLoaded		= false;
 		this.isAssetsLoaded			= false;
-		this.isPrevPageHidden		= false;
-		this.isCurrentPageShown		= false;
+		this.isPageHidden			= false;
+		this.isPageShown			= false;
 		this.isMainLoaderShown		= false;
 		this.isMainLoaderHidden		= false;
-		
-		this.prevPage				= null;
-		this.currentPage			= null;
-		this.nextPage				= null;
 		
 		this.data					= null;
 	}
@@ -89,29 +86,28 @@ STF.PagesController = ( function( window ) {
 		this.pageInfos.id			= id;
 		this.pageInfos.title		= title;
 		
-		_setCurrentPage.call( this );
+		_setPage.call( this );
 	};
 	
 	
-	var _setCurrentPage = function() {
+	var _setPage = function() {
 		if ( this.pages[ this.pageInfos.id ] === undefined) {
 			console.error( 'PagesController error: Need to create a view for the "' + this.pageInfos.id + '" ID, then set the view in the PagesController.pages object.' );
 			
 			return;
 		}
 		
-		this.prevPage		= this.currentPage;
-		this.currentPage	= new this.pages[ this.pageInfos.id ]();
+		this.page = new this.pages[ this.pageInfos.id ]();
 		
-		console.log( '_setCurrentPage():', this.currentPage );
+		console.log( '_setPage():', this.page );
 	};
 	
 	
 	var _initPageChangeValues = function() {
 		this.isContentLoaded	= false;
 		this.isAssetsLoaded		= false;
-		this.isPrevPageHidden	= false;
-		this.isCurrentPageShown	= false;
+		this.isPageHidden		= false;
+		this.isPageShown		= false;
 		this.isMainLoaderShown	= false;
 		this.isMainLoaderHidden	= false;
 	};
@@ -138,8 +134,8 @@ STF.PagesController = ( function( window ) {
 		
 		_loadContent.call( this, url );
 		
-		this.currentPage.buildEvt( this.currentPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
-		this.currentPage.hide();
+		this.page.buildEvt( this.page.E.HIDDEN, _onPageHidden.bind( this ) );
+		this.page.hide();
 		
 		this.mainLoader.buildEvt( this.mainLoader.E.SHOWN, _onMainLoaderShown.bind( this ) );
 		this.mainLoader.show();
@@ -150,12 +146,12 @@ STF.PagesController = ( function( window ) {
 	
 	
 	PagesController.prototype.changeSearch = function() {
-		this.currentPage.updateSearch();
+		this.page.updateSearch();
 	};
 	
 	
 	PagesController.prototype.changeHash = function() {
-		this.currentPage.updateHash();
+		this.page.updateHash();
 	};
 	
 	
@@ -170,10 +166,10 @@ STF.PagesController = ( function( window ) {
 		if ( this.isFirstLoad ) {
 			_updateMenuLinks.call( this );
 			
-			this.currentPage.init();
+			this.page.init();
 			
-			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
-			this.currentPage.show();
+			this.page.buildEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
+			this.page.show();
 			
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 			
@@ -240,12 +236,12 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	var _onPrevPageHidden = function() {
-		this.currentPage.destroyEvt( this.currentPage.E.HIDDEN, _onPrevPageHidden.bind( this ) );
+	var _onPageHidden = function() {
+		this.page.destroyEvt( this.page.E.HIDDEN, _onPageHidden.bind( this ) );
 		
 		_destroyPage.call( this );
 		
-		this.isPrevPageHidden = true;
+		this.isPageHidden = true;
 		_checkFirstStepPageChange.call( this );
 	};
 	
@@ -262,9 +258,9 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _checkFirstStepPageChange = function() {
-		console.log( '---> _checkFirstStepPageChange()', this.isContentLoaded, this.isAssetsLoaded, this.isPrevPageHidden, this.isMainLoaderShown );
+		console.log( '---> _checkFirstStepPageChange()', this.isContentLoaded, this.isAssetsLoaded, this.isPageHidden, this.isMainLoaderShown );
 		
-		if ( this. LOADING_MODE == 'allStatic' && this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
+		if ( this. LOADING_MODE == 'allStatic' && this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
 			STF.MainView.$pageCont[0].innerHTML = this.data;
 			
 			// this.data = null;
@@ -273,39 +269,39 @@ STF.PagesController = ( function( window ) {
 			
 			this.data = null;
 			
-			console.log( 'this.currentPage.init():', this.currentPage );
-			this.currentPage.init();
+			console.log( 'this.page.init():', this.page );
+			this.page.init();
 			
-			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
-			this.currentPage.show();
+			this.page.buildEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
+			this.page.show();
 			
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 			this.mainLoader.hide();
 		}
 		
 		else if ( this. LOADING_MODE == 'byPageStatic' &&
-				  this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ||
+				  this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ||
 				  
 				  this. LOADING_MODE == 'byPageDynamic' &&
-				  this.isContentLoaded && this.isAssetsLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
+				  this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
 			
 			console.log( '--------> OK init page' );
 			
-			console.log( 'this.currentPage.init():', this.currentPage );
-			this.currentPage.init();
+			console.log( 'this.page.init():', this.page );
+			this.page.init();
 			
-			this.currentPage.buildEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
-			this.currentPage.show();
+			this.page.buildEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
+			this.page.show();
 			
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 			this.mainLoader.hide();
 		}
 		
 		else if ( this. LOADING_MODE == 'byPageStatic' &&
-				  this.isContentLoaded && this.isPrevPageHidden && this.isMainLoaderShown ||
+				  this.isContentLoaded && this.isPageHidden && this.isMainLoaderShown ||
 				  
 				  this. LOADING_MODE == 'byPageDynamic' &&
-				  this.isContentLoaded && this.isPrevPageHidden && this.isMainLoaderShown ) {
+				  this.isContentLoaded && this.isPageHidden && this.isMainLoaderShown ) {
 			
 			// console.log( this.data );
 			console.log( 'SLP' );
@@ -321,29 +317,23 @@ STF.PagesController = ( function( window ) {
 			this.data = null;
 		}
 		
-		// else if ( this.LOADING_MODE == 'byPageDynamic' && this.isContentLoaded && this.isPrevPageHidden && this.isMainLoaderShown )
+		// else if ( this.LOADING_MODE == 'byPageDynamic' && this.isContentLoaded && this.isPageHidden && this.isMainLoaderShown )
 		// 	_loadAssets.call( this );
 	};
 	
 	
-	var _destroyPrevPage = function() {
-		console.log( '_destroyPrevPage():', this.prevPage );
-		
-		this.prevPage.destroy();
-		this.prevPage = null;
-	};
 	var _destroyPage = function() {
-		console.log( '_destroyPage():', this.currentPage );
+		console.log( '_destroyPage():', this.page );
 		
-		this.currentPage.destroy();
-		this.currentPage = null;
+		this.page.destroy();
+		this.page = null;
 	};
 	
 	
-	var _onCurrentPageShown = function() {
-		this.currentPage.destroyEvt( this.currentPage.E.SHOWN, _onCurrentPageShown.bind( this ) );
+	var _onPageShown = function() {
+		this.page.destroyEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
 		
-		this.isCurrentPageShown = true;
+		this.isPageShown = true;
 		_checkSecondStepPageChange.call( this );
 	};
 	
@@ -357,7 +347,7 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _checkSecondStepPageChange = function() {
-		if ( this.isCurrentPageShown && this.isMainLoaderHidden )
+		if ( this.isPageShown && this.isMainLoaderHidden )
 			_enablePageChange.call( this );
 	};
 	
