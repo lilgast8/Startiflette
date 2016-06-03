@@ -132,6 +132,9 @@ STF.PagesController = ( function( window ) {
 		_disablePageChange.call( this );
 		_initPageChangeValues.call( this );
 		
+		if ( this.LOADING_MODE == 'allStatic' )
+			this.isAssetsLoaded = true;
+		
 		_loadContent.call( this, url );
 		
 		this.page.buildEvt( this.page.E.HIDDEN, _onPageHidden.bind( this ) );
@@ -139,9 +142,6 @@ STF.PagesController = ( function( window ) {
 		
 		this.mainLoader.buildEvt( this.mainLoader.E.SHOWN, _onMainLoaderShown.bind( this ) );
 		this.mainLoader.show();
-		
-		if ( this.LOADING_MODE == 'allStatic' )
-			this.isAssetsLoaded = true;
 	};
 	
 	
@@ -246,87 +246,66 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
+	var _destroyPage = function() {
+		this.page.destroy();
+		this.page = null;
+	};
+	
+	
 	var _onMainLoaderShown = function() {
 		this.mainLoader.destroyEvt( this.mainLoader.E.SHOWN, _onMainLoaderShown.bind( this ) );
 		
 		this.isMainLoaderShown = true;
 		_checkPageHiding.call( this );
-		
-		/*if ( this. LOADING_MODE == 'byPageStatic' )
-			_loadAssets.call( this );*/
 	};
 	
 	
 	var _checkPageHiding = function() {
 		console.log( '---> _checkPageHiding()', this.isContentLoaded, this.isAssetsLoaded, this.isPageHidden, this.isMainLoaderShown );
 		
-		if ( this. LOADING_MODE == 'allStatic' && this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
-			STF.MainView.$pageCont[0].innerHTML = this.data;
+		if ( this. LOADING_MODE == 'allStatic' &&
+			 this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
 			
-			// this.data = null;
-			
-			this.setPageInfos();
-			
-			this.data = null;
-			
-			console.log( 'this.page.init():', this.page );
-			this.page.init();
-			
-			this.page.buildEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
-			this.page.show();
-			
-			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
-			this.mainLoader.hide();
+			_setContent.call( this );
+			_showPage.call( this );
 		}
 		
-		else if ( this. LOADING_MODE == 'byPageStatic' &&
-				  this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ||
-				  
-				  this. LOADING_MODE == 'byPageDynamic' &&
+		else if ( ( this. LOADING_MODE == 'byPageStatic' || this. LOADING_MODE == 'byPageDynamic' ) &&
+				  this.isContentLoaded && !this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
+			
+			_setContent.call( this );
+		}
+		
+		else if ( ( this. LOADING_MODE == 'byPageStatic' || this. LOADING_MODE == 'byPageDynamic' ) &&
 				  this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
 			
-			console.log( '--------> OK init page' );
-			
-			console.log( 'this.page.init():', this.page );
-			this.page.init();
-			
-			this.page.buildEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
-			this.page.show();
-			
-			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
-			this.mainLoader.hide();
+			_showPage.call( this );
 		}
-		
-		else if ( this. LOADING_MODE == 'byPageStatic' &&
-				  this.isContentLoaded && this.isPageHidden && this.isMainLoaderShown ||
-				  
-				  this. LOADING_MODE == 'byPageDynamic' &&
-				  this.isContentLoaded && this.isPageHidden && this.isMainLoaderShown ) {
-			
-			// console.log( this.data );
-			console.log( 'SLP' );
-			
-			STF.MainView.$pageCont[0].innerHTML = this.data;
-			
-			// this.data = null;
-			
-			this.setPageInfos();
-			
-			_loadAssets.call( this );
-			
-			this.data = null;
-		}
-		
-		// else if ( this.LOADING_MODE == 'byPageDynamic' && this.isContentLoaded && this.isPageHidden && this.isMainLoaderShown )
-		// 	_loadAssets.call( this );
 	};
 	
 	
-	var _destroyPage = function() {
-		console.log( '_destroyPage():', this.page );
+	var _setContent = function() {
+		console.log( '---> _setContent()' );
+		STF.MainView.$pageCont[0].innerHTML = this.data;
 		
-		this.page.destroy();
-		this.page = null;
+		this.setPageInfos();
+		
+		if ( this. LOADING_MODE != 'allStatic' )
+			_loadAssets.call( this );
+		
+		this.data = null;
+	};
+	
+	
+	var _showPage = function() {
+		console.log( '---> _showPage()' );
+		this.page.init();
+		
+		this.page.buildEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
+		this.page.show();
+		
+		this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
+		this.mainLoader.hide();
 	};
 	
 	
