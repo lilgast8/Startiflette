@@ -193,6 +193,9 @@ function manageFileCreation( file, viewType, destFilePath, aStringToReplace, aNe
 		data			= data.replace( new RegExp( stringToReplace, 'g' ), newString );
 	}
 	
+	if ( file == 'ViewName.js' && viewType == 'statics' )
+		data = data.replace( 'return ' + newString, 'return new ' + newString + '()' );
+	
 	
 	if ( file == 'view-name-content.php' ) { // necessary to create a file for each language
 		var lang, destFilePathTemp, destDirPath, dataTemp;
