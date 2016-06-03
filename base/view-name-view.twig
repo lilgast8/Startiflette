@@ -1,7 +1,12 @@
 
-<!-- View name -->
-<section id="page" class="viewClassName">
+{% extends 'page.twig' %}
+
+
+{% block title %}View name{% endblock %}
+{% block cssClassName %}viewClassName{% endblock %}
+
+{% block content %}
 	
 	View name
 	
-</section>
+{% endblock %}
