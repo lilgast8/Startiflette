@@ -102,7 +102,7 @@ STF.AbstractAssets = ( function( window ) {
 		if ( aAssetsToLoad.indexOf( assetUrl ) < 0 )
 			return aAssetsToLoad.push( assetUrl );
 		else if ( STF.Config.ENV != 'prod' )
-			console.log( assetUrl + ' already added to the loading assets array!' );
+			console.log( assetUrl + ' already added to the loading assets list!' );
 	};
 	
 	
