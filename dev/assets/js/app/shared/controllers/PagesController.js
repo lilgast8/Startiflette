@@ -185,7 +185,7 @@ STF.PagesController = ( function( window ) {
 		else if ( !this.isFirstLoad && ( this.LOADING_MODE == 'byPageStatic' || this.LOADING_MODE == 'byPageDynamic' ) ) {
 			this.isAssetsLoaded = true;
 			
-			_checkFirstStepPageChange.call( this );
+			_checkPageHiding.call( this );
 		}
 	};
 	
@@ -216,7 +216,7 @@ STF.PagesController = ( function( window ) {
 		this.data = data;
 		
 		this.isContentLoaded = true;
-		_checkFirstStepPageChange.call( this );
+		_checkPageHiding.call( this );
 	};
 	
 	
@@ -242,7 +242,7 @@ STF.PagesController = ( function( window ) {
 		_destroyPage.call( this );
 		
 		this.isPageHidden = true;
-		_checkFirstStepPageChange.call( this );
+		_checkPageHiding.call( this );
 	};
 	
 	
@@ -250,15 +250,15 @@ STF.PagesController = ( function( window ) {
 		this.mainLoader.destroyEvt( this.mainLoader.E.SHOWN, _onMainLoaderShown.bind( this ) );
 		
 		this.isMainLoaderShown = true;
-		_checkFirstStepPageChange.call( this );
+		_checkPageHiding.call( this );
 		
 		/*if ( this. LOADING_MODE == 'byPageStatic' )
 			_loadAssets.call( this );*/
 	};
 	
 	
-	var _checkFirstStepPageChange = function() {
-		console.log( '---> _checkFirstStepPageChange()', this.isContentLoaded, this.isAssetsLoaded, this.isPageHidden, this.isMainLoaderShown );
+	var _checkPageHiding = function() {
+		console.log( '---> _checkPageHiding()', this.isContentLoaded, this.isAssetsLoaded, this.isPageHidden, this.isMainLoaderShown );
 		
 		if ( this. LOADING_MODE == 'allStatic' && this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
 			STF.MainView.$pageCont[0].innerHTML = this.data;
@@ -334,7 +334,7 @@ STF.PagesController = ( function( window ) {
 		this.page.destroyEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
 		
 		this.isPageShown = true;
-		_checkSecondStepPageChange.call( this );
+		_checkPageShowing.call( this );
 	};
 	
 	
@@ -342,11 +342,11 @@ STF.PagesController = ( function( window ) {
 		this.mainLoader.destroyEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
 		
 		this.isMainLoaderHidden = true;
-		_checkSecondStepPageChange.call( this );
+		_checkPageShowing.call( this );
 	};
 	
 	
-	var _checkSecondStepPageChange = function() {
+	var _checkPageShowing = function() {
 		if ( this.isPageShown && this.isMainLoaderHidden )
 			_enablePageChange.call( this );
 	};
