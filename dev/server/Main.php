@@ -15,6 +15,7 @@ include_once 'server/core/routes/Router.php';
 include_once 'server/core/controllers/PagesController.php';
 
 include_once 'server/core/utils/Helpers.php';
+include_once 'server/core/utils/String.php';
 
 
 

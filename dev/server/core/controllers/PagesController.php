@@ -64,7 +64,7 @@ class PagesController
 		self::$PAGE_INFOS			= new stdClass();
 		
 		self::$PAGE_INFOS->id		= $pageId;
-		self::$PAGE_INFOS->name		= Helpers::camelCase( self::$PAGE_INFOS->id );
+		self::$PAGE_INFOS->name		= String::camelCase( self::$PAGE_INFOS->id );
 	}
 	
 	

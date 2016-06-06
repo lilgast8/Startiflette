@@ -80,20 +80,17 @@ class Router
 	
 	private function getPath()
 	{
-		$paramsUrl	= str_replace( Path::$URL->base, '', self::$URL->full );
+		$path		= str_replace( Path::$URL->base, '', self::$URL->full );
 		
-		// remove ?params
-		$aParamsUrl	= explode( '?', $paramsUrl );
-		$paramsUrl	= $aParamsUrl[0];
+		// remove ?search
+		$pathParams	= explode( '?', $path );
+		$path		= $pathParams[0];
 		
-		if ( substr( $paramsUrl, 0, 1 ) == '/' ) // if / is first character, remove it
-			$paramsUrl = substr( $paramsUrl, 1 );
-		
-		if ( substr( $paramsUrl, -1, 1 ) == '/' ) // if / is last character, remove it
-			$paramsUrl = substr( $paramsUrl, 0, -1 );
+		String::removeFirstSpecificChar( $path, '/' );
+		String::removeLastSpecificChar( $path, '/' );
 		
 		
-		return $paramsUrl;
+		return $path;
 	}
 	
 	
@@ -115,16 +112,13 @@ class Router
 	
 	private function getPageUrl()
 	{
-		$currentUrl = preg_replace( '/' . Lang::$LANG . '/', '', self::$URL->path, 1 );
+		$pageUrl = preg_replace( '/' . Lang::$LANG . '/', '', self::$URL->path, 1 );
 		
-		if ( substr( $currentUrl, 0, 1 ) == '/' ) // if / is first character, remove it
-			$currentUrl = substr( $currentUrl, 1 );
-		
-		if ( substr( $currentUrl, -1, 1 ) == '/' ) // if / is last character, remove it
-			$currentUrl = substr( $currentUrl, 0, -1 );
+		$pageUrl = String::removeFirstSpecificChar( $pageUrl, '/' );
+		$pageUrl = String::removeLastSpecificChar( $pageUrl, '/' );
 		
 		
-		return $currentUrl;
+		return $pageUrl;
 	}
 	
 	
@@ -263,7 +257,7 @@ class Router
 			self::$LINK->$routesGroup = new stdClass();
 			
 			foreach ( $pages as $pageId => $pageParams ) { // parse all pages
-				$pageName = Helpers::camelCase( $pageId );
+				$pageName = String::camelCase( $pageId );
 				
 				if ( $pageName !== 'error404' && $pageName == 'home' )
 					self::$LINK->$routesGroup->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageParams->{ Lang::$LANG }->url;
