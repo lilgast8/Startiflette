@@ -1,63 +1,21 @@
 {
 	
 	"project_1": {
-		"jsView"	: "project",
-		"phpView"	: "project",
-		"fr": {
-			"url"		: "projet/1/nom-projet-1",
-			"title"		: "Nom projet 1",
-			"desc"		: "Nom projet 1"
-		},
-		"en": {
-			"url"		: "project/1/project-name-1",
-			"title"		: "Project name 1",
-			"desc"		: "Project name 1"
-		},
-		"ex": {
-			"url"		: "project-ex/1/project-name-ex-1",
-			"title"		: "Project name ex 1",
-			"desc"		: "Project name ex 1"
-		}
+		"fr":"projet/1/nom-projet-1",
+		"en":"project/1/project-name-1",
+		"ex":"project-ex/1/project-name-ex-1"
 	},
 	
 	"project_2": {
-		"jsView"	: "project",
-		"phpView"	: "project",
-		"fr": {
-			"url"		: "projet/2/nom-projet-2",
-			"title"		: "Nom projet 2",
-			"desc"		: "Nom projet 2"
-		},
-		"en": {
-			"url"		: "project/2/project-name-2",
-			"title"		: "Project name 2",
-			"desc"		: "Project name 2"
-		},
-		"ex": {
-			"url"		: "project-ex/2/project-name-ex-2",
-			"title"		: "Project name ex 2",
-			"desc"		: "Project name ex 2"
-		}
+		"fr":"projet/2/nom-projet-2",
+		"en":"project/2/project-name-2",
+		"ex":"project-ex/2/project-name-ex-2"
 	},
 	
 	"project_3": {
-		"jsView"	: "project",
-		"phpView"	: "project",
-		"fr": {
-			"url"		: "projet/3/nom-projet-3",
-			"title"		: "Nom projet 3",
-			"desc"		: "Nom projet 3"
-		},
-		"en": {
-			"url"		: "project/3/project-name-3",
-			"title"		: "Project name 3",
-			"desc"		: "Project name 3"
-		},
-		"ex": {
-			"url"		: "project-ex/3/project-name-ex-3",
-			"title"		: "Project name ex 3",
-			"desc"		: "Project name ex 3"
-		}
+		"fr":"projet/3/nom-projet-3",
+		"en":"project/3/project-name-3",
+		"ex":"project-ex/3/project-name-ex-3"
 	}
 	
 }

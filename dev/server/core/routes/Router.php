@@ -150,24 +150,24 @@ class Router
 		
 		if ( Lang::$LANG_EXIST && $page->exist ) { // page exist
 			$this->setIsHomepage( $page->id );
-			$this->setAltLangUrl( $page->params );
+			$this->setAltLangUrl( $page->urls );
 			
 			if ( $this->isHomepage && self::$URL->path == Lang::$DEFAULT_LANG )
 				$this->redirectToRoot();
 			else if ( !Lang::$MULTI_LANG && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG )
 				$this->redirectToPageWithoutLang();
 			
-			$this->pagesController->setPageInfos( $page->id, $page->params );
+			$this->pagesController->setPageInfos( $page->id, $page->urls );
 		}
 		else { // 404
-			$page->id		= 'error-404';
-			$page->params	= self::$ROUTES->statics->{ $page->id };
+			$page->id	= 'error-404';
+			$page->urls	= self::$ROUTES->statics->{ $page->id };
 			
 			$this->setAltLangUrl( self::$ROUTES->statics->home );
 			
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
-			$this->pagesController->setPageInfos( $page->id, $page->params );
+			$this->pagesController->setPageInfos( $page->id, $page->urls );
 		}
 	}
 	
@@ -177,16 +177,16 @@ class Router
 		$page = new stdClass();
 		$page->exist	= false;
 		$page->id		= null;
-		$page->params	= null;
+		$page->urls		= null;
 		
-		foreach ( self::$ROUTES as $routesGroupName ) { // parse all routes group
+		foreach ( self::$ROUTES as $routesGroup ) { // parse all routes group
 			
-			foreach ( $routesGroupName as $pageId => $pageParams ) { // parse all pages
+			foreach ( $routesGroup as $pageId => $pageParams ) { // parse all pages
 				
-				if ( $pageParams->{ Lang::$LANG }->url == self::$URL->page ) { // if url exist
+				if ( $pageParams->{ Lang::$LANG } == self::$URL->page ) { // if url exist
 					$page->exist	= true;
 					$page->id		= $pageId;
-					$page->params	= $pageParams;
+					$page->urls		= $pageParams;
 					
 					break; // break second foreach
 				}
@@ -214,7 +214,8 @@ class Router
 		foreach ( Lang::$ALL_LANG as $lang ) {
 			
 			if ( $lang !== Lang::$LANG ) {
-				$currentUrl = $pageParams->$lang->url;
+				// $currentUrl = $pageParams->$lang->url;
+				$currentUrl = $pageParams->$lang;
 				
 				if ( $this->isHomepage && $lang == Lang::$DEFAULT_LANG )
 					$urlPart = '';
@@ -252,18 +253,19 @@ class Router
 	{
 		self::$LINK = new stdClass();
 		
-		foreach ( Router::$ROUTES as $routesGroup => $pages ) { // parse all routes group
+		foreach ( Router::$ROUTES as $routesGroupName => $pages ) { // parse all routes group
 			
-			self::$LINK->$routesGroup = new stdClass();
+			self::$LINK->$routesGroupName = new stdClass();
 			
-			foreach ( $pages as $pageId => $pageParams ) { // parse all pages
+			foreach ( $pages as $pageId => $pageUrls ) { // parse all pages
+				
 				$pageName = String::camelCase( $pageId );
 				
-				if ( $pageName !== 'error404' && $pageName == 'home' )
-					self::$LINK->$routesGroup->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageParams->{ Lang::$LANG }->url;
-				
-				else if ( $pageName !== 'error404' )
-					self::$LINK->$routesGroup->$pageName = Path::$URL->base . Lang::$LANG_LINK . $pageParams->{ Lang::$LANG }->url;
+				if ( $pageName !== 'error404' && $pageId == 'home' )
+					self::$LINK->$routesGroupName->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageUrls->{ Lang::$LANG };
+					
+				else if ( $pageId !== 'error404' )
+					self::$LINK->$routesGroupName->$pageName = Path::$URL->base . Lang::$LANG_LINK . $pageUrls->{ Lang::$LANG };
 			}
 			
 		}
