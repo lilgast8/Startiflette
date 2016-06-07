@@ -276,6 +276,7 @@ class Router
 	{
 		$this->params = new stdClass();
 		
+		$this->params->ROUTES		= self::$ROUTES;
 		$this->params->URL			= self::$URL;
 		$this->params->ALT_LANG_URL	= self::$ALT_LANG_URL;
 		$this->params->LINK			= self::$LINK;
