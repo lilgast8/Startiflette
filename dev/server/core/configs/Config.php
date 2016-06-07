@@ -13,7 +13,6 @@ class Config
 	static $ENVS				= null;
 	static $ROUTES_FILES		= null;
 	static $ALL_LANG			= null;
-	static $HAS_LANG_LANDING	= null;
 	static $HAS_MOBILE_VERSION	= null;
 	static $FORCE_DEVICE		= null;
 	static $GA_ID				= null;
@@ -87,7 +86,6 @@ class Config
 		$this->params->ENVS					= self::$ENVS->{ $this->params->ENV };
 		$this->params->ROUTES_FILES			= self::$ROUTES_FILES;
 		$this->params->ALL_LANG				= self::$ALL_LANG;
-		$this->params->HAS_LANG_LANDING		= self::$HAS_LANG_LANDING;
 		$this->params->GA_ID				= self::$GA_ID;
 		$this->params->CREDITS				= self::$CREDITS;
 	}
