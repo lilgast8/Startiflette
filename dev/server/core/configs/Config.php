@@ -82,11 +82,11 @@ class Config
 	{
 		$this->params = new stdClass();
 		
-		$this->params->ENV					= self::$ENV;
-		$this->params->ENVS					= self::$ENVS->{ $this->params->ENV };
-		$this->params->ALL_LANG				= self::$ALL_LANG;
-		$this->params->GA_ID				= self::$GA_ID;
-		$this->params->CREDITS				= self::$CREDITS;
+		$this->params->ENV		= self::$ENV;
+		$this->params->ENVS		= self::$ENVS->{ $this->params->ENV };
+		$this->params->ALL_LANG	= self::$ALL_LANG;
+		$this->params->GA_ID	= self::$GA_ID;
+		$this->params->CREDITS	= self::$CREDITS;
 	}
 	
 	
