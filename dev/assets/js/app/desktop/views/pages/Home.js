@@ -17,8 +17,8 @@ STF.Views.Pages.Home = ( function( window ) {
 	Home.prototype.constructor	= Home;
 	
 	
-	Home.prototype.initDOM = function() {
-		STF.AbstractView.prototype.initDOM.call( this );
+	Home.prototype.init = function() {
+		STF.AbstractView.prototype.init.call( this );
 	};
 	
 	

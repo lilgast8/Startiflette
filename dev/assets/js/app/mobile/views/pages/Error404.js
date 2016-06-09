@@ -17,8 +17,8 @@ STF.Views.Pages.Error404 = ( function( window ) {
 	Error404.prototype.constructor	= Error404;
 	
 	
-	Error404.prototype.initDOM = function() {
-		STF.AbstractView.prototype.initDOM.call( this );
+	Error404.prototype.init = function() {
+		STF.AbstractView.prototype.init.call( this );
 	};
 	
 	

@@ -17,8 +17,8 @@ STF.Views.Pages.Project = ( function( window ) {
 	Project.prototype.constructor	= Project;
 	
 	
-	Project.prototype.initDOM = function() {
-		STF.AbstractView.prototype.initDOM.call( this );
+	Project.prototype.init = function() {
+		STF.AbstractView.prototype.init.call( this );
 	};
 	
 	

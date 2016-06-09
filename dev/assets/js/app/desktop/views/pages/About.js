@@ -17,8 +17,8 @@ STF.Views.Pages.About = ( function( window ) {
 	About.prototype.constructor	= About;
 	
 	
-	About.prototype.initDOM = function() {
-		STF.AbstractView.prototype.initDOM.call( this );
+	About.prototype.init = function() {
+		STF.AbstractView.prototype.init.call( this );
 	};
 	
 	
