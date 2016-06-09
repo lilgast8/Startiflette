@@ -7,7 +7,7 @@ STF.Utils.String = ( function( window ) {
 	'use strict';
 	
 	
-	String.prototype.removeFirstSpecificChar = function ( char ) {
+	String.prototype.STF_removeFirstSpecificChar = function ( char ) {
 		var string = this;
 		
 		if ( string.substr( 0, 1 ) == char )
@@ -18,7 +18,7 @@ STF.Utils.String = ( function( window ) {
 	};
 	
 	
-	String.prototype.removeLastSpecificChar = function ( char ) {
+	String.prototype.STF_removeLastSpecificChar = function ( char ) {
 		var string = this;
 		
 		if ( string.substr( string.length - 1, 1 ) == char )
@@ -49,8 +49,8 @@ STF.Utils.String = ( function( window ) {
 		path		= path.split( '#' )[0]; // remove #hash
 		path		= path.split( '?' )[0]; // remove ?search
 		
-		path		= path.removeFirstSpecificChar( '/' );
-		path		= path.removeLastSpecificChar( '/' );
+		path		= path.STF_removeFirstSpecificChar( '/' );
+		path		= path.STF_removeLastSpecificChar( '/' );
 		
 		
 		return path;
@@ -62,8 +62,8 @@ STF.Utils.String = ( function( window ) {
 		
 		var search	= url.search.split( '?' )[1] || '';
 		
-		search		= search.removeFirstSpecificChar( '/' );
-		search		= search.removeLastSpecificChar( '/' );
+		search		= search.STF_removeFirstSpecificChar( '/' );
+		search		= search.STF_removeLastSpecificChar( '/' );
 		
 		
 		return search;
@@ -75,8 +75,8 @@ STF.Utils.String = ( function( window ) {
 		
 		var hash	= url.hash.split( '#' )[1] || '';
 		
-		hash		= hash.removeFirstSpecificChar( '/' );
-		hash		= hash.removeLastSpecificChar( '/' );
+		hash		= hash.STF_removeFirstSpecificChar( '/' );
+		hash		= hash.STF_removeLastSpecificChar( '/' );
 		
 		
 		return hash;
@@ -94,12 +94,12 @@ STF.Utils.String = ( function( window ) {
 				aItKey	= aCouples[ nKeyId ].split( '=' );
 				
 				key		= unescape( aItKey[0] );
-				key		= key.removeFirstSpecificChar( '/' );
-				key		= key.removeLastSpecificChar( '/' );
+				key		= key.STF_removeFirstSpecificChar( '/' );
+				key		= key.STF_removeLastSpecificChar( '/' );
 				
 				value	= aItKey.length > 1 ? unescape( aItKey[1] ) : '';
-				value	= value.removeFirstSpecificChar( '/' );
-				value	= value.removeLastSpecificChar( '/' );
+				value	= value.STF_removeFirstSpecificChar( '/' );
+				value	= value.STF_removeLastSpecificChar( '/' );
 				
 				params[ key ] = value;
 			}
