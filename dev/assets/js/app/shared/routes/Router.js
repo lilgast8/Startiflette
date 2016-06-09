@@ -90,35 +90,6 @@ STF.Router = ( function( window ) {
 	};
 	
 	
-	var _setAltLangUrl = function( pageParams )
-	{
-		var currentUrl, urlPart, altLangUrl;
-		
-		for ( var i in STF.Lang.ALL_LANG ) {
-			var lang = STF.Lang.ALL_LANG[ i ];
-			
-			if ( lang !== STF.Lang.LANG ) {
-				currentUrl = pageParams[ lang ].url;
-				
-				if ( this.isHomepage && lang == STF.Lang.DEFAULT_LANG )
-					urlPart = '';
-				
-				else if ( this.isHomepage )
-					urlPart = lang;
-				
-				else
-					urlPart = lang + '/' + pageParams[ lang ].url;
-				
-				
-				altLangUrl = STF.Path.URL.base + urlPart;
-				
-				this.ALT_LANG_URL[ lang ] = altLangUrl;
-			}
-			
-		}
-	};
-	
-	
 	Router.prototype.checkUrlCorrespondence = function() {
 		if ( this.URL.full != _getFullUrl.call( this, null ) )
 			_onPopState.call( this );
@@ -203,6 +174,18 @@ STF.Router = ( function( window ) {
 	var _isHashChanged = function( url ) {
 		var nextHash		= url.STF_getHash();
 		this.isHashChange	= this.URL.hash != nextHash;
+	};
+	
+	
+	Router.prototype.setAltLangUrl = function( $page ) {
+		var lang;
+		
+		for ( var i = 0; i < STF.Lang.ALL_LANG.length; i++ ) {
+			lang = STF.Lang.ALL_LANG[ i ];
+			
+			if ( lang != STF.Lang.LANG )
+				this.ALT_LANG_URL[ lang ] = $page.getAttribute( 'data-lang-' + lang );
+		}
 	};
 	
 	

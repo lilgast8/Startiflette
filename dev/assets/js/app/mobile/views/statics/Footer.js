@@ -19,7 +19,7 @@ STF.Views.Statics.Footer = ( function( window ) {
 	
 	Footer.prototype.initDOM = function() {
 		this.$footer		= $( document.getElementById( 'footer' ) );
-		this.$footerLgLink	= this.$footer.find( '.footer-lg-link' );
+		this.$footerLgLink	= this.$footer.find( '.footer-lang-link' );
 		this.$footerLink	= this.$footer.find( '.footer-link' );
 	};
 	

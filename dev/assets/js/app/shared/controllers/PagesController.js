@@ -86,7 +86,33 @@ STF.PagesController = ( function( window ) {
 		this.pageInfos.title		= title;
 		
 		_setPage.call( this );
+		
+		STF.Router.setAltLangUrl( $page );
 	};
+	
+	
+	/*var _getAltUrl = function( $page ) {
+		// for ( var i = 0; i < STF.Lang.ALL_LANG.length; i++ ) {
+		// 	if (true) {}
+		// }
+		
+		// for ( var lang in STF.Lang.ALL_LANG ) {
+		var lang;
+		for ( var i = 0; i < STF.Lang.ALL_LANG.length; i++ ) {
+			lang = STF.Lang.ALL_LANG[ i ];
+			// console.log( lang );
+			
+			if ( lang != STF.Lang.LANG ) {
+				// $page[0].getAttribute( 'data-lang-' + lang );
+				
+				STF.Router.ALT_LANG_URL[ lang ] = $page.getAttribute( 'data-lang-' + lang );
+			}
+		}
+		
+		console.log( STF.Router.ALT_LANG_URL );
+		
+		// data-lang-en
+	};*/
 	
 	
 	var _setPage = function() {
@@ -118,11 +144,11 @@ STF.PagesController = ( function( window ) {
 	
 	
 	PagesController.prototype.changePage = function( url ) {
-		_updateMenuLinks.call( this );
+		// _updateMenuLinks.call( this );
 		STF.Router.updateGA();
 		
-		if ( STF.Lang.MULTI_LANG )
-			_changeLgLink.call( this );
+		// if ( STF.Lang.MULTI_LANG )
+		// 	_changeLangLinks.call( this );
 		
 		_disablePageChange.call( this );
 		_initPageChangeValues.call( this );
@@ -290,6 +316,8 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _showPage = function() {
+		_manageLangLinks.call( this );
+		
 		this.page.init();
 		
 		this.page.buildEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
@@ -328,8 +356,18 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	var _changeLgLink = function() {
-		// STF.Views.Statics.Header.changeLgLink( STF.Router.ALT_LANG_URL );
+	var _manageLangLinks = function() {
+		_changeLangLinks.call( this, STF.Views.Statics.Footer.$footerLgLink );
+	};
+	
+	
+	var _changeLangLinks = function( $links ) {
+		var $link;
+		
+		for ( var i = 0; i < $links.length; i++ ) {
+			$link		= $links[ i ];
+			$link.href	= STF.Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
+		}
 	};
 	
 	
