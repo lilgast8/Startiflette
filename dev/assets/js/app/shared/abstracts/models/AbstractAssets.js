@@ -77,48 +77,13 @@ STF.AbstractAssets = ( function( window ) {
 			assetsList = aAssets[ aListIds[ i ] ];
 			
 			var fileId;
-			
-			// console.log( assetsList, assetsList.constructor.name );
-			// console.log( Object.prototype.toString.call( assetsList ) );
 			if ( assetsList !== undefined )
 				for ( var id in assetsList ) {
-					// console.log( typeof assetsList );
-					// console.log( assetsList.toString() );
-					// console.log( assetsList.toType() );
-					// console.log( Object.toType( assetsList ) );
-					// console.log( getType( assetsList ) );
-					// console.log( assetsList.STF_toType() );
-					// console.log( Object.prototype.toString.call( assetsList ) );
-					// console.log( Array.isArray( assetsList ) );
-					// console.log( assetsList.constructor.name );
-					// fileId = type == 'img' ? null : id;
-					// fileId = assetsList.constructor.name == 'Object' ? id : null;
 					fileId = getType( assetsList ) === 'object' ? id : null;
-					// console.log( fileId );
 					
 					_addAsset.call( this, aAssetsToLoad, fileId, assetsList[ id ] );
 				}
 		}
-		
-		
-		/*
-		for ( var i = 0; i < aJsonListIds.length; i++ ) {
-			jsonList = this.aJson[ aJsonListIds[ i ] ];
-			
-			if ( jsonList !== undefined ) {
-				
-				for ( var id in jsonList ) {
-					
-					aAssetsToLoad.push( {
-						id:		id,
-						src:	jsonList[ id ]
-					} );
-					
-				}
-				
-			}
-		}
-		*/
 		
 		
 		return aAssetsToLoad;
