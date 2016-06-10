@@ -177,8 +177,18 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _onFileLoad = function( e ) {
-		if ( e.item.type == 'json' )
+		if ( e.item.type == 'image' )
+			_onImageLoaded.call( this, e );
+		else if ( e.item.type == 'json' )
 			this.assetsModel.setJsonData( e.item.id, e.result );
+	};
+	
+	
+	var _onImageLoaded = function( e ) {
+		var $img = $( 'img' ).filter( '[ data-src="' + e.item.src + '" ]' );
+		
+		if ( $img.length > 0 )
+			$img[0].src	= e.item.src;
 	};
 	
 	
