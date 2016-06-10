@@ -377,6 +377,7 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _manageLangLinks = function() {
+		_changeLangLinks.call( this, STF.Views.Statics.Header.$headerLgLink );
 		_changeLangLinks.call( this, STF.Views.Statics.Footer.$footerLgLink );
 	};
 	
