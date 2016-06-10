@@ -13,8 +13,11 @@
 .footer-lang {}
 .footer-lang-link {}
 
-.footer-link { color: $alt4;
-	&.active { color: $alt3; }
+.footer-link {
+	color: $alt4;
+	@include transition(all 0.5s $easeOutQuart); 
+	
+	&:hover, &.active { color: $alt3; }
 }
 
 

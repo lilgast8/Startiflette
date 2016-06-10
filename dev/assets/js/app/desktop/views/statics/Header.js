@@ -18,14 +18,25 @@ STF.Views.Statics.Header = ( function( window ) {
 	
 	
 	Header.prototype.initDOM = function() {
-		this.$header	= $( document.getElementById( 'header' ) );
-		this.$menu		= $( document.getElementById( 'menu' ) );
-		this.$menuLink	= this.$menu.find( '.menu-link' );
+		this.$header		= $( document.getElementById( 'header' ) );
+		this.$menu			= $( document.getElementById( 'menu' ) );
+		this.$menuLink		= this.$menu.find( '.menu-link' );
 	};
 	
 	
 	Header.prototype.bindEvents = function() {
 		this.$menuLink.on( 'click', $.proxy( this.changeUrl, this ) );
+	};
+	
+	
+	Header.prototype.updateMenuLinks = function( pageId ) {
+		var $linkToInactivate	= this.$menuLink.filter( '.active' );
+		var $linkToActivate		= this.$menuLink.filter( '[ data-link-id="' + pageId + '" ]' );
+		
+		if ( $linkToInactivate.length > 0 )
+			removeClass( $linkToInactivate[0], 'active' );
+		if ( $linkToActivate.length )
+			addClass( $linkToActivate[0], 'active' );
 	};
 	
 	

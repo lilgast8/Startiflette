@@ -68,6 +68,7 @@ STF.PagesController = ( function( window ) {
 	
 	PagesController.prototype.initFirstPage = function() {
 		_setPageInfos.call( this );
+		_manageMenuLinks.call( this );
 		_loadAssets.call( this );
 	};
 	
@@ -144,7 +145,6 @@ STF.PagesController = ( function( window ) {
 	
 	
 	PagesController.prototype.changePage = function( url ) {
-		// _updateMenuLinks.call( this );
 		STF.Router.updateGA();
 		
 		// if ( STF.Lang.MULTI_LANG )
@@ -195,8 +195,6 @@ STF.PagesController = ( function( window ) {
 	var _onAssetsLoaded = function() {
 		// first load
 		if ( this.isFirstLoad ) {
-			_updateMenuLinks.call( this );
-			
 			this.page.init();
 			
 			this.page.buildEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
@@ -326,6 +324,7 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _showPage = function() {
+		_manageMenuLinks.call( this );
 		_manageLangLinks.call( this );
 		
 		this.page.init();
@@ -360,9 +359,20 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	var _updateMenuLinks = function() {
-		// STF.Views.Statics.Header.updateMenuLinks( STF.Router.URL.full );
-		// STF.Views.Statics.Footer.updateMenuLinks( STF.Router.URL.full );
+	var _manageMenuLinks = function() {
+		_updateMenuLinks.call( this, STF.Views.Statics.Header.$menuLink );
+		_updateMenuLinks.call( this, STF.Views.Statics.Footer.$footerLink );
+	};
+	
+	
+	var _updateMenuLinks = function( $link ) {
+		var $linkToInactivate	= $link.filter( '.active' );
+		var $linkToActivate		= $link.filter( '[ data-link-id="' + this.pageInfos.id + '" ]' );
+		
+		if ( $linkToInactivate.length > 0 )
+			removeClass( $linkToInactivate[0], 'active' );
+		if ( $linkToActivate.length )
+			addClass( $linkToActivate[0], 'active' );
 	};
 	
 	
