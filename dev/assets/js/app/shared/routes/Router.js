@@ -184,7 +184,7 @@ STF.Router = ( function( window ) {
 			lang = STF.Lang.ALL_LANG[ i ];
 			
 			if ( lang != STF.Lang.LANG )
-				this.ALT_LANG_URL[ lang ] = $page.getAttribute( 'data-lang-' + lang );
+				this.ALT_LANG_URL[ lang ] = $page[0].getAttribute( 'data-lang-' + lang );
 		}
 	};
 	

@@ -91,11 +91,11 @@ STF.AbstractAssets = ( function( window ) {
 	
 	
 	var _addDynamicAssetsToLoad = function( isFirstLoad, aAssetsToLoad ) {
-		var $dynamicImgs = isFirstLoad ? STF.MainView.$pageCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD ) :
-										 $( STF.PagesController.data ).find( STF.PagesController.DYNAMIC_IMG_TO_LOAD );
+		var $dynamicImgs = isFirstLoad ? STF.MainView.$mainCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD ) :
+										 STF.MainView.$pageCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD );
 		
 		for ( var i = 0; i < $dynamicImgs.length; i++ )
-			_addAsset.call( this, aAssetsToLoad, null, $dynamicImgs[ i ].src );
+			_addAsset.call( this, aAssetsToLoad, null, $dynamicImgs[ i ].getAttribute( 'data-src' ) );
 		
 		
 		return aAssetsToLoad;

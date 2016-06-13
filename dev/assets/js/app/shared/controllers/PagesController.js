@@ -12,7 +12,7 @@ STF.PagesController = ( function( window ) {
 		this.prevPageInfos			= {};
 		this.pageInfos				= {};
 		
-		this.LOADING_MODE			= 'allStatic'; // can be allStatic, byPageStatic, byPageDynamic
+		this.LOADING_MODE			= 'byPageStatic'; // can be allStatic, byPageStatic, byPageDynamic
 		this.DYNAMIC_IMG_TO_LOAD	= 'img'; // used when LOADING_MODE == 'byPageDynamic', can be img.class for selective preload
 		this.IS_HIDE_INIT			= true; // set to true if need a different behavior when hide loader on init
 		this.isFirstLoad			= true;
@@ -75,10 +75,9 @@ STF.PagesController = ( function( window ) {
 	
 	var _setPageInfos = function()
 	{
-		var $page	= $( document.getElementById( 'page' ) )[0];
-		var id		= $page.getAttribute( 'data-id' );
-		var title	= $page.getAttribute( 'data-title' );
-		
+		var $page	= $( document.getElementById( 'page' ) );
+		var id		= $page[0].getAttribute( 'data-id' );
+		var title	= $page[0].getAttribute( 'data-title' );
 		
 		this.prevPageInfos.id		= this.pageInfos.id;
 		this.prevPageInfos.title	= this.pageInfos.title;
@@ -90,30 +89,6 @@ STF.PagesController = ( function( window ) {
 		
 		STF.Router.setAltLangUrl( $page );
 	};
-	
-	
-	/*var _getAltUrl = function( $page ) {
-		// for ( var i = 0; i < STF.Lang.ALL_LANG.length; i++ ) {
-		// 	if (true) {}
-		// }
-		
-		// for ( var lang in STF.Lang.ALL_LANG ) {
-		var lang;
-		for ( var i = 0; i < STF.Lang.ALL_LANG.length; i++ ) {
-			lang = STF.Lang.ALL_LANG[ i ];
-			// console.log( lang );
-			
-			if ( lang != STF.Lang.LANG ) {
-				// $page[0].getAttribute( 'data-lang-' + lang );
-				
-				STF.Router.ALT_LANG_URL[ lang ] = $page.getAttribute( 'data-lang-' + lang );
-			}
-		}
-		
-		console.log( STF.Router.ALT_LANG_URL );
-		
-		// data-lang-en
-	};*/
 	
 	
 	var _setPage = function() {
@@ -147,9 +122,6 @@ STF.PagesController = ( function( window ) {
 	PagesController.prototype.changePage = function( url ) {
 		STF.Router.updateGA();
 		
-		// if ( STF.Lang.MULTI_LANG )
-		// 	_changeLangLinks.call( this );
-		
 		_disablePageChange.call( this );
 		_initPageChangeValues.call( this );
 		
@@ -178,17 +150,19 @@ STF.PagesController = ( function( window ) {
 	
 	var _onFileLoad = function( e ) {
 		if ( e.item.type == 'image' )
-			_onImageLoaded.call( this, e );
+			_onImgLoaded.call( this, e );
 		else if ( e.item.type == 'json' )
 			this.assetsModel.setJsonData( e.item.id, e.result );
 	};
 	
 	
-	var _onImageLoaded = function( e ) {
+	var _onImgLoaded = function( e ) {
 		var $img = $( 'img' ).filter( '[ data-src="' + e.item.src + '" ]' );
 		
-		if ( $img.length > 0 )
+		if ( $img.length > 0 ) {
 			$img[0].src	= e.item.src;
+			$img[0].offsetHeight; // jshint ignore:line
+		}
 	};
 	
 	
@@ -316,10 +290,26 @@ STF.PagesController = ( function( window ) {
 		
 		_setPageInfos.call( this );
 		
-		if ( this. LOADING_MODE != 'allStatic' )
-			_loadAssets.call( this );
+		if ( this. LOADING_MODE != 'allStatic' ) {
+			_resetImgs.call( this );
+			setTimeout( function() { _loadAssets.call( this ); }.bind( this ), 0 );
+		}
 		
 		this.data = null;
+	};
+	
+	
+	var _resetImgs = function() {
+		var $imgs = STF.MainView.$pageCont.find( 'img' );
+		var $img, src;
+		
+		for ( var i = 0; i < $imgs.length; i++ ) {
+			$img		= $imgs[i];
+			src			= $img.src;
+			
+			$img.src	= '';
+			$img.setAttribute( 'data-src' , src );
+		}
 	};
 	
 	
