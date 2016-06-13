@@ -307,7 +307,7 @@ STF.PagesController = ( function( window ) {
 			$img		= $imgs[i];
 			src			= $img.src;
 			
-			$img.src	= '';
+			$img.src	= STF.Path.URL.img + 'bgs/pattern-transparent.png';
 			$img.setAttribute( 'data-src' , src );
 		}
 	};
