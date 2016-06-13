@@ -44,6 +44,14 @@ STF.AbstractView = ( function( window ) {
 	
 	AbstractView.prototype.initEl = function() {
 		// console.log( 'AbstractView.initEl() — ', this.constructor.name );
+		
+		// console.log( this.$page );
+		if ( STF.PagesController.HAS_LAZYLOAD && this.$page !== undefined ) {
+			// console.log( 'init lazyloading!', this.constructor.name );
+			this.lazyloader = new STF.LazyLoader( this.$page );
+			// console.log( this.lazyloader );
+			// this.lazyloader.init();
+		}
 	};
 	
 	

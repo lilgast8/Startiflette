@@ -43,7 +43,7 @@ STF.Models.Assets = ( function( window ) {
 			'about': [
 				/* temp */
 				STF.Path.URL.img + 'temp/about-1.jpg',
-				STF.Path.URL.img + 'temp/about-2.jpg',
+				// STF.Path.URL.img + 'temp/about-2.jpg',
 			],
 			
 			'projects': [

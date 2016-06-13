@@ -12,8 +12,10 @@ STF.PagesController = ( function( window ) {
 		this.prevPageInfos			= {};
 		this.pageInfos				= {};
 		
-		this.LOADING_MODE			= 'byPageStatic'; // can be allStatic, byPageStatic, byPageDynamic
+		this.LOADING_MODE			= 'byPageDynamic'; // can be allStatic, byPageStatic, byPageDynamic
 		this.DYNAMIC_IMG_TO_LOAD	= 'img'; // used when LOADING_MODE == 'byPageDynamic', can be img.class for selective preload
+		this.HAS_LAZYLOAD			= true;
+		this.IMG_TO_LAZYLOAD		= 'img-lazyload'; // className used to select specific images to lazyload when HAS_LAZYLOAD == true
 		this.IS_HIDE_INIT			= true; // set to true if need a different behavior when hide loader on init
 		this.isFirstLoad			= true;
 		this.isPageChange			= true;

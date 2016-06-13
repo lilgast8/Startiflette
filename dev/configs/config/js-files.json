@@ -44,6 +44,7 @@
 			"app/desktop/models/Assets.js",
 			
 			"app/shared/loaders/Loader.js",
+			"app/shared/loaders/LazyLoader.js",
 			
 			"app/shared/utils/Global.js",
 			"app/shared/utils/DOM.js",
