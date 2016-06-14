@@ -95,12 +95,12 @@ STF.AbstractAssets = ( function( window ) {
 										 STF.MainView.$pageCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD );
 		
 		for ( var i = 0; i < $dynamicImgs.length; i++ ) {
-			if ( !STF.PagesController.HAS_LAZYLOAD ||
-				  STF.PagesController.HAS_LAZYLOAD && !hasClass( $dynamicImgs[ i ], STF.PagesController.IMG_TO_LAZYLOAD ) ) {
-				console.log( 'hasClass:', hasClass( $dynamicImgs[ i ], STF.PagesController.IMG_TO_LAZYLOAD ) );
+			
+			// if ( !STF.PagesController.HAS_LAZYLOAD ||
+			// 	  STF.PagesController.HAS_LAZYLOAD && $dynamicImgs[ i ].getAttribute( 'data-lazyload' ) != 'true' )
+			if ( $dynamicImgs[ i ].getAttribute( 'data-lazyload' ) != 'true' )
 				_addAsset.call( this, aAssetsToLoad, null, $dynamicImgs[ i ].getAttribute( 'data-src' ) );
-			}
-			// _addAsset.call( this, aAssetsToLoad, null, $dynamicImgs[ i ].getAttribute( 'data-src' ) );
+			
 		}
 		
 		

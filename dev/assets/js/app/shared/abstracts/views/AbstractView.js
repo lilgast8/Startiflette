@@ -45,8 +45,9 @@ STF.AbstractView = ( function( window ) {
 	AbstractView.prototype.initEl = function() {
 		// console.log( 'AbstractView.initEl() — ', this.constructor.name );
 		
-		if ( STF.PagesController.HAS_LAZYLOAD && this.$page !== undefined )
-			this.lazyloader = new STF.LazyLoader( this.$page );
+		// if ( STF.PagesController.HAS_LAZYLOAD && this.$page !== undefined )
+		if ( this.$page !== undefined )
+			this.lazyloader = new STF.LazyLoader( this.$page, 'img-lazyload', 1 );
 	};
 	
 	
@@ -99,7 +100,8 @@ STF.AbstractView = ( function( window ) {
 	AbstractView.prototype.destroy = function() {
 		this.isInit = false;
 		
-		if ( STF.PagesController.HAS_LAZYLOAD && this.$page !== undefined )
+		// if ( STF.PagesController.HAS_LAZYLOAD && this.$page !== undefined )
+		if ( this.$page !== undefined )
 			this.lazyloader.destroy();
 		
 		this.unbindEvents();

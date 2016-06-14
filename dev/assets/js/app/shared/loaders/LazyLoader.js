@@ -4,12 +4,14 @@ STF.LazyLoader = ( function( window ) {
 	'use strict';
 	
 	
-	function LazyLoader( $page ) {
+	function LazyLoader( $container, className, nbImgToLoad ) {
 		STF.EventDispatcher.call( this );
 		
-		this.$page			= $page;
+		this.$container		= $container;
 		
-		this.NB_IMG_TO_LOAD	= 1;
+		this.CLASS_NAME		= className;
+		this.NB_IMG_TO_LOAD	= nbImgToLoad;
+		
 		this.posLoadedImg	= 0;
 		this.imgToLazyload	= [];
 		this.loaderImg		= null;
@@ -32,7 +34,9 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	var _initDOM = function() {
-		this.$imgToLazyload	= this.$page.find( 'img.' + STF.PagesController.IMG_TO_LAZYLOAD );
+		// this.$imgToLazyload	= this.$container.find( 'img.' + STF.PagesController.IMG_TO_LAZYLOAD );
+		this.$imgToLazyload	= this.$container.find( 'img.' + this.CLASS_NAME );
+		console.log( this.$imgToLazyload.length );
 	};
 	
 	
@@ -70,11 +74,12 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	LazyLoader.prototype.startLazyload = function() {
+		console.log( 'startLazyload' );
 		var imgToLazyload = this.imgToLazyload.slice( this.posLoadedImg, this.posLoadedImg + this.NB_IMG_TO_LOAD );
 		
-		setTimeout( function() {
+		// setTimeout( function() {
 			this.loaderImg.startLoad( imgToLazyload );
-		}.bind( this ), 1000 );
+		// }.bind( this ), 1000 );
 	};
 	
 	
@@ -99,7 +104,7 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	LazyLoader.prototype.onLazyloadCompleted = function() {
-		// console.log( '_onLazyloadCompleted:', this.$page[0].getAttribute( 'data-id' ) );
+		// console.log( '_onLazyloadCompleted:', this.$container );
 	};
 	
 	
