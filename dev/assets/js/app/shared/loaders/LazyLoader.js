@@ -4,13 +4,12 @@ STF.LazyLoader = ( function( window ) {
 	'use strict';
 	
 	
-	function LazyLoader( $container, className, nbImgToLoad ) {
+	function LazyLoader( $container, className, stackSize ) {
 		STF.EventDispatcher.call( this );
 		
 		this.$container		= $container;
-		
 		this.CLASS_NAME		= className;
-		this.NB_IMG_TO_LOAD	= nbImgToLoad;
+		this.STACK_SIZE		= stackSize; // number of images loaded at each loading wave
 		
 		this.posLoadedImg	= 0;
 		this.imgToLazyload	= [];
@@ -72,7 +71,7 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	LazyLoader.prototype.startLazyload = function() {
-		var imgToLazyload = this.imgToLazyload.slice( this.posLoadedImg, this.posLoadedImg + this.NB_IMG_TO_LOAD );
+		var imgToLazyload = this.imgToLazyload.slice( this.posLoadedImg, this.posLoadedImg + this.STACK_SIZE );
 		
 		// setTimeout( function() {
 			this.loaderImg.startLoad( imgToLazyload );
@@ -91,7 +90,7 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	LazyLoader.prototype.onImgLoadingComplete = function() {
-		this.posLoadedImg += this.NB_IMG_TO_LOAD;
+		this.posLoadedImg += this.STACK_SIZE;
 		
 		if ( this.posLoadedImg < this.imgToLazyload.length )
 			this.startLazyload.call( this );
