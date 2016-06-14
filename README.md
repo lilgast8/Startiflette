@@ -104,3 +104,11 @@ Made the configurations in the `dev/configs/config/config.json` file.
 ## Routes
 
 * error-404 & home must be defined *— TO COMPLETE*
+
+
+
+## Lazyloading
+
+To create a new lazyloader use: `new STF.LazyLoader( $container, className, stackSize )`
+
+You need to add `data-lazyload="true"` on the image `<img>` tag you want to lazyload. By using it you prevent to add the image on the main loader when the `LOADING_MODE = 'byPageDynamic'`.
