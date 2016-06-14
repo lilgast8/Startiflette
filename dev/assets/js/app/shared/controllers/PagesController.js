@@ -157,11 +157,11 @@ STF.PagesController = ( function( window ) {
 	
 	
 	var _onImgLoaded = function( e ) {
-		var $img = $( 'img' ).filter( '[ data-src="' + e.item.src + '" ]' );
+		var $imgs = $( 'img' ).filter( '[ data-src="' + e.item.src + '" ]' );
 		
-		if ( $img.length > 0 ) {
-			$img[0].src	= e.item.src;
-			$img[0].offsetHeight; // jshint ignore:line
+		for ( var i = 0; i < $imgs.length; i++ ) {
+			$imgs[ i ].src	= e.item.src;
+			$imgs[ i ].offsetHeight; // jshint ignore:line
 		}
 	};
 	
