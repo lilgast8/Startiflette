@@ -94,14 +94,9 @@ STF.AbstractAssets = ( function( window ) {
 		var $dynamicImgs = isFirstLoad ? STF.MainView.$mainCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD ) :
 										 STF.MainView.$pageCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD );
 		
-		for ( var i = 0; i < $dynamicImgs.length; i++ ) {
-			
-			// if ( !STF.PagesController.HAS_LAZYLOAD ||
-			// 	  STF.PagesController.HAS_LAZYLOAD && $dynamicImgs[ i ].getAttribute( 'data-lazyload' ) != 'true' )
+		for ( var i = 0; i < $dynamicImgs.length; i++ )
 			if ( $dynamicImgs[ i ].getAttribute( 'data-lazyload' ) != 'true' )
 				_addAsset.call( this, aAssetsToLoad, null, $dynamicImgs[ i ].getAttribute( 'data-src' ) );
-			
-		}
 		
 		
 		return aAssetsToLoad;

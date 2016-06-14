@@ -34,9 +34,7 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	var _initDOM = function() {
-		// this.$imgToLazyload	= this.$container.find( 'img.' + STF.PagesController.IMG_TO_LAZYLOAD );
 		this.$imgToLazyload	= this.$container.find( 'img.' + this.CLASS_NAME );
-		console.log( this.$imgToLazyload.length );
 	};
 	
 	
@@ -74,7 +72,6 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	LazyLoader.prototype.startLazyload = function() {
-		console.log( 'startLazyload' );
 		var imgToLazyload = this.imgToLazyload.slice( this.posLoadedImg, this.posLoadedImg + this.NB_IMG_TO_LOAD );
 		
 		// setTimeout( function() {
