@@ -92,12 +92,13 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	var _setPage = function() {
 		if ( this.pages[ this.pageInfos.id ] === undefined) {
-			console.error( 'PagesController error: Need to create a view for the "' + this.pageInfos.id + '" ID, then set the view in the PagesController.pages object.' );
+			if ( STF.Config.ENV != 'prod' )
+				console.log( 'PagesController: no specific page view for the "' + this.pageInfos.id + '" ID. If you need one, create it and then set the view in the PagesController.pages object.' );
 			
-			return;
+			this.page = new STF.AbstractView();
 		}
-		
-		this.page = new this.pages[ this.pageInfos.id ]();
+		else
+			this.page = new this.pages[ this.pageInfos.id ]();
 	};
 	
 	
