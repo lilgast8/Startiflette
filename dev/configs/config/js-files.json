@@ -53,7 +53,8 @@
 			
 			"app/desktop/views/MainView.js",
 			
-			"app/shared/controllers/PagesController.js",
+			"app/shared/abstracts/controllers/AbstractPagesController.js",
+			"app/desktop/controllers/PagesController.js",
 			
 			"app/desktop/views/statics/MainLoader.js",
 			"app/desktop/views/statics/Header.js",

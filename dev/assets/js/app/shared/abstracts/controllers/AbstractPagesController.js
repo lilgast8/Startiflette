@@ -1,23 +1,23 @@
 
 
-STF.PagesController = ( function( window ) {
+STF.AbstractPagesController = ( function( window ) {
 	'use strict';
 	
 	
-	function PagesController() {
+	function AbstractPagesController() {
 		STF.EventDispatcher.call( this );
+		
+		this.LOADING_MODE			= 'byPageStatic'; // can be allStatic, byPageStatic, byPageDynamic
+		this.DYNAMIC_IMG_TO_LOAD	= 'img'; // used when LOADING_MODE == 'byPageDynamic', can be img.class for selective preload
+		this.IS_HIDE_INIT			= true; // set to true if need a different behavior when hide loader on init
 		
 		this.pages					= {};
 		this.page					= null;
 		this.prevPageInfos			= {};
 		this.pageInfos				= {};
 		
-		this.LOADING_MODE			= 'byPageDynamic'; // can be allStatic, byPageStatic, byPageDynamic
-		this.DYNAMIC_IMG_TO_LOAD	= 'img'; // used when LOADING_MODE == 'byPageDynamic', can be img.class for selective preload
-		this.IS_HIDE_INIT			= true; // set to true if need a different behavior when hide loader on init
 		this.isFirstLoad			= true;
 		this.isPageChange			= true;
-		
 		this.isContentLoaded		= false;
 		this.isAssetsLoaded			= false;
 		this.isPageHidden			= false;
@@ -29,18 +29,18 @@ STF.PagesController = ( function( window ) {
 	}
 	
 	
-	PagesController.prototype				= Object.create( STF.EventDispatcher.prototype );
-	PagesController.prototype.constructor	= PagesController;
+	AbstractPagesController.prototype				= Object.create( STF.EventDispatcher.prototype );
+	AbstractPagesController.prototype.constructor	= AbstractPagesController;
 	
 	
-	PagesController.prototype.init = function() {
-		_initPages.call( this );
+	AbstractPagesController.prototype.init = function() {
+		this.initPages();
 		_initEl.call( this );
 		_bindEvents.call( this );
 	};
 	
 	
-	var _initPages = function() {
+	AbstractPagesController.prototype.initPages = function() {
 		this.pages = {
 			'error-404':		STF.Views.Pages.Error404,
 			'legal-notices':	STF.Views.Pages.LegalNotices,
@@ -66,15 +66,14 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	PagesController.prototype.initFirstPage = function() {
+	AbstractPagesController.prototype.initFirstPage = function() {
 		_setPageInfos.call( this );
 		_manageMenuLinks.call( this );
 		_loadAssets.call( this );
 	};
 	
 	
-	var _setPageInfos = function()
-	{
+	var _setPageInfos = function() {
 		var $page	= $( document.getElementById( 'page' ) );
 		var id		= $page[0].getAttribute( 'data-id' );
 		var title	= $page[0].getAttribute( 'data-title' );
@@ -119,35 +118,6 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	PagesController.prototype.changePage = function( url ) {
-		STF.Router.updateGA();
-		
-		_disablePageChange.call( this );
-		_initPageChangeValues.call( this );
-		
-		if ( this.LOADING_MODE == 'allStatic' )
-			this.isAssetsLoaded = true;
-		
-		_loadContent.call( this, url );
-		
-		this.page.buildEvt( this.page.E.HIDDEN, _onPageHidden.bind( this ) );
-		this.page.hide();
-		
-		this.mainLoader.buildEvt( this.mainLoader.E.SHOWN, _onMainLoaderShown.bind( this ) );
-		this.mainLoader.show();
-	};
-	
-	
-	PagesController.prototype.changeSearch = function() {
-		this.page.updateSearch();
-	};
-	
-	
-	PagesController.prototype.changeHash = function() {
-		this.page.updateHash();
-	};
-	
-	
 	var _onFileLoad = function( e ) {
 		if ( e.item.type == 'image' )
 			_onImgLoaded.call( this, e );
@@ -171,10 +141,10 @@ STF.PagesController = ( function( window ) {
 		if ( this.isFirstLoad ) {
 			this.page.init();
 			
-			this.page.buildEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
+			this.page.buildEvt( this.page.E.SHOWN, this.onPageShown.bind( this ) );
 			this.page.show();
 			
-			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
+			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden.bind( this ) );
 			
 			if ( this.IS_HIDE_INIT )
 				this.mainLoader.hideInit();
@@ -188,8 +158,33 @@ STF.PagesController = ( function( window ) {
 		else if ( !this.isFirstLoad && ( this.LOADING_MODE == 'byPageStatic' || this.LOADING_MODE == 'byPageDynamic' ) ) {
 			this.isAssetsLoaded = true;
 			
-			_checkPageHiding.call( this );
+			this.checkPageHiding();
 		}
+	};
+	
+	
+	AbstractPagesController.prototype.changePage = function( url ) {
+		STF.Router.updateGA();
+		
+		_disablePageChange.call( this );
+		_initPageChangeValues.call( this );
+		
+		if ( this.LOADING_MODE == 'allStatic' )
+			this.isAssetsLoaded = true;
+		
+		_loadContent.call( this, url );
+		
+		this.managePageHidingTransitions();
+	};
+	
+	
+	AbstractPagesController.prototype.changeSearch = function() {
+		this.page.updateSearch();
+	};
+	
+	
+	AbstractPagesController.prototype.changeHash = function() {
+		this.page.updateHash();
 	};
 	
 	
@@ -219,7 +214,7 @@ STF.PagesController = ( function( window ) {
 		this.data = data;
 		
 		this.isContentLoaded = true;
-		_checkPageHiding.call( this );
+		this.checkPageHiding();
 	};
 	
 	
@@ -239,13 +234,22 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	var _onPageHidden = function() {
-		this.page.destroyEvt( this.page.E.HIDDEN, _onPageHidden.bind( this ) );
+	AbstractPagesController.prototype.managePageHidingTransitions = function() {
+		this.page.buildEvt( this.page.E.HIDDEN, this.onPageHidden.bind( this ) );
+		this.page.hide();
+		
+		this.mainLoader.buildEvt( this.mainLoader.E.SHOWN, this.onMainLoaderShown.bind( this ) );
+		this.mainLoader.show();
+	};
+	
+	
+	AbstractPagesController.prototype.onPageHidden = function() {
+		this.page.destroyEvt( this.page.E.HIDDEN, this.onPageHidden.bind( this ) );
 		
 		_destroyPage.call( this );
 		
 		this.isPageHidden = true;
-		_checkPageHiding.call( this );
+		this.checkPageHiding();
 	};
 	
 	
@@ -255,37 +259,37 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	var _onMainLoaderShown = function() {
-		this.mainLoader.destroyEvt( this.mainLoader.E.SHOWN, _onMainLoaderShown.bind( this ) );
+	AbstractPagesController.prototype.onMainLoaderShown = function() {
+		this.mainLoader.destroyEvt( this.mainLoader.E.SHOWN, this.onMainLoaderShown.bind( this ) );
 		
 		this.isMainLoaderShown = true;
-		_checkPageHiding.call( this );
+		this.checkPageHiding();
 	};
 	
 	
-	var _checkPageHiding = function() {
+	AbstractPagesController.prototype.checkPageHiding = function() {
 		if ( this. LOADING_MODE == 'allStatic' &&
 			 this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
 			
-			_setContent.call( this );
-			_showPage.call( this );
+			this.setContent();
+			this.showPage();
 		}
 		
 		else if ( ( this. LOADING_MODE == 'byPageStatic' || this. LOADING_MODE == 'byPageDynamic' ) &&
 				  this.isContentLoaded && !this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
 			
-			_setContent.call( this );
+			this.setContent();
 		}
 		
 		else if ( ( this. LOADING_MODE == 'byPageStatic' || this. LOADING_MODE == 'byPageDynamic' ) &&
 				  this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
 			
-			_showPage.call( this );
+			this.showPage();
 		}
 	};
 	
 	
-	var _setContent = function() {
+	AbstractPagesController.prototype.setContent = function() {
 		STF.MainView.$pageCont[0].innerHTML = this.data;
 		
 		_setPageInfos.call( this );
@@ -313,39 +317,44 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	var _showPage = function() {
+	AbstractPagesController.prototype.showPage = function() {
 		_manageMenuLinks.call( this );
 		_manageLangLinks.call( this );
 		
 		this.page.init();
 		
-		this.page.buildEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
+		this.managePageShowingTransitions();
+	};
+	
+	
+	AbstractPagesController.prototype.managePageShowingTransitions = function() {
+		this.page.buildEvt( this.page.E.SHOWN, this.onPageShown.bind( this ) );
 		this.page.show();
 		
-		this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
+		this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden.bind( this ) );
 		this.mainLoader.hide();
 	};
 	
 	
-	var _onPageShown = function() {
-		this.page.destroyEvt( this.page.E.SHOWN, _onPageShown.bind( this ) );
+	AbstractPagesController.prototype.onPageShown = function() {
+		this.page.destroyEvt( this.page.E.SHOWN, this.onPageShown.bind( this ) );
 		
 		this.isPageShown = true;
-		_checkPageShowing.call( this );
+		this.checkPageShowing();
 	};
 	
 	
-	var _onMainLoaderHidden = function() {
-		this.mainLoader.destroyEvt( this.mainLoader.E.HIDDEN, _onMainLoaderHidden.bind( this ) );
+	AbstractPagesController.prototype.onMainLoaderHidden = function() {
+		this.mainLoader.destroyEvt( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden.bind( this ) );
 		
 		this.isMainLoaderHidden = true;
-		_checkPageShowing.call( this );
+		this.checkPageShowing();
 	};
 	
 	
-	var _checkPageShowing = function() {
+	AbstractPagesController.prototype.checkPageShowing = function() {
 		if ( this.isPageShown && this.isMainLoaderHidden )
-			_enablePageChange.call( this );
+			this.enablePageChange();
 	};
 	
 	
@@ -382,7 +391,7 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	var _enablePageChange = function() {
+	AbstractPagesController.prototype.enablePageChange = function() {
 		this.isPageChange = false;
 		
 		if ( this.isFirstLoad )
@@ -397,7 +406,7 @@ STF.PagesController = ( function( window ) {
 	};
 	
 	
-	return new PagesController();
+	return AbstractPagesController;
 	
 	
 } ) ( window );
