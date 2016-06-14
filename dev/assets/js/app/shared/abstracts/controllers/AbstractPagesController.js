@@ -45,7 +45,7 @@ STF.AbstractPagesController = ( function( window ) {
 			'error-404':		STF.Views.Pages.Error404,
 			'legal-notices':	STF.Views.Pages.LegalNotices,
 			'home':				STF.Views.Pages.Home,
-			'about':			STF.Views.Pages.About,
+			// 'about':			STF.Views.Pages.About,
 			'projects':			STF.Views.Pages.Projects,
 			'project':			STF.Views.Pages.Project,
 		};
