@@ -91,20 +91,16 @@ If, for some reasons, you need or want to execute a task separately, here is the
 Made the configurations in the `dev/configs/config/config.json` file.
 
 * ENV: @type {string}
-* BASE_URL_DEV: @type {string}
-* BASE_URL_PREPROD: @type {string}
-* BASE_URL_PROD: @type {string}
-* BASE_URL_PROD_ALT: @type {string}
+* ENVS: @type {object}, containt fallbackresource, base_url & base_url_cms
 * ROUTES_FILES: @type {array of string} list of json files used for routing management
 * ALL_LANG: @type {array of string} list of languages, the first one will be the default language
-* HAS_LANG_LANDING: @type {boolean}
 * HAS_MOBILE_VERSION: @type {boolean}
 * FORCE_DEVICE: @type {boolean or string} can be false, "desktop", "tablet" or "mobile"
-* HAS_AJAX: @type {boolean}
-* GA_ID: @type {object} trackerName: gaID, default tracker name is "null"
+* GA_ID: @type {object} "trackerName": "gaID", default tracker name is "null"
+* CREDITS: @type {object} used to show credits console
 
 
 
 ## Routes
 
-* error404 & home must be defined *— TO COMPLETE*
+* error-404 & home must be defined *— TO COMPLETE*
