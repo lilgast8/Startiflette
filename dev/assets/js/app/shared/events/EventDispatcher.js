@@ -11,6 +11,9 @@ STF.EventDispatcher = ( function( window ) {
 	
 	
 	EventDispatcher.prototype.buildEvt = function( name, fct, id ) {
+		id = id === undefined ? getConstructorName( this ).toLowerCase() : id;
+		console.log( '///--------///', getConstructorName( this ), ':', name, id );
+		
 		if ( name == 'resize' )
 			// console.log( '---> buildEvt:', this.constructor.name, ':', name, '/', this.e[ name ] );
 			console.log( '---> buildEvt:', this.constructor.name, ':', name );
@@ -62,7 +65,10 @@ STF.EventDispatcher = ( function( window ) {
 		
 		
 	EventDispatcher.prototype.destroyEvt = function( name, fct, id ) {
-		console.log( 'SLP', name );
+		id = id === undefined ? getConstructorName( this ).toLowerCase() : id;
+		
+		console.log( 'SLP', name, id );
+		
 		/*if ( name == 'resize' ) {
 			// console.log( 'destroyEvt', name );
 			// console.log( '--->', this.constructor.name, this.e[ name ]._bindings.length );
