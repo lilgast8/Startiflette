@@ -31,12 +31,23 @@ STF.Utils.Global = ( function( window ) {
 			if ( obj.hasOwnProperty( key ) )
 				size++;
 		
+		
 		return size;
 	};
 	
 	
 	window.getType = function( obj ) {
 		return ({}).toString.call( obj ).match( /\s([a-z|A-Z]+)/ )[1].toLowerCase();
+	};
+	
+	
+	window.getConstructorName = function ( obj ) {
+		var string	= ( obj.prototype ? obj.prototype.constructor : obj.constructor ).toString();
+		var cname	= string.match( /function\s(\w*)/ )[1];
+		var aliases	= [ "", "anonymous", "Anonymous" ];
+		
+		
+		return aliases.indexOf( cname ) > -1 ? "Function" : cname;
 	};
 	
 	
