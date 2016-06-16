@@ -7,7 +7,9 @@ STF.AbstractView = ( function( window ) {
 	function AbstractView() {
 		STF.EventDispatcher.call( this );
 		
-		this.E = {
+		this.id		= getConstructorName( this ).toLowerCase();
+		
+		this.E		= {
 			SHOW:	'show',
 			SHOWN:	'shown',
 			HIDE:	'hide',
@@ -58,14 +60,14 @@ STF.AbstractView = ( function( window ) {
 	AbstractView.prototype.bindEvents = function() {
 		// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
 		
-		STF.MainView.buildEvt( STF.MainView.E.RESIZE, this.resize.bind( this ), this.constructor.name.toLowerCase() );
+		STF.MainView.buildEvt( STF.MainView.E.RESIZE, this.resize.bind( this ), this.id );
 	};
 	
 	
 	AbstractView.prototype.unbindEvents = function() {
 		// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
 		
-		STF.MainView.destroyEvt( STF.MainView.E.RESIZE, this.resize.bind( this ), this.constructor.name.toLowerCase() );
+		STF.MainView.destroyEvt( STF.MainView.E.RESIZE, this.resize.bind( this ), this.id );
 	};
 	
 	
