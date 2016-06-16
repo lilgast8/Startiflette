@@ -32,9 +32,9 @@ STF.Views.Pages.Home = ( function( window ) {
 	};
 	
 	
-	// Home.prototype.resize = function() {
-	// 	console.log( 'Home.resize' );
-	// };
+	/*Home.prototype.resize = function() {
+		
+	};*/
 	
 	
 	return Home;
