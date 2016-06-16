@@ -39,7 +39,7 @@ STF.AbstractMainLoader = ( function( window ) {
 	
 	
 	AbstractMainLoader.prototype.resize = function() {
-		
+		STF.AbstractView.prototype.resize.call( this );
 	};
 	
 	

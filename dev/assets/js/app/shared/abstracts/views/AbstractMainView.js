@@ -7,13 +7,13 @@ STF.AbstractMainView = ( function( window ) {
 	function AbstractMainView() {
 		STF.AbstractView.call( this );
 		
-		/*this.E = {
+		this.E = {
 			RESIZE:		'resize',
-			RAF:		'raf',
-			MOUSE_MOVE:	'mousemouse',
-			MOUSE_DOWN:	'mousedown',
-			MOUSE_UP:	'mouseup'
-		};*/
+			// RAF:		'raf',
+			// MOUSE_MOVE:	'mousemouse',
+			// MOUSE_DOWN:	'mousedown',
+			// MOUSE_UP:	'mouseup'
+		};
 		
 		this.bW		= null; // body width
 		this.bH		= null; // body height
@@ -75,11 +75,17 @@ STF.AbstractMainView = ( function( window ) {
 	
 	
 	var _resize = function() {
+		// console.log( 'RZ' );
+		
 		_setResizeProps.call( this );
 		
-		this.resizeStaticsViews();
+		// this.resizeStaticsViews();
 		
-		_resizePage.call( this );
+		// _resizePage.call( this );
+		
+		// console.log( 'RZ', this.e.resize );
+		if ( this.e.resize !== undefined )
+			this.dispatch( this.E.RESIZE );
 	};
 	
 	
@@ -100,11 +106,11 @@ STF.AbstractMainView = ( function( window ) {
 	};
 	
 	
-	AbstractMainView.prototype.resizeStaticsViews = function() {
+	/*AbstractMainView.prototype.resizeStaticsViews = function() {
 		STF.Views.Statics.MainLoader.resize();
 		STF.Views.Statics.Header.resize();
 		STF.Views.Statics.Footer.resize();
-	};
+	};*/
 	
 	
 	var _resizePage = function() {

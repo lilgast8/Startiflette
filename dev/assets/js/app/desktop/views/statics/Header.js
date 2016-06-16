@@ -26,6 +26,8 @@ STF.Views.Statics.Header = ( function( window ) {
 	
 	
 	Header.prototype.bindEvents = function() {
+		STF.AbstractView.prototype.bindEvents.call( this );
+		
 		this.$menuLink.on( 'click', $.proxy( this.changeUrl, this ) );
 	};
 	
