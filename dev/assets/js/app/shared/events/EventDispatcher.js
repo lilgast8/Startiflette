@@ -12,7 +12,7 @@ STF.EventDispatcher = ( function( window ) {
 	
 	EventDispatcher.prototype.buildEvt = function( name, fct ) {
 		this.e[ name ] = new signals.Signal();
-		this.e[ name ].add(fct);
+		this.e[ name ].add( fct );
 	};
 		
 		
