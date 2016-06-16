@@ -57,11 +57,15 @@ STF.AbstractView = ( function( window ) {
 	
 	AbstractView.prototype.bindEvents = function() {
 		// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
+		
+		STF.MainView.buildEvt( STF.MainView.E.RESIZE, this.resize.bind( this ), this.constructor.name.toLowerCase() );
 	};
 	
 	
 	AbstractView.prototype.unbindEvents = function() {
 		// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
+		
+		STF.MainView.destroyEvt( STF.MainView.E.RESIZE, this.resize.bind( this ), this.constructor.name.toLowerCase() );
 	};
 	
 	
@@ -87,7 +91,7 @@ STF.AbstractView = ( function( window ) {
 	
 	
 	AbstractView.prototype.resize = function() {
-		// console.log( 'AbstractView.resize() — ', this.constructor.name );
+		console.log( 'AbstractView.resize() — ', this.constructor.name );
 	};
 	
 	
