@@ -10,9 +10,11 @@ STF.AbstractMainView = ( function( window ) {
 		this.E = {
 			RESIZE:		'resize',
 			RAF:		'raf',
-			// MOUSE_MOVE:	'mousemouse',
-			// MOUSE_DOWN:	'mousedown',
-			// MOUSE_UP:	'mouseup'
+			MOUSE_MOVE:	'mousemove',
+			MOUSE_DOWN:	'mousedown',
+			MOUSE_UP:	'mouseup',
+			WINDOW_OUT:	'windowout',
+			WINDOW_IN:	'windowin',
 		};
 		
 		this.bW		= null; // body width
@@ -55,8 +57,7 @@ STF.AbstractMainView = ( function( window ) {
 	
 	AbstractMainView.prototype.bindEvents = function() {
 		this.$window.on( 'resize', $.proxy( _resize, this ) );
-		// this.$window.on( 'resize', $.proxy( this.resize, this ) );
-		TweenLite.ticker.addEventListener( 'tick', _raf, this );
+		// TweenLite.ticker.addEventListener( 'tick', _raf, this );
 		// this.$window.on( 'mousemove', $.proxy( _mouseMove, this ) );
 		// this.$window.on( 'mousedown', $.proxy( _mouseDown, this ) );
 		// this.$window.on( 'mouseup', $.proxy( _mouseUp, this ) );
@@ -166,30 +167,37 @@ STF.AbstractMainView = ( function( window ) {
 		this.mY = e.clientY;
 		
 		console.log( 'AbstractMainView _mouseMove()', this.mX, this.mY );
+		
+		if ( this.e.mousemove !== undefined )
+			this.dispatch( this.E.MOUSE_MOVE );
 	};
 	
 	
 	var _mouseDown = function() {
-		console.log( 'AbstractMainView _mouseDown()' );
+		if ( this.e.mousedown !== undefined )
+			this.dispatch( this.E.MOUSE_DOWN );
 	};
 	
 	
 	var _mouseUp = function() {
-		console.log( 'AbstractMainView _mouseUp()' );
+		if ( this.e.mouseup !== undefined )
+			this.dispatch( this.E.MOUSE_UP );
 	};
 	
 	
 	var _windowOut = function() {
 		this.isWindowFocused = false;
 		
-		console.log( 'AbstractMainView _windowOut', this.isWindowFocused );
+		if ( this.e.windowout !== undefined )
+			this.dispatch( this.E.WINDOW_OUT );
 	};
 	
 	
 	var _windowIn = function() {
 		this.isWindowFocused = true;
 		
-		console.log( 'AbstractMainView _windowOut', this.isWindowFocused );
+		if ( this.e.windowin !== undefined )
+			this.dispatch( this.E.WINDOW_IN );
 	};
 	
 	
