@@ -91,6 +91,12 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 			},
 			{
 				type:		'confirm',
+				name:		'createJS',
+				message:	gutil.colors.green( 'Create a specific JS view?' ),
+				default:	true
+			},
+			{
+				type:		'confirm',
 				name:		'createNewView',
 				message:	gutil.colors.green( 'Create the new view?' ),
 				default:	false
@@ -105,9 +111,10 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 			
 			var currentJsAppName			= helpers.getJsAppName();
 			
+			var viewType					= answers.viewType + 's';
 			var createContent				= answers.createContent;
 			var createController			= answers.createController;
-			var viewType					= answers.viewType + 's';
+			var createJS					= answers.createJS;
 			
 			var fileNameLowerCase			= answers.viewName.toLowerCase();
 			var fileNameUpperCase			= answers.viewName.toUpperCase();
@@ -165,7 +172,8 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 								[ controllerClassName ] );
 			
 			// js
-			manageFileCreation(	'ViewName.js',
+			if ( createJS )
+				manageFileCreation(	'ViewName.js',
 								viewType,
 								paths.env.dev + paths.assets.js.app[ options.device ].views[ viewType ] + jsFileName,
 								[ 'STF', 'ViewType', 'ViewName' ],
