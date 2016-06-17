@@ -321,6 +321,7 @@ STF.AbstractPagesController = ( function( window ) {
 	AbstractPagesController.prototype.showPage = function() {
 		_manageMenuLinks.call( this );
 		_manageLangLinks.call( this );
+		_updateTitle.call( this );
 		
 		this.page.init();
 		
@@ -389,6 +390,11 @@ STF.AbstractPagesController = ( function( window ) {
 			$link		= $links[ i ];
 			$link.href	= STF.Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
 		}
+	};
+	
+	
+	var _updateTitle = function() {
+		document.title = this.pageInfos.title;
 	};
 	
 	
