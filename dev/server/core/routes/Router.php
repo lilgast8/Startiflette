@@ -243,22 +243,6 @@ class Router
 	}
 	
 	
-	private function redirectToRoot()
-	{
-		header( 'Status: 301 Moved Permanently', true, 301 );
-		header( 'Location: ' . Path::$URL->base );
-		exit();
-	}
-	
-	
-	private function redirectToPageWithoutLang()
-	{
-		header( 'Status: 301 Moved Permanently', true, 301 );
-		header( 'Location: ' . Path::$URL->base . self::$URL->page );
-		exit();
-	}
-	
-	
 	private function setLinks()
 	{
 		self::$LINK = new stdClass();
