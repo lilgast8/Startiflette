@@ -30,7 +30,7 @@ STF.Models.Assets = ( function( window ) {
 				/* others */
 			],
 			
-			'error404': [
+			'error-404': [
 				/* temp */
 				STF.Path.URL.img + 'temp/404.jpg',
 			],
