@@ -152,10 +152,9 @@ class Router
 			$this->setIsHomepage( $page->id );
 			$this->setAltLangUrl( $page->urls );
 			
-			if ( $this->isHomepage && self::$URL->path == Lang::$DEFAULT_LANG )
-				$this->redirectToRoot();
-			else if ( !Lang::$MULTI_LANG && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG )
-				$this->redirectToPageWithoutLang();
+			if ( !Lang::$MULTI_LANG && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG ||
+				 $this->isHomepage && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG )
+				$this->redirectToFullPathWithoutLang();
 			
 			$this->pagesController->setPageInfos( $page->id, $page->urls );
 		}
@@ -230,6 +229,17 @@ class Router
 			}
 			
 		}
+	}
+	
+	
+	private function redirectToFullPathWithoutLang()
+	{
+		$fullPath = str_replace( Path::$URL->base . Lang::$LANG, '', self::$URL->full );
+		$fullPath = String::removeFirstSpecificChar( $fullPath, '/' );
+		
+		header( 'Status: 301 Moved Permanently', true, 301 );
+		header( 'Location: ' . Path::$URL->base . $fullPath );
+		exit();
 	}
 	
 	
