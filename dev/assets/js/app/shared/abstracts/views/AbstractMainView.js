@@ -9,7 +9,7 @@ STF.AbstractMainView = ( function( window ) {
 		
 		this.E = {
 			RESIZE:		'resize',
-			// RAF:		'raf',
+			RAF:		'raf',
 			// MOUSE_MOVE:	'mousemouse',
 			// MOUSE_DOWN:	'mousedown',
 			// MOUSE_UP:	'mouseup'
@@ -56,7 +56,7 @@ STF.AbstractMainView = ( function( window ) {
 	AbstractMainView.prototype.bindEvents = function() {
 		this.$window.on( 'resize', $.proxy( _resize, this ) );
 		// this.$window.on( 'resize', $.proxy( this.resize, this ) );
-		// TweenLite.ticker.addEventListener( 'tick', _raf, this );
+		TweenLite.ticker.addEventListener( 'tick', _raf, this );
 		// this.$window.on( 'mousemove', $.proxy( _mouseMove, this ) );
 		// this.$window.on( 'mousedown', $.proxy( _mouseDown, this ) );
 		// this.$window.on( 'mouseup', $.proxy( _mouseUp, this ) );
@@ -110,13 +110,13 @@ STF.AbstractMainView = ( function( window ) {
 		STF.Views.Statics.MainLoader.resize();
 		STF.Views.Statics.Header.resize();
 		STF.Views.Statics.Footer.resize();
-	};*/
+	};
 	
 	
 	var _resizePage = function() {
 		if ( STF.PagesController.page !== null )
 			STF.PagesController.page.resize();
-	};
+	};*/
 	
 	
 	var _raf = function() {
@@ -126,9 +126,12 @@ STF.AbstractMainView = ( function( window ) {
 		
 		_setRafProps.call( this );
 		
-		this.rafStaticsViews();
+		// this.rafStaticsViews();
 		
-		_rafPage.call( this );
+		// _rafPage.call( this );
+		
+		if ( this.e.raf !== undefined )
+			this.dispatch( this.E.RAF );
 		
 		
 		if ( STF.Config.HAS_FPS_STATS && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
@@ -145,17 +148,17 @@ STF.AbstractMainView = ( function( window ) {
 	};
 	
 	
-	AbstractMainView.prototype.rafStaticsViews = function() {
-		STF.Views.Statics.MainLoader.raf();
-		STF.Views.Statics.Header.raf();
-		STF.Views.Statics.Footer.raf();
-	};
+	// AbstractMainView.prototype.rafStaticsViews = function() {
+	// 	STF.Views.Statics.MainLoader.raf();
+	// 	STF.Views.Statics.Header.raf();
+	// 	STF.Views.Statics.Footer.raf();
+	// };
 	
 	
-	var _rafPage = function() {
+	/*var _rafPage = function() {
 		if ( STF.PagesController.page !== null )
 			STF.PagesController.page.raf();
-	};
+	};*/
 	
 	
 	var _mouseMove = function( e ) {
