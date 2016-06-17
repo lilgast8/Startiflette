@@ -76,15 +76,8 @@ STF.AbstractMainView = ( function( window ) {
 	
 	
 	var _resize = function() {
-		// console.log( 'RZ' );
-		
 		_setResizeProps.call( this );
 		
-		// this.resizeStaticsViews();
-		
-		// _resizePage.call( this );
-		
-		// console.log( 'RZ', this.e.resize );
 		if ( this.e.resize !== undefined )
 			this.dispatch( this.E.RESIZE );
 	};
@@ -102,22 +95,7 @@ STF.AbstractMainView = ( function( window ) {
 			this.mX = this.cX;
 			this.mY = this.cY;
 		}
-		
-		// console.log( 'AbstractMainView _setResizeProps()', this.wW, this.wH );
 	};
-	
-	
-	/*AbstractMainView.prototype.resizeStaticsViews = function() {
-		STF.Views.Statics.MainLoader.resize();
-		STF.Views.Statics.Header.resize();
-		STF.Views.Statics.Footer.resize();
-	};
-	
-	
-	var _resizePage = function() {
-		if ( STF.PagesController.page !== null )
-			STF.PagesController.page.resize();
-	};*/
 	
 	
 	var _raf = function() {
@@ -126,10 +104,6 @@ STF.AbstractMainView = ( function( window ) {
 		
 		
 		_setRafProps.call( this );
-		
-		// this.rafStaticsViews();
-		
-		// _rafPage.call( this );
 		
 		if ( this.e.raf !== undefined )
 			this.dispatch( this.E.RAF );
@@ -147,19 +121,6 @@ STF.AbstractMainView = ( function( window ) {
 		this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
 		this.siY	+= ( this.sY - this.siY ) * this.SCROLL_INERTIA;
 	};
-	
-	
-	// AbstractMainView.prototype.rafStaticsViews = function() {
-	// 	STF.Views.Statics.MainLoader.raf();
-	// 	STF.Views.Statics.Header.raf();
-	// 	STF.Views.Statics.Footer.raf();
-	// };
-	
-	
-	/*var _rafPage = function() {
-		if ( STF.PagesController.page !== null )
-			STF.PagesController.page.raf();
-	};*/
 	
 	
 	var _mouseMove = function( e ) {

@@ -93,7 +93,7 @@ STF.AbstractView = ( function( window ) {
 	
 	
 	AbstractView.prototype.resize = function() {
-		console.log( 'AbstractView.resize() — ', this.constructor.name );
+		// console.log( 'AbstractView.resize() — ', this.constructor.name );
 	};
 	
 	
