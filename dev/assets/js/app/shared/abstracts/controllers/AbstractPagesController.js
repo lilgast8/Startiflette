@@ -95,7 +95,7 @@ STF.AbstractPagesController = ( function( window ) {
 			if ( STF.Config.ENV != 'prod' )
 				console.log( 'PagesController: no specific page view for the "' + this.pageInfos.id + '" ID. If you need one, create it and then set the view in the PagesController.pages object.' );
 			
-			this.page = new STF.AbstractView();
+			this.page = new STF.AbstractPageView();
 		}
 		else
 			this.page = new this.pages[ this.pageInfos.id ]();

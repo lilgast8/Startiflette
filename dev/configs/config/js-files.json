@@ -60,6 +60,7 @@
 			"app/desktop/views/statics/Header.js",
 			"app/desktop/views/statics/Footer.js",
 			
+			"app/desktop/abstracts/views/AbstractPageView.js",
 			"app/desktop/views/pages/Error404.js",
 			"app/desktop/views/pages/Home.js",
 			"app/desktop/views/pages/Projects.js",
@@ -96,7 +97,7 @@
 			
 			"app/shared/routes/Router.js",
 			
-			"app/desktop/models/Assets.js",
+			"app/mobile/models/Assets.js",
 			
 			"app/shared/loaders/Loader.js",
 			"app/shared/loaders/LazyLoader.js",
@@ -115,6 +116,7 @@
 			"app/mobile/views/statics/Header.js",
 			"app/mobile/views/statics/Footer.js",
 			
+			"app/mobile/abstracts/views/AbstractPageView.js",
 			"app/mobile/views/pages/Error404.js",
 			"app/mobile/views/pages/Home.js",
 			"app/mobile/views/pages/Projects.js",

@@ -9,26 +9,26 @@ STF.Views.Pages.About = ( function( window ) {
 	
 	
 	function About() {
-		STF.AbstractView.call( this );
+		STF.AbstractPageView.call( this );
 	}
 	
 	
-	About.prototype				= Object.create( STF.AbstractView.prototype );
+	About.prototype				= Object.create( STF.AbstractPageView.prototype );
 	About.prototype.constructor	= About;
 	
 	
 	About.prototype.init = function() {
-		STF.AbstractView.prototype.init.call( this );
+		STF.AbstractPageView.prototype.init.call( this );
 	};
 	
 	
 	About.prototype.bindEvents = function() {
-		STF.AbstractView.prototype.bindEvents.call( this );
+		STF.AbstractPageView.prototype.bindEvents.call( this );
 	};
 	
 	
 	About.prototype.unbindEvents = function() {
-		STF.AbstractView.prototype.unbindEvents.call( this );
+		STF.AbstractPageView.prototype.unbindEvents.call( this );
 	};
 	
 	

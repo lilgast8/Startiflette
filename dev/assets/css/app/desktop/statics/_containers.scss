@@ -10,7 +10,9 @@
 
 #page-container {}
 
-#page {}
+#page {
+	opacity: 0;
+}
 
 .center-wrapper {
 	width: $contentW;

@@ -39,16 +39,11 @@ STF.AbstractView = ( function( window ) {
 	
 	AbstractView.prototype.initDOM = function() {
 		// console.log( 'AbstractView.initDOM() — ', this.constructor.name );
-		
-		this.$page = $( document.getElementById( 'page' ) );
 	};
 	
 	
 	AbstractView.prototype.initEl = function() {
 		// console.log( 'AbstractView.initEl() — ', this.constructor.name );
-		
-		if ( this.$page !== undefined )
-			this.lazyloader = new STF.LazyLoader( this.$page, 'img-lazyload', 1 );
 	};
 	
 	
@@ -80,15 +75,11 @@ STF.AbstractView = ( function( window ) {
 	
 	AbstractView.prototype.show = function() {
 		// console.log( 'AbstractView.show() — ', this.constructor.name );
-		
-		this.dispatch( this.E.SHOWN );
 	};
 	
 	
 	AbstractView.prototype.hide = function() {
 		// console.log( 'AbstractView.hide() — ', this.constructor.name );
-		
-		this.dispatch( this.E.HIDDEN );
 	};
 	
 	
