@@ -62,7 +62,6 @@
 			
 			"app/desktop/views/pages/Error404.js",
 			"app/desktop/views/pages/Home.js",
-			"app/desktop/views/pages/About.js",
 			"app/desktop/views/pages/Projects.js",
 			"app/desktop/views/pages/Project.js",
 			"app/desktop/views/pages/LegalNotices.js",
@@ -97,9 +96,10 @@
 			
 			"app/shared/routes/Router.js",
 			
-			"app/mobile/models/Assets.js",
+			"app/desktop/models/Assets.js",
 			
 			"app/shared/loaders/Loader.js",
+			"app/shared/loaders/LazyLoader.js",
 			
 			"app/shared/utils/Global.js",
 			"app/shared/utils/DOM.js",
@@ -108,7 +108,8 @@
 			
 			"app/mobile/views/MainView.js",
 			
-			"app/shared/controllers/PagesController.js",
+			"app/shared/abstracts/controllers/AbstractPagesController.js",
+			"app/mobile/controllers/PagesController.js",
 			
 			"app/mobile/views/statics/MainLoader.js",
 			"app/mobile/views/statics/Header.js",
@@ -116,7 +117,6 @@
 			
 			"app/mobile/views/pages/Error404.js",
 			"app/mobile/views/pages/Home.js",
-			"app/mobile/views/pages/About.js",
 			"app/mobile/views/pages/Projects.js",
 			"app/mobile/views/pages/Project.js",
 			"app/mobile/views/pages/LegalNotices.js",

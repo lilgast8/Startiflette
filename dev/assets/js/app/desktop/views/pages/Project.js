@@ -23,12 +23,12 @@ STF.Views.Pages.Project = ( function( window ) {
 	
 	
 	Project.prototype.bindEvents = function() {
-		
+		STF.AbstractView.prototype.bindEvents.call( this );
 	};
 	
 	
 	Project.prototype.unbindEvents = function() {
-		
+		STF.AbstractView.prototype.unbindEvents.call( this );
 	};
 	
 	

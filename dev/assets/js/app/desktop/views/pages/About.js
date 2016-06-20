@@ -32,9 +32,9 @@ STF.Views.Pages.About = ( function( window ) {
 	};
 	
 	
-	/*About.prototype.resize = function() {
+	About.prototype.resize = function() {
 		
-	};*/
+	};
 	
 	
 	return About;

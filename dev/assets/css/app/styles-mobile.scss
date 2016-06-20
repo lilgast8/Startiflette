@@ -34,7 +34,7 @@
 /***************************************/
 
 
-// @import 'shared/partials/_PARTIALS';
+// @import 'shared/partials/_PARTIAL';
 
 
 
@@ -71,6 +71,7 @@
 /***************************/
 
 
+@import 'mobile/pages/_error-404';
 @import 'mobile/pages/_legals';
 @import 'mobile/pages/_home';
 @import 'mobile/pages/_about';

@@ -29,17 +29,6 @@ STF.Views.Statics.Footer = ( function( window ) {
 		
 		this.$footerLink.on( 'click', $.proxy( this.changeUrl, this ) );
 	};
-	
-	
-	Footer.prototype.updateMenuLinks = function( pageId ) {
-		var $linkToInactivate	= this.$footerLink.filter( '.active' );
-		var $linkToActivate		= this.$footerLink.filter( '[ data-link-id="' + pageId + '" ]' );
-		
-		if ( $linkToInactivate.length > 0 )
-			removeClass( $linkToInactivate[0], 'active' );
-		if ( $linkToActivate.length )
-			addClass( $linkToActivate[0], 'active' );
-	};
 		
 	
 	return new Footer();

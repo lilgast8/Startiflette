@@ -25,11 +25,15 @@ STF.Views.Pages.Projects = ( function( window ) {
 	
 	
 	Projects.prototype.bindEvents = function() {
+		STF.AbstractView.prototype.bindEvents.call( this );
+		
 		this.$projectLink.on( 'click', $.proxy( this.changeUrl, this ) );
 	};
 	
 	
 	Projects.prototype.unbindEvents = function() {
+		STF.AbstractView.prototype.unbindEvents.call( this );
+		
 		this.$projectLink.off( 'click', $.proxy( this.changeUrl, this ) );
 	};
 	

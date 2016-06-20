@@ -23,12 +23,12 @@ STF.Views.Pages.Error404 = ( function( window ) {
 	
 	
 	Error404.prototype.bindEvents = function() {
-		
+		STF.AbstractView.prototype.bindEvents.call( this );
 	};
 	
 	
 	Error404.prototype.unbindEvents = function() {
-		
+		STF.AbstractView.prototype.unbindEvents.call( this );
 	};
 	
 	

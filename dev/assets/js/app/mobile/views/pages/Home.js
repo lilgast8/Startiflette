@@ -23,12 +23,12 @@ STF.Views.Pages.Home = ( function( window ) {
 	
 	
 	Home.prototype.bindEvents = function() {
-		
+		STF.AbstractView.prototype.bindEvents.call( this );
 	};
 	
 	
 	Home.prototype.unbindEvents = function() {
-		
+		STF.AbstractView.prototype.unbindEvents.call( this );
 	};
 	
 	

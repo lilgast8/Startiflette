@@ -32,17 +32,6 @@ STF.Views.Statics.Header = ( function( window ) {
 	};
 	
 	
-	Header.prototype.updateMenuLinks = function( pageId ) {
-		var $linkToInactivate	= this.$menuLink.filter( '.active' );
-		var $linkToActivate		= this.$menuLink.filter( '[ data-link-id="' + pageId + '" ]' );
-		
-		if ( $linkToInactivate.length > 0 )
-			removeClass( $linkToInactivate[0], 'active' );
-		if ( $linkToActivate.length )
-			addClass( $linkToActivate[0], 'active' );
-	};
-	
-	
 	return new Header();
 	
 	

@@ -40,9 +40,9 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 	};
 	
 	
-	/*MainLoader.prototype.onProgress = function( percentage ) {
-		
-	};*/
+	MainLoader.prototype.onProgress = function( percentage ) {
+		console.log( percentage );
+	};
 	
 	
 	MainLoader.prototype.hideInit = function() {
@@ -87,7 +87,7 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 	};
 	
 	
-	return MainLoader;
+	return new MainLoader();
 	
 	
 } ) ( window );

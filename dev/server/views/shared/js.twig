@@ -19,5 +19,5 @@
 </script>
 
 
-<!-- JS scripts -->
-{{ Path.JS_FILES[ 'scripts-desktop' ]|raw }}
+{# JS scripts #}
+{{ Path.JS_FILES[ 'scripts-' ~ jsScriptName ]|raw }}

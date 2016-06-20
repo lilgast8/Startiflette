@@ -38,9 +38,9 @@ STF.Views.Pages.Projects = ( function( window ) {
 	};
 	
 	
-	/*Projects.prototype.resize = function() {
+	Projects.prototype.resize = function() {
 		
-	};*/
+	};
 	
 	
 	return Projects;

@@ -18,13 +18,16 @@ STF.Views.Statics.Header = ( function( window ) {
 	
 	
 	Header.prototype.initDOM = function() {
-		this.$header	= $( document.getElementById( 'header' ) );
-		this.$menu		= $( document.getElementById( 'menu' ) );
-		this.$menuLink	= this.$menu.find( '.menu-link' );
+		this.$header		= $( document.getElementById( 'header' ) );
+		this.$headerLgLink	= this.$header.find( '.header-lang-link' );
+		this.$menu			= $( document.getElementById( 'menu' ) );
+		this.$menuLink		= this.$menu.find( '.menu-link' );
 	};
 	
 	
 	Header.prototype.bindEvents = function() {
+		STF.AbstractView.prototype.bindEvents.call( this );
+		
 		this.$menuLink.on( 'click', $.proxy( this.changeUrl, this ) );
 	};
 	
