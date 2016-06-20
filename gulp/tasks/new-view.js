@@ -199,6 +199,8 @@ function manageFileCreation( file, viewType, destFilePath, aStringToReplace, aNe
 		newString		= aNewString[0] + '.Views		= ' + aNewString[0] + '.Views';
 		
 		data			= data.replace( new RegExp( stringToReplace, 'g' ), newString );
+		
+		data			= data.replace( new RegExp( 'AbstractView', 'g' ), 'AbstractPageView' );
 	}
 	
 	if ( file == 'ViewName.js' && viewType == 'statics' )
