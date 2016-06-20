@@ -1,9 +1,9 @@
 /*!
- * VERSION: beta 1.3.4
- * DATE: 2014-11-15
- * UPDATES AND DOCS AT: http://www.greensock.com
+ * VERSION: 1.3.6
+ * DATE: 2016-05-24
+ * UPDATES AND DOCS AT: http://greensock.com
  *
- * @license Copyright (c) 2008-2015, GreenSock. All rights reserved.
+ * @license Copyright (c) 2008-2016, GreenSock. All rights reserved.
  * This work is subject to the terms at http://greensock.com/standard-license or for
  * Club GreenSock members, the software agreement that was issued with your membership.
  * 
@@ -21,6 +21,12 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			_corProps = {},
 			_globals = _gsScope._gsDefine.globals,
 			Segment = function(a, b, c, d) {
+				if (c === d) { //if c and d match, the final autoRotate value could lock at -90 degrees, so differentiate them slightly.
+					c = d - (d - b) / 1000000;
+				}
+				if (a === b) { //if a and b match, the starting autoRotate value could lock at -90 degrees, so differentiate them slightly.
+					b = a + (c - a) / 1000000;
+				}
 				this.a = a;
 				this.b = b;
 				this.c = c;
@@ -157,7 +163,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					i = props.length;
 					while (--i > -1) {
 						p = props[i];
-						if (Math.abs(first[p] - last[p]) > 0.05) { //build in a tolerance of +/-0.05 to accommodate rounding errors. For example, if you set an object's position to 4.945, Flash will make it 4.9
+						if (Math.abs(first[p] - last[p]) > 0.05) { //build in a tolerance of +/-0.05 to accommodate rounding errors.
 							seamless = false;
 							break;
 						}
@@ -190,7 +196,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 							a = obj[props[i]];
 							l = a.length - 1;
 							for (j = 0; j < l; j++) {
-								r = a[j+1].da / _r2[j] + a[j].da / _r1[j];
+								r = (a[j+1].da / _r2[j] + a[j].da / _r1[j]) || 0;
 								_r3[j] = (_r3[j] || 0) + r * r;
 							}
 						}
@@ -308,7 +314,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			BezierPlugin = _gsScope._gsDefine.plugin({
 					propName: "bezier",
 					priority: -1,
-					version: "1.3.4",
+					version: "1.3.6",
 					API: 2,
 					global:true,
 
@@ -371,7 +377,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 									this._func[p] = (typeof(target[p]) === "function") ? target[ ((p.indexOf("set") || typeof(target["get" + p.substr(3)]) !== "function") ? p : "get" + p.substr(3)) ] : false;
 								}
 								p = autoRotate[i][2];
-								this._initialRotations[i] = this._func[p] ? this._func[p].call(this._target) : this._target[p];
+								this._initialRotations[i] = (this._func[p] ? this._func[p].call(this._target) : this._target[p]) || 0;
 							}
 						}
 						this._startRatio = tween.vars.runBackwards ? 1 : 0; //we determine the starting ratio when the tween inits which is always 0 unless the tween has runBackwards:true (indicating it's a from() tween) in which case it's 1.
@@ -433,7 +439,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 								this._s2 = curSeg[i];
 								this._si = i;
 							}
-							t = (i + (v - this._s1) / (this._s2 - this._s1)) * this._prec;
+							t = ((i + (v - this._s1) / (this._s2 - this._s1)) * this._prec) || 0;
 						}
 						inv = 1 - t;
 
@@ -545,6 +551,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						cssp._enableTransforms(false);
 					}
 					data.autoRotate = cssp._target._gsTransform;
+					data.proxy.rotation = data.autoRotate.rotation || 0;
 				}
 				plugin._onInitTween(data.proxy, v, cssp._tween);
 				return pt;
@@ -588,7 +595,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		return (_gsScope.GreenSockGlobals || _gsScope)[name];
 	};
 	if (typeof(define) === "function" && define.amd) { //AMD
-		define(["TweenLite"], getGlobal);
+		define(["../TweenLite"], getGlobal);
 	} else if (typeof(module) !== "undefined" && module.exports) { //node
 		require("../TweenLite.js");
 		module.exports = getGlobal();

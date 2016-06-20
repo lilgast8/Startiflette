@@ -1,14 +1,14 @@
 /*!
- * VERSION: 0.14.1
- * DATE: 2015-09-05
+ * VERSION: 0.14.7
+ * DATE: 2016-05-25
  * UPDATES AND DOCS AT: http://greensock.com
  *
  * Requires TweenLite and CSSPlugin version 1.17.0 or later (TweenMax contains both TweenLite and CSSPlugin). ThrowPropsPlugin is required for momentum-based continuation of movement after the mouse/touch is released (ThrowPropsPlugin is a membership benefit of Club GreenSock - http://greensock.com/club/).
  *
- * @license Copyright (c) 2008-2015, GreenSock. All rights reserved.
+ * @license Copyright (c) 2008-2016, GreenSock. All rights reserved.
  * This work is subject to the terms at http://greensock.com/standard-license or for
  * Club GreenSock members, the software agreement that was issued with your membership.
- * 
+ *
  * @author: Jack Doyle, jack@greensock.com
  */
 var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(global) !== "undefined") ? global : this || window; //helps ensure compatibility with AMD/RequireJS and CommonJS/Node
@@ -47,7 +47,6 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			_isAndroid = (navigator.userAgent.toLowerCase().indexOf("android") !== -1), //Android handles touch events in an odd way and it's virtually impossible to "feature test" so we resort to UA sniffing
 			_lastDragTime = 0,
 			_temp1 = {}, // a simple object we reuse and populate (usually x/y properties) to conserve memory and improve performance.
-			_temp2 = {},
 			_windowProxy = {}, //memory/performance optimization - we reuse this object during autoScroll to store window-related bounds/offsets.
 			_slice = function(a) { //don't use Array.prototype.slice.call(target, 0) because that doesn't work in IE8 with a NodeList that's returned by querySelectorAll()
 				if (typeof(a) === "string") {
@@ -61,6 +60,13 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					i;
 				for (i = 0; i !== l; b.push(a[i++]));
 				return b;
+			},
+			_copy = function(obj) {
+				var copy = {}, p;
+				for (p in obj) {
+					copy[p] = obj[p];
+				}
+				return copy;
 			},
 			ThrowPropsPlugin,
 
@@ -293,6 +299,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			_svgBorderScales,
 			_svgScrollOffset,
 			_hasBorderBug,
+			_hasReparentBug,//some browsers, like Chrome 49, alter the offsetTop/offsetLeft/offsetParent of elements when a non-identity transform is applied.
 			_setEnvironmentVariables = function() { //some browsers factor the border into the SVG coordinate space, some don't (like Firefox). Some apply transforms to them, some don't. We feature-detect here so we know how to handle the border(s). We can't do this immediately - we must wait for the document.body to exist.
 				if (!_doc.createElementNS) {
 					_svgBorderFactor = 0;
@@ -306,9 +313,13 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					parent = _doc.body || _docElement,
 					matrix, e1, point, oldValue;
 				if (_doc.body && _transformProp) {
-					style.position = wrapper.style.position = "absolute";
+					style.position = "absolute";
 					parent.appendChild(wrapper);
 					wrapper.appendChild(div);
+					oldValue = div.offsetParent;
+					wrapper.style[_transformProp] = "rotate(1deg)";
+					_hasReparentBug = (div.offsetParent === oldValue);
+					wrapper.style.position = "absolute";
 					style.height = "10px";
 					oldValue = div.offsetTop;
 					wrapper.style.border = "5px solid red";
@@ -324,7 +335,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				style.border = "0px solid red";
 				style.transform = "none";
 				// in some browsers (like certain flavors of Android), the getScreenCTM() matrix is contaminated by the scroll position. We can run some logic here to detect that condition, but we ended up not needing this because we found another workaround using getBoundingClientRect().
-				div.style.cssText = "width:100px;height:100px;overflow:scroll";
+				div.style.cssText = "width:100px;height:100px;overflow:scroll;-ms-overflow-style:none;";
 				parent.appendChild(div);
 				div.appendChild(svg);
 				point = svg.createSVGPoint().matrixTransform(svg.getScreenCTM());
@@ -472,7 +483,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					decoratee.x = (e._gsTransform.xOrigin - v.x);
 					decoratee.y = (e._gsTransform.yOrigin - v.y);
 				} else {
-					if (e.getBBox && !e.offsetWidth && (x + y).indexOf("%") !== -1) { //Firefox doesn't report offsetWidth/height on <svg> elements.
+					if (e.getBBox && (x + y).indexOf("%") !== -1) { //Firefox doesn't report offsetWidth/height on <svg> elements.
 						e = e.getBBox();
 						e = {offsetWidth: e.width, offsetHeight: e.height};
 					}
@@ -495,19 +506,19 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				cache.isSVGRoot = isSVGRoot;
 				cache.borderBox = (cs.boxSizing === "border-box");
 				cache.computedStyle = cs;
-				if (isSVGRoot) {
-					if (!(cache.offsetParent = e.offsetParent)) { //some browsers don't report offsetParent for SVG elements.
-						curSVG = e.parentNode || _docElement;
-						curSVG.insertBefore(_tempDiv, e);
-						cache.offsetParent = _tempDiv.offsetParent || _docElement; //in some cases, Firefox still reports offsetParent as null.
-						curSVG.removeChild(_tempDiv);
-					}
+				if (isSVGRoot) { //some browsers don't report parentNode on SVG elements.
+					curSVG = e.parentNode || _docElement;
+					curSVG.insertBefore(_tempDiv, e);
+					cache.offsetParent = _tempDiv.offsetParent || _docElement; //in some cases, Firefox still reports offsetParent as null.
+					curSVG.removeChild(_tempDiv);
 				} else if (isSVG) {
 					curSVG = e.parentNode;
 					while (curSVG && (curSVG.nodeName + "").toLowerCase() !== "svg") { //offsetParent is always the SVG canvas for SVG elements.
 						curSVG = curSVG.parentNode;
 					}
 					cache.offsetParent = curSVG;
+				} else {
+					cache.offsetParent = e.offsetParent;
 				}
 				return cache;
 			},
@@ -526,7 +537,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				if (e.getBBox && (e.getAttribute("transform") + "").indexOf("matrix") !== -1) { //SVG can store transform data in its "transform" attribute instead of the CSS, so look for that here (only accept matrix()).
 					m = e.getAttribute("transform");
 				}
-				m = (m + "").match(/(?:\-|\b)[\d\-\.e]+\b/g) || [1,0,0,1,0,0];
+				m = (m + "").match(/(?:\-|\.|\b)(\d|\.|e\-)+/g) || [1,0,0,1,0,0];
 				if (m.length > 6) {
 					m = [m[0], m[1], m[4], m[5], m[12], m[13]];
 				}
@@ -589,12 +600,13 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						m[4] += _getDocScrollLeft();
 						m[5] += _getDocScrollTop();
 					}
-					if (parent && parent !== _docElement && parentOffsetParent === offsets.offsetParent) {
-						m[4] -= parent.offsetLeft || 0;
-						m[5] -= parent.offsetTop || 0;
-						if (!_hasBorderBug && parent.offsetParent && !cache.isSVG && !cache.isSVGRoot) {
-							m[4] -= parseInt(_getStyle(parent.offsetParent, "borderLeftWidth"), 10) || 0;
-							m[5] -= parseInt(_getStyle(parent.offsetParent, "borderTopWidth"), 10) || 0;
+					if (parent && parent !== _docElement && parentOffsetParent === offsets.offsetParent && !parentCache.isSVG && (!_hasReparentBug || _getOffset2DMatrix(parent).join("") === "100100")) {
+						offsets = (parentCache.isSVGRoot) ? _getSVGOffsets(parent) : parent;
+						m[4] -= offsets.offsetLeft || 0;
+						m[5] -= offsets.offsetTop || 0;
+						if (!_hasBorderBug && parentCache.offsetParent && !cache.isSVG && !cache.isSVGRoot) {
+							m[4] -= parseInt(_getStyle(parentCache.offsetParent, "borderLeftWidth"), 10) || 0;
+							m[5] -= parseInt(_getStyle(parentCache.offsetParent, "borderTopWidth"), 10) || 0;
 						}
 					}
 				}
@@ -688,7 +700,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						bbox = e.getBBox();
 						width = bbox.width;
 						height = bbox.height;
-					} else if (e.offsetWidth) {
+					} else if ((e.nodeName + "").toLowerCase() !== "svg" && e.offsetWidth) { //Chrome dropped support for "offsetWidth" on SVG elements
 						width = e.offsetWidth;
 						height = e.offsetHeight;
 					} else {
@@ -1103,7 +1115,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				if (!ThrowPropsPlugin) {
 					ThrowPropsPlugin = _globals.com.greensock.plugins.ThrowPropsPlugin;
 				}
-				this.vars = vars = vars || {};
+				this.vars = vars = _copy(vars || {});
 				this.target = target;
 				this.x = this.y = this.rotation = 0;
 				this.dragResistance = parseFloat(vars.dragResistance) || 0;
@@ -1126,11 +1138,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					dragEndTime = 0,
 					checkAutoScrollBounds = false,
 					isClickable = vars.clickableTest || _isClickable,
-					enabled, scrollProxy, startPointerX, startPointerY, startElementX, startElementY, hasBounds, hasDragCallback, maxX, minX, maxY, minY, tempVars, cssVars, touch, touchID, rotationOrigin, dirty, old, snapX, snapY, isClicking, touchEventTarget, matrix, interrupted, clickTime, startScrollTop, startScrollLeft, applyObj, allowNativeTouchScrolling, touchDragAxis, isDispatching,
-
+					clickTime = 0,
+					enabled, scrollProxy, startPointerX, startPointerY, startElementX, startElementY, hasBounds, hasDragCallback, maxX, minX, maxY, minY, tempVars, cssVars, touch, touchID, rotationOrigin, dirty, old, snapX, snapY, isClicking, touchEventTarget, matrix, interrupted, startScrollTop, startScrollLeft, applyObj, allowNativeTouchScrolling, touchDragAxis, isDispatching, clickDispatch,
 					//this method gets called on every tick of TweenLite.ticker which allows us to synchronize the renders to the core engine (which is typically synchronized with the display refresh via requestAnimationFrame). This is an optimization - it's better than applying the values inside the "mousemove" or "touchmove" event handler which may get called many times inbetween refreshes.
 					render = function(suppressEvents) {
-						if (self.autoScroll && self.isDragging && (dirty || checkAutoScrollBounds)) {
+						if (self.autoScroll && self.isDragging && (checkAutoScrollBounds || dirty)) {
 							var e = target,
 								autoScrollFactor = self.autoScroll * 15, //multiplying by 15 just gives us a better "feel" speed-wise.
 								parent, isRoot, rect, pointerX, pointerY, changeX, changeY, gap;
@@ -1145,7 +1157,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 								rect = isRoot ? {bottom:Math.max(_docElement.clientHeight, window.innerHeight || 0), right: Math.max(_docElement.clientWidth, window.innerWidth || 0), left:0, top:0} : parent.getBoundingClientRect();
 								changeX = changeY = 0;
 								if (allowY) {
-									if (pointerY > rect.bottom - 40 && (gap = parent._gsMaxScrollY - parent.scrollTop)) {
+									gap = parent._gsMaxScrollY - parent.scrollTop;
+									if (gap < 0) {
+										changeY = gap;
+									} else if (pointerY > rect.bottom - 40 && gap) {
 										checkAutoScrollBounds = true;
 										changeY = Math.min(gap, (autoScrollFactor * (1 - Math.max(0, (rect.bottom - pointerY)) / 40)) | 0);
 									} else if (pointerY < rect.top + 40 && parent.scrollTop) {
@@ -1156,9 +1171,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 										parent.scrollTop += changeY;
 									}
 								}
-
 								if (allowX) {
-									if (pointerX > rect.right - 40 && (gap = parent._gsMaxScrollX - parent.scrollLeft)) {
+									gap = parent._gsMaxScrollX - parent.scrollLeft;
+									if (gap < 0) {
+										changeX = gap;
+									} else if (pointerX > rect.right - 40 && gap) {
 										checkAutoScrollBounds = true;
 										changeX = Math.min(gap, (autoScrollFactor * (1 - Math.max(0, (rect.right - pointerX)) / 40)) | 0);
 									} else if (pointerX < rect.left + 40 && parent.scrollLeft) {
@@ -1383,16 +1400,40 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						}
 					},
 
-					updateMatrix = function() {
+					updateMatrix = function(shiftStart) {
+						var start = matrix || [1,0,0,1,0,0],
+							a, b, c, d, tx, ty, determinant, pointerX, pointerY;
 						matrix = _getConcatenatedMatrix(target.parentNode, true);
+						if (shiftStart && self.isPressed && start.join(",") !== matrix.join(",")) { //if the matrix changes WHILE the element is pressed, we must adjust the startPointerX and startPointerY accordingly, so we invert the original matrix and figure out where the pointerX and pointerY were in the global space, then apply the new matrix to get the updated coordinates.
+							a = start[0];
+							b = start[1];
+							c = start[2];
+							d = start[3];
+							tx = start[4];
+							ty = start[5];
+							determinant = (a * d - b * c);
+							pointerX = startPointerX * (d / determinant) + startPointerY * (-c / determinant) + ((c * ty - d * tx) / determinant);
+							pointerY = startPointerX * (-b / determinant) + startPointerY * (a / determinant) + (-(a * ty - b * tx) / determinant);
+							startPointerY = pointerX * matrix[1] + pointerY * matrix[3] + matrix[5];
+							startPointerX = pointerX * matrix[0] + pointerY * matrix[2] + matrix[4];
+						}
 						if (!matrix[1] && !matrix[2] && matrix[0] == 1 && matrix[3] == 1 && matrix[4] == 0 && matrix[5] == 0) { //if there are no transforms, we can optimize performance by not factoring in the matrix
 							matrix = null;
 						}
+
 					},
 
 					recordStartPositions = function() {
 						var edgeTolerance = 1 - self.edgeResistance;
-						updateMatrix();
+						updateMatrix(false);
+						if (matrix) {
+							startPointerX = self.pointerX * matrix[0] + self.pointerY * matrix[2] + matrix[4]; //translate to local coordinate system
+							startPointerY = self.pointerX * matrix[1] + self.pointerY * matrix[3] + matrix[5];
+						}
+						if (dirty) {
+							setPointerPosition(self.pointerX, self.pointerY);
+							render(true);
+						}
 						if (scrollProxy) {
 							calculateBounds();
 							startElementY = scrollProxy.top();
@@ -1409,7 +1450,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 								rotationOrigin = _localToGlobal(target, {x:0, y:0});
 								syncXY(true, true);
 								startElementX = self.x; //starting rotation (x always refers to rotation in type:"rotation", measured in degrees)
-								startElementY = self.y = Math.atan2(rotationOrigin.y - startPointerY, startPointerX - rotationOrigin.x) * _RAD2DEG;
+								startElementY = self.y = Math.atan2(rotationOrigin.y - self.pointerY, self.pointerX - rotationOrigin.x) * _RAD2DEG;
 							} else {
 								startScrollTop = target.parentNode ? target.parentNode.scrollTop || 0 : 0;
 								startScrollLeft = target.parentNode ? target.parentNode.scrollLeft || 0 : 0;
@@ -1469,8 +1510,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 					//called when the mouse is pressed (or touch starts)
 					onPress = function(e) {
-						var temp, i;
-						if (!enabled || self.isPressed || !e || (e.type === "mousedown" && _getTime() - clickTime < 30 && _touchEventLookup[self.pointerEvent.type])) { //when we DON'T preventDefault() in order to accommodate touch-scrolling and the user just taps, many browsers also fire a mousedown/mouseup sequence AFTER the touchstart/touchend sequence, thus it'd result in two quick "click" events being dispatched. This line senses that condition and halts it on the subsequent mousedown.
+						var i;
+						if (!enabled || self.isPressed || !e || ((e.type === "mousedown" || e.type === "pointerdown") && _getTime() - clickTime < 30 && _touchEventLookup[self.pointerEvent.type])) { //when we DON'T preventDefault() in order to accommodate touch-scrolling and the user just taps, many browsers also fire a mousedown/mouseup sequence AFTER the touchstart/touchend sequence, thus it'd result in two quick "click" events being dispatched. This line senses that condition and halts it on the subsequent mousedown.
 							return;
 						}
 						interrupted = isTweening();
@@ -1526,11 +1567,6 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 							target.parentNode.appendChild(_placeholderDiv);
 						}
 						recordStartPositions();
-						if (matrix) {
-							temp = startPointerX * matrix[0] + startPointerY * matrix[2] + matrix[4];
-							startPointerY = startPointerX * matrix[1] + startPointerY * matrix[3] + matrix[5];
-							startPointerX = temp;
-						}
 						if (self.tween) {
 							self.tween.kill();
 						}
@@ -1699,7 +1735,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 								}
 							}
 							dirty = true; //a flag that indicates we need to render the target next time the TweenLite.ticker dispatches a "tick" event (typically on a requestAnimationFrame) - this is a performance optimization (we shouldn't render on every move because sometimes many move events can get dispatched between screen refreshes, and that'd be wasteful to render every time)
-							if (!self.isDragging) {
+							if (!self.isDragging && self.isPressed) {
 								self.isDragging = true;
 								_dispatchEvent(self, "dragstart", "onDragStart");
 							}
@@ -1780,15 +1816,18 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 							if (!_isAndroid || originalEvent.type !== "touchmove") { //to accommodate native scrolling on Android devices, we have to immediately call onRelease() on the first touchmove event, but that shouldn't trigger a "click".
 								_dispatchEvent(self, "click", "onClick");
 								eventTarget = originalEvent.target || originalEvent.srcElement || target; //old IE uses srcElement
-								if (eventTarget.click) { //some browsers (like mobile Safari) don't properly trigger the click event
-									eventTarget.click();
-								}
-								else if (_doc.createEvent) {
-									syntheticEvent = _doc.createEvent("MouseEvents");
-									syntheticEvent.initEvent("click", true, true);
-									eventTarget.dispatchEvent(syntheticEvent);
-								}
 								clickTime = _getTime();
+								TweenLite.delayedCall(0.00001, function() { // some browsers (like Firefox) won't trust script-generated clicks, so if the user tries to click on a video to play it, for example, it simply won't work. Since a regular "click" event will most likely be generated anyway (one that has its isTrusted flag set to true), we must slightly delay our script-generated click so that the "real"/trusted one is prioritized. Remember, when there are duplicate events in quick succession, we suppress all but the first one. Some browsers don't even trigger the "real" one at all, so our synthetic one is a safety valve that ensures that no matter what, a click event does get dispatched.
+									if (clickTime !== clickDispatch && self.enabled() && !self.isPressed) {
+										if (eventTarget.click) { //some browsers (like mobile Safari) don't properly trigger the click event
+											eventTarget.click();
+										} else if (_doc.createEvent) {
+											syntheticEvent = _doc.createEvent("MouseEvents");
+											syntheticEvent.initMouseEvent("click", true, true, window, 1, self.pointerEvent.screenX, self.pointerEvent.screenY, self.pointerX, self.pointerY, false, false, false, false, 0, null);
+											eventTarget.dispatchEvent(syntheticEvent);
+										}
+									}
+								});
 							}
 						} else {
 							animate(vars.throwProps); //will skip if throwProps isn't defined or ThrowPropsPlugin isn't loaded.
@@ -1812,8 +1851,13 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 								deltaX = parent.scrollLeft - parent._gsScrollX,
 								deltaY = parent.scrollTop - parent._gsScrollY;
 							if (deltaX || deltaY) {
-								startPointerX -= deltaX;
-								startPointerY -= deltaY;
+								if (matrix) {
+									startPointerX -= deltaX * matrix[0] + deltaY * matrix[2];
+									startPointerY -= deltaY * matrix[3] + deltaX * matrix[1];
+								} else {
+									startPointerX -= deltaX;
+									startPointerY -= deltaY;
+								}
 								parent._gsScrollX += deltaX;
 								parent._gsScrollY += deltaY;
 								setPointerPosition(self.pointerX, self.pointerY);
@@ -1825,6 +1869,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						var time = _getTime(),
 							recentlyClicked = time - clickTime < 40,
 							recentlyDragged = time - dragEndTime < 40;
+						if (recentlyClicked && clickDispatch !== clickTime) {
+							clickDispatch = clickTime;
+							return;
+						}
 						if (self.isPressed || recentlyDragged || recentlyClicked) {
 							if (e.preventDefault) {
 								e.preventDefault();
@@ -1891,7 +1939,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 
 				this.applyBounds = function(newBounds) {
-					var x, y;
+					var x, y, forceZeroVelocity, e, parent, isRoot;
 					if (newBounds && vars.bounds !== newBounds) {
 						vars.bounds = newBounds;
 						return self.update(true);
@@ -1901,19 +1949,18 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					if (hasBounds) {
 						x = self.x;
 						y = self.y;
-						if (hasBounds) {
-							if (x > maxX) {
-								x = maxX;
-							} else if (x < minX) {
-								x = minX;
-							}
-							if (y > maxY) {
-								y = maxY;
-							} else if (y < minY) {
-								y = minY;
-							}
+						if (x > maxX) {
+							x = maxX;
+						} else if (x < minX) {
+							x = minX;
+						}
+						if (y > maxY) {
+							y = maxY;
+						} else if (y < minY) {
+							y = minY;
 						}
 						if (self.x !== x || self.y !== y) {
+							forceZeroVelocity = true;
 							self.x = self.endX = x;
 							if (rotationMode) {
 								self.endRotation = x;
@@ -1921,26 +1968,59 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 								self.y = self.endY = y;
 							}
 							dirty = true;
-							render();
+							render(true);
+							if (self.autoScroll && !self.isDragging) {
+								_recordMaxScrolls(target.parentNode);
+								e = target;
+								_windowProxy.scrollTop = ((window.pageYOffset != null) ? window.pageYOffset : (_docElement.scrollTop != null) ? _docElement.scrollTop : _doc.body.scrollTop);
+								_windowProxy.scrollLeft = ((window.pageXOffset != null) ? window.pageXOffset : (_docElement.scrollLeft != null) ? _docElement.scrollLeft : _doc.body.scrollLeft);
+								while (e && !isRoot) { //walk up the chain and sense wherever the scrollTop/scrollLeft exceeds the maximum.
+									isRoot = _isRoot(e.parentNode);
+									parent = isRoot ? _windowProxy : e.parentNode;
+									if (allowY && parent.scrollTop > parent._gsMaxScrollY) {
+										parent.scrollTop = parent._gsMaxScrollY;
+									}
+									if (allowX && parent.scrollLeft > parent._gsMaxScrollX) {
+										parent.scrollLeft = parent._gsMaxScrollX;
+									}
+									e = parent;
+								}
+							}
+						}
+						if (self.isThrowing && (forceZeroVelocity || self.endX > maxX || self.endX < minX || self.endY > maxY || self.endY < minY)) {
+							animate(vars.throwProps, forceZeroVelocity);
 						}
 					}
 					return self;
 				};
 
-				this.update = function(applyBounds, ignoreExternalChanges) {
+				this.update = function(applyBounds, sticky, ignoreExternalChanges) {
 					var x = self.x,
 						y = self.y;
-					updateMatrix();
+					updateMatrix(!sticky);
 					if (applyBounds) {
 						self.applyBounds();
 					} else {
 						if (dirty && ignoreExternalChanges) {
-							render();
+							render(true);
 						}
 						syncXY(true);
 					}
-					if (self.isPressed && ((allowX && Math.abs(x - self.x) > 0.01) || (allowY && (Math.abs(y - self.y) > 0.01 && !rotationMode)))) {
+					setPointerPosition(self.pointerX, self.pointerY);
+					if (dirty) {
+						render(true);
+					}
+					if (self.isPressed && !sticky && ((allowX && Math.abs(x - self.x) > 0.01) || (allowY && (Math.abs(y - self.y) > 0.01 && !rotationMode)))) {
 						recordStartPositions();
+					}
+					if (self.autoScroll) {
+						_recordMaxScrolls(target.parentNode);
+						checkAutoScrollBounds = self.isDragging;
+						render(true);
+					}
+					if (self.autoScroll) { //in case reparenting occurred.
+						_removeScrollListener(target, updateScroll);
+						_addScrollListener(target, updateScroll);
 					}
 					return self;
 				};
@@ -1962,7 +2042,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						}
 						_setSelectable(triggers, false);
 					}
-					_addScrollListener(self.target, updateScroll);
+					_addScrollListener(target, updateScroll);
 					enabled = true;
 					if (ThrowPropsPlugin && type !== "soft") {
 						ThrowPropsPlugin.track(scrollProxy || target, (xyMode ? "x,y" : rotationMode ? "rotation" : "top,left"));
@@ -1982,6 +2062,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						tween:{},
 						setRatio:(_isOldIE ? function() { TweenLite.set(target, tempVars); } : CSSPlugin._internals.setTransformRatio || CSSPlugin._internals.set3DTransformRatio)
 					};
+					recordStartPositions();
 					self.update(true);
 					return self;
 				};
@@ -2083,7 +2164,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		p.constructor = Draggable;
 		p.pointerX = p.pointerY = 0;
 		p.isDragging = p.isPressed = false;
-		Draggable.version = "0.14.1";
+		Draggable.version = "0.14.7";
 		Draggable.zIndex = 1000;
 
 		_addListener(_doc, "touchcancel", function() {
@@ -2122,9 +2203,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			_oldIERect = function(e) { //IE8 doesn't support getBoundingClientRect(), so we use this as a backup.
 				var top = 0,
 					left = 0,
-					width = e.offsetWidth,
-					height = e.offsetHeight;
+					width, height;
 				e = _unwrapElement(e);
+				width = e.offsetWidth;
+				height = e.offsetHeight;
 				while(e) {
 					top += e.offsetTop;
 					left += e.offsetLeft;
@@ -2192,7 +2274,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		return (_gsScope.GreenSockGlobals || _gsScope)[name];
 	};
 	if (typeof(define) === "function" && define.amd) { //AMD
-		define(["TweenLite"], getGlobal);
+		define(["../TweenLite", "../plugins/CSSPlugin"], getGlobal);
 	} else if (typeof(module) !== "undefined" && module.exports) { //node
 		require("../TweenLite.js");
 		require("../plugins/CSSPlugin.js");
