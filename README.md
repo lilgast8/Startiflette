@@ -56,7 +56,7 @@ List of gulp tasks & what they do:
 * `sounds`: Removes all sounds files in `www/` & moves all sounds files from `dev/` to `www/`.
 * `videos`: Removes all sounds files in `www/` & moves all videos files from `dev/` to `www/`.
 * `robots`: Sets the `robots.txt` file in `www/`;
-* `new-page`: Creates all the necessary files (CSS, PHP, content & JS) for a new page template. All the same need to add by hand the route in `configs/routes/statics.json`, the content connection in `configs/config/contents.json` & the JS view in `PagesController.js`. *(TODO: automated this)*
+* `new-view`: Creates all the necessary files (CSS, Twig, content, PHP controller & JS) for a new view template. The device folder by default is `desktop`. You can define a specific device by using the following flag `--device=DEVICE_NAME`. Even so you need to add by hand the route in `configs/routes/statics.json` & the JS view connection in the `PagesController.pages` object.
 * `set-env`: Executes `htaccess` then sets the environment on `config.json`.
 
 
