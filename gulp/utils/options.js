@@ -10,7 +10,8 @@ options.subtask		= null;
 
 options.isProd		= null;
 options.env			= getEnv();
-options.device		= options.device === undefined ? 'desktop' : options.device;
+options.device		= getDevice();
+console.log( 'Device:', options.device );
 
 options.filePath	= null;
 options.fileName	= null;
@@ -52,6 +53,15 @@ function getEnv() {
 	
 	
 	return env;
+}
+
+
+function getDevice() {
+	var device	= options.device === undefined ? 'desktop' : options.device;
+	device		= options.device.toLowerCase();
+	
+	
+	return device;
 }
 
 
