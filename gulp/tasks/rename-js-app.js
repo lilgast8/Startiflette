@@ -61,10 +61,11 @@ function showDialogue( currentJsAppName ) {
 			
 			recursive( paths.env.dev + paths.assets.js.app.dir, [ '.*' ], function ( err, filesList ) {
 				
-				var isInitFile;
+				var isInitFile, filePath;
 				
 				for ( var i = 0; i < filesList.length; i++ ) {
-					isInitFile = filesList[i] == paths.env.dev + paths.assets.js.app.initFile ? true : false;
+					filePath	= filesList[i].replace( /\\/g, '/' ); // replace \ by /, for Windaube users
+					isInitFile	= filePath == paths.env.dev + paths.assets.js.app.initFile ? true : false;
 					
 					renameApp( filesList[i], currentJsAppName, newJsAppName, isInitFile );
 				}
