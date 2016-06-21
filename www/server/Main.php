@@ -5,17 +5,17 @@
 require 'vendor/autoload.php';
 
 
-include_once 'server/configs/Config.php';
-include_once 'server/configs/Lang.php';
-include_once 'server/configs/Path.php';
+include_once 'server/core/configs/Config.php';
+include_once 'server/core/configs/Device.php';
+include_once 'server/core/configs/Lang.php';
+include_once 'server/core/configs/Path.php';
 
-include_once 'server/routes/Router.php';
+include_once 'server/core/routes/Router.php';
 
-include_once 'server/controllers/PagesController.php';
+include_once 'server/core/controllers/PagesController.php';
 
-include_once 'server/utils/Helpers.php';
-
-include_once 'server/contents/Contents.php';
+include_once 'server/core/utils/Helpers.php';
+include_once 'server/core/utils/String.php';
 
 
 
@@ -24,26 +24,23 @@ class Main
 	
 	protected static $instance;
 	
-	public $path		= null;
-	public $config		= null;
-	public $routes		= null;
-	public $contents	= null;
+	private $config				= null;
+	private $device				= null;
+	private $path				= null;
+	private $lang				= null;
+	private $router				= null;
+	private $pagesController	= null;
 	
 	
 	protected function __construct()
 	{
+		$this->setWhoops();
 		$this->setConfig();
+		$this->setDevice();
 		$this->setPath();
 		$this->setLang();
 		$this->setRoutes();
 		$this->setPagesController();
-		$this->setContents();
-	}
-	
-	
-	protected function __clone()
-	{
-		
 	}
 	
 	
@@ -56,9 +53,23 @@ class Main
 	}
 	
 	
+	private function setWhoops()
+	{
+		$whoops = new \Whoops\Run;
+		$whoops->pushHandler( new \Whoops\Handler\PrettyPageHandler );
+		$whoops->register();
+	}
+	
+	
 	private function setConfig()
 	{
 		$this->config = Config::getInstance();
+	}
+	
+	
+	private function setDevice()
+	{
+		$this->device = Device::getInstance();
 	}
 	
 	
@@ -84,38 +95,13 @@ class Main
 	private function setPagesController()
 	{
 		$this->pagesController = PagesController::getInstance();
+		$this->pagesController->init();
 	}
 	
 	
-	private function setContents()
+	public function displayView()
 	{
-		// $this->contents = getContents();
-		$this->contents = Contents::getInstance();
-	}
-	
-	
-	public function renderView()
-	{
-		$viewPath = $this->getViewPath();
-		
-		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			include_once Path::$FILE->viewsStatics . 'header.php';
-		
-		include_once $viewPath . PagesController::$PAGE_INFOS->phpView . '.php';
-		
-		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			include_once Path::$FILE->viewsStatics . 'footer.php';
-	}
-	
-	
-	private function getViewPath()
-	{
-		$viewPath = Router::$CONTENT_TYPE == 'firstLoad' || Router::$CONTENT_TYPE == 'pageChange' ?
-					Path::$FILE->viewsPage :
-					Path::$FILE->viewsAlt;
-		
-		
-		return $viewPath;
+		$this->pagesController->displayView();
 	}
 	
 }
