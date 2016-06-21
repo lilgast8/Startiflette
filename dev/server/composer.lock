@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eefaa09cb28a3e44f77ca8bffd7721d5",
+    "hash": "9f96dfbfe712cf6fd2e4d67cf83d0bfa",
     "content-hash": "e79deb8029fe35367342ed0398c70802",
     "packages": [
         {
@@ -169,16 +169,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.24.0",
+            "version": "v1.24.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8"
+                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8",
-                "reference": "3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3566d311a92aae4deec6e48682dc5a4528c4a512",
+                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512",
                 "shasum": ""
             },
             "require": {
@@ -226,20 +226,20 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-01-25 21:22:18"
+            "time": "2016-05-30 09:11:59"
         },
         {
             "name": "whichbrowser/parser",
-            "version": "v2.0.18",
+            "version": "v2.0.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WhichBrowser/Parser.git",
-                "reference": "e48cfb8a35311443e88302ddf4af407a9925968f"
+                "reference": "f53b12bbffd2862e901c6f3b01aead11b49f9f07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WhichBrowser/Parser/zipball/e48cfb8a35311443e88302ddf4af407a9925968f",
-                "reference": "e48cfb8a35311443e88302ddf4af407a9925968f",
+                "url": "https://api.github.com/repos/WhichBrowser/Parser/zipball/f53b12bbffd2862e901c6f3b01aead11b49f9f07",
+                "reference": "f53b12bbffd2862e901c6f3b01aead11b49f9f07",
                 "shasum": ""
             },
             "require": {
@@ -284,7 +284,7 @@
                 "ua",
                 "useragent"
             ],
-            "time": "2016-04-22 11:56:55"
+            "time": "2016-06-14 07:31:39"
         }
     ],
     "packages-dev": [],
