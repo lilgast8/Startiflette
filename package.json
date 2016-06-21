@@ -1,7 +1,7 @@
 {
   "name": "Startiflette",
   "description": "Starter + tartiflette = Startiflette, a SEO friendly starter for HTML5 + JS app with a Savoyard touch.",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0",
   "author": {
     "name": "Gaston Bouchayer",
     "url": "http://www.gastonbouchayer.com"
