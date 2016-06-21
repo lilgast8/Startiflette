@@ -134,7 +134,7 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 			
 			var cssClassName		= helpers.lowerCaseFirstLetter( shortNameTitleCaseNoSpace );
 			var contentClassName	= fileNameTitleCaseNoSpace + 'Content';
-			var controllerClassName	= fileNameTitleCaseNoSpace + 'Controller';
+			var controllerClassName	= fileNameTitleCaseNoSpace;
 			var jsFileName			= fileNameTitleCaseNoSpace + '.js';
 			var jsViewType			= helpers.titleCase( viewType );
 			var jsClassName			= fileNameTitleCaseNoSpace;
