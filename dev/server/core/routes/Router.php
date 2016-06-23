@@ -148,6 +148,7 @@ class Router
 	{
 		$page = $this->getPageInfos();
 		
+		// if ( Lang::$LANG_EXIST && $page->exist && $page->available ) { // page exist & available on the current device
 		if ( Lang::$LANG_EXIST && $page->exist ) { // page exist
 			$this->setIsHomepage( $page->id );
 			$this->setAltLangUrl( $page->urls );
@@ -156,7 +157,19 @@ class Router
 				 $this->isHomepage && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG )
 				$this->redirectToFullPathWithoutLang();
 			
-			$this->pagesController->setPageInfos( $page->id, $page->urls );
+			$this->pagesController->setPageInfos( $page->id, $page->urls, $page->available );
+		}
+		else if ( Lang::$LANG_EXIST && $page->exist && !$page->available ) {
+			echo '👙';
+			// $page->id	= 'alt-device-mobile';
+			// $page->urls	= self::$ROUTES->statics->{ $page->id };
+			// $page->urls	= self::$ROUTES->statics->{ $page->id };
+			
+			// $this->setAltLangUrl( self::$ROUTES->statics->home );
+			
+			// header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
+			
+			$this->pagesController->setPageInfos( $page->id, $page->urls, $page->available );
 		}
 		else { // 404
 			$page->id	= 'error-404';
@@ -166,7 +179,7 @@ class Router
 			
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
-			$this->pagesController->setPageInfos( $page->id, $page->urls );
+			$this->pagesController->setPageInfos( $page->id, $page->urls, $page->available );
 		}
 	}
 	
@@ -174,9 +187,10 @@ class Router
 	private function getPageInfos()
 	{
 		$page = new stdClass();
-		$page->exist	= false;
-		$page->id		= null;
-		$page->urls		= null;
+		$page->exist		= false;
+		$page->id			= null;
+		$page->urls			= null;
+		$page->available	= true;
 		
 		foreach ( self::$ROUTES as $routesGroup ) { // parse all routes group
 			
@@ -192,13 +206,30 @@ class Router
 				
 			}
 			
-			if ( $page->exist )
+			if ( $page->exist ) {
+				$page->available = $this->getPageAvailability( $pageParams );
+				
 				break; // break first foreach
+			}
 			
 		}
 		
 		
 		return $page;
+	}
+	
+	
+	private function getPageAvailability( $pageParams )
+	{
+		$pageAvailability = true;
+		
+		if ( isset( $pageParams->device ) )
+			if ( isset( $pageParams->device->{ Device::$DEVICE } ) )
+				if ( !$pageParams->device->{ Device::$DEVICE } )
+					$pageAvailability = false;
+		
+		
+		return $pageAvailability;
 	}
 	
 	

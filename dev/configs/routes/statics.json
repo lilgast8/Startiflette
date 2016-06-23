@@ -37,6 +37,9 @@
 			"fr": "projets",
 			"en": "projects",
 			"ex": "projects-ex"
+		},
+		"device": {
+			"desktop": false
 		}
 	}
 	

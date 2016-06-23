@@ -59,12 +59,21 @@ class PagesController
 	}
 	
 	
-	public function setPageInfos( $pageId, $pageParams )
+	public function setPageInfos( $pageId, $pageParams, $pageAvailability )
 	{
-		self::$PAGE_INFOS			= new stdClass();
+		self::$PAGE_INFOS				= new stdClass();
 		
-		self::$PAGE_INFOS->id		= $pageId;
-		self::$PAGE_INFOS->name		= String::camelCase( self::$PAGE_INFOS->id );
+		self::$PAGE_INFOS->id			= $pageId;
+		self::$PAGE_INFOS->name			= String::camelCase( self::$PAGE_INFOS->id );
+		self::$PAGE_INFOS->available	= $pageAvailability;
+		
+		if ( !self::$PAGE_INFOS->available ) {
+			// self::$PAGE_INFOS->id = 'device-'. Device::$DEVICE;
+			self::$PAGE_INFOS->id = 'not-available';
+			
+			echo self::$PAGE_INFOS->id.' 🐩';
+			// exit;
+		}
 	}
 	
 	
