@@ -182,10 +182,10 @@ class Router
 			
 			foreach ( $routesGroup as $pageId => $pageParams ) { // parse all pages
 				
-				if ( $pageParams->{ Lang::$LANG } == self::$URL->page ) { // if url exist
+				if ( $pageParams->url->{ Lang::$LANG } == self::$URL->page ) { // if url exist
 					$page->exist	= true;
 					$page->id		= $pageId;
-					$page->urls		= $pageParams;
+					$page->urls		= $pageParams->url;
 					
 					break; // break second foreach
 				}
@@ -256,10 +256,10 @@ class Router
 				$pageName = String::camelCase( $pageId );
 				
 				if ( $pageName !== 'error404' && $pageId == 'home' )
-					self::$LINK->$routesGroupName->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageUrls->{ Lang::$LANG };
-					
+					self::$LINK->$routesGroupName->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageUrls->url->{ Lang::$LANG };
+				
 				else if ( $pageId !== 'error404' )
-					self::$LINK->$routesGroupName->$pageName = Path::$URL->base . Lang::$LANG_LINK . $pageUrls->{ Lang::$LANG };
+					self::$LINK->$routesGroupName->$pageName = Path::$URL->base . Lang::$LANG_LINK . $pageUrls->url->{ Lang::$LANG };
 			}
 			
 		}

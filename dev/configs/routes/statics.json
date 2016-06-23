@@ -1,33 +1,43 @@
 {
 	
 	"error-404": {
-		"fr": "404",
-		"en": "404",
-		"ex":"404"
+		"url": {
+			"fr": "404",
+			"en": "404",
+			"ex": "404"
+		}
 	},
 	
 	"legal-notices": {
-		"fr":"mentions-legales",
-		"en":"legal-notices",
-		"ex":"legal-notices-ex"
+		"url": {
+			"fr": "mentions-legales",
+			"en": "legal-notices",
+			"ex": "legal-notices-ex"
+		}
 	},
 	
 	"home": {
-		"fr":"",
-		"en":"",
-		"ex":""
+		"url": {
+			"fr": "",
+			"en": "",
+			"ex": ""
+		}
 	},
 	
 	"about": {
-		"fr":"a-propos",
-		"en":"about",
-		"ex":"about-ex"
+		"url": {
+			"fr": "a-propos",
+			"en": "about",
+			"ex": "about-ex"
+		}
 	},
 	
 	"projects": {
-		"fr":"projets",
-		"en":"projects",
-		"ex":"projects-ex"
+		"url": {
+			"fr": "projets",
+			"en": "projects",
+			"ex": "projects-ex"
+		}
 	}
 	
 }
