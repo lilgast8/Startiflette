@@ -39,30 +39,13 @@ class Router
 	
 	private function setRoutes()
 	{
-		/*self::$ROUTES = new stdClass();
-		
-		foreach ( Config::$ROUTES_FILES as $fileName ) {
-			$filePath = Path::$FILE->routes . $fileName . '.json';
-			
-			if ( !file_exists( $filePath ) )
-				throw new ErrorException('Routes file is missing!');
-			
-			$routes	= file_get_contents( $filePath );
-			$routes	= json_decode( $routes );
-			
-			self::$ROUTES->$fileName = new stdClass();
-			self::$ROUTES->$fileName = $routes;
-		}*/
-		
 		$filePath = Path::$FILE->routes . 'statics.json';
 		
 		if ( !file_exists( $filePath ) )
 			throw new ErrorException( 'Routes file is missing!' );
 		
-		$routes	= file_get_contents( $filePath );
-		$routes	= json_decode( $routes );
-		
-		self::$ROUTES = $routes;
+		$routes			= file_get_contents( $filePath );
+		self::$ROUTES	= json_decode( $routes );
 	}
 	
 	
@@ -196,87 +179,39 @@ class Router
 		$page->urls			= null;
 		$page->available	= true;
 		
-		echo '<pre>';
-		print_r( self::$URL );
-		echo '</pre><br>';
-		
-		
-		$path = String::removeLastSpecificChar( Path::$URL->base . self::$URL->path, '/' );
+		$path				= String::removeLastSpecificChar( Path::$URL->base . self::$URL->path, '/' );
 		
 		foreach ( self::$ROUTES as $pageId => $pageParams ) { // parse all pages
-			// echo '<pre>';
-			// print_r( $pageParams );
-			// echo '</pre>';
 			
-			// echo self::$URL->page. ' / '. $pageParams->url->{ Lang::$LANG }.'<br>';
-			// echo Path::$URL->base . self::$URL->path. ' ——— '. Path::$URL->base . Lang::$LANG . '/' . $pageParams->url->{ Lang::$LANG }.' ———' . strpos( Path::$URL->base . self::$URL->path, Path::$URL->base . Lang::$LANG . '/' . $pageParams->url->{ Lang::$LANG } ) . '<br>';
+			$searchPath	= Path::$URL->base . Lang::$LANG . '/' . $pageParams->url->{ Lang::$LANG };
+			// echo '<b>'.$pageId. ':</b> '.$path. ' ——— '. $searchPath.' ——— ' . strpos( $path, $searchPath ) . '<br>';
 			
-			
-			
-			// $url = $this->getPageUrlParams( $pageParams );
-			// echo '🍺 '.$url.' 🍺<br>';
-			
-			
-			/*$pageUrl = $pageParams->url->{ Lang::$LANG };
-			
-			if ( !isset( $pageParams->alias ) ) {
-				$isExist = $this->checkUrl( $page, $pageUrl );
+			/* unique page */
+			if ( $path == $searchPath ) {
+				$page->exist	= true;
+				$page->id		= $pageId;
+				$page->urls		= $pageParams->url;
+				
+				break; // break first foreach
 			}
 			
-			else {
-				foreach ( $pageParams->alias as $aliasId => $alias ) {
-					
-					$url = $pageUrl . '/' . $alias->{ Lang::$LANG };
-					
-					// echo '🧀 '.$url.' 🧀<br>';
-					$page = $this->checkUrl( $page, $url );
-					
-				}
-			}*/
-			
-			
-			
-			
-			
-			
-			// $pathUrl = Path::$URL->base . self::$URL->path;
-			$searchPath	= Path::$URL->base . Lang::$LANG . '/' . $pageParams->url->{ Lang::$LANG };
-			
-			echo '<b>'.$pageId. ':</b> '.$path. ' ——— '. $searchPath.' ——— ' . strpos( $path, $searchPath ) . '<br>';
-			
-			
-			if ( strpos( $path, $searchPath ) !== false && $pageId != 'home' ) {
-				echo '📜 '.$pageId.'<br>';
+			/* multiple page */
+			else if ( strpos( $path, $searchPath ) !== false && $pageId != 'home' ) {
 				
 				if ( isset( $pageParams->alias ) ) {
 					
 					foreach ( $pageParams->alias as $aliasId => $alias ) {
 						
-						// echo $path.'<br>';
-						// echo $searchPath . '/' . $alias->{ Lang::$LANG }.'<br>';
-						
-						// echo '🔑 '.$aliasId.' — 🏄 '.$alias->{ Lang::$LANG }.'<br>';
-						// echo '🏎 '.$aliasId.'<br>';
-						
 						if ( $searchPath . '/' . $alias->{ Lang::$LANG } == $path ) {
-							echo '🎉 :'.$aliasId;
-							
-							// echo '<pre>';
-							// print_r( $alias );
-							// echo '</pre>';
-							
 							$page->exist	= true;
 							$page->id		= $pageId;
-							// $page->urls		= $pageParams->url;
 							$page->alias	= $aliasId;
 							$page->urls		= $this->getAltPageUrl( $pageParams->url, $alias );
 							
 							break; // break second foreach
 						}
 					}
-					
 				}
-				
 			}
 			
 			if ( $page->exist ) {
@@ -316,103 +251,12 @@ class Router
 	}
 	
 	
-	private function checkUrl( $page, $url )
-	{
-		$isExist = false;
-		
-		echo '🍔 '.$url .'———'. self::$URL->page.'<br>';
-		
-		if ( $url == self::$URL->page ) { // if url exist
-			echo '🍾 <br>';
-			$isExist = true;
-			
-			// break; // break second foreach
-		}
-		
-		
-		return $isExist;
-	}
-	
-	
-	private function getPageUrlParams( $pageParams )
-	{
-		$pageUrl = 'ramon';
-		
-		// echo '<pre>';
-		// print_r( $pageParams );
-		// echo '</pre>';
-		
-		$pageUrl = $pageParams->url->{ Lang::$LANG };
-		
-		if ( isset( $pageParams->alias ) ) {
-			// echo '<pre>';
-			// print_r( $pageParams->alias );
-			// echo '</pre>';
-			// $pageUrl = $pageUrl . '/' . $pageParams->alias->{ Lang::$LANG };
-			
-			foreach ( $pageParams->alias as $aliasId => $alias ) {
-				
-				$path = $pageUrl . '/' . $alias->{ Lang::$LANG };
-				
-				echo '🧀 '.$path.' 🧀<br>';
-				/*echo '🧀 ';
-				echo '<pre>';
-				print_r( $alias );
-				echo '</pre>';
-				
-				if ( $alias =  ) {
-					
-				}
-				
-				
-				
-				if ( $searchPath . '/' . $alias->{ Lang::$LANG } == $pathUrl ) {
-					echo '🎉 :'.$aliasId;
-					
-					// echo '<pre>';
-					// print_r( $alias );
-					// echo '</pre>';
-					
-					$page->exist	= true;
-					$page->id		= $pageId;
-					// $page->urls		= $pageParams->url;
-					$page->urls		= $this->getAltPageUrl( $pageParams->url, $alias );
-					
-					// echo '<pre>';
-					// print_r( $page );
-					// echo '</pre>';
-					
-					break; // break second foreach
-				}*/
-				
-			}
-			
-		}
-		
-		
-		return $pageUrl;
-	}
-	
-	
 	private function getAltPageUrl( $page, $alias )
 	{
 		$urls = new stdClass();
 		
-		/*echo '<pre>';
-		print_r( $page );
-		echo '</pre>';
-		echo '<pre>';
-		print_r( $alias );
-		echo '</pre>';*/
-		
 		foreach ( Lang::$ALL_LANG as $lang )
 			$urls->$lang = $page->$lang . '/' . $alias->$lang;
-		
-		
-		// echo '🙃<pre>';
-		// print_r( $urls );
-		// echo '</pre>';
-		// exit();
 		
 		
 		return $urls;
@@ -444,7 +288,6 @@ class Router
 		foreach ( Lang::$ALL_LANG as $lang ) {
 			
 			if ( $lang !== Lang::$LANG ) {
-				// $currentUrl = $pageParams->$lang->url;
 				$currentUrl = $pageParams->$lang;
 				
 				if ( $this->isHomepage && $lang == Lang::$DEFAULT_LANG )
@@ -498,12 +341,6 @@ class Router
 				}
 			}
 		}
-		
-		
-		echo '<pre>';
-		print_r( self::$LINK );
-		echo '</pre>';
-		exit();
 	}
 	
 	
