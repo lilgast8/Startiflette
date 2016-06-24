@@ -30,7 +30,7 @@ class Router
 	
 	public static function getInstance()
 	{
-		if ( !isset(self::$instance ) )
+		if ( !isset( self::$instance ) )
 			self::$instance = new self;
 		
 		return self::$instance;
@@ -57,7 +57,7 @@ class Router
 		$filePath = Path::$FILE->routes . 'statics.json';
 		
 		if ( !file_exists( $filePath ) )
-			throw new ErrorException('Routes file is missing!');
+			throw new ErrorException( 'Routes file is missing!' );
 		
 		$routes	= file_get_contents( $filePath );
 		$routes	= json_decode( $routes );
