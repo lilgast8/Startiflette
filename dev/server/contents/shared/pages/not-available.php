@@ -17,7 +17,7 @@ class NotAvailableContent extends AbstractContent
 		
 		$d->title	= "This page is not available on mobile.";
 		$d->txt		= "The content you attempt to reach is not available on the mobile version. <br>
-		You can attempt this content on your desktop and tablet or go back to the <a href=\"" . Router::$LINK->statics->home . "\">homepage</a> and continue your browsing.";
+		You can attempt this content on your desktop and tablet or go back to the <a href=\"" . Router::$LINK->home . "\">homepage</a> and continue your browsing.";
 		
 		
 		
