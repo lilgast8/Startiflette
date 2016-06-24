@@ -160,7 +160,7 @@ class Router
 		echo '<pre>';
 		print_r( $page );
 		echo '</pre>';
-		exit();
+		// exit();
 		
 		if ( Lang::$LANG_EXIST && $page->exist ) { // page exist
 			$this->setIsHomepage( $page->id );
@@ -477,23 +477,33 @@ class Router
 	private function setLinks()
 	{
 		self::$LINK = new stdClass();
-		
-		foreach ( Router::$ROUTES as $routesGroupName => $pages ) { // parse all routes group
 			
-			self::$LINK->$routesGroupName = new stdClass();
+		foreach ( Router::$ROUTES as $pageId => $routeParams ) { // parse all pages
 			
-			foreach ( $pages as $pageId => $pageUrls ) { // parse all pages
-				
+			if ( !isset( $routeParams->alias ) ) {
 				$pageName = String::camelCase( $pageId );
 				
 				if ( $pageName !== 'error404' && $pageId == 'home' )
-					self::$LINK->$routesGroupName->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageUrls->url->{ Lang::$LANG };
+					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $routeParams->url->{ Lang::$LANG };
 				
 				else if ( $pageId !== 'error404' )
-					self::$LINK->$routesGroupName->$pageName = Path::$URL->base . Lang::$LANG_LINK . $pageUrls->url->{ Lang::$LANG };
+					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->url->{ Lang::$LANG };
 			}
 			
+			else {
+				foreach ( $routeParams->alias as $aliasId => $alias ) {
+					$pageName = String::camelCase( $aliasId );
+					
+					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->url->{ Lang::$LANG } . '/' . $alias->{ Lang::$LANG };
+				}
+			}
 		}
+		
+		
+		echo '<pre>';
+		print_r( self::$LINK );
+		echo '</pre>';
+		exit();
 	}
 	
 	
