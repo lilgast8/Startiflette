@@ -90,7 +90,6 @@ class PagesController
 		
 		include_once $phpFilePath;
 		
-		// $this->pageController = new $controllerClassName( self::$PAGE_INFOS->id, 'page' );
 		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->id, self::$PAGE_INFOS->alias, 'page' );
 	}
 	
