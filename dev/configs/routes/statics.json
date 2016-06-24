@@ -41,6 +41,27 @@
 		"device": {
 			"mobile": false
 		}
+	},
+	
+	"project": {
+		"url": {
+			"fr": "projet",
+			"en": "project",
+			"ex": "project-ex"
+		},
+		"subs": {
+			"mask-1": {
+				"fr": "masque-1",
+				"en": "mask-1",
+				"ex": "masque-1-ex"
+			},
+			"mask-2": {
+				"fr": "masque-2",
+				"en": "mask-2",
+				"ex": "masque-2-ex"
+			}
+		},
+		"params": [ "param-1", "param-2", "param-3" ]
 	}
 	
 }
