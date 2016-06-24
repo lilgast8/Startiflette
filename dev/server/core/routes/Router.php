@@ -216,30 +216,6 @@ class Router
 		}
 		
 		
-		
-		/*foreach ( self::$ROUTES as $routesGroup ) { // parse all routes group
-			
-			foreach ( $routesGroup as $pageId => $pageParams ) { // parse all pages
-				
-				if ( $pageParams->url->{ Lang::$LANG } == self::$URL->page ) { // if url exist
-					$page->exist	= true;
-					$page->id		= $pageId;
-					$page->urls		= $pageParams->url;
-					
-					break; // break second foreach
-				}
-				
-			}
-			
-			if ( $page->exist ) {
-				$page->available = $this->getPageAvailability( $pageParams );
-				
-				break; // break first foreach
-			}
-			
-		}*/
-		
-		
 		return $page;
 	}
 	
