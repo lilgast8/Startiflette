@@ -148,7 +148,6 @@ class Router
 	{
 		$page = $this->getPageInfos();
 		
-		// if ( Lang::$LANG_EXIST && $page->exist && $page->available ) { // page exist & available on the current device
 		if ( Lang::$LANG_EXIST && $page->exist ) { // page exist
 			$this->setIsHomepage( $page->id );
 			$this->setAltLangUrl( $page->urls );
@@ -156,18 +155,6 @@ class Router
 			if ( !Lang::$MULTI_LANG && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG ||
 				 $this->isHomepage && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG )
 				$this->redirectToFullPathWithoutLang();
-			
-			$this->pagesController->setPageInfos( $page->id, $page->urls, $page->available );
-		}
-		else if ( Lang::$LANG_EXIST && $page->exist && !$page->available ) {
-			echo '👙';
-			// $page->id	= 'alt-device-mobile';
-			// $page->urls	= self::$ROUTES->statics->{ $page->id };
-			// $page->urls	= self::$ROUTES->statics->{ $page->id };
-			
-			// $this->setAltLangUrl( self::$ROUTES->statics->home );
-			
-			// header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
 			$this->pagesController->setPageInfos( $page->id, $page->urls, $page->available );
 		}

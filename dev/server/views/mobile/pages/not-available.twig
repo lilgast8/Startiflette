@@ -8,8 +8,10 @@
 {% block content %}
 	
 	<br><br><br>
-	{{ title }}<br>
-	desktop page content / {{ Lang.LANG }}
+	<b>{{ title }}</b><br>
+	{{ txt|raw }}
+	<br><br>
+	<img src="{{ Path.URL.img }}temp/not-available.gif" alt="{{ title }}">
 	<br><br><br><br>
 	
 {% endblock %}

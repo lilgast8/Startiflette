@@ -39,7 +39,7 @@
 			"ex": "projects-ex"
 		},
 		"device": {
-			"desktop": false
+			"mobile": false
 		}
 	}
 	

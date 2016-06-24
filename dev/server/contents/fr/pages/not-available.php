@@ -11,11 +11,13 @@ class NotAvailableContent extends AbstractContent
 		
 		
 		$d->metas			= new stdClass();
-		$d->metas->title	= "Not available — Title";
-		$d->metas->desc		= "Not available — Description";
+		$d->metas->title	= "Pas disponible — Title";
+		$d->metas->desc		= "Pas disponible — Description";
 		
 		
-		$d->title = "— Not available  / fr —";
+		$d->title	= "Cette page n'est pas disponible sur mobile.";
+		$d->txt		= "Le contenu auquel vous tentez d'accéder n'est pas disponible sur la version mobile. <br>
+		Vous pouvez accéder à ce contenu depuis votre ordinateur et tablette ou retourner sur la <a href=\"" . Router::$LINK->statics->home . "\">page d'accueil</a> et continuer votre navigation.";
 		
 		
 		
