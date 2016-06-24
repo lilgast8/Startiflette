@@ -140,10 +140,6 @@ class Router
 	private function setPageInfos()
 	{
 		$page = $this->getPageInfos();
-		echo '<pre>';
-		print_r( $page );
-		echo '</pre>';
-		// exit();
 		
 		if ( Lang::$LANG_EXIST && $page->exist ) { // page exist
 			$this->setIsHomepage( $page->id );
@@ -157,11 +153,9 @@ class Router
 		}
 		else { // 404
 			$page->id	= 'error-404';
-			// $page->urls	= self::$ROUTES->statics->{ $page->id };
 			$page->urls	= self::$ROUTES->{ $page->id };
 			
-			// $this->setAltLangUrl( self::$ROUTES->statics->home );
-			$this->setAltLangUrl( self::$ROUTES->home );
+			$this->setAltLangUrl( self::$ROUTES->home->url );
 			
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
@@ -184,7 +178,6 @@ class Router
 		foreach ( self::$ROUTES as $pageId => $pageParams ) { // parse all pages
 			
 			$searchPath	= Path::$URL->base . Lang::$LANG . '/' . $pageParams->url->{ Lang::$LANG };
-			// echo '<b>'.$pageId. ':</b> '.$path. ' ——— '. $searchPath.' ——— ' . strpos( $path, $searchPath ) . '<br>';
 			
 			/* unique page */
 			if ( $path == $searchPath ) {
@@ -283,12 +276,12 @@ class Router
 	}
 	
 	
-	private function setAltLangUrl( $pageParams )
+	private function setAltLangUrl( $urls )
 	{
 		foreach ( Lang::$ALL_LANG as $lang ) {
 			
 			if ( $lang !== Lang::$LANG ) {
-				$currentUrl = $pageParams->$lang;
+				$currentUrl = $urls->$lang;
 				
 				if ( $this->isHomepage && $lang == Lang::$DEFAULT_LANG )
 					$urlPart = '';
