@@ -59,12 +59,13 @@ class PagesController
 	}
 	
 	
-	public function setPageInfos( $pageId, $pageUrls, $pageAvailability )
+	public function setPageInfos( $page )
 	{
-		self::$PAGE_INFOS				= new stdClass();
+		self::$PAGE_INFOS			= new stdClass();
 		
-		self::$PAGE_INFOS->id			= $pageAvailability ? $pageId : 'not-available';
-		self::$PAGE_INFOS->name			= String::camelCase( self::$PAGE_INFOS->id );
+		self::$PAGE_INFOS->id		= $page->available ? $page->id : 'not-available';
+		self::$PAGE_INFOS->name		= String::camelCase( self::$PAGE_INFOS->id );
+		self::$PAGE_INFOS->alias	= $page->alias;
 	}
 	
 	
@@ -89,7 +90,8 @@ class PagesController
 		
 		include_once $phpFilePath;
 		
-		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->id, 'page' );
+		// $this->pageController = new $controllerClassName( self::$PAGE_INFOS->id, 'page' );
+		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->id, self::$PAGE_INFOS->alias, 'page' );
 	}
 	
 	

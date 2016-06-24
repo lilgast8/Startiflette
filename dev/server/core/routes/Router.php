@@ -149,7 +149,7 @@ class Router
 				 $this->isHomepage && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG )
 				$this->redirectToFullPathWithoutLang();
 			
-			$this->pagesController->setPageInfos( $page->id, $page->urls, $page->available );
+			$this->pagesController->setPageInfos( $page );
 		}
 		else { // 404
 			$page->id	= 'error-404';
@@ -159,7 +159,7 @@ class Router
 			
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
-			$this->pagesController->setPageInfos( $page->id, $page->urls, $page->available );
+			$this->pagesController->setPageInfos( $page );
 		}
 	}
 	

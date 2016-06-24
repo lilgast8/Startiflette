@@ -2,7 +2,7 @@
 
 
 
-class ProjectContent extends AbstractContent
+class Proj1Content extends AbstractContent
 {
 	
 	public function setDatas()
@@ -11,11 +11,11 @@ class ProjectContent extends AbstractContent
 		
 		
 		$d->metas			= new stdClass();
-		$d->metas->title	= "Projet";
-		$d->metas->desc		= "Projet";
+		$d->metas->title	= "Projet 1";
+		$d->metas->desc		= "Projet 1";
 		
 		
-		$d->title = "— Projet —";
+		$d->title = "— Projet 1 —";
 		
 		
 		

@@ -9,10 +9,11 @@ class AbstractViewController
 	private $staticViewsInfos	= null;
 	
 	
-	public function __construct( $id, $type )
+	public function __construct( $id, $alias, $type )
 	{
-		$this->id	= $id;
-		$this->type	= $type;
+		$this->id		= $id;
+		$this->alias	= $alias;
+		$this->type		= $type;
 		
 		$this->pagesController = PagesController::getInstance();
 		
@@ -93,6 +94,14 @@ class AbstractViewController
 		$contentClassName	= String::titleCase( $this->id ) . 'Content';
 		
 		$this->getContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
+		
+		if ( $this->alias !== null ) {
+			$phpFilePath		= Path::$FILE->contentsLang . $this->type . 's/' . $this->alias . '.php';
+			$phpSharedFilePath	= Path::$FILE->contentsShared . $this->type . 's/' . $this->alias . '.php';
+			$contentClassName	= String::titleCase( $this->alias ) . 'Content';
+			
+			$this->getContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
+		}
 	}
 	
 	
