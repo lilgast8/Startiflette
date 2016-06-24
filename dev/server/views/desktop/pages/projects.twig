@@ -11,10 +11,11 @@
 	{{ title }}<br>
 	desktop page content / {{ Lang.LANG }}
 	<br><br>
-	<a href="{{ Path.URL.base ~ Lang.LANG }}/projet/proj-1">Project 1</a><br>
-	<a href="{{ Path.URL.base ~ Lang.LANG }}/projet/proj-2">Project 2</a><br>
-	<a href="{{ Path.URL.base ~ Lang.LANG }}/projet/proj-3">Project 3</a><br>
-	{# <img src="{{ Path.URL.img }}temp/projects.jpg" alt="{{ title }}"> #}
+	<a href="{{ Router.LINK.proj1 }}">Project 1</a><br>
+	<a href="{{ Router.LINK.proj2 }}">Project 2</a><br>
+	<a href="{{ Router.LINK.proj3 }}">Project 3</a><br>
+	<br>
+	<img src="{{ Path.URL.img }}temp/projects.jpg" alt="{{ title }}">
 	<br><br><br><br>
 	
 {% endblock %}
