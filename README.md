@@ -103,7 +103,10 @@ Made the configurations in the `dev/configs/config/config.json` file.
 
 ## Routes
 
-* error-404 & home must be defined *— TO COMPLETE*
+* `error-404` & `home` have to be defined. They are the default routes that every project must have.
+* Each route is defined by a key which is the page id. The object can contain the following parameters:
+	* `url`: @type {object} list of the urls for each languages
+	* `device`: @type {object} Can be used if you need to make unavailable a page on a specific device. For example, `"device": { "mobile": false }` will make the page unavailable on mobile and show the `not-available.twig` template instead. You can personalize this template like any other page (css, JS, content).
 
 
 
