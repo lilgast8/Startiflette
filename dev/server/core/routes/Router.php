@@ -155,7 +155,7 @@ class Router
 			$page->id	= 'error-404';
 			$page->urls	= self::$ROUTES->{ $page->id };
 			
-			$this->setAltLangUrl( self::$ROUTES->home->url );
+			$this->setAltLangUrl( self::$ROUTES->home->{ 'url-page' } );
 			
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
@@ -177,13 +177,13 @@ class Router
 		
 		foreach ( self::$ROUTES as $pageId => $pageParams ) { // parse all pages
 			
-			$searchPath	= Path::$URL->base . Lang::$LANG . '/' . $pageParams->url->{ Lang::$LANG };
+			$searchPath	= Path::$URL->base . Lang::$LANG . '/' . $pageParams->{ 'url-page' }->{ Lang::$LANG };
 			
 			/* unique page */
 			if ( $path == $searchPath ) {
 				$page->exist	= true;
 				$page->id		= $pageId;
-				$page->urls		= $pageParams->url;
+				$page->urls		= $pageParams->{ 'url-page' };
 				
 				break; // break first foreach
 			}
@@ -191,15 +191,15 @@ class Router
 			/* multiple page */
 			else if ( strpos( $path, $searchPath ) !== false && $pageId != 'home' ) {
 				
-				if ( isset( $pageParams->alias ) ) {
+				if ( isset( $pageParams->{ 'url-alias' } ) ) {
 					
-					foreach ( $pageParams->alias as $aliasId => $alias ) {
+					foreach ( $pageParams->{ 'url-alias' } as $aliasId => $alias ) {
 						
 						if ( $searchPath . '/' . $alias->{ Lang::$LANG } == $path ) {
 							$page->exist	= true;
 							$page->id		= $pageId;
 							$page->alias	= $aliasId;
-							$page->urls		= $this->getAltPageUrl( $pageParams->url, $alias );
+							$page->urls		= $this->getAltPageUrl( $pageParams->{ 'url-page' }, $alias );
 							
 							break; // break second foreach
 						}
@@ -292,21 +292,21 @@ class Router
 			
 		foreach ( Router::$ROUTES as $pageId => $routeParams ) { // parse all pages
 			
-			if ( !isset( $routeParams->alias ) ) {
+			if ( !isset( $routeParams->{ 'url-alias' } ) ) {
 				$pageName = String::camelCase( $pageId );
 				
 				if ( $pageName !== 'error404' && $pageId == 'home' )
-					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $routeParams->url->{ Lang::$LANG };
+					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $routeParams->{ 'url-page' }->{ Lang::$LANG };
 				
 				else if ( $pageId !== 'error404' )
-					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->url->{ Lang::$LANG };
+					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG };
 			}
 			
 			else {
-				foreach ( $routeParams->alias as $aliasId => $alias ) {
+				foreach ( $routeParams->{ 'url-alias' } as $aliasId => $alias ) {
 					$pageName = String::camelCase( $aliasId );
 					
-					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->url->{ Lang::$LANG } . '/' . $alias->{ Lang::$LANG };
+					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $alias->{ Lang::$LANG };
 				}
 			}
 		}
