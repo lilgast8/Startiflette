@@ -166,18 +166,22 @@ class Router
 	
 	private function getPageInfos()
 	{
-		$page = new stdClass();
+		$page				= new stdClass();
 		$page->exist		= false;
 		$page->id			= null;
 		$page->alias		= null;
 		$page->urls			= null;
 		$page->available	= true;
 		
-		$path				= String::removeLastSpecificChar( Path::$URL->base . self::$URL->path, '/' );
-		
 		foreach ( self::$ROUTES as $pageId => $pageParams ) { // parse all pages
 			
-			$searchPath	= Path::$URL->base . Lang::$LANG . '/' . $pageParams->{ 'url-page' }->{ Lang::$LANG };
+			$path = self::$URL->page == '' && Lang::$LANG == Lang::$DEFAULT_LANG ?
+					$path = Path::$URL->base :
+					String::removeLastSpecificChar( Path::$URL->base . self::$URL->path, '/' );
+			
+			$searchPath = $pageId == 'home' ?
+						  $searchPath = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageParams->{ 'url-page' }->{ Lang::$LANG } :
+						  Path::$URL->base . Lang::$LANG_LINK . $pageParams->{ 'url-page' }->{ Lang::$LANG };
 			
 			/* unique page */
 			if ( $path == $searchPath ) {
