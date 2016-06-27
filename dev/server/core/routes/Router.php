@@ -176,6 +176,8 @@ class Router
 		$page->urls			= null;
 		$page->available	= true;
 		
+		$aliasParams		= null;
+		
 		foreach ( self::$ROUTES as $pageId => $pageParams ) { // parse all pages
 			
 			$path = self::$URL->page == '' && Lang::$LANG == Lang::$DEFAULT_LANG ?
@@ -192,25 +194,23 @@ class Router
 				$page->id		= $pageId;
 				$page->urls		= $pageParams->{ 'url-page' };
 				
-				$page			= $this->setSpecificOptions( $page, $pageParams );
-				
-				break; // break first foreach
+				$page			= $this->setSpecificOptions( $page, $pageParams, null );
 			}
 			
 			/* multiple page */
 			else if ( strpos( $path, $searchPath ) !== false && $pageId != 'home' ) {
 				
-				if ( isset( $pageParams->{ 'url-alias' } ) ) {
+				if ( isset( $pageParams->subs ) ) {
 					
-					foreach ( $pageParams->{ 'url-alias' } as $aliasId => $alias ) {
+					foreach ( $pageParams->subs as $aliasId => $aliasParams ) {
 						
-						if ( $searchPath . '/' . $alias->{ Lang::$LANG } == $path ) {
+						if ( $searchPath . '/' . $aliasParams->{ 'url-alias' }->{ Lang::$LANG } == $path ) {
 							$page->exist	= true;
 							$page->id		= $pageId;
 							$page->alias	= $aliasId;
-							$page->urls		= $this->getAltPageUrl( $pageParams->{ 'url-page' }, $alias );
+							$page->urls		= $this->getAltPageUrl( $pageParams->{ 'url-page' }, $aliasParams->{ 'url-alias' } );
 							
-							$page			= $this->setSpecificOptions( $page, $pageParams );
+							$page			= $this->setSpecificOptions( $page, $pageParams, $aliasParams );
 							
 							break; // break second foreach
 						}
@@ -219,7 +219,7 @@ class Router
 			}
 			
 			if ( $page->exist ) {
-				$page->available = $this->getPageAvailability( $pageParams );
+				$page->available = $this->getPageAvailability( $pageParams, $aliasParams );
 				
 				break; // break first foreach
 			}
@@ -243,18 +243,24 @@ class Router
 	}
 	
 	
-	private function setSpecificOptions( $page, $pageParams )
+	private function setSpecificOptions( $page, $pageParams, $aliasParams )
 	{
 		$page->js	= isset( $pageParams->js ) ? $pageParams->js : null;
 		$page->twig	= isset( $pageParams->twig ) ? $pageParams->twig : null;
 		$page->ctrl	= isset( $pageParams->ctrl ) ? $pageParams->ctrl : null;
+		
+		if ( $aliasParams ) {
+			$page->js	= isset( $aliasParams->js ) ? $aliasParams->js : $page->js;
+			$page->twig	= isset( $aliasParams->twig ) ? $aliasParams->twig : $page->twig;
+			$page->ctrl	= isset( $aliasParams->ctrl ) ? $aliasParams->ctrl : $page->ctrl;
+		}
 		
 		
 		return $page;
 	}
 	
 	
-	private function getPageAvailability( $pageParams )
+	private function getPageAvailability( $pageParams, $aliasParams )
 	{
 		$pageAvailability = true;
 		
@@ -262,6 +268,12 @@ class Router
 			if ( isset( $pageParams->device->{ Device::$DEVICE } ) )
 				if ( !$pageParams->device->{ Device::$DEVICE } )
 					$pageAvailability = false;
+		
+		if ( $aliasParams !== null )
+			if ( isset( $aliasParams->device ) )
+				if ( isset( $aliasParams->device->{ Device::$DEVICE } ) )
+					if ( !$aliasParams->device->{ Device::$DEVICE } )
+						$pageAvailability = false;
 		
 		
 		return $pageAvailability;
@@ -314,7 +326,7 @@ class Router
 			
 		foreach ( Router::$ROUTES as $pageId => $routeParams ) { // parse all pages
 			
-			if ( !isset( $routeParams->{ 'url-alias' } ) ) {
+			if ( !isset( $routeParams->subs ) ) {
 				$pageName = String::camelCase( $pageId );
 				
 				if ( $pageName !== 'error404' && $pageId == 'home' )
@@ -325,10 +337,10 @@ class Router
 			}
 			
 			else {
-				foreach ( $routeParams->{ 'url-alias' } as $aliasId => $alias ) {
+				foreach ( $routeParams->subs as $aliasId => $alias ) {
 					$pageName = String::camelCase( $aliasId );
 					
-					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $alias->{ Lang::$LANG };
+					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $alias->{ 'url-alias' }->{ Lang::$LANG };
 				}
 			}
 		}

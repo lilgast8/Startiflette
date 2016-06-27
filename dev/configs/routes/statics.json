@@ -49,21 +49,27 @@
 			"en": "project",
 			"ex": "project-ex"
 		},
-		"url-alias": {
+		"subs": {
 			"proj-1": {
-				"fr": "projet-1",
-				"en": "project-1",
-				"ex": "project-1-ex"
+				"url-alias": {
+					"fr": "projet-1",
+					"en": "project-1",
+					"ex": "project-1-ex"
+				}
 			},
 			"proj-2": {
-				"fr": "projet-2",
-				"en": "project-2",
-				"ex": "project-2-ex"
+				"url-alias": {
+					"fr": "projet-2",
+					"en": "project-2",
+					"ex": "project-2-ex"
+				}
 			},
 			"proj-3": {
-				"fr": "projet-3",
-				"en": "project-3",
-				"ex": "project-3-ex"
+				"url-alias": {
+					"fr": "projet-3",
+					"en": "project-3",
+					"ex": "project-3-ex"
+				}
 			}
 		},
 		"params": [ "param-1", "param-2", "param-3" ]
