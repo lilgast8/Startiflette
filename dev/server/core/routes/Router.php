@@ -169,6 +169,9 @@ class Router
 		$page				= new stdClass();
 		$page->exist		= false;
 		$page->id			= null;
+		$page->js			= null;
+		$page->twig			= null;
+		$page->ctrl			= null;
 		$page->alias		= null;
 		$page->urls			= null;
 		$page->available	= true;
@@ -189,6 +192,8 @@ class Router
 				$page->id		= $pageId;
 				$page->urls		= $pageParams->{ 'url-page' };
 				
+				$page			= $this->setSpecificOptions( $page, $pageParams );
+				
 				break; // break first foreach
 			}
 			
@@ -204,6 +209,8 @@ class Router
 							$page->id		= $pageId;
 							$page->alias	= $aliasId;
 							$page->urls		= $this->getAltPageUrl( $pageParams->{ 'url-page' }, $alias );
+							
+							$page			= $this->setSpecificOptions( $page, $pageParams );
 							
 							break; // break second foreach
 						}
@@ -233,6 +240,17 @@ class Router
 		
 		
 		return $urls;
+	}
+	
+	
+	private function setSpecificOptions( $page, $pageParams )
+	{
+		$page->js	= isset( $pageParams->js ) ? $pageParams->js : null;
+		$page->twig	= isset( $pageParams->twig ) ? $pageParams->twig : null;
+		$page->ctrl	= isset( $pageParams->ctrl ) ? $pageParams->ctrl : null;
+		
+		
+		return $page;
 	}
 	
 	

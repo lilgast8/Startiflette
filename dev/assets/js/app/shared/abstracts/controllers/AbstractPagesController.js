@@ -75,7 +75,7 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	var _setPageInfos = function() {
 		var $page	= $( document.getElementById( 'page' ) );
-		var id		= $page[0].getAttribute( 'data-id' );
+		var id		= $page[0].getAttribute( 'data-js-id' );
 		var title	= $page[0].getAttribute( 'data-title' );
 		
 		this.prevPageInfos.id		= this.pageInfos.id;

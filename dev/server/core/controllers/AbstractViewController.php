@@ -113,7 +113,7 @@ class AbstractViewController
 	
 	private function getTemplate()
 	{
-		$this->template = $this->pagesController->twig->loadTemplate( PagesController::$PAGE_INFOS->id . '.twig' );
+		$this->template = $this->pagesController->twig->loadTemplate( PagesController::$PAGE_INFOS->twig . '.twig' );
 	}
 	
 	

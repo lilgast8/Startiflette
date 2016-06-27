@@ -64,8 +64,15 @@ class PagesController
 		self::$PAGE_INFOS			= new stdClass();
 		
 		self::$PAGE_INFOS->id		= $page->available ? $page->id : 'not-available';
+		self::$PAGE_INFOS->js		= $page->js === null ? $page->id : $page->js;
+		self::$PAGE_INFOS->twig		= $page->twig === null ? $page->id : $page->twig;
+		self::$PAGE_INFOS->ctrl		= $page->ctrl === null ? $page->id : $page->ctrl;
 		self::$PAGE_INFOS->name		= String::camelCase( self::$PAGE_INFOS->id );
 		self::$PAGE_INFOS->alias	= $page->alias;
+		
+		echo '<pre>';
+		print_r( self::$PAGE_INFOS );
+		echo '</pre>';
 	}
 	
 	
@@ -79,7 +86,7 @@ class PagesController
 	
 	private function setPageViewController()
 	{
-		$controllerClassName	= ucfirst( self::$PAGE_INFOS->id );
+		$controllerClassName	= String::titleCase( self::$PAGE_INFOS->ctrl );
 		
 		$phpFilePath			= 'server/core/controllers/pages/' . $controllerClassName . '.php';
 		
@@ -90,7 +97,7 @@ class PagesController
 		
 		include_once $phpFilePath;
 		
-		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->id, self::$PAGE_INFOS->alias, 'page' );
+		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->ctrl, self::$PAGE_INFOS->alias, 'page' );
 	}
 	
 	
