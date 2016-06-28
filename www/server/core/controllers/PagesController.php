@@ -30,7 +30,7 @@ class PagesController
 	
 	public static function getInstance()
 	{
-		if ( !isset(self::$instance ) )
+		if ( !isset( self::$instance ) )
 			self::$instance = new self;
 		
 		return self::$instance;
@@ -59,12 +59,24 @@ class PagesController
 	}
 	
 	
-	public function setPageInfos( $pageId, $pageParams )
+	public function setPageInfos( $page )
 	{
 		self::$PAGE_INFOS			= new stdClass();
 		
-		self::$PAGE_INFOS->id		= $pageId;
+		self::$PAGE_INFOS->id		= $page->available ? $page->id : 'not-available';
 		self::$PAGE_INFOS->name		= String::camelCase( self::$PAGE_INFOS->id );
+		if ( $page->available ) {
+			self::$PAGE_INFOS->js		= $page->js === null ? $page->id : $page->js;
+			self::$PAGE_INFOS->twig		= $page->twig === null ? $page->id : $page->twig;
+			self::$PAGE_INFOS->ctrl		= $page->ctrl === null ? $page->id : $page->ctrl;
+			self::$PAGE_INFOS->alias	= $page->alias;
+		}
+		else {
+			self::$PAGE_INFOS->js		= self::$PAGE_INFOS->id;
+			self::$PAGE_INFOS->twig		= self::$PAGE_INFOS->id;
+			self::$PAGE_INFOS->ctrl		= self::$PAGE_INFOS->id;
+			self::$PAGE_INFOS->alias	= null;
+		}
 	}
 	
 	
@@ -78,7 +90,7 @@ class PagesController
 	
 	private function setPageViewController()
 	{
-		$controllerClassName	= ucfirst( self::$PAGE_INFOS->id );
+		$controllerClassName	= String::titleCase( self::$PAGE_INFOS->ctrl );
 		
 		$phpFilePath			= 'server/core/controllers/pages/' . $controllerClassName . '.php';
 		
@@ -89,7 +101,7 @@ class PagesController
 		
 		include_once $phpFilePath;
 		
-		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->id, 'page' );
+		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->ctrl, self::$PAGE_INFOS->alias, 'page' );
 	}
 	
 	

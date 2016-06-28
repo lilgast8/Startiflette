@@ -30,7 +30,7 @@ class Router
 	
 	public static function getInstance()
 	{
-		if ( !isset(self::$instance ) )
+		if ( !isset( self::$instance ) )
 			self::$instance = new self;
 		
 		return self::$instance;
@@ -39,20 +39,13 @@ class Router
 	
 	private function setRoutes()
 	{
-		self::$ROUTES = new stdClass();
+		$filePath = Path::$FILE->routesFile;
 		
-		foreach ( Config::$ROUTES_FILES as $fileName ) {
-			$filePath = Path::$FILE->routes . $fileName . '.json';
-			
-			if ( !file_exists( $filePath ) )
-				throw new ErrorException('Routes file is missing!');
-			
-			$routes	= file_get_contents( $filePath );
-			$routes	= json_decode( $routes );
-			
-			self::$ROUTES->$fileName = new stdClass();
-			self::$ROUTES->$fileName = $routes;
-		}
+		if ( !file_exists( $filePath ) )
+			throw new ErrorException( 'Routes file is missing!' );
+		
+		$routes			= file_get_contents( $filePath );
+		self::$ROUTES	= json_decode( $routes );
 	}
 	
 	
@@ -156,49 +149,134 @@ class Router
 				 $this->isHomepage && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG )
 				$this->redirectToFullPathWithoutLang();
 			
-			$this->pagesController->setPageInfos( $page->id, $page->urls );
+			$this->pagesController->setPageInfos( $page );
 		}
 		else { // 404
 			$page->id	= 'error-404';
-			$page->urls	= self::$ROUTES->statics->{ $page->id };
+			$page->urls	= self::$ROUTES->{ $page->id };
 			
-			$this->setAltLangUrl( self::$ROUTES->statics->home );
+			$this->setAltLangUrl( self::$ROUTES->home->{ 'url-page' } );
 			
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
-			$this->pagesController->setPageInfos( $page->id, $page->urls );
+			$this->pagesController->setPageInfos( $page );
 		}
 	}
 	
 	
 	private function getPageInfos()
 	{
-		$page = new stdClass();
-		$page->exist	= false;
-		$page->id		= null;
-		$page->urls		= null;
+		$page				= new stdClass();
+		$page->exist		= false;
+		$page->id			= null;
+		$page->js			= null;
+		$page->twig			= null;
+		$page->ctrl			= null;
+		$page->alias		= null;
+		$page->urls			= null;
+		$page->available	= true;
 		
-		foreach ( self::$ROUTES as $routesGroup ) { // parse all routes group
+		$aliasParams		= null;
+		
+		foreach ( self::$ROUTES as $pageId => $pageParams ) { // parse all pages
 			
-			foreach ( $routesGroup as $pageId => $pageParams ) { // parse all pages
+			$path = self::$URL->page == '' && Lang::$LANG == Lang::$DEFAULT_LANG ?
+					$path = Path::$URL->base :
+					String::removeLastSpecificChar( Path::$URL->base . self::$URL->path, '/' );
+			
+			$searchPath = $pageId == 'home' ?
+						  $searchPath = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageParams->{ 'url-page' }->{ Lang::$LANG } :
+						  Path::$URL->base . Lang::$LANG_LINK . $pageParams->{ 'url-page' }->{ Lang::$LANG };
+			
+			/* unique page */
+			if ( $path == $searchPath ) {
+				$page->exist	= true;
+				$page->id		= $pageId;
+				$page->urls		= $pageParams->{ 'url-page' };
 				
-				if ( $pageParams->{ Lang::$LANG } == self::$URL->page ) { // if url exist
-					$page->exist	= true;
-					$page->id		= $pageId;
-					$page->urls		= $pageParams;
-					
-					break; // break second foreach
-				}
-				
+				$page			= $this->setSpecificOptions( $page, $pageParams, null );
 			}
 			
-			if ( $page->exist )
+			/* multiple page */
+			else if ( strpos( $path, $searchPath ) !== false && $pageId != 'home' ) {
+				
+				if ( isset( $pageParams->subs ) ) {
+					
+					foreach ( $pageParams->subs as $aliasId => $aliasParams ) {
+						
+						if ( $searchPath . '/' . $aliasParams->{ 'url-alias' }->{ Lang::$LANG } == $path ) {
+							$page->exist	= true;
+							$page->id		= $pageId;
+							$page->alias	= $aliasId;
+							$page->urls		= $this->getAltPageUrl( $pageParams->{ 'url-page' }, $aliasParams->{ 'url-alias' } );
+							
+							$page			= $this->setSpecificOptions( $page, $pageParams, $aliasParams );
+							
+							break; // break second foreach
+						}
+					}
+				}
+			}
+			
+			if ( $page->exist ) {
+				$page->available = $this->getPageAvailability( $pageParams, $aliasParams );
+				
 				break; // break first foreach
+			}
 			
 		}
 		
 		
 		return $page;
+	}
+	
+	
+	private function getAltPageUrl( $page, $alias )
+	{
+		$urls = new stdClass();
+		
+		foreach ( Lang::$ALL_LANG as $lang )
+			$urls->$lang = $page->$lang . '/' . $alias->$lang;
+		
+		
+		return $urls;
+	}
+	
+	
+	private function setSpecificOptions( $page, $pageParams, $aliasParams )
+	{
+		$page->js	= isset( $pageParams->js ) ? $pageParams->js : null;
+		$page->twig	= isset( $pageParams->twig ) ? $pageParams->twig : null;
+		$page->ctrl	= isset( $pageParams->ctrl ) ? $pageParams->ctrl : null;
+		
+		if ( $aliasParams ) {
+			$page->js	= isset( $aliasParams->js ) ? $aliasParams->js : $page->js;
+			$page->twig	= isset( $aliasParams->twig ) ? $aliasParams->twig : $page->twig;
+			$page->ctrl	= isset( $aliasParams->ctrl ) ? $aliasParams->ctrl : $page->ctrl;
+		}
+		
+		
+		return $page;
+	}
+	
+	
+	private function getPageAvailability( $pageParams, $aliasParams )
+	{
+		$pageAvailability = true;
+		
+		if ( isset( $pageParams->device ) )
+			if ( isset( $pageParams->device->{ Device::$DEVICE } ) )
+				if ( !$pageParams->device->{ Device::$DEVICE } )
+					$pageAvailability = false;
+		
+		if ( $aliasParams !== null )
+			if ( isset( $aliasParams->device ) )
+				if ( isset( $aliasParams->device->{ Device::$DEVICE } ) )
+					if ( !$aliasParams->device->{ Device::$DEVICE } )
+						$pageAvailability = false;
+		
+		
+		return $pageAvailability;
 	}
 	
 	
@@ -208,13 +286,12 @@ class Router
 	}
 	
 	
-	private function setAltLangUrl( $pageParams )
+	private function setAltLangUrl( $urls )
 	{
 		foreach ( Lang::$ALL_LANG as $lang ) {
 			
 			if ( $lang !== Lang::$LANG ) {
-				// $currentUrl = $pageParams->$lang->url;
-				$currentUrl = $pageParams->$lang;
+				$currentUrl = $urls->$lang;
 				
 				if ( $this->isHomepage && $lang == Lang::$DEFAULT_LANG )
 					$urlPart = '';
@@ -246,22 +323,26 @@ class Router
 	private function setLinks()
 	{
 		self::$LINK = new stdClass();
-		
-		foreach ( Router::$ROUTES as $routesGroupName => $pages ) { // parse all routes group
 			
-			self::$LINK->$routesGroupName = new stdClass();
+		foreach ( Router::$ROUTES as $pageId => $routeParams ) { // parse all pages
 			
-			foreach ( $pages as $pageId => $pageUrls ) { // parse all pages
-				
+			if ( !isset( $routeParams->subs ) ) {
 				$pageName = String::camelCase( $pageId );
 				
 				if ( $pageName !== 'error404' && $pageId == 'home' )
-					self::$LINK->$routesGroupName->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageUrls->{ Lang::$LANG };
-					
+					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $routeParams->{ 'url-page' }->{ Lang::$LANG };
+				
 				else if ( $pageId !== 'error404' )
-					self::$LINK->$routesGroupName->$pageName = Path::$URL->base . Lang::$LANG_LINK . $pageUrls->{ Lang::$LANG };
+					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG };
 			}
 			
+			else {
+				foreach ( $routeParams->subs as $aliasId => $alias ) {
+					$pageName = String::camelCase( $aliasId );
+					
+					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $alias->{ 'url-alias' }->{ Lang::$LANG };
+				}
+			}
 		}
 	}
 	
@@ -270,7 +351,6 @@ class Router
 	{
 		$this->params = new stdClass();
 		
-		$this->params->ROUTES		= self::$ROUTES;
 		$this->params->URL			= self::$URL;
 		$this->params->ALT_LANG_URL	= self::$ALT_LANG_URL;
 		$this->params->LINK			= self::$LINK;

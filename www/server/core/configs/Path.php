@@ -84,8 +84,8 @@ class Path
 		self::$FILE->svgSprite				= self::$FILE->svg		. '_sprite/';
 		self::$FILE->videos					= self::$FILE->assets	. 'videos/';
 		self::$FILE->configs				= 'configs/';
-		self::$FILE->jsFilesFile			= self::$FILE->configs	. 'config/js-files.json';
-		self::$FILE->routes					= self::$FILE->configs	. 'routes/';
+		self::$FILE->jsFilesFile			= self::$FILE->configs	. 'js-files.json';
+		self::$FILE->routesFile				= self::$FILE->configs	. 'routes.json';
 		self::$FILE->server					= 'server/';
 		self::$FILE->contents				= self::$FILE->server	. 'contents/';
 		self::$FILE->contentsLang			= null;
@@ -121,8 +121,8 @@ class Path
 		foreach ( $jsFiles as $fileId => $fileInfos ) { // parse JsFiles infos
 			$listFiles	= '';
 			
-			// dev 
-			if ( Config::$ENV != 'preprod-local' || Config::$ENV != 'preprod' || Config::$ENV != 'prod' ) {
+			// dev
+			if ( Config::$ENV != 'preprod-local' && Config::$ENV != 'preprod' && Config::$ENV != 'prod' ) {
 				$files = $jsFiles->$fileId->files;
 				
 				foreach ( $files as $filePath ) { // parse files list
@@ -135,7 +135,7 @@ class Path
 				}
 			}
 			
-			// preprod-local, preprod or prod 
+			// preprod-local, preprod or prod
 			else {
 				$fileName = $jsFiles->$fileId->name;
 				$fileDest = $jsFiles->$fileId->dest;

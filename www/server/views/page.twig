@@ -8,7 +8,7 @@
 
 {# Content #}
 <!-- {% block title %}{% endblock %} -->
-<section id="page" class="{% block cssClassName %}{% endblock %}" data-id="{{ PagesController.PAGE_INFOS.id }}" data-title="{{ metas.title }}" {% for lang, url in Router.ALT_LANG_URL %}data-lang-{{ lang }}="{{ url }}" {% endfor %}>
+<section id="page" class="{% block cssClassName %}{% endblock %}" data-js-id="{{ PagesController.PAGE_INFOS.js }}" data-title="{{ metas.title }}" {% for lang, url in Router.ALT_LANG_URL %}data-lang-{{ lang }}="{{ url }}" {% endfor %}>
 
 {% block content %}{% endblock %}
 
