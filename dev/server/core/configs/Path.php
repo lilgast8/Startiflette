@@ -84,8 +84,8 @@ class Path
 		self::$FILE->svgSprite				= self::$FILE->svg		. '_sprite/';
 		self::$FILE->videos					= self::$FILE->assets	. 'videos/';
 		self::$FILE->configs				= 'configs/';
-		self::$FILE->jsFilesFile			= self::$FILE->configs	. 'config/js-files.json';
-		self::$FILE->routesFile				= self::$FILE->configs	. 'config/routes.json';
+		self::$FILE->jsFilesFile			= self::$FILE->configs	. 'js-files.json';
+		self::$FILE->routesFile				= self::$FILE->configs	. 'routes.json';
 		self::$FILE->server					= 'server/';
 		self::$FILE->contents				= self::$FILE->server	. 'contents/';
 		self::$FILE->contentsLang			= null;

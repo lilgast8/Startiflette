@@ -5,14 +5,14 @@ var paths	= require( '../utils/paths' );
 
 var fs		= require( 'fs' );
 
-var config	= require( '../../' + paths.env.dev + paths.configs.config.configFile );
+var config	= require( '../../' + paths.env.dev + paths.configs.configFile );
 
 
 
 gulp.task( 'htaccess', function() {
 	
 	if ( options.task == 'default' ) { // force reset config by reloading config.json file if there has been change on it
-		var configFile	= fs.readFileSync( paths.env.dev + paths.configs.config.configFile, 'utf8' );
+		var configFile	= fs.readFileSync( paths.env.dev + paths.configs.configFile, 'utf8' );
 		config			= JSON.parse( configFile );
 	}
 	

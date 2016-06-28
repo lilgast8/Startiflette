@@ -118,16 +118,13 @@ module.exports = {
 	},
 	
 	configs: {
-		dir:			'configs/',
-		allFiles:		'configs/**/*',
-		allJsonFiles:	'configs/**/*.json',
-		
-		config: {
-				dir:			'configs/config/',
-				allFiles:		'configs/config/*.json',
-				configFile:		'configs/config/config.json',
-				jsFilesFile:	'configs/config/js-files.json'
-		},
+		dir:				'configs/',
+		allFiles:			'configs/**/*',
+		allRootJsonFiles:	'configs/*.json',
+		allJsonFiles:		'configs/**/*.json',
+		configFile:			'configs/config.json',
+		jsFilesFile:		'configs/js-files.json',
+		routesFile:			'configs/routes.json',
 		
 		favicons: {
 			dir:		'configs/favicons/',

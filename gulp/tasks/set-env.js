@@ -9,7 +9,7 @@ var fs		= require( 'fs' );
 
 gulp.task( 'set-env', [ 'htaccess' ], function() {
 	
-	var config		= require( '../../' + paths.env.dev + paths.configs.config.configFile );
+	var config		= require( '../../' + paths.env.dev + paths.configs.configFile );
 	var configProd	= JSON.parse( JSON.stringify( config ) );
 	var envProd		= JSON.parse( JSON.stringify( configProd.ENVS[ options.env ] ) );
 	
@@ -19,6 +19,6 @@ gulp.task( 'set-env', [ 'htaccess' ], function() {
 	
 	var data		= JSON.stringify( configProd );
 	
-	fs.writeFileSync( paths.env.prod + paths.configs.config.configFile, data, 'utf8' );
+	fs.writeFileSync( paths.env.prod + paths.configs.configFile, data, 'utf8' );
 	
 } );

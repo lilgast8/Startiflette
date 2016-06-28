@@ -32,7 +32,7 @@ gulp.task( 'watch', function() {
 		
 	], function(e) {
 		
-		var ext, desktop, mobile, shared, config, favicons, routes;
+		var ext, desktop, mobile, shared, favicons, configs;
 		var taskname = null;
 		
 		options.filePath	= e.path;
@@ -42,9 +42,8 @@ gulp.task( 'watch', function() {
 		desktop		= options.filePath.indexOf( 'desktop/' ) > -1 ? true : false;
 		mobile		= options.filePath.indexOf( 'mobile/' ) > -1 ? true : false;
 		shared		= options.filePath.indexOf( 'shared/' ) > -1 ? true : false;
-		config		= options.filePath.indexOf( 'config/' ) > -1 ? true : false;
 		favicons	= options.filePath.indexOf( 'configs/favicons/' ) > -1 ? true : false;
-		routes		= options.filePath.indexOf( 'routes/' ) > -1 ? true : false;
+		configs		= options.filePath.indexOf( 'configs/' ) > -1 ? true : false;
 		
 		//  options.devicePath: used for SASS error notification
 		if ( desktop )
@@ -95,10 +94,8 @@ gulp.task( 'watch', function() {
 		else if ( ext == '.json' ) {
 			taskname = 'json';
 			
-			if ( config )
-				options.jsonSrcPath = paths.env.dev + paths.configs.config.allFiles;
-			else if ( routes )
-				options.jsonSrcPath = paths.env.dev + paths.configs.routes.allFiles;
+			if ( configs )
+				options.jsonSrcPath = paths.env.dev + paths.configs.allRootJsonFiles;
 			else
 				options.jsonSrcPath = paths.env.dev + paths.assets.json.allFiles;
 		}

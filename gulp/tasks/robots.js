@@ -5,7 +5,7 @@ var paths	= require( '../utils/paths' );
 
 var fs		= require( 'fs' );
 
-var config	= require( '../../' + paths.env.dev + paths.configs.config.configFile );
+var config	= require( '../../' + paths.env.dev + paths.configs.configFile );
 
 
 

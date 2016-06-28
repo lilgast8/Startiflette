@@ -8,7 +8,7 @@ var gutil		= require( 'gulp-util' );
 var inquirer	= require( 'inquirer' );
 var fs			= require( 'fs' );
 
-var config		= require( '../../' + paths.env.dev + paths.configs.config.configFile );
+var config		= require( '../../' + paths.env.dev + paths.configs.configFile );
 
 
 

@@ -7,7 +7,7 @@ class Config
 	
 	protected static $instance;
 	
-	const CONFIG_FILE_PATH		= 'configs/config/config.json';
+	const CONFIG_FILE_PATH		= 'configs/config.json';
 	
 	static $ENV					= null;
 	static $ENVS				= null;

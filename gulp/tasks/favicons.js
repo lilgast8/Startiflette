@@ -7,7 +7,7 @@ var plumber			= require( 'gulp-plumber' );
 var realFavicon		= require( 'gulp-real-favicon' );
 var fs				= require( 'fs' );
 
-var globalConfig	= require( '../../' + paths.env.dev + paths.configs.config.configFile );
+var globalConfig	= require( '../../' + paths.env.dev + paths.configs.configFile );
 
 
 

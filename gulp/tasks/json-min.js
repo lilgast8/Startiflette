@@ -7,7 +7,7 @@ var fs			= require( 'fs' );
 var plumber		= require( 'gulp-plumber' );
 var jsonminify	= require( 'gulp-jsonminify' );
 
-var config		= require( '../../' + paths.env.dev + paths.configs.config.configFile );
+var config		= require( '../../' + paths.env.dev + paths.configs.configFile );
 
 
 
@@ -33,7 +33,7 @@ gulp.task( 'json-min:configs', [ 'delete' ], function() {
 	
 	var jsonSrcPath = [
 		paths.env.dev + paths.configs.allJsonFiles,
-		'!' + paths.env.dev + paths.configs.config.jsFilesFile,
+		'!' + paths.env.dev + paths.configs.jsFilesFile,
 		'!' + paths.env.dev + paths.configs.favicons.allFiles
 	];
 	var jsonDestPath = paths.env.prod + paths.configs.dir;
@@ -56,7 +56,7 @@ function minifyJson( scrPath, destPath ) {
 
 
 function minifyJsFilesFile() {
-	var jsFiles	= require( '../../' + paths.env.dev + paths.configs.config.jsFilesFile );
+	var jsFiles	= require( '../../' + paths.env.dev + paths.configs.jsFilesFile );
 	var aLength	= Object.keys( jsFiles ).length;
 	var i		= 0;
 	var jsFile, jsFileName, isArray;
@@ -81,6 +81,5 @@ function minifyJsFilesFile() {
 	
 	
 	helpers.createDir( paths.env.prod + paths.configs.dir );
-	helpers.createDir( paths.env.prod + paths.configs.config.dir );
-	fs.writeFileSync( paths.env.prod + paths.configs.config.jsFilesFile, data, 'utf8' );
+	fs.writeFileSync( paths.env.prod + paths.configs.jsFilesFile, data, 'utf8' );
 }

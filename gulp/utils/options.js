@@ -28,7 +28,7 @@ options.movePath	= null;
 
 
 function getEnv() {
-	var config		= require( '../../' + paths.env.dev + paths.configs.config.configFile );
+	var config		= require( '../../' + paths.env.dev + paths.configs.configFile );
 	var defaultEnv	= config.ENV;
 	var envTemp		= options.env;
 	var env;
@@ -45,7 +45,7 @@ function getEnv() {
 	
 	// preprod-local, preprod or prod
 	else {
-		var config = require( '../../' + paths.env.dev + paths.configs.config.configFile );
+		var config = require( '../../' + paths.env.dev + paths.configs.configFile );
 		
 		if ( envTemp == 'preprod-local' || envTemp == 'preprod' || envTemp == 'prod' )
 			env =  envTemp;
