@@ -1,6 +1,8 @@
 var options	= require( 'minimist' )( process.argv.slice(2) );
 var paths	= require( '../utils/paths' );
 
+var gutil	= require( 'gulp-util' );
+
 
 
 options.imageMin	= true;
@@ -33,7 +35,10 @@ function getEnv() {
 	
 	// dev
 	if ( envTemp == defaultEnv || options.task == 'init' || options.task == 'default' ) {
-		env = config.ENV;
+		if ( envTemp === undefined )
+			env = config.ENV;
+		else
+			env = envTemp;
 		
 		options.isProd = false;
 	}
@@ -49,6 +54,8 @@ function getEnv() {
 		
 		options.isProd = true;
 	}
+	
+	console.log( gutil.colors.bgMagenta( ' — ENV: ' + env + ' — ' ) );
 	
 	
 	return env;
