@@ -39,7 +39,7 @@ class Router
 	
 	private function setRoutes()
 	{
-		$filePath = Path::$FILE->routes . 'statics.json';
+		$filePath = Path::$FILE->routesFile;
 		
 		if ( !file_exists( $filePath ) )
 			throw new ErrorException( 'Routes file is missing!' );

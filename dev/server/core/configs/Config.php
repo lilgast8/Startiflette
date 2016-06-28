@@ -11,7 +11,6 @@ class Config
 	
 	static $ENV					= null;
 	static $ENVS				= null;
-	static $ROUTES_FILES		= null;
 	static $ALL_LANG			= null;
 	static $HAS_MOBILE_VERSION	= null;
 	static $FORCE_DEVICE		= null;

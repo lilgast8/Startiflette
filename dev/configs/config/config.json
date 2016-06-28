@@ -23,10 +23,6 @@
 										"base_url_cms":		"http://cms.SITE_URL.COM/"
 									}
 								},
-	"ROUTES_FILES":				[
-									"statics",
-									"projects"
-								],
 	"ALL_LANG":					[
 									"fr",
 									"en",
