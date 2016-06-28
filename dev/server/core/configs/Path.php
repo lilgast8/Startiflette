@@ -121,8 +121,8 @@ class Path
 		foreach ( $jsFiles as $fileId => $fileInfos ) { // parse JsFiles infos
 			$listFiles	= '';
 			
-			// dev 
-			if ( Config::$ENV != 'preprod-local' || Config::$ENV != 'preprod' || Config::$ENV != 'prod' ) {
+			// dev
+			if ( Config::$ENV != 'preprod-local' && Config::$ENV != 'preprod' && Config::$ENV != 'prod' ) {
 				$files = $jsFiles->$fileId->files;
 				
 				foreach ( $files as $filePath ) { // parse files list
@@ -135,7 +135,7 @@ class Path
 				}
 			}
 			
-			// preprod-local, preprod or prod 
+			// preprod-local, preprod or prod
 			else {
 				$fileName = $jsFiles->$fileId->name;
 				$fileDest = $jsFiles->$fileId->dest;
