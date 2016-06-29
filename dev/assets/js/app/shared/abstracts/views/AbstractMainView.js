@@ -43,7 +43,7 @@ STF.AbstractMainView = ( function( window ) {
 		
 		this.initStaticsViews();
 		
-		this.resize.call( this );
+		this.resize();
 	};
 	
 	
