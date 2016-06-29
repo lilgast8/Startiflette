@@ -121,7 +121,7 @@ Made the configurations in the `dev/configs/config.json` file.
 
 ## Routes
 
-* `error-404` & `home` have to be defined. They are the default routes that every project must have.
+* `home` have to be defined. It's the default route that every project must have.
 * Each route is defined by a key which is the page id. The object can contain the following parameters:
 	* `url-page`: @type {object} List of the page urls for each languages.
 	* `js`: @type {string} Optional option, can be used to override the JS view id.
