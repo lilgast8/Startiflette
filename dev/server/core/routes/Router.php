@@ -325,10 +325,9 @@ class Router
 		self::$LINK = new stdClass();
 			
 		foreach ( Router::$ROUTES as $pageId => $routeParams ) { // parse all pages
+			$pageName	= String::camelCase( $pageId );
 			
 			if ( !isset( $routeParams->subs ) ) {
-				$pageName = String::camelCase( $pageId );
-				
 				if ( $pageName !== 'error404' && $pageId == 'home' )
 					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $routeParams->{ 'url-page' }->{ Lang::$LANG };
 				
@@ -337,10 +336,12 @@ class Router
 			}
 			
 			else {
+				self::$LINK->$pageName = new stdClass();
+				
 				foreach ( $routeParams->subs as $aliasId => $alias ) {
-					$pageName = String::camelCase( $aliasId );
+					$aliasName	= String::camelCase( $aliasId );
 					
-					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $alias->{ 'url-alias' }->{ Lang::$LANG };
+					self::$LINK->$pageName->$aliasName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $alias->{ 'url-alias' }->{ Lang::$LANG };
 				}
 			}
 		}
