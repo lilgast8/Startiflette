@@ -35,6 +35,11 @@ STF.Models.Assets = ( function( window ) {
 				STF.Path.URL.img + 'temp/404.jpg',
 			],
 			
+			'not-available': [
+				/* temp */
+				STF.Path.URL.img + 'temp/not-available.gif',
+			],
+			
 			'home': [
 				/* temp */
 				STF.Path.URL.img + 'temp/home.jpg',

@@ -29,6 +29,9 @@
 			"fr": "a-propos",
 			"en": "about",
 			"ex": "about-ex"
+		},
+		"device": {
+			"mobile": false
 		}
 	},
 	
@@ -37,9 +40,6 @@
 			"fr": "projets",
 			"en": "projects",
 			"ex": "projects-ex"
-		},
-		"device": {
-			"mobile": false
 		}
 	},
 	
