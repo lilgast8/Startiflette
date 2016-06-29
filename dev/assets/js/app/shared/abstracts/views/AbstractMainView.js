@@ -43,7 +43,7 @@ STF.AbstractMainView = ( function( window ) {
 		
 		this.initStaticsViews();
 		
-		_resize.call( this );
+		this.resize.call( this );
 	};
 	
 	
@@ -56,13 +56,13 @@ STF.AbstractMainView = ( function( window ) {
 	
 	
 	AbstractMainView.prototype.bindEvents = function() {
-		this.$window.on( 'resize', $.proxy( _resize, this ) );
-		// TweenLite.ticker.addEventListener( 'tick', _raf, this );
-		// this.$window.on( 'mousemove', $.proxy( _mouseMove, this ) );
-		// this.$window.on( 'mousedown', $.proxy( _mouseDown, this ) );
-		// this.$window.on( 'mouseup', $.proxy( _mouseUp, this ) );
-		// this.$window.on( 'blur', $.proxy( _windowOut, this ) );
-		// this.$window.on( 'focus', $.proxy( _windowIn, this ) );
+		this.$window.on( 'resize', $.proxy( this.resize, this ) );
+		TweenLite.ticker.addEventListener( 'tick', this.raf, this );
+		// this.$window.on( 'mousemove', $.proxy( this.mouseMove, this ) );
+		// this.$window.on( 'mousedown', $.proxy( this.mouseDown, this ) );
+		// this.$window.on( 'mouseup', $.proxy( this.mouseUp, this ) );
+		// this.$window.on( 'blur', $.proxy( this.windowOut, this ) );
+		// this.$window.on( 'focus', $.proxy( this.windowIn, this ) );
 	};
 	
 	
@@ -75,7 +75,7 @@ STF.AbstractMainView = ( function( window ) {
 	};
 	
 	
-	var _resize = function() {
+	AbstractMainView.prototype.resize = function() {
 		_setResizeProps.call( this );
 		
 		if ( this.e.resize !== undefined )
@@ -98,7 +98,7 @@ STF.AbstractMainView = ( function( window ) {
 	};
 	
 	
-	var _raf = function() {
+	AbstractMainView.prototype.raf = function() {
 		if ( STF.Config.HAS_FPS_STATS && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
 			STF.Utils.FPSStats.begin();
 		
@@ -123,7 +123,7 @@ STF.AbstractMainView = ( function( window ) {
 	};
 	
 	
-	var _mouseMove = function( e ) {
+	AbstractMainView.prototype.mouseMove = function( e ) {
 		this.mX = e.clientX;
 		this.mY = e.clientY;
 		
@@ -134,19 +134,19 @@ STF.AbstractMainView = ( function( window ) {
 	};
 	
 	
-	var _mouseDown = function() {
+	AbstractMainView.prototype.mouseDown = function() {
 		if ( this.e.mousedown !== undefined )
 			this.dispatch( this.E.MOUSE_DOWN );
 	};
 	
 	
-	var _mouseUp = function() {
+	AbstractMainView.prototype.mouseUp = function() {
 		if ( this.e.mouseup !== undefined )
 			this.dispatch( this.E.MOUSE_UP );
 	};
 	
 	
-	var _windowOut = function() {
+	AbstractMainView.prototype.windowOut = function() {
 		this.isWindowFocused = false;
 		
 		if ( this.e.windowout !== undefined )
@@ -154,7 +154,7 @@ STF.AbstractMainView = ( function( window ) {
 	};
 	
 	
-	var _windowIn = function() {
+	AbstractMainView.prototype.windowIn = function() {
 		this.isWindowFocused = true;
 		
 		if ( this.e.windowin !== undefined )
