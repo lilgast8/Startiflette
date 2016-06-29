@@ -153,11 +153,11 @@ class Router
 		}
 		else { // 404
 			$page->id	= 'error-404';
-			$page->urls	= self::$ROUTES->{ $page->id };
 			
 			$this->setAltLangUrl( self::$ROUTES->home->{ 'url-page' } );
 			
-			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
+			if ( Router::$CONTENT_TYPE == 'firstLoad' )
+				header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
 			$this->pagesController->setPageInfos( $page );
 		}
@@ -324,14 +324,16 @@ class Router
 		foreach ( Router::$ROUTES as $pageId => $routeParams ) { // parse all pages
 			$pageName	= String::camelCase( $pageId );
 			
+			/* unique page */
 			if ( !isset( $routeParams->subs ) ) {
-				if ( $pageName !== 'error404' && $pageId == 'home' )
+				if ( $pageId == 'home' )
 					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $routeParams->{ 'url-page' }->{ Lang::$LANG };
 				
-				else if ( $pageId !== 'error404' )
+				else
 					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG };
 			}
 			
+			/* multiple page */
 			else {
 				self::$LINK->$pageName = new stdClass();
 				

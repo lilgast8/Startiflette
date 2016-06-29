@@ -1,13 +1,5 @@
 {
 	
-	"error-404": {
-		"url-page": {
-			"fr": "404",
-			"en": "404",
-			"ex": "404"
-		}
-	},
-	
 	"legal-notices": {
 		"url-page": {
 			"fr": "mentions-legales",
