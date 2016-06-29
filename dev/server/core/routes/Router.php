@@ -189,7 +189,7 @@ class Router
 						  Path::$URL->base . Lang::$LANG_LINK . $pageParams->{ 'url-page' }->{ Lang::$LANG };
 			
 			/* unique page */
-			if ( $path == $searchPath ) {
+			if ( $path == $searchPath && !isset( $pageParams->subs ) ) {
 				$page->exist	= true;
 				$page->id		= $pageId;
 				$page->urls		= $pageParams->{ 'url-page' };
@@ -198,22 +198,19 @@ class Router
 			}
 			
 			/* multiple page */
-			else if ( strpos( $path, $searchPath ) !== false && $pageId != 'home' ) {
+			else if ( strpos( $path, $searchPath ) !== false && $pageId != 'home' && isset( $pageParams->subs ) ) {
 				
-				if ( isset( $pageParams->subs ) ) {
+				foreach ( $pageParams->subs as $aliasId => $aliasParams ) {
 					
-					foreach ( $pageParams->subs as $aliasId => $aliasParams ) {
+					if ( $searchPath . '/' . $aliasParams->{ 'url-alias' }->{ Lang::$LANG } == $path ) {
+						$page->exist	= true;
+						$page->id		= $pageId;
+						$page->alias	= $aliasId;
+						$page->urls		= $this->getAltPageUrl( $pageParams->{ 'url-page' }, $aliasParams->{ 'url-alias' } );
 						
-						if ( $searchPath . '/' . $aliasParams->{ 'url-alias' }->{ Lang::$LANG } == $path ) {
-							$page->exist	= true;
-							$page->id		= $pageId;
-							$page->alias	= $aliasId;
-							$page->urls		= $this->getAltPageUrl( $pageParams->{ 'url-page' }, $aliasParams->{ 'url-alias' } );
-							
-							$page			= $this->setSpecificOptions( $page, $pageParams, $aliasParams );
-							
-							break; // break second foreach
-						}
+						$page			= $this->setSpecificOptions( $page, $pageParams, $aliasParams );
+						
+						break; // break second foreach
 					}
 				}
 			}
