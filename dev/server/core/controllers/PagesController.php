@@ -7,6 +7,9 @@ include_once 'server/core/controllers/AbstractViewController.php';
 include_once 'server/contents/AbstractContent.php';
 
 
+// use stf\core\utils\Helpers;
+
+
 
 class PagesController
 {
@@ -62,6 +65,8 @@ class PagesController
 	
 	private function setTwigExtensions()
 	{
+		$this->twig->addExtension( new Helpers() );
+		
 		// $this->twig->addExtension( new Twig_Extensions_Extension_Text() );
 		// $this->twig->addExtension( new Twig_Extensions_Extension_I18n() );
 		// $this->twig->addExtension( new Twig_Extensions_Extension_Intl() );
