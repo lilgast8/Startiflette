@@ -65,7 +65,7 @@ class PagesController
 	
 	private function setTwigExtensions()
 	{
-		$this->twig->addExtension( new Helpers() );
+		$this->twig->addGlobal( 'Helpers', new Helpers() );
 		
 		// $this->twig->addExtension( new Twig_Extensions_Extension_Text() );
 		// $this->twig->addExtension( new Twig_Extensions_Extension_I18n() );
