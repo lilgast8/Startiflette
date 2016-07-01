@@ -80,7 +80,7 @@ If, for some reasons, you need or want to execute a task separately, here is the
 Complete list of gulp tasks & what they do:
 
 * `delete`: Deletes files depending to the executed task.
-* `favicons`: 
+* `favicons`: Generates all type of favicons.
 * `files`: Removes all files in `www/files/` & moves all sounds files from `dev/files/` to `www/files/`.
 * `htaccess`: Sets the htaccess.
 * `image`: Executes `image-min` or `image-move` depending on `options.imageMin`
