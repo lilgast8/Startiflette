@@ -7,9 +7,6 @@ include_once 'server/core/controllers/AbstractViewController.php';
 include_once 'server/contents/AbstractContent.php';
 
 
-// use stf\core\utils\Helpers;
-
-
 
 class PagesController
 {

@@ -2,12 +2,6 @@
 
 
 
-// namespace stf\core\utils;
-
-// use server\vendor\Twig\Extension;
-
-
-
 class Helpers extends Twig_Extension
 {
 	
@@ -20,7 +14,6 @@ class Helpers extends Twig_Extension
 	public function getFunctions()
 	{
 		return array(
-			// new \Twig_SimpleFunction( 'myFunc', array( $this, 'myFunc' ) ),
 			new Twig_SimpleFunction( 'getSVG', array( $this, 'getSVG' ) ),
 			new Twig_SimpleFunction( 'echoSVG', array( $this, 'echoSVG' ) ),
 		);
