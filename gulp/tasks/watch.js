@@ -30,7 +30,7 @@ gulp.task( 'watch', function() {
 		paths.env.dev + paths.configs.allFiles,
 		'!' + paths.env.dev + paths.configs.favicons.dataFile,
 		
-	], function(e) {
+	], function( e ) {
 		
 		var ext, desktop, mobile, shared, favicons, configs;
 		var taskname = null;

@@ -21,12 +21,12 @@ gulp.task( 'js-hint', function() {
 			'-W083' : true // Don't make functions within a loop
 		}) )
 		.pipe( jshint.reporter( 'jshint-stylish' ) )
-		.pipe( notify( function(file) {
+		.pipe( notify( function( file ) {
 			
 			if ( file.jshint.success )
 				return false;
 			
-			var errors = file.jshint.results.map( function(data) {
+			var errors = file.jshint.results.map( function( data ) {
 				if ( data.error )
 					return '(' + data.error.line + ':' + data.error.character + ') ' + data.error.reason;
 			} ).join('\n');
