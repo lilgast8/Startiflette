@@ -96,9 +96,6 @@ STF.AbstractView = ( function( window ) {
 	AbstractView.prototype.destroy = function() {
 		this.isInit = false;
 		
-		if ( this.$page !== undefined )
-			this.lazyloader.destroy();
-		
 		this.unbindEvents();
 		
 		this.destroyGSAP();

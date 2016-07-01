@@ -42,6 +42,14 @@ STF.AbstractPageView = ( function( window ) {
 	};
 	
 	
+	AbstractPageView.prototype.destroy = function() {
+		STF.AbstractView.prototype.destroy.call( this );
+		
+		if ( this.lazyloader !== undefined )
+			this.lazyloader.destroy();
+	};
+	
+	
 	/*var _onPageShown = function() {
 		
 	};*/
