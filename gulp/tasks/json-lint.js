@@ -22,11 +22,11 @@ gulp.task( 'json-lint', function() {
 		.pipe( plumber() )
 		.pipe( jsonlint() )
 		.pipe( jsonlint.reporter() )
-		.pipe( jsonlint.reporter(function(file) {
-			var posJsonStr	= file.path.indexOf( 'www/' ) + 4;
+		.pipe( jsonlint.reporter( function( file ) {
+			var posJsonStr	= file.path.indexOf( paths.env.dev ) + paths.env.dev.length;
 			var fileName	= file.path.substring( posJsonStr, file.path.length );
 			
-			return notify().write( 'JSON Lint error on: ' + fileName );
+			notify().write( 'JSON Lint error on: ' + fileName );
 		}) );
 	
 } );
