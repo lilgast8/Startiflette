@@ -29,7 +29,7 @@ gulp.task( 'favicons:move', [ 'favicons:manage-markups' ], function() {
 // Generate the icons. This task takes a few seconds to complete. 
 // You should run it at least once to create the icons. Then, 
 // you should run it whenever RealFaviconGenerator updates its 
-// package (see the favicon:check-update task below).
+// package (see the favicons:check-update task below).
 gulp.task( 'favicons:generate', [ 'delete' ], function( done ) {
 	
 	var configFile			= fs.readFileSync( paths.env.dev + paths.configs.favicons.configFile, 'utf8' );
