@@ -104,20 +104,12 @@ STF.AbstractView = ( function( window ) {
 	
 	AbstractView.prototype.destroyGSAP = function() {
 		/* tween */
-		for ( var tween in this.tw ) {
-			var tw = this.tw[ tween ];
-			
-			tw.kill();
-		}
+		for ( var tween in this.tw )
+			this.killTween( tween );
 		
 		/* timeline */
-		for ( var timeline in this.tl ) {
-			var tl = this.tl[ timeline ];
-			
-			tl.stop();
-			tl.clear();
-			tl.kill();
-		}
+		for ( var timeline in this.tl )
+			this.killTimeline( timeline );
 		
 		this.tl = {};
 		this.tw = {};
