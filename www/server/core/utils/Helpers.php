@@ -2,10 +2,25 @@
 
 
 
-class Helpers
+class Helpers extends Twig_Extension
 {
 	
-	public static function getSVG( $name )
+	public function getName()
+	{
+		return 'Helpers';
+	}
+	
+	
+	public function getFunctions()
+	{
+		return array(
+			new Twig_SimpleFunction( 'getSVG', array( $this, 'getSVG' ) ),
+			new Twig_SimpleFunction( 'echoSVG', array( $this, 'echoSVG' ) ),
+		);
+	}
+	
+	
+	public function getSVG( $name )
 	{
 		$html = '';
 		
@@ -17,7 +32,7 @@ class Helpers
 	}
 	
 	
-	public static function echoSVG( $name )
+	public function echoSVG( $name )
 	{
 		echo Helpers::getSVG( $name );
 	}

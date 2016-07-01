@@ -153,11 +153,11 @@ class Router
 		}
 		else { // 404
 			$page->id	= 'error-404';
-			$page->urls	= self::$ROUTES->{ $page->id };
 			
 			$this->setAltLangUrl( self::$ROUTES->home->{ 'url-page' } );
 			
-			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
+			if ( Router::$CONTENT_TYPE == 'firstLoad' )
+				header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
 			$this->pagesController->setPageInfos( $page );
 		}
@@ -189,7 +189,7 @@ class Router
 						  Path::$URL->base . Lang::$LANG_LINK . $pageParams->{ 'url-page' }->{ Lang::$LANG };
 			
 			/* unique page */
-			if ( $path == $searchPath ) {
+			if ( $path == $searchPath && !isset( $pageParams->subs ) ) {
 				$page->exist	= true;
 				$page->id		= $pageId;
 				$page->urls		= $pageParams->{ 'url-page' };
@@ -198,22 +198,19 @@ class Router
 			}
 			
 			/* multiple page */
-			else if ( strpos( $path, $searchPath ) !== false && $pageId != 'home' ) {
+			else if ( strpos( $path, $searchPath ) !== false && $pageId != 'home' && isset( $pageParams->subs ) ) {
 				
-				if ( isset( $pageParams->subs ) ) {
+				foreach ( $pageParams->subs as $aliasId => $aliasParams ) {
 					
-					foreach ( $pageParams->subs as $aliasId => $aliasParams ) {
+					if ( $searchPath . '/' . $aliasParams->{ 'url-alias' }->{ Lang::$LANG } == $path ) {
+						$page->exist	= true;
+						$page->id		= $pageId;
+						$page->alias	= $aliasId;
+						$page->urls		= $this->getAltPageUrl( $pageParams->{ 'url-page' }, $aliasParams->{ 'url-alias' } );
 						
-						if ( $searchPath . '/' . $aliasParams->{ 'url-alias' }->{ Lang::$LANG } == $path ) {
-							$page->exist	= true;
-							$page->id		= $pageId;
-							$page->alias	= $aliasId;
-							$page->urls		= $this->getAltPageUrl( $pageParams->{ 'url-page' }, $aliasParams->{ 'url-alias' } );
-							
-							$page			= $this->setSpecificOptions( $page, $pageParams, $aliasParams );
-							
-							break; // break second foreach
-						}
+						$page			= $this->setSpecificOptions( $page, $pageParams, $aliasParams );
+						
+						break; // break second foreach
 					}
 				}
 			}
@@ -325,22 +322,25 @@ class Router
 		self::$LINK = new stdClass();
 			
 		foreach ( Router::$ROUTES as $pageId => $routeParams ) { // parse all pages
+			$pageName	= String::camelCase( $pageId );
 			
+			/* unique page */
 			if ( !isset( $routeParams->subs ) ) {
-				$pageName = String::camelCase( $pageId );
-				
-				if ( $pageName !== 'error404' && $pageId == 'home' )
+				if ( $pageId == 'home' )
 					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $routeParams->{ 'url-page' }->{ Lang::$LANG };
 				
-				else if ( $pageId !== 'error404' )
+				else
 					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG };
 			}
 			
+			/* multiple page */
 			else {
+				self::$LINK->$pageName = new stdClass();
+				
 				foreach ( $routeParams->subs as $aliasId => $alias ) {
-					$pageName = String::camelCase( $aliasId );
+					$aliasName	= String::camelCase( $aliasId );
 					
-					self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $alias->{ 'url-alias' }->{ Lang::$LANG };
+					self::$LINK->$pageName->$aliasName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $alias->{ 'url-alias' }->{ Lang::$LANG };
 				}
 			}
 		}

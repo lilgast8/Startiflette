@@ -25,6 +25,7 @@ class PagesController
 	protected function __construct()
 	{
 		$this->setTwig();
+		$this->setTwigExtensions();
 	}
 	
 	
@@ -48,7 +49,7 @@ class PagesController
 			Path::$FILE->svgSprite
 		) );
 		
-		if ( Config::$ENV == 'dev' ) {
+		if ( Config::$ENV != 'preprod-local' && Config::$ENV != 'preprod' && Config::$ENV != 'prod' ) {
 			$this->twig	= new Twig_Environment( $loader, array(
 				'debug' => true
 			) );
@@ -56,6 +57,18 @@ class PagesController
 		}
 		else
 			$this->twig	= new Twig_Environment( $loader );
+	}
+	
+	
+	private function setTwigExtensions()
+	{
+		$this->twig->addGlobal( 'Helpers', new Helpers() );
+		
+		// $this->twig->addExtension( new Twig_Extensions_Extension_Text() );
+		// $this->twig->addExtension( new Twig_Extensions_Extension_I18n() );
+		// $this->twig->addExtension( new Twig_Extensions_Extension_Intl() );
+		// $this->twig->addExtension( new Twig_Extensions_Extension_Array() );
+		// $this->twig->addExtension( new Twig_Extensions_Extension_Date() );
 	}
 	
 	
