@@ -29,20 +29,18 @@ gulp.task( 'sass:dev', [ 'delete' ], function() {
 		];
 	
 	
-	return gulp.src( options.cssSrcPath )
-		.pipe( plumber() )
-		.pipe( sass({
+	return sass( options.cssSrcPath, {
 			style:				'compressed',
-			precision:			3,
 			// style:				'expanded',
+			precision:			3,
 			compass:			true,
-			'sourcemap=none':	true
-		}) )
-		.on( 'error', function( error ) {
-			console.log( gutil.colors.red( error.message ) );
-			return notify().write( options.devicePath + ': ' + path.basename( error.message ) );
+			emitCompileError:	true
 		} )
-		.pipe( rename( {suffix : '.min'} ) )
+		.on( 'error', function( error ) {
+			console.log( gutil.colors.red( error ) );
+			notify().write( options.devicePath + ': ' + error.message );
+		} )
+		.pipe( rename( { suffix : '.min' } ) )
 		.pipe( gulp.dest( paths.env.dev + paths.assets.css.dir ) );
 	
 });
