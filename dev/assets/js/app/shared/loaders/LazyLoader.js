@@ -71,6 +71,10 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	LazyLoader.prototype.startLazyload = function() {
+		if ( this.$imgToLazyload.length === 0 )
+			return;
+		
+		
 		var imgToLazyload = this.imgToLazyload.slice( this.posLoadedImg, this.posLoadedImg + this.STACK_SIZE );
 		
 		// setTimeout( function() {
