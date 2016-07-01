@@ -145,6 +145,8 @@ Made the configurations in the `dev/configs/config.json` file.
 
 ## Lazyloading
 
+A lazyloader `this.lazyloader = new STF.LazyLoader( this.$page, 'img-lazyload', 1 )` is already created by default for each page view. You can manage or update it according to your needs in `AbstractPageView.js`.
+
 To create a new lazyloader use: `new STF.LazyLoader( $container, className, stackSize )`
 
-You need to add `data-lazyload="true"` on the image `<img>` tag you want to lazyload. By using it you prevent to add the image on the main loader when the `LOADING_MODE = 'byPageDynamic'`.
+You need to add `data-lazyload="true"` on the image `<img>` tag you want to lazyload. By using it you prevent to add the image on the main loader when `LOADING_MODE = 'byPageDynamic'`.
