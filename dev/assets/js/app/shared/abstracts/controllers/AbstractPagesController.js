@@ -93,7 +93,7 @@ STF.AbstractPagesController = ( function( window ) {
 	var _setPage = function() {
 		if ( this.pages[ this.pageInfos.id ] === undefined) {
 			if ( STF.Config.ENV != 'prod' )
-				console.log( 'PagesController: no specific page view for the "' + this.pageInfos.id + '" ID. If you need one, create it and then set the view in the PagesController.pages object.' );
+				console.warn( 'PagesController: no specific page view for the "' + this.pageInfos.id + '" ID. If you need one, create it and then set the view in the PagesController.pages object.' );
 			
 			this.page = new STF.AbstractPageView();
 		}
@@ -220,7 +220,7 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	
 	var _onContentError = function( e ) {
-		console.log( 'Ajax loading error', e );
+		console.warn( 'Ajax loading error', e );
 		
 		if ( e.status == 404 )
 			_force404Load.call( this );
