@@ -52,7 +52,7 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 					}
 					
 					else
-						done( true );
+						done( null, true );
 				}
 			},
 			{
@@ -74,7 +74,7 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 					}
 					
 					else
-						done( true );
+						done( null, true );
 				}
 			},
 			{
@@ -101,7 +101,7 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 				message:	gutil.colors.green( 'Create the new view?' ),
 				default:	false
 			}
-		], function( answers ) {
+		] ).then( function( answers ) {
 			
 			if ( !answers.createNewView ) {
 				console.log( gutil.colors.cyan( 'New files wasn\'t created.' ) );
@@ -153,7 +153,6 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 								paths.env.dev + paths.server.views[ options.device ][ viewType ] + twigFileName,
 								[ 'View name', 'viewClassName' ],
 								[ fileNameCapitalize, cssClassName ] );
-								// [ fileNameCapitalize, '"'+cssClassName+'"' ] );
 			
 			// content
 			if ( createContent )
@@ -235,9 +234,12 @@ function manageFileCreation( file, viewType, destFilePath, aStringToReplace, aNe
 
 
 function createFile( destFilePath, data ) {
-	if ( !fs.existsSync( destFilePath ) ) // create file
+	if ( !fs.existsSync( destFilePath ) ) { // create file
 		fs.writeFileSync( destFilePath, data, 'utf8' );
+		
+		console.log( gutil.colors.bgGreen( ' ' + destFilePath + ' ' ) + gutil.colors.green( ' file was succefully created.' ) );
+	}
 	
 	else // if file already exists
-		console.log( gutil.colors.red( 'WARNING!: ' + destFilePath + ' file wasn\'t created because it already exists.' ) );
+		console.log( gutil.colors.red( 'WARNING!: ' ) + gutil.colors.bgRed( ' ' + destFilePath + ' ' ) + gutil.colors.red( ' file wasn\'t created because it already exists.' ) );
 }
