@@ -45,7 +45,7 @@ gulp.task( 'watch', function() {
 		favicons	= options.filePath.indexOf( 'configs/favicons/' ) > -1 ? true : false;
 		configs		= options.filePath.indexOf( 'configs/' ) > -1 ? true : false;
 		
-		//  options.devicePath: used for SASS error notification
+		// options.devicePath: used for SASS error notification
 		if ( desktop )
 			options.devicePath = 'desktop';
 		else if ( mobile )

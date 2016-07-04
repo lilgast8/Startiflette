@@ -48,9 +48,9 @@ function getEnv() {
 		var config = require( '../../' + paths.env.dev + paths.configs.configFile );
 		
 		if ( envTemp == 'preprod-local' || envTemp == 'preprod' || envTemp == 'prod' )
-			env =  envTemp;
+			env = envTemp;
 		else
-			env =  'prod';
+			env = 'prod';
 		
 		options.isProd = true;
 	}
