@@ -161,7 +161,7 @@ class Router
 						  Path::$URL->base . Lang::$LANG_LINK . $pageParams->{ 'url-page' }->{ Lang::$LANG };
 			
 			/* unique page */
-			if ( $path == $searchPath && !isset( $pageParams->subs ) ) {
+			if ( $path == $searchPath && !isset( $pageParams->subs ) && !isset( $pageParams->params ) ) {
 				$this->page->exist	= true;
 				$this->page->id	= $pageId;
 				$this->page->urls	= $pageParams->{ 'url-page' };
@@ -189,20 +189,23 @@ class Router
 			
 			/* multiple dynamic pages */
 			else if ( strpos( $path, $searchPath ) !== false && $pageId != 'home' && isset( $pageParams->params ) ) {
-				$dynamicUrl			= String::removeFirstSpecificChar( str_replace( $searchPath, '', $path ), '/' );
-				$dynamicUrlParams	= explode( '/', $dynamicUrl );
+				$dynamicUrl = String::removeFirstSpecificChar( str_replace( $searchPath, '', $path ), '/' );
 				
-				$dynamicUrls		= new stdClass();
-				
-				foreach ( $pageParams->params as $key => $paramId )
-					if ( isset( $dynamicUrlParams[ $key ] ) )
-						$dynamicUrls->$paramId = $dynamicUrlParams[ $key ];
-				
-				$this->page->exist		= true;
-				$this->page->id			= $pageId;
-				$this->page->dynamic	= $dynamicUrls;
-				
-				$this->page				= $this->setSpecificOptions( $this->page, $pageParams, null );
+				if ( $dynamicUrl != '' ) {
+					$dynamicUrlParams	= explode( '/', $dynamicUrl );
+					
+					$dynamicUrls		= new stdClass();
+					
+					foreach ( $pageParams->params as $key => $paramId )
+						if ( isset( $dynamicUrlParams[ $key ] ) )
+							$dynamicUrls->$paramId = $dynamicUrlParams[ $key ];
+					
+					$this->page->exist		= true;
+					$this->page->id			= $pageId;
+					$this->page->dynamic	= $dynamicUrls;
+					
+					$this->page				= $this->setSpecificOptions( $this->page, $pageParams, null );
+				}
 			}
 			
 			if ( $this->page->exist ) {
