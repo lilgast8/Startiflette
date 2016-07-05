@@ -144,14 +144,6 @@ class Router
 	private function setPageInfos()
 	{
 		$page = $this->getPageInfos();
-		/*echo '<br>🍟<pre>';
-		print_r( $page );
-		echo '</pre>🍟<br>';*/
-		
-		/*if ( $page->dynamic == '' ) {
-			echo '🐩';
-		}*/
-		// exit();
 		
 		if ( Lang::$LANG_EXIST && $page->exist ) { // page exist
 			$this->setIsHomepage( $page->id );
@@ -165,32 +157,25 @@ class Router
 			$this->pagesController->setPageInfos( $page );
 		}
 		else { // 404
-			$page->id	= 'error-404';
+			/*$page->id	= 'error-404';
 			
 			$this->setAltLangUrl( self::$ROUTES->home->{ 'url-page' } );
 			
-			// if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			// 	header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
+			if ( Router::$CONTENT_TYPE == 'firstLoad' )
+				header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
-			$this->pagesController->setPageInfos( $page );
+			$this->pagesController->setPageInfos( $page );*/
+			
+			$this->set404( $page );
 		}
 	}
 	
 	
 	private function getPageInfos()
 	{
-		$page				= new stdClass();
-		$page->exist		= false;
-		$page->id			= null;
-		$page->js			= null;
-		$page->twig			= null;
-		$page->ctrl			= null;
-		$page->alias		= null;
-		$page->dynamic		= null;
-		$page->urls			= null;
-		$page->available	= true;
+		$page			= $this->createPageObj();
 		
-		$aliasParams		= null;
+		$aliasParams	= null;
 		
 		foreach ( self::$ROUTES as $pageId => $pageParams ) { // parse all pages
 			
@@ -202,7 +187,6 @@ class Router
 						  $searchPath = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageParams->{ 'url-page' }->{ Lang::$LANG } :
 						  Path::$URL->base . Lang::$LANG_LINK . $pageParams->{ 'url-page' }->{ Lang::$LANG };
 			
-			// echo '🍌 '.$path . ' ——— ' . $searchPath.' — '. strpos( $path, $searchPath ).' — '. isset( $pageParams->params ) .'<br>';
 			/* unique page */
 			if ( $path == $searchPath && !isset( $pageParams->subs ) ) {
 				$page->exist	= true;
@@ -232,50 +216,20 @@ class Router
 			
 			/* multiple dynamic pages */
 			else if ( strpos( $path, $searchPath ) !== false && $pageId != 'home' && isset( $pageParams->params ) ) {
-				// echo '🍌 '.$path . ' ——— ' . $searchPath.' — '. strpos( $path, $searchPath ).' — '. isset( $pageParams->params ) .'<br>';
-				// echo '🐤 <br>';
-				/*echo '<pre>';
-				print_r( self::$URL );
-				echo '</pre>🐤<br><br>';*/
+				$dynamicUrl			= String::removeFirstSpecificChar( str_replace( $searchPath, '', $path ), '/' );
+				$dynamicUrlParams	= explode( '/', $dynamicUrl );
 				
-				$dynamicUrl = String::removeFirstSpecificChar( str_replace( $searchPath, '', $path ), '/' );
-				// echo '🐗 '.$dynamicUrl.'<br>';
-				// $dynamicUrlParams = split( '/', $dynamicUrl );
-				$dynamicUrlParams = explode( '/', $dynamicUrl );
-				/*echo '<pre>';
-				print_r( $dynamicUrlParams );
-				echo '</pre>';*/
+				$dynamicUrls		= new stdClass();
 				
-				
-				$dynamicUrls = new stdClass();
-				// $i = 0;
-				
-				foreach ( $pageParams->params as $key => $paramId ) {
-					// echo '🐔 '.$key.' ——— '.$paramId.'<br>';
-					
-					// echo '🍣 '.isset( $dynamicUrlParams[ $i ] ).'<br>';
-					/*if ( !isset( $dynamicUrlParams[ $i ] ) && $isRequired ) {
-						echo '💩<br>';
-					}*/
-					
-					
+				foreach ( $pageParams->params as $key => $paramId )
 					if ( isset( $dynamicUrlParams[ $key ] ) )
 						$dynamicUrls->$paramId = $dynamicUrlParams[ $key ];
-					
-					
-					// $i++;
-					
-				}
 				
 				$page->exist	= true;
 				$page->id		= $pageId;
 				$page->dynamic	= $dynamicUrls;
 				
 				$page			= $this->setSpecificOptions( $page, $pageParams, null );
-				
-				// echo '<pre>';
-				// print_r( $dynamicUrls );
-				// echo '</pre>';
 			}
 			
 			if ( $page->exist ) {
@@ -286,6 +240,23 @@ class Router
 			
 		}
 		
+		
+		return $page;
+	}
+	
+	
+	private function createPageObj()
+	{
+		$page				= new stdClass();
+		$page->exist		= false;
+		$page->id			= null;
+		$page->js			= null;
+		$page->twig			= null;
+		$page->ctrl			= null;
+		$page->alias		= null;
+		$page->dynamic		= null;
+		$page->urls			= null;
+		$page->available	= true;
 		
 		return $page;
 	}
@@ -348,7 +319,6 @@ class Router
 	
 	private function setAltLangUrl( $urls )
 	{
-		// echo '📠';
 		foreach ( Lang::$ALL_LANG as $lang ) {
 			
 			if ( $lang !== Lang::$LANG ) {
@@ -378,6 +348,19 @@ class Router
 		header( 'Status: 301 Moved Permanently', true, 301 );
 		header( 'Location: ' . Path::$URL->base . $fullPath );
 		exit();
+	}
+	
+	
+	private function set404( $page )
+	{
+		$page->id	= 'error-404';
+		
+		$this->setAltLangUrl( self::$ROUTES->home->{ 'url-page' } );
+		
+		if ( Router::$CONTENT_TYPE == 'firstLoad' )
+			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
+		
+		$this->pagesController->setPageInfos( $page );
 	}
 	
 	
@@ -429,76 +412,19 @@ class Router
 	}
 	
 	
-	public function callbackDynamicDatas( $response )
+	public function updateFromDynamicPageResponse( $response )
 	{
-		// echo '🐙 <br>';
-		
 		if ( $response->pageExist ) {
-			// echo '🍰 <br>';
-			
 			$this->setAltLangUrl( $response->urls );
 			$this->setParams();
 		}
 		else {
-			$this->force404		= true;
-			self::$FORCE_404	= true;
+			$page = $this->createPageObj();
 			
-			// echo '🐩 <br>';
-			
-			// $page = $this->getPageInfos();
-			$page				= new stdClass();
-			$page->exist		= false;
-			$page->id			= null;
-			$page->js			= null;
-			$page->twig			= null;
-			$page->ctrl			= null;
-			$page->alias		= null;
-			$page->dynamic		= null;
-			$page->urls			= null;
-			$page->available	= true;
-			
-			/*echo '<pre>';
-			print_r( $page );
-			echo '</pre>🐩🐩🐩';*/
-			
-			/*echo '<pre>';
-			print_r( $this );
-			echo '</pre>🐩🐩🐩';*/
-			
-			$page->id	= 'error-404';
-			
-			$this->setAltLangUrl( self::$ROUTES->home->{ 'url-page' } );
+			$this->set404( $page );
 			$this->setParams();
 			
-			
-			
-			
-			// if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			// 	header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
-			
-			/*echo '<pre>';
-			print_r( PagesController::$PAGE_INFOS );
-			echo '</pre>';*/
-			// $this->pagesController	= PagesController::getInstance();
-			$this->pagesController->setPageInfos( $page );
-			
-			/*echo '<pre>';
-			print_r( $this->pagesController->pageController );
-			echo '</pre>';*/
-			
-			
-			/*echo '<pre>';
-			print_r( PagesController::$PAGE_INFOS );
-			echo '</pre>';*/
-			
-			// $this->pagesController	= PagesController::getInstance();
 			$this->pagesController->init();
-			/*echo '<pre>';
-			print_r( $this->pagesController );
-			echo '</pre>';*/
-			
-			// $this->main	= Main::getInstance();
-			// $this->main->init();
 		}
 	}
 	

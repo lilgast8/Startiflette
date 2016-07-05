@@ -17,8 +17,8 @@ class PagesController
 	
 	private $headerController	= null;
 	private $footerController	= null;
-	// private $pageController		= null;
-	public $pageController		= null;
+	private $pageController		= null;
+	private $router				= null;
 	
 	public $params				= null;
 	
@@ -92,68 +92,23 @@ class PagesController
 			self::$PAGE_INFOS->ctrl		= self::$PAGE_INFOS->id;
 			self::$PAGE_INFOS->alias	= null;
 		}
-		
-		
-		/*echo '<br>🍔<pre>';
-		print_r( self::$PAGE_INFOS );
-		echo '</pre>🍔<br>';*/
-		
-		/*$temp = self::getInstance();
-		echo '<pre>';
-		print_r( $temp );
-		echo '</pre>';*/
-		
-		// $this->setParams();
 	}
 	
 	
 	public function init()
 	{
-		echo '💅<br>';
-		
 		$this->router = Router::getInstance();
 		
 		
 		$this->setParams();
-		
 		$this->setPageViewController();
-		
-		
-		
-		
-		
-		/* static view */
-		if ( PagesController::$PAGE_INFOS->dynamic == null ) {
-			echo '🐤<br>';
-			// $this->init( $this->twig );
-			$this->pageController->init( $this->twig );
-		}
-		
-		/* dynamic view */
-		else {
-			$isPageExist = $this->pageController->getPageExistence();
-			
-			if ( $isPageExist ) {
-				echo '🐬 <br>';
-				$this->router->callbackDynamicDatas( $this->pageController->response );
-				// $this->init( $this->twig );
-				$this->pageController->init( $this->twig );
-			}
-			else {
-				echo '🐲 <br>';
-				$this->router->callbackDynamicDatas( $this->pageController->response );
-				return;
-				echo '🐲🐲🐲 <br>';
-			}
-		}
-		
+		$this->initPageController();
 	}
 	
 	
 	private function setPageViewController()
 	{
 		$controllerClassName	= String::titleCase( self::$PAGE_INFOS->ctrl );
-		echo '🍟 '.$controllerClassName.'<br>';
 		
 		$phpFilePath			= 'server/core/controllers/pages/' . $controllerClassName . '.php';
 		
@@ -164,7 +119,30 @@ class PagesController
 		
 		include_once $phpFilePath;
 		
-		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->ctrl, self::$PAGE_INFOS->alias, 'page', $this->twig );
+		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->ctrl, self::$PAGE_INFOS->alias, 'page' );
+	}
+	
+	
+	private function initPageController()
+	{
+		/* static page */
+		if ( PagesController::$PAGE_INFOS->dynamic == null )
+			$this->pageController->init( $this->twig );
+		
+		/* dynamic page */
+		else {
+			$pageExist = $this->pageController->getPageExistence();
+			
+			if ( $pageExist ) {
+				$this->router->updateFromDynamicPageResponse( $this->pageController->response );
+				$this->pageController->init( $this->twig );
+			}
+			else {
+				$this->router->updateFromDynamicPageResponse( $this->pageController->response );
+				
+				return;
+			}
+		}
 	}
 	
 	

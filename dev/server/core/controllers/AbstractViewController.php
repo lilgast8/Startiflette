@@ -5,123 +5,38 @@
 class AbstractViewController
 {
 	
-	private $content			= array();
-	private $staticViewsInfos	= null;
-	
-	/*private $id					= null;
+	private $id					= null;
 	private $alias				= null;
 	private $type				= null;
 	
-	private $response			= null;
-	
 	private $pagesController	= null;
-	private $router				= null;*/
+	private $content			= array();
+	private $staticViewsInfos	= null;
 	
-	public $response = null;
+	public $response			= null;
 	
 	
-	public function __construct( $id, $alias, $type, $twig )
+	public function __construct( $id, $alias, $type )
 	{
-		echo '🎲 '.$id.' — '. get_class( $this ).' <br>';
-		
 		$this->id		= $id;
 		$this->alias	= $alias;
 		$this->type		= $type;
 		
-		$this->response	= null;
-		
-		// $this->pagesController	= PagesController::getInstance();
-		// $this->router			= Router::getInstance();
-		
-		
-		/*$this->getPageViewDynamicInfos();
-		
-		echo '<pre>';
-		print_r( $this->response );
-		echo '</pre>';
-		// exit();
-		
-		// echo '🎮<br>';
-		
-		/* static view *
-		if ( PagesController::$PAGE_INFOS->dynamic == null ) {
-			echo '🐤<br>';
-			$this->init( $twig );
-		}
-		
-		/* dynamic view *
-		else {
-			if ( $this->response->pageExist ) {
-				echo '🐬 <br>';
-				$this->router->callbackDynamicDatas( $this->response );
-				$this->init( $twig );
-			}
-			else {
-				echo '🐲 <br>';
-				$this->router->callbackDynamicDatas( $this->response );
-				return;
-				echo '🐲🐲🐲 <br>';
-			}
-		}*/
-		// exit();
-		
-		/*if ( PagesController::$PAGE_INFOS->dynamic != null ) {
-			if ( $this->response->pageExist ) {
-				echo '🐬 <br>';
-				$this->router->callbackDynamicDatas( $this->response );
-				$this->init();
-			}
-			else {
-				echo '🐲 <br>';
-				$this->router->callbackDynamicDatas( $this->response );
-				return false;
-				echo '🐲🐲🐲 <br>';
-			}
-		}
-		else
-			$this->init();*/
-		
-		// $this->callDynamicDatasApi();
-		// echo '🐀🐀🐀 <br>';
-		
-		
-		
-		/*$this->setStaticViewsInfos();
-		$this->setParams();
-		
-		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			$this->getStaticViewsDatas();
-		$this->getGlobalDatas();
-		$this->getPageViewDatas();
-		if ( PagesController::$PAGE_INFOS->dynamic != null )
-			$this->getPageViewDynamicDatas();
-		
-		$this->getTemplate();
-		$this->renderView();*/
+		$this->pagesController = PagesController::getInstance();
 	}
 	
 	
 	public function getPageExistence()
 	{
-		
 		$this->getPageViewDynamicInfos();
-		
-		echo '🍷<pre>';
-		print_r( $this->response );
-		echo '</pre>🍷🍷<br>';
-		
 		
 		
 		return $this->response->pageExist;
 	}
 	
 	
-	// private function init( $twig )
-	public function init( $twig )
+	public function init()
 	{
-		echo '🐀🐀🐀 <br>';
-		
-		
 		$this->setStaticViewsInfos();
 		$this->setParams();
 		
@@ -132,7 +47,7 @@ class AbstractViewController
 		if ( PagesController::$PAGE_INFOS->dynamic != null )
 			$this->getPageViewDynamicDatas();
 		
-		$this->getTemplate( $twig );
+		$this->getTemplate();
 		$this->renderView();
 	}
 	
@@ -224,31 +139,20 @@ class AbstractViewController
 	}
 	
 	
-	private function getTemplate( $twig )
+	private function getTemplate()
 	{
-		// $this->template = $this->pagesController->twig->loadTemplate( PagesController::$PAGE_INFOS->twig . '.twig' );
-		$this->template = $twig->loadTemplate( PagesController::$PAGE_INFOS->twig . '.twig' );
+		$this->template = $this->pagesController->twig->loadTemplate( PagesController::$PAGE_INFOS->twig . '.twig' );
 	}
 	
 	
 	private function renderView()
 	{
-		echo '📇 <br>';
 		$this->view = $this->template->render( $this->content );
-		
-		// $this->displayView();
 	}
 	
 	
 	public function displayView()
 	{
-		echo '💻 <br>';
-		
-		/*echo '<pre>';
-		print_r( PagesController::$PAGE_INFOS );
-		echo '</pre>';*/
-		echo '✏️ '.get_class( $this ).'<br>';
-		
 		echo $this->view;
 	}
 	
