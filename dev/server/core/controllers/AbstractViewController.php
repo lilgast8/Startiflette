@@ -8,14 +8,101 @@ class AbstractViewController
 	private $content			= array();
 	private $staticViewsInfos	= null;
 	
+	/*private $id					= null;
+	private $alias				= null;
+	private $type				= null;
+	
+	private $response			= null;
+	
+	private $pagesController	= null;
+	private $router				= null;*/
+	
 	
 	public function __construct( $id, $alias, $type )
 	{
+		echo '🎲 '.$id.' — '. get_class( $this ).' <br>';
+		
 		$this->id		= $id;
 		$this->alias	= $alias;
 		$this->type		= $type;
 		
-		$this->pagesController = PagesController::getInstance();
+		$this->response	= null;
+		
+		$this->pagesController	= PagesController::getInstance();
+		$this->router			= Router::getInstance();
+		
+		
+		$this->getPageViewDynamicInfos();
+		
+		/*echo '<pre>';
+		print_r( $this->response );
+		echo '</pre>';*/
+		// exit();
+		
+		// echo '🎮<br>';
+		
+		/* static view */
+		if ( PagesController::$PAGE_INFOS->dynamic == null ) {
+			echo '🐤<br>';
+			$this->init();
+		}
+		
+		/* dynamic view */
+		else {
+			if ( $this->response->pageExist ) {
+				echo '🐬 <br>';
+				$this->router->callbackDynamicDatas( $this->response );
+				$this->init();
+			}
+			else {
+				echo '🐲 <br>';
+				$this->router->callbackDynamicDatas( $this->response );
+				return;
+				echo '🐲🐲🐲 <br>';
+			}
+		}
+		// exit();
+		
+		/*if ( PagesController::$PAGE_INFOS->dynamic != null ) {
+			if ( $this->response->pageExist ) {
+				echo '🐬 <br>';
+				$this->router->callbackDynamicDatas( $this->response );
+				$this->init();
+			}
+			else {
+				echo '🐲 <br>';
+				$this->router->callbackDynamicDatas( $this->response );
+				return false;
+				echo '🐲🐲🐲 <br>';
+			}
+		}
+		else
+			$this->init();*/
+		
+		// $this->callDynamicDatasApi();
+		// echo '🐀🐀🐀 <br>';
+		
+		
+		
+		/*$this->setStaticViewsInfos();
+		$this->setParams();
+		
+		if ( Router::$CONTENT_TYPE == 'firstLoad' )
+			$this->getStaticViewsDatas();
+		$this->getGlobalDatas();
+		$this->getPageViewDatas();
+		if ( PagesController::$PAGE_INFOS->dynamic != null )
+			$this->getPageViewDynamicDatas();
+		
+		$this->getTemplate();
+		$this->renderView();*/
+	}
+	
+	
+	private function init()
+	{
+		echo '🐀🐀🐀 <br>';
+		
 		
 		$this->setStaticViewsInfos();
 		$this->setParams();
@@ -24,7 +111,8 @@ class AbstractViewController
 			$this->getStaticViewsDatas();
 		$this->getGlobalDatas();
 		$this->getPageViewDatas();
-		$this->getPageViewDynamicDatas();
+		if ( PagesController::$PAGE_INFOS->dynamic != null )
+			$this->getPageViewDynamicDatas();
 		
 		$this->getTemplate();
 		$this->renderView();
@@ -105,9 +193,16 @@ class AbstractViewController
 	}
 	
 	
-	protected function getPageViewDynamicDatas()
+	protected function getPageViewDynamicInfos()
 	{
 		
+	}
+	
+	
+	private function getPageViewDynamicDatas()
+	{
+		if ( $this->response->pageExist )
+			$this->content = array_merge_recursive ( $this->content, (array) $this->response->datas );
 	}
 	
 	
@@ -119,12 +214,22 @@ class AbstractViewController
 	
 	private function renderView()
 	{
+		echo '📇 <br>';
 		$this->view = $this->template->render( $this->content );
+		
+		$this->displayView();
 	}
 	
 	
 	public function displayView()
 	{
+		echo '💻 <br>';
+		
+		/*echo '<pre>';
+		print_r( PagesController::$PAGE_INFOS );
+		echo '</pre>';*/
+		echo '✏️ '.get_class( $this ).'<br>';
+		
 		echo $this->view;
 	}
 	
@@ -135,7 +240,7 @@ class AbstractViewController
 		$params				= new stdClass();
 		$params->$className	= $class->getParams();
 		
-		$this->content		=  array_merge ( $this->content, (array) $params );
+		$this->content		= array_merge ( $this->content, (array) $params );
 	}
 	
 	
@@ -150,7 +255,7 @@ class AbstractViewController
 			$contentClass	= new $contentClassName();
 			$datas			= $contentClass->getDatas();
 			
-			$this->content	=  array_merge_recursive ( $this->content, (array) $datas );
+			$this->content	= array_merge_recursive ( $this->content, (array) $datas );
 		}
 	}
 	

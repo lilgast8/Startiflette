@@ -17,7 +17,8 @@ class PagesController
 	
 	private $headerController	= null;
 	private $footerController	= null;
-	private $pageController		= null;
+	// private $pageController		= null;
+	public $pageController		= null;
 	
 	public $params				= null;
 	
@@ -83,6 +84,7 @@ class PagesController
 			self::$PAGE_INFOS->twig		= $page->twig === null ? $page->id : $page->twig;
 			self::$PAGE_INFOS->ctrl		= $page->ctrl === null ? $page->id : $page->ctrl;
 			self::$PAGE_INFOS->alias	= $page->alias;
+			self::$PAGE_INFOS->dynamic	= $page->dynamic;
 		}
 		else {
 			self::$PAGE_INFOS->js		= self::$PAGE_INFOS->id;
@@ -90,11 +92,24 @@ class PagesController
 			self::$PAGE_INFOS->ctrl		= self::$PAGE_INFOS->id;
 			self::$PAGE_INFOS->alias	= null;
 		}
+		
+		
+		/*echo '<br>🍔<pre>';
+		print_r( self::$PAGE_INFOS );
+		echo '</pre>🍔<br>';*/
+		
+		/*$temp = self::getInstance();
+		echo '<pre>';
+		print_r( $temp );
+		echo '</pre>';*/
+		
+		// $this->setParams();
 	}
 	
 	
 	public function init()
 	{
+		echo '💅<br>';
 		$this->setParams();
 		
 		$this->setPageViewController();
@@ -104,6 +119,7 @@ class PagesController
 	private function setPageViewController()
 	{
 		$controllerClassName	= String::titleCase( self::$PAGE_INFOS->ctrl );
+		// echo '🍟 '.$controllerClassName.'<br>';
 		
 		$phpFilePath			= 'server/core/controllers/pages/' . $controllerClassName . '.php';
 		

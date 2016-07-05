@@ -92,8 +92,10 @@ class Main
 	}
 	
 	
-	private function setPagesController()
+	// private function setPagesController()
+	public function setPagesController()
 	{
+		// echo '🐣<br>';
 		$this->pagesController = PagesController::getInstance();
 		$this->pagesController->init();
 	}
@@ -101,6 +103,16 @@ class Main
 	
 	public function displayView()
 	{
+		echo '📄 '. get_class( $this->pagesController->pageController ) .'<br>';
+		
+		// echo '📄<pre>';
+		// print_r( PagesController::$PAGE_INFOS );
+		// echo '</pre>📄';
+		
+		// $this->pagesController = PagesController::getInstance();
+		// echo '<pre>';
+		// print_r( $this->pagesController->pageController );
+		// echo '</pre>';
 		$this->pagesController->displayView();
 	}
 	

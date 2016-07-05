@@ -228,7 +228,7 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	
 	var _force404Load = function() {
-		var lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/'  : '';
+		var lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/' : '';
 		var url		= STF.Path.URL.base + lang + '404';
 		
 		_loadContent.call( this, url );
