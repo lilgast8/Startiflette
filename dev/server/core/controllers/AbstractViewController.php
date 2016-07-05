@@ -30,7 +30,7 @@ class AbstractViewController
 	
 	public function getPageExistence()
 	{
-		$this->getPageViewDynamicInfos();
+		$this->callAPI();
 		
 		
 		return $this->response->pageExist;
@@ -131,7 +131,7 @@ class AbstractViewController
 	}
 	
 	
-	protected function getPageViewDynamicInfos()
+	protected function callAPI()
 	{
 		
 	}

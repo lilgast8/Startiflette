@@ -5,7 +5,7 @@
 class Project extends AbstractViewController
 {
 	
-	protected function getPageViewDynamicInfos()
+	protected function callAPI()
 	{
 		// call API
 		// [ ... ]
