@@ -470,6 +470,9 @@ class Router
 			$this->setAltLangUrl( self::$ROUTES->home->{ 'url-page' } );
 			$this->setParams();
 			
+			
+			
+			
 			// if ( Router::$CONTENT_TYPE == 'firstLoad' )
 			// 	header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 			
@@ -478,11 +481,17 @@ class Router
 			echo '</pre>';*/
 			// $this->pagesController	= PagesController::getInstance();
 			$this->pagesController->setPageInfos( $page );
+			
+			/*echo '<pre>';
+			print_r( $this->pagesController->pageController );
+			echo '</pre>';*/
+			
+			
 			/*echo '<pre>';
 			print_r( PagesController::$PAGE_INFOS );
 			echo '</pre>';*/
 			
-			$this->pagesController	= PagesController::getInstance();
+			// $this->pagesController	= PagesController::getInstance();
 			$this->pagesController->init();
 			/*echo '<pre>';
 			print_r( $this->pagesController );

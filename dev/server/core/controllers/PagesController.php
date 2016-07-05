@@ -110,16 +110,50 @@ class PagesController
 	public function init()
 	{
 		echo '💅<br>';
+		
+		$this->router = Router::getInstance();
+		
+		
 		$this->setParams();
 		
 		$this->setPageViewController();
+		
+		
+		
+		
+		
+		/* static view */
+		if ( PagesController::$PAGE_INFOS->dynamic == null ) {
+			echo '🐤<br>';
+			// $this->init( $this->twig );
+			$this->pageController->init( $this->twig );
+		}
+		
+		/* dynamic view */
+		else {
+			$isPageExist = $this->pageController->getPageExistence();
+			
+			if ( $isPageExist ) {
+				echo '🐬 <br>';
+				$this->router->callbackDynamicDatas( $this->pageController->response );
+				// $this->init( $this->twig );
+				$this->pageController->init( $this->twig );
+			}
+			else {
+				echo '🐲 <br>';
+				$this->router->callbackDynamicDatas( $this->pageController->response );
+				return;
+				echo '🐲🐲🐲 <br>';
+			}
+		}
+		
 	}
 	
 	
 	private function setPageViewController()
 	{
 		$controllerClassName	= String::titleCase( self::$PAGE_INFOS->ctrl );
-		// echo '🍟 '.$controllerClassName.'<br>';
+		echo '🍟 '.$controllerClassName.'<br>';
 		
 		$phpFilePath			= 'server/core/controllers/pages/' . $controllerClassName . '.php';
 		
@@ -130,7 +164,7 @@ class PagesController
 		
 		include_once $phpFilePath;
 		
-		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->ctrl, self::$PAGE_INFOS->alias, 'page' );
+		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->ctrl, self::$PAGE_INFOS->alias, 'page', $this->twig );
 	}
 	
 	

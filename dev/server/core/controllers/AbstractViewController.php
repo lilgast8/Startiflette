@@ -17,8 +17,10 @@ class AbstractViewController
 	private $pagesController	= null;
 	private $router				= null;*/
 	
+	public $response = null;
 	
-	public function __construct( $id, $alias, $type )
+	
+	public function __construct( $id, $alias, $type, $twig )
 	{
 		echo '🎲 '.$id.' — '. get_class( $this ).' <br>';
 		
@@ -28,31 +30,31 @@ class AbstractViewController
 		
 		$this->response	= null;
 		
-		$this->pagesController	= PagesController::getInstance();
-		$this->router			= Router::getInstance();
+		// $this->pagesController	= PagesController::getInstance();
+		// $this->router			= Router::getInstance();
 		
 		
-		$this->getPageViewDynamicInfos();
+		/*$this->getPageViewDynamicInfos();
 		
-		/*echo '<pre>';
+		echo '<pre>';
 		print_r( $this->response );
-		echo '</pre>';*/
+		echo '</pre>';
 		// exit();
 		
 		// echo '🎮<br>';
 		
-		/* static view */
+		/* static view *
 		if ( PagesController::$PAGE_INFOS->dynamic == null ) {
 			echo '🐤<br>';
-			$this->init();
+			$this->init( $twig );
 		}
 		
-		/* dynamic view */
+		/* dynamic view *
 		else {
 			if ( $this->response->pageExist ) {
 				echo '🐬 <br>';
 				$this->router->callbackDynamicDatas( $this->response );
-				$this->init();
+				$this->init( $twig );
 			}
 			else {
 				echo '🐲 <br>';
@@ -60,7 +62,7 @@ class AbstractViewController
 				return;
 				echo '🐲🐲🐲 <br>';
 			}
-		}
+		}*/
 		// exit();
 		
 		/*if ( PagesController::$PAGE_INFOS->dynamic != null ) {
@@ -99,7 +101,23 @@ class AbstractViewController
 	}
 	
 	
-	private function init()
+	public function getPageExistence()
+	{
+		
+		$this->getPageViewDynamicInfos();
+		
+		echo '🍷<pre>';
+		print_r( $this->response );
+		echo '</pre>🍷🍷<br>';
+		
+		
+		
+		return $this->response->pageExist;
+	}
+	
+	
+	// private function init( $twig )
+	public function init( $twig )
 	{
 		echo '🐀🐀🐀 <br>';
 		
@@ -114,7 +132,7 @@ class AbstractViewController
 		if ( PagesController::$PAGE_INFOS->dynamic != null )
 			$this->getPageViewDynamicDatas();
 		
-		$this->getTemplate();
+		$this->getTemplate( $twig );
 		$this->renderView();
 	}
 	
@@ -206,9 +224,10 @@ class AbstractViewController
 	}
 	
 	
-	private function getTemplate()
+	private function getTemplate( $twig )
 	{
-		$this->template = $this->pagesController->twig->loadTemplate( PagesController::$PAGE_INFOS->twig . '.twig' );
+		// $this->template = $this->pagesController->twig->loadTemplate( PagesController::$PAGE_INFOS->twig . '.twig' );
+		$this->template = $twig->loadTemplate( PagesController::$PAGE_INFOS->twig . '.twig' );
 	}
 	
 	
@@ -217,7 +236,7 @@ class AbstractViewController
 		echo '📇 <br>';
 		$this->view = $this->template->render( $this->content );
 		
-		$this->displayView();
+		// $this->displayView();
 	}
 	
 	

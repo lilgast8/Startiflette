@@ -103,6 +103,11 @@ class Main
 	
 	public function displayView()
 	{
+		$this->pagesController = PagesController::getInstance();
+		
+		/*echo '<pre>';
+		print_r( $this->pagesController->pageController );
+		echo '</pre>';*/
 		echo '📄 '. get_class( $this->pagesController->pageController ) .'<br>';
 		
 		// echo '📄<pre>';
