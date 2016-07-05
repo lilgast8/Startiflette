@@ -5,7 +5,7 @@
 class ViewNameController extends AbstractViewController
 {
 	
-	protected function getPageViewDynamicDatas()
+	protected function getPageViewDynamicInfos()
 	{
 		
 	}
