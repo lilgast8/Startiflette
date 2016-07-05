@@ -236,23 +236,6 @@ class Router
 	}
 	
 	
-	private function createPageObj()
-	{
-		$page				= new stdClass();
-		$page->exist		= false;
-		$page->id			= null;
-		$page->js			= null;
-		$page->twig			= null;
-		$page->ctrl			= null;
-		$page->alias		= null;
-		$page->dynamic		= null;
-		$page->urls			= null;
-		$page->available	= true;
-		
-		return $page;
-	}
-	
-	
 	private function getAltPageUrl( $page, $alias )
 	{
 		$urls = new stdClass();
