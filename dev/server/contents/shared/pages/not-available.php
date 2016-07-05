@@ -5,7 +5,7 @@
 class NotAvailableContent extends AbstractContent
 {
 	
-	public function setDatas()
+	public function setData()
 	{
 		$d = new stdClass();
 		
@@ -21,7 +21,7 @@ class NotAvailableContent extends AbstractContent
 		
 		
 		
-		$this->datas = $d;
+		$this->data = $d;
 	}
 	
 }

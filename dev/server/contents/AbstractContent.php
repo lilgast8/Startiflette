@@ -5,26 +5,26 @@
 class AbstractContent
 {
 	
-	protected $datas = null;
+	protected $data = null;
 	
 	
 	public function __construct()
 	{
-		$this->setDatas();
+		$this->setData();
 	}
 	
 	
-	public function setDatas()
+	public function setData()
 	{
 		$d				= new stdClass();
 		
-		$this->datas	= $d;
+		$this->data	= $d;
 	}
 	
 	
-	public function getDatas()
+	public function getData()
 	{
-		return $this->datas;
+		return $this->data;
 		
 	}
 	

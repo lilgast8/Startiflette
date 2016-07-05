@@ -43,13 +43,13 @@ class AbstractViewController
 		$this->setParams();
 		
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
-			$this->getStaticViewsDatas();
+			$this->getStaticViewsData();
 		
-		$this->getGlobalDatas();
-		$this->getPageViewDatas();
+		$this->getGlobalData();
+		$this->getPageViewData();
 		
 		if ( $this->page->dynamic != null )
-			$this->getPageViewDynamicDatas();
+			$this->getPageViewDynamicData();
 		
 		$this->getTemplate();
 		$this->renderView();
@@ -96,14 +96,14 @@ class AbstractViewController
 	}
 	
 	
-	private function getStaticViewsDatas()
+	private function getStaticViewsData()
 	{
 		foreach ( $this->staticViewsInfos as $viewInfos )
 			$this->getContent( $viewInfos->phpFilePath, $viewInfos->phpSharedFilePath, $viewInfos->contentClassName );
 	}
 	
 	
-	private function getGlobalDatas()
+	private function getGlobalData()
 	{
 		$phpFilePath		= Path::$FILE->contentsLang . 'global.php';
 		$phpSharedFilePath	= Path::$FILE->contentsShared . 'global.php';
@@ -113,7 +113,7 @@ class AbstractViewController
 	}
 	
 	
-	protected function getPageViewDatas()
+	protected function getPageViewData()
 	{
 		$phpFilePath		= Path::$FILE->contentsLang . $this->type . 's/' . $this->id . '.php';
 		$phpSharedFilePath	= Path::$FILE->contentsShared . $this->type . 's/' . $this->id . '.php';
@@ -137,10 +137,9 @@ class AbstractViewController
 	}
 	
 	
-	private function getPageViewDynamicDatas()
+	private function getPageViewDynamicData()
 	{
-		if ( $this->response->pageExist )
-			$this->content = array_merge_recursive ( $this->content, (array) $this->response->datas );
+		$this->content = array_merge_recursive ( $this->content, (array) $this->response->data );
 	}
 	
 	
@@ -181,9 +180,9 @@ class AbstractViewController
 			include_once $phpFilePath;
 			
 			$contentClass	= new $contentClassName();
-			$datas			= $contentClass->getDatas();
+			$data			= $contentClass->getData();
 			
-			$this->content	= array_merge_recursive ( $this->content, (array) $datas );
+			$this->content	= array_merge_recursive ( $this->content, (array) $data );
 		}
 	}
 	

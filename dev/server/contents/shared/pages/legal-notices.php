@@ -5,7 +5,7 @@
 class LegalNoticesContent extends AbstractContent
 {
 	
-	public function setDatas()
+	public function setData()
 	{
 		$d = new stdClass();
 		
@@ -19,7 +19,7 @@ class LegalNoticesContent extends AbstractContent
 		
 		
 		
-		$this->datas = $d;
+		$this->data = $d;
 	}
 	
 }

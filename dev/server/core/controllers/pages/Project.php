@@ -22,7 +22,7 @@ class Project extends AbstractViewController
 			"en" => 'project/1/name-1/filter-1',
 			"ex" => 'project-ex/1/name-ex-1/filter-ex-1'
 		];
-		$this->response->datas		= (object) [
+		$this->response->data		= (object) [
 			'metas' => [
 				'title'	=> 'Projet dynamique 1',
 				'desc'	=> 'Description du projet dynamique 1'
