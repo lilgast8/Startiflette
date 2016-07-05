@@ -140,6 +140,11 @@ Made the configurations in the `dev/configs/config.json` file.
 		}
 	}
 	```
+	
+	* `params`: @type {array} Optional option. List of dynamic parameters used when you have a dynamic page which needs to get data via an API. To use it you need to extend the `AbstractViewController` class, override the `callAPI()` method and make your API call from it. The API response have to be saved in `$this->response` and must contain the 3 following parameters:
+		* `$this->response->pageExist`: @type {boolean} Show the page view if `true`, else set & show the 404 page.
+		* `$this->response->urls`: @type {object} List of the page urls for each language.
+		* `$this->response->data`: @type {data} All the data you need in the page view.
 
 
 
