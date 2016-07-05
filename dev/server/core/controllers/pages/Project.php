@@ -31,7 +31,7 @@ class Project extends AbstractViewController
 		
 		
 		// simulate a nonvalid page
-		$this->response->pageExist = false;
+		// $this->response->pageExist = false;
 	}
 	
 }
