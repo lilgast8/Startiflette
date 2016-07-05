@@ -131,11 +131,11 @@ class PagesController
 			$pageExist = $this->pageController->getPageExistence();
 			
 			if ( $pageExist ) {
-				$this->router->updateFromDynamicPageResponse( $this->pageController->response );
+				$this->router->updateFurtherToAPIResponse( $this->pageController->response );
 				$this->pageController->init( $this->twig );
 			}
 			else {
-				$this->router->updateFromDynamicPageResponse( $this->pageController->response );
+				$this->router->updateFurtherToAPIResponse( $this->pageController->response );
 				
 				return;
 			}

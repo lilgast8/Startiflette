@@ -400,7 +400,7 @@ class Router
 	}
 	
 	
-	public function updateFromDynamicPageResponse( $response )
+	public function updateFurtherToAPIResponse( $response )
 	{
 		if ( $response->pageExist ) {
 			$this->setAltLangUrl( $response->urls );
