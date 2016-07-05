@@ -13,14 +13,11 @@ class PagesController
 	
 	protected static $instance;
 	
-	static $PAGE_INFOS			= null;
-	
 	private $headerController	= null;
 	private $footerController	= null;
 	private $pageController		= null;
+	private $page				= null;
 	private $router				= null;
-	
-	public $params				= null;
 	
 	
 	protected function __construct()
@@ -75,22 +72,22 @@ class PagesController
 	
 	public function setPageInfos( $page )
 	{
-		self::$PAGE_INFOS			= new stdClass();
+		$this->page = Page::getInstance();
 		
-		self::$PAGE_INFOS->id		= $page->available ? $page->id : 'not-available';
-		self::$PAGE_INFOS->name		= String::camelCase( self::$PAGE_INFOS->id );
+		$this->page->id		= $page->available ? $page->id : 'not-available';
+		$this->page->name	= String::camelCase( $this->page->id );
 		if ( $page->available ) {
-			self::$PAGE_INFOS->js		= $page->js === null ? $page->id : $page->js;
-			self::$PAGE_INFOS->twig		= $page->twig === null ? $page->id : $page->twig;
-			self::$PAGE_INFOS->ctrl		= $page->ctrl === null ? $page->id : $page->ctrl;
-			self::$PAGE_INFOS->alias	= $page->alias;
-			self::$PAGE_INFOS->dynamic	= $page->dynamic;
+			$this->page->js			= $page->js === null ? $page->id : $page->js;
+			$this->page->twig		= $page->twig === null ? $page->id : $page->twig;
+			$this->page->ctrl		= $page->ctrl === null ? $page->id : $page->ctrl;
+			$this->page->alias		= $page->alias;
+			$this->page->dynamic	= $page->dynamic;
 		}
 		else {
-			self::$PAGE_INFOS->js		= self::$PAGE_INFOS->id;
-			self::$PAGE_INFOS->twig		= self::$PAGE_INFOS->id;
-			self::$PAGE_INFOS->ctrl		= self::$PAGE_INFOS->id;
-			self::$PAGE_INFOS->alias	= null;
+			$this->page->js		= $this->page->id;
+			$this->page->twig	= $this->page->id;
+			$this->page->ctrl	= $this->page->id;
+			$this->page->alias	= null;
 		}
 	}
 	
@@ -99,8 +96,8 @@ class PagesController
 	{
 		$this->router = Router::getInstance();
 		
+		$this->page->setParams();
 		
-		$this->setParams();
 		$this->setPageViewController();
 		$this->initPageController();
 	}
@@ -108,7 +105,7 @@ class PagesController
 	
 	private function setPageViewController()
 	{
-		$controllerClassName	= String::titleCase( self::$PAGE_INFOS->ctrl );
+		$controllerClassName	= String::titleCase( $this->page->ctrl );
 		
 		$phpFilePath			= 'server/core/controllers/pages/' . $controllerClassName . '.php';
 		
@@ -119,14 +116,14 @@ class PagesController
 		
 		include_once $phpFilePath;
 		
-		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->ctrl, self::$PAGE_INFOS->alias, 'page' );
+		$this->pageController = new $controllerClassName( $this->page->ctrl, $this->page->alias, 'page' );
 	}
 	
 	
 	private function initPageController()
 	{
 		/* static page */
-		if ( PagesController::$PAGE_INFOS->dynamic == null )
+		if ( $this->page->dynamic == null )
 			$this->pageController->init( $this->twig );
 		
 		/* dynamic page */
@@ -143,20 +140,6 @@ class PagesController
 				return;
 			}
 		}
-	}
-	
-	
-	private function setParams()
-	{
-		$this->params = new stdClass();
-		
-		$this->params->PAGE_INFOS = self::$PAGE_INFOS;
-	}
-	
-	
-	public function getParams()
-	{
-		return $this->params;
 	}
 	
 	

@@ -18,17 +18,15 @@ class Router
 	
 	private $lang				= null;
 	private $pagesController	= null;
+	private $page				= null;
 	
 	private $params				= null;
-	
-	
-	public $force404 = null;
-	static $FORCE_404 = null;
 	
 	
 	protected function __construct()
 	{
 		$this->setRoutes();
+		$this->setPage();
 	}
 	
 	
@@ -50,6 +48,13 @@ class Router
 		
 		$routes			= file_get_contents( $filePath );
 		self::$ROUTES	= json_decode( $routes );
+	}
+	
+	
+	private function setPage()
+	{
+		$this->page	= Page::getInstance();
+		$this->page->init();
 	}
 	
 	
@@ -143,38 +148,6 @@ class Router
 	
 	private function setPageInfos()
 	{
-		$page = $this->getPageInfos();
-		
-		if ( Lang::$LANG_EXIST && $page->exist ) { // page exist
-			$this->setIsHomepage( $page->id );
-			if ( $page->dynamic == null )
-				$this->setAltLangUrl( $page->urls );
-			
-			if ( !Lang::$MULTI_LANG && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG ||
-				 $this->isHomepage && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG )
-				$this->redirectToFullPathWithoutLang();
-			
-			$this->pagesController->setPageInfos( $page );
-		}
-		else { // 404
-			/*$page->id	= 'error-404';
-			
-			$this->setAltLangUrl( self::$ROUTES->home->{ 'url-page' } );
-			
-			if ( Router::$CONTENT_TYPE == 'firstLoad' )
-				header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
-			
-			$this->pagesController->setPageInfos( $page );*/
-			
-			$this->set404( $page );
-		}
-	}
-	
-	
-	private function getPageInfos()
-	{
-		$page			= $this->createPageObj();
-		
 		$aliasParams	= null;
 		
 		foreach ( self::$ROUTES as $pageId => $pageParams ) { // parse all pages
@@ -189,11 +162,11 @@ class Router
 			
 			/* unique page */
 			if ( $path == $searchPath && !isset( $pageParams->subs ) ) {
-				$page->exist	= true;
-				$page->id		= $pageId;
-				$page->urls		= $pageParams->{ 'url-page' };
+				$this->page->exist	= true;
+				$this->page->id	= $pageId;
+				$this->page->urls	= $pageParams->{ 'url-page' };
 				
-				$page			= $this->setSpecificOptions( $page, $pageParams, null );
+				$this->page		= $this->setSpecificOptions( $this->page, $pageParams, null );
 			}
 			
 			/* multiple static pages */
@@ -202,12 +175,12 @@ class Router
 				foreach ( $pageParams->subs as $aliasId => $aliasParams ) {
 					
 					if ( $searchPath . '/' . $aliasParams->{ 'url-alias' }->{ Lang::$LANG } == $path ) {
-						$page->exist	= true;
-						$page->id		= $pageId;
-						$page->alias	= $aliasId;
-						$page->urls		= $this->getAltPageUrl( $pageParams->{ 'url-page' }, $aliasParams->{ 'url-alias' } );
+						$this->page->exist	= true;
+						$this->page->id		= $pageId;
+						$this->page->alias	= $aliasId;
+						$this->page->urls	= $this->getAltPageUrl( $pageParams->{ 'url-page' }, $aliasParams->{ 'url-alias' } );
 						
-						$page			= $this->setSpecificOptions( $page, $pageParams, $aliasParams );
+						$this->page			= $this->setSpecificOptions( $this->page, $pageParams, $aliasParams );
 						
 						break; // break second foreach
 					}
@@ -225,15 +198,15 @@ class Router
 					if ( isset( $dynamicUrlParams[ $key ] ) )
 						$dynamicUrls->$paramId = $dynamicUrlParams[ $key ];
 				
-				$page->exist	= true;
-				$page->id		= $pageId;
-				$page->dynamic	= $dynamicUrls;
+				$this->page->exist		= true;
+				$this->page->id			= $pageId;
+				$this->page->dynamic	= $dynamicUrls;
 				
-				$page			= $this->setSpecificOptions( $page, $pageParams, null );
+				$this->page				= $this->setSpecificOptions( $this->page, $pageParams, null );
 			}
 			
-			if ( $page->exist ) {
-				$page->available = $this->getPageAvailability( $pageParams, $aliasParams );
+			if ( $this->page->exist ) {
+				$this->page->available = $this->getPageAvailability( $pageParams, $aliasParams );
 				
 				break; // break first foreach
 			}
@@ -241,7 +214,22 @@ class Router
 		}
 		
 		
-		return $page;
+		// page exist
+		if ( Lang::$LANG_EXIST && $this->page->exist ) {
+			$this->setIsHomepage( $this->page->id );
+			if ( $this->page->dynamic == null )
+				$this->setAltLangUrl( $this->page->urls );
+			
+			if ( !Lang::$MULTI_LANG && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG ||
+				 $this->isHomepage && self::$URL->pathParams[0] == Lang::$DEFAULT_LANG )
+				$this->redirectToFullPathWithoutLang();
+			
+			$this->pagesController->setPageInfos( $this->page );
+		}
+		
+		// 404
+		else
+			$this->set404( $this->page );
 	}
 	
 	
@@ -419,9 +407,9 @@ class Router
 			$this->setParams();
 		}
 		else {
-			$page = $this->createPageObj();
+			$this->page->init();
 			
-			$this->set404( $page );
+			$this->set404( $this->page );
 			$this->setParams();
 			
 			$this->pagesController->init();

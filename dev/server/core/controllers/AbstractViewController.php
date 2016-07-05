@@ -10,6 +10,7 @@ class AbstractViewController
 	private $type				= null;
 	
 	private $pagesController	= null;
+	private $page				= null;
 	private $content			= array();
 	private $staticViewsInfos	= null;
 	
@@ -22,7 +23,8 @@ class AbstractViewController
 		$this->alias	= $alias;
 		$this->type		= $type;
 		
-		$this->pagesController = PagesController::getInstance();
+		$this->pagesController	= PagesController::getInstance();
+		$this->page				= Page::getInstance();
 	}
 	
 	
@@ -42,9 +44,11 @@ class AbstractViewController
 		
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
 			$this->getStaticViewsDatas();
+		
 		$this->getGlobalDatas();
 		$this->getPageViewDatas();
-		if ( PagesController::$PAGE_INFOS->dynamic != null )
+		
+		if ( $this->page->dynamic != null )
 			$this->getPageViewDynamicDatas();
 		
 		$this->getTemplate();
@@ -85,7 +89,8 @@ class AbstractViewController
 		$this->getParamsFromClass( 'Path' );
 		$this->getParamsFromClass( 'Lang' );
 		$this->getParamsFromClass( 'Router' );
-		$this->getParamsFromClass( 'PagesController' );
+		// $this->getParamsFromClass( 'PagesController' );
+		$this->getParamsFromClass( 'Page' );
 		
 		$this->content = json_decode( json_encode( $this->content ), true );
 	}
@@ -141,7 +146,7 @@ class AbstractViewController
 	
 	private function getTemplate()
 	{
-		$this->template = $this->pagesController->twig->loadTemplate( PagesController::$PAGE_INFOS->twig . '.twig' );
+		$this->template = $this->pagesController->twig->loadTemplate( $this->page->twig . '.twig' );
 	}
 	
 	
