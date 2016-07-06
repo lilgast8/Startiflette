@@ -148,6 +148,12 @@ class PagesController
 		$this->pageController->displayView();
 	}
 	
+	
+	public function getPageController()
+	{
+		return $this->pageController;
+	}
+	
 }
 
 

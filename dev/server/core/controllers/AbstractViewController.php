@@ -92,15 +92,13 @@ class AbstractViewController
 		$this->getParamsFromClass( 'Lang' );
 		$this->getParamsFromClass( 'Router' );
 		$this->getParamsFromClass( 'Page' );
-		
-		$this->content = json_decode( json_encode( $this->content ), true );
 	}
 	
 	
 	private function getStaticViewsData()
 	{
 		foreach ( $this->staticViewsInfos as $viewInfos )
-			$this->getContent( $viewInfos->phpFilePath, $viewInfos->phpSharedFilePath, $viewInfos->contentClassName );
+			$this->addContent( $viewInfos->phpFilePath, $viewInfos->phpSharedFilePath, $viewInfos->contentClassName );
 	}
 	
 	
@@ -110,7 +108,7 @@ class AbstractViewController
 		$phpSharedFilePath	= Path::$FILE->contentsShared . 'global.php';
 		$contentClassName	= 'GlobalContent';
 		
-		$this->getContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
+		$this->addContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
 	}
 	
 	
@@ -120,14 +118,14 @@ class AbstractViewController
 		$phpSharedFilePath	= Path::$FILE->contentsShared . $this->type . 's/' . $this->id . '.php';
 		$contentClassName	= String::titleCase( $this->id ) . 'Content';
 		
-		$this->getContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
+		$this->addContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
 		
 		if ( $this->alias !== null ) {
 			$phpFilePath		= Path::$FILE->contentsLang . $this->type . 's/' . $this->alias . '.php';
 			$phpSharedFilePath	= Path::$FILE->contentsShared . $this->type . 's/' . $this->alias . '.php';
 			$contentClassName	= String::titleCase( $this->alias ) . 'Content';
 			
-			$this->getContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
+			$this->addContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
 		}
 	}
 	
@@ -140,7 +138,7 @@ class AbstractViewController
 	
 	private function getPageViewDynamicData()
 	{
-		$this->addContent( $this->response->data );
+		$this->addData( $this->response->data );
 	}
 	
 	
@@ -174,11 +172,11 @@ class AbstractViewController
 		$params				= new stdClass();
 		$params->$className	= $class->getParams();
 		
-		$this->addContent( $params );
+		$this->addData( $params );
 	}
 	
 	
-	private function getContent( $phpFilePath, $phpSharedFilePath, $contentClassName )
+	private function addContent( $phpFilePath, $phpSharedFilePath, $contentClassName )
 	{
 		if ( !file_exists( $phpFilePath ) )
 			$phpFilePath = $phpSharedFilePath;
@@ -189,14 +187,22 @@ class AbstractViewController
 			$contentClass	= new $contentClassName();
 			$data			= $contentClass->getData();
 			
-			$this->addContent( $data );
+			$this->addData( $data );
 		}
 	}
 	
 	
-	protected function addContent( $data )
+	protected function addData( $data )
 	{
-		$this->content = array_merge_recursive( $this->content, (array) $data );
+		$data			= json_decode( json_encode( $data ), true );
+		
+		$this->content	= array_merge_recursive( $this->content, (array) $data );
+	}
+	
+	
+	public function getContent()
+	{
+		return $this->content;
 	}
 	
 }

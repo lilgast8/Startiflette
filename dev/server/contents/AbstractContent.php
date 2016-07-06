@@ -27,6 +27,20 @@ class AbstractContent
 		return $this->data;
 	}
 	
+	
+	protected function getContent( $id )
+	{
+		$pagesController	= PagesController::getInstance();
+		$pageController		= $pagesController->getPageController();
+		$content			= $pageController->getContent();
+		
+		if ( $id != null )
+			$content = $content[ $id ];
+		
+		
+		return Helpers::arrayToObject( $content );
+	}
+	
 }
 
 
