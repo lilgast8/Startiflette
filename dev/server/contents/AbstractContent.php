@@ -14,7 +14,7 @@ class AbstractContent
 	}
 	
 	
-	public function setData()
+	protected function setData()
 	{
 		$d				= new stdClass();
 		
@@ -25,7 +25,6 @@ class AbstractContent
 	public function getData()
 	{
 		return $this->data;
-		
 	}
 	
 }

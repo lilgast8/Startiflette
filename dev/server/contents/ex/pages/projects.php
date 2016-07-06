@@ -5,7 +5,7 @@
 class ProjectsContent extends AbstractContent
 {
 	
-	public function setData()
+	protected function setData()
 	{
 		$d = new stdClass();
 		

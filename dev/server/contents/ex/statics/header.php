@@ -5,7 +5,7 @@
 class HeaderContent extends AbstractContent
 {
 	
-	public function setData()
+	protected function setData()
 	{
 		$d = new stdClass();
 		
