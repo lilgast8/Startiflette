@@ -11,8 +11,11 @@ class AbstractViewController
 	
 	private $pagesController	= null;
 	private $page				= null;
-	private $content			= array();
+	
 	private $staticViewsInfos	= null;
+	private $content			= array();
+	private $template			= null;
+	private $view				= null;
 	
 	public $response			= null;
 	
@@ -37,7 +40,7 @@ class AbstractViewController
 	}
 	
 	
-	public function init()
+	public function init( $twig )
 	{
 		$this->setStaticViewsInfos();
 		$this->setParams();
@@ -53,7 +56,7 @@ class AbstractViewController
 		
 		$this->initExtras();
 		
-		$this->getTemplate();
+		$this->setTemplate( $twig );
 		$this->renderView();
 	}
 	
@@ -148,9 +151,9 @@ class AbstractViewController
 	}
 	
 	
-	private function getTemplate()
+	private function setTemplate( $twig )
 	{
-		$this->template = $this->pagesController->twig->loadTemplate( $this->page->twig . '.twig' );
+		$this->template = $twig->loadTemplate( $this->page->twig . '.twig' );
 	}
 	
 	

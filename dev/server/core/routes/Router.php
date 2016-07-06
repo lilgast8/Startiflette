@@ -14,11 +14,11 @@ class Router
 	
 	static $CONTENT_TYPE		= null;
 	
-	private $isHomepage			= null;
-	
+	private $page				= null;
 	private $lang				= null;
 	private $pagesController	= null;
-	private $page				= null;
+	
+	private $isHomepage			= null;
 	
 	private $params				= null;
 	
@@ -184,7 +184,7 @@ class Router
 		if ( Lang::$LANG_EXIST && $this->page->exist ) // page exist
 			$this->setPageView();
 		else // 404
-			$this->set404( $this->page );
+			$this->set404();
 	}
 	
 	
@@ -290,6 +290,7 @@ class Router
 	private function setPageView()
 	{
 		$this->setIsHomepage( $this->page->id );
+		
 		if ( $this->page->dynamic == null )
 			$this->setAltLangUrl( $this->page->urls );
 		
@@ -301,16 +302,16 @@ class Router
 	}
 	
 	
-	private function set404( $page )
+	private function set404()
 	{
-		$page->id	= 'error-404';
+		$this->page->id	= 'error-404';
 		
 		$this->setAltLangUrl( self::$ROUTES->home->{ 'url-page' } );
 		
 		if ( Router::$CONTENT_TYPE == 'firstLoad' )
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 		
-		$this->pagesController->setPageInfos( $page );
+		$this->pagesController->setPageInfos( $this->page );
 	}
 	
 	
@@ -411,7 +412,7 @@ class Router
 		else {
 			$this->page->init();
 			
-			$this->set404( $this->page );
+			$this->set404();
 			$this->setParams();
 			
 			$this->pagesController->init();

@@ -13,9 +13,10 @@ class PagesController
 	
 	protected static $instance;
 	
-	private $headerController	= null;
-	private $footerController	= null;
+	private $twig				= null;
+	
 	private $pageController		= null;
+	
 	private $page				= null;
 	private $router				= null;
 	

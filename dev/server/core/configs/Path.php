@@ -11,6 +11,8 @@ class Path
 	static $FILE		= null;
 	static $JS_FILES	= null;
 	
+	private $config		= null;
+	
 	private $deviceDir	= null;
 	
 	private $params		= null;
