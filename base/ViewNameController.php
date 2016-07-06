@@ -10,6 +10,12 @@ class ViewNameController extends AbstractViewController
 		
 	}
 	
+	
+	protected function initExtras()
+	{
+		
+	}
+	
 }
 
 

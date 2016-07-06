@@ -51,6 +51,8 @@ class AbstractViewController
 		if ( $this->page->dynamic != null )
 			$this->getPageViewDynamicData();
 		
+		$this->initExtras();
+		
 		$this->getTemplate();
 		$this->renderView();
 	}
@@ -89,7 +91,6 @@ class AbstractViewController
 		$this->getParamsFromClass( 'Path' );
 		$this->getParamsFromClass( 'Lang' );
 		$this->getParamsFromClass( 'Router' );
-		// $this->getParamsFromClass( 'PagesController' );
 		$this->getParamsFromClass( 'Page' );
 		
 		$this->content = json_decode( json_encode( $this->content ), true );
@@ -139,7 +140,13 @@ class AbstractViewController
 	
 	private function getPageViewDynamicData()
 	{
-		$this->content = array_merge_recursive ( $this->content, (array) $this->response->data );
+		$this->addContent( $this->response->data );
+	}
+	
+	
+	protected function initExtras()
+	{
+		
 	}
 	
 	
@@ -167,7 +174,7 @@ class AbstractViewController
 		$params				= new stdClass();
 		$params->$className	= $class->getParams();
 		
-		$this->content		= array_merge ( $this->content, (array) $params );
+		$this->addContent( $params );
 	}
 	
 	
@@ -182,8 +189,14 @@ class AbstractViewController
 			$contentClass	= new $contentClassName();
 			$data			= $contentClass->getData();
 			
-			$this->content	= array_merge_recursive ( $this->content, (array) $data );
+			$this->addContent( $data );
 		}
+	}
+	
+	
+	protected function addContent( $data )
+	{
+		$this->content = array_merge_recursive( $this->content, (array) $data );
 	}
 	
 }

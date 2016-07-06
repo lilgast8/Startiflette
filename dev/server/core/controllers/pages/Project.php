@@ -34,6 +34,12 @@ class Project extends AbstractViewController
 		// $this->response->pageExist = false;
 	}
 	
+	
+	protected function initExtras()
+	{
+		
+	}
+	
 }
 
 

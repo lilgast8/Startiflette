@@ -10,6 +10,12 @@ class Home extends AbstractViewController
 		
 	}
 	
+	
+	protected function initExtras()
+	{
+		
+	}
+	
 }
 
 
