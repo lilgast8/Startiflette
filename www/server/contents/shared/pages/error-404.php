@@ -5,7 +5,7 @@
 class Error404Content extends AbstractContent
 {
 	
-	public function setDatas()
+	protected function setData()
 	{
 		$d = new stdClass();
 		
@@ -22,7 +22,7 @@ class Error404Content extends AbstractContent
 		
 		
 		
-		$this->datas = $d;
+		$this->data = $d;
 	}
 	
 }

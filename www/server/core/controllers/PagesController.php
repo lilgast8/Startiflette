@@ -13,13 +13,12 @@ class PagesController
 	
 	protected static $instance;
 	
-	static $PAGE_INFOS			= null;
+	private $twig				= null;
 	
-	private $headerController	= null;
-	private $footerController	= null;
 	private $pageController		= null;
 	
-	public $params				= null;
+	private $page				= null;
+	private $router				= null;
 	
 	
 	protected function __construct()
@@ -62,7 +61,7 @@ class PagesController
 	
 	private function setTwigExtensions()
 	{
-		$this->twig->addGlobal( 'Helpers', new Helpers() );
+		$this->twig->addGlobal( 'Helpers', new TwigHelpers() );
 		
 		// $this->twig->addExtension( new Twig_Extensions_Extension_Text() );
 		// $this->twig->addExtension( new Twig_Extensions_Extension_I18n() );
@@ -74,36 +73,40 @@ class PagesController
 	
 	public function setPageInfos( $page )
 	{
-		self::$PAGE_INFOS			= new stdClass();
+		$this->page = Page::getInstance();
 		
-		self::$PAGE_INFOS->id		= $page->available ? $page->id : 'not-available';
-		self::$PAGE_INFOS->name		= String::camelCase( self::$PAGE_INFOS->id );
+		$this->page->id		= $page->available ? $page->id : 'not-available';
+		$this->page->name	= String::camelCase( $this->page->id );
 		if ( $page->available ) {
-			self::$PAGE_INFOS->js		= $page->js === null ? $page->id : $page->js;
-			self::$PAGE_INFOS->twig		= $page->twig === null ? $page->id : $page->twig;
-			self::$PAGE_INFOS->ctrl		= $page->ctrl === null ? $page->id : $page->ctrl;
-			self::$PAGE_INFOS->alias	= $page->alias;
+			$this->page->js			= $page->js === null ? $page->id : $page->js;
+			$this->page->twig		= $page->twig === null ? $page->id : $page->twig;
+			$this->page->ctrl		= $page->ctrl === null ? $page->id : $page->ctrl;
+			$this->page->alias		= $page->alias;
+			$this->page->dynamic	= $page->dynamic;
 		}
 		else {
-			self::$PAGE_INFOS->js		= self::$PAGE_INFOS->id;
-			self::$PAGE_INFOS->twig		= self::$PAGE_INFOS->id;
-			self::$PAGE_INFOS->ctrl		= self::$PAGE_INFOS->id;
-			self::$PAGE_INFOS->alias	= null;
+			$this->page->js		= $this->page->id;
+			$this->page->twig	= $this->page->id;
+			$this->page->ctrl	= $this->page->id;
+			$this->page->alias	= null;
 		}
 	}
 	
 	
 	public function init()
 	{
-		$this->setParams();
+		$this->router = Router::getInstance();
+		
+		$this->page->setParams();
 		
 		$this->setPageViewController();
+		$this->initPageController();
 	}
 	
 	
 	private function setPageViewController()
 	{
-		$controllerClassName	= String::titleCase( self::$PAGE_INFOS->ctrl );
+		$controllerClassName	= String::titleCase( $this->page->ctrl );
 		
 		$phpFilePath			= 'server/core/controllers/pages/' . $controllerClassName . '.php';
 		
@@ -114,27 +117,42 @@ class PagesController
 		
 		include_once $phpFilePath;
 		
-		$this->pageController = new $controllerClassName( self::$PAGE_INFOS->ctrl, self::$PAGE_INFOS->alias, 'page' );
+		$this->pageController = new $controllerClassName( $this->page->ctrl, $this->page->alias, 'page' );
 	}
 	
 	
-	private function setParams()
+	private function initPageController()
 	{
-		$this->params = new stdClass();
+		/* static page */
+		if ( $this->page->dynamic == null )
+			$this->pageController->init( $this->twig );
 		
-		$this->params->PAGE_INFOS = self::$PAGE_INFOS;
-	}
-	
-	
-	public function getParams()
-	{
-		return $this->params;
+		/* dynamic page */
+		else {
+			$pageExist = $this->pageController->getPageExistence();
+			
+			if ( $pageExist ) {
+				$this->router->updateFurtherToAPIResponse( $this->pageController->response );
+				$this->pageController->init( $this->twig );
+			}
+			else {
+				$this->router->updateFurtherToAPIResponse( $this->pageController->response );
+				
+				return;
+			}
+		}
 	}
 	
 	
 	public function displayView()
 	{
 		$this->pageController->displayView();
+	}
+	
+	
+	public function getPageController()
+	{
+		return $this->pageController;
 	}
 	
 }

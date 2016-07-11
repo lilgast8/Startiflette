@@ -5,7 +5,13 @@
 class Home extends AbstractViewController
 {
 	
-	protected function getPageViewDynamicDatas()
+	protected function callAPI()
+	{
+		
+	}
+	
+	
+	protected function initExtras()
 	{
 		
 	}

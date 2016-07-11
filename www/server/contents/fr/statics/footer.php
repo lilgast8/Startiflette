@@ -5,16 +5,16 @@
 class FooterContent extends AbstractContent
 {
 	
-	public function setDatas()
+	protected function setData()
 	{
 		$d = new stdClass();
 		
 		
-		// $d->data = new stdClass();
+		// $d->datum = new stdClass();
 		
 		
 		
-		$this->datas = $d;
+		$this->data = $d;
 	}
 	
 }

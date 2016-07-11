@@ -7,13 +7,13 @@
 		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 		{% for gaName, gaId in Config.GA_ID %}
-	    	{% if gaName == 'default' %}
-		    	ga( 'create', '{{ gaId }}', 'auto' );
+			{% if gaName == 'default' %}
+				ga( 'create', '{{ gaId }}', 'auto' );
 				ga( 'send', 'pageview', '/{{ Router.URL.fullGa }}' );
-	    	{% else %}
-	    		ga( 'create', '{{ gaId }}', 'auto', '{{ gaName }}' );
+			{% else %}
+				ga( 'create', '{{ gaId }}', 'auto', '{{ gaName }}' );
 				ga( '{{ gaName }}.send', 'pageview', '/{{ Router.URL.fullGa }}' );
-	    	{% endif %}
+			{% endif %}
 		{% endfor %}
 	</script>
 {% endif %}

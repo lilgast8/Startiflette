@@ -5,7 +5,7 @@
 class HomeContent extends AbstractContent
 {
 	
-	public function setDatas()
+	protected function setData()
 	{
 		$d = new stdClass();
 		
@@ -19,7 +19,7 @@ class HomeContent extends AbstractContent
 		
 		
 		
-		$this->datas = $d;
+		$this->data = $d;
 	}
 	
 }

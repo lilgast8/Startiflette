@@ -5,7 +5,7 @@
 class AltContent extends AbstractContent
 {
 	
-	public function setDatas()
+	protected function setData()
 	{
 		$d = new stdClass();
 		
@@ -24,7 +24,7 @@ class AltContent extends AbstractContent
 		
 		
 		
-		$this->datas = $d;
+		$this->data = $d;
 	}
 	
 }

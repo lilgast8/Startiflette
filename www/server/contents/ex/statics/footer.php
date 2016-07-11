@@ -5,7 +5,7 @@
 class FooterContent extends AbstractContent
 {
 	
-	public function setDatas()
+	protected function setData()
 	{
 		$d = new stdClass();
 		
@@ -14,7 +14,7 @@ class FooterContent extends AbstractContent
 		
 		
 		
-		$this->datas = $d;
+		$this->data = $d;
 	}
 	
 }

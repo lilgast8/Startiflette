@@ -5,7 +5,7 @@
 class StaticGlobalContent extends AbstractContent
 {
 	
-	public function setDatas()
+	protected function setData()
 	{
 		$d = new stdClass();
 		
@@ -21,7 +21,7 @@ class StaticGlobalContent extends AbstractContent
 		
 		
 		
-		$this->datas = $d;
+		$this->data = $d;
 	}
 	
 }
