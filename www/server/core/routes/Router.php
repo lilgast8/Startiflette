@@ -324,22 +324,18 @@ class Router
 	private function setAltLangUrl( $urls )
 	{
 		foreach ( Lang::$ALL_LANG as $lang ) {
+			$currentUrl = $urls->$lang;
 			
-			if ( $lang !== Lang::$LANG ) {
-				$currentUrl = $urls->$lang;
-				
-				if ( $this->isHomepage && $lang == Lang::$DEFAULT_LANG )
-					$urlPart = '';
-				else if ( $this->isHomepage )
-					$urlPart = $lang;
-				else
-					$urlPart = $lang . '/' . $currentUrl;
-				
-				$altLangUrl = Path::$URL->base . $urlPart;
-				
-				self::$ALT_LANG_URL[ $lang ] = $altLangUrl;
-			}
+			if ( $this->isHomepage && $lang == Lang::$DEFAULT_LANG )
+				$urlPart = '';
+			else if ( $this->isHomepage )
+				$urlPart = $lang;
+			else
+				$urlPart = $lang . '/' . $currentUrl;
 			
+			$altLangUrl = Path::$URL->base . $urlPart;
+			
+			self::$ALT_LANG_URL[ $lang ] = $altLangUrl;
 		}
 	}
 	
