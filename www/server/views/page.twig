@@ -2,7 +2,7 @@
 
 {# Header #}
 {% if Router.CONTENT_TYPE == 'firstLoad' %}
-{{ include( 'header.twig' ) }}
+{% include 'header.twig' %}
 {% endif %}
 
 
@@ -17,5 +17,5 @@
 
 {# Footer #}
 {% if Router.CONTENT_TYPE == 'firstLoad' %}
-{{ include( 'footer.twig' ) }}
+{% include 'footer.twig' %}
 {% endif %}

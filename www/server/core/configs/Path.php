@@ -129,8 +129,10 @@ class Path
 				
 				foreach ( $files as $filePath ) { // parse files list
 					if ( is_array( $filePath ) ) {
-						$listFiles .= '<!--[if lt IE 9]><script src="' . self::$URL->js . $filePath[1] . '"></script><![endif]-->' . "\n";
-						$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . self::$URL->js . $filePath[0] . '"></script><!--<![endif]-->' . "\n";
+						if ( $filePath[1] != '' )
+							$listFiles .= '<!--[if lt IE 9]><script src="' . self::$URL->js . $filePath[1] . '"></script><![endif]-->' . "\n";
+						if ( $filePath[0] != '' )
+							$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . self::$URL->js . $filePath[0] . '"></script><!--<![endif]-->' . "\n";
 					}
 					else
 						$listFiles .= '<script src="' . self::$URL->js . $filePath . '"></script>' . "\n";
