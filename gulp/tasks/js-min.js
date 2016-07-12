@@ -39,9 +39,12 @@ gulp.task( 'js-min', [ 'delete' ], function() {
 					aFilesOldie.push( paths.env.dev + paths.assets.js.dir + file );
 			}
 			else { // if object - two versions of file for manage oldie version
-				aFiles.push( paths.env.dev + paths.assets.js.dir + file[0] );
+				console.log( '🍍', file[0] + ' — ' + file[1] );
 				
-				if ( needOldie ) // if need oldie version
+				if ( file[0] != '' )
+					aFiles.push( paths.env.dev + paths.assets.js.dir + file[0] );
+				
+				if ( needOldie && file[1] != '' ) // if need oldie version
 					aFilesOldie.push( paths.env.dev + paths.assets.js.dir + file[1] );
 			}
 		}
