@@ -43,7 +43,7 @@ function showDialogue( currentJsAppName ) {
 					}
 					
 					else
-						done( true );
+						done( null, true );
 				}
 			},
 			{
@@ -52,7 +52,7 @@ function showDialogue( currentJsAppName ) {
 				message:	gutil.colors.green( 'Rename JS app?' ),
 				default:	false
 			}
-		], function( answers ) {
+		] ).then( function( answers ) {
 			
 			if ( !answers.namedJsApp )
 				return;
