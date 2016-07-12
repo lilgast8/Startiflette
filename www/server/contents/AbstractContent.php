@@ -34,7 +34,7 @@ class AbstractContent
 		$pageController		= $pagesController->getPageController();
 		$content			= $pageController->getContent();
 		
-		if ( $id != null )
+		if ( $id != null && isset( $content[ $id ] ) )
 			$content = $content[ $id ];
 		
 		

@@ -17,6 +17,8 @@ class GlobalContent extends AbstractContent
 		$d->menu->projects	= "Projets";
 		$d->menu->legals	= "Mentions légales";
 		
+		$d->author			= new stdClass();
+		$d->author->name	= "LilGast8";
 		
 		
 		$this->data = $d;
