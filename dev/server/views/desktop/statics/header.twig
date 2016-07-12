@@ -21,10 +21,10 @@
 	{% endfor %}
 	
 	{# Social share #}
-	{{ include( 'social-share.twig' ) }}
+	{% include 'social-share.twig' %}
 	
 	{# Favicons #}
-	{{ include( 'favicons.twig' ) }}
+	{% include 'favicons.twig' %}
 	
 	<link media="screen" rel="stylesheet" type="text/css" href="{{ Path.URL.css }}styles-desktop.min.css" />
 	
@@ -34,20 +34,20 @@
 	{{ Path.JS_FILES.header|raw }}
 	
 	{# Google Analytics #}
-	{{ include( 'google-analytics.twig' ) }}
+	{% include 'google-analytics.twig' %}
 	
 </head>
 
 <body>
 
 
-{{ include( 'svg.twig' ) }}
+{% include 'svg.twig' %}
 
 
 <!-- Main container -->
 <div id="main-container" class="preload lang-{{ Lang.LANG }}">
 	
-	{{ include( 'main-loader.twig' ) }}
+	{% include 'main-loader.twig' %}
 	
 	<!-- Header -->
 	<header id="header">

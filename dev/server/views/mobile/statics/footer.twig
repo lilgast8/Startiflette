@@ -21,15 +21,15 @@
 		</nav>
 	</footer>
 	
-	{{ include( 'no-js.twig' ) }} {# no JS #}
+	{% include 'no-js.twig' %} {# no JS #}
 	
-	{{ include( 'old-browser.twig' ) }} {# old browser #}
+	{% include 'old-browser.twig' %} {# old browser #}
 	
 </div> <!-- End #main-container -->
 
 
 {# JS #}
-{{ include( 'js.twig', { jsScriptName: 'mobile' } ) }}
+{% include 'js.twig' with { jsScriptName: 'mobile' } %}
 
 
 </body>
