@@ -15,14 +15,15 @@ STF.Utils.FPSStats = ( function( window ) {
 	FPSStats.prototype.init = function() {
 		this.stats = new Stats();
 		
-		this.stats.setMode(0);
+		this.stats.setMode( 0 );
 		
-		this.stats.domElement.style.position	= 'fixed';
-		this.stats.domElement.style.right		= '0px';
-		this.stats.domElement.style.bottom		= '0px';
-		this.stats.domElement.style.zIndex		= 88;
+		this.stats.dom.style.top		= 'auto';
+		this.stats.dom.style.left		= 'auto';
+		this.stats.dom.style.right		= '0px';
+		this.stats.dom.style.bottom		= '0px';
+		this.stats.dom.style.zIndex		= 88;
 		
-		document.body.appendChild( this.stats.domElement );
+		document.body.appendChild( this.stats.dom );
 	};
 	
 	
