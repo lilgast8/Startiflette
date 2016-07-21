@@ -11,6 +11,7 @@ STF.Config = ( function( window ) {
 		this.ENVS				= null;
 		this.ROUTES_FILES		= null;
 		this.ALL_LANG			= null;
+		this.MULTIPLE_TRANS		= null;
 		this.HAS_MOBILE_VERSION	= null;
 		this.FORCE_DEVICE		= null;
 		this.GA_ID				= null;

@@ -15,7 +15,8 @@
 	
 	
 	/* JS vars */
-	var STF_Config = JSON.parse( '{{ Config|json_encode|e("js") }}' );
+	var STF_Config	= JSON.parse( '{{ Config|json_encode|e("js") }}' );
+	var STF_JS_VIEW	= JSON.parse( '{{ Router.JS_VIEW|json_encode|e("js") }}' );
 </script>
 
 

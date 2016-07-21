@@ -28,6 +28,7 @@
 									"en",
 									"ex"
 								],
+	"MULTIPLE_TRANS":			true,
 	"HAS_MOBILE_VERSION":		true,
 	"FORCE_DEVICE":				false,
 	"GA_ID":					{},

@@ -50,12 +50,12 @@ STF.AbstractPageView = ( function( window ) {
 	};
 	
 	
-	/*var _onPageShown = function() {
+	/*AbstractPageView.prototype.onPageShown = function() {
 		
 	};*/
 	
 	
-	/*var _onPageHidden = function() {
+	/*AbstractPageView.prototype.onPageHidden = function() {
 		
 	};*/
 	

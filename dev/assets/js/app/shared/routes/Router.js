@@ -7,10 +7,10 @@ STF.Router = ( function( window ) {
 	function Router() {
 		STF.EventDispatcher.call( this );
 		
-		this.ROUTES			= {};
+		// this.ROUTES			= {};
 		this.URL			= {};
 		this.ALT_LANG_URL	= {};
-		this.LINK			= {};
+		// this.LINK			= {};
 		
 		this.isHomepage		= null;
 		this.isPageChange	= null;

@@ -86,6 +86,7 @@ class Path
 		self::$FILE->svgSprite				= self::$FILE->svg		. '_sprite/';
 		self::$FILE->videos					= self::$FILE->assets	. 'videos/';
 		self::$FILE->configs				= 'configs/';
+		self::$FILE->dynamicSubPath			= self::$FILE->configs	. 'dynamic-sub-path/';
 		self::$FILE->jsFilesFile			= self::$FILE->configs	. 'js-files.json';
 		self::$FILE->routesFile				= self::$FILE->configs	. 'routes.json';
 		self::$FILE->server					= 'server/';
