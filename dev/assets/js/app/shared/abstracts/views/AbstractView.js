@@ -138,13 +138,24 @@ STF.AbstractView = ( function( window ) {
 	};
 	
 	
+	/**
+	 * Change the url
+	 * @params {object or string} e: most of time is an object when it come from a click on a link,
+	 *								 but if you need to force a specific url you can directly pass a string
+	 */
 	AbstractView.prototype.changeUrl = function( e ) {
-		if ( STF.Props.HAS_PUSHSTATE ) { // if pushstate supported
-			e.preventDefault();
+		if ( WLB.Props.HAS_PUSHSTATE ) { // if pushstate supported
+			var url;
 			
-			var url = e.currentTarget.href;
+			if ( typeof e == 'object' ) {
+				e.preventDefault();
+				
+				url = e.currentTarget.href;
+			}
+			else if ( typeof e == 'string' )
+				url = e;
 			
-			STF.Router.updateUrl( url );
+			WLB.Router.updateUrl( url );
 		}
 	};
 	
