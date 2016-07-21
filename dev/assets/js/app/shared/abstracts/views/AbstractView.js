@@ -144,7 +144,7 @@ STF.AbstractView = ( function( window ) {
 	 *								 but if you need to force a specific url you can directly pass a string
 	 */
 	AbstractView.prototype.changeUrl = function( e ) {
-		if ( WLB.Props.HAS_PUSHSTATE ) { // if pushstate supported
+		if ( STF.Props.HAS_PUSHSTATE ) { // if pushstate supported
 			var url;
 			
 			if ( typeof e == 'object' ) {
@@ -155,7 +155,7 @@ STF.AbstractView = ( function( window ) {
 			else if ( typeof e == 'string' )
 				url = e;
 			
-			WLB.Router.updateUrl( url );
+			STF.Router.updateUrl( url );
 		}
 	};
 	
