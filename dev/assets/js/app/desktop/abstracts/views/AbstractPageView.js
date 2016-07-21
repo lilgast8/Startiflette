@@ -31,14 +31,14 @@ STF.AbstractPageView = ( function( window ) {
 		/* Show page */
 		this.tl.showPage = new TimelineLite( {
 			paused:		true,
-			onComplete:	_onPageShown.bind( this )
+			onComplete:	this.onPageShown.bind( this )
 		} );
 		this.tl.showPage.to( this.$page, 0.8, { opacity:1, ease:Quad.easeOut } );
 		
 		/* Hide page */
 		this.tl.hidePage = new TimelineLite( {
 			paused:		true,
-			onComplete:	_onPageHidden.bind( this )
+			onComplete:	this.onPageHidden.bind( this )
 		} );
 		this.tl.hidePage.to( this.$page, 0.8, { opacity:0, ease:Quad.easeOut } );
 	};
@@ -66,12 +66,12 @@ STF.AbstractPageView = ( function( window ) {
 	};
 	
 	
-	var _onPageShown = function() {
+	AbstractPageView.prototype.onPageShown = function() {
 		this.dispatch( this.E.SHOWN );
 	};
 	
 	
-	var _onPageHidden = function() {
+	AbstractPageView.prototype.onPageHidden = function() {
 		this.dispatch( this.E.HIDDEN );
 	};
 	
