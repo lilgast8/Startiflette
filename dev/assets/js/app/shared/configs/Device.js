@@ -7,7 +7,6 @@ STF.Device = ( function( window ) {
 	function Device() {
 		STF.EventDispatcher.call( this );
 		
-		this.HAS_MOBILE_VERSION	= null;
 		this.FORCE_DEVICE		= null;
 		
 		this.DEVICE				= null;
@@ -33,8 +32,7 @@ STF.Device = ( function( window ) {
 	
 	
 	var _getConfig = function() {
-		this.HAS_MOBILE_VERSION	= STF.Config.HAS_MOBILE_VERSION;
-		this.FORCE_DEVICE		= STF.Config.FORCE_DEVICE;
+		this.FORCE_DEVICE = STF.Config.FORCE_DEVICE;
 	};
 	
 	

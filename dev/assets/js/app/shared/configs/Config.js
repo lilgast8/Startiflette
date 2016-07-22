@@ -9,10 +9,8 @@ STF.Config = ( function( window ) {
 		
 		this.ENV				= null;
 		this.ENVS				= null;
-		this.ROUTES_FILES		= null;
 		this.ALL_LANG			= null;
 		this.COMPLEX_TRANSITION	= null;
-		this.HAS_MOBILE_VERSION	= null;
 		this.FORCE_DEVICE		= null;
 		this.GA_ID				= null;
 		this.CREDITS			= null;
