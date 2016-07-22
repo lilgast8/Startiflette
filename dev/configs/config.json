@@ -28,7 +28,7 @@
 									"en",
 									"ex"
 								],
-	"COMPLEX_TRANSITION":		true,
+	"COMPLEX_TRANSITION":		false,
 	"HAS_MOBILE_VERSION":		true,
 	"FORCE_DEVICE":				false,
 	"GA_ID":					{},
