@@ -112,6 +112,7 @@ Made the configurations in the `dev/configs/config.json` file.
 * ENV: @type {string}
 * ENVS: @type {object}, containt `fallbackresource`, `base_url` & `base_url_cms`
 * ALL_LANG: @type {array of string} list of languages, the first one will be the default language
+* COMPLEX_TRANSITION: @type {boolean} used to manage several hide/show transitions for a view, [more infos](#manage-complex-transitions)
 * HAS_MOBILE_VERSION: @type {boolean}
 * FORCE_DEVICE: @type {boolean or string} can be false, "desktop", "tablet" or "mobile"
 * GA_ID: @type {object} `"trackerName": "gaID"`, default tracker name is "null"
@@ -155,3 +156,28 @@ A lazyloader `this.lazyloader = new STF.LazyLoader( this.$page, 'img-lazyload', 
 To create a new lazyloader use: `new STF.LazyLoader( $container, className, stackSize )`
 
 You need to add `data-lazyload="true"` on the image `<img>` tag you want to lazyload. By using it you prevent to add the image on the main loader when `LOADING_MODE = 'byPageDynamic'`.
+
+
+
+## Manage complex transitions
+
+Sometimes you need to have several hide or show transitions for a view depending on what the next or previous view is. To do that you need to get the id of both views (next & previous) instantly when the url change. That's why we need an array who linked the urls with the js view id.
+
+This array is automatically generated from the `routes.json` file in the `Router.php` file and stocked in `JS_VIEWS_ID` in `Config.js` file. But if you have dynamic pages (therefore dynamic routes) they can't be guessed so you need to generate and save them in `dev/configs/dynamic-sub-path/` directory. You must generate one file per view, its name must be the view id and it must contain the list of sub-paths.
+
+Here is a example:	
+* You have the following route in your `route.json` file:
+
+```
+"example": {
+	"url-page": {
+		"fr": "example-path-fr",
+		"en": "example-path-en",
+		"ex": "example-path-ex"
+	},
+	"params": [ "param1", "param2", "param3" ]
+}
+```
+
+* Your dynamic sub-path file will look like this ([see the `example.json`](https://github.com/LilGast8/Startiflette/tree/master/dev/configs/dynamic-sub-path/example.json))
+
