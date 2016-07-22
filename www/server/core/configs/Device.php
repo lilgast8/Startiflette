@@ -8,13 +8,17 @@ class Device
 	protected static $instance;
 	
 	static $HAS_MOBILE_VERSION	= null;
+	static $TABLET_VERSION		= null;
 	static $FORCE_DEVICE		= null;
 	
 	static $DEVICE				= null;
 	static $IS_DESKTOP			= null;
 	static $IS_TABLET			= null;
 	static $IS_MOBILE			= null;
+	static $VERSION				= null;
 	static $IS_OLD_BROWSER		= null;
+	
+	private $config				= null;
 	
 	private $params				= null;
 	
@@ -23,7 +27,11 @@ class Device
 	{
 		$this->getConfig();
 		$this->setDevice();
+		$this->setVersion();
 		$this->setOldBrowser();
+		
+		$this->config = Config::getInstance();
+		$this->config->init();
 		
 		$this->setParams();
 	}
@@ -41,6 +49,7 @@ class Device
 	private function getConfig()
 	{
 		self::$HAS_MOBILE_VERSION	= Config::$HAS_MOBILE_VERSION;
+		self::$TABLET_VERSION		= Config::$TABLET_VERSION;
 		self::$FORCE_DEVICE			= Config::$FORCE_DEVICE;
 	}
 	
@@ -66,6 +75,19 @@ class Device
 		self::$IS_DESKTOP	= self::$DEVICE == 'desktop';
 		self::$IS_TABLET	= self::$DEVICE == 'tablet';
 		self::$IS_MOBILE	= self::$DEVICE == 'mobile';
+	}
+	
+	
+	private function setVersion()
+	{
+		if ( !self::$HAS_MOBILE_VERSION ||
+			 self::$HAS_MOBILE_VERSION && self::$IS_DESKTOP ||
+			 self::$HAS_MOBILE_VERSION && self::$IS_TABLET && self::$TABLET_VERSION == 'desktop' )
+			self::$VERSION = 'desktop';
+		
+		else if ( self::$HAS_MOBILE_VERSION && self::$IS_MOBILE ||
+				  self::$HAS_MOBILE_VERSION && self::$IS_TABLET && self::$TABLET_VERSION == 'mobile' )
+			self::$VERSION = 'mobile';
 	}
 	
 	

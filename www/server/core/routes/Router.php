@@ -11,6 +11,7 @@ class Router
 	static $URL					= null;
 	static $ALT_LANG_URL		= null;
 	static $LINK				= null;
+	static $JS_VIEWS_ID			= null;
 	
 	static $CONTENT_TYPE		= null;
 	
@@ -132,6 +133,8 @@ class Router
 		$this->setContentType();
 		$this->setCurrentPage();
 		$this->setLinks();
+		if ( self::$CONTENT_TYPE == 'firstLoad' && Config::$IS_PAGE_ID_NEEDED )
+			$this->setJsViewId();
 		
 		$this->setParams();
 	}
@@ -381,6 +384,71 @@ class Router
 	}
 	
 	
+	private function setJsViewId()
+	{
+		self::$JS_VIEWS_ID = new stdClass();
+		
+		foreach ( Router::$ROUTES as $pageId => $routeParams ) { // parse all pages
+			// unique page
+			if ( !isset( $routeParams->subs ) && !isset( $routeParams->params ) ) {
+				$jsId = !isset( $routeParams->js ) ? $pageId : $routeParams->js;
+				
+				if ( $pageId == 'home' )
+					$path = Lang::$LANG_LINK_ROOT . $routeParams->{ 'url-page' }->{ Lang::$LANG } == '' ? 'index' :
+							Lang::$LANG_LINK_ROOT . $routeParams->{ 'url-page' }->{ Lang::$LANG };
+				else
+					$path = Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG };
+				
+				self::$JS_VIEWS_ID->$path = $jsId;
+			}
+			
+			// multiple static page
+			else if ( isset( $routeParams->subs ) ) {
+				foreach ( $routeParams->subs as $aliasId => $alias ) {
+					$jsId = !isset( $routeParams->js ) ? $pageId : $routeParams->js;
+					$jsId = !isset( $alias->js ) ? $jsId : $alias->js;
+					
+					$path = Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $alias->{ 'url-alias' }->{ Lang::$LANG };
+					
+					self::$JS_VIEWS_ID->$path = $jsId;
+				}
+			}
+			
+			// multiple dynamic page
+			else if ( isset( $routeParams->params ) ) {
+				$jsId			= !isset( $routeParams->js ) ? $pageId : $routeParams->js;
+				$dynamicSubPath	= $this->getDynamicSubPath();
+				
+				foreach ( $dynamicSubPath->$pageId->{ Lang::$LANG } as $subPath ) {
+					$path = Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $subPath;
+					
+					self::$JS_VIEWS_ID->$path = $jsId;
+				}
+			}
+		}
+	}
+	
+	
+	private function getDynamicSubPath()
+	{
+		$dynamicSubPath = new stdClass();
+		
+		foreach ( scandir( Path::$FILE->dynamicSubPath ) as $fileName ) {
+			if ( strpos( $fileName, '.json' ) !== false ) {
+				$id		= str_replace( '.json', '', $fileName );
+				
+				$json	= file_get_contents( Path::$FILE->dynamicSubPath . $fileName );
+				$json	= json_decode( $json );
+				
+				$dynamicSubPath->$id = $json;
+			}
+		}
+		
+		
+		return $dynamicSubPath;
+	}
+	
+	
 	private function setParams()
 	{
 		$this->params = new stdClass();
@@ -388,6 +456,7 @@ class Router
 		$this->params->URL			= self::$URL;
 		$this->params->ALT_LANG_URL	= self::$ALT_LANG_URL;
 		$this->params->LINK			= self::$LINK;
+		$this->params->JS_VIEWS_ID	= self::$JS_VIEWS_ID;
 		
 		$this->params->CONTENT_TYPE	= self::$CONTENT_TYPE;
 	}

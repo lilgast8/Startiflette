@@ -41,12 +41,7 @@ class Path
 	
 	private function setDeviceDir()
 	{
-		if ( !Device::$HAS_MOBILE_VERSION )
-			$this->deviceDir = 'desktop/';
-		else if ( Device::$HAS_MOBILE_VERSION && ( Device::$IS_DESKTOP || Device::$IS_TABLET ) )
-			$this->deviceDir = 'desktop/';
-		else if ( Device::$HAS_MOBILE_VERSION && Device::$DEVICE == 'mobile' )
-			$this->deviceDir = 'mobile/';
+		$this->deviceDir = Device::$VERSION . '/';
 	}
 	
 	
@@ -86,6 +81,7 @@ class Path
 		self::$FILE->svgSprite				= self::$FILE->svg		. '_sprite/';
 		self::$FILE->videos					= self::$FILE->assets	. 'videos/';
 		self::$FILE->configs				= 'configs/';
+		self::$FILE->dynamicSubPath			= self::$FILE->configs	. 'dynamic-sub-path/';
 		self::$FILE->jsFilesFile			= self::$FILE->configs	. 'js-files.json';
 		self::$FILE->routesFile				= self::$FILE->configs	. 'routes.json';
 		self::$FILE->server					= 'server/';
