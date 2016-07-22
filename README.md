@@ -181,7 +181,4 @@ Here is a example:
 
 * Your dynamic sub-path file will look like this ([see the `example.json`](https://github.com/LilGast8/Startiflette/tree/master/dev/configs/dynamic-sub-path/example.json))
 
-<<<<<<< HEAD
 Once the array stocked in `JS_VIEWS_ID`, it will be used to set the `pageInfos.id` & `prevPageInfos.id` in `AbstractPagesController.js`. Then these ids can be used to make conditions and launch the specific hide/show transition you want.
-=======
->>>>>>> a7e04302adfae0b2724b12e603a469dfe7ebe650
