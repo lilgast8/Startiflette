@@ -133,8 +133,8 @@ class Router
 		$this->setContentType();
 		$this->setCurrentPage();
 		$this->setLinks();
-		if ( Config::$COMPLEX_TRANSITION && self::$CONTENT_TYPE == 'firstLoad' )
-			$this->setViewId();
+		if ( self::$CONTENT_TYPE == 'firstLoad' && Config::$COMPLEX_TRANSITION )
+			$this->setJsViewId();
 		
 		$this->setParams();
 	}
@@ -381,70 +381,34 @@ class Router
 				}
 			}
 		}
-		
-		// echo '<pre>';
-		// print_r( self::$LINK );
-		// echo '</pre>';
 	}
 	
 	
-	private function setViewId()
+	private function setJsViewId()
 	{
 		self::$JS_VIEWS_ID = new stdClass();
 		
 		foreach ( Router::$ROUTES as $pageId => $routeParams ) { // parse all pages
-			// echo $pageId.'<br>';
-			/*echo '<pre>';
-			print_r( $routeParams );
-			echo '</pre>';
-			echo '⚡️ SLP ⚡️';*/
-			
-			// $pageName	= String::camelCase( $pageId );
-			
 			// unique page
 			if ( !isset( $routeParams->subs ) && !isset( $routeParams->params ) ) {
-				// echo '🐣 <br>';
 				$jsId = !isset( $routeParams->js ) ? $pageId : $routeParams->js;
 				
-				if ( $pageId == 'home' ) {
-					// self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK_ROOT . $routeParams->{ 'url-page' }->{ Lang::$LANG };
-					
+				if ( $pageId == 'home' )
 					$path = Lang::$LANG_LINK_ROOT . $routeParams->{ 'url-page' }->{ Lang::$LANG } == '' ? 'index' :
 							Lang::$LANG_LINK_ROOT . $routeParams->{ 'url-page' }->{ Lang::$LANG };
-					// self::$JS_VIEWS_ID->$path = $pageId;
-				}
-					
-				
-				else {
-					// self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG };
+				else
 					$path = Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG };
-					// self::$JS_VIEWS_ID->$path = $pageId;
-				}
 				
 				self::$JS_VIEWS_ID->$path = $jsId;
 			}
 			
 			// multiple static page
 			else if ( isset( $routeParams->subs ) ) {
-				// echo '🐥 <br>';
-				// self::$LINK->$pageName = new stdClass();
-				
 				foreach ( $routeParams->subs as $aliasId => $alias ) {
-					// echo '⚡️ SLP ⚡️'. $aliasId .' <br />';
-					// echo '<pre>';
-					// print_r( $aliasId );
-					// print_r( $alias );
-					// echo '</pre>';
-					
 					$jsId = !isset( $routeParams->js ) ? $pageId : $routeParams->js;
 					$jsId = !isset( $alias->js ) ? $jsId : $alias->js;
 					
 					$path = Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $alias->{ 'url-alias' }->{ Lang::$LANG };
-					echo '⚡️ '.$path.' ⚡️ <br />';
-					
-					/*$aliasName	= String::camelCase( $aliasId );
-					
-					self::$LINK->$pageName->$aliasName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $alias->{ 'url-alias' }->{ Lang::$LANG };*/
 					
 					self::$JS_VIEWS_ID->$path = $jsId;
 				}
@@ -452,75 +416,33 @@ class Router
 			
 			// multiple dynamic page
 			else if ( isset( $routeParams->params ) ) {
-				// echo '🐓 <br>';
-				$jsId = !isset( $routeParams->js ) ? $pageId : $routeParams->js;
+				$jsId			= !isset( $routeParams->js ) ? $pageId : $routeParams->js;
+				$dynamicSubPath	= $this->getDynamicSubPath();
 				
-				$dynamicSubPath = $this->getDynamicSubPath();
-				// echo '<pre>';
-				// print_r( $dynamicSubPath );
-				// print_r( $dynamicSubPath->$pageId );
-				// echo '</pre>';
-				
-				// foreach ( $dynamicSubPath->$pageId as $subPath ) {
 				foreach ( $dynamicSubPath->$pageId->{ Lang::$LANG } as $subPath ) {
-					echo '🐶 '.$subPath.'<br>';
+					$path = Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $subPath;
 					
-					$url = Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $subPath;
-					
-					self::$JS_VIEWS_ID->$url = $jsId;
+					self::$JS_VIEWS_ID->$path = $jsId;
 				}
 			}
 		}
-		
-		
-		echo '<pre>';
-		print_r( self::$JS_VIEWS_ID );
-		echo '</pre>';
-		// exit();
 	}
 	
 	
 	private function getDynamicSubPath()
 	{
-		// $getDynamicSubPath = array( 'proj-1', 'proj-2', 'proj-3' );
-		
-		// return $getDynamicSubPath;
-		
-		
-		// echo '<pre>';
-		// print_r( scandir( 'configs/dynamic-url' ) );
-		// echo '</pre>';
-		
-		
 		$dynamicSubPath = new stdClass();
 		
 		foreach ( scandir( Path::$FILE->dynamicSubPath ) as $fileName ) {
 			if ( strpos( $fileName, '.json' ) !== false ) {
-				// echo $fileName.' ⚡️ SLP ⚡️ <br />';
+				$id		= str_replace( '.json', '', $fileName );
 				
-				$id = str_replace( '.json', '', $fileName );
-				// echo $id.' ⚡️ SLP ⚡️ <br />';
-				
-				$json = file_get_contents( Path::$FILE->dynamicSubPath . $fileName );
-				$json = json_decode( $json );
+				$json	= file_get_contents( Path::$FILE->dynamicSubPath . $fileName );
+				$json	= json_decode( $json );
 				
 				$dynamicSubPath->$id = $json;
 			}
 		}
-		
-		// echo '<pre>';
-		// print_r( $dynamicUrl );
-		// echo '</pre>';
-		
-		// exit();
-		
-		
-		
-		/*if ( !file_exists( self::JS_VIEW_FILE_PATH ) )
-			throw new ErrorException( 'Dynamic-url file is missing!' );
-		
-		$dynamicUrl = file_get_contents( self::JS_VIEW_FILE_PATH );
-		$dynamicUrl = json_decode( $dynamicUrl );*/
 		
 		
 		return $dynamicSubPath;

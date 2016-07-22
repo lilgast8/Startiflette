@@ -75,18 +75,13 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	var _setPageId = function( url ) {
 		var path	= STF.Router.URL.path === '' ? 'index' : STF.Router.URL.path;
-		console.log( '🍄', path );
 		var id		= STF.Config.JS_VIEWS_ID[ path ];
 		
 		if ( id === undefined )
 			id = 'error-404';
 		
-		
 		this.prevPageInfos.id	= this.pageInfos.id;
 		this.pageInfos.id		= id;
-		
-		
-		console.log( '🐌', this.prevPageInfos.id, this.pageInfos.id );
 	};
 	
 	
@@ -102,7 +97,6 @@ STF.AbstractPagesController = ( function( window ) {
 		this.pageInfos.id			= id;
 		this.pageInfos.title		= title;
 		
-		console.log( '🐌🐌🐌', this.prevPageInfos.id, this.pageInfos.id );
 		_setPage.call( this );
 		
 		STF.Router.setAltLangUrl( $page );

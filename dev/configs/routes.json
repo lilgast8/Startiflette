@@ -36,7 +36,6 @@
 	},
 	
 	"project": {
-		"js": "slut",
 		"url-page": {
 			"fr": "projet",
 			"en": "project",
@@ -58,7 +57,6 @@
 				}
 			},
 			"proj-3": {
-				"js": "slut-3",
 				"url-alias": {
 					"fr": "projet-3",
 					"en": "project-3",
@@ -68,11 +66,11 @@
 		}
 	},
 	
-	"test": {
+	"example": {
 		"url-page": {
-			"fr": "yolo",
-			"en": "yolo-en",
-			"ex": "yolo-ex"
+			"fr": "example-path-fr",
+			"en": "example-path-en",
+			"ex": "example-path-ex"
 		},
 		"params": [ "param1", "param2", "param3" ]
 	}
