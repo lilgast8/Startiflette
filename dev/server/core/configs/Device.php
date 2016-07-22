@@ -8,6 +8,7 @@ class Device
 	protected static $instance;
 	
 	static $HAS_MOBILE_VERSION	= null;
+	static $TABLET_VERSION		= null;
 	static $FORCE_DEVICE		= null;
 	
 	static $DEVICE				= null;
@@ -48,6 +49,7 @@ class Device
 	private function getConfig()
 	{
 		self::$HAS_MOBILE_VERSION	= Config::$HAS_MOBILE_VERSION;
+		self::$TABLET_VERSION		= Config::$TABLET_VERSION;
 		self::$FORCE_DEVICE			= Config::$FORCE_DEVICE;
 	}
 	
@@ -78,11 +80,13 @@ class Device
 	
 	private function setVersion()
 	{
-		if ( !Device::$HAS_MOBILE_VERSION )
+		if ( !self::$HAS_MOBILE_VERSION ||
+			 self::$HAS_MOBILE_VERSION && self::$IS_DESKTOP ||
+			 self::$HAS_MOBILE_VERSION && self::$IS_TABLET && self::$TABLET_VERSION == 'desktop' )
 			self::$VERSION = 'desktop';
-		else if ( Device::$HAS_MOBILE_VERSION && ( Device::$IS_DESKTOP || Device::$IS_TABLET ) )
-			self::$VERSION = 'desktop';
-		else if ( Device::$HAS_MOBILE_VERSION && Device::$DEVICE == 'mobile' )
+		
+		else if ( self::$HAS_MOBILE_VERSION && self::$IS_MOBILE ||
+				  self::$HAS_MOBILE_VERSION && self::$IS_TABLET && self::$TABLET_VERSION == 'mobile' )
 			self::$VERSION = 'mobile';
 	}
 	

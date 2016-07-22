@@ -14,6 +14,7 @@ class Config
 	static $ALL_LANG			= null;
 	static $COMPLEX_TRANSITION	= null;
 	static $HAS_MOBILE_VERSION	= null;
+	static $TABLET_VERSION		= null;
 	static $FORCE_DEVICE		= null;
 	static $GA_ID				= null;
 	static $CREDITS				= null;

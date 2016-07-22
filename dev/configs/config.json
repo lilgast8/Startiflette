@@ -30,6 +30,7 @@
 							],
 	"COMPLEX_TRANSITION":	[],
 	"HAS_MOBILE_VERSION":	true,
+	"TABLET_VERSION":		"desktop",
 	"FORCE_DEVICE":			false,
 	"GA_ID":				{},
 	"CREDITS":				{
