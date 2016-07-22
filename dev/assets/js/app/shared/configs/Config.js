@@ -11,11 +11,13 @@ STF.Config = ( function( window ) {
 		this.ENVS				= null;
 		this.ROUTES_FILES		= null;
 		this.ALL_LANG			= null;
-		this.MULTIPLE_TRANS		= null;
+		this.COMPLEX_TRANSITION	= null;
 		this.HAS_MOBILE_VERSION	= null;
 		this.FORCE_DEVICE		= null;
 		this.GA_ID				= null;
 		this.CREDITS			= null;
+		
+		this.JS_VIEWS_ID		= null;
 		
 		this.HAS_FPS_STATS		= null;
 		this.HAS_MEMORY_STATS	= null;
@@ -28,6 +30,7 @@ STF.Config = ( function( window ) {
 	
 	Config.prototype.init = function() {
 		_setConfig.call( this );
+		_setJsViewsId.call( this );
 		_showCreditsLog.call( this );
 	};
 	
@@ -35,6 +38,11 @@ STF.Config = ( function( window ) {
 	var _setConfig = function( data ) {
 		for ( var varName in STF_Config )
 			this[ varName ] = STF_Config[ varName ];
+	};
+	
+	
+	var _setJsViewsId = function() {
+		this.JS_VIEWS_ID = STF_JS_VIEWS_ID;
 	};
 	
 	

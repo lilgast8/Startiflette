@@ -11,7 +11,7 @@ class Router
 	static $URL					= null;
 	static $ALT_LANG_URL		= null;
 	static $LINK				= null;
-	static $JS_VIEW				= null;
+	static $JS_VIEWS_ID			= null;
 	
 	static $CONTENT_TYPE		= null;
 	
@@ -133,8 +133,8 @@ class Router
 		$this->setContentType();
 		$this->setCurrentPage();
 		$this->setLinks();
-		if ( Config::$MULTIPLE_TRANS && self::$CONTENT_TYPE == 'firstLoad' )
-			$this->setJsView();
+		if ( Config::$COMPLEX_TRANSITION && self::$CONTENT_TYPE == 'firstLoad' )
+			$this->setViewId();
 		
 		$this->setParams();
 	}
@@ -388,9 +388,9 @@ class Router
 	}
 	
 	
-	private function setJsView()
+	private function setViewId()
 	{
-		self::$JS_VIEW = new stdClass();
+		self::$JS_VIEWS_ID = new stdClass();
 		
 		foreach ( Router::$ROUTES as $pageId => $routeParams ) { // parse all pages
 			// echo $pageId.'<br>';
@@ -411,17 +411,17 @@ class Router
 					
 					$path = Lang::$LANG_LINK_ROOT . $routeParams->{ 'url-page' }->{ Lang::$LANG } == '' ? 'index' :
 							Lang::$LANG_LINK_ROOT . $routeParams->{ 'url-page' }->{ Lang::$LANG };
-					// self::$JS_VIEW->$path = $pageId;
+					// self::$JS_VIEWS_ID->$path = $pageId;
 				}
 					
 				
 				else {
 					// self::$LINK->$pageName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG };
 					$path = Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG };
-					// self::$JS_VIEW->$path = $pageId;
+					// self::$JS_VIEWS_ID->$path = $pageId;
 				}
 				
-				self::$JS_VIEW->$path = $jsId;
+				self::$JS_VIEWS_ID->$path = $jsId;
 			}
 			
 			// multiple static page
@@ -446,7 +446,7 @@ class Router
 					
 					self::$LINK->$pageName->$aliasName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $alias->{ 'url-alias' }->{ Lang::$LANG };*/
 					
-					self::$JS_VIEW->$path = $jsId;
+					self::$JS_VIEWS_ID->$path = $jsId;
 				}
 			}
 			
@@ -467,14 +467,14 @@ class Router
 					
 					$url = Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $subPath;
 					
-					self::$JS_VIEW->$url = $jsId;
+					self::$JS_VIEWS_ID->$url = $jsId;
 				}
 			}
 		}
 		
 		
 		echo '<pre>';
-		print_r( self::$JS_VIEW );
+		print_r( self::$JS_VIEWS_ID );
 		echo '</pre>';
 		// exit();
 	}
@@ -534,7 +534,7 @@ class Router
 		$this->params->URL			= self::$URL;
 		$this->params->ALT_LANG_URL	= self::$ALT_LANG_URL;
 		$this->params->LINK			= self::$LINK;
-		$this->params->JS_VIEW		= self::$JS_VIEW;
+		$this->params->JS_VIEWS_ID	= self::$JS_VIEWS_ID;
 		
 		$this->params->CONTENT_TYPE	= self::$CONTENT_TYPE;
 	}

@@ -73,17 +73,36 @@ STF.AbstractPagesController = ( function( window ) {
 	};
 	
 	
+	var _setPageId = function( url ) {
+		var path	= STF.Router.URL.path === '' ? 'index' : STF.Router.URL.path;
+		console.log( '🍄', path );
+		var id		= STF.Config.JS_VIEWS_ID[ path ];
+		
+		if ( id === undefined )
+			id = 'error-404';
+		
+		
+		this.prevPageInfos.id	= this.pageInfos.id;
+		this.pageInfos.id		= id;
+		
+		
+		console.log( '🐌', this.prevPageInfos.id, this.pageInfos.id );
+	};
+	
+	
 	var _setPageInfos = function() {
 		var $page	= $( document.getElementById( 'page' ) );
 		var id		= $page[0].getAttribute( 'data-js-id' );
 		var title	= $page[0].getAttribute( 'data-title' );
 		
-		this.prevPageInfos.id		= this.pageInfos.id;
+		if ( !STF.Config.COMPLEX_TRANSITION )
+			this.prevPageInfos.id	= this.pageInfos.id;
 		this.prevPageInfos.title	= this.pageInfos.title;
 		
 		this.pageInfos.id			= id;
 		this.pageInfos.title		= title;
 		
+		console.log( '🐌🐌🐌', this.prevPageInfos.id, this.pageInfos.id );
 		_setPage.call( this );
 		
 		STF.Router.setAltLangUrl( $page );
@@ -167,8 +186,8 @@ STF.AbstractPagesController = ( function( window ) {
 	AbstractPagesController.prototype.changePage = function( url ) {
 		STF.Router.updateGA();
 		
-		_setPageId.call( this, url );
-		// console.log( this.pageInfos.id );
+		if ( STF.Config.COMPLEX_TRANSITION )
+			_setPageId.call( this, url );
 		
 		_disablePageChange.call( this );
 		_initPageChangeValues.call( this );
@@ -179,26 +198,6 @@ STF.AbstractPagesController = ( function( window ) {
 		_loadContent.call( this, url );
 		
 		this.managePageHidingTransitions();
-	};
-	
-	
-	var _setPageId = function( url ) {
-		// console.log( '🍄', url, STF.Router.URL.path );
-		// var path = url.replace( STF.Path.URL.base, '' );
-		
-		var path	= STF.Router.URL.path === '' ? 'index' : STF.Router.URL.path;
-		console.log( '🍄', path );
-		var id		= STF_JS_VIEW[ path ];
-		
-		if ( id === undefined )
-			id = 'error-404';
-		
-		
-		this.prevPageInfos.id	= this.pageInfos.id;
-		this.pageInfos.id		= id;
-		
-		
-		console.log( '🐌', this.prevPageInfos.id, this.pageInfos.id );
 	};
 	
 	

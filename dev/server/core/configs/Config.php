@@ -12,7 +12,7 @@ class Config
 	static $ENV					= null;
 	static $ENVS				= null;
 	static $ALL_LANG			= null;
-	static $MULTIPLE_TRANS		= null;
+	static $COMPLEX_TRANSITION	= null;
 	static $HAS_MOBILE_VERSION	= null;
 	static $FORCE_DEVICE		= null;
 	static $GA_ID				= null;
@@ -82,12 +82,12 @@ class Config
 	{
 		$this->params = new stdClass();
 		
-		$this->params->ENV				= self::$ENV;
-		$this->params->ENVS				= self::$ENVS->{ $this->params->ENV };
-		$this->params->ALL_LANG			= self::$ALL_LANG;
-		$this->params->MULTIPLE_TRANS	= self::$MULTIPLE_TRANS;
-		$this->params->GA_ID			= self::$GA_ID;
-		$this->params->CREDITS			= self::$CREDITS;
+		$this->params->ENV					= self::$ENV;
+		$this->params->ENVS					= self::$ENVS->{ $this->params->ENV };
+		$this->params->ALL_LANG				= self::$ALL_LANG;
+		$this->params->COMPLEX_TRANSITION	= self::$COMPLEX_TRANSITION;
+		$this->params->GA_ID				= self::$GA_ID;
+		$this->params->CREDITS				= self::$CREDITS;
 	}
 	
 	
