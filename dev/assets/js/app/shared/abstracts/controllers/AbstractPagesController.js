@@ -90,7 +90,7 @@ STF.AbstractPagesController = ( function( window ) {
 		var id		= $page[0].getAttribute( 'data-js-id' );
 		var title	= $page[0].getAttribute( 'data-title' );
 		
-		if ( !STF.Config.COMPLEX_TRANSITION )
+		if ( !STF.Config.IS_PAGE_ID_NEEDED )
 			this.prevPageInfos.id	= this.pageInfos.id;
 		this.prevPageInfos.title	= this.pageInfos.title;
 		
@@ -180,7 +180,7 @@ STF.AbstractPagesController = ( function( window ) {
 	AbstractPagesController.prototype.changePage = function( url ) {
 		STF.Router.updateGA();
 		
-		if ( STF.Config.COMPLEX_TRANSITION )
+		if ( STF.Config.IS_PAGE_ID_NEEDED )
 			_setPageId.call( this, url );
 		
 		_disablePageChange.call( this );

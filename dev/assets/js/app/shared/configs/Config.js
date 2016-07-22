@@ -10,10 +10,10 @@ STF.Config = ( function( window ) {
 		this.ENV				= null;
 		this.ENVS				= null;
 		this.ALL_LANG			= null;
-		this.COMPLEX_TRANSITION	= null;
 		this.FORCE_DEVICE		= null;
 		this.GA_ID				= null;
 		this.CREDITS			= null;
+		this.IS_PAGE_ID_NEEDED	= null;
 		
 		this.JS_VIEWS_ID		= null;
 		

@@ -41,12 +41,7 @@ class Path
 	
 	private function setDeviceDir()
 	{
-		if ( !Device::$HAS_MOBILE_VERSION )
-			$this->deviceDir = 'desktop/';
-		else if ( Device::$HAS_MOBILE_VERSION && ( Device::$IS_DESKTOP || Device::$IS_TABLET ) )
-			$this->deviceDir = 'desktop/';
-		else if ( Device::$HAS_MOBILE_VERSION && Device::$DEVICE == 'mobile' )
-			$this->deviceDir = 'mobile/';
+		$this->deviceDir = Device::$VERSION . '/';
 	}
 	
 	

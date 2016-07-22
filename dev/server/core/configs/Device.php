@@ -14,7 +14,10 @@ class Device
 	static $IS_DESKTOP			= null;
 	static $IS_TABLET			= null;
 	static $IS_MOBILE			= null;
+	static $VERSION				= null;
 	static $IS_OLD_BROWSER		= null;
+	
+	private $config				= null;
 	
 	private $params				= null;
 	
@@ -23,7 +26,11 @@ class Device
 	{
 		$this->getConfig();
 		$this->setDevice();
+		$this->setVersion();
 		$this->setOldBrowser();
+		
+		$this->config = Config::getInstance();
+		$this->config->init();
 		
 		$this->setParams();
 	}
@@ -66,6 +73,17 @@ class Device
 		self::$IS_DESKTOP	= self::$DEVICE == 'desktop';
 		self::$IS_TABLET	= self::$DEVICE == 'tablet';
 		self::$IS_MOBILE	= self::$DEVICE == 'mobile';
+	}
+	
+	
+	private function setVersion()
+	{
+		if ( !Device::$HAS_MOBILE_VERSION )
+			self::$VERSION = 'desktop';
+		else if ( Device::$HAS_MOBILE_VERSION && ( Device::$IS_DESKTOP || Device::$IS_TABLET ) )
+			self::$VERSION = 'desktop';
+		else if ( Device::$HAS_MOBILE_VERSION && Device::$DEVICE == 'mobile' )
+			self::$VERSION = 'mobile';
 	}
 	
 	

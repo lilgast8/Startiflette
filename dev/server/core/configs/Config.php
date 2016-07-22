@@ -18,6 +18,8 @@ class Config
 	static $GA_ID				= null;
 	static $CREDITS				= null;
 	
+	static $IS_PAGE_ID_NEEDED	= null;
+	
 	private $jsFiles			= null;
 	
 	private $params				= null;
@@ -26,8 +28,6 @@ class Config
 	protected function __construct()
 	{
 		$this->setConfig();
-		
-		$this->setParams();
 	}
 	
 	
@@ -62,6 +62,22 @@ class Config
 	}
 	
 	
+	public function init()
+	{
+		$this->setComplexTransition();
+		$this->setParams();
+	}
+	
+	
+	private function setComplexTransition()
+	{
+		if ( in_array( Device::$DEVICE, self::$COMPLEX_TRANSITION ) )
+			self::$IS_PAGE_ID_NEEDED = true;
+		else
+			self::$IS_PAGE_ID_NEEDED = false;
+	}
+	
+	
 	public function getJsFilesFile()
 	{
 		if ( !$this->jsFiles ) { // load file if it wasn't already done
@@ -85,10 +101,10 @@ class Config
 		$this->params->ENV					= self::$ENV;
 		$this->params->ENVS					= self::$ENVS->{ $this->params->ENV };
 		$this->params->ALL_LANG				= self::$ALL_LANG;
-		$this->params->COMPLEX_TRANSITION	= self::$COMPLEX_TRANSITION;
 		$this->params->FORCE_DEVICE			= self::$FORCE_DEVICE;
 		$this->params->GA_ID				= self::$GA_ID;
 		$this->params->CREDITS				= self::$CREDITS;
+		$this->params->IS_PAGE_ID_NEEDED	= self::$IS_PAGE_ID_NEEDED;
 	}
 	
 	
