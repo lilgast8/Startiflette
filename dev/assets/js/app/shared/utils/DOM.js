@@ -52,14 +52,14 @@ STF.Utils.DOM = ( function( window ) {
 	};
 	
 	
-	window.setTranslate = function( $obj, x, y ) {
+	window.setTranslate = function( el, x, y ) {
 		x = x === null ? 0 : x;
 		y = y === null ? 0 : y;
 		
 		if ( STF.Props.HAS_TRANSFORMS_3D )
-			$obj[0].style[ STF.Props.TRANSFORM ] = 'translate3d(' + x + 'px, ' + y + 'px, 0px)';
+			el.style[ STF.Props.TRANSFORM ] = 'translate3d(' + x + 'px, ' + y + 'px, 0px)';
 		else
-			$obj[0].style[ STF.Props.TRANSFORM ] = 'translate(' + x + 'px, ' + y + 'px)';
+			el.style[ STF.Props.TRANSFORM ] = 'translate(' + x + 'px, ' + y + 'px)';
 	};
 	
 	
