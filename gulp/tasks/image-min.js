@@ -1,12 +1,12 @@
-var gulp		= require( 'gulp' );
+var gulp			= require( 'gulp' );
 
-var paths		= require( '../utils/paths' );
+var paths			= require( '../utils/paths' );
 
-var plumber		= require( 'gulp-plumber' );
-var imagemin	= require( 'gulp-imagemin' );
+var plumber			= require( 'gulp-plumber' );
+var imagemin		= require( 'gulp-imagemin' );
 
 var jpegRecompress	= require( 'imagemin-jpeg-recompress' );
-var pngquant	= require( 'imagemin-pngquant' );
+var pngquant		= require( 'imagemin-pngquant' );
 
 
 
@@ -17,19 +17,18 @@ gulp.task( 'image-min', [ 'delete' ], function() {
 			'!' + paths.env.dev + paths.emptyFiles
 		] )
 		.pipe( plumber() )
-		.pipe( imagemin({
-			use:	[
-						jpegRecompress({
-							min: 80,
-							max: 80
-						}),
-						
-						pngquant(/*{
-							quality: '70-90',
-							speed: 3 // default 3
-						}*/)
-					]
-		}) )
+		.pipe( imagemin(
+			[
+				jpegRecompress({
+					min: 60,
+					max: 60
+				}),
+				pngquant(/*{
+					quality: '70-90',
+					speed: 3 // default 3
+				}*/)
+			]
+		) )
 		.pipe( gulp.dest( paths.env.prod + paths.assets.img.dir ) );
 	
 } );
