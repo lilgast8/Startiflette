@@ -4,7 +4,7 @@ STF.LazyLoader = ( function( window ) {
 	'use strict';
 	
 	
-	function LazyLoader( $container, className, stackSize ) {
+	function LazyLoader( $container, className, stackSize, autoInit ) {
 		STF.EventDispatcher.call( this );
 		
 		this.$container		= $container;
@@ -15,7 +15,8 @@ STF.LazyLoader = ( function( window ) {
 		this.imgToLazyload	= [];
 		this.loaderImg		= null;
 		
-		this.init();
+		if ( autoInit )
+			this.init();
 	}
 	
 	
@@ -24,20 +25,20 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	LazyLoader.prototype.init = function() {
-		_initDOM.call( this );
-		_initEl.call( this );
-		_bindEvents.call( this );
+		this.initDOM( this );
+		this.initEl( this );
+		this.bindEvents( this );
 		
 		this.startLazyload.call( this );
 	};
 	
 	
-	var _initDOM = function() {
+	LazyLoader.prototype.initDOM = function() {
 		this.$imgToLazyload	= this.$container.find( 'img.' + this.CLASS_NAME );
 	};
 	
 	
-	var _initEl = function() {
+	LazyLoader.prototype.initEl = function() {
 		this.loaderImg = new STF.Loader( false, true );
 		
 		var src;
@@ -51,13 +52,13 @@ STF.LazyLoader = ( function( window ) {
 	};
 	
 	
-	var _bindEvents = function() {
+	LazyLoader.prototype.bindEvents = function() {
 		this.loaderImg.buildEvt( this.loaderImg.E.FILE_LOAD, this.onImgLoad.bind( this ) );
 		this.loaderImg.buildEvt( this.loaderImg.E.COMPLETE, this.onImgLoadingComplete.bind( this ) );
 	};
 	
 	
-	var _unbindEvents = function() {
+	LazyLoader.prototype.unbindEvents = function() {
 		this.loaderImg.destroyEvt( this.loaderImg.E.FILE_LOAD, this.onImgLoad.bind( this ) );
 		this.loaderImg.destroyEvt( this.loaderImg.E.COMPLETE, this.onImgLoadingComplete.bind( this ) );
 	};
@@ -71,7 +72,7 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	LazyLoader.prototype.startLazyload = function() {
-		if ( this.$imgToLazyload.length === 0 )
+		if ( this.imgToLazyload.length === 0 )
 			return;
 		
 		

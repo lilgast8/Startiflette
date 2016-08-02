@@ -23,7 +23,7 @@ STF.AbstractPageView = ( function( window ) {
 	AbstractPageView.prototype.initEl = function() {
 		// console.log( 'AbstractPageView.initEl() — ', this.constructor.name );
 		
-		this.lazyloader = new STF.LazyLoader( this.$page, 'img-lazyload', 1 );
+		this.lazyloader = new STF.LazyLoader( this.$page, 'img-lazyload', 1, true );
 	};
 	
 	
