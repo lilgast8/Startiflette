@@ -112,7 +112,7 @@ Made the configurations in the `dev/configs/config.json` file.
 * ENV: @type {string}
 * ENVS: @type {object}, containt `fallbackresource`, `base_url` & `base_url_cms`
 * ALL_LANG: @type {array of string} list of languages, the first one will be the default language
-* COMPLEX_TRANSITION: @type {array} list of device, used to manage several hide/show transitions for a view, [more infos](#manage-complex-transitions)
+* GENERATE_JS_VIEW_ID: @type {array} list of device, used to manage several hide/show transitions for a view, [more infos](#manage-complex-transitions)
 * HAS_MOBILE_VERSION: @type {boolean}
 * TABLET_VERSION: @type {string} version displayed for tablet, can be "desktop" or "mobile"
 * FORCE_DEVICE: @type {boolean or string} can be false, "desktop", "tablet" or "mobile"
