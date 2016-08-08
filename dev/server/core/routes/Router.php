@@ -133,7 +133,7 @@ class Router
 		$this->setContentType();
 		$this->setCurrentPage();
 		$this->setLinks();
-		if ( self::$CONTENT_TYPE == 'firstLoad' && Config::$IS_PAGE_ID_NEEDED )
+		if ( self::$CONTENT_TYPE == 'firstLoad' && Config::$NEED_PAGE_ID )
 			$this->setJsViewId();
 		
 		$this->setParams();

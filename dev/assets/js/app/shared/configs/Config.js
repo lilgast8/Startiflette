@@ -7,13 +7,13 @@ STF.Config = ( function( window ) {
 	function Config() {
 		STF.EventDispatcher.call( this );
 		
-		this.ENV				= null;
-		this.ENVS				= null;
-		this.ALL_LANG			= null;
-		this.FORCE_DEVICE		= null;
-		this.GA_ID				= null;
-		this.CREDITS			= null;
-		this.IS_PAGE_ID_NEEDED	= null;
+		this.ENV			= null;
+		this.ENVS			= null;
+		this.ALL_LANG		= null;
+		this.FORCE_DEVICE	= null;
+		this.GA_ID			= null;
+		this.CREDITS		= null;
+		this.NEED_PAGE_ID	= null;
 		
 		this.JS_VIEWS_ID		= null;
 		
