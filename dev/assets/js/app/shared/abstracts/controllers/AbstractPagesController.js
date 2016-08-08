@@ -387,9 +387,9 @@ STF.AbstractPagesController = ( function( window ) {
 		var $linkToActivate		= $link.filter( '[ data-link-id="' + this.pageInfos.id + '" ]' );
 		
 		if ( $linkToInactivate.length > 0 )
-			removeClass( $linkToInactivate[0], 'active' );
+			STF_dom_removeClass( $linkToInactivate[0], 'active' );
 		if ( $linkToActivate.length )
-			addClass( $linkToActivate[0], 'active' );
+			STF_dom_addClass( $linkToActivate[0], 'active' );
 	};
 	
 	

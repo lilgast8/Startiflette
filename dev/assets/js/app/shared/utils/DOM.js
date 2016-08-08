@@ -7,7 +7,7 @@ STF.Utils.DOM = ( function( window ) {
 	'use strict';
 	
 	
-	window.addClass = function( el, classToAdd ) {
+	window.STF_dom_addClass = function( el, classToAdd ) {
 		if ( el.classList )
 			el.classList.add( classToAdd );
 		else {
@@ -17,7 +17,7 @@ STF.Utils.DOM = ( function( window ) {
 	};
 	
 	
-	window.removeClass = function( el, classToRemove ) {
+	window.STF_dom_removeClass = function( el, classToRemove ) {
 		if ( el.classList )
 			el.classList.remove( classToRemove );
 		else {
@@ -30,12 +30,12 @@ STF.Utils.DOM = ( function( window ) {
 	};
 	
 	
-	window.resetClass = function( el ) {
+	window.STF_dom_resetClass = function( el ) {
 		el.className = '';
 	};
 	
 	
-	window.hasClass = function( el, classToCheck ) {
+	window.STF_dom_hasClass = function( el, classToCheck ) {
 		var hasClass;
 		
 		if ( el.classList )
@@ -47,12 +47,12 @@ STF.Utils.DOM = ( function( window ) {
 	};
 	
 	
-	window.resetStyle = function( el ) {
+	window.STF_dom_resetStyle = function( el ) {
 		el.style.cssText = '';
 	};
 	
 	
-	window.setTranslate = function( el, x, y ) {
+	window.STF_dom_setTranslate = function( el, x, y ) {
 		x = x === null ? 0 : x;
 		y = y === null ? 0 : y;
 		

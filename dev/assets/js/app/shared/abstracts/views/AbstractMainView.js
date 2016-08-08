@@ -71,7 +71,7 @@ STF.AbstractMainView = ( function( window ) {
 		STF.Views.Statics.Header.init();
 		STF.Views.Statics.Footer.init();
 		
-		removeClass( this.$mainCont[0], 'preload' );
+		STF_dom_removeClass( this.$mainCont[0], 'preload' );
 	};
 	
 	

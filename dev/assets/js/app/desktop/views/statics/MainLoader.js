@@ -97,7 +97,7 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 	var _onHideInitComplete = function() {
 		this.killTimeline( 'hideInit' );
 		
-		removeClass( this.$loader[0], 'init' );
+		STF_dom_removeClass( this.$loader[0], 'init' );
 		this.$loader[0].style.display = 'none';
 		
 		this.dispatch( this.E.HIDDEN );
