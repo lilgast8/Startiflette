@@ -7,7 +7,7 @@ STF.Utils.Math = ( function( window ) {
 	'use strict';
 	
 	
-	window.getElPos = function( elW, elH, contW, contH ) {
+	window.STF_math_getElPos = function( elW, elH, contW, contH ) {
 		var elRatio		= elW / elH;
 		var contRatio	= contW / contH;
 		var pos			= {
@@ -32,7 +32,7 @@ STF.Utils.Math = ( function( window ) {
 	};
 	
 	
-	window.getCropPos = function( elW, elH, contW, contH ) {
+	window.STF_math_getCropPos = function( elW, elH, contW, contH ) {
 		var elRatio		= elW / elH;
 		var contRatio	= contW / contH;
 		var pos			= {
@@ -57,17 +57,17 @@ STF.Utils.Math = ( function( window ) {
 	};
 	
 	
-	window.degToRad = function( deg ) {
+	window.STF_math_degToRad = function( deg ) {
 		return deg * Math.PI / 180;
 	};
 	
 	
-	window.radToDeg = function( rad ) {
+	window.STF_math_radToDeg = function( rad ) {
 		return rad * 180 / Math.PI;
 	};
 	
 	
-	window.getHypotenuse = function( widthA, widthB ) {
+	window.STF_math_getHypotenuse = function( widthA, widthB ) {
 		return Math.sqrt( widthA * widthA + widthB * widthB );
 	};
 	
