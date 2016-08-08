@@ -22,7 +22,7 @@ STF.Views.Pages.LegalNotices = ( function( window ) {
 		
 		this.$email	= this.$page.find( '.email' );
 		
-		// encryptMailto( this.$.email, 'contact', 'domain', 'com', true );
+		// STF_gl_encryptMailto( this.$.email, 'contact', 'domain', 'com', true );
 	};
 	
 	

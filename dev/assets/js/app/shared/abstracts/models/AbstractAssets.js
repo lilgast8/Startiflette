@@ -79,7 +79,7 @@ STF.AbstractAssets = ( function( window ) {
 			var fileId;
 			if ( assetsList !== undefined )
 				for ( var id in assetsList ) {
-					fileId = getType( assetsList ) === 'object' ? id : null;
+					fileId = STF_gl_getType( assetsList ) === 'object' ? id : null;
 					
 					_addAsset.call( this, aAssetsToLoad, fileId, assetsList[ id ] );
 				}

@@ -10,7 +10,7 @@ STF.Utils.Global = ( function( window ) {
 	window.color = {};
 	
 	
-	window.encryptMailto = function( el, address, domain, end, replaceContent ) {
+	window.STF_gl_encryptMailto = function( el, address, domain, end, replaceContent ) {
 		var className	= el.className;
 		var mailto		= 'mailto';
 		var separator	= ':';
@@ -24,7 +24,7 @@ STF.Utils.Global = ( function( window ) {
 	};
 	
 	
-	window.getObjSize = function( obj ) {
+	window.STF_gl_getObjSize = function( obj ) {
 		var size = 0;
 		
 		for ( var key in obj )
@@ -36,12 +36,12 @@ STF.Utils.Global = ( function( window ) {
 	};
 	
 	
-	window.getType = function( obj ) {
+	window.STF_gl_getType = function( obj ) {
 		return ({}).toString.call( obj ).match( /\s([a-z|A-Z]+)/ )[1].toLowerCase();
 	};
 	
 	
-	window.getConstructorName = function ( obj ) {
+	window.STF_gl_getConstructorName = function ( obj ) {
 		var string	= ( obj.prototype ? obj.prototype.constructor : obj.constructor ).toString();
 		var cname	= string.match( /function\s(\w*)/ )[1];
 		var aliases	= [ "", "anonymous", "Anonymous" ];

@@ -11,7 +11,7 @@ STF.EventDispatcher = ( function( window ) {
 	
 	
 	EventDispatcher.prototype.buildEvt = function( name, fct, id ) {
-		id = id === undefined ? getConstructorName( this ).toLowerCase() : id;
+		id = id === undefined ? STF_gl_getConstructorName( this ).toLowerCase() : id;
 		
 		if ( this.e[ name ] === undefined )
 			this.e[ name ] = new signals.Signal();
@@ -37,7 +37,7 @@ STF.EventDispatcher = ( function( window ) {
 	
 	
 	EventDispatcher.prototype.destroyEvt = function( name, fct, id ) {
-		id = id === undefined ? getConstructorName( this ).toLowerCase() : id;
+		id = id === undefined ? STF_gl_getConstructorName( this ).toLowerCase() : id;
 		
 		if ( this.e[ name ].getNumListeners() == 1 ) {
 			this.e[ name ].remove( fct );
