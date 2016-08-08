@@ -25,9 +25,9 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	LazyLoader.prototype.init = function() {
-		this.initDOM( this );
-		this.initEl( this );
-		this.bindEvents( this );
+		this.initDOM();
+		this.initEl();
+		this.bindEvents();
 		
 		this.startLazyload.call( this );
 	};
@@ -65,7 +65,7 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	LazyLoader.prototype.destroy = function() {
-		_unbindEvents.call( this );
+		this.unbindEvents();
 		
 		this.loaderImg.destroy();
 	};
