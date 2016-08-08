@@ -7,9 +7,7 @@ STF.Utils.String = ( function( window ) {
 	'use strict';
 	
 	
-	String.prototype.STF_removeFirstSpecificChar = function ( char ) {
-		var string = this;
-		
+	window.STF_str_removeFirstSpecificChar = function ( string, char ) {
 		if ( string.substr( 0, 1 ) == char )
 			string = string.substr( 1 );
 		
@@ -18,9 +16,7 @@ STF.Utils.String = ( function( window ) {
 	};
 	
 	
-	String.prototype.STF_removeLastSpecificChar = function ( char ) {
-		var string = this;
-		
+	window.STF_str_removeLastSpecificChar = function ( string, char ) {
 		if ( string.substr( string.length - 1, 1 ) == char )
 			string = string.substr( 0, string.length - 1 );
 		
@@ -29,9 +25,7 @@ STF.Utils.String = ( function( window ) {
 	};
 	
 	
-	String.prototype.STF_convertToUrl = function() {
-		var string = this;
-		
+	window.STF_str_convertToUrl = function( string ) {
 		var link	= document.createElement( 'a' );
 		link.href	= string;
 		
@@ -40,51 +34,51 @@ STF.Utils.String = ( function( window ) {
 	};
 	
 	
-	String.prototype.STF_getPath = function( baseUrl ) {
+	window.STF_str_getPath = function( string, baseUrl ) {
 		if ( baseUrl === null || baseUrl === undefined )
 			baseUrl = STF.Path.URL.base;
 		
-		var path	= this.replace( baseUrl, '' );
+		var path	= string.replace( baseUrl, '' );
 		
 		path		= path.split( '#' )[0]; // remove #hash
 		path		= path.split( '?' )[0]; // remove ?search
 		
-		path		= path.STF_removeFirstSpecificChar( '/' );
-		path		= path.STF_removeLastSpecificChar( '/' );
+		path		= STF_str_removeFirstSpecificChar( path, '/' );
+		path		= STF_str_removeLastSpecificChar( path, '/' );
 		
 		
 		return path;
 	};
 	
 	
-	String.prototype.STF_getSearch = function() {
-		var url		= this.STF_convertToUrl();
+	window.STF_str_getSearch = function( string ) {
+		var url		= STF_str_convertToUrl( string );
 		
 		var search	= url.search.split( '?' )[1] || '';
 		
-		search		= search.STF_removeFirstSpecificChar( '/' );
-		search		= search.STF_removeLastSpecificChar( '/' );
+		search		= STF_str_removeFirstSpecificChar( search, '/' );
+		search		= STF_str_removeLastSpecificChar( search, '/' );
 		
 		
 		return search;
 	};
 	
 	
-	String.prototype.STF_getHash = function() {
-		var url		= this.STF_convertToUrl();
+	window.STF_str_getHash = function( string ) {
+		var url		= STF_str_convertToUrl( string );
 		
 		var hash	= url.hash.split( '#' )[1] || '';
 		
-		hash		= hash.STF_removeFirstSpecificChar( '/' );
-		hash		= hash.STF_removeLastSpecificChar( '/' );
+		hash		= STF_str_removeFirstSpecificChar( hash, '/' );
+		hash		= STF_str_removeLastSpecificChar( hash, '/' );
 		
 		
 		return hash;
 	};
 	
 	
-	String.prototype.STF_getParams = function( type ) {
-		var url		= this.STF_convertToUrl();
+	window.STF_str_getParams = function( string, type ) {
+		var url		= STF_str_convertToUrl( string );
 		
 		var params	= {};
 		var key, value;
@@ -94,12 +88,12 @@ STF.Utils.String = ( function( window ) {
 				aItKey	= aCouples[ nKeyId ].split( '=' );
 				
 				key		= unescape( aItKey[0] );
-				key		= key.STF_removeFirstSpecificChar( '/' );
-				key		= key.STF_removeLastSpecificChar( '/' );
+				key		= STF_str_removeFirstSpecificChar( key, '/' );
+				key		= STF_str_removeLastSpecificChar( key, '/' );
 				
 				value	= aItKey.length > 1 ? unescape( aItKey[1] ) : '';
-				value	= value.STF_removeFirstSpecificChar( '/' );
-				value	= value.STF_removeLastSpecificChar( '/' );
+				value	= STF_str_removeFirstSpecificChar( value, '/' );
+				value	= STF_str_removeLastSpecificChar( value, '/' );
 				
 				params[ key ] = value;
 			}

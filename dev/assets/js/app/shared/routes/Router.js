@@ -24,12 +24,12 @@ STF.Router = ( function( window ) {
 	Router.prototype.setUrl = function( isInit, url )
 	{
 		this.URL.full			= _getFullUrl.call( this, url );
-		this.URL.path			= this.URL.full.STF_getPath();
+		this.URL.path			= STF_str_getPath( this.URL.full );
 		this.URL.pathParams		= this.URL.path.split( '/' );
-		this.URL.search			= this.URL.full.STF_getSearch();
-		this.URL.searchParams	= this.URL.full.STF_getParams( 'search' );
-		this.URL.hash			= this.URL.full.STF_getHash();
-		this.URL.hashParams		= this.URL.full.STF_getParams( 'hash' );
+		this.URL.search			= STF_str_getSearch( this.URL.full );
+		this.URL.searchParams	= STF_str_getParams( this.URL.full, 'search' );
+		this.URL.hash			= STF_str_getHash( this.URL.full );
+		this.URL.hashParams		= STF_str_getParams( this.URL.full, 'hash' );
 		this.URL.fullGA			= _getFullGaUrl.call( this );
 	};
 	
@@ -158,19 +158,19 @@ STF.Router = ( function( window ) {
 	
 	
 	var _isPageChanged = function( url ) {
-		var nextPath		= url.STF_getPath();
+		var nextPath		= STF_str_getPath( url );
 		this.isPageChange	= this.URL.path != nextPath;
 	};
 	
 	
 	var _isSearchChanged = function( url ) {
-		var nextSearch		= url.STF_getSearch();
+		var nextSearch		= STF_str_getSearch( url );
 		this.isSearchChange	= this.URL.search != nextSearch;
 	};
 	
 	
 	var _isHashChanged = function( url ) {
-		var nextHash		= url.STF_getHash();
+		var nextHash		= STF_str_getHash( url );
 		this.isHashChange	= this.URL.hash != nextHash;
 	};
 	
