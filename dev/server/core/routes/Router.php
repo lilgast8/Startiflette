@@ -89,8 +89,8 @@ class Router
 		$pathParams	= explode( '?', $path );
 		$path		= $pathParams[0];
 		
-		String::removeFirstSpecificChar( $path, '/' );
-		String::removeLastSpecificChar( $path, '/' );
+		Strings::removeFirstSpecificChar( $path, '/' );
+		Strings::removeLastSpecificChar( $path, '/' );
 		
 		
 		return $path;
@@ -117,8 +117,8 @@ class Router
 	{
 		$pageUrl = preg_replace( '/' . Lang::$LANG . '/', '', self::$URL->path, 1 );
 		
-		$pageUrl = String::removeFirstSpecificChar( $pageUrl, '/' );
-		$pageUrl = String::removeLastSpecificChar( $pageUrl, '/' );
+		$pageUrl = Strings::removeFirstSpecificChar( $pageUrl, '/' );
+		$pageUrl = Strings::removeLastSpecificChar( $pageUrl, '/' );
 		
 		
 		return $pageUrl;
@@ -157,7 +157,7 @@ class Router
 			
 			$path		= self::$URL->page == '' && Lang::$LANG == Lang::$DEFAULT_LANG ?
 						  $path = Path::$URL->base :
-						  String::removeLastSpecificChar( Path::$URL->base . self::$URL->path, '/' );
+						  Strings::removeLastSpecificChar( Path::$URL->base . self::$URL->path, '/' );
 			
 			$searchPath	= $pageId == 'home' ?
 						  $searchPath = Path::$URL->base . Lang::$LANG_LINK_ROOT . $pageParams->{ 'url-page' }->{ Lang::$LANG } :
@@ -221,7 +221,7 @@ class Router
 	
 	private function setMultipleDynamicPage( $path, $searchPath, $pageId, $pageParams )
 	{
-		$dynamicUrl = String::removeFirstSpecificChar( str_replace( $searchPath, '', $path ), '/' );
+		$dynamicUrl = Strings::removeFirstSpecificChar( str_replace( $searchPath, '', $path ), '/' );
 		
 		if ( $dynamicUrl != '' ) {
 			$dynamicUrlParams	= explode( '/', $dynamicUrl );
@@ -346,7 +346,7 @@ class Router
 	private function redirectToFullPathWithoutLang()
 	{
 		$fullPath = str_replace( Path::$URL->base . Lang::$LANG, '', self::$URL->full );
-		$fullPath = String::removeFirstSpecificChar( $fullPath, '/' );
+		$fullPath = Strings::removeFirstSpecificChar( $fullPath, '/' );
 		
 		header( 'Status: 301 Moved Permanently', true, 301 );
 		header( 'Location: ' . Path::$URL->base . $fullPath );
@@ -359,7 +359,7 @@ class Router
 		self::$LINK = new stdClass();
 			
 		foreach ( Router::$ROUTES as $pageId => $routeParams ) { // parse all pages
-			$pageName	= String::camelCase( $pageId );
+			$pageName	= Strings::camelCase( $pageId );
 			
 			/* unique page */
 			if ( !isset( $routeParams->subs ) ) {
@@ -375,7 +375,7 @@ class Router
 				self::$LINK->$pageName = new stdClass();
 				
 				foreach ( $routeParams->subs as $aliasId => $alias ) {
-					$aliasName	= String::camelCase( $aliasId );
+					$aliasName	= Strings::camelCase( $aliasId );
 					
 					self::$LINK->$pageName->$aliasName = Path::$URL->base . Lang::$LANG_LINK . $routeParams->{ 'url-page' }->{ Lang::$LANG } . '/' . $alias->{ 'url-alias' }->{ Lang::$LANG };
 				}

@@ -2,7 +2,7 @@
 
 
 
-class String
+class Strings
 {
 	
 	public static function titleCase( $string )
@@ -18,7 +18,7 @@ class String
 	
 	public static function camelCase( $string )
 	{
-		$string	= String::titleCase( $string );
+		$string	= Strings::titleCase( $string );
 		$string = lcfirst( $string );
 		
 		return $string;
