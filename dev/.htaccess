@@ -1,5 +1,14 @@
 
 
+# -------- Cache control -------- #
+# Prevent intermediate caches or proxies #
+Header set Cache-Control "no-transform"
+# Prevent mime based attacks #
+Header set X-Content-Type-Options "nosniff"
+# Disable cache #
+# Header add Cache-Control "max-age=0"
+
+
 # -------- Force UTF-8 -------- #
 AddDefaultCharset UTF-8
 
