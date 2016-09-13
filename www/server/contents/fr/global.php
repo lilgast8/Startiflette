@@ -21,6 +21,7 @@ class GlobalContent extends AbstractContent
 		$d->author->name	= "LilGast8";
 		
 		
+		
 		$this->data = $d;
 	}
 	

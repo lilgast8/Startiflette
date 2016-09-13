@@ -119,14 +119,14 @@ class AbstractViewController
 	{
 		$phpFilePath		= Path::$FILE->contentsLang . $this->type . 's/' . $this->id . '.php';
 		$phpSharedFilePath	= Path::$FILE->contentsShared . $this->type . 's/' . $this->id . '.php';
-		$contentClassName	= String::titleCase( $this->id ) . 'Content';
+		$contentClassName	= Strings::titleCase( $this->id ) . 'Content';
 		
 		$this->addContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
 		
 		if ( $this->alias !== null ) {
 			$phpFilePath		= Path::$FILE->contentsLang . $this->type . 's/' . $this->alias . '.php';
 			$phpSharedFilePath	= Path::$FILE->contentsShared . $this->type . 's/' . $this->alias . '.php';
-			$contentClassName	= String::titleCase( $this->alias ) . 'Content';
+			$contentClassName	= Strings::titleCase( $this->alias ) . 'Content';
 			
 			$this->addContent( $phpFilePath, $phpSharedFilePath, $contentClassName );
 		}

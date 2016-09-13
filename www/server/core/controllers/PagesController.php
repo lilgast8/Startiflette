@@ -76,7 +76,7 @@ class PagesController
 		$this->page = Page::getInstance();
 		
 		$this->page->id		= $page->available ? $page->id : 'not-available';
-		$this->page->name	= String::camelCase( $this->page->id );
+		$this->page->name	= Strings::camelCase( $this->page->id );
 		if ( $page->available ) {
 			$this->page->js			= $page->js === null ? $page->id : $page->js;
 			$this->page->twig		= $page->twig === null ? $page->id : $page->twig;
@@ -106,7 +106,7 @@ class PagesController
 	
 	private function setPageViewController()
 	{
-		$controllerClassName	= String::titleCase( $this->page->ctrl );
+		$controllerClassName	= Strings::titleCase( $this->page->ctrl );
 		
 		$phpFilePath			= 'server/core/controllers/pages/' . $controllerClassName . '.php';
 		

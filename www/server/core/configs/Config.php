@@ -12,14 +12,14 @@ class Config
 	static $ENV					= null;
 	static $ENVS				= null;
 	static $ALL_LANG			= null;
-	static $COMPLEX_TRANSITION	= null;
+	static $GENERATE_JS_VIEW_ID	= null;
 	static $HAS_MOBILE_VERSION	= null;
 	static $TABLET_VERSION		= null;
 	static $FORCE_DEVICE		= null;
 	static $GA_ID				= null;
 	static $CREDITS				= null;
 	
-	static $IS_PAGE_ID_NEEDED	= null;
+	static $NEED_PAGE_ID		= null;
 	
 	private $jsFiles			= null;
 	
@@ -72,10 +72,10 @@ class Config
 	
 	private function setComplexTransition()
 	{
-		if ( in_array( Device::$DEVICE, self::$COMPLEX_TRANSITION ) )
-			self::$IS_PAGE_ID_NEEDED = true;
+		if ( in_array( Device::$DEVICE, self::$GENERATE_JS_VIEW_ID ) )
+			self::$NEED_PAGE_ID = true;
 		else
-			self::$IS_PAGE_ID_NEEDED = false;
+			self::$NEED_PAGE_ID = false;
 	}
 	
 	
@@ -99,13 +99,13 @@ class Config
 	{
 		$this->params = new stdClass();
 		
-		$this->params->ENV					= self::$ENV;
-		$this->params->ENVS					= self::$ENVS->{ $this->params->ENV };
-		$this->params->ALL_LANG				= self::$ALL_LANG;
-		$this->params->FORCE_DEVICE			= self::$FORCE_DEVICE;
-		$this->params->GA_ID				= self::$GA_ID;
-		$this->params->CREDITS				= self::$CREDITS;
-		$this->params->IS_PAGE_ID_NEEDED	= self::$IS_PAGE_ID_NEEDED;
+		$this->params->ENV			= self::$ENV;
+		$this->params->ENVS			= self::$ENVS->{ $this->params->ENV };
+		$this->params->ALL_LANG		= self::$ALL_LANG;
+		$this->params->FORCE_DEVICE	= self::$FORCE_DEVICE;
+		$this->params->GA_ID		= self::$GA_ID;
+		$this->params->CREDITS		= self::$CREDITS;
+		$this->params->NEED_PAGE_ID	= self::$NEED_PAGE_ID;
 	}
 	
 	

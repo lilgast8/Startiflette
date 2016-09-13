@@ -16,7 +16,7 @@ include_once 'server/core/controllers/PagesController.php';
 include_once 'server/core/controllers/Page.php';
 
 include_once 'server/core/utils/Helpers.php';
-include_once 'server/core/utils/String.php';
+include_once 'server/core/utils/Strings.php';
 include_once 'server/core/utils/TwigHelpers.php';
 
 
