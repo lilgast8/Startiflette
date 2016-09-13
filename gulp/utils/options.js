@@ -23,8 +23,6 @@ options.jsSrcPath	= null;
 options.jsonSrcPath	= null;
 options.svgSrcPath	= null;
 
-options.movePath	= null;
-
 
 
 function getEnv() {

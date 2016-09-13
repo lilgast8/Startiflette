@@ -9,8 +9,10 @@ var plumber	= require( 'gulp-plumber' );
 
 gulp.task( 'move', function() {
 	
+	var movePath = null;
+	
 	/* Prod */
-	if ( options.movePath === null && options.task == 'prod' ) {
+	if ( options.task == 'prod' ) {
 		
 		var imgPathFrom;
 		
@@ -23,7 +25,7 @@ gulp.task( 'move', function() {
 			];
 		
 		
-		options.movePath = {
+		movePath = {
 			from: [
 				[ paths.env.dev + paths.assets.css.minAllFiles ],
 				[
@@ -76,8 +78,8 @@ gulp.task( 'move', function() {
 	
 	
 	/* SASS */
-	else if ( options.movePath === null && options.task == 'sass' )
-		options.movePath = {
+	else if ( options.task == 'sass' )
+		movePath = {
 			from: [
 				[ paths.env.dev + paths.assets.css.minAllFiles ],
 				[
@@ -93,8 +95,8 @@ gulp.task( 'move', function() {
 	
 	
 	/* Favicons */
-	else if ( options.movePath === null && options.task == 'favicons' )
-		options.movePath = {
+	else if ( options.task == 'favicons' )
+		movePath = {
 			from: [
 				[
 					paths.env.dev + paths.assets.favicons.allFiles,
@@ -106,8 +108,8 @@ gulp.task( 'move', function() {
 	
 	
 	/* Files */
-	else if ( options.movePath === null && options.task == 'files' )
-		options.movePath = {
+	else if ( options.task == 'files' )
+		movePath = {
 			from: [
 				[
 					paths.env.dev + paths.assets.files.allFiles,
@@ -119,24 +121,24 @@ gulp.task( 'move', function() {
 	
 	
 	/* JS & JS-min */
-	else if ( options.movePath === null && ( options.task == 'js' || options.task == 'js-min' ) )
-		options.movePath = {
+	else if ( options.task == 'js' || options.task == 'js-min' )
+		movePath = {
 			from: [ paths.env.dev + paths.assets.js.vendor.HTML5ShivFile ],
 			to: [ paths.env.prod + paths.assets.js.vendor.dir ]
 		};
 	
 	
 	/* SVG */
-	else if ( options.movePath === null && options.task == 'svg' && options.isProd )
-		options.movePath = {
+	else if ( options.task == 'svg' && options.isProd )
+		movePath = {
 			from: [ paths.env.dev + paths.assets.svg.sprite.allFiles ],
 			to: [ paths.env.prod + paths.assets.svg.sprite.dir ]
 		};
 	
 	
 	/* Image */
-	else if ( options.movePath === null && ( options.task == 'image' || options.task == 'image-min' || options.task == 'image-move' ) )
-		options.movePath = {
+	else if ( options.task == 'image' || options.task == 'image-min' || options.task == 'image-move' )
+		movePath = {
 			from: [
 				[
 					paths.env.dev + paths.assets.img.allFiles,
@@ -148,8 +150,8 @@ gulp.task( 'move', function() {
 	
 	
 	/* Sounds */
-	else if ( options.movePath === null && options.task == 'sounds' )
-		options.movePath = {
+	else if ( options.task == 'sounds' )
+		movePath = {
 			from: [
 				[
 					paths.env.dev + paths.assets.sounds.allFiles,
@@ -161,8 +163,8 @@ gulp.task( 'move', function() {
 	
 	
 	/* Videos */
-	else if ( options.movePath === null && options.task == 'videos' )
-		options.movePath = {
+	else if ( options.task == 'videos' )
+		movePath = {
 			from: [
 				[
 					paths.env.dev + paths.assets.videos.allFiles,
@@ -174,8 +176,8 @@ gulp.task( 'move', function() {
 	
 	
 	/* Server */
-	else if ( options.movePath === null && options.task == 'server' )
-		options.movePath = {
+	else if ( options.task == 'server' )
+		movePath = {
 			from: [
 				[
 					paths.env.dev + paths.server.allFiles,
@@ -191,12 +193,13 @@ gulp.task( 'move', function() {
 	
 	
 	
-	if ( options.movePath !== null ) {
-		for ( var i = 0; i < options.movePath.from.length; i++ ) {
+	console.log( '🐷', movePath );
+	if ( movePath !== null ) {
+		for ( var i = 0; i < movePath.from.length; i++ ) {
 			
-			gulp.src( options.movePath.from[i] )
+			gulp.src( movePath.from[i] )
 				.pipe( plumber() )
-				.pipe( gulp.dest( options.movePath.to[i] ) );
+				.pipe( gulp.dest( movePath.to[i] ) );
 			
 		}
 	}
