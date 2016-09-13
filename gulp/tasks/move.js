@@ -14,7 +14,7 @@ gulp.task( 'move', function() {
 		
 		var imgPathFrom;
 		
-		if ( options.imageMin )
+		if ( options.image.min )
 			imgPathFrom = [];
 		else
 			imgPathFrom = [

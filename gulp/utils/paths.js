@@ -53,7 +53,9 @@ module.exports = {
 		
 		img: {
 			dir:		'assets/img/',
-			allFiles:	'assets/img/**/*'
+			allFiles:	'assets/img/**/*',
+			allJpg:		'assets/img/**/*.jpg',
+			allPng:		'assets/img/**/*.png'
 		},
 		
 		js: {

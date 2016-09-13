@@ -1,11 +1,12 @@
 var options	= require( 'minimist' )( process.argv.slice(2) );
 var paths	= require( '../utils/paths' );
+var image	= require( '../utils/image' );
 
 var gutil	= require( 'gulp-util' );
 
 
 
-options.imageMin	= true;
+options.image		= image;
 
 options.task		= options._[0] === undefined ? 'default' : options._[0];
 options.subtask		= null;
