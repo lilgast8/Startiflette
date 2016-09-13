@@ -49,7 +49,7 @@ gulp.task( 'delete', function() {
 	
 	
 	/* SVG */
-	else if ( options.task == 'svg' && options.isProd )
+	else if ( options.task == 'svg' )
 		deletePath = [
 			paths.env.dev + paths.assets.svg.sprite.allFiles,
 			paths.env.prod + paths.assets.svg.dir

@@ -129,7 +129,7 @@ gulp.task( 'move', function() {
 	
 	
 	/* SVG */
-	else if ( options.task == 'svg' && options.isProd )
+	else if ( options.task == 'svg' )
 		movePath = {
 			from: [ paths.env.dev + paths.assets.svg.sprite.allFiles ],
 			to: [ paths.env.prod + paths.assets.svg.sprite.dir ]
@@ -193,7 +193,6 @@ gulp.task( 'move', function() {
 	
 	
 	
-	console.log( '🐷', movePath );
 	if ( movePath !== null ) {
 		for ( var i = 0; i < movePath.from.length; i++ ) {
 			
