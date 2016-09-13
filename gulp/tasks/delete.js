@@ -13,7 +13,6 @@ gulp.task( 'delete', function() {
 	if ( options.deletePath === null && options.task == 'prod' )
 		options.deletePath = [
 			paths.env.dev + paths.assets.css.minAllFiles,
-			paths.env.dev + paths.assets.favicons.allFiles,
 			paths.env.dev + paths.assets.svg.sprite.allFiles,
 			paths.env.prod
 		];
@@ -28,6 +27,8 @@ gulp.task( 'delete', function() {
 	
 	
 	/* Favicons */
+	else if ( options.task == 'default' )
+		options.deletePath = paths.env.dev + paths.assets.favicons.dir;
 	else if ( options.deletePath === null && options.task == 'favicons' )
 		options.deletePath = [
 			paths.env.dev + paths.assets.favicons.dir,

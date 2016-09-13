@@ -37,7 +37,6 @@ gulp.task( 'prod', [ 'delete' ], function() {
 gulp.task( 'prod:move', [
 	'robots',
 	'sass',
-	'favicons',
 	'js',
 	'json',
 	'svg',
