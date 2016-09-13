@@ -32,8 +32,8 @@ gulp.task( 'favicons:move', [ 'favicons:manage-markups' ], function() {
 // package (see the favicons:check-update task below).
 gulp.task( 'favicons:generate', [ 'delete' ], function( done ) {
 	
-	var configFile			= fs.readFileSync( paths.env.dev + paths.configs.favicons.configFile, 'utf8' );
-	var config				= JSON.parse( configFile );
+	var configFile	= fs.readFileSync( paths.env.dev + paths.configs.favicons.configFile, 'utf8' );
+	var config		= JSON.parse( configFile );
 	
 	realFavicon.generateFavicon({
 		masterPicture:	paths.env.dev + paths.configs.favicons.dir + config.url,
