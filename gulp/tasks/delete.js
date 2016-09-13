@@ -9,9 +9,11 @@ var del		= require( 'del' );
 
 gulp.task( 'delete', function() {
 	
+	var deletePath = null;
+	
 	/* Prod */
-	if ( options.deletePath === null && options.task == 'prod' )
-		options.deletePath = [
+	if ( options.task == 'prod' )
+		deletePath = [
 			paths.env.dev + paths.assets.css.minAllFiles,
 			paths.env.dev + paths.assets.svg.sprite.allFiles,
 			paths.env.prod
@@ -19,8 +21,8 @@ gulp.task( 'delete', function() {
 	
 	
 	/* SASS */
-	else if ( options.deletePath === null && options.task == 'sass' )
-		options.deletePath = [
+	else if ( options.task == 'sass' )
+		deletePath = [
 			paths.env.dev + paths.assets.css.minAllFiles,
 			paths.env.prod + paths.assets.css.dir
 		];
@@ -28,65 +30,65 @@ gulp.task( 'delete', function() {
 	
 	/* Favicons */
 	else if ( options.task == 'default' )
-		options.deletePath = paths.env.dev + paths.assets.favicons.dir;
-	else if ( options.deletePath === null && options.task == 'favicons' )
-		options.deletePath = [
+		deletePath = paths.env.dev + paths.assets.favicons.dir;
+	else if ( options.task == 'favicons' )
+		deletePath = [
 			paths.env.dev + paths.assets.favicons.dir,
 			paths.env.prod + paths.assets.favicons.dir
 		];
 	
 	
 	/* Files */
-	else if ( options.deletePath === null && options.task == 'files' )
-		options.deletePath = paths.env.prod + paths.assets.files.dir;
+	else if ( options.task == 'files' )
+		deletePath = paths.env.prod + paths.assets.files.dir;
 	
 	
 	/* JS & JS-min */
-	else if ( options.deletePath === null && ( options.task == 'js' || options.task == 'js-min' ) )
-		options.deletePath = paths.env.prod + paths.assets.js.dir;
+	else if ( options.task == 'js' || options.task == 'js-min' )
+		deletePath = paths.env.prod + paths.assets.js.dir;
 	
 	
 	/* SVG */
-	else if ( options.deletePath === null && options.task == 'svg' && options.isProd )
-		options.deletePath = [
+	else if ( options.task == 'svg' && options.isProd )
+		deletePath = [
 			paths.env.dev + paths.assets.svg.sprite.allFiles,
 			paths.env.prod + paths.assets.svg.dir
 		];
 	
 	
 	/* JSON & JSON-min */
-	else if ( options.deletePath === null && ( options.task == 'json' || options.task == 'json-min' ) )
-		options.deletePath = [
+	else if ( options.task == 'json' || options.task == 'json-min' )
+		deletePath = [
 			paths.env.prod + paths.assets.json.dir,
 			paths.env.prod + paths.configs.dir
 		];
 	
 	
 	/* Image, Image-min & Image-move */
-	else if ( options.deletePath === null && ( options.task == 'image' || options.task == 'image-min' || options.task == 'image-move' ) )
-		options.deletePath = paths.env.prod + paths.assets.img.dir;
+	else if ( options.task == 'image' || options.task == 'image-min' || options.task == 'image-move' )
+		deletePath = paths.env.prod + paths.assets.img.dir;
 	
 	
 	/* Sounds */
-	else if ( options.deletePath === null && options.task == 'sounds' )
-		options.deletePath = paths.env.prod + paths.assets.sounds.dir;
+	else if ( options.task == 'sounds' )
+		deletePath = paths.env.prod + paths.assets.sounds.dir;
 	
 	
 	/* Videos */
-	else if ( options.deletePath === null && options.task == 'videos' )
-		options.deletePath = paths.env.prod + paths.assets.videos.dir;
+	else if ( options.task == 'videos' )
+		deletePath = paths.env.prod + paths.assets.videos.dir;
 	
 	
 	/* Server */
-	else if ( options.deletePath === null && options.task == 'server' )
-		options.deletePath = [
+	else if ( options.task == 'server' )
+		deletePath = [
 			paths.env.prod + paths.server.dir,
 			paths.env.prod + paths.server.indexFile
 		];
 	
 	
 	
-	if (options.deletePath !== null && options.subtask != 'prod-deleted' )
-		del.sync( options.deletePath );
+	if ( deletePath !== null && options.subtask != 'prod-deleted' )
+		del.sync( deletePath );
 	
 } );

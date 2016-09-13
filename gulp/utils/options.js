@@ -23,7 +23,6 @@ options.jsSrcPath	= null;
 options.jsonSrcPath	= null;
 options.svgSrcPath	= null;
 
-options.deletePath	= null;
 options.movePath	= null;
 
 
