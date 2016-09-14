@@ -152,11 +152,22 @@ Made the configurations in the `dev/configs/config.json` file.
 
 ## Lazyloading
 
-A lazyloader `this.lazyloader = new STF.LazyLoader( this.$page, 'img-lazyload', 1 )` is already created by default for each page view. You can manage or update it according to your needs in `AbstractPageView.js`.
+A lazyloader `this.lazyloader = new STF.LazyLoader( this.$page, this.imgToLazyloadClassName, this.lazyloadParentEl, 1, true )` is already created by default for each page view. You can manage or update it according to your needs in `AbstractPageView.js`.
 
-To create a new lazyloader use: `new STF.LazyLoader( $container, className, stackSize )`
+To create a new lazyloader use: `new STF.LazyLoader( $container, className, parentEl, stackSize, autoInit )`
 
 You need to add `data-lazyload="true"` on the image `<img>` tag you want to lazyload. By using it you prevent to add the image on the main loader when `LOADING_MODE = 'byPageDynamic'`.
+
+The lazyloader created by default need these following variables :
+
+* `imgToLazyloadClassName`: class name of images to lazyload, the default value is `img-lazyload`
+* `lazyloadParentEl`: selector of parent of images to lazyload, the default value is `null`
+
+You can custom these two variables where the lazyloader was created or in the class of your page.
+
+Once your image loaded, the `loaded` class name is added to the parent element defined in `lazyloadParentEl`. If `lazyloadParentEl === null`, nothing happens.
+
+Once all images loaded, the `onLazyloadCompleted` function is fired. You can do any actions you want in this function.
 
 
 
