@@ -27,8 +27,11 @@ STF.AbstractMainView = ( function( window ) {
 		this.siY	= null; // scroll inertia Y
 		this.mX		= null; // mouse X
 		this.mY		= null; // mouse Y
+		this.miX	= null; // mouse inertia X
+		this.miY	= null; // mouse inertia Y
 		
 		this.SCROLL_INERTIA		= 0.07;
+		this.MOUSE_INERTIA		= 0.03;
 		
 		this.isWindowFocused	= true;
 	}
@@ -120,6 +123,9 @@ STF.AbstractMainView = ( function( window ) {
 	var _setRafProps = function() {
 		this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
 		this.siY	= STF_math_getInertia( this.sY, this.siY, this.SCROLL_INERTIA );
+		
+		this.miX	= STF_math_getInertia( this.mX, this.miX, this.MOUSE_INERTIA );
+		this.miY	= STF_math_getInertia( this.mY, this.miY, this.MOUSE_INERTIA );
 	};
 	
 	
@@ -127,7 +133,7 @@ STF.AbstractMainView = ( function( window ) {
 		this.mX = e.clientX;
 		this.mY = e.clientY;
 		
-		console.log( 'AbstractMainView _mouseMove()', this.mX, this.mY );
+		// console.log( 'AbstractMainView _mouseMove()', this.mX, this.mY );
 		
 		if ( this.e.mousemove !== undefined )
 			this.dispatch( this.E.MOUSE_MOVE );
