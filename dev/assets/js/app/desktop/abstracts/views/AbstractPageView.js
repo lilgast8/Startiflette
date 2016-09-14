@@ -6,6 +6,9 @@ STF.AbstractPageView = ( function( window ) {
 	
 	function AbstractPageView() {
 		STF.AbstractView.call( this );
+		
+		this.imgToLazyloadClassName	= 'img-lazyload'; // class name of images to lazyload
+		this.lazyloadParentEl		= null; // selector of parent of images to lazyload
 	}
 	
 	
@@ -23,7 +26,7 @@ STF.AbstractPageView = ( function( window ) {
 	AbstractPageView.prototype.initEl = function() {
 		// console.log( 'AbstractPageView.initEl() — ', this.constructor.name );
 		
-		this.lazyLoader = new STF.LazyLoader( this.$page, 'img-lazyload', 1, true );
+		this.lazyLoader = new STF.LazyLoader( this.$page, this.imgToLazyloadClassName, this.lazyloadParentEl, 1, true );
 	};
 	
 	

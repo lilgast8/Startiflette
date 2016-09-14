@@ -4,11 +4,12 @@ STF.LazyLoader = ( function( window ) {
 	'use strict';
 	
 	
-	function LazyLoader( $container, className, stackSize, autoInit ) {
+	function LazyLoader( $container, className, parentEl, stackSize, autoInit ) {
 		STF.EventDispatcher.call( this );
 		
 		this.$container		= $container;
 		this.CLASS_NAME		= className;
+		this.PARENT_EL		= parentEl;
 		this.STACK_SIZE		= stackSize; // number of images loaded at each loading wave
 		
 		this.posLoadedImg	= 0;
@@ -90,6 +91,9 @@ STF.LazyLoader = ( function( window ) {
 		for ( var i = 0; i < $imgs.length; i++ ) {
 			$imgs[ i ].src = e.item.src;
 			$imgs[ i ].offsetHeight; // jshint ignore:line
+			
+			if ( this.PARENT_EL !== null )
+				addClass( $( $imgs[ i ] ).parent( this.PARENT_EL )[0], 'loaded' );
 		}
 	};
 	
