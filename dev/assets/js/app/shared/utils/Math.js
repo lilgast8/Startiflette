@@ -72,5 +72,13 @@ STF.Utils.Math = ( function( window ) {
 	};
 	
 	
+	window.STF_math_getInertia = function( destValue, value, inertia ) {
+		var valueToAdd	= Math.abs ( ( destValue - value ) * inertia ) >= 0.01 ? ( destValue - value ) * inertia : destValue - value;
+		value			+= valueToAdd;
+		
+		return value;
+	};
+	
+	
 } ) ( window );
 
