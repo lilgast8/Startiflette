@@ -119,7 +119,7 @@ STF.AbstractMainView = ( function( window ) {
 	
 	var _setRafProps = function() {
 		this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
-		this.siY	+= ( this.sY - this.siY ) * this.SCROLL_INERTIA;
+		this.siY	= STF_math_getInertia( this.sY, this.siY, this.SCROLL_INERTIA );
 	};
 	
 	
