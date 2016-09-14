@@ -58,6 +58,11 @@ STF.AbstractMainView = ( function( window ) {
 	};
 	
 	
+	AbstractMainView.prototype.initEl = function() {
+		
+	};
+	
+	
 	AbstractMainView.prototype.bindEvents = function() {
 		this.$window.on( 'resize', $.proxy( this.resize, this ) );
 		TweenLite.ticker.addEventListener( 'tick', this.raf, this );
@@ -75,6 +80,12 @@ STF.AbstractMainView = ( function( window ) {
 		STF.Views.Statics.Footer.init();
 		
 		STF_dom_removeClass( this.$mainCont[0], 'preload' );
+	};
+	
+	
+	AbstractMainView.prototype.disableScrollRestoration = function() {
+		if ( 'scrollRestoration' in history )
+			history.scrollRestoration = 'manual';
 	};
 	
 	

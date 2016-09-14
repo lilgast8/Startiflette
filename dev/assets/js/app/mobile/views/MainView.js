@@ -18,6 +18,11 @@ STF.MainView = ( function( window ) {
 	};*/
 	
 	
+	/*MainView.prototype.initEl = function() {
+		
+	};*/
+	
+	
 	/*MainView.prototype.bindEvents = function() {
 		STF.AbstractMainView.prototype.bindEvents.call( this );
 	};*/
