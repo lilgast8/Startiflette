@@ -168,6 +168,22 @@ STF.AbstractMainView = ( function( window ) {
 	};
 	
 	
+	AbstractMainView.prototype.setScrollY = function( scrollY ) {
+		this.sY		= scrollY;
+		this.siY	= scrollY;
+		
+		this.$window[0].scrollTo( 0, scrollY );
+	};
+	
+	
+	AbstractMainView.prototype.setBodyHeight = function( bodyH ) {
+		if ( bodyH === null )
+			bodyH = this.$pageCont.height();
+		
+		this.$body[0].style.height = bodyH + 'px';
+	};
+	
+	
 	return AbstractMainView;
 	
 	
