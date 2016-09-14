@@ -47,6 +47,7 @@
 			"app/shared/loaders/LazyLoader.js",
 			
 			"app/shared/utils/Global.js",
+			"app/shared/utils/Array.js",
 			"app/shared/utils/DOM.js",
 			"app/shared/utils/Math.js",
 			"app/shared/utils/String.js",
@@ -103,6 +104,7 @@
 			"app/shared/loaders/LazyLoader.js",
 			
 			"app/shared/utils/Global.js",
+			"app/shared/utils/Array.js",
 			"app/shared/utils/DOM.js",
 			"app/shared/utils/Math.js",
 			"app/shared/utils/String.js",
