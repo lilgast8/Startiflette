@@ -10,14 +10,6 @@ STF.Views.Statics.MainLoader = ( function( window ) {
 	
 	function MainLoader() {
 		STF.AbstractMainLoader.call( this );
-		
-		this.E = {
-			PROGRESS:	'progress',
-			FILE_LOAD:	'fileLoad',
-			COMPLETE:	'complete',
-			SHOWN:		'shown',
-			HIDDEN:		'hidden'
-		};
 	}
 	
 	
