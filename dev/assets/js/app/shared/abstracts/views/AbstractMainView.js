@@ -184,6 +184,11 @@ STF.AbstractMainView = ( function( window ) {
 	};
 	
 	
+	AbstractMainView.prototype.initAfterAssetsLoaded = function() {
+		
+	};
+	
+	
 	return AbstractMainView;
 	
 	

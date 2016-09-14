@@ -153,6 +153,8 @@ STF.AbstractPagesController = ( function( window ) {
 	var _onAssetsLoaded = function() {
 		// first load
 		if ( this.isFirstLoad ) {
+			STF.MainView.initAfterAssetsLoaded();
+			
 			this.page.init();
 			
 			this.page.buildEvt( this.page.E.SHOWN, this.onPageShown.bind( this ) );
