@@ -314,25 +314,11 @@ STF.AbstractPagesController = ( function( window ) {
 		_setPageInfos.call( this );
 		
 		if ( this. LOADING_MODE != 'allStatic' ) {
-			_resetImgs.call( this );
+			STF_resetImgs( STF.MainView.$pageCont.find( 'img' ) );
 			setTimeout( function() { _loadAssets.call( this ); }.bind( this ), 0 );
 		}
 		
 		this.data = null;
-	};
-	
-	
-	var _resetImgs = function() {
-		var $imgs = STF.MainView.$pageCont.find( 'img' );
-		var $img, src;
-		
-		for ( var i = 0; i < $imgs.length; i++ ) {
-			$img		= $imgs[i];
-			src			= $img.src;
-			
-			$img.src	= STF.Path.URL.img + 'bgs/pattern-transparent.png';
-			$img.setAttribute( 'data-src' , src );
-		}
 	};
 	
 	

@@ -2,17 +2,20 @@
 <!-- JS -->
 <script>
 	/* Reset img's src tag to stop loading */
-	var $imgs = document.getElementsByTagName( 'img' );
-	var $img, src;
-	
-	for ( var i = 0; i < $imgs.length; i++ ) {
-		$img		= $imgs[i];
-		src			= $img.src;
+	var STF_resetImgs = function( $imgs ) {
+		var $img, src;
 		
-		$img.src	= '';
-		$img.src	= '{{ Path.URL.img }}bgs/pattern-transparent.png';
-		$img.setAttribute( 'data-src' , src );
-	}
+		for ( var i = 0; i < $imgs.length; i++ ) {
+			$img		= $imgs[i];
+			src			= $img.src;
+			
+			$img.src	= '';
+			$img.src	= '{{ Path.URL.img }}bgs/pattern-transparent.png';
+			$img.setAttribute( 'data-src' , src );
+		}
+	};
+	
+	STF_resetImgs( document.getElementsByTagName( 'img' ) );
 	
 	
 	/* JS vars */
