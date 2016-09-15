@@ -5,7 +5,7 @@ STF.Path = ( function( window ) {
 	
 	
 	function Path() {
-		this.URL		= null;
+		this.URL = null;
 	}
 	
 	
