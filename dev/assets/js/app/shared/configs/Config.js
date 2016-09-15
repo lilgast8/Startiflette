@@ -5,8 +5,6 @@ STF.Config = ( function( window ) {
 	
 	
 	function Config() {
-		STF.CustomEvent.call( this );
-		
 		this.ENV			= null;
 		this.ENVS			= null;
 		this.ALL_LANG		= null;
@@ -20,10 +18,6 @@ STF.Config = ( function( window ) {
 		this.HAS_FPS_STATS		= null;
 		this.HAS_MEMORY_STATS	= null;
 	}
-	
-	
-	Config.prototype				= Object.create( STF.CustomEvent.prototype );
-	Config.prototype.constructor	= Config;
 	
 	
 	Config.prototype.init = function() {

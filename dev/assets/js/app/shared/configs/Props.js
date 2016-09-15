@@ -5,8 +5,6 @@ STF.Props = ( function( window ) {
 	
 	
 	function Props() {
-		STF.CustomEvent.call( this );
-		
 		this.HAS_PUSHSTATE		= null;
 		this.TRANSFORM			= null;
 		this.HAS_TRANSFORMS		= null;
@@ -14,10 +12,6 @@ STF.Props = ( function( window ) {
 		this.HAS_TRANSITIONS	= null;
 		this.HAS_ANIMATIONS		= null;
 	}
-	
-	
-	Props.prototype				= Object.create( STF.CustomEvent.prototype );
-	Props.prototype.constructor	= Props;
 	
 	
 	Props.prototype.init = function() {

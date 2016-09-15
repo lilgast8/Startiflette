@@ -5,8 +5,6 @@ STF.Device = ( function( window ) {
 	
 	
 	function Device() {
-		STF.CustomEvent.call( this );
-		
 		this.FORCE_DEVICE		= null;
 		
 		this.DEVICE				= null;
@@ -18,10 +16,6 @@ STF.Device = ( function( window ) {
 		this.BROWSER_VERSION	= null;
 		this.IS_IE				= null;
 	}
-	
-	
-	Device.prototype				= Object.create( STF.CustomEvent.prototype );
-	Device.prototype.constructor	= Device;
 	
 	
 	Device.prototype.init = function() {
