@@ -65,7 +65,7 @@ STF.AbstractMainView = ( function( window ) {
 	
 	AbstractMainView.prototype.bindEvents = function() {
 		this.$window.on( 'resize', $.proxy( this.resize, this ) );
-		TweenLite.ticker.addEventListener( 'tick', this.raf, this );
+		// TweenLite.ticker.addEventListener( 'tick', this.raf, this );
 		// this.$window.on( 'mousemove', $.proxy( this.mouseMove, this ) );
 		// this.$window.on( 'mousedown', $.proxy( this.mouseDown, this ) );
 		// this.$window.on( 'mouseup', $.proxy( this.mouseUp, this ) );
@@ -92,8 +92,7 @@ STF.AbstractMainView = ( function( window ) {
 	AbstractMainView.prototype.resize = function() {
 		_setResizeProps.call( this );
 		
-		if ( this.e.resize !== undefined )
-			this.dispatch( this.E.RESIZE );
+		this.dispatch( this.E.RESIZE );
 	};
 	
 	
@@ -119,8 +118,7 @@ STF.AbstractMainView = ( function( window ) {
 		
 		_setRafProps.call( this );
 		
-		// if ( this.e.raf !== undefined )
-			this.dispatch( this.E.RAF );
+		this.dispatch( this.E.RAF );
 		
 		
 		if ( STF.Config.HAS_FPS_STATS && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
@@ -146,36 +144,31 @@ STF.AbstractMainView = ( function( window ) {
 		
 		// console.log( 'AbstractMainView _mouseMove()', this.mX, this.mY );
 		
-		if ( this.e.mousemove !== undefined )
-			this.dispatch( this.E.MOUSE_MOVE );
+		this.dispatch( this.E.MOUSE_MOVE );
 	};
 	
 	
 	AbstractMainView.prototype.mouseDown = function() {
-		if ( this.e.mousedown !== undefined )
-			this.dispatch( this.E.MOUSE_DOWN );
+		this.dispatch( this.E.MOUSE_DOWN );
 	};
 	
 	
 	AbstractMainView.prototype.mouseUp = function() {
-		if ( this.e.mouseup !== undefined )
-			this.dispatch( this.E.MOUSE_UP );
+		this.dispatch( this.E.MOUSE_UP );
 	};
 	
 	
 	AbstractMainView.prototype.windowOut = function() {
 		this.isWindowFocused = false;
 		
-		if ( this.e.windowout !== undefined )
-			this.dispatch( this.E.WINDOW_OUT );
+		this.dispatch( this.E.WINDOW_OUT );
 	};
 	
 	
 	AbstractMainView.prototype.windowIn = function() {
 		this.isWindowFocused = true;
 		
-		if ( this.e.windowin !== undefined )
-			this.dispatch( this.E.WINDOW_IN );
+		this.dispatch( this.E.WINDOW_IN );
 	};
 	
 	
