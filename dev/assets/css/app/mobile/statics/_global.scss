@@ -6,28 +6,9 @@
 /****************************/
 
 
-::selection {
-	background-color: $bgSelection;
-	color: $textSelection;
-}
-::-moz-selection {
-	background-color: $bgSelection;
-	color: $textSelection;
-}
-
 body {
 	width: 100%;
-	// min-width: $contentMinW;
 	height: 100%;
-	// min-height: $contentMinH;
-	font: normal 13px/15px Arial;
-	// -webkit-font-smoothing: subpixel-antialiased;
-	// -moz-osx-font-smoothing: auto;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	// -webkit-text-stroke: 0.35px;
-	color: $alt2;
-	background-color: $alt1;
 }
 
 img { max-width: 100%; }
@@ -36,6 +17,6 @@ img { max-width: 100%; }
 
 /* -------- CSS TRANSITION -------- */
 
-.js .preload * { @include transition(none !important); }
+.js .preload * { @include transition(none !important); } 
 
 

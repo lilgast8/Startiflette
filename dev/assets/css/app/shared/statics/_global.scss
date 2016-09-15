@@ -1,0 +1,35 @@
+
+
+
+/****************************/
+/* -------- GLOBAL -------- */
+/****************************/
+
+
+::selection {
+	background-color: $bgSelection;
+	color: $textSelection;
+}
+::-moz-selection {
+	background-color: $bgSelection;
+	color: $textSelection;
+}
+
+body {
+	font: normal 13px/15px Arial;
+	// -webkit-font-smoothing: subpixel-antialiased;
+	// -moz-osx-font-smoothing: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	// -webkit-text-stroke: 0.35px;
+	color: $alt2;
+	background-color: $alt1;
+}
+
+
+
+/* -------- CSS TRANSITION -------- */
+
+.js .preload * { @include transition(none !important); }
+
+
