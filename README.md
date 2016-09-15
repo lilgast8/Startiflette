@@ -83,8 +83,8 @@ Complete list of gulp tasks & what they do:
 * `favicons`: Generates all type of favicons.
 * `files`: Removes all files in `www/files/` & moves all sounds files from `dev/files/` to `www/files/`.
 * `htaccess`: Sets the htaccess.
-* `image`: Executes `image-min` or `image-move` depending on `options.imageMin`
-* `image-min`: Minifies images in `www/img/`. If directly called, `delete` which deletes all images in `www/img/` is executed before.
+* `image`: Executes `image-min` or `image-move` depending on `image.min` option in `utils/image.js` file, [more infos](#config-image-gulp-task).
+* `image-min`: Minifies images in `www/img/`. If directly called, `delete` which deletes all images in `www/img/` is executed before. You can manage compression independently for each files, [more infos](#config-image-gulp-task).
 * `image-move`: Moves images in `www/img/`. If directly called, `delete` which deletes all images in `www/img/` is executed before.
 * `js`: If called by `watch`, this will only execute `js-hint`. Else this will execute `js-hint` then `js-min`.
 * `js-hint`: Checks the potential errors & problems in JSON files.
@@ -106,18 +106,32 @@ Complete list of gulp tasks & what they do:
 
 
 
-## Config
-Made the configurations in the `dev/configs/config.json` file.
+### Config `image` gulp task
 
-* ENV: @type {string}
-* ENVS: @type {object}, containt `fallbackresource`, `base_url` & `base_url_cms`
-* ALL_LANG: @type {array of string} list of languages, the first one will be the default language
-* GENERATE_JS_VIEW_ID: @type {array} list of device, used to manage several hide/show transitions for a view, [more infos](#manage-complex-transitions)
-* HAS_MOBILE_VERSION: @type {boolean}
-* TABLET_VERSION: @type {string} version displayed for tablet, can be "desktop" or "mobile"
-* FORCE_DEVICE: @type {boolean or string} can be false, "desktop", "tablet" or "mobile"
-* GA_ID: @type {object} `"trackerName": "gaID"`, default tracker name is "null"
-* CREDITS: @type {object} used to show credits console
+The `image` gulp task allow you to compress the images from the `img/` directory. Make the configurations in `gulp/utils/image.js` file.
+
+* `min`: @type {boolean} `true` Eenable/disable compression
+* `params`: @type {array of object} Each object contains the following parameters:
+	* `src`: @type {array} List of paths you want to target or exclude.
+	* `dest`: @type {string} `null` Path of the destination directory. Useful if you targeted only files in the `src` parameter. If you targeted a directory you can set it to `null`.
+	* `quality`: @type {object}
+		* `min`: @type {int} Minimum quality, value between 0-100.
+		* `max`: @type {int} Maximum quality, value between 0-100.
+
+
+
+## Config
+Make the configurations in the `dev/configs/config.json` file.
+
+* `ENV`: @type {string}
+* `ENVS`: @type {object} Containt `fallbackresource`, `base_url` & `base_url_cms`.
+* `ALL_LANG`: @type {array of string} List of languages, the first one will be the default language.
+* `GENERATE_JS_VIEW_ID`: @type {array} List of device, used to manage several hide/show transitions for a view, [more infos](#manage-complex-transitions).
+* `HAS_MOBILE_VERSION`: @type {boolean} `true`
+* `TABLET_VERSION`: @type {string} Version displayed for tablet, can be `"desktop"` or `"mobile"`.
+* `FORCE_DEVICE`: @type {boolean or string} `false` Can be `false`, `"desktop"`, `"tablet"` or `"mobile"`.
+* `GA_ID`: @type {object} `"trackerName": "gaID"` Default tracker name is `"null"`.
+* `CREDITS`: @type {object} Used to show credits console.
 
 
 
@@ -147,6 +161,27 @@ Made the configurations in the `dev/configs/config.json` file.
 		* `$this->response->pageExist`: @type {boolean} Show the page view if `true`, else set & show the 404 page.
 		* `$this->response->urls`: @type {object} List of the page urls for each language.
 		* `$this->response->data`: @type {data} All the data you need in the page view.
+
+
+
+## Custom events
+
+The [custom event class](https://github.com/LilGast8/Startiflette/blob/master/dev/assets/js/app/shared/events/CustomEvent.js) depend on [`js-signal`](http://millermedeiros.github.io/js-signals). You can create and manage custom events. 
+
+First of all, set the list of event(s) in `this.E` of the object which will be listened:
+
+```
+this.E = {
+	RESIZE:	'resize',
+	RAF:	'raf'
+}
+```
+
+Then use the following methods to manage your custom event:
+
+* `LISTENED_OBJECT.bind( LISTENED_OBJECT.E.EVENT, FUNCTION, CONTEXT )` Bind an event to the listened object.
+* `LISTENED_OBJECT.unbind( LISTENED_OBJECT.E.EVENT, FUNCTION, CONTEXT )` Unbind an event to the listened object.
+* `this.dispatch( this.E.EVENT )` Dispatch an event from the listened object.
 
 
 
