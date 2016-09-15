@@ -119,7 +119,7 @@ STF.AbstractMainView = ( function( window ) {
 		
 		_setRafProps.call( this );
 		
-		if ( this.e.raf !== undefined )
+		// if ( this.e.raf !== undefined )
 			this.dispatch( this.E.RAF );
 		
 		

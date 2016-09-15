@@ -29,6 +29,25 @@ STF.Views.Statics.Header = ( function( window ) {
 		STF.AbstractView.prototype.bindEvents.call( this );
 		
 		this.$menuLink.on( 'click', $.proxy( this.changeUrl, this ) );
+		
+		STF.MainView.buildEvt( STF.MainView.E.RAF, this.raf, this );
+	};
+	
+	
+	Header.prototype.rmRaf = function() {
+		// STF.MainView.destroyEvt( STF.MainView.E.RAF, this.raf, this );
+		STF.MainView.destroyEvt( STF.MainView.E.RAF, this.raf, this );
+		// STF.MainView.destroyEvt( undefined, this.raf, this );
+	};
+	
+	
+	Header.prototype.raf = function() {
+		// console.log( '💂🏾 raf', this.id );
+	};
+	
+	
+	Header.prototype.resize = function() {
+		console.log( '💂🏾 resize' );
 	};
 	
 	

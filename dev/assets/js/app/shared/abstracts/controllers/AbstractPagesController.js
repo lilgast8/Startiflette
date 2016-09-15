@@ -157,7 +157,8 @@ STF.AbstractPagesController = ( function( window ) {
 			
 			this.page.init();
 			
-			this.page.buildEvt( this.page.E.SHOWN, this.onPageShown.bind( this ) );
+			// this.page.buildEvt( this.page.E.SHOWN, this.onPageShown.bind( this ) );
+			this.page.buildEvt( this.page.E.SHOWN, this.onPageShown, this );
 			this.page.show();
 			
 			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden.bind( this ) );
@@ -343,7 +344,8 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	
 	AbstractPagesController.prototype.onPageShown = function() {
-		this.page.destroyEvt( this.page.E.SHOWN, this.onPageShown.bind( this ) );
+		// this.page.destroyEvt( this.page.E.SHOWN, this.onPageShown.bind( this ) );
+		this.page.destroyEvt( this.page.E.SHOWN, this.onPageShown, this );
 		
 		this.isPageShown = true;
 		this.checkPageShowing();
