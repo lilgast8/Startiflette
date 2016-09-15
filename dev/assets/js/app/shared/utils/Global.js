@@ -41,15 +41,5 @@ STF.Utils.Global = ( function( window ) {
 	};
 	
 	
-	window.STF_gl_getConstructorName = function ( obj ) {
-		var string	= ( obj.prototype ? obj.prototype.constructor : obj.constructor ).toString();
-		var cname	= string.match( /function\s(\w*)/ )[1];
-		var aliases	= [ "", "anonymous", "Anonymous" ];
-		
-		
-		return aliases.indexOf( cname ) > -1 ? "Function" : cname;
-	};
-	
-	
 } ) ( window );
 
