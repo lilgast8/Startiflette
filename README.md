@@ -105,15 +105,14 @@ Complete list of gulp tasks & what they do:
 * `watch`: This is the dev task. It watches all files, run the associated tasks (`sass`, `js`, `json` or `svg`) & livereload when a file us updated.
 
 
-
 ### Config `image` gulp task
 
-The `image` gulp task allow you to compress the images from the `img/` directory. Make the configurations in `gulp/utils/image.js` file.
+The `image` gulp task allows you to compress the images from the `img/` directory. Make the configurations in `gulp/utils/image.js` file.
 
-* `min`: @type {boolean} `true` Eenable/disable compression
+* `min`: @type {boolean} `true` Enable/disable compression.
 * `params`: @type {array of object} Each object contains the following parameters:
 	* `src`: @type {array} List of paths you want to target or exclude.
-	* `dest`: @type {string} `null` Path of the destination directory. Useful if you targeted only files in the `src` parameter. If you targeted a directory you can set it to `null`.
+	* `dest`: @type {string} `null` Path of the destination directory. Useful if you targeted only files in the `src` parameter but if you targeted a directory you can set it to `null`.
 	* `quality`: @type {object}
 		* `min`: @type {int} Minimum quality, value between 0-100.
 		* `max`: @type {int} Maximum quality, value between 0-100.
@@ -166,7 +165,7 @@ Make the configurations in the `dev/configs/config.json` file.
 
 ## Custom events
 
-The [custom event class](https://github.com/LilGast8/Startiflette/blob/master/dev/assets/js/app/shared/events/CustomEvent.js) depend on [`js-signal`](http://millermedeiros.github.io/js-signals). You can create and manage custom events. 
+You can create and manage custom events in any inherited class from CustomEvent class. [CustomEvent.js](https://github.com/LilGast8/Startiflette/blob/master/dev/assets/js/app/shared/events/CustomEvent.js) depend on [`js-signal`](http://millermedeiros.github.io/js-signals).
 
 First of all, set the list of event(s) in `this.E` of the object which will be listened:
 
@@ -177,10 +176,10 @@ this.E = {
 }
 ```
 
-Then use the following methods to manage your custom event:
+Then use the following methods to manage a custom event:
 
 * `LISTENED_OBJECT.bind( LISTENED_OBJECT.E.EVENT, FUNCTION, CONTEXT )` Bind an event to the listened object.
-* `LISTENED_OBJECT.unbind( LISTENED_OBJECT.E.EVENT, FUNCTION, CONTEXT )` Unbind an event to the listened object.
+* `LISTENED_OBJECT.unbind( LISTENED_OBJECT.E.EVENT, FUNCTION, CONTEXT )` Unbind an event from the listened object.
 * `this.dispatch( this.E.EVENT )` Dispatch an event from the listened object.
 
 
