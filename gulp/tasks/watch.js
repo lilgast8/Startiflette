@@ -75,8 +75,10 @@ gulp.task( 'watch', function() {
 		}
 		
 		/* Favicons */
-		if ( favicons )
-			taskname = 'favicons';
+		if ( favicons ) {
+			taskname		= 'favicons';
+			options.subtask	= 'default-favicons';
+		}
 		
 		/* JS */
 		else if ( ext == '.js' ) {

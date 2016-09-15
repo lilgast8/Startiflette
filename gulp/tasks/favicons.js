@@ -13,12 +13,12 @@ var globalConfig	= require( '../../' + paths.env.dev + paths.configs.configFile 
 
 gulp.task( 'favicons', [ 'favicons:generate' ], function() {
 	
-	gulp.start( 'favicons:move' );
+	gulp.start( 'favicons:dev' );
 	
 });
 
 
-gulp.task( 'favicons:move', [ 'favicons:manage-markups' ], function() {
+gulp.task( 'favicons:dev', [ 'favicons:manage-markups' ], function() {
 	
 	if ( options.task == 'favicons' )
 		gulp.start( 'move' );

@@ -29,7 +29,7 @@ gulp.task( 'delete', function() {
 	
 	
 	/* Favicons */
-	else if ( options.task == 'default' )
+	else if ( options.task == 'default' && options.subtask == 'default-favicons' )
 		deletePath = paths.env.dev + paths.assets.favicons.dir;
 	else if ( options.task == 'favicons' )
 		deletePath = [
