@@ -28,21 +28,8 @@ STF.Views.Statics.Footer = ( function( window ) {
 		STF.AbstractView.prototype.bindEvents.call( this );
 		
 		this.$footerLink.on( 'click', $.proxy( this.changeUrl, this ) );
-		
-		STF.MainView.bind( STF.MainView.E.RAF, _raf, this );
 	};
 	
-	
-	Footer.prototype.rmRaf = function() {
-		STF.MainView.unbind( STF.MainView.E.RAF, _raf, this );
-	};
-	
-	
-	// Footer.prototype.raf = function() {
-	var _raf = function() {
-		// console.log( '👟️ raf', this.id );
-	};
-		
 	
 	return new Footer();
 	
