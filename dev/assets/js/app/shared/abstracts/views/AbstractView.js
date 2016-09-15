@@ -7,8 +7,6 @@ STF.AbstractView = ( function( window ) {
 	function AbstractView() {
 		STF.CustomEvent.call( this );
 		
-		this.id		= STF_gl_getConstructorName( this ).toLowerCase();
-		
 		this.E		= {
 			SHOW:	'show',
 			SHOWN:	'shown',
