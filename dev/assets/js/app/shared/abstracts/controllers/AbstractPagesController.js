@@ -61,8 +61,8 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	
 	var _bindEvents = function() {
-		this.mainLoader.buildEvt( this.mainLoader.E.FILE_LOAD, _onFileLoad.bind( this ) );
-		this.mainLoader.buildEvt( this.mainLoader.E.COMPLETE, _onAssetsLoaded.bind( this ) );
+		this.mainLoader.bind( this.mainLoader.E.FILE_LOAD, _onFileLoad, this );
+		this.mainLoader.bind( this.mainLoader.E.COMPLETE, _onAssetsLoaded, this );
 	};
 	
 	
@@ -157,11 +157,10 @@ STF.AbstractPagesController = ( function( window ) {
 			
 			this.page.init();
 			
-			// this.page.buildEvt( this.page.E.SHOWN, this.onPageShown.bind( this ) );
-			this.page.buildEvt( this.page.E.SHOWN, this.onPageShown, this );
+			this.page.bind( this.page.E.SHOWN, this.onPageShown, this );
 			this.page.show();
 			
-			this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden.bind( this ) );
+			this.mainLoader.bind( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden, this );
 			
 			if ( this.IS_HIDE_INIT )
 				this.mainLoader.hideInit();
@@ -255,16 +254,16 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	
 	AbstractPagesController.prototype.managePageHidingTransitions = function() {
-		this.page.buildEvt( this.page.E.HIDDEN, this.onPageHidden.bind( this ) );
+		this.page.bind( this.page.E.HIDDEN, this.onPageHidden, this );
 		this.page.hide();
 		
-		this.mainLoader.buildEvt( this.mainLoader.E.SHOWN, this.onMainLoaderShown.bind( this ) );
+		this.mainLoader.bind( this.mainLoader.E.SHOWN, this.onMainLoaderShown, this );
 		this.mainLoader.show();
 	};
 	
 	
 	AbstractPagesController.prototype.onPageHidden = function() {
-		this.page.destroyEvt( this.page.E.HIDDEN, this.onPageHidden.bind( this ) );
+		this.page.unbind( this.page.E.HIDDEN, this.onPageHidden, this );
 		
 		_destroyPage.call( this );
 		
@@ -280,7 +279,7 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	
 	AbstractPagesController.prototype.onMainLoaderShown = function() {
-		this.mainLoader.destroyEvt( this.mainLoader.E.SHOWN, this.onMainLoaderShown.bind( this ) );
+		this.mainLoader.unbind( this.mainLoader.E.SHOWN, this.onMainLoaderShown, this );
 		
 		this.isMainLoaderShown = true;
 		this.checkPageHiding();
@@ -335,17 +334,16 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	
 	AbstractPagesController.prototype.managePageShowingTransitions = function() {
-		this.page.buildEvt( this.page.E.SHOWN, this.onPageShown.bind( this ) );
+		this.page.bind( this.page.E.SHOWN, this.onPageShown, this );
 		this.page.show();
 		
-		this.mainLoader.buildEvt( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden.bind( this ) );
+		this.mainLoader.bind( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden, this );
 		this.mainLoader.hide();
 	};
 	
 	
 	AbstractPagesController.prototype.onPageShown = function() {
-		// this.page.destroyEvt( this.page.E.SHOWN, this.onPageShown.bind( this ) );
-		this.page.destroyEvt( this.page.E.SHOWN, this.onPageShown, this );
+		this.page.unbind( this.page.E.SHOWN, this.onPageShown, this );
 		
 		this.isPageShown = true;
 		this.checkPageShowing();
@@ -353,7 +351,7 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	
 	AbstractPagesController.prototype.onMainLoaderHidden = function() {
-		this.mainLoader.destroyEvt( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden.bind( this ) );
+		this.mainLoader.unbind( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden, this );
 		
 		this.isMainLoaderHidden = true;
 		this.checkPageShowing();

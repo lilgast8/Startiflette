@@ -55,14 +55,14 @@ STF.AbstractView = ( function( window ) {
 	AbstractView.prototype.bindEvents = function() {
 		// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
 		
-		STF.MainView.buildEvt( STF.MainView.E.RESIZE, this.resize.bind( this ), this.id );
+		STF.MainView.bind( STF.MainView.E.RESIZE, this.resize, this );
 	};
 	
 	
 	AbstractView.prototype.unbindEvents = function() {
 		// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
 		
-		STF.MainView.destroyEvt( STF.MainView.E.RESIZE, this.resize.bind( this ), this.id );
+		STF.MainView.unbind( STF.MainView.E.RESIZE, this.resize, this );
 	};
 	
 	

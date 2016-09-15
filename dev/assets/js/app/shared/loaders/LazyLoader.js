@@ -54,14 +54,14 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	LazyLoader.prototype.bindEvents = function() {
-		this.loaderImg.buildEvt( this.loaderImg.E.FILE_LOAD, this.onImgLoad.bind( this ) );
-		this.loaderImg.buildEvt( this.loaderImg.E.COMPLETE, this.onImgLoadingComplete.bind( this ) );
+		this.loaderImg.bind( this.loaderImg.E.FILE_LOAD, this.onImgLoad, this );
+		this.loaderImg.bind( this.loaderImg.E.COMPLETE, this.onImgLoadingComplete, this );
 	};
 	
 	
 	LazyLoader.prototype.unbindEvents = function() {
-		this.loaderImg.destroyEvt( this.loaderImg.E.FILE_LOAD, this.onImgLoad.bind( this ) );
-		this.loaderImg.destroyEvt( this.loaderImg.E.COMPLETE, this.onImgLoadingComplete.bind( this ) );
+		this.loaderImg.unbind( this.loaderImg.E.FILE_LOAD, this.onImgLoad, this );
+		this.loaderImg.unbind( this.loaderImg.E.COMPLETE, this.onImgLoadingComplete, this );
 	};
 	
 	

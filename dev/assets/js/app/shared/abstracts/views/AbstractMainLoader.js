@@ -47,9 +47,9 @@ STF.AbstractMainLoader = ( function( window ) {
 		this.assetsLoader = new STF.Loader( true, true );
 		this.assetsLoader.init();
 		
-		this.assetsLoader.buildEvt( this.assetsLoader.E.PROGRESS, this.onProgress.bind( this ) );
-		this.assetsLoader.buildEvt( this.assetsLoader.E.FILE_LOAD, _onFileLoad.bind( this ) );
-		this.assetsLoader.buildEvt( this.assetsLoader.E.COMPLETE, _onComplete.bind( this ) );
+		this.assetsLoader.bind( this.assetsLoader.E.PROGRESS, this.onProgress, this );
+		this.assetsLoader.bind( this.assetsLoader.E.FILE_LOAD, _onFileLoad, this );
+		this.assetsLoader.bind( this.assetsLoader.E.COMPLETE, _onComplete, this );
 	};
 	
 	

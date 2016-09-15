@@ -29,12 +29,12 @@ STF.Views.Statics.Footer = ( function( window ) {
 		
 		this.$footerLink.on( 'click', $.proxy( this.changeUrl, this ) );
 		
-		STF.MainView.buildEvt( STF.MainView.E.RAF, _raf, this );
+		STF.MainView.bind( STF.MainView.E.RAF, _raf, this );
 	};
 	
 	
 	Footer.prototype.rmRaf = function() {
-		STF.MainView.destroyEvt( STF.MainView.E.RAF, _raf, this );
+		STF.MainView.unbind( STF.MainView.E.RAF, _raf, this );
 	};
 	
 	
