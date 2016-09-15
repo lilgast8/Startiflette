@@ -42,6 +42,18 @@ STF.PagesController = ( function( window ) {
 	};*/
 	
 	
+	PagesController.prototype.manageMenuLinks = function() {
+		this.updateMenuLinks( STF.Views.Statics.Header.$menuLink );
+		this.updateMenuLinks( STF.Views.Statics.Footer.$footerLink );
+	};
+	
+	
+	PagesController.prototype.manageLangLinks = function() {
+		this.changeLangLinks( STF.Views.Statics.Header.$headerLgLink );
+		this.changeLangLinks( STF.Views.Statics.Footer.$footerLgLink );
+	};
+	
+	
 	return new PagesController();
 	
 	

@@ -35,8 +35,7 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	AbstractPagesController.prototype.init = function() {
 		this.initPages();
-		_initEl.call( this );
-		_bindEvents.call( this );
+		this.initEl();
 	};
 	
 	
@@ -52,7 +51,7 @@ STF.AbstractPagesController = ( function( window ) {
 	};
 	
 	
-	var _initEl = function() {
+	AbstractPagesController.prototype.initEl = function() {
 		this.assetsModel = STF.Models.Assets;
 		this.assetsModel.init();
 		
@@ -60,16 +59,17 @@ STF.AbstractPagesController = ( function( window ) {
 	};
 	
 	
-	var _bindEvents = function() {
-		this.mainLoader.bind( this.mainLoader.E.FILE_LOAD, _onFileLoad, this );
-		this.mainLoader.bind( this.mainLoader.E.COMPLETE, _onAssetsLoaded, this );
+	AbstractPagesController.prototype.initFirstPage = function() {
+		this.bindEvents();
+		_setPageInfos.call( this );
+		this.manageMenuLinks();
+		_loadAssets.call( this );
 	};
 	
 	
-	AbstractPagesController.prototype.initFirstPage = function() {
-		_setPageInfos.call( this );
-		_manageMenuLinks.call( this );
-		_loadAssets.call( this );
+	AbstractPagesController.prototype.bindEvents = function() {
+		this.mainLoader.bind( this.mainLoader.E.FILE_LOAD, _onFileLoad, this );
+		this.mainLoader.bind( this.mainLoader.E.COMPLETE, _onAssetsLoaded, this );
 	};
 	
 	
@@ -115,7 +115,7 @@ STF.AbstractPagesController = ( function( window ) {
 	};
 	
 	
-	var _initPageChangeValues = function() {
+	AbstractPagesController.prototype.initPageChangeValues = function() {
 		this.isContentLoaded	= false;
 		this.isAssetsLoaded		= false;
 		this.isPageHidden		= false;
@@ -186,7 +186,7 @@ STF.AbstractPagesController = ( function( window ) {
 			_setPageId.call( this, url );
 		
 		_disablePageChange.call( this );
-		_initPageChangeValues.call( this );
+		this.initPageChangeValues();
 		
 		if ( this.LOADING_MODE == 'allStatic' )
 			this.isAssetsLoaded = true;
@@ -323,8 +323,8 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	
 	AbstractPagesController.prototype.showPage = function() {
-		_manageMenuLinks.call( this );
-		_manageLangLinks.call( this );
+		this.manageMenuLinks();
+		this.manageLangLinks();
 		_updateTitle.call( this );
 		
 		this.page.init();
@@ -364,13 +364,12 @@ STF.AbstractPagesController = ( function( window ) {
 	};
 	
 	
-	var _manageMenuLinks = function() {
-		_updateMenuLinks.call( this, STF.Views.Statics.Header.$menuLink );
-		_updateMenuLinks.call( this, STF.Views.Statics.Footer.$footerLink );
+	AbstractPagesController.prototype.manageMenuLinks = function() {
+		
 	};
 	
 	
-	var _updateMenuLinks = function( $link ) {
+	AbstractPagesController.prototype.updateMenuLinks = function( $link ) {
 		var $linkToInactivate	= $link.filter( '.active' );
 		var $linkToActivate		= $link.filter( '[ data-link-id="' + this.pageInfos.id + '" ]' );
 		
@@ -381,13 +380,12 @@ STF.AbstractPagesController = ( function( window ) {
 	};
 	
 	
-	var _manageLangLinks = function() {
-		_changeLangLinks.call( this, STF.Views.Statics.Header.$headerLgLink );
-		_changeLangLinks.call( this, STF.Views.Statics.Footer.$footerLgLink );
+	AbstractPagesController.prototype.manageLangLinks = function() {
+		
 	};
 	
 	
-	var _changeLangLinks = function( $links ) {
+	AbstractPagesController.prototype.changeLangLinks = function( $links ) {
 		var $link;
 		
 		for ( var i = 0; i < $links.length; i++ ) {
