@@ -5,7 +5,7 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	
 	function AbstractPagesController() {
-		STF.EventDispatcher.call( this );
+		STF.CustomEvent.call( this );
 		
 		this.LOADING_MODE			= 'byPageStatic'; // can be allStatic, byPageStatic, byPageDynamic
 		this.DYNAMIC_IMG_TO_LOAD	= 'img'; // used when LOADING_MODE == 'byPageDynamic', can be img.class for selective preload
@@ -29,7 +29,7 @@ STF.AbstractPagesController = ( function( window ) {
 	}
 	
 	
-	AbstractPagesController.prototype				= Object.create( STF.EventDispatcher.prototype );
+	AbstractPagesController.prototype				= Object.create( STF.CustomEvent.prototype );
 	AbstractPagesController.prototype.constructor	= AbstractPagesController;
 	
 	

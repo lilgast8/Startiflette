@@ -5,7 +5,7 @@ STF.Loader = ( function( window ) {
 	
 	
 	function Loader( isOnProgress, isOnFileLoad ) {
-		STF.EventDispatcher.call( this );
+		STF.CustomEvent.call( this );
 		
 		this.isOnProgress = isOnProgress;
 		this.isOnFileLoad = isOnFileLoad;
@@ -25,7 +25,7 @@ STF.Loader = ( function( window ) {
 	}
 	
 	
-	Loader.prototype				= Object.create( STF.EventDispatcher.prototype );
+	Loader.prototype				= Object.create( STF.CustomEvent.prototype );
 	Loader.prototype.constructor	= Loader;
 	
 	

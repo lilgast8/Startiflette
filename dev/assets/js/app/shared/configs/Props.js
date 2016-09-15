@@ -5,7 +5,7 @@ STF.Props = ( function( window ) {
 	
 	
 	function Props() {
-		STF.EventDispatcher.call( this );
+		STF.CustomEvent.call( this );
 		
 		this.HAS_PUSHSTATE		= null;
 		this.TRANSFORM			= null;
@@ -16,7 +16,7 @@ STF.Props = ( function( window ) {
 	}
 	
 	
-	Props.prototype				= Object.create( STF.EventDispatcher.prototype );
+	Props.prototype				= Object.create( STF.CustomEvent.prototype );
 	Props.prototype.constructor	= Props;
 	
 	

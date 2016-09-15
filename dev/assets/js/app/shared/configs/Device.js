@@ -5,7 +5,7 @@ STF.Device = ( function( window ) {
 	
 	
 	function Device() {
-		STF.EventDispatcher.call( this );
+		STF.CustomEvent.call( this );
 		
 		this.FORCE_DEVICE		= null;
 		
@@ -20,7 +20,7 @@ STF.Device = ( function( window ) {
 	}
 	
 	
-	Device.prototype				= Object.create( STF.EventDispatcher.prototype );
+	Device.prototype				= Object.create( STF.CustomEvent.prototype );
 	Device.prototype.constructor	= Device;
 	
 	

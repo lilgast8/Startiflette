@@ -5,7 +5,7 @@ STF.LazyLoader = ( function( window ) {
 	
 	
 	function LazyLoader( $container, className, parentEl, stackSize, autoInit ) {
-		STF.EventDispatcher.call( this );
+		STF.CustomEvent.call( this );
 		
 		this.$container		= $container;
 		this.CLASS_NAME		= className;
@@ -21,7 +21,7 @@ STF.LazyLoader = ( function( window ) {
 	}
 	
 	
-	LazyLoader.prototype				= Object.create( STF.EventDispatcher.prototype );
+	LazyLoader.prototype				= Object.create( STF.CustomEvent.prototype );
 	LazyLoader.prototype.constructor	= LazyLoader;
 	
 	

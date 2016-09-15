@@ -1,16 +1,16 @@
 
 
-STF.EventDispatcher = ( function( window ) {
+STF.CustomEvent = ( function( window ) {
 	'use strict';
 	
 	
-	function EventDispatcher() {
+	function CustomEvent() {
 		this.e = {};
 		this.E = {};
 	}
 	
 	
-	EventDispatcher.prototype.bind = function( name, fct, context ) {
+	CustomEvent.prototype.bind = function( name, fct, context ) {
 		if ( !context && STF.Config.ENV != 'prod' )
 			console.warn( 'Bind "' + name + '" custom event without context.' );
 		
@@ -21,7 +21,7 @@ STF.EventDispatcher = ( function( window ) {
 	};
 	
 	
-	EventDispatcher.prototype.unbind = function( name, fct, context ) {
+	CustomEvent.prototype.unbind = function( name, fct, context ) {
 		if ( !name && STF.Config.ENV != 'prod' ) {
 			console.warn( 'You must to define a name to unbind a custom event.' );
 			
@@ -43,7 +43,7 @@ STF.EventDispatcher = ( function( window ) {
 	};
 	
 	
-	EventDispatcher.prototype.dispatch = function( name, params ) {
+	CustomEvent.prototype.dispatch = function( name, params ) {
 		if ( this.e[ name ] === undefined && STF.Config.ENV != 'prod' ) { // if the event is not registred
 			console.warn( 'Trying to dispath "' + name + '" custom event which is undefined.' );
 			
@@ -57,7 +57,7 @@ STF.EventDispatcher = ( function( window ) {
 	};
 	
 	
-	return EventDispatcher;
+	return CustomEvent;
 	
 	
 } ) ( window );

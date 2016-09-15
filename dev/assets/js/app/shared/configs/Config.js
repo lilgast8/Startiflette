@@ -5,7 +5,7 @@ STF.Config = ( function( window ) {
 	
 	
 	function Config() {
-		STF.EventDispatcher.call( this );
+		STF.CustomEvent.call( this );
 		
 		this.ENV			= null;
 		this.ENVS			= null;
@@ -22,7 +22,7 @@ STF.Config = ( function( window ) {
 	}
 	
 	
-	Config.prototype				= Object.create( STF.EventDispatcher.prototype );
+	Config.prototype				= Object.create( STF.CustomEvent.prototype );
 	Config.prototype.constructor	= Config;
 	
 	

@@ -5,7 +5,7 @@ STF.Router = ( function( window ) {
 	
 	
 	function Router() {
-		STF.EventDispatcher.call( this );
+		STF.CustomEvent.call( this );
 		
 		this.URL			= {};
 		this.ALT_LANG_URL	= {};
@@ -17,7 +17,7 @@ STF.Router = ( function( window ) {
 	}
 	
 	
-	Router.prototype				= Object.create( STF.EventDispatcher.prototype );
+	Router.prototype				= Object.create( STF.CustomEvent.prototype );
 	Router.prototype.constructor	= Router;
 	
 	

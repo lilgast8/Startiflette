@@ -5,7 +5,7 @@ STF.AbstractView = ( function( window ) {
 	
 	
 	function AbstractView() {
-		STF.EventDispatcher.call( this );
+		STF.CustomEvent.call( this );
 		
 		this.id		= STF_gl_getConstructorName( this ).toLowerCase();
 		
@@ -23,7 +23,7 @@ STF.AbstractView = ( function( window ) {
 	}
 	
 	
-	AbstractView.prototype				= Object.create( STF.EventDispatcher.prototype );
+	AbstractView.prototype				= Object.create( STF.CustomEvent.prototype );
 	AbstractView.prototype.constructor	= AbstractView;
 	
 	
