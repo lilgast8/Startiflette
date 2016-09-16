@@ -27,7 +27,7 @@ STF.Config = ( function( window ) {
 	};
 	
 	
-	var _setConfig = function( data ) {
+	var _setConfig = function() {
 		for ( var varName in STF_Config )
 			this[ varName ] = STF_Config[ varName ];
 	};
