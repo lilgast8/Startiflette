@@ -11,6 +11,23 @@ STF.CustomEvent = ( function( window ) {
 	
 	
 	CustomEvent.prototype.bind = function( name, fct, context ) {
+		if ( !name || !fct ) {
+			if ( STF.Config.ENV != 'prod' ) {
+				var missingParams;
+				
+				if ( !name && !fct )
+					missingParams = 'name and a function';
+				else if ( !name )
+					missingParams = 'name';
+				else if ( !fct )
+					missingParams = 'function';
+				
+				console.warn( 'You must to provide a ' + missingParams + ' to the custom event you want to bind.' );
+			}
+			
+			return;
+		}
+		
 		if ( !context && STF.Config.ENV != 'prod' )
 			console.warn( 'Bind "' + name + '" custom event without context.' );
 		
@@ -22,8 +39,9 @@ STF.CustomEvent = ( function( window ) {
 	
 	
 	CustomEvent.prototype.unbind = function( name, fct, context ) {
-		if ( !name && STF.Config.ENV != 'prod' ) {
-			console.warn( 'You must to define a name to unbind a custom event.' );
+		if ( !name ) {
+			if ( STF.Config.ENV != 'prod' )
+				console.warn( 'You must to define the name of the custom event you want to unbind.' );
 			
 			return;
 		}
@@ -44,8 +62,9 @@ STF.CustomEvent = ( function( window ) {
 	
 	
 	CustomEvent.prototype.dispatch = function( name, params ) {
-		if ( this.e[ name ] === undefined && STF.Config.ENV != 'prod' ) { // if the event is not registred
-			console.warn( 'Trying to dispath "' + name + '" custom event which is undefined.' );
+		if ( this.e[ name ] === undefined ) { // if the event is not registred
+			if ( STF.Config.ENV != 'prod' )
+				console.warn( 'Trying to dispath "' + name + '" custom event which is undefined.' );
 			
 			return;
 		}
