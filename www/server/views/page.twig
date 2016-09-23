@@ -7,7 +7,7 @@
 
 
 {# Content #}
-<!-- {% block title %}{% endblock %} -->
+<!-- {% block commentedPageName %}{% endblock %} -->
 <section id="page" class="{% block cssClassName %}{% endblock %}" data-js-id="{{ Page.js }}" data-title="{{ metas.title }}" {% for lang, url in Router.ALT_LANG_URL %}data-lang-{{ lang }}="{{ url }}" {% endfor %}>
 
 {% block content %}{% endblock %}

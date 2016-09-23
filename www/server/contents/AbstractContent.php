@@ -28,6 +28,11 @@ class AbstractContent
 	}
 	
 	
+	/**
+	 * Get a content who is already defined
+	 * @params {string} $id: useful when you are in a view and you want to get a var
+	 *						 who is already defined before in another view
+	 */
 	protected function getContent( $id )
 	{
 		$pagesController	= PagesController::getInstance();
