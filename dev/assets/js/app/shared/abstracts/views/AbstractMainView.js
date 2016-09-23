@@ -42,7 +42,10 @@ STF.AbstractMainView = ( function( window ) {
 	
 	
 	AbstractMainView.prototype.init = function() {
-		STF.AbstractView.prototype.init.call( this );
+		this.initDOM();
+		this.initEl();
+		this.initTl();
+		this.bindEvents();
 		
 		this.initStaticsViews();
 		
