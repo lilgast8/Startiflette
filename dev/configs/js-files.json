@@ -16,7 +16,7 @@
 		],
 		"dest": "",
 		"files": [
-			[	
+			[
 				"vendor/zepto.js",
 				"vendor/jquery-oldie.js"
 			],
