@@ -129,7 +129,7 @@ Make the configurations in the `dev/configs/config.json` file.
 * `HAS_MOBILE_VERSION`: @type {boolean} `true`
 * `TABLET_VERSION`: @type {string} Version displayed for tablet, can be `"desktop"` or `"mobile"`.
 * `FORCE_DEVICE`: @type {boolean or string} `false` Can be `false`, `"desktop"`, `"tablet"` or `"mobile"`.
-* `GA_ID`: @type {object} `"trackerName": "gaID"` Default tracker name is `"null"`.
+* `GA_ID`: @type {object} `"trackerName": "gaID"` Tracker name to use by default is `"default"`.
 * `CREDITS`: @type {object} Used to show credits console.
 
 

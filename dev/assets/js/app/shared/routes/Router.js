@@ -190,7 +190,7 @@ STF.Router = ( function( window ) {
 	Router.prototype.updateGA = function() {
 		if ( STF.Config.ENV == 'prod' && Object.keys( STF.Config.GA_ID ).length > 0 ) {
 			for ( var gaName in STF.Config.GA_ID ) {
-				if ( gaName == 'null' )
+				if ( gaName == 'default' )
 					ga( 'send', 'pageview', '/' + this.URL.fullGA );
 				else
 					ga( gaName + '.send', 'pageview', '/' + this.URL.fullGA );
