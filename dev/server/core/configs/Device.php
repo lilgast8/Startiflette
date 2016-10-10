@@ -30,7 +30,7 @@ class Device
 	
 	protected function __construct()
 	{
-		$this->whichBrowser = new WhichBrowser\Parser( getallheaders() );
+		$this->whichBrowser = new WhichBrowser\Parser( getallheaders(), [ 'detectBots' => false ] );
 		
 		$this->getConfig();
 		$this->setDevice();
@@ -87,7 +87,7 @@ class Device
 	{
 		self::$BROWSER			= $this->whichBrowser->browser->name;
 		self::$BROWSER_VERSION	= $this->whichBrowser->browser->version->value;
-		self::$BROWSER_ENGINE	= $this->whichBrowser->engine->name;
+		self::$BROWSER_ENGINE	= $this->whichBrowser->engine->getName();
 		
 		if ( $this->whichBrowser->isBrowser( 'Internet Explorer', '<', '9' ) ||
 			 $this->whichBrowser->isBrowser( 'Firefox', '<', '35' ) ||
