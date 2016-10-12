@@ -86,7 +86,7 @@ class Device
 	private function setBrowser()
 	{
 		self::$BROWSER			= $this->whichBrowser->browser->name;
-		self::$BROWSER_VERSION	= $this->whichBrowser->browser->version->value;
+		self::$BROWSER_VERSION	= $this->whichBrowser->browser->getVersion();
 		self::$BROWSER_ENGINE	= $this->whichBrowser->engine->getName();
 		
 		if ( $this->whichBrowser->isBrowser( 'Internet Explorer', '<', '9' ) ||
