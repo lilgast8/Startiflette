@@ -8,13 +8,16 @@ STF.AbstractMainView = ( function( window ) {
 		STF.AbstractView.call( this );
 		
 		this.E = {
-			RESIZE:		'resize',
-			RAF:		'raf',
-			MOUSE_MOVE:	'mousemove',
-			MOUSE_DOWN:	'mousedown',
-			MOUSE_UP:	'mouseup',
-			WINDOW_OUT:	'windowout',
-			WINDOW_IN:	'windowin',
+			RESIZE:			'resize',
+			RAF:			'raf',
+			MOUSE_MOVE:		'mousemove',
+			MOUSE_DOWN:		'mousedown',
+			MOUSE_UP:		'mouseup',
+			TOUCH_MOVE:		'touchmove',
+			TOUCH_START:	'touchstart',
+			TOUCH_END:		'touchend',
+			WINDOW_OUT:		'windowout',
+			WINDOW_IN:		'windowin'
 		};
 		
 		this.bW		= null; // body width
@@ -29,6 +32,8 @@ STF.AbstractMainView = ( function( window ) {
 		this.mY		= null; // mouse Y
 		this.miX	= null; // mouse inertia X
 		this.miY	= null; // mouse inertia Y
+		this.tX		= null; // touch X
+		this.tY		= null; // touch Y
 		
 		this.SCROLL_INERTIA		= 0.07;
 		this.MOUSE_INERTIA		= 0.03;
@@ -72,6 +77,9 @@ STF.AbstractMainView = ( function( window ) {
 		// this.$window.on( 'mousemove', $.proxy( this.mouseMove, this ) );
 		// this.$window.on( 'mousedown', $.proxy( this.mouseDown, this ) );
 		// this.$window.on( 'mouseup', $.proxy( this.mouseUp, this ) );
+		// this.$window.on( 'touchmove', $.proxy( this.touchMove, this ) );
+		// this.$window.on( 'touchstart', $.proxy( this.touchStart, this ) );
+		// this.$window.on( 'touchend', $.proxy( this.touchEnd, this ) );
 		// this.$window.on( 'blur', $.proxy( this.windowOut, this ) );
 		// this.$window.on( 'focus', $.proxy( this.windowIn, this ) );
 	};
@@ -158,6 +166,30 @@ STF.AbstractMainView = ( function( window ) {
 	
 	AbstractMainView.prototype.mouseUp = function() {
 		this.dispatch( this.E.MOUSE_UP );
+	};
+	
+	
+	AbstractMainView.prototype.touchMove = function( e ) {
+		e.preventDefault();
+		
+		// Zepto
+		this.tX = e.touches[0].pageX;
+		this.tY = e.touches[0].pageY;
+		// jQuery
+		// this.tX = e.originalEvent.touches[0].pageX;
+		// this.tY = e.originalEvent.touches[0].pageY;
+		
+		this.dispatch( this.E.TOUCH_MOVE );
+	};
+	
+	
+	AbstractMainView.prototype.touchStart = function() {
+		this.dispatch( this.E.TOUCH_START );
+	};
+	
+	
+	AbstractMainView.prototype.touchEnd = function() {
+		this.dispatch( this.E.TOUCH_END );
 	};
 	
 	
