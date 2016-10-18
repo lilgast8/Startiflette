@@ -7,13 +7,14 @@ STF.Router = ( function( window ) {
 	function Router() {
 		STF.CustomEvent.call( this );
 		
-		this.URL			= {};
-		this.ALT_LANG_URL	= {};
+		this.URL					= {};
+		this.ALT_LANG_URL			= {};
 		
-		this.isHomepage		= null;
-		this.isPageChange	= null;
-		this.isSearchChange	= null;
-		this.isHashChange	= null;
+		this.isHomepage				= null;
+		this.isPageChange			= null;
+		this.isPageChangeByClick	= null;
+		this.isSearchChange			= null;
+		this.isHashChange			= null;
 	}
 	
 	
@@ -98,6 +99,8 @@ STF.Router = ( function( window ) {
 		if ( STF.PagesController.isPageChange )
 			return;
 		
+		this.isPageChangeByClick = true;
+		
 		_setUrlPartChange.call( this, url );
 		this.setUrl( false, url );
 		
@@ -123,6 +126,8 @@ STF.Router = ( function( window ) {
 	var _onPopState = function( e ) {
 		if ( STF.PagesController.isPageChange )
 			return;
+		
+		this.isPageChangeByClick = false;
 		
 		_setUrlPartChange.call( this, window.location.href );
 		
