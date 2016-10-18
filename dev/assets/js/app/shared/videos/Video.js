@@ -4,7 +4,7 @@ STF.Video = ( function( window ) {
 	'use strict';
 	
 	
-	function Video( id, url, isFireLoadStart, isFireCanPlay, isFireCanPlayThrough ) {
+	function Video( id, url, poster, isFireLoadStart, isFireCanPlay, isFireCanPlayThrough ) {
 		STF.AbstractView.call( this );
 		
 		this.E = {
@@ -17,9 +17,12 @@ STF.Video = ( function( window ) {
 		
 		this.id						= id;
 		this.url					= url;
+		this.poster					= poster;
 		this.isFireLoadStart		= isFireLoadStart;
 		this.isFireCanPlay			= isFireCanPlay;
 		this.isFireCanPlayThrough	= isFireCanPlayThrough;
+		
+		this.isDynamic				= this.url === null ? false : true;
 		
 		this.duration				= null;
 		this.isLoadStart			= false;
@@ -38,6 +41,7 @@ STF.Video = ( function( window ) {
 	
 	
 	Video.prototype.initEl = function() {
+		_setPoster.call( this );
 		this.setUrl( null );
 	};
 	
@@ -56,11 +60,17 @@ STF.Video = ( function( window ) {
 	};
 	
 	
-	Video.prototype.setUrl = function( url ) {
-		if ( url !== null )
-			this.url = url;
+	var _setPoster = function() {
+		if ( this.poster === null )
+			return;
 		
-		this.$video[0].src = this.url;
+		this.$video[0].setAttribute( 'poster', this.poster );
+	};
+	
+	
+	Video.prototype.setUrl = function( url ) {
+		if ( this.isDynamic )
+			this.$video[0].src = this.url;
 	};
 	
 	
