@@ -140,7 +140,8 @@ gulp.task( 'watch', function() {
 		
 		/* Server */
 		paths.env.dev + paths.server.indexFile,
-		paths.env.dev + paths.server.allFiles
+		paths.env.dev + paths.server.allFiles,
+		'!' + paths.env.dev + paths.server.vendor.allFiles
 		
 	] ).on( 'change', livereload.changed );
 	

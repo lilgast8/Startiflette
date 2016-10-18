@@ -157,6 +157,10 @@ module.exports = {
 			}
 		},
 		
+		vendor: {
+			allFiles: 'server/vendor/**/*',
+		},
+		
 		views: {
 			desktop: {
 				pages:		'server/views/desktop/pages/',
