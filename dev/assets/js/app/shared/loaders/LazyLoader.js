@@ -47,7 +47,7 @@ STF.LazyLoader = ( function( window ) {
 		for ( var i = 0; i < this.$imgToLazyload.length; i++ ) {
 			src = this.$imgToLazyload[ i ].getAttribute( 'data-src' );
 			
-			if ( this.imgToLazyload.indexOf( src ) < 0 )
+			if ( this.imgToLazyload.indexOf( src ) < 0 && src != 'preloaded' )
 				this.imgToLazyload.push( src );
 		}
 	};
@@ -87,10 +87,14 @@ STF.LazyLoader = ( function( window ) {
 	
 	LazyLoader.prototype.onImgLoad = function( e ) {
 		var $imgs = this.$imgToLazyload.filter( '[ data-src="' + e.item.src + '" ]' );
+		var $img;
 		
 		for ( var i = 0; i < $imgs.length; i++ ) {
-			$imgs[ i ].src = e.item.src;
-			$imgs[ i ].offsetHeight; // jshint ignore:line
+			$img		= $imgs[ i ];
+			$img.src	= e.item.src;
+			
+			$img.offsetHeight; // jshint ignore:line
+			$img.setAttribute( 'data-src', 'lazyloaded' );
 			
 			if ( this.PARENT_EL !== null )
 				addClass( $( $imgs[ i ] ).parent( this.PARENT_EL )[0], 'loaded' );

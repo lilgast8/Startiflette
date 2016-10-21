@@ -142,15 +142,27 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	var _onImgLoaded = function( e ) {
 		var $imgs = $( 'img' ).filter( '[ data-src="' + e.item.src + '" ]' );
+		_setImages.call( this, $imgs, e.item.src, 'preloaded' );
+	};
+	
+	
+	var _setImages = function( $imgs, src, dataSrc ) {
+		var $img;
 		
 		for ( var i = 0; i < $imgs.length; i++ ) {
-			$imgs[ i ].src	= e.item.src;
-			$imgs[ i ].offsetHeight; // jshint ignore:line
+			$img		= $imgs[ i ];
+			$img.src	= src !== null ? src : $img.getAttribute( 'data-src' );
+			
+			$img.offsetHeight; // jshint ignore:line
+			$img.setAttribute( 'data-src', dataSrc );
 		}
 	};
 	
 	
 	var _onAssetsLoaded = function() {
+		_showNonLoadedImages.call( this );
+		
+		
 		// first load
 		if ( this.isFirstLoad ) {
 			STF.MainView.initAfterAssetsLoaded();
@@ -176,6 +188,17 @@ STF.AbstractPagesController = ( function( window ) {
 			
 			this.checkPageHiding();
 		}
+	};
+	
+	
+	var _showNonLoadedImages = function() {
+		var $imgsCont = this.isFirstLoad ? STF.MainView.$body : STF.MainView.$pageCont;
+		
+		var $imgs = $imgsCont.find( 'img' ).filter( function() {
+			return this.getAttribute( 'data-lazyload' ) != 'true' && this.getAttribute( 'data-src' ) != 'preloaded';
+		} );
+		
+		_setImages.call( this, $imgs, null, 'non-preloaded' );
 	};
 	
 	
