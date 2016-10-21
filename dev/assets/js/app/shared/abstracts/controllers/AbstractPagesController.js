@@ -347,7 +347,6 @@ STF.AbstractPagesController = ( function( window ) {
 	
 	AbstractPagesController.prototype.showPage = function() {
 		this.manageMenuLinks();
-		this.manageLangLinks();
 		_updateTitle.call( this );
 		
 		this.page.init();
