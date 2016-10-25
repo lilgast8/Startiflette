@@ -35,7 +35,7 @@ There are 4 default environments:
 * `preprod`: used to test prod online, the targeted directory is `www/`.
 * `prod`: used for production, the targeted directory is `www/`.
 
-You can add as many environment as you want for development.
+You can add as many environments as you want. For development you can use the name you want. For `preprod-local`, `preprod` or `prod` you need to keep the prefix `preprod-local`, `preprod` or `prod` depends on which environment you want to set.
 
 
 
