@@ -36,7 +36,7 @@ STF.Main = ( function( window ) {
 	var _initFPSStats = function( isSet ) {
 		STF.Config.setFPSStats( isSet );
 		
-		if ( isSet && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
+		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.FPSStats.init();
 	};
 	
@@ -44,13 +44,13 @@ STF.Main = ( function( window ) {
 	var _initMemoryStats = function( isSet ) {
 		STF.Config.setMemoryStats( isSet );
 		
-		if ( isSet && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
+		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.MemoryStats.init();
 	};
 	
 	
 	var _initDatGUI = function( isSet ) {
-		if ( isSet && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
+		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.DatGUI.init();
 	};
 	

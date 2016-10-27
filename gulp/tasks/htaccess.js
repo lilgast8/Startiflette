@@ -17,7 +17,7 @@ gulp.task( 'htaccess', function() {
 	}
 	
 	var baseUrlFBR		= config.ENVS[ options.env ].fallbackresource;
-	var dirPath			= options.isProd ? paths.env.prod : paths.env.dev;
+	var dirPath			= options.isDev ? paths.env.dev : paths.env.prod;
 	
 	var data			= fs.readFileSync( paths.env.base + paths.htaccess, 'utf8' );
 	var stringToReplace	= 'FallbackResource BASE_URL_FBR';

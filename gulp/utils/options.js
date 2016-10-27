@@ -11,7 +11,7 @@ options.image		= image;
 options.task		= options._[0] === undefined ? 'default' : options._[0];
 options.subtask		= null;
 
-options.isProd		= null;
+options.isDev		= null;
 options.env			= getEnv();
 options.device		= getDevice();
 
@@ -40,23 +40,19 @@ function getEnv() {
 		else
 			env = envTemp;
 		
-		options.isProd = false;
+		options.isDev = true;
 	}
 	
 	// preprod-local, preprod or prod
 	else {
-		var config = require( '../../' + paths.env.dev + paths.configs.configFile );
-		
 		if ( envTemp === undefined )
 			env = 'prod';
-		else if ( envTemp.indexOf( 'preprod-local' ) > -1 )
-			env = 'preprod-local';
-		else if ( envTemp.indexOf( 'preprod' ) > -1 )
-			env = 'preprod';
-		else if ( envTemp.indexOf( 'prod' ) > -1 )
-			env = 'prod';
+		else if ( envTemp == 'preprod-local' || envTemp.indexOf( 'preprod-local-' ) > -1 ||
+			 envTemp == 'preprod' || envTemp.indexOf( 'preprod-' ) > -1 ||
+			 envTemp == 'prod' || envTemp.indexOf( 'prod-' ) > -1 )
+			env = envTemp;
 		
-		options.isProd = true;
+		options.isDev = false;
 	}
 	
 	console.log( gutil.colors.bgMagenta( ' — ENV: ' + env + ' — ' ) );
@@ -68,9 +64,7 @@ function getEnv() {
 
 function checkEnvExistence( config, envTemp ) {
 	if ( envTemp !== undefined && config.ENVS[ envTemp ] === undefined )
-		console.log( gutil.colors.red( 'WARNING!: ' ) + gutil.colors.bgRed( ' ' + envTemp + ' ' ) + gutil.colors.red( ' doesn\'t exist! Please set an existing environment.' ) );
-	
-	
+		console.log( gutil.colors.red( 'WARNING!: ' ) + gutil.colors.bgRed( ' ' + envTemp + ' ' ) + gutil.colors.red( ' doesn\'t exist! Please set an existing environment.' ) );	
 }
 
 

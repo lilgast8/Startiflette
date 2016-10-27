@@ -123,7 +123,7 @@ STF.AbstractMainView = ( function( window ) {
 	
 	
 	AbstractMainView.prototype.raf = function() {
-		if ( STF.Config.HAS_FPS_STATS && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
+		if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.FPSStats.begin();
 		
 		
@@ -132,10 +132,10 @@ STF.AbstractMainView = ( function( window ) {
 		this.dispatch( this.E.RAF );
 		
 		
-		if ( STF.Config.HAS_FPS_STATS && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
+		if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.FPSStats.end();
 		
-		if ( STF.Config.HAS_MEMORY_STATS && STF.Config.ENV != 'preprod' && STF.Config.ENV != 'prod' )
+		if ( STF.Config.HAS_MEMORY_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.MemoryStats.update();
 	};
 	

@@ -127,7 +127,7 @@ class Path
 			$listFiles	= '';
 			
 			// dev
-			if ( Config::$ENV != 'preprod-local' && Config::$ENV != 'preprod' && Config::$ENV != 'prod' ) {
+			if ( Config::$IS_DEV ) {
 				$files = $jsFiles->$fileId->files;
 				
 				foreach ( $files as $filePath ) { // parse files list

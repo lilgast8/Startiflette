@@ -48,7 +48,7 @@ class PagesController
 			Path::$FILE->svgSprite
 		) );
 		
-		if ( Config::$ENV != 'preprod-local' && Config::$ENV != 'preprod' && Config::$ENV != 'prod' ) {
+		if ( Config::$IS_DEV ) {
 			$this->twig	= new Twig_Environment( $loader, array(
 				'debug' => true
 			) );
