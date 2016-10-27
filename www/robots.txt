@@ -4,4 +4,4 @@ Disallow: /assets/
 Disallow: /configs/
 Disallow: /server/
 
-Sitemap: http://www.SITE_URL.COM/sitemap.xml
+Sitemap: http://startiflette:8888/www/sitemap.xml

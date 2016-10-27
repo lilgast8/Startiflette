@@ -1,5 +1,5 @@
 
-{% if Config.ENV == 'prod' and Config.GA_ID is not empty %}
+{% if Config.IS_PROD and Config.GA_ID is not empty %}
 	<!-- Google Analytics -->
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
