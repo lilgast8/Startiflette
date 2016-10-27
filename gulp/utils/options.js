@@ -28,29 +28,22 @@ options.svgSrcPath	= null;
 function getEnv() {
 	var config		= require( '../../' + paths.env.dev + paths.configs.configFile );
 	var defaultEnv	= config.ENV;
-	var envTemp		= options.env;
-	var env;
+	var env			= options.env;
 	
-	checkEnvExistence( config, envTemp );
+	checkEnvExistence( config, env );
 	
 	// dev
-	if ( envTemp == defaultEnv || options.task == 'init' || options.task == 'default' ) {
-		if ( envTemp === undefined )
+	if ( env == defaultEnv || options.task == 'init' || options.task == 'default' ) {
+		if ( env === undefined )
 			env = config.ENV;
-		else
-			env = envTemp;
 		
 		options.isDev = true;
 	}
 	
 	// preprod-local, preprod or prod
 	else {
-		if ( envTemp === undefined )
+		if ( env === undefined )
 			env = 'prod';
-		else if ( envTemp == 'preprod-local' || envTemp.indexOf( 'preprod-local-' ) > -1 ||
-			 envTemp == 'preprod' || envTemp.indexOf( 'preprod-' ) > -1 ||
-			 envTemp == 'prod' || envTemp.indexOf( 'prod-' ) > -1 )
-			env = envTemp;
 		
 		options.isDev = false;
 	}
@@ -62,9 +55,9 @@ function getEnv() {
 }
 
 
-function checkEnvExistence( config, envTemp ) {
-	if ( envTemp !== undefined && config.ENVS[ envTemp ] === undefined )
-		console.log( gutil.colors.red( 'WARNING!: ' ) + gutil.colors.bgRed( ' ' + envTemp + ' ' ) + gutil.colors.red( ' doesn\'t exist! Please set an existing environment.' ) );	
+function checkEnvExistence( config, env ) {
+	if ( env !== undefined && config.ENVS[ env ] === undefined )
+		console.log( gutil.colors.red( 'WARNING!: ' ) + gutil.colors.bgRed( ' ' + env + ' ' ) + gutil.colors.red( ' doesn\'t exist! Please set an existing environment.' ) );	
 }
 
 
