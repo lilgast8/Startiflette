@@ -1,48 +1,26 @@
 {
 	
-	"ENV":					"dev-gaston",
+	"ENV":					"dev",
 	"ENVS":					{
-								"dev-gaston": {
+								"dev": {
 									"fallbackresource":	"/dev/",
 									"base_url":			"http://startiflette:8888/dev/",
 									"base_url_cms":		"http://startiflette:8888/cms/"
 								},
-								"preprod-local-gaston": {
-									"fallbackresource":	"/www/",
-									"base_url":			"http://startiflette:8888/www/",
-									"base_url_cms":		"http://preprod-local-gaston:8888/cms/"
-								},
-								"preprod-gaston": {
-									"fallbackresource":	"/www/",
-									"base_url":			"http://startiflette:8888/www/",
-									"base_url_cms":		"http://preprod-gaston:8888/cms/"
-								},
-								"prod-gaston": {
-									"fallbackresource":	"/www/",
-									"base_url":			"http://startiflette:8888/www/",
-									"base_url_cms":		"http://prod-gaston:8888/cms/"
-								},
-								
-								
-								"dev": {
-									"fallbackresource":	"/dev-/",
-									"base_url":			"http://startiflette:8888/dev-/",
-									"base_url_cms":		"http://startiflette:8888/cms-/"
-								},
 								"preprod-local": {
-									"fallbackresource":	"/www-/",
-									"base_url":			"http://startiflette:8888/www-/",
-									"base_url_cms":		"http://startiflette:8888/cms-/"
+									"fallbackresource":	"/www/",
+									"base_url":			"http://startiflette:8888/www/",
+									"base_url_cms":		"http://startiflette:8888/cms/"
 								},
 								"preprod": {
-									"fallbackresource":	"/preprod_startiflette-/",
-									"base_url":			"http://preprod.SITE_URL.COM-/",
-									"base_url_cms":		"http://cms-preprod.SITE_URL.COM-/"
+									"fallbackresource":	"/preprod_startiflette/",
+									"base_url":			"http://preprod.SITE_URL.COM/",
+									"base_url_cms":		"http://cms-preprod.SITE_URL.COM/"
 								},
 								"prod": {
-									"fallbackresource":	"/startiflette-/",
-									"base_url":			"http://www.SITE_URL.COM-/",
-									"base_url_cms":		"http://cms.SITE_URL.COM-/"
+									"fallbackresource":	"/startiflette/",
+									"base_url":			"http://www.SITE_URL.COM/",
+									"base_url_cms":		"http://cms.SITE_URL.COM/"
 								}
 							},
 	"ALL_LANG":				[
@@ -54,9 +32,7 @@
 	"HAS_MOBILE_VERSION":	true,
 	"TABLET_VERSION":		"desktop",
 	"FORCE_DEVICE":			false,
-	"GA_ID":				{
-		"default" : "739113"
-	},
+	"GA_ID":				{},
 	"CREDITS":				{
 								"author":		"Gaston Bouchayer",
 								"authorUrl":	"www.gastonbouchayer.com",
