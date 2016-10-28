@@ -31,11 +31,11 @@ Here are the dependencies you need to install globally before starting:
 There are 4 default environments:
 
 * `dev`: used for development, the targeted directory is `dev/`.
-* `preprod-local`: used to test prod in local, the targeted directory is `www/`.
-* `preprod`: used to test prod online, the targeted directory is `www/`.
+* `preprod-local`: used to test prod version in local, the targeted directory is `www/`.
+* `preprod`: used to test prod version online, the targeted directory is `www/`.
 * `prod`: used for production, the targeted directory is `www/`.
 
-You can add as many environments as you want. For development you can use the name you want. For `preprod-local`, `preprod` or `prod` you need to keep the prefix `preprod-local`, `preprod` or `prod` depends on which environment you want to set.
+You can add as many environments as you want. You just need to keep the prefix `dev-`, `preprod-local-`, `preprod-` or `prod-` depends on which type of environment you want to set.
 
 
 
@@ -184,20 +184,33 @@ Then use the following methods to manage a custom event:
 
 
 
+## Assets loading
+
+Define the list of assets you want to load in `Assets.js`. The `aImg` and `aJson` objects are respectively used for images and JSON files. These objects contain a list of arrays with a key. This key is the id of the page you previously defined in `routes.json`. In this way we can load the images according to the page on which the user is. The `global` id is used for assets which need to be loaded just once, at start. Basically the assets which don't depend on a specific page.
+
+There are 3 types of images loading. You can set the mode you want in `AbstractPagesController.js` or `PagesController.js` with `LOADING_MODE` variable. Here is the 3 options:
+
+* `allStatic`: It load all the assets defined in `Assets.js` at the start, then no loading on page change.
+* `byPageStatic`: At the start it load the assets in `global` and the assets of the page `page_id` defined in `Assets.js`. On page change only the assets of the page `page_id` are loaded.
+* `byPageDynamic`: Same behaviour than `byPageStatic` but it also parse the DOM to find images defined by `DYNAMIC_IMG_TO_LOAD` and preload them, except these which have the following data-value `data-lazyload="true"` ([see lazyloading management below](#lazyloading)). At the start it parse all the DOM but on page change it only parse the page container `#page-container`.
+
+
+
 ## Lazyloading
 
 A lazyloader `this.lazyloader = new STF.LazyLoader( this.$page, this.imgToLazyloadClassName, this.lazyloadParentEl, 1, true )` is already created by default for each page view. You can manage or update it according to your needs in `AbstractPageView.js`.
 
-To create a new lazyloader use: `new STF.LazyLoader( $container, className, parentEl, stackSize, autoInit )`
-
 You need to add `data-lazyload="true"` on the image `<img>` tag you want to lazyload. By using it you prevent to add the image on the main loader when `LOADING_MODE = 'byPageDynamic'`.
 
-The lazyloader created by default need these following variables :
+To create a new lazyloader use: `new STF.LazyLoader( $container, className, parentEl, stackSize, autoInit )`
 
-* `imgToLazyloadClassName`: class name of images to lazyload, the default value is `img-lazyload`
-* `lazyloadParentEl`: selector of parent of images to lazyload, the default value is `null`
+* `$container`: container parsed to find the images to lazyload
+* `className`: class name of images to lazyload
+* `parentEl`: selector of parent of images to lazyload
+* `stackSize`: number of images to load on each loading wave
+* `autoInit`: `true` if the loader initializes itself when it's created or `false` if we need to manually initialize it after
 
-You can custom these two variables where the lazyloader was created or in the class of your page.
+The lazyloader created by default needs these two following variables: `imgToLazyloadClassName` & `lazyloadParentEl`. You can custom them where the lazyloader was created or in the class of your page.
 
 Once your image loaded, the `loaded` class name is added to the parent element defined in `lazyloadParentEl`. If `lazyloadParentEl === null`, nothing happens.
 
