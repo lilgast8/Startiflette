@@ -27,7 +27,6 @@ STF.Config = ( function( window ) {
 	
 	Config.prototype.init = function() {
 		_setConfig.call( this );
-		_setEnvInfos.call( this );
 		_setJsViewsId.call( this );
 		_showCreditsLog.call( this );
 	};
@@ -36,24 +35,6 @@ STF.Config = ( function( window ) {
 	var _setConfig = function() {
 		for ( var varName in STF_Config )
 			this[ varName ] = STF_Config[ varName ];
-	};
-	
-	
-	var _setEnvInfos = function() {
-		this.IS_DEV				= false;
-		this.IS_PREPROD_LOCAL	= false;
-		this.IS_PREPROD			= false;
-		this.IS_PROD			= false;
-		
-		
-		if ( this.ENV == 'dev' || this.ENV.indexOf( 'dev-' ) > -1 )
-			this.IS_DEV = true;
-		else if ( this.ENV == 'preprod-local' || this.ENV.indexOf( 'preprod-local-' ) > -1 )
-			this.IS_PREPROD_LOCAL = true;
-		else if ( this.ENV == 'preprod' || this.ENV.indexOf( 'preprod-' ) > -1 )
-			this.IS_PREPROD = true;
-		else if ( this.ENV == 'prod' || this.ENV.indexOf( 'prod-' ) > -1 )
-			this.IS_PROD = true;
 	};
 	
 	
