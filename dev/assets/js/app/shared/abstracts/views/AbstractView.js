@@ -160,13 +160,13 @@ STF.AbstractView = ( function( window ) {
 	
 	AbstractView.prototype.updateSearch = function() {
 		if ( !STF.Config.IS_PROD )
-			console.error( 'You need to override the updateSearch() method from AbstractView in the current page view.' );
+			console.warn( 'You need to override the updateSearch() method from AbstractView in the current page view.' );
 	};
 	
 	
 	AbstractView.prototype.updateHash = function() {
 		if ( !STF.Config.IS_PROD )
-			console.error( 'You need to override the updateHash() method from AbstractView in the current page view.' );
+			console.warn( 'You need to override the updateHash() method from AbstractView in the current page view.' );
 	};
 	
 	
