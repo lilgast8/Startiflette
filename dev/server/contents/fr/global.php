@@ -10,15 +10,15 @@ class GlobalContent extends AbstractContent
 		$d = new stdClass();
 		
 		
-		$d->menu			= new stdClass();
+		$d->menu				= new stdClass();
 		
-		$d->menu->home		= "Accueil";
-		$d->menu->about		= "À propos";
-		$d->menu->projects	= "Projets";
-		$d->menu->legals	= "Mentions légales";
+		$d->menu->home			= "Accueil";
+		$d->menu->about			= "À propos";
+		$d->menu->projects		= "Projets";
+		$d->menu->legalNotices	= "Mentions légales";
 		
-		$d->author			= new stdClass();
-		$d->author->name	= "LilGast8";
+		$d->author				= new stdClass();
+		$d->author->name		= "LilGast8";
 		
 		
 		
