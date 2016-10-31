@@ -39,9 +39,9 @@ gulp.task( 'watch', function() {
 		ext					= path.extname( options.filePath );
 		options.fileName	= path.basename( options.filePath )
 		
-		desktop		= options.filePath.indexOf( 'desktop/' ) > -1 ? true : false;
-		mobile		= options.filePath.indexOf( 'mobile/' ) > -1 ? true : false;
-		shared		= options.filePath.indexOf( 'shared/' ) > -1 ? true : false;
+		desktop		= options.filePath.indexOf( 'desktop' ) > -1 ? true : false;
+		mobile		= options.filePath.indexOf( 'mobile' ) > -1 ? true : false;
+		shared		= options.filePath.indexOf( 'shared' ) > -1 ? true : false;
 		favicons	= options.filePath.indexOf( 'configs/favicons/' ) > -1 ? true : false;
 		configs		= options.filePath.indexOf( 'configs/' ) > -1 ? true : false;
 		
