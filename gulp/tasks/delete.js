@@ -83,7 +83,7 @@ gulp.task( 'delete', function() {
 	else if ( options.task == 'server' )
 		deletePath = [
 			paths.env.prod + paths.server.dir,
-			paths.env.prod + paths.server.indexFile
+			paths.env.prod + paths.indexFile
 		];
 	
 	

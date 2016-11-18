@@ -139,7 +139,7 @@ gulp.task( 'watch', function() {
 		'!' + paths.env.dev + paths.configs.favicons.dataFile,
 		
 		/* Server */
-		paths.env.dev + paths.server.indexFile,
+		paths.env.dev + paths.indexFile,
 		paths.env.dev + paths.server.allFiles,
 		'!' + paths.env.dev + paths.server.vendor.allFiles
 		

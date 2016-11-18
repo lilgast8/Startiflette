@@ -54,7 +54,7 @@ gulp.task( 'move', function() {
 					paths.env.dev + paths.assets.videos.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles
 				],
-				[ paths.env.dev + paths.server.indexFile ],
+				[ paths.env.dev + paths.indexFile ],
 				[
 					paths.env.dev + paths.server.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles
@@ -183,7 +183,7 @@ gulp.task( 'move', function() {
 					paths.env.dev + paths.server.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles,
 				],
-				[ paths.env.dev + paths.server.indexFile ]
+				[ paths.env.dev + paths.indexFile ]
 			],
 			to: [
 				paths.env.prod + paths.server.dir,

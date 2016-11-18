@@ -9,6 +9,7 @@ module.exports = {
 	emptyFiles:	'**/empty-folder.txt',
 	
 	htaccess:	'.htaccess',
+	indexFile:	'index.php',
 	robots:		'robots.txt',
 	
 	assets: {
@@ -143,7 +144,6 @@ module.exports = {
 	},
 	
 	server: {
-		indexFile:	'index.php',
 		dir:		'server/',
 		allFiles:	'server/**/*',
 		
