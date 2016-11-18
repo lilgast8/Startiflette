@@ -96,7 +96,7 @@ class Main
 	
 	private function setPagesController()
 	{
-		$this->pagesController	= PagesController::getInstance();
+		$this->pagesController = PagesController::getInstance();
 		$this->pagesController->init();
 	}
 	
