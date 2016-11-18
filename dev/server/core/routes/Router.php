@@ -89,8 +89,8 @@ class Router
 		$pathParams	= explode( '?', $path );
 		$path		= $pathParams[0];
 		
-		Strings::removeFirstSpecificChar( $path, '/' );
-		Strings::removeLastSpecificChar( $path, '/' );
+		$path		= Strings::removeFirstSpecificChar( $path, '/' );
+		$path		= Strings::removeLastSpecificChar( $path, '/' );
 		
 		
 		return $path;
