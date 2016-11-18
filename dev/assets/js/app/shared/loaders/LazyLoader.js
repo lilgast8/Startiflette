@@ -97,7 +97,7 @@ STF.LazyLoader = ( function( window ) {
 			$img.setAttribute( 'data-src', 'lazyloaded' );
 			
 			if ( this.PARENT_EL !== null )
-				addClass( $( $imgs[ i ] ).parent( this.PARENT_EL )[0], 'loaded' );
+				STF_dom_addClass( $( $imgs[ i ] ).parent( this.PARENT_EL )[0], 'loaded' );
 		}
 	};
 	
