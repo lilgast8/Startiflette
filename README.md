@@ -125,9 +125,9 @@ Make the configurations in the `dev/configs/config.json` file.
 * `ENV`: @type {string}
 * `ENVS`: @type {object} Containt `fallbackresource`, `base_url` & `base_url_cms`.
 * `ALL_LANG`: @type {array of string} List of languages, the first one will be the default language.
-* `GENERATE_JS_VIEW_ID`: @type {array} List of targeted version (desktop and/or mobile), used to manage several hide/show transitions for a view, [more infos](#manage-complex-transitions).
+* `GENERATE_JS_VIEW_ID`: @type {array} List of targeted version, used to manage several hide/show transitions for a view, can be `"desktop"` and/or `"mobile"`, [more infos](#manage-complex-transitions).
 * `HAS_MOBILE_VERSION`: @type {boolean} `true`
-* `TABLET_VERSION`: @type {string} Version displayed for tablet, can be `"desktop"` or `"mobile"`.
+* `TABLET_VERSION`: @type {string} Targeted version displayed for tablet, can be `"desktop"`, `"mobile"` or `""`.
 * `FORCE_DEVICE`: @type {boolean or string} `false` Can be `false`, `"desktop"`, `"tablet"` or `"mobile"`.
 * `GA_ID`: @type {object} `"trackerName": "gaID"` Tracker name to use by default is `"default"`.
 * `CREDITS`: @type {object} Used to show credits console.
