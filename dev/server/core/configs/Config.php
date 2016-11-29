@@ -87,22 +87,6 @@ class Config
 	}
 	
 	
-	public function init()
-	{
-		$this->setComplexTransition();
-		$this->setParams();
-	}
-	
-	
-	private function setComplexTransition()
-	{
-		if ( in_array( Device::$DEVICE, self::$GENERATE_JS_VIEW_ID ) )
-			self::$NEED_PAGE_ID = true;
-		else
-			self::$NEED_PAGE_ID = false;
-	}
-	
-	
 	public function getJsFilesFile()
 	{
 		if ( !$this->jsFiles ) { // load file if it wasn't already done
@@ -116,6 +100,22 @@ class Config
 		
 		
 		return $this->jsFiles;
+	}
+	
+	
+	public function init()
+	{
+		$this->setComplexTransition();
+		$this->setParams();
+	}
+	
+	
+	private function setComplexTransition()
+	{
+		if ( in_array( Device::$TARGETED_VERSION, self::$GENERATE_JS_VIEW_ID ) )
+			self::$NEED_PAGE_ID = true;
+		else
+			self::$NEED_PAGE_ID = false;
 	}
 	
 	

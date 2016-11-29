@@ -41,6 +41,7 @@ class Main
 		$this->setDevice();
 		$this->setPath();
 		$this->setLang();
+		$this->initConfig();
 		$this->setRoutes();
 		$this->setPagesController();
 	}
@@ -84,6 +85,13 @@ class Main
 	private function setLang()
 	{
 		$this->lang = Lang::getInstance();
+	}
+	
+	
+	private function initConfig()
+	{
+		$this->config = Config::getInstance();
+		$this->config->init();
 	}
 	
 	
