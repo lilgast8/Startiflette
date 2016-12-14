@@ -5,8 +5,10 @@ STF.CustomEvent = ( function( window ) {
 	
 	
 	function CustomEvent() {
-		this.e = {};
-		this.E = {};
+		this.e						= {};
+		this.E						= {};
+		
+		this.isWarningDispatched	= false;
 	}
 	
 	
@@ -63,8 +65,11 @@ STF.CustomEvent = ( function( window ) {
 	
 	CustomEvent.prototype.dispatch = function( name, params ) {
 		if ( this.e[ name ] === undefined ) { // if the event is not registred
-			if ( !STF.Config.IS_PROD )
+			if ( !STF.Config.IS_PROD && !this.isWarningDispatched ) {
 				console.warn( 'Trying to dispath "' + name + '" custom event which is undefined.' );
+				
+				this.isWarningDispatched = true;
+			}
 			
 			return;
 		}
