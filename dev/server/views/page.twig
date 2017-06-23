@@ -1,7 +1,7 @@
 
 
 {# Header #}
-{% if Router.CONTENT_TYPE == 'firstLoad' %}
+{% if Config.CONTENT_TYPE == 'firstLoad' %}
 {% include 'header.twig' %}
 {% endif %}
 
@@ -16,6 +16,6 @@
 
 
 {# Footer #}
-{% if Router.CONTENT_TYPE == 'firstLoad' %}
+{% if Config.CONTENT_TYPE == 'firstLoad' %}
 {% include 'footer.twig' %}
 {% endif %}

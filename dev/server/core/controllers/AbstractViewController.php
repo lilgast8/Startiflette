@@ -45,7 +45,7 @@ class AbstractViewController
 		$this->setStaticViewsInfos();
 		$this->setParams();
 		
-		if ( Router::$CONTENT_TYPE == 'firstLoad' )
+		if ( Config::$CONTENT_TYPE == 'firstLoad' )
 			$this->getStaticViewsData();
 		
 		$this->getGlobalData();

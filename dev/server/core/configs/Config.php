@@ -25,6 +25,8 @@ class Config
 	static $IS_PROD				= null;
 	static $NEED_PAGE_ID		= null;
 	
+	static $CONTENT_TYPE		= null;
+	
 	private $jsFiles			= null;
 	
 	private $params				= null;
@@ -34,6 +36,7 @@ class Config
 	{
 		$this->setConfig();
 		$this->setEnvInfos();
+		$this->setContentType();
 	}
 	
 	
@@ -87,6 +90,15 @@ class Config
 	}
 	
 	
+	private function setContentType()
+	{
+		if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'pageChange' )
+			self::$CONTENT_TYPE = 'pageChange';
+		else
+			self::$CONTENT_TYPE = 'firstLoad';
+	}
+	
+	
 	public function getJsFilesFile()
 	{
 		if ( !$this->jsFiles ) { // load file if it wasn't already done
@@ -129,11 +141,14 @@ class Config
 		$this->params->FORCE_DEVICE		= self::$FORCE_DEVICE;
 		$this->params->GA_ID			= self::$GA_ID;
 		$this->params->CREDITS			= self::$CREDITS;
+		
 		$this->params->IS_DEV			= self::$IS_DEV;
 		$this->params->IS_PREPROD_LOCAL	= self::$IS_PREPROD_LOCAL;
 		$this->params->IS_PREPROD		= self::$IS_PREPROD;
 		$this->params->IS_PROD			= self::$IS_PROD;
 		$this->params->NEED_PAGE_ID		= self::$NEED_PAGE_ID;
+		
+		$this->params->CONTENT_TYPE		= self::$CONTENT_TYPE;
 	}
 	
 	

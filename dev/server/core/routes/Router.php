@@ -13,8 +13,6 @@ class Router
 	static $LINK				= null;
 	static $JS_VIEWS_ID			= null;
 	
-	static $CONTENT_TYPE		= null;
-	
 	private $page				= null;
 	private $lang				= null;
 	private $pagesController	= null;
@@ -130,22 +128,12 @@ class Router
 		$this->lang				= Lang::getInstance();
 		$this->pagesController	= PagesController::getInstance();
 		
-		$this->setContentType();
 		$this->setCurrentPage();
 		$this->setLinks();
-		if ( self::$CONTENT_TYPE == 'firstLoad' && Config::$NEED_PAGE_ID )
+		if ( Config::$CONTENT_TYPE == 'firstLoad' && Config::$NEED_PAGE_ID )
 			$this->setJsViewId();
 		
 		$this->setParams();
-	}
-	
-	
-	private function setContentType()
-	{
-		if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'pageChange' )
-			self::$CONTENT_TYPE = 'pageChange';
-		else
-			self::$CONTENT_TYPE = 'firstLoad';
 	}
 	
 	
@@ -311,7 +299,7 @@ class Router
 		
 		$this->setAltLangUrl( self::$ROUTES->home->{ 'url-page' } );
 		
-		if ( Router::$CONTENT_TYPE == 'firstLoad' )
+		if ( Config::$CONTENT_TYPE == 'firstLoad' )
 			header( $_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found' );
 		
 		$this->pagesController->setPageInfos( $this->page );
@@ -457,8 +445,6 @@ class Router
 		$this->params->ALT_LANG_URL	= self::$ALT_LANG_URL;
 		$this->params->LINK			= self::$LINK;
 		$this->params->JS_VIEWS_ID	= self::$JS_VIEWS_ID;
-		
-		$this->params->CONTENT_TYPE	= self::$CONTENT_TYPE;
 	}
 	
 	
