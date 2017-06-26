@@ -19,6 +19,8 @@ STF.MainView = ( function( window ) {
 	
 	
 	MainView.prototype.initEl = function() {
+		STF.AbstractMainView.prototype.initEl.call( this );
+		
 		this.disableScrollRestoration();
 	};
 	

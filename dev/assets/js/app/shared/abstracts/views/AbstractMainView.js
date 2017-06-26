@@ -67,7 +67,7 @@ STF.AbstractMainView = ( function( window ) {
 	
 	
 	AbstractMainView.prototype.initEl = function() {
-		
+		STF.Path.overwriteSpecialPaths();
 	};
 	
 	

@@ -27,6 +27,7 @@ class Config
 	
 	static $CONTENT_TYPE		= null;
 	static $HTMLIFY				= null;
+	static $ASSETS_BASE_URL		= null;
 	
 	private $jsFiles			= null;
 	
@@ -75,8 +76,10 @@ class Config
 	
 	private function setHTMLify()
 	{
-		if ( isset( $_POST[ 'htmlify' ] ) )
-			self::$HTMLIFY = true;
+		if ( isset( $_POST[ 'htmlify' ] ) ) {
+			self::$HTMLIFY			= true;
+			self::$ASSETS_BASE_URL	= ' data-assets-base-url="assets/"';
+		}
 		else
 			self::$HTMLIFY = false;
 	}
@@ -162,6 +165,7 @@ class Config
 		$this->params->NEED_PAGE_ID		= self::$NEED_PAGE_ID;
 		
 		$this->params->CONTENT_TYPE		= self::$CONTENT_TYPE;
+		$this->params->ASSETS_BASE_URL	= self::$ASSETS_BASE_URL;
 		
 		
 		if ( self::$HTMLIFY )

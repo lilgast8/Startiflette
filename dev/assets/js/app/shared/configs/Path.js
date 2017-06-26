@@ -36,6 +36,14 @@ STF.Path = ( function( window ) {
 	};
 	
 	
+	Path.prototype.overwriteSpecialPaths = function() {
+		var assetsBaseUrl = STF.MainView.$mainCont[0].getAttribute( 'data-assets-base-url' );
+		
+		for ( var key in this.URL )
+			this.URL[ key ] = this.URL[ key ].replace( 'assets/', assetsBaseUrl );
+	};
+	
+	
 	return new Path();
 	
 	
