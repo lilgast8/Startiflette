@@ -41,6 +41,7 @@ class Main
 		$this->setDevice();
 		$this->setPath();
 		$this->setLang();
+		$this->initConfig();
 		$this->setRoutes();
 		$this->setPagesController();
 	}
@@ -87,6 +88,13 @@ class Main
 	}
 	
 	
+	private function initConfig()
+	{
+		$this->config = Config::getInstance();
+		$this->config->init();
+	}
+	
+	
 	private function setRoutes()
 	{
 		$this->router = Router::getInstance();
@@ -96,7 +104,7 @@ class Main
 	
 	private function setPagesController()
 	{
-		$this->pagesController	= PagesController::getInstance();
+		$this->pagesController = PagesController::getInstance();
 		$this->pagesController->init();
 	}
 	

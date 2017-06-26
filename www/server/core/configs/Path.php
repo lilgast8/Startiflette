@@ -7,22 +7,22 @@ class Path
 	
 	protected static $instance;
 	
-	static $URL			= null;
-	static $FILE		= null;
-	static $JS_FILES	= null;
+	static $URL					= null;
+	static $FILE				= null;
+	static $JS_FILES			= null;
 	
-	private $config		= null;
+	private $config				= null;
 	
-	private $deviceDir	= null;
+	private $targetedVersionDir	= null;
 	
-	private $params		= null;
+	private $params				= null;
 	
 	
 	protected function __construct()
 	{
 		$this->config = Config::getInstance();
 		
-		$this->setDeviceDir();
+		$this->setTargetedVersionDir();
 		$this->setPaths();
 		$this->setJsFilesUrl();
 		
@@ -39,16 +39,9 @@ class Path
 	}
 	
 	
-	private function setDeviceDir()
+	private function setTargetedVersionDir()
 	{
-		if ( !Device::$HAS_MOBILE_VERSION ||
-			 Device::$HAS_MOBILE_VERSION && Device::$IS_DESKTOP ||
-			 Device::$HAS_MOBILE_VERSION && Device::$IS_TABLET && Device::$TABLET_VERSION == 'desktop' )
-			$this->deviceDir = 'desktop/';
-		
-		else if ( Device::$HAS_MOBILE_VERSION && Device::$IS_MOBILE ||
-				  Device::$HAS_MOBILE_VERSION && Device::$IS_TABLET && Device::$TABLET_VERSION == 'mobile' )
-			$this->deviceDir = 'mobile/';
+		$this->targetedVersionDir = Device::$TARGETED_VERSION . '/';
 	}
 	
 	
@@ -102,9 +95,9 @@ class Path
 		self::$FILE->contentsSharedPartials	= self::$FILE->contentsShared	. 'partials/';
 		self::$FILE->contentsSharedStatics	= self::$FILE->contentsShared	. 'statics/';
 		self::$FILE->views					= self::$FILE->server	. 'views/';
-		self::$FILE->viewsPages				= self::$FILE->views	. $this->deviceDir . 'pages/';
-		self::$FILE->viewsPartials			= self::$FILE->views	. $this->deviceDir . 'partials/';
-		self::$FILE->viewsStatics			= self::$FILE->views	. $this->deviceDir . 'statics/';
+		self::$FILE->viewsPages				= self::$FILE->views	. $this->targetedVersionDir . 'pages/';
+		self::$FILE->viewsPartials			= self::$FILE->views	. $this->targetedVersionDir . 'partials/';
+		self::$FILE->viewsStatics			= self::$FILE->views	. $this->targetedVersionDir . 'statics/';
 		self::$FILE->viewsShared			= self::$FILE->views	. 'shared/';
 	}
 	

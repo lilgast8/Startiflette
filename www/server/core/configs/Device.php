@@ -21,6 +21,7 @@ class Device
 	static $IS_OLD_BROWSER		= null;
 	static $IS_IE				= null;
 	static $IS_EDGE				= null;
+	static $TARGETED_VERSION	= null;
 	
 	private $whichBrowser		= null;
 	private $config				= null;
@@ -35,10 +36,7 @@ class Device
 		$this->getConfig();
 		$this->setDevice();
 		$this->setBrowser();
-		
-		$this->config = Config::getInstance();
-		$this->config->init();
-		
+		$this->setTargetedVersion();
 		$this->setParams();
 	}
 	
@@ -100,6 +98,19 @@ class Device
 		
 		self::$IS_IE	= $this->whichBrowser->isBrowser( 'Internet Explorer' );
 		self::$IS_EDGE	= $this->whichBrowser->isBrowser( 'Edge' );
+	}
+	
+	
+	private function setTargetedVersion()
+	{
+		if ( !self::$HAS_MOBILE_VERSION ||
+			 self::$HAS_MOBILE_VERSION && self::$IS_DESKTOP ||
+			 self::$HAS_MOBILE_VERSION && self::$IS_TABLET && self::$TABLET_VERSION == 'desktop' )
+			self::$TARGETED_VERSION = 'desktop';
+		
+		else if ( self::$HAS_MOBILE_VERSION && self::$IS_MOBILE ||
+				  self::$HAS_MOBILE_VERSION && self::$IS_TABLET && self::$TABLET_VERSION == 'mobile' )
+			self::$TARGETED_VERSION = 'mobile';
 	}
 	
 	

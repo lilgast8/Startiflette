@@ -25,6 +25,8 @@ class Config
 	static $IS_PROD				= null;
 	static $NEED_PAGE_ID		= null;
 	
+	static $CONTENT_TYPE		= null;
+	
 	private $jsFiles			= null;
 	
 	private $params				= null;
@@ -34,6 +36,7 @@ class Config
 	{
 		$this->setConfig();
 		$this->setEnvInfos();
+		$this->setContentType();
 	}
 	
 	
@@ -52,6 +55,19 @@ class Config
 		
 		foreach ( $config as $varName => $value )
 			self::${ $varName } = $value;
+	}
+	
+	
+	private function getConfigFile()
+	{
+		if ( !file_exists( self::CONFIG_FILE_PATH ) )
+			throw new ErrorException( 'Config file is missing!' );
+		
+		$config = file_get_contents( self::CONFIG_FILE_PATH );
+		$config = json_decode( $config );
+		
+		
+		return $config;
 	}
 	
 	
@@ -74,32 +90,12 @@ class Config
 	}
 	
 	
-	private function getConfigFile()
+	private function setContentType()
 	{
-		if ( !file_exists( self::CONFIG_FILE_PATH ) )
-			throw new ErrorException( 'Config file is missing!' );
-		
-		$config = file_get_contents( self::CONFIG_FILE_PATH );
-		$config = json_decode( $config );
-		
-		
-		return $config;
-	}
-	
-	
-	public function init()
-	{
-		$this->setComplexTransition();
-		$this->setParams();
-	}
-	
-	
-	private function setComplexTransition()
-	{
-		if ( in_array( Device::$DEVICE, self::$GENERATE_JS_VIEW_ID ) )
-			self::$NEED_PAGE_ID = true;
+		if ( isset( $_POST['ajax'] ) && $_POST['ajax'] == 'true' && isset( $_POST['type'] ) && $_POST['type'] == 'pageChange' )
+			self::$CONTENT_TYPE = 'pageChange';
 		else
-			self::$NEED_PAGE_ID = false;
+			self::$CONTENT_TYPE = 'firstLoad';
 	}
 	
 	
@@ -119,6 +115,22 @@ class Config
 	}
 	
 	
+	public function init()
+	{
+		$this->setComplexTransition();
+		$this->setParams();
+	}
+	
+	
+	private function setComplexTransition()
+	{
+		if ( in_array( Device::$TARGETED_VERSION, self::$GENERATE_JS_VIEW_ID ) )
+			self::$NEED_PAGE_ID = true;
+		else
+			self::$NEED_PAGE_ID = false;
+	}
+	
+	
 	private function setParams()
 	{
 		$this->params = new stdClass();
@@ -129,11 +141,14 @@ class Config
 		$this->params->FORCE_DEVICE		= self::$FORCE_DEVICE;
 		$this->params->GA_ID			= self::$GA_ID;
 		$this->params->CREDITS			= self::$CREDITS;
+		
 		$this->params->IS_DEV			= self::$IS_DEV;
 		$this->params->IS_PREPROD_LOCAL	= self::$IS_PREPROD_LOCAL;
 		$this->params->IS_PREPROD		= self::$IS_PREPROD;
 		$this->params->IS_PROD			= self::$IS_PROD;
 		$this->params->NEED_PAGE_ID		= self::$NEED_PAGE_ID;
+		
+		$this->params->CONTENT_TYPE		= self::$CONTENT_TYPE;
 	}
 	
 	
