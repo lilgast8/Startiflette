@@ -1,7 +1,0 @@
-User-Agent: *
-Allow: /assets/img/
-Disallow: /assets/
-Disallow: /configs/
-Disallow: /server/
-
-Sitemap: http://startiflette:8888/www/sitemap.xml
