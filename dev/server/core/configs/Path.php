@@ -120,7 +120,7 @@ class Path
 			$listFiles	= '';
 			
 			// dev
-			if ( Config::$IS_DEV ) {
+			if ( Config::$IS_DEV && !Config::$HTMLIFY ) {
 				$files = $jsFiles->$fileId->files;
 				
 				foreach ( $files as $filePath ) { // parse files list

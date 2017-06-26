@@ -14,6 +14,7 @@ options.subtask		= null;
 options.isDev		= null;
 options.env			= getEnv();
 options.device		= getDevice();
+options.htmlify		= getHTMLify();
 
 options.filePath	= null;
 options.fileName	= null;
@@ -67,6 +68,14 @@ function getDevice() {
 	
 	
 	return device;
+}
+
+
+function getHTMLify() {
+	var htmlify = options.task == 'prod-htmlify' ? true : false;
+	
+	
+	return htmlify;
 }
 
 

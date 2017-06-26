@@ -12,7 +12,7 @@ gulp.task( 'delete', function() {
 	var deletePath = null;
 	
 	/* Prod */
-	if ( options.task == 'prod' )
+	if ( options.task == 'prod' || options.htmlify )
 		deletePath = [
 			paths.env.dev + paths.assets.css.minAllFiles,
 			paths.env.dev + paths.assets.svg.sprite.allFiles,

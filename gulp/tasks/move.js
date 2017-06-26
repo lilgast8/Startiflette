@@ -12,7 +12,7 @@ gulp.task( 'move', function() {
 	var movePath = null;
 	
 	/* Prod */
-	if ( options.task == 'prod' ) {
+	if ( options.task == 'prod' || options.htmlify ) {
 		
 		var imgPathFrom;
 		
@@ -53,11 +53,6 @@ gulp.task( 'move', function() {
 				[
 					paths.env.dev + paths.assets.videos.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles
-				],
-				[ paths.env.dev + paths.indexFile ],
-				[
-					paths.env.dev + paths.server.allFiles,
-					'!' + paths.env.dev + paths.emptyFiles
 				]
 			],
 			to: [
@@ -69,11 +64,21 @@ gulp.task( 'move', function() {
 				paths.env.prod + paths.assets.js.vendor.dir,
 				paths.env.prod + paths.assets.sounds.dir,
 				paths.env.prod + paths.assets.svg.sprite.dir,
-				paths.env.prod + paths.assets.videos.dir,
-				paths.env.prod,
-				paths.env.prod + paths.server.dir
+				paths.env.prod + paths.assets.videos.dir
 			]
 		};
+		
+		
+		if ( !options.htmlify ) {
+			movePath.from.push( [ paths.env.dev + paths.indexFile ] );
+			movePath.from.push( [
+				paths.env.dev + paths.server.allFiles,
+				'!' + paths.env.dev + paths.emptyFiles
+			] );
+			
+			movePath.to.push( paths.env.prod );
+			movePath.to.push( paths.env.prod + paths.server.dir );
+		}
 	}
 	
 	

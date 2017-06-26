@@ -46,3 +46,28 @@ gulp.task( 'prod:move', [
 	gulp.start( 'move' );
 	
 } );
+
+
+/* HTMLify */
+gulp.task( 'prod-htmlify', [ 'delete' ], function() {
+	
+	helpers.createDir( paths.env.prod );
+	
+	options.subtask = 'prod-deleted';
+	
+	gulp.start( 'prod-htmlify:move' );
+	
+} );
+
+gulp.task( 'prod-htmlify:move', [
+	'sass',
+	'js',
+	'json',
+	'svg',
+	'image'
+], function() {
+	
+	gulp.start( 'move' );
+	gulp.start( 'htmlify' );
+	
+} );

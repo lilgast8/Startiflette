@@ -10,7 +10,7 @@ gulp.task( 'json', [ 'json-lint' ], function() {
 	if ( options.task == 'default' && options.fileName == 'config.json' )
 		gulp.start( 'htaccess' );
 	
-	else if ( options.task == 'prod' || options.task == 'json' )
+	else if ( options.task == 'prod' || options.task == 'json' || options.htmlify )
 		gulp.start( 'json-min' );
 	
 } );

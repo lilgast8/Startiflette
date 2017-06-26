@@ -26,6 +26,7 @@ class Config
 	static $NEED_PAGE_ID		= null;
 	
 	static $CONTENT_TYPE		= null;
+	static $HTMLIFY				= null;
 	
 	private $jsFiles			= null;
 	
@@ -35,6 +36,7 @@ class Config
 	protected function __construct()
 	{
 		$this->setConfig();
+		$this->setHTMLify();
 		$this->setEnvInfos();
 		$this->setContentType();
 	}
@@ -71,6 +73,15 @@ class Config
 	}
 	
 	
+	private function setHTMLify()
+	{
+		if ( isset( $_POST[ 'htmlify' ] ) )
+			self::$HTMLIFY = true;
+		else
+			self::$HTMLIFY = false;
+	}
+	
+	
 	private function setEnvInfos()
 	{
 		self::$IS_DEV			= false;
@@ -79,7 +90,9 @@ class Config
 		self::$IS_PROD			= false;
 		
 		
-		if ( self::$ENV == 'dev' || strpos( self::$ENV, 'dev-' ) !== false )
+		if ( self::$HTMLIFY )
+			self::$IS_PROD = true;
+		else if ( self::$ENV == 'dev' || strpos( self::$ENV, 'dev-' ) !== false )
 			self::$IS_DEV = true;
 		else if ( self::$ENV == 'preprod-local' || strpos( self::$ENV, 'preprod-local-' ) !== false )
 			self::$IS_PREPROD_LOCAL = true;
@@ -149,6 +162,10 @@ class Config
 		$this->params->NEED_PAGE_ID		= self::$NEED_PAGE_ID;
 		
 		$this->params->CONTENT_TYPE		= self::$CONTENT_TYPE;
+		
+		
+		if ( self::$HTMLIFY )
+			$this->params->ENVS->base_url	= '';
 	}
 	
 	
