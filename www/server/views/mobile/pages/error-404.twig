@@ -1,0 +1,18 @@
+
+{% extends 'page.twig' %}
+
+
+{% block commentedPageName %}404 error{% endblock %}
+{% block cssClassName %}error404{% endblock %}
+
+{% block content %}
+	
+	<br><br><br>
+	{{ title }}<br><br>
+	{{ txt }} <br>
+	<a href="{{ Router.LINK.home }}">{{ back }}</a>
+	<br><br>
+	<img src="{{ Path.URL.img }}temp/404.jpg" alt="404">
+	<br><br><br><br>
+	
+{% endblock %}

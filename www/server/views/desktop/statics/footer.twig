@@ -1,0 +1,36 @@
+	
+	</div> <!-- End #page-container -->
+	
+	<!-- Footer -->
+	<footer id="footer">
+		{% if Lang.MULTI_LANG %}
+		<nav class="footer-lang">
+			{% for lang, url in Router.ALT_LANG_URL if lang != Lang.LANG %}
+			<a href="{{ url }}" class="footer-lang-link" data-lang="{{ lang }}">{{ lang }}</a>
+			{% endfor %}
+		</nav>
+		{% endif %}
+		<nav>
+			<ul>
+				<li>
+					<a href="{{ Router.LINK.legalNotices }}" class="footer-link" data-link-id="legal-notices">
+						{{ menu.legalNotices }}
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</footer>
+	
+	{% include 'no-js.twig' %} {# no JS #}
+	
+	{% include 'old-browser.twig' %} {# old browser #}
+	
+</div> <!-- End #main-container -->
+
+
+{# JS #}
+{% include 'js.twig' with { jsScriptName: 'desktop' } %}
+
+
+</body>
+</html>

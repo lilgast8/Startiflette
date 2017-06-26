@@ -1,0 +1,18 @@
+
+{% extends 'page.twig' %}
+
+
+{% block commentedPageName %}Home{% endblock %}
+{% block cssClassName %}home{% endblock %}
+
+{% block content %}
+	
+	<br><br><br>
+	<b>{{ mainTitle }}</b><br><br>
+	{{ title }}<br>
+	desktop page content / {{ Lang.LANG }}
+	<br><br>
+	<img src="{{ Path.URL.img }}temp/home.jpg" alt="{{ title }}">
+	<br><br><br><br>
+	
+{% endblock %}

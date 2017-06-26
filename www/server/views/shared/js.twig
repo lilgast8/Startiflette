@@ -1,0 +1,29 @@
+
+<!-- JS -->
+<script>
+	/* Reset img's src tag to stop loading */
+	var STF_resetImgs = function( $imgs ) {
+		var $img, src;
+		
+		for ( var i = 0; i < $imgs.length; i++ ) {
+			$img		= $imgs[i];
+			src			= $img.src;
+			
+			$img.src	= '';
+			$img.src	= '{{ Path.URL.img }}bgs/pattern-transparent.png';
+			$img.setAttribute( 'data-src' , src );
+		}
+	};
+	
+	STF_resetImgs( document.getElementsByTagName( 'img' ) );
+	
+	
+	/* JS vars */
+	var STF_Config		= JSON.parse( '{{ Config|json_encode|e("js") }}' );
+	var STF_Device		= JSON.parse( '{{ Device|json_encode|e("js") }}' );
+	var STF_JS_VIEWS_ID	= JSON.parse( '{{ Router.JS_VIEWS_ID|json_encode|e("js") }}' );
+</script>
+
+
+{# JS scripts #}
+{{ Path.JS_FILES[ 'scripts-' ~ jsScriptName ]|raw }}

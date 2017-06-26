@@ -1,0 +1,17 @@
+
+{% extends 'page.twig' %}
+
+
+{% block commentedPageName %}not available{% endblock %}
+{% block cssClassName %}notAv{% endblock %}
+
+{% block content %}
+	
+	<br><br><br>
+	<b>{{ title }}</b><br>
+	{{ txt|raw }}
+	<br><br>
+	<img src="{{ Path.URL.img }}temp/not-available.gif" alt="{{ title }}">
+	<br><br><br><br>
+	
+{% endblock %}
