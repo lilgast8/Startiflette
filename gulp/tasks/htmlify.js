@@ -16,14 +16,17 @@ var routes	= require( '../../' + paths.env.dev + paths.configs.routesFile );
 gulp.task( 'htmlify', [ 'delete' ], function() {
 	
 	var urlPage, path;
+	var multiLang = config.ALL_LANG.length > 1;
 	
 	for ( var id in routes ) {
 		urlPage = routes[ id ][ 'url-page' ];
 		
 		for ( var lg in urlPage ) {
-			path = urlPage[ lg ];
-			
-			htmlify( lg, path );
+			if ( config.ALL_LANG.indexOf( lg ) >= 0 ) {
+				path = urlPage[ lg ];
+				
+				htmlify( multiLang, lg, path );
+			}
 		}
 	}
 	
@@ -31,9 +34,10 @@ gulp.task( 'htmlify', [ 'delete' ], function() {
 
 
 
-function htmlify( lg, path ) {
+function htmlify( multiLang, lg, path ) {
 	var baseUrl		= config.ENVS[ config.ENV ].base_url;
-	var url			= lg == config.ALL_LANG[0] && path == '' ? baseUrl : baseUrl + lg + '/' + path;
+	var lgPath		= !multiLang || lg == config.ALL_LANG[0] && path == '' ? '' : lg + '/';
+	var url			= baseUrl + lgPath + path;
 	
 	var dataObject	= { htmlify: 'true' };
 	var curlOpts	= curl.opts.silent()
@@ -44,11 +48,11 @@ function htmlify( lg, path ) {
 								.post_data( dataObject );
 	
 	curl( url, curlOpts, function( err, data, stderr ) {
-		var id = path == '' ? 'home' : path;
+		var id			= path == '' ? 'home' : path;
 		
-		var filePath		= paths.env.prod + lg + '-' + id + '.html';
+		var filePath	= paths.env.prod + lg + '-' + id + '.html';
 		
-		data = data.replace( new RegExp( baseUrl, 'g' ), '' );
+		data			= data.replace( new RegExp( baseUrl, 'g' ), '' );
 		
 		fs.writeFileSync( filePath, data, 'utf8' );
 		
