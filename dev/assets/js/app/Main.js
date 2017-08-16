@@ -1,5 +1,34 @@
+'use strict';
 
 
+require( 'zepto' );
+
+var App = require( 'App' );
+
+
+
+function Main() {}
+
+
+
+Main.prototype.init = function() {
+	var app = new App();
+	// var ra;
+	// var asdd;
+	// console.log( '⚡️ SLP ⚡️' );
+	// window.app = new App();
+	app.init();
+};
+
+
+var main = new Main();
+
+$( main.init.bind( main ) );
+// $( STF.Main.init.bind( STF.Main ) );
+
+
+
+/*
 STF.Main = ( function( window ) {
 	'use strict';
 	
@@ -62,4 +91,5 @@ STF.Main = ( function( window ) {
 
 
 $( STF.Main.init.bind( STF.Main ) );
+*/
 

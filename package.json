@@ -20,6 +20,8 @@
   ],
   "main": "gulpfile.js",
   "devDependencies": {
+    "browserify": "^14.4.0",
+    "browserify-shim": "^3.8.14",
     "curljs": "^0.1.2",
     "del": "^2.2.1",
     "gulp": "^3.9.1",
@@ -45,6 +47,19 @@
     "minimist": "^1.2.0",
     "path": "^0.12.7",
     "recursive-readdir": "^2.0.0",
-    "require-dir": "^0.3.0"
+    "require-dir": "^0.3.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browser": {
+    "zepto": "./dev/assets/js/vendor/zepto.js"
+  },
+  "browserify-shim": {
+    "zepto": "$"
   }
 }

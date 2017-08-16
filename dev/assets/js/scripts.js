@@ -1,3 +1,413 @@
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
+
+
+var Config	= require( 'shared/configs/Config' );
+var Props	= require( 'shared/configs/Props' );
+var Device	= require( 'shared/configs/Device' );
+var Path	= require( 'shared/configs/Path' );
+var Lang	= require( 'shared/configs/Lang' );
+// var Stats	= require( 'stats.min' );
+// var DatGUI	= require( 'DatGUI' );
+// var Scene	= require( 'Scene' );
+
+
+
+function App() {
+	
+}
+
+
+App.prototype.init = function() {
+	/*var config = Config;
+	config.init();
+	console.log( config );
+	
+	var props = Props;
+	props.init();
+	console.log( props );
+	
+	var device = Device;
+	device.init();
+	console.log( device );
+	
+	var path = Path;
+	path.init();
+	console.log( path );
+	
+	var lang = Lang;
+	lang.init();
+	console.log( lang );*/
+	
+	Config.init();
+	Props.init();
+	Device.init();
+	Path.init();
+	// Lang.init();
+	
+	
+	// STF.Config.init();
+	// STF.Props.init();
+	// STF.Device.init();
+	// STF.Path.init();
+	// STF.Lang.init();
+};
+
+
+module.exports = App;
+
+
+},{"shared/configs/Config":3,"shared/configs/Device":4,"shared/configs/Lang":5,"shared/configs/Path":6,"shared/configs/Props":7}],2:[function(require,module,exports){
+'use strict';
+
+
+require( 'zepto' );
+
+var App = require( 'App' );
+
+
+
+function Main() {}
+
+
+
+Main.prototype.init = function() {
+	var app = new App();
+	// var ra;
+	// var asdd;
+	// console.log( '⚡️ SLP ⚡️' );
+	// window.app = new App();
+	app.init();
+};
+
+
+var main = new Main();
+
+$( main.init.bind( main ) );
+// $( STF.Main.init.bind( STF.Main ) );
+
+
+
+/*
+STF.Main = ( function( window ) {
+	'use strict';
+	
+	
+	function Main() {
+		
+	}
+	
+	
+	Main.prototype.init = function() {
+		STF.Config.init();
+		STF.Props.init();
+		STF.Device.init();
+		STF.Path.init();
+		STF.Lang.init();
+		
+		_initDebug.call( this );
+		
+		STF.PagesController.init();
+		STF.MainView.init();
+		STF.Router.init();
+		
+		// this.$window.on( 'load', $.proxy( _windowLoad, this ) );
+	};
+	
+	
+	var _initDebug = function() {
+		_initFPSStats.call( this, false );
+		_initMemoryStats.call( this, false );
+		_initDatGUI.call( this, false );
+	};
+	
+	
+	var _initFPSStats = function( isSet ) {
+		STF.Config.setFPSStats( isSet );
+		
+		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
+			STF.Utils.FPSStats.init();
+	};
+	
+	
+	var _initMemoryStats = function( isSet ) {
+		STF.Config.setMemoryStats( isSet );
+		
+		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
+			STF.Utils.MemoryStats.init();
+	};
+	
+	
+	var _initDatGUI = function( isSet ) {
+		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
+			STF.Utils.DatGUI.init();
+	};
+	
+	
+	return new Main();
+	
+	
+} ) ( window );
+
+
+$( STF.Main.init.bind( STF.Main ) );
+*/
+
+
+},{"App":1,"zepto":8}],3:[function(require,module,exports){
+'use strict';
+
+
+
+function Config() {
+	this.ENV				= null;
+	this.ENVS				= null;
+	this.ALL_LANG			= null;
+	this.FORCE_DEVICE		= null;
+	this.GA_ID				= null;
+	this.CREDITS			= null;
+	
+	this.IS_DEV				= null;
+	this.IS_PREPROD_LOCAL	= null;
+	this.IS_PREPROD			= null;
+	this.IS_PROD			= null;
+	this.NEED_PAGE_ID		= null;
+	
+	this.JS_VIEWS_ID		= null;
+	
+	this.HAS_FPS_STATS		= null;
+	this.HAS_MEMORY_STATS	= null;
+}
+
+
+Config.prototype.init = function() {
+	_setConfig.call( this );
+	_setJsViewsId.call( this );
+	_showCreditsLog.call( this );
+};
+
+
+var _setConfig = function() {
+	for ( var varName in STF_Config )
+		this[ varName ] = STF_Config[ varName ];
+};
+
+
+var _setJsViewsId = function() {
+	this.JS_VIEWS_ID = STF_JS_VIEWS_ID;
+};
+
+
+var _showCreditsLog = function() {
+	console.log(
+		'%cmade by %c— ' + this.CREDITS.author + ' —%c ' + this.CREDITS.authorUrl,
+		'padding:8px 5px; color:' + this.CREDITS.color1 + '; line-height:25px;',
+		'padding:8px 15px; color:' + this.CREDITS.color2 + '; background-color:' + this.CREDITS.color3 + '; line-height:25px;',
+		'padding:8px 5px; color:' + this.CREDITS.color3 + '; line-height:25px;'
+	);
+};
+
+
+Config.prototype.setFPSStats = function( isSet ) {
+	this.HAS_FPS_STATS = isSet;
+};
+
+
+Config.prototype.setMemoryStats = function( isSet ) {
+	this.HAS_MEMORY_STATS = isSet;
+};
+
+
+module.exports = new Config();
+
+
+},{}],4:[function(require,module,exports){
+'use strict';
+
+
+
+function Device() {
+	this.HAS_MOBILE_VERSION	= null;
+	this.TABLET_VERSION		= null;
+	this.FORCE_DEVICE		= null;
+	
+	this.DEVICE				= null;
+	this.IS_DESKTOP			= null;
+	this.IS_TABLET			= null;
+	this.IS_MOBILE			= null;
+	this.BROWSER			= null;
+	this.BROWSER_VERSION	= null;
+	this.BROWSER_ENGINE		= null;
+	this.IS_OLD_BROWSER		= null;
+	this.IS_IE				= null;
+	this.IS_EDGE			= null;
+}
+
+
+Device.prototype.init = function() {
+	_setDevice.call( this );
+};
+
+var _setDevice = function() {
+	for ( var varName in STF_Device )
+		this[ varName ] = STF_Device[ varName ];
+};
+
+
+module.exports = new Device();
+
+
+},{}],5:[function(require,module,exports){
+'use strict';
+
+
+// var Router	= require( 'shared/routes/Router' );
+var Config	= require( 'shared/configs/Config' );
+
+
+
+function Lang() {
+	
+}
+
+
+Lang.prototype.init = function() {
+	_setGlobalInfos.call( this );
+	// STF.Router.setUrl( true, null );
+	Router.setUrl( true, null );
+	_setCurrentLang.call( this );
+	_checkDefaultLang.call( this );
+	_setLangLinks.call( this );
+};
+
+
+var _setGlobalInfos = function() {
+	// all lang
+	// this.ALL_LANG = STF.Config.ALL_LANG;
+	this.ALL_LANG = Config.ALL_LANG;
+	
+	// default lang
+	this.DEFAULT_LANG = this.ALL_LANG[0];
+	
+	// multi-lang
+	if ( this.ALL_LANG.length == 1 )
+		this.MULTI_LANG = false;
+	else
+		this.MULTI_LANG = true;
+};
+
+
+var _setCurrentLang = function() {
+	// if ( !this.MULTI_LANG || STF.Router.URL.path.length === 0 )
+	if ( !this.MULTI_LANG || Router.URL.path.length === 0 )
+		this.LANG = this.DEFAULT_LANG;
+	else
+		// this.LANG = STF.Router.URL.pathParams[0];
+		this.LANG = Router.URL.pathParams[0];
+};
+
+
+var _checkDefaultLang = function() {
+	if ( this.ALL_LANG.indexOf( this.LANG ) < 0 )
+		this.LANG = this.DEFAULT_LANG;
+};
+
+
+var _setLangLinks = function() {
+	this.LANG_LINK_ROOT	= this.LANG == this.DEFAULT_LANG ? '' : this.LANG;
+	this.LANG_LINK		= this.MULTI_LANG ? this.LANG + '/' : '';
+};
+
+
+module.exports = new Lang();
+
+
+},{"shared/configs/Config":3}],6:[function(require,module,exports){
+'use strict';
+
+
+var Config	= require( 'shared/configs/Config' );
+
+
+
+function Path() {
+	this.URL = null;
+}
+
+
+Path.prototype.init = function() {
+	_setPaths.call( this );
+};
+
+
+var _setPaths = function() {
+	var baseUrl = Config.ENVS.base_url;
+	
+	// url paths
+	this.URL = {
+		base:		baseUrl,
+		assets:		baseUrl + 'assets/',
+		css:		baseUrl + 'assets/css/',
+		favicons:	baseUrl + 'assets/favicons/',
+		files:		baseUrl + 'assets/files/',
+		img:		baseUrl + 'assets/img/',
+		js:			baseUrl + 'assets/js/',
+		json:		baseUrl + 'assets/json/',
+		sounds:		baseUrl + 'assets/sounds/',
+		svg:		baseUrl + 'assets/svg/',
+		videos:		baseUrl + 'assets/videos/',
+		routes:		baseUrl + 'configs/routes/',
+		server:		baseUrl + 'server/',
+	};
+};
+
+
+Path.prototype.overwriteSpecialPaths = function() {
+	// var assetsBaseUrl = STF.MainView.$mainCont[0].getAttribute( 'data-assets-base-url' );
+	
+	// for ( var key in this.URL )
+	// 	this.URL[ key ] = this.URL[ key ].replace( 'assets/', assetsBaseUrl );
+};
+
+
+module.exports = new Path();
+
+
+},{"shared/configs/Config":3}],7:[function(require,module,exports){
+'use strict';
+
+
+function Props() {
+	this.HAS_PUSHSTATE		= null;
+	this.TRANSFORM			= null;
+	this.HAS_TRANSFORMS		= null;
+	this.HAS_TRANSFORMS_3D	= null;
+	this.HAS_TRANSITIONS	= null;
+	this.HAS_ANIMATIONS		= null;
+}
+
+
+Props.prototype.init = function() {
+	_setProperties.call( this );
+};
+
+
+var _setProperties = function() {
+	this.HAS_PUSHSTATE		= Modernizr.history;
+	this.TRANSFORM			= Modernizr.prefixed( 'transform' );
+	this.HAS_TRANSFORMS		= Modernizr.csstransforms;
+	this.HAS_TRANSFORMS_3D	= Modernizr.csstransforms3d;
+	this.HAS_TRANSITIONS	= Modernizr.csstransitions;
+	this.HAS_ANIMATIONS		= Modernizr.cssanimations;
+};
+
+
+module.exports = new Props();
+
+
+},{}],8:[function(require,module,exports){
+(function (global){
+; var __browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /* Zepto v1.2.0 - zepto event ajax form ie - zeptojs.com/license */
 (function(global, factory) {
   if (typeof define === 'function' && define.amd)
@@ -1648,3 +2058,10 @@ window.$ === undefined && (window.$ = Zepto)
 })()
   return Zepto
 }))
+
+; browserify_shim__define__module__export__(typeof $ != "undefined" ? $ : window.$);
+
+}).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}]},{},[2]);
