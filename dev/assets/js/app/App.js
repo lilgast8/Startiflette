@@ -7,8 +7,9 @@ var Device			= require( 'shared/configs/Device' );
 var Path			= require( 'shared/configs/Path' );
 var Lang			= require( 'shared/configs/Lang' );
 var Debug			= require( 'shared/utils/Debug' );
-var PagesController	= require( 'desktop/controllers/PagesController' );
 var MainView		= require( 'desktop/views/MainView' );
+var PagesController	= require( 'desktop/controllers/PagesController' );
+
 
 
 

@@ -8,8 +8,9 @@ var Device			= require( 'shared/configs/Device' );
 var Path			= require( 'shared/configs/Path' );
 var Lang			= require( 'shared/configs/Lang' );
 var Debug			= require( 'shared/utils/Debug' );
-var PagesController	= require( 'desktop/controllers/PagesController' );
 var MainView		= require( 'desktop/views/MainView' );
+var PagesController	= require( 'desktop/controllers/PagesController' );
+
 
 
 
@@ -1302,16 +1303,18 @@ module.exports = AbstractMainLoader;
 
 
 var AbstractView	= require( 'shared/abstracts/views/AbstractView' );
+// var CustomEvent		= require( 'shared/events/CustomEvent' );
 var Path			= require( 'shared/configs/Path' );
 
 // var MainLoader		= require( 'desktop/views/statics/MainLoader' );
 // var Header			= require( 'desktop/views/statics/Header' );
-var PagesController	= require( 'desktop/controllers/PagesController' );
+// var PagesController	= require( 'desktop/controllers/PagesController' );
 
 
 
 function AbstractMainView() {
 	AbstractView.call( this );
+	// CustomEvent.call( this );
 	
 	this.E = {
 		RESIZE:			'resize',
@@ -1350,12 +1353,13 @@ function AbstractMainView() {
 
 AbstractMainView.prototype				= Object.create( AbstractView.prototype );
 AbstractMainView.prototype.constructor	= AbstractMainView;
+// AbstractMainView.prototype				= Object.create( CustomEvent.prototype );
+// AbstractMainView.prototype.constructor	= AbstractMainView;
 
 
 AbstractMainView.prototype.init = function() {
 	this.initDOM();
 	this.initEl();
-	this.initTl();
 	this.bindEvents();
 	
 	this.initStaticsViews();
@@ -1396,16 +1400,7 @@ AbstractMainView.prototype.initStaticsViews = function() {
 	// STF.Views.Statics.Header.init();
 	// STF.Views.Statics.Footer.init();
 	
-	
-	// var MainLoader = require( 'desktop/views/statics/MainLoader' );
-	// console.log( MainLoader );
-	// MainLoader.init();
-	// Header.init();
-	// STF.Views.Statics.Footer.init();
-	
-	console.log( PagesController );
-	
-	STF_dom_removeClass( this.$mainCont[0], 'preload' );
+	// STF_dom_removeClass( this.$mainCont[0], 'preload' );
 };
 
 
@@ -1546,12 +1541,12 @@ AbstractMainView.prototype.initAfterAssetsLoaded = function() {
 module.exports = AbstractMainView;
 
 
-},{"desktop/controllers/PagesController":4,"shared/abstracts/views/AbstractView":16,"shared/configs/Path":20}],16:[function(require,module,exports){
+},{"shared/abstracts/views/AbstractView":16,"shared/configs/Path":20}],16:[function(require,module,exports){
 'use strict';
 
 
 var CustomEvent	= require( 'shared/events/CustomEvent' );
-// var MainView	= require( 'desktop/views/MainView' );
+var MainView	= require( 'desktop/views/MainView' );
 
 
 
@@ -1605,7 +1600,7 @@ AbstractView.prototype.bindEvents = function() {
 	// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
 	
 	// STF.MainView.bind( STF.MainView.E.RESIZE, this.resize, this );
-	// MainView.bind( MainView.E.RESIZE, this.resize, this );
+	MainView.bind( MainView.E.RESIZE, this.resize, this );
 };
 
 
@@ -1613,7 +1608,7 @@ AbstractView.prototype.unbindEvents = function() {
 	// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
 	
 	// STF.MainView.unbind( STF.MainView.E.RESIZE, this.resize, this );
-	// MainView.unbind( MainView.E.RESIZE, this.resize, this );
+	MainView.unbind( MainView.E.RESIZE, this.resize, this );
 };
 
 
@@ -1726,7 +1721,7 @@ AbstractView.prototype.updateHash = function() {
 module.exports = AbstractView;
 
 
-},{"shared/events/CustomEvent":22}],17:[function(require,module,exports){
+},{"desktop/views/MainView":6,"shared/events/CustomEvent":22}],17:[function(require,module,exports){
 'use strict';
 
 

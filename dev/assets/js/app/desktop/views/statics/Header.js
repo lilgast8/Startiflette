@@ -1,8 +1,8 @@
 'use strict';
 
 
-// var AbstractView = require( 'shared/abstracts/views/AbstractView' );
-// console.log( AbstractView );
+var AbstractView = require( 'shared/abstracts/views/AbstractView' );
+console.log( AbstractView );
 
 
 function Header() {

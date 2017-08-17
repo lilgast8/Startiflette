@@ -2,7 +2,7 @@
 
 
 var CustomEvent	= require( 'shared/events/CustomEvent' );
-// var MainView	= require( 'desktop/views/MainView' );
+var MainView	= require( 'desktop/views/MainView' );
 
 
 
@@ -56,7 +56,7 @@ AbstractView.prototype.bindEvents = function() {
 	// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
 	
 	// STF.MainView.bind( STF.MainView.E.RESIZE, this.resize, this );
-	// MainView.bind( MainView.E.RESIZE, this.resize, this );
+	MainView.bind( MainView.E.RESIZE, this.resize, this );
 };
 
 
@@ -64,7 +64,7 @@ AbstractView.prototype.unbindEvents = function() {
 	// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
 	
 	// STF.MainView.unbind( STF.MainView.E.RESIZE, this.resize, this );
-	// MainView.unbind( MainView.E.RESIZE, this.resize, this );
+	MainView.unbind( MainView.E.RESIZE, this.resize, this );
 };
 
 

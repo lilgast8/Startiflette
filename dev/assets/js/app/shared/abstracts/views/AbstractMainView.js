@@ -2,16 +2,18 @@
 
 
 var AbstractView	= require( 'shared/abstracts/views/AbstractView' );
+// var CustomEvent		= require( 'shared/events/CustomEvent' );
 var Path			= require( 'shared/configs/Path' );
 
 // var MainLoader		= require( 'desktop/views/statics/MainLoader' );
 // var Header			= require( 'desktop/views/statics/Header' );
-var PagesController	= require( 'desktop/controllers/PagesController' );
+// var PagesController	= require( 'desktop/controllers/PagesController' );
 
 
 
 function AbstractMainView() {
 	AbstractView.call( this );
+	// CustomEvent.call( this );
 	
 	this.E = {
 		RESIZE:			'resize',
@@ -50,12 +52,13 @@ function AbstractMainView() {
 
 AbstractMainView.prototype				= Object.create( AbstractView.prototype );
 AbstractMainView.prototype.constructor	= AbstractMainView;
+// AbstractMainView.prototype				= Object.create( CustomEvent.prototype );
+// AbstractMainView.prototype.constructor	= AbstractMainView;
 
 
 AbstractMainView.prototype.init = function() {
 	this.initDOM();
 	this.initEl();
-	this.initTl();
 	this.bindEvents();
 	
 	this.initStaticsViews();
@@ -96,16 +99,7 @@ AbstractMainView.prototype.initStaticsViews = function() {
 	// STF.Views.Statics.Header.init();
 	// STF.Views.Statics.Footer.init();
 	
-	
-	// var MainLoader = require( 'desktop/views/statics/MainLoader' );
-	// console.log( MainLoader );
-	// MainLoader.init();
-	// Header.init();
-	// STF.Views.Statics.Footer.init();
-	
-	console.log( PagesController );
-	
-	STF_dom_removeClass( this.$mainCont[0], 'preload' );
+	// STF_dom_removeClass( this.$mainCont[0], 'preload' );
 };
 
 
