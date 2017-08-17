@@ -6,6 +6,7 @@ var Props	= require( 'shared/configs/Props' );
 var Device	= require( 'shared/configs/Device' );
 var Path	= require( 'shared/configs/Path' );
 var Lang	= require( 'shared/configs/Lang' );
+var Debug	= require( 'shared/utils/Debug' );
 // var Stats	= require( 'stats.min' );
 // var DatGUI	= require( 'DatGUI' );
 // var Scene	= require( 'Scene' );
@@ -42,14 +43,8 @@ App.prototype.init = function() {
 	Props.init();
 	Device.init();
 	Path.init();
-	// Lang.init();
-	
-	
-	// STF.Config.init();
-	// STF.Props.init();
-	// STF.Device.init();
-	// STF.Path.init();
-	// STF.Lang.init();
+	Lang.init();
+	Debug.init( false, false, false );
 };
 
 

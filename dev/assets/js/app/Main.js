@@ -16,7 +16,7 @@ Main.prototype.init = function() {
 	// var ra;
 	// var asdd;
 	// console.log( '⚡️ SLP ⚡️' );
-	// window.app = new App();
+	// window.STF = app;
 	app.init();
 };
 

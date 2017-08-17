@@ -38,10 +38,10 @@ var _setPaths = function() {
 
 
 Path.prototype.overwriteSpecialPaths = function() {
-	// var assetsBaseUrl = STF.MainView.$mainCont[0].getAttribute( 'data-assets-base-url' );
+	var assetsBaseUrl = STF.MainView.$mainCont[0].getAttribute( 'data-assets-base-url' );
 	
-	// for ( var key in this.URL )
-	// 	this.URL[ key ] = this.URL[ key ].replace( 'assets/', assetsBaseUrl );
+	for ( var key in this.URL )
+		this.URL[ key ] = this.URL[ key ].replace( 'assets/', assetsBaseUrl );
 };
 
 
