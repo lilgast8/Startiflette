@@ -1,15 +1,14 @@
 'use strict';
 
 
-var Config	= require( 'shared/configs/Config' );
-var Props	= require( 'shared/configs/Props' );
-var Device	= require( 'shared/configs/Device' );
-var Path	= require( 'shared/configs/Path' );
-var Lang	= require( 'shared/configs/Lang' );
-var Debug	= require( 'shared/utils/Debug' );
-// var Stats	= require( 'stats.min' );
-// var DatGUI	= require( 'DatGUI' );
-// var Scene	= require( 'Scene' );
+var Config			= require( 'shared/configs/Config' );
+var Props			= require( 'shared/configs/Props' );
+var Device			= require( 'shared/configs/Device' );
+var Path			= require( 'shared/configs/Path' );
+var Lang			= require( 'shared/configs/Lang' );
+var Debug			= require( 'shared/utils/Debug' );
+var PagesController	= require( 'desktop/controllers/PagesController' );
+var MainView		= require( 'desktop/views/MainView' );
 
 
 
@@ -45,6 +44,9 @@ App.prototype.init = function() {
 	Path.init();
 	Lang.init();
 	Debug.init( false, false, false );
+	PagesController.init();
+	MainView.init();
+	// STF.Router.init();
 };
 
 

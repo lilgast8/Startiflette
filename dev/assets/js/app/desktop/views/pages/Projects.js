@@ -1,50 +1,44 @@
+'use strict';
 
 
-STF.Views		= STF.Views || {};
-STF.Views.Pages	= STF.Views.Pages || {};
+var AbstractPageView = require( 'desktop/abstracts/views/AbstractPageView' );
 
 
-STF.Views.Pages.Projects = ( function( window ) {
-	'use strict';
+
+function Projects() {
+	AbstractPageView.call( this );
+}
+
+
+Projects.prototype				= Object.create( AbstractPageView.prototype );
+Projects.prototype.constructor	= Projects;
+
+
+Projects.prototype.initDOM = function() {
+	AbstractPageView.prototype.initDOM.call( this );
 	
+	this.$projectLink = this.$page.find( '.proj-link' );
+};
+
+
+Projects.prototype.bindEvents = function() {
+	AbstractPageView.prototype.bindEvents.call( this );
 	
-	function Projects() {
-		STF.AbstractPageView.call( this );
-	}
+	this.$projectLink.on( 'click', $.proxy( this.changeUrl, this ) );
+};
+
+
+Projects.prototype.unbindEvents = function() {
+	AbstractPageView.prototype.unbindEvents.call( this );
 	
+	this.$projectLink.off( 'click', $.proxy( this.changeUrl, this ) );
+};
+
+
+Projects.prototype.resize = function() {
 	
-	Projects.prototype				= Object.create( STF.AbstractPageView.prototype );
-	Projects.prototype.constructor	= Projects;
-	
-	
-	Projects.prototype.initDOM = function() {
-		STF.AbstractPageView.prototype.initDOM.call( this );
-		
-		this.$projectLink = this.$page.find( '.proj-link' );
-	};
-	
-	
-	Projects.prototype.bindEvents = function() {
-		STF.AbstractPageView.prototype.bindEvents.call( this );
-		
-		this.$projectLink.on( 'click', $.proxy( this.changeUrl, this ) );
-	};
-	
-	
-	Projects.prototype.unbindEvents = function() {
-		STF.AbstractPageView.prototype.unbindEvents.call( this );
-		
-		this.$projectLink.off( 'click', $.proxy( this.changeUrl, this ) );
-	};
-	
-	
-	Projects.prototype.resize = function() {
-		
-	};
-	
-	
-	return Projects;
-	
-	
-} ) ( window );
+};
+
+
+module.exports = Projects;
 

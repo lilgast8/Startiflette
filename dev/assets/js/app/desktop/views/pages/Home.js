@@ -1,44 +1,38 @@
+'use strict';
 
 
-STF.Views		= STF.Views || {};
-STF.Views.Pages	= STF.Views.Pages || {};
+var AbstractPageView = require( 'desktop/abstracts/views/AbstractPageView' );
 
 
-STF.Views.Pages.Home = ( function( window ) {
-	'use strict';
+
+function Home() {
+	AbstractPageView.call( this );
+}
+
+
+Home.prototype				= Object.create( AbstractPageView.prototype );
+Home.prototype.constructor	= Home;
+
+
+Home.prototype.init = function() {
+	AbstractPageView.prototype.init.call( this );
+};
+
+
+Home.prototype.bindEvents = function() {
+	AbstractPageView.prototype.bindEvents.call( this );
+};
+
+
+Home.prototype.unbindEvents = function() {
+	AbstractPageView.prototype.unbindEvents.call( this );
+};
+
+
+Home.prototype.resize = function() {
 	
-	
-	function Home() {
-		STF.AbstractPageView.call( this );
-	}
-	
-	
-	Home.prototype				= Object.create( STF.AbstractPageView.prototype );
-	Home.prototype.constructor	= Home;
-	
-	
-	Home.prototype.init = function() {
-		STF.AbstractPageView.prototype.init.call( this );
-	};
-	
-	
-	Home.prototype.bindEvents = function() {
-		STF.AbstractPageView.prototype.bindEvents.call( this );
-	};
-	
-	
-	Home.prototype.unbindEvents = function() {
-		STF.AbstractPageView.prototype.unbindEvents.call( this );
-	};
-	
-	
-	Home.prototype.resize = function() {
-		
-	};
-	
-	
-	return Home;
-	
-	
-} ) ( window );
+};
+
+
+module.exports = Home;
 

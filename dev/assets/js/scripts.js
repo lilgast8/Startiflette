@@ -2,15 +2,14 @@
 'use strict';
 
 
-var Config	= require( 'shared/configs/Config' );
-var Props	= require( 'shared/configs/Props' );
-var Device	= require( 'shared/configs/Device' );
-var Path	= require( 'shared/configs/Path' );
-var Lang	= require( 'shared/configs/Lang' );
-var Debug	= require( 'shared/utils/Debug' );
-// var Stats	= require( 'stats.min' );
-// var DatGUI	= require( 'DatGUI' );
-// var Scene	= require( 'Scene' );
+var Config			= require( 'shared/configs/Config' );
+var Props			= require( 'shared/configs/Props' );
+var Device			= require( 'shared/configs/Device' );
+var Path			= require( 'shared/configs/Path' );
+var Lang			= require( 'shared/configs/Lang' );
+var Debug			= require( 'shared/utils/Debug' );
+var PagesController	= require( 'desktop/controllers/PagesController' );
+var MainView		= require( 'desktop/views/MainView' );
 
 
 
@@ -46,13 +45,16 @@ App.prototype.init = function() {
 	Path.init();
 	Lang.init();
 	Debug.init( false, false, false );
+	PagesController.init();
+	MainView.init();
+	// STF.Router.init();
 };
 
 
 module.exports = App;
 
 
-},{"shared/configs/Config":3,"shared/configs/Device":4,"shared/configs/Lang":5,"shared/configs/Path":6,"shared/configs/Props":7,"shared/utils/Debug":11}],2:[function(require,module,exports){
+},{"desktop/controllers/PagesController":4,"desktop/views/MainView":6,"shared/configs/Config":17,"shared/configs/Device":18,"shared/configs/Lang":19,"shared/configs/Path":20,"shared/configs/Props":21,"shared/utils/Debug":25}],2:[function(require,module,exports){
 'use strict';
 
 
@@ -149,7 +151,1582 @@ $( STF.Main.init.bind( STF.Main ) );
 */
 
 
-},{"App":1,"zepto":19}],3:[function(require,module,exports){
+},{"App":1,"zepto":33}],3:[function(require,module,exports){
+'use strict';
+
+
+var AbstractView = require( 'shared/abstracts/views/AbstractView' );
+
+
+
+function AbstractPageView() {
+	AbstractView.call( this );
+	
+	this.imgToLazyloadClassName	= 'img-lazyload'; // class name of images to lazyload
+	this.lazyloadParentEl		= null; // selector of parent of images to lazyload
+}
+
+
+AbstractPageView.prototype				= Object.create( AbstractView.prototype );
+AbstractPageView.prototype.constructor	= AbstractPageView;
+
+
+AbstractPageView.prototype.initDOM = function() {
+	// console.log( 'AbstractPageView.initDOM() — ', this.constructor.name );
+	
+	this.$page = $( document.getElementById( 'page' ) );
+};
+
+
+AbstractPageView.prototype.initEl = function() {
+	// console.log( 'AbstractPageView.initEl() — ', this.constructor.name );
+	
+	this.lazyLoader = new STF.LazyLoader( this.$page, this.imgToLazyloadClassName, this.lazyloadParentEl, 1, true );
+};
+
+
+AbstractPageView.prototype.initTl = function() {
+	/* Show page */
+	this.tl.showPage = new TimelineLite( {
+		paused:		true,
+		onComplete:	this.onPageShown.bind( this )
+	} );
+	this.tl.showPage.to( this.$page, 0.8, { opacity:1, ease:Quad.easeOut } );
+	
+	/* Hide page */
+	this.tl.hidePage = new TimelineLite( {
+		paused:		true,
+		onComplete:	this.onPageHidden.bind( this )
+	} );
+	this.tl.hidePage.to( this.$page, 0.8, { opacity:0, ease:Quad.easeOut } );
+};
+
+
+AbstractPageView.prototype.show = function() {
+	// if ( STF.PagesController.isFirstLoad )
+	// 	this.tl.showPage.progress(1);
+		
+	// else
+		this.tl.showPage.play(0);
+};
+
+
+AbstractPageView.prototype.hide = function() {
+	this.tl.hidePage.play(0);
+};
+
+
+AbstractPageView.prototype.destroy = function() {
+	AbstractView.prototype.destroy.call( this );
+	
+	if ( this.lazyLoader !== undefined )
+		this.lazyLoader.destroy();
+};
+
+
+AbstractPageView.prototype.onPageShown = function() {
+	this.dispatch( this.E.SHOWN );
+};
+
+
+AbstractPageView.prototype.onPageHidden = function() {
+	this.dispatch( this.E.HIDDEN );
+};
+
+
+module.exports = AbstractPageView;
+
+
+},{"shared/abstracts/views/AbstractView":16}],4:[function(require,module,exports){
+'use strict';
+
+
+var AbstractPagesController = require( 'shared/abstracts/controllers/AbstractPagesController' );
+
+
+
+function PagesController() {
+	AbstractPagesController.call( this );
+	
+	// this.LOADING_MODE			= null;
+	// this.DYNAMIC_IMG_TO_LOAD	= null;
+	// this.IS_HIDE_INIT			= null;
+}
+
+
+PagesController.prototype				= Object.create( AbstractPagesController.prototype );
+PagesController.prototype.constructor	= PagesController;
+
+
+/*PagesController.prototype.initPages = function() {
+	
+};*/
+
+
+/*PagesController.prototype.managePageHidingTransitions = function() {
+	
+};*/
+
+
+/*PagesController.prototype.checkPageHiding = function() {
+	
+};*/
+
+
+/*PagesController.prototype.managePageShowingTransitions = function() {
+	
+};*/
+
+
+/*AbstractPagesController.prototype.checkPageShowing = function() {
+	
+};*/
+
+
+PagesController.prototype.manageMenuLinks = function() {
+	this.updateMenuLinks( STF.Views.Statics.Header.$menuLink );
+	this.updateMenuLinks( STF.Views.Statics.Footer.$footerLink );
+};
+
+
+PagesController.prototype.manageLangLinks = function() {
+	this.changeLangLinks( STF.Views.Statics.Header.$headerLgLink );
+	this.changeLangLinks( STF.Views.Statics.Footer.$footerLgLink );
+};
+
+
+module.exports = new PagesController();
+
+
+},{"shared/abstracts/controllers/AbstractPagesController":13}],5:[function(require,module,exports){
+'use strict';
+
+
+var AbstractAssets	= require( 'desktop/abstracts/views/AbstractPageView' );
+var Path			= require( 'shared/configs/Path' );
+
+
+
+function Assets() {
+	AbstractAssets.call( this );
+}
+
+
+Assets.prototype				= Object.create( AbstractAssets.prototype );
+Assets.prototype.constructor	= Assets;
+
+
+Assets.prototype.init = function() {
+	this.aImg = {
+		'global': [
+			/* bgs */
+			
+			/* btns */
+			
+			/* icons */
+			
+			/* logos */
+			
+			/* others */
+		],
+		
+		'error-404': [
+			/* temp */
+			Path.URL.img + 'temp/404.jpg',
+		],
+		
+		'not-available': [
+			/* temp */
+			Path.URL.img + 'temp/not-available.gif',
+		],
+		
+		'home': [
+			/* temp */
+			Path.URL.img + 'temp/home.jpg',
+		],
+		
+		'about': [
+			/* temp */
+			Path.URL.img + 'temp/about-1.jpg',
+			Path.URL.img + 'temp/about-2.jpg',
+		],
+		
+		'projects': [
+			/* temp */
+			Path.URL.img + 'temp/projects.jpg',
+		]
+	};
+	
+	
+	this.aJson = {
+		'global': {
+			global: Path.URL.json + 'test-global.json'
+		},
+		
+		'home': {
+			home: Path.URL.json + 'test-home.json'
+		},
+		
+		'projects': {
+			projects: Path.URL.json + 'test-projects.json'
+		}
+	};
+};
+
+
+module.exports = new Assets();
+
+
+},{"desktop/abstracts/views/AbstractPageView":3,"shared/configs/Path":20}],6:[function(require,module,exports){
+'use strict';
+
+
+var AbstractMainView = require( 'shared/abstracts/views/AbstractMainView' );
+
+// var Path			= require( 'shared/configs/Path' );
+
+
+
+function MainView() {
+	AbstractMainView.call( this );
+}
+
+
+MainView.prototype				= Object.create( AbstractMainView.prototype );
+MainView.prototype.constructor	= MainView;
+
+
+/*MainView.prototype.initDOM = function() {
+	AbstractMainView.prototype.initDOM.call( this );
+};*/
+
+
+MainView.prototype.initEl = function() {
+	// console.log( '🐷', this );
+	
+	AbstractMainView.prototype.initEl.call( this );
+	
+	this.disableScrollRestoration();
+};
+
+
+/*MainView.prototype.bindEvents = function() {
+	AbstractMainView.prototype.bindEvents.call( this );
+};*/
+
+
+/*MainView.prototype.initStaticsViews = function() {
+	AbstractMainView.prototype.initStaticsViews.call( this );
+};*/
+
+
+module.exports = new MainView();
+
+
+},{"shared/abstracts/views/AbstractMainView":15}],7:[function(require,module,exports){
+'use strict';
+
+
+var AbstractPageView = require( 'desktop/abstracts/views/AbstractPageView' );
+
+
+
+function Error404() {
+	AbstractPageView.call( this );
+}
+
+
+Error404.prototype				= Object.create( AbstractPageView.prototype );
+Error404.prototype.constructor	= Error404;
+
+
+Error404.prototype.init = function() {
+	AbstractPageView.prototype.init.call( this );
+};
+
+
+Error404.prototype.bindEvents = function() {
+	AbstractPageView.prototype.bindEvents.call( this );
+};
+
+
+Error404.prototype.unbindEvents = function() {
+	AbstractPageView.prototype.unbindEvents.call( this );
+};
+
+
+Error404.prototype.resize = function() {
+	
+};
+
+
+module.exports = Error404;
+
+
+},{"desktop/abstracts/views/AbstractPageView":3}],8:[function(require,module,exports){
+'use strict';
+
+
+var AbstractPageView = require( 'desktop/abstracts/views/AbstractPageView' );
+
+
+
+function Home() {
+	AbstractPageView.call( this );
+}
+
+
+Home.prototype				= Object.create( AbstractPageView.prototype );
+Home.prototype.constructor	= Home;
+
+
+Home.prototype.init = function() {
+	AbstractPageView.prototype.init.call( this );
+};
+
+
+Home.prototype.bindEvents = function() {
+	AbstractPageView.prototype.bindEvents.call( this );
+};
+
+
+Home.prototype.unbindEvents = function() {
+	AbstractPageView.prototype.unbindEvents.call( this );
+};
+
+
+Home.prototype.resize = function() {
+	
+};
+
+
+module.exports = Home;
+
+
+},{"desktop/abstracts/views/AbstractPageView":3}],9:[function(require,module,exports){
+'use strict';
+
+
+var AbstractPageView = require( 'desktop/abstracts/views/AbstractPageView' );
+
+
+
+function LegalNotices() {
+	AbstractPageView.call( this );
+}
+
+
+LegalNotices.prototype				= Object.create( AbstractPageView.prototype );
+LegalNotices.prototype.constructor	= LegalNotices;
+
+
+LegalNotices.prototype.initDOM = function() {
+	AbstractPageView.prototype.initDOM.call( this );
+	
+	this.$email	= this.$page.find( '.email' );
+	
+	// STF_gl_encryptMailto( this.$.email, 'contact', 'domain', 'com', true );
+};
+
+
+LegalNotices.prototype.bindEvents = function() {
+	AbstractPageView.prototype.bindEvents.call( this );
+};
+
+
+LegalNotices.prototype.unbindEvents = function() {
+	AbstractPageView.prototype.unbindEvents.call( this );
+};
+
+
+LegalNotices.prototype.resize = function() {
+	
+};
+
+
+module.exports = LegalNotices;
+
+
+},{"desktop/abstracts/views/AbstractPageView":3}],10:[function(require,module,exports){
+'use strict';
+
+
+var AbstractPageView = require( 'desktop/abstracts/views/AbstractPageView' );
+
+
+
+function Project() {
+	AbstractPageView.call( this );
+}
+
+
+Project.prototype				= Object.create( AbstractPageView.prototype );
+Project.prototype.constructor	= Project;
+
+
+Project.prototype.init = function() {
+	AbstractPageView.prototype.init.call( this );
+};
+
+
+Project.prototype.bindEvents = function() {
+	AbstractPageView.prototype.bindEvents.call( this );
+};
+
+
+Project.prototype.unbindEvents = function() {
+	AbstractPageView.prototype.unbindEvents.call( this );
+};
+
+
+Project.prototype.resize = function() {
+	
+};
+
+
+module.exports = Project;
+
+
+},{"desktop/abstracts/views/AbstractPageView":3}],11:[function(require,module,exports){
+'use strict';
+
+
+var AbstractPageView = require( 'desktop/abstracts/views/AbstractPageView' );
+
+
+
+function Projects() {
+	AbstractPageView.call( this );
+}
+
+
+Projects.prototype				= Object.create( AbstractPageView.prototype );
+Projects.prototype.constructor	= Projects;
+
+
+Projects.prototype.initDOM = function() {
+	AbstractPageView.prototype.initDOM.call( this );
+	
+	this.$projectLink = this.$page.find( '.proj-link' );
+};
+
+
+Projects.prototype.bindEvents = function() {
+	AbstractPageView.prototype.bindEvents.call( this );
+	
+	this.$projectLink.on( 'click', $.proxy( this.changeUrl, this ) );
+};
+
+
+Projects.prototype.unbindEvents = function() {
+	AbstractPageView.prototype.unbindEvents.call( this );
+	
+	this.$projectLink.off( 'click', $.proxy( this.changeUrl, this ) );
+};
+
+
+Projects.prototype.resize = function() {
+	
+};
+
+
+module.exports = Projects;
+
+
+},{"desktop/abstracts/views/AbstractPageView":3}],12:[function(require,module,exports){
+'use strict';
+
+
+var AbstractMainLoader = require( 'shared/abstracts/views/AbstractMainLoader' );
+
+
+
+function MainLoader() {
+	AbstractMainLoader.call( this );
+}
+
+
+MainLoader.prototype				= Object.create( AbstractMainLoader.prototype );
+MainLoader.prototype.constructor	= MainLoader;
+
+
+/*MainLoader.prototype.init = function() {
+	AbstractMainLoader.prototype.init.call( this );
+};*/
+
+
+MainLoader.prototype.initDOM = function() {
+	this.$loader		= $( document.getElementById( 'main-loader' ) );
+	this.$loaderCont	= this.$loader.find( '.main-loader-container' );
+	this.$percentage	= this.$loader.find( '.main-loader-percentage' );
+	this.$progress		= this.$loader.find( '.main-loader-progress' );
+	this.$loading		= this.$loader.find( '.main-loader-loading' );
+};
+
+
+MainLoader.prototype.initTl = function() {
+	/* Hide init */
+	this.tl.hideInit = new TimelineLite( { paused:true, onComplete:_onHideInitComplete.bind( this ) } );
+	
+	this.tl.hideInit.to( this.$loader, 1.5, { xPercent:100, ease:Quart.easeInOut }, 0 );
+	this.tl.hideInit.to( this.$loaderCont, 1.5, { xPercent:-100, ease:Quart.easeInOut }, 0 );
+	
+	
+	/* Show */
+	this.tl.show = new TimelineLite( { paused:true, onComplete:_onShowComplete.bind( this ) } );
+	
+	this.tl.show.set( this.$loader, { xPercent:-100 }, 0 );
+	this.tl.show.set( this.$loaderCont, { xPercent:100 }, 0 );
+	this.tl.show.to( this.$loader, 1, { xPercent:0, ease:Quart.easeInOut }, 0 );
+	this.tl.show.to( this.$loaderCont, 1, { xPercent:0, ease:Quart.easeInOut }, 0 );
+	
+	
+	/* Hide */
+	this.tl.hide = new TimelineLite( { paused:true, onComplete:_onHideComplete.bind( this ) } );
+	
+	this.tl.hide.to( this.$loader, 1, { xPercent:100, ease:Quart.easeInOut }, 0 );
+	this.tl.hide.to( this.$loaderCont, 1, { xPercent:-100, ease:Quart.easeInOut }, 0 );
+};
+
+
+MainLoader.prototype.onProgress = function( percentage ) {
+	var posX = percentage - 100;
+	
+	this.$percentage[0].innerHTML					= parseInt( percentage ) + ' %';
+	this.$progress[0].style[ STF.Props.TRANSFORM ]	= 'translate(' + posX + '%, 0%)';
+};
+
+
+MainLoader.prototype.hideInit = function() {
+	this.tl.hideInit.play();
+	
+	
+	// this.$loader[0].style.display = 'none';
+	// this.dispatch( this.E.HIDDEN );
+};
+
+
+MainLoader.prototype.show = function() {
+	this.$loader[0].style.display = 'block';
+	this.$loader[0].offsetHeight; // jshint ignore:line
+	
+	this.tl.show.play(0);
+};
+
+
+MainLoader.prototype.hide = function() {
+	this.tl.hide.play(0);
+};
+
+
+var _onHideInitComplete = function() {
+	this.killTimeline( 'hideInit' );
+	
+	STF_dom_removeClass( this.$loader[0], 'init' );
+	this.$loader[0].style.display = 'none';
+	
+	this.dispatch( this.E.HIDDEN );
+};
+
+
+var _onShowComplete = function() {
+	this.dispatch( this.E.SHOWN );
+};
+
+
+var _onHideComplete = function() {
+	// LOADING_MODE == 'byPageStatic' && LOADING_MODE == 'byPageDynamic'
+	this.$percentage[0].innerHTML					= '0 %';
+	this.$progress[0].style[ STF.Props.TRANSFORM ]	= 'translate(-100%, 0%)';
+	
+	this.$loader[0].style.display					= 'none';
+	
+	this.dispatch( this.E.HIDDEN );
+};
+
+
+return new MainLoader();
+
+
+},{"shared/abstracts/views/AbstractMainLoader":14}],13:[function(require,module,exports){
+'use strict';
+
+
+var CustomEvent		= require( 'shared/events/CustomEvent' );
+
+var Error404		= require( 'desktop/views/pages/Error404' );
+var LegalNotices	= require( 'desktop/views/pages/LegalNotices' );
+var Home			= require( 'desktop/views/pages/Home' );
+// var About			= require( 'desktop/views/pages/About' );
+var Projects		= require( 'desktop/views/pages/Projects' );
+var Project			= require( 'desktop/views/pages/Project' );
+
+var AssetsModel		= require( 'desktop/models/Assets' );
+var MainLoader		= require( 'desktop/views/statics/MainLoader' );
+
+
+
+function AbstractPagesController() {
+	CustomEvent.call( this );
+	
+	this.LOADING_MODE			= 'byPageStatic'; // can be allStatic, byPageStatic, byPageDynamic
+	this.DYNAMIC_IMG_TO_LOAD	= 'img'; // used when LOADING_MODE == 'byPageDynamic', can be img.class for selective preload
+	this.IS_HIDE_INIT			= true; // set to true if need a different behavior when hide loader on init
+	
+	this.pages					= {};
+	this.page					= null;
+	this.prevPageInfos			= {};
+	this.pageInfos				= {};
+	
+	this.isFirstLoad			= true;
+	this.isPageChange			= true;
+	this.isContentLoaded		= false;
+	this.isAssetsLoaded			= false;
+	this.isPageHidden			= false;
+	this.isPageShown			= false;
+	this.isMainLoaderShown		= false;
+	this.isMainLoaderHidden		= false;
+	
+	this.data					= null;
+}
+
+
+AbstractPagesController.prototype				= Object.create( CustomEvent.prototype );
+AbstractPagesController.prototype.constructor	= AbstractPagesController;
+
+
+AbstractPagesController.prototype.init = function() {
+	this.initPages();
+	this.initEl();
+};
+
+
+AbstractPagesController.prototype.initPages = function() {
+	this.pages = {
+		'error-404':		Error404,
+		'legal-notices':	LegalNotices,
+		'home':				Home,
+		// 'about':			About,
+		'projects':			Projects,
+		'project':			Project,
+	};
+};
+
+
+AbstractPagesController.prototype.initEl = function() {
+	// this.assetsModel = AssetsModel;
+	// this.assetsModel.init();
+	AssetsModel.init();
+	
+	// this.mainLoader = STF.Views.Statics.MainLoader;
+};
+
+
+AbstractPagesController.prototype.initFirstPage = function() {
+	this.bindEvents();
+	_setPageInfos.call( this );
+	this.manageMenuLinks();
+	_loadAssets.call( this );
+};
+
+
+AbstractPagesController.prototype.bindEvents = function() {
+	// this.mainLoader.bind( this.mainLoader.E.FILE_LOAD, _onFileLoad, this );
+	// this.mainLoader.bind( this.mainLoader.E.COMPLETE, _onAssetsLoaded, this );
+	MainLoader.bind( MainLoader.E.FILE_LOAD, _onFileLoad, this );
+	MainLoader.bind( MainLoader.E.COMPLETE, _onAssetsLoaded, this );
+};
+
+
+var _setPageId = function( url ) {
+	var path	= STF.Router.URL.path === '' ? 'index' : STF.Router.URL.path;
+	var id		= STF.Config.JS_VIEWS_ID[ path ];
+	
+	if ( id === undefined )
+		id = 'error-404';
+	
+	this.prevPageInfos.id	= this.pageInfos.id;
+	this.pageInfos.id		= id;
+};
+
+
+var _setPageInfos = function() {
+	var $page	= $( document.getElementById( 'page' ) );
+	var id		= $page[0].getAttribute( 'data-js-id' );
+	var title	= $page[0].getAttribute( 'data-title' );
+	
+	if ( !STF.Config.NEED_PAGE_ID )
+		this.prevPageInfos.id	= this.pageInfos.id;
+	this.prevPageInfos.title	= this.pageInfos.title;
+	
+	this.pageInfos.id			= id;
+	this.pageInfos.title		= title;
+	
+	_setPage.call( this );
+	
+	STF.Router.setAltLangUrl( $page );
+};
+
+
+var _setPage = function() {
+	if ( this.pages[ this.pageInfos.id ] === undefined) {
+		if ( !STF.Config.IS_PROD )
+			console.warn( 'PagesController: no specific page view for the "' + this.pageInfos.id + '" ID. If you need one, create it and then set the view in the PagesController.pages object.' );
+		
+		this.page = new STF.AbstractPageView();
+	}
+	else
+		this.page = new this.pages[ this.pageInfos.id ]();
+};
+
+
+AbstractPagesController.prototype.initPageChangeValues = function() {
+	this.isContentLoaded	= false;
+	this.isAssetsLoaded		= false;
+	this.isPageHidden		= false;
+	this.isPageShown		= false;
+	this.isMainLoaderShown	= false;
+	this.isMainLoaderHidden	= false;
+};
+
+
+var _loadAssets = function() {
+	var aAssetsToLoad = this.assetsModel.getAssetsToLoad( this.pageInfos.id, this.isFirstLoad, this.LOADING_MODE );
+	
+	// this.mainLoader.loadAssets( aAssetsToLoad );
+	MainLoader.loadAssets( aAssetsToLoad );
+};
+
+
+var _onFileLoad = function( e ) {
+	if ( e.item.type == 'image' )
+		_onImgLoaded.call( this, e );
+	else if ( e.item.type == 'json' )
+		this.assetsModel.setJsonData( e.item.id, e.result );
+};
+
+
+var _onImgLoaded = function( e ) {
+	var $imgs = $( 'img' ).filter( '[ data-src="' + e.item.src + '" ]' );
+	_setImages.call( this, $imgs, e.item.src, 'preloaded' );
+};
+
+
+var _setImages = function( $imgs, src, dataSrc ) {
+	var $img;
+	
+	for ( var i = 0; i < $imgs.length; i++ ) {
+		$img		= $imgs[ i ];
+		$img.src	= src !== null ? src : $img.getAttribute( 'data-src' );
+		
+		$img.offsetHeight; // jshint ignore:line
+		$img.setAttribute( 'data-src', dataSrc );
+	}
+};
+
+
+var _onAssetsLoaded = function() {
+	_showNonLoadedImages.call( this );
+	
+	
+	// first load
+	if ( this.isFirstLoad ) {
+		STF.MainView.initAfterAssetsLoaded();
+		
+		this.page.init();
+		
+		this.page.bind( this.page.E.SHOWN, this.onPageShown, this );
+		this.page.show();
+		
+		// this.mainLoader.bind( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden, this );
+		MainLoader.bind( MainLoader.E.HIDDEN, this.onMainLoaderHidden, this );
+		
+		if ( this.IS_HIDE_INIT )
+			// this.mainLoader.hideInit();
+			MainLoader.hideInit();
+		
+		else
+			// this.mainLoader.hide();
+			MainLoader.hide();
+	}
+	
+	
+	// page change load
+	else if ( !this.isFirstLoad && ( this.LOADING_MODE == 'byPageStatic' || this.LOADING_MODE == 'byPageDynamic' ) ) {
+		this.isAssetsLoaded = true;
+		
+		this.checkPageHiding();
+	}
+};
+
+
+var _showNonLoadedImages = function() {
+	var $imgsCont = this.isFirstLoad ? STF.MainView.$body : STF.MainView.$pageCont;
+	
+	var $imgs = $imgsCont.find( 'img' ).filter( function() {
+		return this.getAttribute( 'data-lazyload' ) != 'true' && this.getAttribute( 'data-src' ) != 'preloaded';
+	} );
+	
+	_setImages.call( this, $imgs, null, 'non-preloaded' );
+};
+
+
+AbstractPagesController.prototype.changePage = function( url ) {
+	STF.Router.updateGA();
+	
+	if ( STF.Config.NEED_PAGE_ID )
+		_setPageId.call( this, url );
+	
+	_disablePageChange.call( this );
+	this.initPageChangeValues();
+	
+	if ( this.LOADING_MODE == 'allStatic' )
+		this.isAssetsLoaded = true;
+	
+	_loadContent.call( this, url );
+	
+	this.managePageHidingTransitions();
+};
+
+
+AbstractPagesController.prototype.changeSearch = function() {
+	this.page.updateSearch();
+};
+
+
+AbstractPagesController.prototype.changeHash = function() {
+	this.page.updateHash();
+};
+
+
+var _loadContent = function( url ) {
+	// setTimeout( function() { // simulate a very slow connection = very long load
+	
+	$.ajax({
+		context:	this,
+		url:		url,
+		type:		'POST',
+		data:		{
+						// useful if need differents behavior on PHP file when AJAX load
+						// can be got with $_POST['ajax'] & $_POST['type']
+						ajax: 'true',
+						type: 'pageChange'
+					},
+		dataType:	'html',
+		success:	_onContentLoaded.bind( this ),
+		error:		_onContentError.bind( this )
+	});
+	
+	// }.bind( this ), 3000 ); // simulate a very slow connection = very long load
+};
+
+
+var _onContentLoaded = function( data ) {
+	this.data = data;
+	
+	this.isContentLoaded = true;
+	this.checkPageHiding();
+};
+
+
+var _onContentError = function( e ) {
+	console.warn( 'Ajax loading error', e );
+	
+	if ( e.status == 404 )
+		_force404Load.call( this );
+};
+
+
+var _force404Load = function() {
+	var lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/' : '';
+	var url		= STF.Path.URL.base + lang + '404';
+	
+	_loadContent.call( this, url );
+};
+
+
+AbstractPagesController.prototype.managePageHidingTransitions = function() {
+	this.page.bind( this.page.E.HIDDEN, this.onPageHidden, this );
+	this.page.hide();
+	
+	// this.mainLoader.bind( this.mainLoader.E.SHOWN, this.onMainLoaderShown, this );
+	// this.mainLoader.show();
+	MainLoader.bind( MainLoader.E.SHOWN, this.onMainLoaderShown, this );
+	MainLoader.show();
+};
+
+
+AbstractPagesController.prototype.onPageHidden = function() {
+	this.page.unbind( this.page.E.HIDDEN, this.onPageHidden, this );
+	
+	_destroyPage.call( this );
+	
+	this.isPageHidden = true;
+	this.checkPageHiding();
+};
+
+
+var _destroyPage = function() {
+	this.page.destroy();
+	this.page = null;
+};
+
+
+AbstractPagesController.prototype.onMainLoaderShown = function() {
+	// this.mainLoader.unbind( this.mainLoader.E.SHOWN, this.onMainLoaderShown, this );
+	MainLoader.unbind( MainLoader.E.SHOWN, this.onMainLoaderShown, this );
+	
+	this.isMainLoaderShown = true;
+	this.checkPageHiding();
+};
+
+
+AbstractPagesController.prototype.checkPageHiding = function() {
+	if ( this. LOADING_MODE == 'allStatic' &&
+		 this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
+		
+		this.setContent();
+		this.showPage();
+	}
+	
+	else if ( ( this. LOADING_MODE == 'byPageStatic' || this. LOADING_MODE == 'byPageDynamic' ) &&
+			  this.isContentLoaded && !this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
+		
+		this.setContent();
+	}
+	
+	else if ( ( this. LOADING_MODE == 'byPageStatic' || this. LOADING_MODE == 'byPageDynamic' ) &&
+			  this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
+		
+		this.showPage();
+	}
+};
+
+
+AbstractPagesController.prototype.setContent = function() {
+	STF.MainView.$pageCont[0].innerHTML = this.data;
+	
+	_setPageInfos.call( this );
+	
+	if ( this. LOADING_MODE != 'allStatic' ) {
+		STF_resetImgs( STF.MainView.$pageCont.find( 'img' ) );
+		setTimeout( function() { _loadAssets.call( this ); }.bind( this ), 0 );
+	}
+	
+	this.data = null;
+};
+
+
+AbstractPagesController.prototype.showPage = function() {
+	this.manageMenuLinks();
+	_updateTitle.call( this );
+	
+	this.page.init();
+	
+	this.managePageShowingTransitions();
+};
+
+
+AbstractPagesController.prototype.managePageShowingTransitions = function() {
+	this.page.bind( this.page.E.SHOWN, this.onPageShown, this );
+	this.page.show();
+	
+	// this.mainLoader.bind( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden, this );
+	// this.mainLoader.hide();
+	MainLoader.bind( MainLoader.E.HIDDEN, this.onMainLoaderHidden, this );
+	MainLoader.hide();
+};
+
+
+AbstractPagesController.prototype.onPageShown = function() {
+	this.page.unbind( this.page.E.SHOWN, this.onPageShown, this );
+	
+	this.isPageShown = true;
+	this.checkPageShowing();
+};
+
+
+AbstractPagesController.prototype.onMainLoaderHidden = function() {
+	// this.mainLoader.unbind( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden, this );
+	MainLoader.unbind( MainLoader.E.HIDDEN, this.onMainLoaderHidden, this );
+	
+	this.isMainLoaderHidden = true;
+	this.checkPageShowing();
+};
+
+
+AbstractPagesController.prototype.checkPageShowing = function() {
+	if ( this.isPageShown && this.isMainLoaderHidden )
+		this.enablePageChange();
+};
+
+
+AbstractPagesController.prototype.manageMenuLinks = function() {
+	
+};
+
+
+AbstractPagesController.prototype.updateMenuLinks = function( $link ) {
+	var $linkToInactivate	= $link.filter( '.active' );
+	var $linkToActivate		= $link.filter( '[ data-link-id="' + this.pageInfos.id + '" ]' );
+	
+	if ( $linkToInactivate.length > 0 )
+		STF_dom_removeClass( $linkToInactivate[0], 'active' );
+	if ( $linkToActivate.length )
+		STF_dom_addClass( $linkToActivate[0], 'active' );
+};
+
+
+AbstractPagesController.prototype.manageLangLinks = function() {
+	
+};
+
+
+AbstractPagesController.prototype.changeLangLinks = function( $links ) {
+	var $link;
+	
+	for ( var i = 0; i < $links.length; i++ ) {
+		$link		= $links[ i ];
+		$link.href	= STF.Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
+	}
+};
+
+
+var _updateTitle = function() {
+	document.title = this.pageInfos.title;
+};
+
+
+AbstractPagesController.prototype.enablePageChange = function() {
+	this.isPageChange = false;
+	
+	if ( this.isFirstLoad )
+		this.isFirstLoad = false;
+	
+	STF.Router.checkUrlCorrespondence();
+};
+
+
+var _disablePageChange = function() {
+	this.isPageChange = true;
+};
+
+
+module.exports = AbstractPagesController;
+
+
+},{"desktop/models/Assets":5,"desktop/views/pages/Error404":7,"desktop/views/pages/Home":8,"desktop/views/pages/LegalNotices":9,"desktop/views/pages/Project":10,"desktop/views/pages/Projects":11,"desktop/views/statics/MainLoader":12,"shared/events/CustomEvent":22}],14:[function(require,module,exports){
+'use strict';
+
+
+var AbstractView = require( 'shared/abstracts/views/AbstractView' );
+
+
+
+function AbstractMainLoader() {
+	AbstractView.call( this );
+	
+	this.E = {
+		PROGRESS:	'progress',
+		FILE_LOAD:	'fileLoad',
+		COMPLETE:	'complete',
+		SHOWN:		'shown',
+		HIDDEN:		'hidden'
+	};
+}
+
+
+AbstractMainLoader.prototype				= Object.create( AbstractView.prototype );
+AbstractMainLoader.prototype.constructor	= AbstractMainLoader;
+
+
+AbstractMainLoader.prototype.init = function() {
+	AbstractView.prototype.init.call( this );
+	
+	_instanceAssetsLoader.call( this );
+};
+
+
+AbstractMainLoader.prototype.initDOM = function() {
+	
+};
+
+
+AbstractMainLoader.prototype.initTl = function() {
+	
+};
+
+
+AbstractMainLoader.prototype.resize = function() {
+	AbstractView.prototype.resize.call( this );
+};
+
+
+var _instanceAssetsLoader = function() {
+	this.assetsLoader = new STF.Loader( true, true );
+	this.assetsLoader.init();
+	
+	this.assetsLoader.bind( this.assetsLoader.E.PROGRESS, this.onProgress, this );
+	this.assetsLoader.bind( this.assetsLoader.E.FILE_LOAD, _onFileLoad, this );
+	this.assetsLoader.bind( this.assetsLoader.E.COMPLETE, _onComplete, this );
+};
+
+
+AbstractMainLoader.prototype.loadAssets = function( aAssetsToLoad ) {
+	// console.log( aAssetsToLoad );
+	
+	this.assetsLoader.startLoad( aAssetsToLoad );
+};
+
+
+AbstractMainLoader.prototype.onProgress = function( percentage ) {
+	
+};
+
+
+var _onFileLoad = function( e ) {
+	this.dispatch( this.E.FILE_LOAD, e );
+};
+
+
+var _onComplete = function( data ) {
+	this.dispatch( this.E.COMPLETE, data );
+};
+
+
+module.exports = AbstractMainLoader;
+
+
+},{"shared/abstracts/views/AbstractView":16}],15:[function(require,module,exports){
+'use strict';
+
+
+var AbstractView	= require( 'shared/abstracts/views/AbstractView' );
+var Path			= require( 'shared/configs/Path' );
+
+// var MainLoader		= require( 'desktop/views/statics/MainLoader' );
+// var Header			= require( 'desktop/views/statics/Header' );
+var PagesController	= require( 'desktop/controllers/PagesController' );
+
+
+
+function AbstractMainView() {
+	AbstractView.call( this );
+	
+	this.E = {
+		RESIZE:			'resize',
+		RAF:			'raf',
+		MOUSE_MOVE:		'mousemove',
+		MOUSE_DOWN:		'mousedown',
+		MOUSE_UP:		'mouseup',
+		TOUCH_MOVE:		'touchmove',
+		TOUCH_START:	'touchstart',
+		TOUCH_END:		'touchend',
+		WINDOW_OUT:		'windowout',
+		WINDOW_IN:		'windowin'
+	};
+	
+	this.bW		= null; // body width
+	this.bH		= null; // body height
+	this.wW		= null; // window width
+	this.wH		= null; // window height
+	this.cX		= null; // center X
+	this.cY		= null; // center Y
+	this.sY		= null; // scroll Y
+	this.siY	= null; // scroll inertia Y
+	this.mX		= null; // mouse X
+	this.mY		= null; // mouse Y
+	this.miX	= null; // mouse inertia X
+	this.miY	= null; // mouse inertia Y
+	this.tX		= null; // touch X
+	this.tY		= null; // touch Y
+	
+	this.SCROLL_INERTIA		= 0.07;
+	this.MOUSE_INERTIA		= 0.03;
+	
+	this.isWindowFocused	= true;
+}
+
+
+AbstractMainView.prototype				= Object.create( AbstractView.prototype );
+AbstractMainView.prototype.constructor	= AbstractMainView;
+
+
+AbstractMainView.prototype.init = function() {
+	this.initDOM();
+	this.initEl();
+	this.initTl();
+	this.bindEvents();
+	
+	this.initStaticsViews();
+	
+	this.resize();
+};
+
+
+AbstractMainView.prototype.initDOM = function() {
+	this.$window	= $( window );
+	this.$body		= $( document.body );
+	this.$mainCont	= $( document.getElementById( 'main-container' ) );
+	this.$pageCont	= $( document.getElementById( 'page-container' ) );
+};
+
+
+AbstractMainView.prototype.initEl = function() {
+	Path.overwriteSpecialPaths( this.$mainCont[0].getAttribute( 'data-assets-base-url' ) );
+};
+
+
+AbstractMainView.prototype.bindEvents = function() {
+	this.$window.on( 'resize', $.proxy( this.resize, this ) );
+	// TweenLite.ticker.addEventListener( 'tick', this.raf, this );
+	// this.$window.on( 'mousemove', $.proxy( this.mouseMove, this ) );
+	// this.$window.on( 'mousedown', $.proxy( this.mouseDown, this ) );
+	// this.$window.on( 'mouseup', $.proxy( this.mouseUp, this ) );
+	// this.$window.on( 'touchmove', $.proxy( this.touchMove, this ) );
+	// this.$window.on( 'touchstart', $.proxy( this.touchStart, this ) );
+	// this.$window.on( 'touchend', $.proxy( this.touchEnd, this ) );
+	// this.$window.on( 'blur', $.proxy( this.windowOut, this ) );
+	// this.$window.on( 'focus', $.proxy( this.windowIn, this ) );
+};
+
+
+AbstractMainView.prototype.initStaticsViews = function() {
+	// STF.Views.Statics.MainLoader.init();
+	// STF.Views.Statics.Header.init();
+	// STF.Views.Statics.Footer.init();
+	
+	
+	// var MainLoader = require( 'desktop/views/statics/MainLoader' );
+	// console.log( MainLoader );
+	// MainLoader.init();
+	// Header.init();
+	// STF.Views.Statics.Footer.init();
+	
+	console.log( PagesController );
+	
+	STF_dom_removeClass( this.$mainCont[0], 'preload' );
+};
+
+
+AbstractMainView.prototype.disableScrollRestoration = function() {
+	if ( 'scrollRestoration' in history )
+		history.scrollRestoration = 'manual';
+};
+
+
+AbstractMainView.prototype.resize = function() {
+	_setResizeProps.call( this );
+	
+	this.dispatch( this.E.RESIZE );
+};
+
+
+var _setResizeProps = function() {
+	this.bW = this.$body.width();
+	this.bH = this.$body.height();
+	this.wW = this.$window.width();
+	this.wH = this.$window.height();
+	this.cX = Math.round( this.bW / 2 );
+	this.cY = Math.round( this.wH / 2 );
+	
+	if ( this.mX === null && this.mY === null ) {
+		this.mX = this.cX;
+		this.mY = this.cY;
+	}
+};
+
+
+AbstractMainView.prototype.raf = function() {
+	if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
+		STF.Utils.FPSStats.begin();
+	
+	
+	_setRafProps.call( this );
+	
+	this.dispatch( this.E.RAF );
+	
+	
+	if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
+		STF.Utils.FPSStats.end();
+	
+	if ( STF.Config.HAS_MEMORY_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
+		STF.Utils.MemoryStats.update();
+};
+
+
+var _setRafProps = function() {
+	this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
+	this.siY	= STF_math_getInertia( this.sY, this.siY, this.SCROLL_INERTIA );
+	
+	this.miX	= STF_math_getInertia( this.mX, this.miX, this.MOUSE_INERTIA );
+	this.miY	= STF_math_getInertia( this.mY, this.miY, this.MOUSE_INERTIA );
+};
+
+
+AbstractMainView.prototype.mouseMove = function( e ) {
+	this.mX = e.clientX;
+	this.mY = e.clientY;
+	
+	// console.log( 'AbstractMainView _mouseMove()', this.mX, this.mY );
+	
+	this.dispatch( this.E.MOUSE_MOVE );
+};
+
+
+AbstractMainView.prototype.mouseDown = function() {
+	this.dispatch( this.E.MOUSE_DOWN );
+};
+
+
+AbstractMainView.prototype.mouseUp = function() {
+	this.dispatch( this.E.MOUSE_UP );
+};
+
+
+AbstractMainView.prototype.touchMove = function( e ) {
+	e.preventDefault();
+	
+	// Zepto
+	this.tX = e.touches[0].pageX;
+	this.tY = e.touches[0].pageY;
+	// jQuery
+	// this.tX = e.originalEvent.touches[0].pageX;
+	// this.tY = e.originalEvent.touches[0].pageY;
+	
+	this.dispatch( this.E.TOUCH_MOVE );
+};
+
+
+AbstractMainView.prototype.touchStart = function() {
+	this.dispatch( this.E.TOUCH_START );
+};
+
+
+AbstractMainView.prototype.touchEnd = function() {
+	this.dispatch( this.E.TOUCH_END );
+};
+
+
+AbstractMainView.prototype.windowOut = function() {
+	this.isWindowFocused = false;
+	
+	this.dispatch( this.E.WINDOW_OUT );
+};
+
+
+AbstractMainView.prototype.windowIn = function() {
+	this.isWindowFocused = true;
+	
+	this.dispatch( this.E.WINDOW_IN );
+};
+
+
+AbstractMainView.prototype.setScrollY = function( scrollY ) {
+	this.sY		= scrollY;
+	this.siY	= scrollY;
+	
+	this.$window[0].scrollTo( 0, scrollY );
+};
+
+
+AbstractMainView.prototype.setBodyHeight = function( bodyH ) {
+	if ( bodyH === null )
+		bodyH = this.$pageCont.height();
+	
+	this.$body[0].style.height = bodyH + 'px';
+};
+
+
+AbstractMainView.prototype.initAfterAssetsLoaded = function() {
+	
+};
+
+
+module.exports = AbstractMainView;
+
+
+},{"desktop/controllers/PagesController":4,"shared/abstracts/views/AbstractView":16,"shared/configs/Path":20}],16:[function(require,module,exports){
+'use strict';
+
+
+var CustomEvent	= require( 'shared/events/CustomEvent' );
+// var MainView	= require( 'desktop/views/MainView' );
+
+
+
+function AbstractView() {
+	CustomEvent.call( this );
+	
+	this.E		= {
+		SHOW:	'show',
+		SHOWN:	'shown',
+		HIDE:	'hide',
+		HIDDEN:	'hidden'
+	};
+	
+	this.tw		= {};
+	this.tl		= {};
+	
+	this.isInit	= false;
+}
+
+
+AbstractView.prototype				= Object.create( CustomEvent.prototype );
+AbstractView.prototype.constructor	= AbstractView;
+
+
+AbstractView.prototype.init = function() {
+	this.initDOM();
+	this.initEl();
+	this.initTl();
+	this.bindEvents();
+	
+	this.resize();
+};
+
+
+AbstractView.prototype.initDOM = function() {
+	// console.log( 'AbstractView.initDOM() — ', this.constructor.name );
+};
+
+
+AbstractView.prototype.initEl = function() {
+	// console.log( 'AbstractView.initEl() — ', this.constructor.name );
+};
+
+
+AbstractView.prototype.initTl = function() {
+	// console.log( 'AbstractView.initTl() — ', this.constructor.name );
+};
+
+
+AbstractView.prototype.bindEvents = function() {
+	// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
+	
+	// STF.MainView.bind( STF.MainView.E.RESIZE, this.resize, this );
+	// MainView.bind( MainView.E.RESIZE, this.resize, this );
+};
+
+
+AbstractView.prototype.unbindEvents = function() {
+	// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
+	
+	// STF.MainView.unbind( STF.MainView.E.RESIZE, this.resize, this );
+	// MainView.unbind( MainView.E.RESIZE, this.resize, this );
+};
+
+
+AbstractView.prototype.initView = function() {
+	// console.log( 'AbstractView.initView() — ', this.constructor.name );
+	
+	this.isInit = true;
+};
+
+
+AbstractView.prototype.show = function() {
+	// console.log( 'AbstractView.show() — ', this.constructor.name );
+};
+
+
+AbstractView.prototype.hide = function() {
+	// console.log( 'AbstractView.hide() — ', this.constructor.name );
+};
+
+
+AbstractView.prototype.resize = function() {
+	// console.log( 'AbstractView.resize() — ', this.constructor.name );
+};
+
+
+AbstractView.prototype.raf = function() {
+	// console.log( 'AbstractView.raf() — ', this.constructor.name );
+};
+
+
+AbstractView.prototype.destroy = function() {
+	this.isInit = false;
+	
+	this.unbindEvents();
+	
+	this.destroyGSAP();
+};
+
+
+AbstractView.prototype.destroyGSAP = function() {
+	/* tween */
+	for ( var tween in this.tw )
+		this.killTween( tween );
+	
+	/* timeline */
+	for ( var timeline in this.tl )
+		this.killTimeline( timeline );
+	
+	this.tl = {};
+	this.tw = {};
+};
+
+
+AbstractView.prototype.killTween = function( twName ) {
+	if ( !this.tw[ twName ] )
+		return;
+	
+	this.tw[ twName ].kill();
+	
+	this.tw[ twName ] = null;
+};
+
+
+AbstractView.prototype.killTimeline = function( tlName ) {
+	if ( !this.tl[ tlName ] )
+		return;
+	
+	this.tl[ tlName ].stop();
+	this.tl[ tlName ].clear();
+	this.tl[ tlName ].kill();
+	
+	this.tl[ tlName ] = null;
+};
+
+
+/**
+ * Change the url
+ * @params {object or string} e: most of time is an object when it come from a click on a link,
+ *								 but if you need to force a specific url you can directly pass a string
+ */
+AbstractView.prototype.changeUrl = function( e ) {
+	if ( STF.Props.HAS_PUSHSTATE ) { // if pushstate supported
+		var url;
+		
+		if ( typeof e == 'object' ) {
+			e.preventDefault();
+			
+			url = e.currentTarget.href;
+		}
+		else if ( typeof e == 'string' )
+			url = e;
+		
+		STF.Router.updateUrl( url );
+	}
+};
+
+
+AbstractView.prototype.updateSearch = function() {
+	if ( !STF.Config.IS_PROD )
+		console.warn( 'You need to override the updateSearch() method from AbstractView in the current page view.' );
+};
+
+
+AbstractView.prototype.updateHash = function() {
+	if ( !STF.Config.IS_PROD )
+		console.warn( 'You need to override the updateHash() method from AbstractView in the current page view.' );
+};
+
+
+module.exports = AbstractView;
+
+
+},{"shared/events/CustomEvent":22}],17:[function(require,module,exports){
 'use strict';
 
 
@@ -216,7 +1793,7 @@ Config.prototype.setMemoryStats = function( isSet ) {
 module.exports = new Config();
 
 
-},{}],4:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 
@@ -243,6 +1820,7 @@ Device.prototype.init = function() {
 	_setDevice.call( this );
 };
 
+
 var _setDevice = function() {
 	for ( var varName in STF_Device )
 		this[ varName ] = STF_Device[ varName ];
@@ -252,7 +1830,7 @@ var _setDevice = function() {
 module.exports = new Device();
 
 
-},{}],5:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
 
@@ -313,11 +1891,11 @@ var _setLangLinks = function() {
 module.exports = new Lang();
 
 
-},{"shared/configs/Config":3,"shared/routes/Router":9}],6:[function(require,module,exports){
+},{"shared/configs/Config":17,"shared/routes/Router":23}],20:[function(require,module,exports){
 'use strict';
 
 
-var Config	= require( 'shared/configs/Config' );
+var Config		= require( 'shared/configs/Config' );
 
 
 
@@ -353,8 +1931,10 @@ var _setPaths = function() {
 };
 
 
-Path.prototype.overwriteSpecialPaths = function() {
-	var assetsBaseUrl = STF.MainView.$mainCont[0].getAttribute( 'data-assets-base-url' );
+Path.prototype.overwriteSpecialPaths = function( assetsBaseUrl ) {
+	if ( !assetsBaseUrl )
+		return;
+	
 	
 	for ( var key in this.URL )
 		this.URL[ key ] = this.URL[ key ].replace( 'assets/', assetsBaseUrl );
@@ -364,7 +1944,7 @@ Path.prototype.overwriteSpecialPaths = function() {
 module.exports = new Path();
 
 
-},{"shared/configs/Config":3}],7:[function(require,module,exports){
+},{"shared/configs/Config":17}],21:[function(require,module,exports){
 'use strict';
 
 
@@ -396,7 +1976,7 @@ var _setProperties = function() {
 module.exports = new Props();
 
 
-},{}],8:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 
 
@@ -486,7 +2066,7 @@ CustomEvent.prototype.dispatch = function( name, params ) {
 module.exports = CustomEvent;
 
 
-},{"shared/configs/Config":3,"signals":17}],9:[function(require,module,exports){
+},{"shared/configs/Config":17,"signals":31}],23:[function(require,module,exports){
 'use strict';
 
 
@@ -698,7 +2278,7 @@ Router.prototype.updateGA = function() {
 module.exports = new Router();
 
 
-},{"shared/configs/Path":6,"shared/events/CustomEvent":8,"shared/utils/String":14}],10:[function(require,module,exports){
+},{"shared/configs/Path":20,"shared/events/CustomEvent":22,"shared/utils/String":28}],24:[function(require,module,exports){
 'use strict';
 
 
@@ -779,7 +2359,7 @@ DatGUI.prototype._function = function() {
 module.exports = new DatGUI();
 
 
-},{"dat.gui":15}],11:[function(require,module,exports){
+},{"dat.gui":29}],25:[function(require,module,exports){
 'use strict';
 
 
@@ -827,7 +2407,7 @@ var _initDatGUI = function( isSet ) {
 module.exports = new Debug();
 
 
-},{"shared/configs/Config":3,"shared/utils/DatGUI":10,"shared/utils/FPSStats":12,"shared/utils/MemoryStats":13}],12:[function(require,module,exports){
+},{"shared/configs/Config":17,"shared/utils/DatGUI":24,"shared/utils/FPSStats":26,"shared/utils/MemoryStats":27}],26:[function(require,module,exports){
 'use strict';
 
 
@@ -868,7 +2448,7 @@ FPSStats.prototype.end = function() {
 module.exports = new FPSStats();
 
 
-},{"stats":18}],13:[function(require,module,exports){
+},{"stats":32}],27:[function(require,module,exports){
 'use strict';
 
 
@@ -901,7 +2481,7 @@ MemoryStats.prototype.update = function() {
 module.exports = new MemoryStats();
 
 
-},{"memory-stats":16}],14:[function(require,module,exports){
+},{"memory-stats":30}],28:[function(require,module,exports){
 'use strict';
 
 
@@ -1014,7 +2594,7 @@ String.prototype.getParams = function( string, type ) {
 module.exports = new String();
 
 
-},{"shared/configs/Path":6}],15:[function(require,module,exports){
+},{"shared/configs/Path":20}],29:[function(require,module,exports){
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -5307,7 +6887,7 @@ return /******/ (function(modules) { // webpackBootstrap
 });
 ;
 
-},{}],16:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /**
  * @author mrdoob / http://mrdoob.com/
  * @author jetienne / http://jetienne.com/
@@ -5443,7 +7023,7 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports = MemoryStats;
 }
 
-},{}],17:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 /*jslint onevar:true, undef:true, newcap:true, regexp:true, bitwise:true, maxerr:50, indent:4, white:false, nomen:false, plusplus:false */
 /*global define:false, require:false, exports:false, module:false, signals:false */
 
@@ -5890,7 +7470,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 }(this));
 
-},{}],18:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /**
  * @author mrdoob / http://mrdoob.com/
  */
@@ -6067,7 +7647,7 @@ if ( typeof module === 'object' ) {
 
 }
 
-},{}],19:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 (function (global){
 ; var __browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /* Zepto v1.2.0 - zepto event ajax form ie - zeptojs.com/license */

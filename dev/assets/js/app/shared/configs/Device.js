@@ -24,6 +24,7 @@ Device.prototype.init = function() {
 	_setDevice.call( this );
 };
 
+
 var _setDevice = function() {
 	for ( var varName in STF_Device )
 		this[ varName ] = STF_Device[ varName ];

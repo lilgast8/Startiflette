@@ -1,7 +1,7 @@
 'use strict';
 
 
-var Config	= require( 'shared/configs/Config' );
+var Config		= require( 'shared/configs/Config' );
 
 
 
@@ -37,8 +37,10 @@ var _setPaths = function() {
 };
 
 
-Path.prototype.overwriteSpecialPaths = function() {
-	var assetsBaseUrl = STF.MainView.$mainCont[0].getAttribute( 'data-assets-base-url' );
+Path.prototype.overwriteSpecialPaths = function( assetsBaseUrl ) {
+	if ( !assetsBaseUrl )
+		return;
+	
 	
 	for ( var key in this.URL )
 		this.URL[ key ] = this.URL[ key ].replace( 'assets/', assetsBaseUrl );
