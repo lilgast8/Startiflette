@@ -25,7 +25,8 @@ var plumber		= require( 'gulp-plumber' );
 var browserify	= require( 'browserify' );
 var watchify	= require( 'watchify' );
 var source		= require( 'vinyl-source-stream' );
-// var buffer		= require( 'vinyl-buffer' );
+var buffer		= require( 'vinyl-buffer' );
+var sourcemaps	= require( 'gulp-sourcemaps' );
 
 var assign		= require( 'lodash.assign' );
 
@@ -47,7 +48,7 @@ gulp.task( 'js', function() {
 							paths.env.dev + paths.assets.js.app.dir,
 							paths.env.dev + paths.assets.js.vendor.dir
 						],
-		// debug: 			true,
+		debug: 			true,
 		
 		transform: [
 			// browserifyShim,
@@ -77,10 +78,10 @@ function bundle( b ) {
 		.on( 'error', gutil.log.bind( gutil, 'Browserify Error' ) )
 		.pipe( source( 'scripts.js' ) )
 		// optional, remove if you don't need to buffer file contents
-		// .pipe( buffer() )
+		.pipe( buffer() )
 		// optional, remove if you dont want sourcemaps
-		// .pipe( sourcemaps.init( {loadMaps: true} ) ) // loads map from browserify file
+		.pipe( sourcemaps.init( { loadMaps: true } ) ) // loads map from browserify file
 			// Add transformation tasks to the pipeline here.
-		// .pipe( sourcemaps.write('./') ) // writes .map file
+		.pipe( sourcemaps.write( './' ) ) // writes .map file
 		.pipe( gulp.dest( paths.env.dev + paths.assets.js.dir ) );
 }
