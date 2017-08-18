@@ -50,7 +50,7 @@ AbstractPageView.prototype.initTl = function() {
 
 
 AbstractPageView.prototype.show = function() {
-	// if ( STF.PagesController.isFirstLoad )
+	// if ( PagesController.isFirstLoad )
 	// 	this.tl.showPage.progress(1);
 		
 	// else

@@ -27,5 +27,5 @@ MemoryStats.prototype.update = function() {
 };
 
 
-module.exports = new MemoryStats();
+module.exports = MemoryStats;
 

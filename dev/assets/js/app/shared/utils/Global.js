@@ -2,12 +2,12 @@
 
 
 
-function Global() {
+function GlobalUtil() {
 	this.color = {};
 }
 
 
-Global.prototype.encryptMailto = function( el, address, domain, end, replaceContent ) {
+GlobalUtil.prototype.encryptMailto = function( el, address, domain, end, replaceContent ) {
 	var className	= el.className;
 	var mailto		= 'mailto';
 	var separator	= ':';
@@ -21,7 +21,7 @@ Global.prototype.encryptMailto = function( el, address, domain, end, replaceCont
 };
 
 
-Global.prototype.getObjSize = function( obj ) {
+GlobalUtil.prototype.getObjSize = function( obj ) {
 	var size = 0;
 	
 	for ( var key in obj )
@@ -33,10 +33,10 @@ Global.prototype.getObjSize = function( obj ) {
 };
 
 
-Global.prototype.getType = function( obj ) {
+GlobalUtil.prototype.getType = function( obj ) {
 	return ({}).toString.call( obj ).match( /\s([a-z|A-Z]+)/ )[1].toLowerCase();
 };
 
 
-module.exports = new Global();
+module.exports = new GlobalUtil();
 

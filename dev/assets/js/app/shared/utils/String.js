@@ -5,12 +5,12 @@ var Path = require( 'shared/configs/Path' );
 
 
 
-function String() {
+function StringUtil() {
 	
 }
 
 
-String.prototype.removeFirstSpecificChar = function ( string, char ) {
+StringUtil.prototype.removeFirstSpecificChar = function ( string, char ) {
 	if ( string.substr( 0, 1 ) == char )
 		string = string.substr( 1 );
 	
@@ -19,7 +19,7 @@ String.prototype.removeFirstSpecificChar = function ( string, char ) {
 };
 
 
-String.prototype.removeLastSpecificChar = function ( string, char ) {
+StringUtil.prototype.removeLastSpecificChar = function ( string, char ) {
 	if ( string.substr( string.length - 1, 1 ) == char )
 		string = string.substr( 0, string.length - 1 );
 	
@@ -28,7 +28,7 @@ String.prototype.removeLastSpecificChar = function ( string, char ) {
 };
 
 
-String.prototype.convertToUrl = function( string ) {
+StringUtil.prototype.convertToUrl = function( string ) {
 	var link	= document.createElement( 'a' );
 	link.href	= string;
 	
@@ -37,7 +37,7 @@ String.prototype.convertToUrl = function( string ) {
 };
 
 
-String.prototype.getPath = function( string, baseUrl ) {
+StringUtil.prototype.getPath = function( string, baseUrl ) {
 	if ( baseUrl === null || baseUrl === undefined )
 		baseUrl = Path.URL.base;
 	
@@ -54,7 +54,7 @@ String.prototype.getPath = function( string, baseUrl ) {
 };
 
 
-String.prototype.getSearch = function( string ) {
+StringUtil.prototype.getSearch = function( string ) {
 	var url		= this.convertToUrl( string );
 	
 	var search	= url.search.split( '?' )[1] || '';
@@ -67,7 +67,7 @@ String.prototype.getSearch = function( string ) {
 };
 
 
-String.prototype.getHash = function( string ) {
+StringUtil.prototype.getHash = function( string ) {
 	var url		= this.convertToUrl( string );
 	
 	var hash	= url.hash.split( '#' )[1] || '';
@@ -80,7 +80,7 @@ String.prototype.getHash = function( string ) {
 };
 
 
-String.prototype.getParams = function( string, type ) {
+StringUtil.prototype.getParams = function( string, type ) {
 	var url		= this.convertToUrl( string );
 	
 	var params	= {};
@@ -107,5 +107,5 @@ String.prototype.getParams = function( string, type ) {
 };
 
 
-module.exports = new String();
+module.exports = new StringUtil();
 

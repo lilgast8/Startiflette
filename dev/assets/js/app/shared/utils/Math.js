@@ -2,12 +2,12 @@
 
 
 
-function Math() {
+function MathUtil() {
 	
 }
 
 
-Math.prototype.getElPos = function( elW, elH, contW, contH ) {
+MathUtil.prototype.getElPos = function( elW, elH, contW, contH ) {
 	var elRatio		= elW / elH;
 	var contRatio	= contW / contH;
 	var pos			= {
@@ -32,7 +32,7 @@ Math.prototype.getElPos = function( elW, elH, contW, contH ) {
 };
 
 
-Math.prototype.getCropPos = function( elW, elH, contW, contH ) {
+MathUtil.prototype.getCropPos = function( elW, elH, contW, contH ) {
 	var elRatio		= elW / elH;
 	var contRatio	= contW / contH;
 	var pos			= {
@@ -57,22 +57,22 @@ Math.prototype.getCropPos = function( elW, elH, contW, contH ) {
 };
 
 
-Math.prototype.degToRad = function( deg ) {
+MathUtil.prototype.degToRad = function( deg ) {
 	return deg * Math.PI / 180;
 };
 
 
-Math.prototype.radToDeg = function( rad ) {
+MathUtil.prototype.radToDeg = function( rad ) {
 	return rad * 180 / Math.PI;
 };
 
 
-Math.prototype.getHypotenuse = function( widthA, widthB ) {
+MathUtil.prototype.getHypotenuse = function( widthA, widthB ) {
 	return Math.sqrt( widthA * widthA + widthB * widthB );
 };
 
 
-Math.prototype.getInertia = function( destValue, value, inertia ) {
+MathUtil.prototype.getInertia = function( destValue, value, inertia ) {
 	var valueToAdd	= Math.abs ( ( destValue - value ) * inertia ) >= 0.01 ? ( destValue - value ) * inertia : destValue - value;
 	value			+= valueToAdd;
 	
@@ -80,5 +80,5 @@ Math.prototype.getInertia = function( destValue, value, inertia ) {
 };
 
 
-module.exports = new Math();
+module.exports = new MathUtil();
 

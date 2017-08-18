@@ -28,17 +28,9 @@ App.prototype.init = function() {
 	Router.setUrl( null );
 	Lang.init();
 	Debug.init( false, false, false );
-	// PagesController.init();
-	// MainView.init();
-	// STF.Router.init();
-	
 	PagesController.init();
 	MainView.init();
-	// GlobalController.init();
-	
-	// Router.bindEvents();
 	Router.init();
-	
 	PagesController.initFirstPage();
 };
 

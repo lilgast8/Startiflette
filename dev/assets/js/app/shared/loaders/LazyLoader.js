@@ -4,7 +4,7 @@
 var CustomEvent	= require( 'shared/events/CustomEvent' );
 var Loader		= require( 'shared/loaders/Loader' );
 
-var STF_DOM	= require( 'shared/utils/DOM' );
+var DOMUtil		= require( 'shared/utils/DOM' );
 
 
 
@@ -101,7 +101,7 @@ LazyLoader.prototype.onImgLoad = function( e ) {
 		$img.setAttribute( 'data-src', 'lazyloaded' );
 		
 		if ( this.PARENT_EL !== null )
-			STF_DOM.addClass( $( $imgs[ i ] ).parent( this.PARENT_EL )[0], 'loaded' );
+			DOMUtil.addClass( $( $imgs[ i ] ).parent( this.PARENT_EL )[0], 'loaded' );
 	}
 };
 

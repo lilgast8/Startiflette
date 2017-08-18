@@ -1,9 +1,12 @@
 'use strict';
 
 
-var PagesController	= require( 'desktop/controllers/PagesController' );
+// var PagesController	= require( 'desktop/controllers/PagesController' );
+var MainView		= require( 'desktop/views/MainView' );
 
-var STF_Global	= require( 'shared/utils/Global' );
+var GlobalUtil		= require( 'shared/utils/Global' );
+
+var Config			= require( 'shared/configs/Config' );
 
 
 
@@ -83,7 +86,7 @@ var _addStaticAssetsToLoad = function( type, aAssetsToLoad, aListIds ) {
 		var fileId;
 		if ( assetsList !== undefined )
 			for ( var id in assetsList ) {
-				fileId = STF_Global.getType( assetsList ) === 'object' ? id : null;
+				fileId = GlobalUtil.getType( assetsList ) === 'object' ? id : null;
 				
 				_addAsset.call( this, aAssetsToLoad, fileId, assetsList[ id ] );
 			}
@@ -95,8 +98,10 @@ var _addStaticAssetsToLoad = function( type, aAssetsToLoad, aListIds ) {
 
 
 var _addDynamicAssetsToLoad = function( isFirstLoad, aAssetsToLoad ) {
-	var $dynamicImgs = isFirstLoad ? STF.MainView.$mainCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD ) :
-									 STF.MainView.$pageCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD );
+	var PagesController	= require( 'desktop/controllers/PagesController' );
+	
+	var $dynamicImgs = isFirstLoad ? MainView.$mainCont.find( PagesController.DYNAMIC_IMG_TO_LOAD ) :
+									 MainView.$pageCont.find( PagesController.DYNAMIC_IMG_TO_LOAD );
 	
 	for ( var i = 0; i < $dynamicImgs.length; i++ )
 		if ( $dynamicImgs[ i ].getAttribute( 'data-lazyload' ) != 'true' )
@@ -115,7 +120,7 @@ var _addAsset = function( aAssetsToLoad, id, assetUrl ) {
 			id:		id,
 			src:	assetUrl
 		} );
-	else if ( !STF.Config.IS_PROD )
+	else if ( !Config.IS_PROD )
 		console.warn( 'AbstractAssets:' + assetUrl + ' already added to the loading assets list!' );
 };
 

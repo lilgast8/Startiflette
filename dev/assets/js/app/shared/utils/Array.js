@@ -2,7 +2,7 @@
 
 
 
-function Array() {
+function ArrayUtil() {
 	
 }
 
@@ -14,7 +14,7 @@ function Array() {
  * @params {string, number, int or array} item: value or array of values
  * @return {array} array: new array
  */
-Array.prototype.insert = function( array, index, item ) {
+ArrayUtil.prototype.insert = function( array, index, item ) {
 	if ( typeof item != 'object' )
 		array.splice( index, 0, item );
 	
@@ -28,5 +28,5 @@ Array.prototype.insert = function( array, index, item ) {
 };
 	
 	
-module.exports = new Array();
+module.exports = new ArrayUtil();
 

@@ -5,12 +5,12 @@ var Props = require( 'shared/configs/Props' );
 
 
 
-function DOM() {
+function DOMUtil() {
 	
 }
 
 
-DOM.prototype.addClass = function( el, classToAdd ) {
+DOMUtil.prototype.addClass = function( el, classToAdd ) {
 	if ( el.classList )
 		el.classList.add( classToAdd );
 	else {
@@ -20,7 +20,7 @@ DOM.prototype.addClass = function( el, classToAdd ) {
 };
 
 
-DOM.prototype.removeClass = function( el, classToRemove ) {
+DOMUtil.prototype.removeClass = function( el, classToRemove ) {
 	if ( el.classList )
 		el.classList.remove( classToRemove );
 	else {
@@ -33,12 +33,12 @@ DOM.prototype.removeClass = function( el, classToRemove ) {
 };
 
 
-DOM.prototype.resetClass = function( el ) {
+DOMUtil.prototype.resetClass = function( el ) {
 	el.className = '';
 };
 
 
-DOM.prototype.hasClass = function( el, classToCheck ) {
+DOMUtil.prototype.hasClass = function( el, classToCheck ) {
 	var hasClass;
 	
 	if ( el.classList )
@@ -50,12 +50,12 @@ DOM.prototype.hasClass = function( el, classToCheck ) {
 };
 
 
-DOM.prototype.resetStyle = function( el ) {
+DOMUtil.prototype.resetStyle = function( el ) {
 	el.style.cssText = '';
 };
 
 
-DOM.prototype.setTranslate = function( el, x, y ) {
+DOMUtil.prototype.setTranslate = function( el, x, y ) {
 	x = x === null ? 0 : x;
 	y = y === null ? 0 : y;
 	
@@ -66,5 +66,5 @@ DOM.prototype.setTranslate = function( el, x, y ) {
 };
 
 
-module.exports = new DOM();
+module.exports = new DOMUtil();
 

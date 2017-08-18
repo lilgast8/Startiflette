@@ -1,7 +1,8 @@
 'use strict';
 
 
-var AbstractPageView = require( 'desktop/abstracts/views/AbstractPageView' );
+var AbstractPageView	= require( 'desktop/abstracts/views/AbstractPageView' );
+// var GlobalUtil			= require( 'shared/utils/Global' );
 
 
 
@@ -19,7 +20,7 @@ LegalNotices.prototype.initDOM = function() {
 	
 	this.$email	= this.$page.find( '.email' );
 	
-	// STF_gl_encryptMailto( this.$.email, 'contact', 'domain', 'com', true );
+	// GlobalUtil.encryptMailto( this.$.email, 'contact', 'domain', 'com', true );
 };
 
 

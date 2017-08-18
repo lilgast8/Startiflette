@@ -19,7 +19,7 @@ var Config			= require( 'shared/configs/Config' );
 var AbstractPageView = require( 'desktop/abstracts/views/AbstractPageView' );
 var Router			= require( 'shared/routes/Router' );
 
-var STF_DOM	= require( 'shared/utils/DOM' );
+var DOMUtil			= require( 'shared/utils/DOM' );
 
 var MainView		= require( 'desktop/views/MainView' );
 
@@ -76,17 +76,7 @@ AbstractPagesController.prototype.initPages = function() {
 
 
 AbstractPagesController.prototype.initEl = function() {
-	// this.assetsModel = AssetsModel;
-	// this.assetsModel.init();
-	
 	AssetsModel.init();
-	
-	// var AssetsModel		= require( 'desktop/models/Assets' );
-	// this.assetsModel = new AssetsModel();
-	// this.assetsModel.init();
-	
-	// this.mainLoader = STF.Views.Statics.MainLoader;
-	
 	MainLoader.init();
 	Header.init();
 	Footer.init();
@@ -444,9 +434,9 @@ AbstractPagesController.prototype.updateMenuLinks = function( $link ) {
 	var $linkToActivate		= $link.filter( '[ data-link-id="' + this.pageInfos.id + '" ]' );
 	
 	if ( $linkToInactivate.length > 0 )
-		STF_DOM.removeClass( $linkToInactivate[0], 'active' );
+		DOMUtil.removeClass( $linkToInactivate[0], 'active' );
 	if ( $linkToActivate.length )
-		STF_DOM.addClass( $linkToActivate[0], 'active' );
+		DOMUtil.addClass( $linkToActivate[0], 'active' );
 };
 
 

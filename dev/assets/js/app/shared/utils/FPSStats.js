@@ -35,5 +35,5 @@ FPSStats.prototype.end = function() {
 };
 
 
-module.exports = new FPSStats();
+module.exports = FPSStats;
 

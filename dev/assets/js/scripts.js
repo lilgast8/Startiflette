@@ -29,17 +29,9 @@ App.prototype.init = function() {
 	Router.setUrl( null );
 	Lang.init();
 	Debug.init( false, false, false );
-	// PagesController.init();
-	// MainView.init();
-	// STF.Router.init();
-	
 	PagesController.init();
 	MainView.init();
-	// GlobalController.init();
-	
-	// Router.bindEvents();
 	Router.init();
-	
 	PagesController.initFirstPage();
 };
 
@@ -64,10 +56,6 @@ function Main() {}
 
 Main.prototype.init = function() {
 	var app = new App();
-	// var ra;
-	// var asdd;
-	// console.log( '⚡️ SLP ⚡️' );
-	// window.STF = app;
 	app.init();
 };
 
@@ -75,77 +63,12 @@ Main.prototype.init = function() {
 var main = new Main();
 
 $( main.init.bind( main ) );
-// $( STF.Main.init.bind( STF.Main ) );
 
 
-
-/*
-STF.Main = ( function( window ) {
-	'use strict';
-	
-	
-	function Main() {
-		
-	}
-	
-	
-	Main.prototype.init = function() {
-		STF.Config.init();
-		STF.Props.init();
-		STF.Device.init();
-		STF.Path.init();
-		STF.Lang.init();
-		
-		_initDebug.call( this );
-		
-		STF.PagesController.init();
-		STF.MainView.init();
-		STF.Router.init();
-		
-		// this.$window.on( 'load', $.proxy( _windowLoad, this ) );
-	};
-	
-	
-	var _initDebug = function() {
-		_initFPSStats.call( this, false );
-		_initMemoryStats.call( this, false );
-		_initDatGUI.call( this, false );
-	};
-	
-	
-	var _initFPSStats = function( isSet ) {
-		STF.Config.setFPSStats( isSet );
-		
-		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.FPSStats.init();
-	};
-	
-	
-	var _initMemoryStats = function( isSet ) {
-		STF.Config.setMemoryStats( isSet );
-		
-		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.MemoryStats.init();
-	};
-	
-	
-	var _initDatGUI = function( isSet ) {
-		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.DatGUI.init();
-	};
-	
-	
-	return new Main();
-	
-	
-} ) ( window );
+// module.exports = main;
 
 
-$( STF.Main.init.bind( STF.Main ) );
-*/
-
-
-},{"App":1,"greensock/TweenMax":37,"zepto":42}],3:[function(require,module,exports){
+},{"App":1,"greensock/TweenMax":38,"zepto":43}],3:[function(require,module,exports){
 'use strict';
 
 
@@ -198,7 +121,7 @@ AbstractPageView.prototype.initTl = function() {
 
 
 AbstractPageView.prototype.show = function() {
-	// if ( STF.PagesController.isFirstLoad )
+	// if ( PagesController.isFirstLoad )
 	// 	this.tl.showPage.progress(1);
 		
 	// else
@@ -508,7 +431,8 @@ module.exports = Home;
 'use strict';
 
 
-var AbstractPageView = require( 'desktop/abstracts/views/AbstractPageView' );
+var AbstractPageView	= require( 'desktop/abstracts/views/AbstractPageView' );
+// var GlobalUtil			= require( 'shared/utils/Global' );
 
 
 
@@ -526,7 +450,7 @@ LegalNotices.prototype.initDOM = function() {
 	
 	this.$email	= this.$page.find( '.email' );
 	
-	// STF_gl_encryptMailto( this.$.email, 'contact', 'domain', 'com', true );
+	// GlobalUtil.encryptMailto( this.$.email, 'contact', 'domain', 'com', true );
 };
 
 
@@ -711,7 +635,7 @@ module.exports = new Header();
 var AbstractMainLoader	= require( 'shared/abstracts/views/AbstractMainLoader' );
 
 var Props				= require( 'shared/configs/Props' );
-var STF_DOM				= require( 'shared/utils/DOM' );
+var DOMUtil				= require( 'shared/utils/DOM' );
 
 
 
@@ -796,7 +720,7 @@ MainLoader.prototype.hide = function() {
 var _onHideInitComplete = function() {
 	this.killTimeline( 'hideInit' );
 	
-	STF_DOM.removeClass( this.$loader[0], 'init' );
+	DOMUtil.removeClass( this.$loader[0], 'init' );
 	this.$loader[0].style.display = 'none';
 	
 	this.dispatch( this.E.HIDDEN );
@@ -844,7 +768,7 @@ var Config			= require( 'shared/configs/Config' );
 var AbstractPageView = require( 'desktop/abstracts/views/AbstractPageView' );
 var Router			= require( 'shared/routes/Router' );
 
-var STF_DOM	= require( 'shared/utils/DOM' );
+var DOMUtil			= require( 'shared/utils/DOM' );
 
 var MainView		= require( 'desktop/views/MainView' );
 
@@ -901,17 +825,7 @@ AbstractPagesController.prototype.initPages = function() {
 
 
 AbstractPagesController.prototype.initEl = function() {
-	// this.assetsModel = AssetsModel;
-	// this.assetsModel.init();
-	
 	AssetsModel.init();
-	
-	// var AssetsModel		= require( 'desktop/models/Assets' );
-	// this.assetsModel = new AssetsModel();
-	// this.assetsModel.init();
-	
-	// this.mainLoader = STF.Views.Statics.MainLoader;
-	
 	MainLoader.init();
 	Header.init();
 	Footer.init();
@@ -1269,9 +1183,9 @@ AbstractPagesController.prototype.updateMenuLinks = function( $link ) {
 	var $linkToActivate		= $link.filter( '[ data-link-id="' + this.pageInfos.id + '" ]' );
 	
 	if ( $linkToInactivate.length > 0 )
-		STF_DOM.removeClass( $linkToInactivate[0], 'active' );
+		DOMUtil.removeClass( $linkToInactivate[0], 'active' );
 	if ( $linkToActivate.length )
-		STF_DOM.addClass( $linkToActivate[0], 'active' );
+		DOMUtil.addClass( $linkToActivate[0], 'active' );
 };
 
 
@@ -1317,9 +1231,12 @@ module.exports = AbstractPagesController;
 'use strict';
 
 
-var PagesController	= require( 'desktop/controllers/PagesController' );
+// var PagesController	= require( 'desktop/controllers/PagesController' );
+var MainView		= require( 'desktop/views/MainView' );
 
-var STF_Global	= require( 'shared/utils/Global' );
+var GlobalUtil		= require( 'shared/utils/Global' );
+
+var Config			= require( 'shared/configs/Config' );
 
 
 
@@ -1399,7 +1316,7 @@ var _addStaticAssetsToLoad = function( type, aAssetsToLoad, aListIds ) {
 		var fileId;
 		if ( assetsList !== undefined )
 			for ( var id in assetsList ) {
-				fileId = STF_Global.getType( assetsList ) === 'object' ? id : null;
+				fileId = GlobalUtil.getType( assetsList ) === 'object' ? id : null;
 				
 				_addAsset.call( this, aAssetsToLoad, fileId, assetsList[ id ] );
 			}
@@ -1411,8 +1328,10 @@ var _addStaticAssetsToLoad = function( type, aAssetsToLoad, aListIds ) {
 
 
 var _addDynamicAssetsToLoad = function( isFirstLoad, aAssetsToLoad ) {
-	var $dynamicImgs = isFirstLoad ? STF.MainView.$mainCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD ) :
-									 STF.MainView.$pageCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD );
+	var PagesController	= require( 'desktop/controllers/PagesController' );
+	
+	var $dynamicImgs = isFirstLoad ? MainView.$mainCont.find( PagesController.DYNAMIC_IMG_TO_LOAD ) :
+									 MainView.$pageCont.find( PagesController.DYNAMIC_IMG_TO_LOAD );
 	
 	for ( var i = 0; i < $dynamicImgs.length; i++ )
 		if ( $dynamicImgs[ i ].getAttribute( 'data-lazyload' ) != 'true' )
@@ -1431,7 +1350,7 @@ var _addAsset = function( aAssetsToLoad, id, assetUrl ) {
 			id:		id,
 			src:	assetUrl
 		} );
-	else if ( !STF.Config.IS_PROD )
+	else if ( !Config.IS_PROD )
 		console.warn( 'AbstractAssets:' + assetUrl + ' already added to the loading assets list!' );
 };
 
@@ -1444,7 +1363,7 @@ AbstractAssets.prototype.setJsonData = function( id, data ) {
 module.exports = AbstractAssets;
 
 
-},{"desktop/controllers/PagesController":4,"shared/utils/Global":33}],17:[function(require,module,exports){
+},{"desktop/controllers/PagesController":4,"desktop/views/MainView":6,"shared/configs/Config":20,"shared/utils/Global":33}],17:[function(require,module,exports){
 'use strict';
 
 
@@ -1539,6 +1458,12 @@ var Path			= require( 'shared/configs/Path' );
 // var Header			= require( 'desktop/views/statics/Header' );
 // var PagesController	= require( 'desktop/controllers/PagesController' );
 
+var DOMUtil		= require( 'shared/utils/DOM' );
+var MathUtil	= require( 'shared/utils/Math' );
+
+var Config		= require( 'shared/configs/Config' );
+var Debug		= require( 'shared/utils/Debug' );
+
 
 
 function AbstractMainView() {
@@ -1591,7 +1516,7 @@ AbstractMainView.prototype.init = function() {
 	this.initEl();
 	this.bindEvents();
 	
-	this.initStaticsViews();
+	DOMUtil.removeClass( this.$mainCont[0], 'preload' );
 	
 	this.resize();
 };
@@ -1624,17 +1549,6 @@ AbstractMainView.prototype.bindEvents = function() {
 };
 
 
-AbstractMainView.prototype.initStaticsViews = function() {
-	// STF.Views.Statics.MainLoader.init();
-	// STF.Views.Statics.Header.init();
-	// STF.Views.Statics.Footer.init();
-	
-	console.log( 'AbstractMainView.🦊' );
-	
-	// STF_dom_removeClass( this.$mainCont[0], 'preload' );
-};
-
-
 AbstractMainView.prototype.disableScrollRestoration = function() {
 	if ( 'scrollRestoration' in history )
 		history.scrollRestoration = 'manual';
@@ -1664,8 +1578,8 @@ var _setResizeProps = function() {
 
 
 AbstractMainView.prototype.raf = function() {
-	if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-		STF.Utils.FPSStats.begin();
+	if ( Config.HAS_FPS_STATS && ( Config.IS_DEV || Config.IS_PREPROD_LOCAL ) )
+		Debug.fpsStats.begin();
 	
 	
 	_setRafProps.call( this );
@@ -1673,20 +1587,20 @@ AbstractMainView.prototype.raf = function() {
 	this.dispatch( this.E.RAF );
 	
 	
-	if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-		STF.Utils.FPSStats.end();
+	if ( Config.HAS_FPS_STATS && ( Config.IS_DEV || Config.IS_PREPROD_LOCAL ) )
+		Debug.fpsStats.end();
 	
-	if ( STF.Config.HAS_MEMORY_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-		STF.Utils.MemoryStats.update();
+	if ( Config.HAS_MEMORY_STATS && ( Config.IS_DEV || Config.IS_PREPROD_LOCAL ) )
+		Debug.memoryStats.update();
 };
 
 
 var _setRafProps = function() {
 	this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
-	this.siY	= STF_math_getInertia( this.sY, this.siY, this.SCROLL_INERTIA );
+	this.siY	= MathUtil.getInertia( this.sY, this.siY, this.SCROLL_INERTIA );
 	
-	this.miX	= STF_math_getInertia( this.mX, this.miX, this.MOUSE_INERTIA );
-	this.miY	= STF_math_getInertia( this.mY, this.miY, this.MOUSE_INERTIA );
+	this.miX	= MathUtil.getInertia( this.mX, this.miX, this.MOUSE_INERTIA );
+	this.miY	= MathUtil.getInertia( this.mY, this.miY, this.MOUSE_INERTIA );
 };
 
 
@@ -1772,7 +1686,7 @@ AbstractMainView.prototype.initAfterAssetsLoaded = function() {
 module.exports = AbstractMainView;
 
 
-},{"shared/configs/Path":23,"shared/events/CustomEvent":25}],19:[function(require,module,exports){
+},{"shared/configs/Config":20,"shared/configs/Path":23,"shared/events/CustomEvent":25,"shared/utils/DOM":29,"shared/utils/Debug":31,"shared/utils/Math":34}],19:[function(require,module,exports){
 'use strict';
 
 
@@ -2080,8 +1994,6 @@ Lang.prototype.init = function() {
 	_setCurrentLang.call( this );
 	_checkDefaultLang.call( this );
 	_setLangLinks.call( this );
-	
-	console.log( this );
 };
 
 
@@ -2298,14 +2210,14 @@ CustomEvent.prototype.dispatch = function( name, params ) {
 module.exports = CustomEvent;
 
 
-},{"shared/configs/Config":20,"signals":40}],26:[function(require,module,exports){
+},{"shared/configs/Config":20,"signals":41}],26:[function(require,module,exports){
 'use strict';
 
 
 var CustomEvent	= require( 'shared/events/CustomEvent' );
 var Loader		= require( 'shared/loaders/Loader' );
 
-var STF_DOM	= require( 'shared/utils/DOM' );
+var DOMUtil		= require( 'shared/utils/DOM' );
 
 
 
@@ -2402,7 +2314,7 @@ LazyLoader.prototype.onImgLoad = function( e ) {
 		$img.setAttribute( 'data-src', 'lazyloaded' );
 		
 		if ( this.PARENT_EL !== null )
-			STF_DOM.addClass( $( $imgs[ i ] ).parent( this.PARENT_EL )[0], 'loaded' );
+			DOMUtil.addClass( $( $imgs[ i ] ).parent( this.PARENT_EL )[0], 'loaded' );
 	}
 };
 
@@ -2534,7 +2446,7 @@ var _onError = function( e ) {
 module.exports = Loader;
 
 
-},{"preloadjs":39,"shared/events/CustomEvent":25}],28:[function(require,module,exports){
+},{"preloadjs":40,"shared/events/CustomEvent":25}],28:[function(require,module,exports){
 'use strict';
 
 
@@ -2542,7 +2454,7 @@ var CustomEvent	= require( 'shared/events/CustomEvent' );
 var Path		= require( 'shared/configs/Path' );
 var MainView	= require( 'desktop/views/MainView' );
 
-var STF_String	= require( 'shared/utils/String' );
+var StringUtil	= require( 'shared/utils/String' );
 
 var Config		= require( 'shared/configs/Config' );
 
@@ -2575,15 +2487,13 @@ Router.prototype.setUrl = function( url ) {
 // Router.prototype.init = function() {
 	this.URL.full			= _getFullUrl.call( this, url );
 	// this.URL.full			= window.location.href;
-	this.URL.path			= STF_String.getPath( this.URL.full );
+	this.URL.path			= StringUtil.getPath( this.URL.full );
 	this.URL.pathParams		= this.URL.path.split( '/' );
-	this.URL.search			= STF_String.getSearch( this.URL.full );
-	this.URL.searchParams	= STF_String.getParams( this.URL.full, 'search' );
-	this.URL.hash			= STF_String.getHash( this.URL.full );
-	this.URL.hashParams		= STF_String.getParams( this.URL.full, 'hash' );
+	this.URL.search			= StringUtil.getSearch( this.URL.full );
+	this.URL.searchParams	= StringUtil.getParams( this.URL.full, 'search' );
+	this.URL.hash			= StringUtil.getHash( this.URL.full );
+	this.URL.hashParams		= StringUtil.getParams( this.URL.full, 'hash' );
 	this.URL.fullGA			= _getFullGaUrl.call( this );
-	
-	console.log( this.URL );
 };
 
 
@@ -2609,32 +2519,14 @@ var _getFullGaUrl = function () {
 
 
 Router.prototype.init = function() {
-// Router.prototype.init2 = function() {
 	_bindEvents.call( this );
-	
-	// STF.PagesController.initFirstPage();
 };
 
 
 var _bindEvents = function() {
-// Router.prototype.bindEvents = function() {
 	MainView.$window.on( 'popstate', $.proxy( _onPopState, this ) );
 	MainView.$window.on( 'hashchange', $.proxy( _onHashChange, this ) );
 };
-
-
-/*var _getLangExistence = function() {
-	var langExist = true;
-	
-	if ( STF.Lang.ALL_LANG.indexOf( STF.Lang.LANG ) == -1 ) {
-		STF.Lang.LANG = STF.Lang.DEFAULT_LANG;
-		
-		langExist = false;
-	}
-	
-	
-	return langExist;
-};*/
 
 
 var _setIsHomepage = function( pageId ) {
@@ -2724,19 +2616,19 @@ var _setUrlPartChange = function( url ) {
 
 
 var _isPageChanged = function( url ) {
-	var nextPath		= STF_String.getPath( url );
+	var nextPath		= StringUtil.getPath( url );
 	this.isPageChange	= this.URL.path != nextPath;
 };
 
 
 var _isSearchChanged = function( url ) {
-	var nextSearch		= STF_String.getSearch( url );
+	var nextSearch		= StringUtil.getSearch( url );
 	this.isSearchChange	= this.URL.search != nextSearch;
 };
 
 
 var _isHashChanged = function( url ) {
-	var nextHash		= STF_String.getHash( url );
+	var nextHash		= StringUtil.getHash( url );
 	this.isHashChange	= this.URL.hash != nextHash;
 };
 
@@ -2769,7 +2661,7 @@ Router.prototype.updateGA = function() {
 module.exports = new Router();
 
 
-},{"desktop/controllers/PagesController":4,"desktop/views/MainView":6,"shared/configs/Config":20,"shared/configs/Lang":22,"shared/configs/Path":23,"shared/events/CustomEvent":25,"shared/utils/String":35}],29:[function(require,module,exports){
+},{"desktop/controllers/PagesController":4,"desktop/views/MainView":6,"shared/configs/Config":20,"shared/configs/Lang":22,"shared/configs/Path":23,"shared/events/CustomEvent":25,"shared/utils/String":36}],29:[function(require,module,exports){
 'use strict';
 
 
@@ -2777,12 +2669,12 @@ var Props = require( 'shared/configs/Props' );
 
 
 
-function DOM() {
+function DOMUtil() {
 	
 }
 
 
-DOM.prototype.addClass = function( el, classToAdd ) {
+DOMUtil.prototype.addClass = function( el, classToAdd ) {
 	if ( el.classList )
 		el.classList.add( classToAdd );
 	else {
@@ -2792,7 +2684,7 @@ DOM.prototype.addClass = function( el, classToAdd ) {
 };
 
 
-DOM.prototype.removeClass = function( el, classToRemove ) {
+DOMUtil.prototype.removeClass = function( el, classToRemove ) {
 	if ( el.classList )
 		el.classList.remove( classToRemove );
 	else {
@@ -2805,12 +2697,12 @@ DOM.prototype.removeClass = function( el, classToRemove ) {
 };
 
 
-DOM.prototype.resetClass = function( el ) {
+DOMUtil.prototype.resetClass = function( el ) {
 	el.className = '';
 };
 
 
-DOM.prototype.hasClass = function( el, classToCheck ) {
+DOMUtil.prototype.hasClass = function( el, classToCheck ) {
 	var hasClass;
 	
 	if ( el.classList )
@@ -2822,12 +2714,12 @@ DOM.prototype.hasClass = function( el, classToCheck ) {
 };
 
 
-DOM.prototype.resetStyle = function( el ) {
+DOMUtil.prototype.resetStyle = function( el ) {
 	el.style.cssText = '';
 };
 
 
-DOM.prototype.setTranslate = function( el, x, y ) {
+DOMUtil.prototype.setTranslate = function( el, x, y ) {
 	x = x === null ? 0 : x;
 	y = y === null ? 0 : y;
 	
@@ -2838,7 +2730,7 @@ DOM.prototype.setTranslate = function( el, x, y ) {
 };
 
 
-module.exports = new DOM();
+module.exports = new DOMUtil();
 
 
 },{"shared/configs/Props":24}],30:[function(require,module,exports){
@@ -2919,10 +2811,10 @@ DatGUI.prototype._function = function() {
 };
 
 
-module.exports = new DatGUI();
+module.exports = DatGUI;
 
 
-},{"dat.gui":36}],31:[function(require,module,exports){
+},{"dat.gui":37}],31:[function(require,module,exports){
 'use strict';
 
 
@@ -2934,7 +2826,9 @@ var DatGUI		= require( 'shared/utils/DatGUI' );
 
 
 function Debug() {
-	
+	this.fpsStats		= null;
+	this.memoryStats	= null;
+	this.datGui			= null;
 }
 
 
@@ -2948,29 +2842,35 @@ Debug.prototype.init = function( isInitFPSStats, isInitMemoryStats, isInitDatGUI
 var _initFPSStats = function( isSet ) {
 	Config.setFPSStats( isSet );
 	
-	if ( isSet && ( Config.IS_DEV || Config.IS_PREPROD_LOCAL ) )
-		FPSStats.init();
+	if ( isSet && ( Config.IS_DEV || Config.IS_PREPROD_LOCAL ) ) {
+		this.fpsStats = new FPSStats();
+		this.fpsStats.init();
+	}
 };
 
 
 var _initMemoryStats = function( isSet ) {
 	Config.setMemoryStats( isSet );
 	
-	if ( isSet && ( Config.IS_DEV || Config.IS_PREPROD_LOCAL ) )
-		MemoryStats.init();
+	if ( isSet && ( Config.IS_DEV || Config.IS_PREPROD_LOCAL ) ) {
+		this.memoryStats = new MemoryStats();
+		this.memoryStats.init();
+	}
 };
 
 
 var _initDatGUI = function( isSet ) {
-	if ( isSet && ( Config.IS_DEV || Config.IS_PREPROD_LOCAL ) )
-		DatGUI.init();
+	if ( isSet && ( Config.IS_DEV || Config.IS_PREPROD_LOCAL ) ) {
+		this.datGui = new DatGUI();
+		this.datGui.init();
+	}
 };
 
 
 module.exports = new Debug();
 
 
-},{"shared/configs/Config":20,"shared/utils/DatGUI":30,"shared/utils/FPSStats":32,"shared/utils/MemoryStats":34}],32:[function(require,module,exports){
+},{"shared/configs/Config":20,"shared/utils/DatGUI":30,"shared/utils/FPSStats":32,"shared/utils/MemoryStats":35}],32:[function(require,module,exports){
 'use strict';
 
 
@@ -3008,20 +2908,20 @@ FPSStats.prototype.end = function() {
 };
 
 
-module.exports = new FPSStats();
+module.exports = FPSStats;
 
 
-},{"stats":41}],33:[function(require,module,exports){
+},{"stats":42}],33:[function(require,module,exports){
 'use strict';
 
 
 
-function Global() {
+function GlobalUtil() {
 	this.color = {};
 }
 
 
-Global.prototype.encryptMailto = function( el, address, domain, end, replaceContent ) {
+GlobalUtil.prototype.encryptMailto = function( el, address, domain, end, replaceContent ) {
 	var className	= el.className;
 	var mailto		= 'mailto';
 	var separator	= ':';
@@ -3035,7 +2935,7 @@ Global.prototype.encryptMailto = function( el, address, domain, end, replaceCont
 };
 
 
-Global.prototype.getObjSize = function( obj ) {
+GlobalUtil.prototype.getObjSize = function( obj ) {
 	var size = 0;
 	
 	for ( var key in obj )
@@ -3047,15 +2947,101 @@ Global.prototype.getObjSize = function( obj ) {
 };
 
 
-Global.prototype.getType = function( obj ) {
+GlobalUtil.prototype.getType = function( obj ) {
 	return ({}).toString.call( obj ).match( /\s([a-z|A-Z]+)/ )[1].toLowerCase();
 };
 
 
-module.exports = new Global();
+module.exports = new GlobalUtil();
 
 
 },{}],34:[function(require,module,exports){
+'use strict';
+
+
+
+function MathUtil() {
+	
+}
+
+
+MathUtil.prototype.getElPos = function( elW, elH, contW, contH ) {
+	var elRatio		= elW / elH;
+	var contRatio	= contW / contH;
+	var pos			= {
+		x: 0,
+		y: 0,
+		w: 0,
+		h: 0
+	};
+	
+	if ( elRatio < contRatio ) {
+		pos.w = contW;
+		pos.h = Math.round( pos.w / elRatio );
+		pos.y = Math.round( - ( pos.h - contH ) / 2 );
+	}
+	else {
+		pos.h = contH;
+		pos.w = Math.round ( pos.h * elRatio );
+		pos.x = Math.round ( - ( pos.w - contW ) / 2 );
+	}
+	
+	return pos;
+};
+
+
+MathUtil.prototype.getCropPos = function( elW, elH, contW, contH ) {
+	var elRatio		= elW / elH;
+	var contRatio	= contW / contH;
+	var pos			= {
+		x: 0,
+		y: 0,
+		w: 0,
+		h: 0
+	};
+	
+	if ( elRatio < contRatio ) {
+		pos.w = elW;
+		pos.h = Math.round( pos.w / contRatio );
+		pos.y = Math.round( - ( pos.h - elH ) / 2 );
+	}
+	else {
+		pos.h = elH;
+		pos.w = Math.round ( pos.h * contRatio );
+		pos.x = Math.round ( - ( pos.w - elW ) / 2 );
+	}
+	
+	return pos;
+};
+
+
+MathUtil.prototype.degToRad = function( deg ) {
+	return deg * Math.PI / 180;
+};
+
+
+MathUtil.prototype.radToDeg = function( rad ) {
+	return rad * 180 / Math.PI;
+};
+
+
+MathUtil.prototype.getHypotenuse = function( widthA, widthB ) {
+	return Math.sqrt( widthA * widthA + widthB * widthB );
+};
+
+
+MathUtil.prototype.getInertia = function( destValue, value, inertia ) {
+	var valueToAdd	= Math.abs ( ( destValue - value ) * inertia ) >= 0.01 ? ( destValue - value ) * inertia : destValue - value;
+	value			+= valueToAdd;
+	
+	return value;
+};
+
+
+module.exports = new MathUtil();
+
+
+},{}],35:[function(require,module,exports){
 'use strict';
 
 
@@ -3085,10 +3071,10 @@ MemoryStats.prototype.update = function() {
 };
 
 
-module.exports = new MemoryStats();
+module.exports = MemoryStats;
 
 
-},{"memory-stats":38}],35:[function(require,module,exports){
+},{"memory-stats":39}],36:[function(require,module,exports){
 'use strict';
 
 
@@ -3096,12 +3082,12 @@ var Path = require( 'shared/configs/Path' );
 
 
 
-function String() {
+function StringUtil() {
 	
 }
 
 
-String.prototype.removeFirstSpecificChar = function ( string, char ) {
+StringUtil.prototype.removeFirstSpecificChar = function ( string, char ) {
 	if ( string.substr( 0, 1 ) == char )
 		string = string.substr( 1 );
 	
@@ -3110,7 +3096,7 @@ String.prototype.removeFirstSpecificChar = function ( string, char ) {
 };
 
 
-String.prototype.removeLastSpecificChar = function ( string, char ) {
+StringUtil.prototype.removeLastSpecificChar = function ( string, char ) {
 	if ( string.substr( string.length - 1, 1 ) == char )
 		string = string.substr( 0, string.length - 1 );
 	
@@ -3119,7 +3105,7 @@ String.prototype.removeLastSpecificChar = function ( string, char ) {
 };
 
 
-String.prototype.convertToUrl = function( string ) {
+StringUtil.prototype.convertToUrl = function( string ) {
 	var link	= document.createElement( 'a' );
 	link.href	= string;
 	
@@ -3128,7 +3114,7 @@ String.prototype.convertToUrl = function( string ) {
 };
 
 
-String.prototype.getPath = function( string, baseUrl ) {
+StringUtil.prototype.getPath = function( string, baseUrl ) {
 	if ( baseUrl === null || baseUrl === undefined )
 		baseUrl = Path.URL.base;
 	
@@ -3145,7 +3131,7 @@ String.prototype.getPath = function( string, baseUrl ) {
 };
 
 
-String.prototype.getSearch = function( string ) {
+StringUtil.prototype.getSearch = function( string ) {
 	var url		= this.convertToUrl( string );
 	
 	var search	= url.search.split( '?' )[1] || '';
@@ -3158,7 +3144,7 @@ String.prototype.getSearch = function( string ) {
 };
 
 
-String.prototype.getHash = function( string ) {
+StringUtil.prototype.getHash = function( string ) {
 	var url		= this.convertToUrl( string );
 	
 	var hash	= url.hash.split( '#' )[1] || '';
@@ -3171,7 +3157,7 @@ String.prototype.getHash = function( string ) {
 };
 
 
-String.prototype.getParams = function( string, type ) {
+StringUtil.prototype.getParams = function( string, type ) {
 	var url		= this.convertToUrl( string );
 	
 	var params	= {};
@@ -3198,10 +3184,10 @@ String.prototype.getParams = function( string, type ) {
 };
 
 
-module.exports = new String();
+module.exports = new StringUtil();
 
 
-},{"shared/configs/Path":23}],36:[function(require,module,exports){
+},{"shared/configs/Path":23}],37:[function(require,module,exports){
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -7494,7 +7480,7 @@ return /******/ (function(modules) { // webpackBootstrap
 });
 ;
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (global){
 /*!
  * VERSION: 1.19.0
@@ -15298,7 +15284,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 })((typeof(module) !== "undefined" && module.exports && typeof(global) !== "undefined") ? global : this || window, "TweenMax");
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 /**
  * @author mrdoob / http://mrdoob.com/
  * @author jetienne / http://jetienne.com/
@@ -15434,7 +15420,7 @@ if (typeof module !== "undefined" && module.exports) {
 	module.exports = MemoryStats;
 }
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 (function (global){
 ; var __browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
@@ -22743,7 +22729,7 @@ this.createjs = this.createjs || {};
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 /*jslint onevar:true, undef:true, newcap:true, regexp:true, bitwise:true, maxerr:50, indent:4, white:false, nomen:false, plusplus:false */
 /*global define:false, require:false, exports:false, module:false, signals:false */
 
@@ -23190,7 +23176,7 @@ this.createjs = this.createjs || {};
 
 }(this));
 
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 /**
  * @author mrdoob / http://mrdoob.com/
  */
@@ -23367,7 +23353,7 @@ if ( typeof module === 'object' ) {
 
 }
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 (function (global){
 ; var __browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /* Zepto v1.2.0 - zepto event ajax form ie - zeptojs.com/license */

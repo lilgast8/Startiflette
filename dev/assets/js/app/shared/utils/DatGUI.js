@@ -75,5 +75,5 @@ DatGUI.prototype._function = function() {
 };
 
 
-module.exports = new DatGUI();
+module.exports = DatGUI;
 

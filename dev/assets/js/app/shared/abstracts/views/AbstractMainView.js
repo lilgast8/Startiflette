@@ -9,6 +9,12 @@ var Path			= require( 'shared/configs/Path' );
 // var Header			= require( 'desktop/views/statics/Header' );
 // var PagesController	= require( 'desktop/controllers/PagesController' );
 
+var DOMUtil		= require( 'shared/utils/DOM' );
+var MathUtil	= require( 'shared/utils/Math' );
+
+var Config		= require( 'shared/configs/Config' );
+var Debug		= require( 'shared/utils/Debug' );
+
 
 
 function AbstractMainView() {
@@ -61,7 +67,7 @@ AbstractMainView.prototype.init = function() {
 	this.initEl();
 	this.bindEvents();
 	
-	this.initStaticsViews();
+	DOMUtil.removeClass( this.$mainCont[0], 'preload' );
 	
 	this.resize();
 };
@@ -94,17 +100,6 @@ AbstractMainView.prototype.bindEvents = function() {
 };
 
 
-AbstractMainView.prototype.initStaticsViews = function() {
-	// STF.Views.Statics.MainLoader.init();
-	// STF.Views.Statics.Header.init();
-	// STF.Views.Statics.Footer.init();
-	
-	console.log( 'AbstractMainView.🦊' );
-	
-	// STF_dom_removeClass( this.$mainCont[0], 'preload' );
-};
-
-
 AbstractMainView.prototype.disableScrollRestoration = function() {
 	if ( 'scrollRestoration' in history )
 		history.scrollRestoration = 'manual';
@@ -134,8 +129,8 @@ var _setResizeProps = function() {
 
 
 AbstractMainView.prototype.raf = function() {
-	if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-		STF.Utils.FPSStats.begin();
+	if ( Config.HAS_FPS_STATS && ( Config.IS_DEV || Config.IS_PREPROD_LOCAL ) )
+		Debug.fpsStats.begin();
 	
 	
 	_setRafProps.call( this );
@@ -143,20 +138,20 @@ AbstractMainView.prototype.raf = function() {
 	this.dispatch( this.E.RAF );
 	
 	
-	if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-		STF.Utils.FPSStats.end();
+	if ( Config.HAS_FPS_STATS && ( Config.IS_DEV || Config.IS_PREPROD_LOCAL ) )
+		Debug.fpsStats.end();
 	
-	if ( STF.Config.HAS_MEMORY_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-		STF.Utils.MemoryStats.update();
+	if ( Config.HAS_MEMORY_STATS && ( Config.IS_DEV || Config.IS_PREPROD_LOCAL ) )
+		Debug.memoryStats.update();
 };
 
 
 var _setRafProps = function() {
 	this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
-	this.siY	= STF_math_getInertia( this.sY, this.siY, this.SCROLL_INERTIA );
+	this.siY	= MathUtil.getInertia( this.sY, this.siY, this.SCROLL_INERTIA );
 	
-	this.miX	= STF_math_getInertia( this.mX, this.miX, this.MOUSE_INERTIA );
-	this.miY	= STF_math_getInertia( this.mY, this.miY, this.MOUSE_INERTIA );
+	this.miX	= MathUtil.getInertia( this.mX, this.miX, this.MOUSE_INERTIA );
+	this.miY	= MathUtil.getInertia( this.mY, this.miY, this.MOUSE_INERTIA );
 };
 
 

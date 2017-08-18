@@ -4,7 +4,7 @@
 var AbstractMainLoader	= require( 'shared/abstracts/views/AbstractMainLoader' );
 
 var Props				= require( 'shared/configs/Props' );
-var STF_DOM				= require( 'shared/utils/DOM' );
+var DOMUtil				= require( 'shared/utils/DOM' );
 
 
 
@@ -89,7 +89,7 @@ MainLoader.prototype.hide = function() {
 var _onHideInitComplete = function() {
 	this.killTimeline( 'hideInit' );
 	
-	STF_DOM.removeClass( this.$loader[0], 'init' );
+	DOMUtil.removeClass( this.$loader[0], 'init' );
 	this.$loader[0].style.display = 'none';
 	
 	this.dispatch( this.E.HIDDEN );

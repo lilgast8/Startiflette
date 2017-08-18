@@ -20,8 +20,6 @@ Lang.prototype.init = function() {
 	_setCurrentLang.call( this );
 	_checkDefaultLang.call( this );
 	_setLangLinks.call( this );
-	
-	console.log( this );
 };
 
 
