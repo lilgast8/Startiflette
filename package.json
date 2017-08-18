@@ -59,9 +59,11 @@
     ]
   },
   "browser": {
-    "zepto": "./dev/assets/js/vendor/zepto.js"
+    "zepto": "./dev/assets/js/vendor/zepto.js",
+    "preloadjs": "./dev/assets/js/vendor/preloadjs.js"
   },
   "browserify-shim": {
-    "zepto": "$"
+    "zepto": "$",
+    "preloadjs": "createjs"
   }
 }

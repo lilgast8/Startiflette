@@ -6,10 +6,12 @@ var Props			= require( 'shared/configs/Props' );
 var Device			= require( 'shared/configs/Device' );
 var Path			= require( 'shared/configs/Path' );
 var Lang			= require( 'shared/configs/Lang' );
+var Router			= require( 'shared/routes/Router' );
 var Debug			= require( 'shared/utils/Debug' );
-var MainView		= require( 'desktop/views/MainView' );
+// var MainView		= require( 'desktop/views/MainView' );
 var PagesController	= require( 'desktop/controllers/PagesController' );
-
+var MainView		= require( 'desktop/views/MainView' );
+// var GlobalController	= require( 'desktop/controllers/GlobalController' );
 
 
 
@@ -19,35 +21,25 @@ function App() {
 
 
 App.prototype.init = function() {
-	/*var config = Config;
-	config.init();
-	console.log( config );
-	
-	var props = Props;
-	props.init();
-	console.log( props );
-	
-	var device = Device;
-	device.init();
-	console.log( device );
-	
-	var path = Path;
-	path.init();
-	console.log( path );
-	
-	var lang = Lang;
-	lang.init();
-	console.log( lang );*/
-	
 	Config.init();
 	Props.init();
 	Device.init();
 	Path.init();
+	Router.setUrl( null );
 	Lang.init();
 	Debug.init( false, false, false );
+	// PagesController.init();
+	// MainView.init();
+	// STF.Router.init();
+	
 	PagesController.init();
 	MainView.init();
-	// STF.Router.init();
+	// GlobalController.init();
+	
+	// Router.bindEvents();
+	Router.init();
+	
+	PagesController.initFirstPage();
 };
 
 

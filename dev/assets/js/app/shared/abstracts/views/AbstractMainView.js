@@ -1,8 +1,8 @@
 'use strict';
 
 
-var AbstractView	= require( 'shared/abstracts/views/AbstractView' );
-// var CustomEvent		= require( 'shared/events/CustomEvent' );
+// var AbstractView	= require( 'shared/abstracts/views/AbstractView' );
+var CustomEvent		= require( 'shared/events/CustomEvent' );
 var Path			= require( 'shared/configs/Path' );
 
 // var MainLoader		= require( 'desktop/views/statics/MainLoader' );
@@ -12,8 +12,8 @@ var Path			= require( 'shared/configs/Path' );
 
 
 function AbstractMainView() {
-	AbstractView.call( this );
-	// CustomEvent.call( this );
+	// AbstractView.call( this );
+	CustomEvent.call( this );
 	
 	this.E = {
 		RESIZE:			'resize',
@@ -50,10 +50,10 @@ function AbstractMainView() {
 }
 
 
-AbstractMainView.prototype				= Object.create( AbstractView.prototype );
-AbstractMainView.prototype.constructor	= AbstractMainView;
-// AbstractMainView.prototype				= Object.create( CustomEvent.prototype );
+// AbstractMainView.prototype				= Object.create( AbstractView.prototype );
 // AbstractMainView.prototype.constructor	= AbstractMainView;
+AbstractMainView.prototype				= Object.create( CustomEvent.prototype );
+AbstractMainView.prototype.constructor	= AbstractMainView;
 
 
 AbstractMainView.prototype.init = function() {
@@ -98,6 +98,8 @@ AbstractMainView.prototype.initStaticsViews = function() {
 	// STF.Views.Statics.MainLoader.init();
 	// STF.Views.Statics.Header.init();
 	// STF.Views.Statics.Footer.init();
+	
+	console.log( 'AbstractMainView.🦊' );
 	
 	// STF_dom_removeClass( this.$mainCont[0], 'preload' );
 };

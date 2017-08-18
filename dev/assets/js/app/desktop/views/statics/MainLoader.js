@@ -1,7 +1,10 @@
 'use strict';
 
 
-var AbstractMainLoader = require( 'shared/abstracts/views/AbstractMainLoader' );
+var AbstractMainLoader	= require( 'shared/abstracts/views/AbstractMainLoader' );
+
+var Props				= require( 'shared/configs/Props' );
+var STF_DOM				= require( 'shared/utils/DOM' );
 
 
 
@@ -57,7 +60,7 @@ MainLoader.prototype.onProgress = function( percentage ) {
 	var posX = percentage - 100;
 	
 	this.$percentage[0].innerHTML					= parseInt( percentage ) + ' %';
-	this.$progress[0].style[ STF.Props.TRANSFORM ]	= 'translate(' + posX + '%, 0%)';
+	this.$progress[0].style[ Props.TRANSFORM ]	= 'translate(' + posX + '%, 0%)';
 };
 
 
@@ -86,7 +89,7 @@ MainLoader.prototype.hide = function() {
 var _onHideInitComplete = function() {
 	this.killTimeline( 'hideInit' );
 	
-	STF_dom_removeClass( this.$loader[0], 'init' );
+	STF_DOM.removeClass( this.$loader[0], 'init' );
 	this.$loader[0].style.display = 'none';
 	
 	this.dispatch( this.E.HIDDEN );
@@ -101,7 +104,7 @@ var _onShowComplete = function() {
 var _onHideComplete = function() {
 	// LOADING_MODE == 'byPageStatic' && LOADING_MODE == 'byPageDynamic'
 	this.$percentage[0].innerHTML					= '0 %';
-	this.$progress[0].style[ STF.Props.TRANSFORM ]	= 'translate(-100%, 0%)';
+	this.$progress[0].style[ Props.TRANSFORM ]	= 'translate(-100%, 0%)';
 	
 	this.$loader[0].style.display					= 'none';
 	
@@ -109,5 +112,5 @@ var _onHideComplete = function() {
 };
 
 
-return new MainLoader();
+module.exports = new MainLoader();
 

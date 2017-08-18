@@ -3,6 +3,9 @@
 
 var AbstractPagesController = require( 'shared/abstracts/controllers/AbstractPagesController' );
 
+var Header			= require( 'desktop/views/statics/Header' );
+var Footer			= require( 'desktop/views/statics/Footer' );
+
 
 
 function PagesController() {
@@ -44,14 +47,14 @@ PagesController.prototype.constructor	= PagesController;
 
 
 PagesController.prototype.manageMenuLinks = function() {
-	this.updateMenuLinks( STF.Views.Statics.Header.$menuLink );
-	this.updateMenuLinks( STF.Views.Statics.Footer.$footerLink );
+	this.updateMenuLinks( Header.$menuLink );
+	this.updateMenuLinks( Footer.$footerLink );
 };
 
 
 PagesController.prototype.manageLangLinks = function() {
-	this.changeLangLinks( STF.Views.Statics.Header.$headerLgLink );
-	this.changeLangLinks( STF.Views.Statics.Footer.$footerLgLink );
+	this.changeLangLinks( Header.$headerLgLink );
+	this.changeLangLinks( Footer.$footerLgLink );
 };
 
 

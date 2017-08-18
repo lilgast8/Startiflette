@@ -2,7 +2,7 @@
 
 
 var AbstractView = require( 'shared/abstracts/views/AbstractView' );
-console.log( AbstractView );
+
 
 
 function Header() {

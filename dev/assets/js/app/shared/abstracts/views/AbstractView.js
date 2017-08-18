@@ -3,6 +3,9 @@
 
 var CustomEvent	= require( 'shared/events/CustomEvent' );
 var MainView	= require( 'desktop/views/MainView' );
+var Props		= require( 'shared/configs/Props' );
+var Config		= require( 'shared/configs/Config' );
+var Router		= require( 'shared/routes/Router' );
 
 
 
@@ -55,7 +58,6 @@ AbstractView.prototype.initTl = function() {
 AbstractView.prototype.bindEvents = function() {
 	// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
 	
-	// STF.MainView.bind( STF.MainView.E.RESIZE, this.resize, this );
 	MainView.bind( MainView.E.RESIZE, this.resize, this );
 };
 
@@ -63,7 +65,6 @@ AbstractView.prototype.bindEvents = function() {
 AbstractView.prototype.unbindEvents = function() {
 	// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
 	
-	// STF.MainView.unbind( STF.MainView.E.RESIZE, this.resize, this );
 	MainView.unbind( MainView.E.RESIZE, this.resize, this );
 };
 
@@ -146,7 +147,7 @@ AbstractView.prototype.killTimeline = function( tlName ) {
  *								 but if you need to force a specific url you can directly pass a string
  */
 AbstractView.prototype.changeUrl = function( e ) {
-	if ( STF.Props.HAS_PUSHSTATE ) { // if pushstate supported
+	if ( Props.HAS_PUSHSTATE ) { // if pushstate supported
 		var url;
 		
 		if ( typeof e == 'object' ) {
@@ -157,19 +158,19 @@ AbstractView.prototype.changeUrl = function( e ) {
 		else if ( typeof e == 'string' )
 			url = e;
 		
-		STF.Router.updateUrl( url );
+		Router.updateUrl( url );
 	}
 };
 
 
 AbstractView.prototype.updateSearch = function() {
-	if ( !STF.Config.IS_PROD )
+	if ( !Config.IS_PROD )
 		console.warn( 'You need to override the updateSearch() method from AbstractView in the current page view.' );
 };
 
 
 AbstractView.prototype.updateHash = function() {
-	if ( !STF.Config.IS_PROD )
+	if ( !Config.IS_PROD )
 		console.warn( 'You need to override the updateHash() method from AbstractView in the current page view.' );
 };
 

@@ -12,6 +12,19 @@ var Project			= require( 'desktop/views/pages/Project' );
 
 var AssetsModel		= require( 'desktop/models/Assets' );
 var MainLoader		= require( 'desktop/views/statics/MainLoader' );
+var Header			= require( 'desktop/views/statics/Header' );
+var Footer			= require( 'desktop/views/statics/Footer' );
+
+var Config			= require( 'shared/configs/Config' );
+var AbstractPageView = require( 'desktop/abstracts/views/AbstractPageView' );
+var Router			= require( 'shared/routes/Router' );
+
+var STF_DOM	= require( 'shared/utils/DOM' );
+
+var MainView		= require( 'desktop/views/MainView' );
+
+var Lang			= require( 'shared/configs/Lang' );
+var Path			= require( 'shared/configs/Path' );
 
 
 
@@ -65,9 +78,18 @@ AbstractPagesController.prototype.initPages = function() {
 AbstractPagesController.prototype.initEl = function() {
 	// this.assetsModel = AssetsModel;
 	// this.assetsModel.init();
+	
 	AssetsModel.init();
 	
+	// var AssetsModel		= require( 'desktop/models/Assets' );
+	// this.assetsModel = new AssetsModel();
+	// this.assetsModel.init();
+	
 	// this.mainLoader = STF.Views.Statics.MainLoader;
+	
+	MainLoader.init();
+	Header.init();
+	Footer.init();
 };
 
 
@@ -88,8 +110,8 @@ AbstractPagesController.prototype.bindEvents = function() {
 
 
 var _setPageId = function( url ) {
-	var path	= STF.Router.URL.path === '' ? 'index' : STF.Router.URL.path;
-	var id		= STF.Config.JS_VIEWS_ID[ path ];
+	var path	= Router.URL.path === '' ? 'index' : Router.URL.path;
+	var id		= Config.JS_VIEWS_ID[ path ];
 	
 	if ( id === undefined )
 		id = 'error-404';
@@ -104,7 +126,7 @@ var _setPageInfos = function() {
 	var id		= $page[0].getAttribute( 'data-js-id' );
 	var title	= $page[0].getAttribute( 'data-title' );
 	
-	if ( !STF.Config.NEED_PAGE_ID )
+	if ( !Config.NEED_PAGE_ID )
 		this.prevPageInfos.id	= this.pageInfos.id;
 	this.prevPageInfos.title	= this.pageInfos.title;
 	
@@ -113,16 +135,16 @@ var _setPageInfos = function() {
 	
 	_setPage.call( this );
 	
-	STF.Router.setAltLangUrl( $page );
+	Router.setAltLangUrl( $page );
 };
 
 
 var _setPage = function() {
 	if ( this.pages[ this.pageInfos.id ] === undefined) {
-		if ( !STF.Config.IS_PROD )
+		if ( !Config.IS_PROD )
 			console.warn( 'PagesController: no specific page view for the "' + this.pageInfos.id + '" ID. If you need one, create it and then set the view in the PagesController.pages object.' );
 		
-		this.page = new STF.AbstractPageView();
+		this.page = new AbstractPageView();
 	}
 	else
 		this.page = new this.pages[ this.pageInfos.id ]();
@@ -140,7 +162,8 @@ AbstractPagesController.prototype.initPageChangeValues = function() {
 
 
 var _loadAssets = function() {
-	var aAssetsToLoad = this.assetsModel.getAssetsToLoad( this.pageInfos.id, this.isFirstLoad, this.LOADING_MODE );
+	// var aAssetsToLoad = this.assetsModel.getAssetsToLoad( this.pageInfos.id, this.isFirstLoad, this.LOADING_MODE );
+	var aAssetsToLoad = AssetsModel.getAssetsToLoad( this.pageInfos.id, this.isFirstLoad, this.LOADING_MODE );
 	
 	// this.mainLoader.loadAssets( aAssetsToLoad );
 	MainLoader.loadAssets( aAssetsToLoad );
@@ -151,7 +174,8 @@ var _onFileLoad = function( e ) {
 	if ( e.item.type == 'image' )
 		_onImgLoaded.call( this, e );
 	else if ( e.item.type == 'json' )
-		this.assetsModel.setJsonData( e.item.id, e.result );
+		// this.assetsModel.setJsonData( e.item.id, e.result );
+		AssetsModel.setJsonData( e.item.id, e.result );
 };
 
 
@@ -180,7 +204,7 @@ var _onAssetsLoaded = function() {
 	
 	// first load
 	if ( this.isFirstLoad ) {
-		STF.MainView.initAfterAssetsLoaded();
+		MainView.initAfterAssetsLoaded();
 		
 		this.page.init();
 		
@@ -210,7 +234,7 @@ var _onAssetsLoaded = function() {
 
 
 var _showNonLoadedImages = function() {
-	var $imgsCont = this.isFirstLoad ? STF.MainView.$body : STF.MainView.$pageCont;
+	var $imgsCont = this.isFirstLoad ? MainView.$body : MainView.$pageCont;
 	
 	var $imgs = $imgsCont.find( 'img' ).filter( function() {
 		return this.getAttribute( 'data-lazyload' ) != 'true' && this.getAttribute( 'data-src' ) != 'preloaded';
@@ -221,9 +245,9 @@ var _showNonLoadedImages = function() {
 
 
 AbstractPagesController.prototype.changePage = function( url ) {
-	STF.Router.updateGA();
+	Router.updateGA();
 	
-	if ( STF.Config.NEED_PAGE_ID )
+	if ( Config.NEED_PAGE_ID )
 		_setPageId.call( this, url );
 	
 	_disablePageChange.call( this );
@@ -287,8 +311,8 @@ var _onContentError = function( e ) {
 
 
 var _force404Load = function() {
-	var lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/' : '';
-	var url		= STF.Path.URL.base + lang + '404';
+	var lang	= Lang.MULTI_LANG ? Lang.LANG + '/' : '';
+	var url		= Path.URL.base + lang + '404';
 	
 	_loadContent.call( this, url );
 };
@@ -353,12 +377,12 @@ AbstractPagesController.prototype.checkPageHiding = function() {
 
 
 AbstractPagesController.prototype.setContent = function() {
-	STF.MainView.$pageCont[0].innerHTML = this.data;
+	MainView.$pageCont[0].innerHTML = this.data;
 	
 	_setPageInfos.call( this );
 	
 	if ( this. LOADING_MODE != 'allStatic' ) {
-		STF_resetImgs( STF.MainView.$pageCont.find( 'img' ) );
+		STF_resetImgs( MainView.$pageCont.find( 'img' ) );
 		setTimeout( function() { _loadAssets.call( this ); }.bind( this ), 0 );
 	}
 	
@@ -420,9 +444,9 @@ AbstractPagesController.prototype.updateMenuLinks = function( $link ) {
 	var $linkToActivate		= $link.filter( '[ data-link-id="' + this.pageInfos.id + '" ]' );
 	
 	if ( $linkToInactivate.length > 0 )
-		STF_dom_removeClass( $linkToInactivate[0], 'active' );
+		STF_DOM.removeClass( $linkToInactivate[0], 'active' );
 	if ( $linkToActivate.length )
-		STF_dom_addClass( $linkToActivate[0], 'active' );
+		STF_DOM.addClass( $linkToActivate[0], 'active' );
 };
 
 
@@ -436,7 +460,7 @@ AbstractPagesController.prototype.changeLangLinks = function( $links ) {
 	
 	for ( var i = 0; i < $links.length; i++ ) {
 		$link		= $links[ i ];
-		$link.href	= STF.Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
+		$link.href	= Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
 	}
 };
 
@@ -452,7 +476,7 @@ AbstractPagesController.prototype.enablePageChange = function() {
 	if ( this.isFirstLoad )
 		this.isFirstLoad = false;
 	
-	STF.Router.checkUrlCorrespondence();
+	Router.checkUrlCorrespondence();
 };
 
 

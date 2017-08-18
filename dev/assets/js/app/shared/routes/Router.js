@@ -3,8 +3,15 @@
 
 var CustomEvent	= require( 'shared/events/CustomEvent' );
 var Path		= require( 'shared/configs/Path' );
+var MainView	= require( 'desktop/views/MainView' );
 
-var STF_String = require( 'shared/utils/String' );
+var STF_String	= require( 'shared/utils/String' );
+
+var Config		= require( 'shared/configs/Config' );
+
+// var PagesController	= require( 'desktop/controllers/PagesController' );
+
+// var Lang		= require( 'shared/configs/Lang' );
 
 
 
@@ -26,8 +33,11 @@ Router.prototype				= Object.create( CustomEvent.prototype );
 Router.prototype.constructor	= Router;
 
 
-Router.prototype.setUrl = function( isInit, url ) {
+// Router.prototype.setUrl = function( isInit, url ) {
+Router.prototype.setUrl = function( url ) {
+// Router.prototype.init = function() {
 	this.URL.full			= _getFullUrl.call( this, url );
+	// this.URL.full			= window.location.href;
 	this.URL.path			= STF_String.getPath( this.URL.full );
 	this.URL.pathParams		= this.URL.path.split( '/' );
 	this.URL.search			= STF_String.getSearch( this.URL.full );
@@ -35,6 +45,8 @@ Router.prototype.setUrl = function( isInit, url ) {
 	this.URL.hash			= STF_String.getHash( this.URL.full );
 	this.URL.hashParams		= STF_String.getParams( this.URL.full, 'hash' );
 	this.URL.fullGA			= _getFullGaUrl.call( this );
+	
+	console.log( this.URL );
 };
 
 
@@ -60,19 +72,21 @@ var _getFullGaUrl = function () {
 
 
 Router.prototype.init = function() {
+// Router.prototype.init2 = function() {
 	_bindEvents.call( this );
 	
-	STF.PagesController.initFirstPage();
+	// STF.PagesController.initFirstPage();
 };
 
 
 var _bindEvents = function() {
-	STF.MainView.$window.on( 'popstate', $.proxy( _onPopState, this ) );
-	STF.MainView.$window.on( 'hashchange', $.proxy( _onHashChange, this ) );
+// Router.prototype.bindEvents = function() {
+	MainView.$window.on( 'popstate', $.proxy( _onPopState, this ) );
+	MainView.$window.on( 'hashchange', $.proxy( _onHashChange, this ) );
 };
 
 
-var _getLangExistence = function() {
+/*var _getLangExistence = function() {
 	var langExist = true;
 	
 	if ( STF.Lang.ALL_LANG.indexOf( STF.Lang.LANG ) == -1 ) {
@@ -83,7 +97,7 @@ var _getLangExistence = function() {
 	
 	
 	return langExist;
-};
+};*/
 
 
 var _setIsHomepage = function( pageId ) {
@@ -98,13 +112,16 @@ Router.prototype.checkUrlCorrespondence = function() {
 
 
 Router.prototype.updateUrl = function( url ) {
-	if ( STF.PagesController.isPageChange )
+	var PagesController = require( 'desktop/controllers/PagesController' );
+	
+	if ( PagesController.isPageChange )
 		return;
 	
 	this.isPageChangeByClick = true;
 	
 	_setUrlPartChange.call( this, url );
-	this.setUrl( false, url );
+	// this.setUrl( false, url );
+	this.setUrl( url );
 	
 	
 	var data = {
@@ -117,16 +134,18 @@ Router.prototype.updateUrl = function( url ) {
 	
 	
 	if ( this.isPageChange )
-		STF.PagesController.changePage( this.URL.full );
+		PagesController.changePage( this.URL.full );
 	else if ( this.isSearchChange )
-		STF.PagesController.changeSearch();
+		PagesController.changeSearch();
 	else if ( this.isHashChange )
-		STF.PagesController.changeHash();
+		PagesController.changeHash();
 };
 
 
 var _onPopState = function( e ) {
-	if ( STF.PagesController.isPageChange )
+	var PagesController = require( 'desktop/controllers/PagesController' );
+	
+	if ( PagesController.isPageChange )
 		return;
 	
 	this.isPageChangeByClick = false;
@@ -135,25 +154,28 @@ var _onPopState = function( e ) {
 	
 	
 	if ( this.isPageChange || this.isSearchChange )
-		this.setUrl( false, null );
+		// this.setUrl( false, null );
+		this.setUrl( null );
 	
 	if ( this.isPageChange )
-		STF.PagesController.changePage( this.URL.full );
+		PagesController.changePage( this.URL.full );
 	else if ( this.isSearchChange )
-		STF.PagesController.changeSearch();
+		PagesController.changeSearch();
 };
 
 
 var _onHashChange = function( e ) {
-	if ( STF.PagesController.isPageChange )
+	var PagesController = require( 'desktop/controllers/PagesController' );
+	
+	if ( PagesController.isPageChange )
 		return;
 	
 	_setUrlPartChange.call( this, window.location.href );
-	this.setUrl( false, null );
+	this.setUrl( null );
 	
 	
 	if ( this.isHashChange && !this.isPageChange && !this.isSearchChange )
-		STF.PagesController.changeHash();
+		PagesController.changeHash();
 };
 
 
@@ -184,19 +206,20 @@ var _isHashChanged = function( url ) {
 
 Router.prototype.setAltLangUrl = function( $page ) {
 	var lang;
+	var Lang = require( 'shared/configs/Lang' );
 	
-	for ( var i = 0; i < STF.Lang.ALL_LANG.length; i++ ) {
-		lang = STF.Lang.ALL_LANG[ i ];
+	for ( var i = 0; i < Lang.ALL_LANG.length; i++ ) {
+		lang = Lang.ALL_LANG[ i ];
 		
-		if ( lang != STF.Lang.LANG )
+		if ( lang != Lang.LANG )
 			this.ALT_LANG_URL[ lang ] = $page[0].getAttribute( 'data-lang-' + lang );
 	}
 };
 
 
 Router.prototype.updateGA = function() {
-	if ( STF.Config.IS_PROD && Object.keys( STF.Config.GA_ID ).length > 0 ) {
-		for ( var gaName in STF.Config.GA_ID ) {
+	if ( Config.IS_PROD && Object.keys( Config.GA_ID ).length > 0 ) {
+		for ( var gaName in Config.GA_ID ) {
 			if ( gaName == 'default' )
 				ga( 'send', 'pageview', '/' + this.URL.fullGA );
 			else

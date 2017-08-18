@@ -12,11 +12,16 @@ function Lang() {
 
 
 Lang.prototype.init = function() {
+	// Router.setUrl( true, null );
+	
 	_setGlobalInfos.call( this );
-	Router.setUrl( true, null );
+	// Router.setUrl( true, null );
+	// Router.init( true, null );
 	_setCurrentLang.call( this );
 	_checkDefaultLang.call( this );
 	_setLangLinks.call( this );
+	
+	console.log( this );
 };
 
 

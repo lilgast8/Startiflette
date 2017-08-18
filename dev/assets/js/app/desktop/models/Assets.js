@@ -1,7 +1,7 @@
 'use strict';
 
 
-var AbstractAssets	= require( 'desktop/abstracts/views/AbstractPageView' );
+var AbstractAssets	= require( 'shared/abstracts/models/AbstractAssets' );
 var Path			= require( 'shared/configs/Path' );
 
 
@@ -16,6 +16,8 @@ Assets.prototype.constructor	= Assets;
 
 
 Assets.prototype.init = function() {
+	// AbstractAssets.prototype.init.call( this );
+	
 	this.aImg = {
 		'global': [
 			/* bgs */
@@ -74,4 +76,5 @@ Assets.prototype.init = function() {
 
 
 module.exports = new Assets();
+// module.exports = Assets;
 

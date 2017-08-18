@@ -2,6 +2,7 @@
 
 
 require( 'zepto' );
+require( 'greensock/TweenMax' );
 
 var App = require( 'App' );
 

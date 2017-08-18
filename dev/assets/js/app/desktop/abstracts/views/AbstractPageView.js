@@ -1,7 +1,8 @@
 'use strict';
 
 
-var AbstractView = require( 'shared/abstracts/views/AbstractView' );
+var AbstractView	= require( 'shared/abstracts/views/AbstractView' );
+var LazyLoader		= require( 'shared/loaders/LazyLoader' );
 
 
 
@@ -27,7 +28,7 @@ AbstractPageView.prototype.initDOM = function() {
 AbstractPageView.prototype.initEl = function() {
 	// console.log( 'AbstractPageView.initEl() — ', this.constructor.name );
 	
-	this.lazyLoader = new STF.LazyLoader( this.$page, this.imgToLazyloadClassName, this.lazyloadParentEl, 1, true );
+	this.lazyLoader = new LazyLoader( this.$page, this.imgToLazyloadClassName, this.lazyloadParentEl, 1, true );
 };
 
 

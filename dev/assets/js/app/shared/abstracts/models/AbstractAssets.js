@@ -1,6 +1,11 @@
 'use strict';
 
 
+var PagesController	= require( 'desktop/controllers/PagesController' );
+
+var STF_Global	= require( 'shared/utils/Global' );
+
+
 
 function AbstractAssets() {
 	this.aImg		= {};
@@ -10,7 +15,8 @@ function AbstractAssets() {
 
 
 AbstractAssets.prototype.init = function() {
-	
+	// var PagesController	= require( 'desktop/controllers/PagesController' );
+	// console.log( PagesController );
 };
 
 
@@ -77,7 +83,7 @@ var _addStaticAssetsToLoad = function( type, aAssetsToLoad, aListIds ) {
 		var fileId;
 		if ( assetsList !== undefined )
 			for ( var id in assetsList ) {
-				fileId = STF_gl_getType( assetsList ) === 'object' ? id : null;
+				fileId = STF_Global.getType( assetsList ) === 'object' ? id : null;
 				
 				_addAsset.call( this, aAssetsToLoad, fileId, assetsList[ id ] );
 			}

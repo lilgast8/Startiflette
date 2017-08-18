@@ -1,7 +1,8 @@
 'use strict';
 
 
-var AbstractView = require( 'shared/abstracts/views/AbstractView' );
+var AbstractView	= require( 'shared/abstracts/views/AbstractView' );
+var Loader			= require( 'shared/loaders/Loader' );
 
 
 
@@ -45,8 +46,8 @@ AbstractMainLoader.prototype.resize = function() {
 
 
 var _instanceAssetsLoader = function() {
-	this.assetsLoader = new STF.Loader( true, true );
-	this.assetsLoader.init();
+	this.assetsLoader = new Loader( true, true );
+	// this.assetsLoader.init();
 	
 	this.assetsLoader.bind( this.assetsLoader.E.PROGRESS, this.onProgress, this );
 	this.assetsLoader.bind( this.assetsLoader.E.FILE_LOAD, _onFileLoad, this );
