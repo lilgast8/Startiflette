@@ -20,6 +20,7 @@ module.exports = {
 			minAllFiles:	'assets/css/*.css',
 			
 			app: {
+				dir:			'assets/css/app/',
 				desktopFile:	'assets/css/app/styles-desktop.scss',
 				mobileFile:		'assets/css/app/styles-mobile.scss',
 				

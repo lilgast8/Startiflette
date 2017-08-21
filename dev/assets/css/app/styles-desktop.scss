@@ -11,7 +11,7 @@
 @import 'shared/utilities/_fonts';
 @import 'shared/utilities/_variables';
 @import 'shared/utilities/_easing';
-@import 'shared/utilities/_functions';
+// @import 'shared/utilities/_functions';
 
 
 
@@ -24,7 +24,7 @@
 
 @import 'shared/statics/_svg';
 @import 'shared/statics/_alt';
-@import 'shared/statics/_global';
+// @import 'shared/statics/_global';
 
 
 
@@ -46,11 +46,11 @@
 /*****************************/
 
 
-@import 'desktop/statics/_global';
+/* @import 'desktop/statics/_global';
 @import 'desktop/statics/_containers';
 @import 'desktop/statics/_main-loader';
 @import 'desktop/statics/_header';
-@import 'desktop/statics/_footer';
+@import 'desktop/statics/_footer'; */
 
 
 
@@ -72,10 +72,10 @@
 /***************************/
 
 
-@import 'desktop/pages/_error-404';
+/* @import 'desktop/pages/_error-404';
 @import 'desktop/pages/_not-available';
 @import 'desktop/pages/_legal-notices';
 @import 'desktop/pages/_home';
-@import 'desktop/pages/_about';
+@import 'desktop/pages/_about'; */
 
 
