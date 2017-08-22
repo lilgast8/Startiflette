@@ -10,10 +10,7 @@ Here are the dependencies you need to install globally before starting:
 * [Node](https://nodejs.org)
 * [Gulp](http://gulpjs.com)
 * [Composer](https://getcomposer.org)
-* [Ruby](https://www.ruby-lang.org)
-* [GEM](https://rubygems.org)
 * [SASS](http://sass-lang.com)
-* [Compass](http://compass-style.org)
 
 
 
@@ -103,6 +100,13 @@ Complete list of gulp tasks & what they do:
 * `svg`: Compiles SVG files to SVG sprite. If directly called, `delete` which deletes all SVG sprites is executed before then SVG sprite is also moved to `www/assets/svg/_sprite/`.
 * `videos`: Removes all sounds files in `www/videos/` & moves all videos files from `dev/videos/` to `www/videos/`.
 * `watch`: This is the dev task. It watches all files, run the associated tasks (`sass`, `js`, `json` or `svg`) & livereload when a file us updated.
+
+
+### Config CSS supports for `sass` gulp task
+
+The `sass` gulp task have options to manage css supports which can be edited in `gulp/utils/css-supports.js` file.
+
+* `cssSupports`: @type {object} List of parameters which will define CSS supports, using [Browserslist library](https://github.com/ai/browserslist). See [Browserslist docs](https://github.com/ai/browserslist#queries) for available queries and default value.
 
 
 ### Config `image` gulp task
