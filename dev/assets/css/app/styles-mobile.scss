@@ -11,7 +11,7 @@
 @import 'shared/utilities/_fonts';
 @import 'shared/utilities/_variables';
 @import 'shared/utilities/_easing';
-// @import 'shared/utilities/_functions';
+@import 'shared/utilities/_functions';
 
 
 
@@ -24,4 +24,58 @@
 
 @import 'shared/statics/_svg';
 @import 'shared/statics/_alt';
-// @import 'shared/statics/_global';
+@import 'shared/statics/_global';
+
+
+
+
+
+/***************************************/
+/* -------- SHARED - PARTIALS -------- */
+/***************************************/
+
+
+// @import 'shared/partials/_PARTIAL';
+
+
+
+
+
+/*****************************/
+/* -------- STATICS -------- */
+/*****************************/
+
+
+@import 'mobile/statics/_global';
+@import 'mobile/statics/_containers';
+@import 'mobile/statics/_main-loader';
+@import 'mobile/statics/_header';
+@import 'mobile/statics/_footer';
+
+
+
+
+
+/******************************/
+/* -------- PARTIALS -------- */
+/******************************/
+
+
+// @import 'mobile/partials/_PARTIAL';
+
+
+
+
+
+/***************************/
+/* -------- PAGES -------- */
+/***************************/
+
+
+@import 'mobile/pages/_error-404';
+@import 'mobile/pages/_not-available';
+@import 'mobile/pages/_legal-notices';
+@import 'mobile/pages/_home';
+@import 'mobile/pages/_about';
+
+

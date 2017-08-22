@@ -14,9 +14,3 @@ body {
 img { max-width: 100%; }
 
 
-
-/* -------- CSS TRANSITION -------- */
-
-.js .preload * { @include transition(none !important); } 
-
-

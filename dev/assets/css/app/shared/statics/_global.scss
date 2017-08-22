@@ -30,6 +30,6 @@ body {
 
 /* -------- CSS TRANSITION -------- */
 
-.js .preload * { @include transition(none !important); }
+.js .preload * { transition: none !important; }
 
 
