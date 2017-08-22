@@ -24,26 +24,21 @@ gulp.task( 'sass', [ 'sass:dev' ], function() {
 gulp.task( 'sass:dev', [ 'delete' ], function() {
 	
 	if ( options.cssSrcPath === null )
-		/*options.cssSrcPath = [
-			paths.env.dev + paths.assets.css.app.desktopFile,
-			paths.env.dev + paths.assets.css.app.mobileFile
-		];*/
 		options.cssSrcPath = paths.env.dev + paths.assets.css.app.dir + '*.scss';
 	
 	
 	return gulp.src( options.cssSrcPath )
+		.pipe( plumber() )
 		.pipe( sourcemaps.init() )
-		.pipe( sass( {
+		.pipe( sass.sync( {
 			outputStyle:		'compressed',
-			// outputStyle:		'expanded',
 			precision:			3,
-			// compass:			true,
 			emitCompileError:	true
 		} ).on( 'error', function( error ) {
-			var file = error.file.substr( error.file.indexOf( '/assets/' ) + 8 );
-			var msg = 'CSS error: ' + file + ' in line ' + error.line + ', column ' + error.column;
-			console.log( gutil.colors.red( msg ) );
+			var file	= error.relativePath.substr( error.relativePath.indexOf( '/assets/' ) + 8 );
+			var msg		= 'CSS error: ' + file + ' on line ' + error.line + ', column ' + error.column;
 			notify().write( msg );
+			console.log( gutil.colors.red( error.message ) );
 		} ) )
 		.pipe( rename( { suffix : '.min' } ) )
 		.pipe( sourcemaps.write( './maps' ) )
