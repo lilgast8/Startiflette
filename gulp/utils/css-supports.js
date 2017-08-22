@@ -1,6 +1,7 @@
 var cssSupports	= {
 	browsers: [
-		'last 92 versions'
+		'last 2 versions',
+		'> 1%'
 	]
 };
 
