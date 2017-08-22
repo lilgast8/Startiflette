@@ -1,15 +1,17 @@
-var gulp		= require( 'gulp' );
-var path		= require( 'path' );
+var gulp			= require( 'gulp' );
+var path			= require( 'path' );
 
-var options		= require( '../utils/options' );
-var paths		= require( '../utils/paths' );
+var options			= require( '../utils/options' );
+var cssSupports		= require( '../utils/css-supports' );
+var paths			= require( '../utils/paths' );
 
-var plumber		= require( 'gulp-plumber' );
-var gutil		= require( 'gulp-util' );
-var sass		= require( 'gulp-sass' );
-var sourcemaps	= require( 'gulp-sourcemaps' );
-var notify		= require( 'gulp-notify' );
-var rename		= require( 'gulp-rename' );
+var plumber			= require( 'gulp-plumber' );
+var gutil			= require( 'gulp-util' );
+var sass			= require( 'gulp-sass' );
+var sourcemaps		= require( 'gulp-sourcemaps' );
+var autoprefixer	= require( 'gulp-autoprefixer' );
+var notify			= require( 'gulp-notify' );
+var rename			= require( 'gulp-rename' );
 
 
 
@@ -40,6 +42,7 @@ gulp.task( 'sass:dev', [ 'delete' ], function() {
 			notify().write( msg );
 			console.log( gutil.colors.red( error.message ) );
 		} ) )
+		.pipe( autoprefixer( cssSupports ) )
 		.pipe( rename( { suffix : '.min' } ) )
 		.pipe( sourcemaps.write( './maps' ) )
 		.pipe( gulp.dest( paths.env.dev + paths.assets.css.dir ) );
