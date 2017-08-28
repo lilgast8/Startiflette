@@ -21,7 +21,7 @@ gulp.task( 'watch', function() {
 		
 		/* Assets */
 		paths.env.dev + paths.assets.allFiles,
-		'!' + paths.env.dev + paths.assets.css.minAllFiles,
+		'!' + paths.env.dev + paths.assets.css.allMinFiles,
 		'!' + paths.env.dev + paths.assets.css.fonts.allFiles,
 		'!' + paths.env.dev + paths.assets.favicons.allFiles,
 		'!' + paths.env.dev + paths.assets.svg.sprite.allFiles,
@@ -123,7 +123,7 @@ gulp.task( 'watch', function() {
 		paths.env.dev + paths.htaccess,
 		
 		/* CSS */
-		paths.env.dev + paths.assets.css.minAllFiles,
+		paths.env.dev + paths.assets.css.allMinFiles,
 		
 		/* JS */
 		paths.env.dev + paths.assets.js.allFiles,

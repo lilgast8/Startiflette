@@ -17,10 +17,10 @@ module.exports = {
 		
 		css: {
 			dir:			'assets/css/',
-			minAllFiles:	'assets/css/*.css',
+			allMinFiles:	'assets/css/*.css',
 			
 			app: {
-				dir:			'assets/css/app/',
+				allSCSS:		'assets/css/app/*.scss',
 				desktopFile:	'assets/css/app/styles-desktop.scss',
 				mobileFile:		'assets/css/app/styles-mobile.scss',
 				

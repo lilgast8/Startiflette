@@ -14,7 +14,7 @@ gulp.task( 'delete', function() {
 	/* Prod */
 	if ( options.task == 'prod' || options.htmlify )
 		deletePath = [
-			paths.env.dev + paths.assets.css.minAllFiles,
+			paths.env.dev + paths.assets.css.allMinFiles,
 			paths.env.dev + paths.assets.svg.sprite.allFiles,
 			paths.env.prod
 		];
@@ -23,7 +23,7 @@ gulp.task( 'delete', function() {
 	/* SASS */
 	else if ( options.task == 'sass' )
 		deletePath = [
-			paths.env.dev + paths.assets.css.minAllFiles,
+			paths.env.dev + paths.assets.css.allMinFiles,
 			paths.env.prod + paths.assets.css.dir
 		];
 	

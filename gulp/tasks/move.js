@@ -27,7 +27,7 @@ gulp.task( 'move', function() {
 		
 		movePath = {
 			from: [
-				[ paths.env.dev + paths.assets.css.minAllFiles ],
+				[ paths.env.dev + paths.assets.css.allMinFiles ],
 				[
 					paths.env.dev + paths.assets.css.fonts.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles
@@ -86,7 +86,7 @@ gulp.task( 'move', function() {
 	else if ( options.task == 'sass' )
 		movePath = {
 			from: [
-				[ paths.env.dev + paths.assets.css.minAllFiles ],
+				[ paths.env.dev + paths.assets.css.allMinFiles ],
 				[
 					paths.env.dev + paths.assets.css.fonts.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles
