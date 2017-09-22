@@ -67,7 +67,7 @@ STF.AbstractMainView = ( function( window ) {
 	
 	
 	AbstractMainView.prototype.initEl = function() {
-		STF.Path.overwriteSpecialPaths();
+		STF.Path.overwriteSpecialPaths( this.$mainCont[0].getAttribute( 'data-assets-base-url' ) );
 	};
 	
 	
