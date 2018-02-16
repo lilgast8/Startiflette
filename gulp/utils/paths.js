@@ -20,9 +20,15 @@ module.exports = {
 			allMinFiles:	'assets/css/*.css',
 			
 			app: {
-				allSCSS:		'assets/css/app/*.scss',
-				desktopFile:	'assets/css/app/styles-desktop.scss',
-				mobileFile:		'assets/css/app/styles-mobile.scss',
+				allRootSCSSFiles:	'assets/css/app/*.scss',
+				allSCSSFiles:		'assets/css/app/**/*.scss',
+				desktopFile:		'assets/css/app/styles-desktop.scss',
+				mobileFile:			'assets/css/app/styles-mobile.scss',
+				
+				maps: {
+					dir:		'assets/css/maps/',
+					allFiles:	'assets/css/maps/**/*'
+				},
 				
 				desktop: {
 					pages:		'assets/css/app/desktop/pages/',

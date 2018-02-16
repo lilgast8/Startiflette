@@ -20,11 +20,10 @@ gulp.task( 'watch', function() {
 		paths.env.base + paths.htaccess,
 		
 		/* Assets */
-		paths.env.dev + paths.assets.allFiles,
-		'!' + paths.env.dev + paths.assets.css.allMinFiles,
-		'!' + paths.env.dev + paths.assets.css.fonts.allFiles,
-		'!' + paths.env.dev + paths.assets.favicons.allFiles,
-		'!' + paths.env.dev + paths.assets.svg.sprite.allFiles,
+		paths.env.dev + paths.assets.css.app.allSCSSFiles,
+		paths.env.dev + paths.assets.js.allFiles,
+		paths.env.dev + paths.assets.json.allFiles,
+		paths.env.dev + paths.assets.svg.allFiles,
 		
 		/* Config */
 		paths.env.dev + paths.configs.allFiles,
@@ -39,11 +38,11 @@ gulp.task( 'watch', function() {
 		ext					= path.extname( options.filePath );
 		options.fileName	= path.basename( options.filePath )
 		
-		desktop		= options.filePath.indexOf( 'desktop' ) > -1 ? true : false;
-		mobile		= options.filePath.indexOf( 'mobile' ) > -1 ? true : false;
-		shared		= options.filePath.indexOf( 'shared' ) > -1 ? true : false;
-		favicons	= options.filePath.indexOf( 'configs/favicons/' ) > -1 ? true : false;
-		configs		= options.filePath.indexOf( 'configs/' ) > -1 ? true : false;
+		desktop		= options.filePath.indexOf( '/desktop/' ) > -1 ? true : false;
+		mobile		= options.filePath.indexOf( '/mobile/' ) > -1 ? true : false;
+		shared		= options.filePath.indexOf( '/shared/' ) > -1 ? true : false;
+		favicons	= options.filePath.indexOf( '/configs/favicons/' ) > -1 ? true : false;
+		configs		= options.filePath.indexOf( '/configs/' ) > -1 ? true : false;
 		
 		// options.devicePath: used for SASS error notification
 		if ( desktop )
