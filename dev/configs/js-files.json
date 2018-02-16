@@ -1,7 +1,7 @@
 {
 	
 	"header": {
-		"name": "header.min.js",
+		"name": "header.js",
 		"dest": "",
 		"files": [
 			"vendor/modernizr.js",
@@ -10,16 +10,10 @@
 	},
 	
 	"scripts-desktop": {
-		"name": [
-			"scripts-desktop.min.js",
-			"scripts-desktop-oldie.min.js"
-		],
+		"name": "scripts-desktop.js",
 		"dest": "",
 		"files": [
-			[
-				"vendor/zepto.js",
-				"vendor/jquery-oldie.js"
-			],
+			"vendor/zepto.js",
 			"vendor/greensock/TweenMax.js",
 			"vendor/signals.js",
 			"vendor/preloadjs.js",
@@ -73,7 +67,7 @@
 	},
 	
 	"scripts-mobile": {
-		"name": "scripts-mobile.min.js",
+		"name": "scripts-mobile.js",
 		"dest": "",
 		"files": [
 			"vendor/zepto.js",

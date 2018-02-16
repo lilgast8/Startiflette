@@ -67,12 +67,13 @@ module.exports = {
 		},
 		
 		js: {
-			dir:		'assets/js/',
-			allFiles:	'assets/js/**/*.js',
+			dir:			'assets/js/',
+			allRootJsFiles:	'assets/js/*.js',
+			allJsFiles:		'assets/js/**/*.js',
 			
 			app: {
 				dir:				'assets/js/app/',
-				allFiles:			'assets/js/app/**/*.js',
+				allJsFiles:			'assets/js/app/**/*.js',
 				initFile:			'assets/js/app/InitApp.js',
 				desktopAllFiles:	'assets/js/app/desktop/**/*.js',
 				mobileAllFiles:		'assets/js/app/mobile/**/*.js',

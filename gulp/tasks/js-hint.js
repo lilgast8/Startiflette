@@ -12,7 +12,7 @@ var jshint	= require( 'gulp-jshint' );
 gulp.task( 'js-hint', function() {
 	
 	if ( options.jsSrcPath === null )
-		options.jsSrcPath = paths.env.dev + paths.assets.js.app.allFiles;
+		options.jsSrcPath = paths.env.dev + paths.assets.js.app.allJsFiles;
 	
 	
 	gulp.src( options.jsSrcPath )
