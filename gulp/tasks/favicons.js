@@ -15,7 +15,7 @@ gulp.task( 'favicons', [ 'favicons:generate' ], function() {
 	
 	gulp.start( 'favicons:dev' );
 	
-});
+} );
 
 
 gulp.task( 'favicons:dev', [ 'favicons:manage-markups' ], function() {
@@ -23,7 +23,7 @@ gulp.task( 'favicons:dev', [ 'favicons:manage-markups' ], function() {
 	if ( options.task == 'favicons' )
 		gulp.start( 'move' );
 	
-});
+} );
 
 
 // Generate the icons. This task takes a few seconds to complete. 
@@ -93,9 +93,9 @@ gulp.task( 'favicons:generate', [ 'delete' ], function( done ) {
 		
 	}, function() {
 		done();
-	});
+	} );
 	
-});
+} );
 
 
 gulp.task( 'favicons:manage-markups', [ 'favicons:inject-markups' ], function() {
@@ -111,7 +111,7 @@ gulp.task( 'favicons:manage-markups', [ 'favicons:inject-markups' ], function() 
 	
 	fs.writeFileSync( filePath, data, 'utf8' );
 	
-});
+} );
 
 
 // Inject the favicon markups in your HTML pages. You should run 
@@ -126,7 +126,7 @@ gulp.task( 'favicons:inject-markups', function() {
 		) )
 		.pipe( gulp.dest( paths.env.dev + paths.server.views.shared.dir ) );
 	
-});
+} );
 
 
 // Check for updates on RealFaviconGenerator (think: Apple has just
@@ -140,6 +140,6 @@ gulp.task( 'favicons:check-update', function( done ) {
 	realFavicon.checkForUpdates( currentVersion, function( err ) {
 		if ( err )
 			throw err;
-	});
+	} );
 	
-});
+} );

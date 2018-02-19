@@ -14,7 +14,7 @@ gulp.task( 'svg', [ 'svg:dev' ], function() {
 	if ( options.task == 'svg' )
 		gulp.start( 'move' );
 	
-});
+} );
 
 
 gulp.task( 'svg:dev', [ 'delete' ], function() {
@@ -47,7 +47,7 @@ gulp.task( 'svg:dev', [ 'delete' ], function() {
 		.pipe( svgSprite( config ) )
 		.on( 'error', function( error ) {
 			console.log( gutil.colors.red( error ) );
-		})
+		} )
 		.pipe( gulp.dest( paths.env.dev + paths.assets.svg.sprite.dir ) );
 	
-});
+} );

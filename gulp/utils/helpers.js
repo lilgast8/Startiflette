@@ -20,7 +20,7 @@ var helpers = {
 	titleCase: function( string ) {
 		return string.replace( /\w\S*/g, function( txt ) {
 			return txt[0].toUpperCase() + txt.substr(1).toLowerCase();
-		});
+		} );
 	},
 	
 	

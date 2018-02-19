@@ -27,6 +27,6 @@ gulp.task( 'json-lint', function() {
 			var fileName	= file.path.substring( posJsonStr, file.path.length );
 			
 			notify().write( 'JSON Lint error on: ' + fileName );
-		}) );
+		} ) );
 	
 } );

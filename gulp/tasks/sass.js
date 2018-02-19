@@ -20,7 +20,7 @@ gulp.task( 'sass', [ 'sass:dev' ], function() {
 	if ( options.task == 'sass' )
 		gulp.start( 'move' );
 	
-});
+} );
 
 
 gulp.task( 'sass:dev', [ 'delete' ], function() {
@@ -47,4 +47,4 @@ gulp.task( 'sass:dev', [ 'delete' ], function() {
 		.pipe( sourcemaps.write( './maps' ) )
 		.pipe( gulp.dest( paths.env.dev + paths.assets.css.dir ) );
 	
-});
+} );
