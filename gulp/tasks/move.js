@@ -41,7 +41,6 @@ gulp.task( 'move', function() {
 					'!' + paths.env.dev + paths.emptyFiles
 				],
 				imgPathFrom,
-				[ paths.env.dev + paths.assets.js.vendor.HTML5ShivFile ],
 				[
 					paths.env.dev + paths.assets.sounds.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles
@@ -61,7 +60,6 @@ gulp.task( 'move', function() {
 				paths.env.prod + paths.assets.favicons.dir,
 				paths.env.prod + paths.assets.files.dir,
 				paths.env.prod + paths.assets.img.dir,
-				paths.env.prod + paths.assets.js.vendor.dir,
 				paths.env.prod + paths.assets.sounds.dir,
 				paths.env.prod + paths.assets.svg.sprite.dir,
 				paths.env.prod + paths.assets.videos.dir
@@ -126,11 +124,7 @@ gulp.task( 'move', function() {
 	
 	
 	/* JS & JS-min */
-	else if ( options.task == 'js' || options.task == 'js-min' )
-		movePath = {
-			from: [ paths.env.dev + paths.assets.js.vendor.HTML5ShivFile ],
-			to: [ paths.env.prod + paths.assets.js.vendor.dir ]
-		};
+	// else if ( options.task == 'js' || options.task == 'js-min' )
 	
 	
 	/* SVG */
