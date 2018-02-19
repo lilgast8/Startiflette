@@ -11,7 +11,7 @@ var livereload	= require( 'gulp-livereload' );
 
 
 
-gulp.task( 'js-concat', /*[ 'delete' ],*/ function() {
+gulp.task( 'js-concat', [ 'delete' ], function() {
 	
 	var jsFiles = require( '../../' + paths.env.dev + paths.configs.jsFilesFile );
 	

@@ -44,8 +44,11 @@ gulp.task( 'delete', function() {
 	
 	
 	/* JS-concat */
-	else if ( options.task == 'default' && options.subtask == 'default-js' )
-		deletePath = paths.env.dev + paths.assets.js.allRootJsFiles;
+	else if ( options.task == 'js-concat' )
+		deletePath = [
+			paths.env.dev + paths.assets.js.allRootJsFiles,
+			paths.env.dev + paths.assets.js.maps.allFiles
+		];
 	
 	
 	/* JS & JS-min */

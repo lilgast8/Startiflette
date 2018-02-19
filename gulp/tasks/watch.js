@@ -81,10 +81,8 @@ gulp.task( 'watch', function() {
 		}
 		
 		/* JS */
-		else if ( ext == '.js' ) {
-			taskname		= 'js';
-			options.subtask	= 'default-js';
-		}
+		else if ( ext == '.js' )
+			taskname = 'js';
 		
 		/* JSON */
 		else if ( ext == '.json' ) {
