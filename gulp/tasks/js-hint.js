@@ -13,9 +13,11 @@ gulp.task( 'js-hint', function() {
 	
 	gulp.src( paths.env.dev + paths.assets.js.app.allJsFiles )
 		.pipe( plumber() )
-		.pipe( jshint({
-			'-W083' : true // Don't make functions within a loop
-		}) )
+		.pipe( jshint( {
+			// esnext:		true,
+			esversion:	6,
+			'-W083' :	true // Don't make functions within a loop
+		} ) )
 		.pipe( jshint.reporter( 'jshint-stylish' ) )
 		.pipe( notify( function( file ) {
 			
@@ -29,7 +31,7 @@ gulp.task( 'js-hint', function() {
 			
 			return file.relative + ' (' + file.jshint.results.length + ' errors)\n' + errors;
 			
-		}))
+		} ) )
 		.pipe( jshint.reporter( 'fail' ) );
 	
 } );
