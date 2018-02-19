@@ -25,11 +25,6 @@ module.exports = {
 				desktopFile:		'assets/css/app/styles-desktop.scss',
 				mobileFile:			'assets/css/app/styles-mobile.scss',
 				
-				maps: {
-					dir:		'assets/css/maps/',
-					allFiles:	'assets/css/maps/**/*'
-				},
-				
 				desktop: {
 					pages:		'assets/css/app/desktop/pages/',
 					partials:	'assets/css/app/desktop/partials/',
@@ -46,6 +41,11 @@ module.exports = {
 			fonts: {
 				dir:		'assets/css/fonts/',
 				allFiles:	'assets/css/fonts/**/*'
+			},
+			
+			maps: {
+				dir:		'assets/css/maps/',
+				allFiles:	'assets/css/maps/**/*'
 			}
 		},
 		

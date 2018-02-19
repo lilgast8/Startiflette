@@ -24,6 +24,7 @@ gulp.task( 'delete', function() {
 	else if ( options.task == 'sass' )
 		deletePath = [
 			paths.env.dev + paths.assets.css.allMinFiles,
+			paths.env.dev + paths.assets.css.maps.allFiles,
 			paths.env.prod + paths.assets.css.dir
 		];
 	
