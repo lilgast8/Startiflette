@@ -1,7 +1,7 @@
 {
 	
-	"header": {
-		"name": "header.js",
+	"scripts-header": {
+		"name": "scripts-header.js",
 		"dest": "",
 		"files": [
 			"vendor/modernizr.js",
