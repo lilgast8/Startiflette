@@ -37,7 +37,7 @@ gulp.task( 'watch', function() {
 		
 		options.filePath	= e.path;
 		ext					= path.extname( options.filePath );
-		options.fileName	= path.basename( options.filePath )
+		options.fileName	= path.basename( options.filePath );
 		// console.log( '🛤', options.filePath );
 		
 		desktop		= options.filePath.indexOf( '/desktop/' ) > -1 ? true : false;
@@ -45,14 +45,6 @@ gulp.task( 'watch', function() {
 		shared		= options.filePath.indexOf( '/shared/' ) > -1 ? true : false;
 		favicons	= options.filePath.indexOf( '/configs/favicons/' ) > -1 ? true : false;
 		configs		= options.filePath.indexOf( '/configs/' ) > -1 ? true : false;
-		
-		// options.devicePath: used for SASS error notification
-		if ( desktop )
-			options.devicePath = 'desktop';
-		else if ( mobile )
-			options.devicePath = 'mobile';
-		else if ( shared )
-			options.devicePath = 'shared';
 		
 		
 		/* htaccess */
@@ -73,6 +65,14 @@ gulp.task( 'watch', function() {
 					paths.env.dev + paths.assets.css.app.desktopFile,
 					paths.env.dev + paths.assets.css.app.mobileFile
 				];
+			
+			// options.devicePath: used for SASS error notification
+			if ( desktop )
+				options.devicePath = 'desktop';
+			else if ( mobile )
+				options.devicePath = 'mobile';
+			else if ( shared )
+				options.devicePath = 'shared';
 		}
 		
 		/* Favicons */
@@ -86,12 +86,14 @@ gulp.task( 'watch', function() {
 			taskname		= 'js';
 			options.subtask	= 'default-js';
 			
-			if ( desktop )
-				options.jsSrcPath = paths.env.dev + paths.assets.js.app.desktopAllFiles;
-			else if ( mobile )
-				options.jsSrcPath = paths.env.dev + paths.assets.js.app.mobileAllFiles;
-			else if ( shared )
-				options.jsSrcPath = paths.env.dev + paths.assets.js.app.sharedAllFiles;
+			// if ( desktop )
+			// 	options.jsSrcPath = paths.env.dev + paths.assets.js.app.desktopAllFiles;
+			// else if ( mobile )
+			// 	options.jsSrcPath = paths.env.dev + paths.assets.js.app.mobileAllFiles;
+			// else if ( shared )
+			// 	options.jsSrcPath = paths.env.dev + paths.assets.js.app.sharedAllFiles;
+			
+			// console.log( '🐯', options.jsSrcPath );
 		}
 		
 		/* JSON */
