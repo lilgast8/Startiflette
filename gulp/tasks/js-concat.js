@@ -18,28 +18,74 @@ gulp.task( 'js-concat', [ 'delete' ], function() {
 	var jsFilesList	= getJsFileList( jsFiles );
 	var i			= 0;
 	
-	var allTasks = jsFilesList.map( function( bundle ) {
-		i++;
+	// used for default or js-concat gulp task
+	if ( options.task == 'default' || options.task == 'js-concat' ) {
+		var allTasks = jsFilesList.map( function( bundle ) {
+			i++;
+			
+			if ( i < jsFilesList.length )
+				return gulp.src( bundle.src )
+							.pipe( plumber() )
+							.pipe( sourcemaps.init() )
+							.pipe( concat( bundle.name ) )
+							.pipe( sourcemaps.write( './maps' ) )
+							.pipe( gulp.dest( paths.env.dev + paths.assets.js.dir ) );
+			else if ( i == jsFilesList.length )
+				return gulp.src( bundle.src )
+							.pipe( plumber() )
+							.pipe( sourcemaps.init() )
+							.pipe( concat( bundle.name ) )
+							.pipe( sourcemaps.write( './maps' ) )
+							.pipe( gulp.dest( paths.env.dev + paths.assets.js.dir ) )
+							.pipe( livereload() );
+		} );
 		
-		if ( i < jsFilesList.length )
-			return gulp.src( bundle.src )
-						.pipe( plumber() )
-						.pipe( sourcemaps.init() )
-						.pipe( concat( bundle.name ) )
-						.pipe( sourcemaps.write( './maps' ) )
-						.pipe( gulp.dest( paths.env.dev + paths.assets.js.dir ) );
-		else if ( i == jsFilesList.length )
-			return gulp.src( bundle.src )
-						.pipe( plumber() )
-						.pipe( sourcemaps.init() )
-						.pipe( concat( bundle.name ) )
-						.pipe( sourcemaps.write( './maps' ) )
-						.pipe( gulp.dest( paths.env.dev + paths.assets.js.dir ) )
-						.pipe( livereload() );
-	} );
+		all( allTasks );
+	}
 	
-	
-	all( allTasks );
+	// used for prod, js or js-min gulp task
+	// this method is needed to wait that the task is completely finished before sending the callback
+	// (Yes, it's a bit twisted but it works. So, fuck it!)
+	else {
+		if ( jsFilesList.length == 2 ) {
+			return all(
+				gulp.src( jsFilesList[0].src )
+					.pipe( plumber() )
+					.pipe( sourcemaps.init() )
+					.pipe( concat( jsFilesList[0].name ) )
+					.pipe( sourcemaps.write( './maps' ) )
+					.pipe( gulp.dest( paths.env.dev + paths.assets.js.dir ) ),
+				gulp.src( jsFilesList[1].src )
+					.pipe( plumber() )
+					.pipe( sourcemaps.init() )
+					.pipe( concat( jsFilesList[1].name ) )
+					.pipe( sourcemaps.write( './maps' ) )
+					.pipe( gulp.dest( paths.env.dev + paths.assets.js.dir ) )
+			);
+		}
+		else if ( jsFilesList.length == 3 ) {
+			return all(
+				gulp.src( jsFilesList[0].src )
+					.pipe( plumber() )
+					.pipe( sourcemaps.init() )
+					.pipe( concat( jsFilesList[0].name ) )
+					.pipe( sourcemaps.write( './maps' ) )
+					.pipe( gulp.dest( paths.env.dev + paths.assets.js.dir ) ),
+				gulp.src( jsFilesList[1].src )
+					.pipe( plumber() )
+					.pipe( sourcemaps.init() )
+					.pipe( concat( jsFilesList[1].name ) )
+					.pipe( sourcemaps.write( './maps' ) )
+					.pipe( gulp.dest( paths.env.dev + paths.assets.js.dir ) ),
+				gulp.src( jsFilesList[2].src )
+					.pipe( plumber() )
+					.pipe( sourcemaps.init() )
+					.pipe( concat( jsFilesList[2].name ) )
+					.pipe( sourcemaps.write( './maps' ) )
+					.pipe( gulp.dest( paths.env.dev + paths.assets.js.dir ) )
+			);
+		}
+	}
 	
 } );
 
