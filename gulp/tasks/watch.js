@@ -38,7 +38,6 @@ gulp.task( 'watch', function() {
 		options.filePath	= e.path;
 		ext					= path.extname( options.filePath );
 		options.fileName	= path.basename( options.filePath );
-		// console.log( '🛤', options.filePath );
 		
 		desktop		= options.filePath.indexOf( '/desktop/' ) > -1 ? true : false;
 		mobile		= options.filePath.indexOf( '/mobile/' ) > -1 ? true : false;
@@ -85,15 +84,6 @@ gulp.task( 'watch', function() {
 		else if ( ext == '.js' ) {
 			taskname		= 'js';
 			options.subtask	= 'default-js';
-			
-			// if ( desktop )
-			// 	options.jsSrcPath = paths.env.dev + paths.assets.js.app.desktopAllFiles;
-			// else if ( mobile )
-			// 	options.jsSrcPath = paths.env.dev + paths.assets.js.app.mobileAllFiles;
-			// else if ( shared )
-			// 	options.jsSrcPath = paths.env.dev + paths.assets.js.app.sharedAllFiles;
-			
-			// console.log( '🐯', options.jsSrcPath );
 		}
 		
 		/* JSON */
@@ -130,7 +120,6 @@ gulp.task( 'watch', function() {
 		paths.env.dev + paths.assets.css.allMinFiles,
 		
 		/* JS */
-		// paths.env.dev + paths.assets.js.allJsFiles,
 		// paths.env.dev + paths.assets.js.allRootJsFiles,
 		
 		/* JSON */
