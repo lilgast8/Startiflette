@@ -1,63 +1,68 @@
 
 
 STF.Main = ( function( window ) {
-	'use strict';
+
+
+class Main {
 	
 	
-	function Main() {
+	constructor() {
 		
 	}
 	
 	
-	Main.prototype.init = function() {
+	init() {
 		STF.Config.init();
 		STF.Props.init();
 		STF.Device.init();
 		STF.Path.init();
-		STF.Lang.init();
+		// STF.Lang.init();
 		
-		_initDebug.call( this );
+		this._initDebug();
 		
-		STF.PagesController.init();
-		STF.MainView.init();
-		STF.Router.init();
+		// STF.PagesController.init();
+		// STF.MainView.init();
+		// STF.Router.init();
 		
 		// this.$window.on( 'load', $.proxy( _windowLoad, this ) );
-	};
+	}
 	
 	
-	var _initDebug = function() {
-		_initFPSStats.call( this, false );
-		_initMemoryStats.call( this, false );
-		_initDatGUI.call( this, false );
-	};
+	_initDebug() {
+		this._initFPSStats( false );
+		this._initMemoryStats( false );
+		this._initDatGUI( false );
+	}
 	
 	
-	var _initFPSStats = function( isSet ) {
+	_initFPSStats( isSet ) {
 		STF.Config.setFPSStats( isSet );
 		
 		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.FPSStats.init();
-	};
+	}
 	
 	
-	var _initMemoryStats = function( isSet ) {
+	_initMemoryStats( isSet ) {
 		STF.Config.setMemoryStats( isSet );
 		
 		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.MemoryStats.init();
-	};
+	}
 	
 	
-	var _initDatGUI = function( isSet ) {
+	_initDatGUI( isSet ) {
 		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.DatGUI.init();
-	};
+	}
 	
 	
-	return new Main();
-	
-	
+}
+
+
+return new Main();
+
+
 } ) ( window );
 
 

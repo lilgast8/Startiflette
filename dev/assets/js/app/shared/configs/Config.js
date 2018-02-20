@@ -1,10 +1,12 @@
 
 
 STF.Config = ( function( window ) {
-	'use strict';
+
+
+class Config {
 	
 	
-	function Config() {
+	constructor() {
 		this.ENV				= null;
 		this.ENVS				= null;
 		this.ALL_LANG			= null;
@@ -25,46 +27,49 @@ STF.Config = ( function( window ) {
 	}
 	
 	
-	Config.prototype.init = function() {
-		_setConfig.call( this );
-		_setJsViewsId.call( this );
-		_showCreditsLog.call( this );
-	};
+	init () {
+		this._setConfig();
+		this._setJsViewsId();
+		this._showCreditsLog();
+	}
 	
 	
-	var _setConfig = function() {
-		for ( var varName in STF_Config )
+	_setConfig() {
+		for ( const varName in STF_Config )
 			this[ varName ] = STF_Config[ varName ];
-	};
+	}
 	
 	
-	var _setJsViewsId = function() {
+	_setJsViewsId() {
 		this.JS_VIEWS_ID = STF_JS_VIEWS_ID;
-	};
+	}
 	
 	
-	var _showCreditsLog = function() {
+	_showCreditsLog() {
 		console.log(
-			'%cmade by %c— ' + this.CREDITS.author + ' —%c ' + this.CREDITS.authorUrl,
-			'padding:8px 5px; color:' + this.CREDITS.color1 + '; line-height:25px;',
-			'padding:8px 15px; color:' + this.CREDITS.color2 + '; background-color:' + this.CREDITS.color3 + '; line-height:25px;',
-			'padding:8px 5px; color:' + this.CREDITS.color3 + '; line-height:25px;'
+			`%cmade by %c— ${ this.CREDITS.author } —%c ${ this.CREDITS.authorUrl }`,
+			`padding: 8px 5px; color: ${ this.CREDITS.color1 }; line-height:25px;`,
+			`padding: 8px 15px; color: ${ this.CREDITS.color2 }; background-color: ${ this.CREDITS.color3 }; line-height:25px;`,
+			`padding: 8px 5px; color: ${ this.CREDITS.color3 }; line-height:25px;`
 		);
-	};
+	}
 	
 	
-	Config.prototype.setFPSStats = function( isSet ) {
+	setFPSStats( isSet ) {
 		this.HAS_FPS_STATS = isSet;
-	};
+	}
 	
 	
-	Config.prototype.setMemoryStats = function( isSet ) {
+	setMemoryStats( isSet ) {
 		this.HAS_MEMORY_STATS = isSet;
-	};
+	}
 	
 	
-	return new Config();
-	
-	
+}
+
+
+return new Config();
+
+
 } ) ( window );
 

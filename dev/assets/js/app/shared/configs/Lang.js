@@ -1,24 +1,26 @@
 
 
 STF.Lang = ( function( window ) {
-	'use strict';
+
+
+class Lang {
 	
 	
-	function Lang() {
+	constructor() {
 		
 	}
 	
 	
-	Lang.prototype.init = function() {
-		_setGlobalInfos.call( this );
+	init() {
+		this._setGlobalInfos();
 		STF.Router.setUrl( true, null );
-		_setCurrentLang.call( this );
-		_checkDefaultLang.call( this );
-		_setLangLinks.call( this );
-	};
+		this._setCurrentLang();
+		this._checkDefaultLang();
+		this._setLangLinks();
+	}
 	
 	
-	var _setGlobalInfos = function() {
+	_setGlobalInfos() {
 		// all lang
 		this.ALL_LANG = STF.Config.ALL_LANG;
 		
@@ -30,31 +32,34 @@ STF.Lang = ( function( window ) {
 			this.MULTI_LANG = false;
 		else
 			this.MULTI_LANG = true;
-	};
+	}
 	
 	
-	var _setCurrentLang = function() {
+	_setCurrentLang() {
 		if ( !this.MULTI_LANG || STF.Router.URL.path.length === 0 )
 			this.LANG = this.DEFAULT_LANG;
 		else
 			this.LANG = STF.Router.URL.pathParams[0];
-	};
+	}
 	
 	
-	var _checkDefaultLang = function() {
+	_checkDefaultLang() {
 		if ( this.ALL_LANG.indexOf( this.LANG ) < 0 )
 			this.LANG = this.DEFAULT_LANG;
-	};
+	}
 	
 	
-	var _setLangLinks = function() {
+	_setLangLinks() {
 		this.LANG_LINK_ROOT	= this.LANG == this.DEFAULT_LANG ? '' : this.LANG;
 		this.LANG_LINK		= this.MULTI_LANG ? this.LANG + '/' : '';
-	};
+	}
 	
 	
-	return new Lang();
-	
-	
+}
+
+
+return new Lang();
+
+
 } ) (window);
 

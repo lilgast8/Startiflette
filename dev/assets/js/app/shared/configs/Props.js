@@ -1,10 +1,13 @@
 
 
 STF.Props = ( function( window ) {
-	'use strict';
+// STF.Props = ( () => {
+
+
+class Props {
 	
 	
-	function Props() {
+	constructor() {
 		this.HAS_PUSHSTATE		= null;
 		this.TRANSFORM			= null;
 		this.HAS_TRANSFORMS		= null;
@@ -14,23 +17,27 @@ STF.Props = ( function( window ) {
 	}
 	
 	
-	Props.prototype.init = function() {
-		_setProperties.call( this );
-	};
+	init() {
+		this._setProperties();
+	}
 	
 	
-	var _setProperties = function() {
+	_setProperties() {
 		this.HAS_PUSHSTATE		= Modernizr.history;
 		this.TRANSFORM			= Modernizr.prefixed( 'transform' );
 		this.HAS_TRANSFORMS		= Modernizr.csstransforms;
 		this.HAS_TRANSFORMS_3D	= Modernizr.csstransforms3d;
 		this.HAS_TRANSITIONS	= Modernizr.csstransitions;
 		this.HAS_ANIMATIONS		= Modernizr.cssanimations;
-	};
+	}
 	
 	
-	return new Props();
-	
-	
+}
+
+
+return new Props();
+
+
+// } ) ();
 } ) ( window );
 

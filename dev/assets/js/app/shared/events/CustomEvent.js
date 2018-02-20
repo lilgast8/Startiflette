@@ -1,10 +1,12 @@
 
 
 STF.CustomEvent = ( function( window ) {
-	'use strict';
+
+
+class Config {
 	
 	
-	function CustomEvent() {
+	constructor() {
 		this.e						= {};
 		this.E						= {};
 		
@@ -12,10 +14,10 @@ STF.CustomEvent = ( function( window ) {
 	}
 	
 	
-	CustomEvent.prototype.bind = function( name, fct, context ) {
+	bind( name, fct, context ) {
 		if ( !name || !fct ) {
 			if ( !STF.Config.IS_PROD ) {
-				var missingParams;
+				let missingParams;
 				
 				if ( !name && !fct )
 					missingParams = 'name and a function';
@@ -37,10 +39,10 @@ STF.CustomEvent = ( function( window ) {
 			this.e[ name ] = new signals.Signal();
 		
 		this.e[ name ].add( fct, context ); // add the listener to the custom event
-	};
+	}
 	
 	
-	CustomEvent.prototype.unbind = function( name, fct, context ) {
+	unbind( name, fct, context ) {
 		if ( !name ) {
 			if ( !STF.Config.IS_PROD )
 				console.warn( 'You must to define the name of the custom event you want to unbind.' );
@@ -60,10 +62,10 @@ STF.CustomEvent = ( function( window ) {
 			this.e[ name ].dispose();
 			delete this.e[ name ];
 		}
-	};
+	}
 	
 	
-	CustomEvent.prototype.dispatch = function( name, params ) {
+	dispatch( name, params ) {
 		if ( this.e[ name ] === undefined ) { // if the event is not registred
 			if ( !STF.Config.IS_PROD && !this.isWarningDispatched ) {
 				console.warn( 'Trying to dispath "' + name + '" custom event which is undefined.' );
@@ -78,11 +80,14 @@ STF.CustomEvent = ( function( window ) {
 			this.e[ name ].dispatch();
 		else
 			this.e[ name ].dispatch( params );
-	};
+	}
 	
 	
-	return CustomEvent;
-	
-	
+}
+
+
+return CustomEvent;
+
+
 } ) ( window );
 

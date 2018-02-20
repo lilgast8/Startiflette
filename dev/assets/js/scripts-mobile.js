@@ -17134,16 +17134,18 @@ this.createjs = this.createjs || {};
 }());
 
 
-var STF = STF || {};
+const STF = {};
 
 
 
 
 STF.CustomEvent = ( function( window ) {
-	'use strict';
+
+
+class Config {
 	
 	
-	function CustomEvent() {
+	constructor() {
 		this.e						= {};
 		this.E						= {};
 		
@@ -17151,10 +17153,10 @@ STF.CustomEvent = ( function( window ) {
 	}
 	
 	
-	CustomEvent.prototype.bind = function( name, fct, context ) {
+	bind( name, fct, context ) {
 		if ( !name || !fct ) {
 			if ( !STF.Config.IS_PROD ) {
-				var missingParams;
+				let missingParams;
 				
 				if ( !name && !fct )
 					missingParams = 'name and a function';
@@ -17176,10 +17178,10 @@ STF.CustomEvent = ( function( window ) {
 			this.e[ name ] = new signals.Signal();
 		
 		this.e[ name ].add( fct, context ); // add the listener to the custom event
-	};
+	}
 	
 	
-	CustomEvent.prototype.unbind = function( name, fct, context ) {
+	unbind( name, fct, context ) {
 		if ( !name ) {
 			if ( !STF.Config.IS_PROD )
 				console.warn( 'You must to define the name of the custom event you want to unbind.' );
@@ -17199,10 +17201,10 @@ STF.CustomEvent = ( function( window ) {
 			this.e[ name ].dispose();
 			delete this.e[ name ];
 		}
-	};
+	}
 	
 	
-	CustomEvent.prototype.dispatch = function( name, params ) {
+	dispatch( name, params ) {
 		if ( this.e[ name ] === undefined ) { // if the event is not registred
 			if ( !STF.Config.IS_PROD && !this.isWarningDispatched ) {
 				console.warn( 'Trying to dispath "' + name + '" custom event which is undefined.' );
@@ -17217,22 +17219,27 @@ STF.CustomEvent = ( function( window ) {
 			this.e[ name ].dispatch();
 		else
 			this.e[ name ].dispatch( params );
-	};
+	}
 	
 	
-	return CustomEvent;
-	
-	
+}
+
+
+return CustomEvent;
+
+
 } ) ( window );
 
 
 
 
 STF.Config = ( function( window ) {
-	'use strict';
+
+
+class Config {
 	
 	
-	function Config() {
+	constructor() {
 		this.ENV				= null;
 		this.ENVS				= null;
 		this.ALL_LANG			= null;
@@ -17253,57 +17260,63 @@ STF.Config = ( function( window ) {
 	}
 	
 	
-	Config.prototype.init = function() {
-		_setConfig.call( this );
-		_setJsViewsId.call( this );
-		_showCreditsLog.call( this );
-	};
+	init () {
+		this._setConfig();
+		this._setJsViewsId();
+		this._showCreditsLog();
+	}
 	
 	
-	var _setConfig = function() {
-		for ( var varName in STF_Config )
+	_setConfig() {
+		for ( const varName in STF_Config )
 			this[ varName ] = STF_Config[ varName ];
-	};
+	}
 	
 	
-	var _setJsViewsId = function() {
+	_setJsViewsId() {
 		this.JS_VIEWS_ID = STF_JS_VIEWS_ID;
-	};
+	}
 	
 	
-	var _showCreditsLog = function() {
+	_showCreditsLog() {
 		console.log(
-			'%cmade by %c— ' + this.CREDITS.author + ' —%c ' + this.CREDITS.authorUrl,
-			'padding:8px 5px; color:' + this.CREDITS.color1 + '; line-height:25px;',
-			'padding:8px 15px; color:' + this.CREDITS.color2 + '; background-color:' + this.CREDITS.color3 + '; line-height:25px;',
-			'padding:8px 5px; color:' + this.CREDITS.color3 + '; line-height:25px;'
+			`%cmade by %c— ${ this.CREDITS.author } —%c ${ this.CREDITS.authorUrl }`,
+			`padding: 8px 5px; color: ${ this.CREDITS.color1 }; line-height:25px;`,
+			`padding: 8px 15px; color: ${ this.CREDITS.color2 }; background-color: ${ this.CREDITS.color3 }; line-height:25px;`,
+			`padding: 8px 5px; color: ${ this.CREDITS.color3 }; line-height:25px;`
 		);
-	};
+	}
 	
 	
-	Config.prototype.setFPSStats = function( isSet ) {
+	setFPSStats( isSet ) {
 		this.HAS_FPS_STATS = isSet;
-	};
+	}
 	
 	
-	Config.prototype.setMemoryStats = function( isSet ) {
+	setMemoryStats( isSet ) {
 		this.HAS_MEMORY_STATS = isSet;
-	};
+	}
 	
 	
-	return new Config();
-	
-	
+}
+
+
+return new Config();
+
+
 } ) ( window );
 
 
 
 
 STF.Props = ( function( window ) {
-	'use strict';
+// STF.Props = ( () => {
+
+
+class Props {
 	
 	
-	function Props() {
+	constructor() {
 		this.HAS_PUSHSTATE		= null;
 		this.TRANSFORM			= null;
 		this.HAS_TRANSFORMS		= null;
@@ -17313,34 +17326,40 @@ STF.Props = ( function( window ) {
 	}
 	
 	
-	Props.prototype.init = function() {
-		_setProperties.call( this );
-	};
+	init() {
+		this._setProperties();
+	}
 	
 	
-	var _setProperties = function() {
+	_setProperties() {
 		this.HAS_PUSHSTATE		= Modernizr.history;
 		this.TRANSFORM			= Modernizr.prefixed( 'transform' );
 		this.HAS_TRANSFORMS		= Modernizr.csstransforms;
 		this.HAS_TRANSFORMS_3D	= Modernizr.csstransforms3d;
 		this.HAS_TRANSITIONS	= Modernizr.csstransitions;
 		this.HAS_ANIMATIONS		= Modernizr.cssanimations;
-	};
+	}
 	
 	
-	return new Props();
-	
-	
+}
+
+
+return new Props();
+
+
+// } ) ();
 } ) ( window );
 
 
 
 
 STF.Device = ( function( window ) {
-	'use strict';
+
+
+class Device {
 	
 	
-	function Device() {
+	constructor() {
 		this.HAS_MOBILE_VERSION	= null;
 		this.TABLET_VERSION		= null;
 		this.FORCE_DEVICE		= null;
@@ -17358,40 +17377,46 @@ STF.Device = ( function( window ) {
 	}
 	
 	
-	Device.prototype.init = function() {
-		_setDevice.call( this );
-	};
+	init() {
+		this._setDevice();
+	}
 	
-	var _setDevice = function() {
-		for ( var varName in STF_Device )
+	
+	_setDevice() {
+		for ( const varName in STF_Device )
 			this[ varName ] = STF_Device[ varName ];
-	};
+	}
 	
 	
-	return new Device();
-	
-	
+}
+
+
+return new Device();
+
+
 } ) ( window );
 
 
 
 
 STF.Path = ( function( window ) {
-	'use strict';
+
+
+class Path {
 	
 	
-	function Path() {
+	constructor() {
 		this.URL = null;
 	}
 	
 	
-	Path.prototype.init = function() {
-		_setPaths.call( this );
-	};
+	init() {
+		this._setPaths();
+	}
 	
 	
-	var _setPaths = function() {
-		var baseUrl = STF.Config.ENVS.base_url;
+	_setPaths() {
+		const baseUrl = STF.Config.ENVS.base_url;
 		
 		// url paths
 		this.URL = {
@@ -17409,46 +17434,51 @@ STF.Path = ( function( window ) {
 			routes:		baseUrl + 'configs/routes/',
 			server:		baseUrl + 'server/',
 		};
-	};
+	}
 	
 	
-	Path.prototype.overwriteSpecialPaths = function( assetsBaseUrl ) {
+	overwriteSpecialPaths( assetsBaseUrl ) {
 		if ( !assetsBaseUrl )
 			return;
 		
 		
-		for ( var key in this.URL )
+		for ( const key in this.URL )
 			this.URL[ key ] = this.URL[ key ].replace( 'assets/', assetsBaseUrl );
-	};
+	}
 	
 	
-	return new Path();
-	
-	
+}
+
+
+return new Path();
+
+
 } ) (window);
 
 
 
 
 STF.Lang = ( function( window ) {
-	'use strict';
+
+
+class Lang {
 	
 	
-	function Lang() {
+	constructor() {
 		
 	}
 	
 	
-	Lang.prototype.init = function() {
-		_setGlobalInfos.call( this );
+	init() {
+		this._setGlobalInfos();
 		STF.Router.setUrl( true, null );
-		_setCurrentLang.call( this );
-		_checkDefaultLang.call( this );
-		_setLangLinks.call( this );
-	};
+		this._setCurrentLang();
+		this._checkDefaultLang();
+		this._setLangLinks();
+	}
 	
 	
-	var _setGlobalInfos = function() {
+	_setGlobalInfos() {
 		// all lang
 		this.ALL_LANG = STF.Config.ALL_LANG;
 		
@@ -17460,32 +17490,35 @@ STF.Lang = ( function( window ) {
 			this.MULTI_LANG = false;
 		else
 			this.MULTI_LANG = true;
-	};
+	}
 	
 	
-	var _setCurrentLang = function() {
+	_setCurrentLang() {
 		if ( !this.MULTI_LANG || STF.Router.URL.path.length === 0 )
 			this.LANG = this.DEFAULT_LANG;
 		else
 			this.LANG = STF.Router.URL.pathParams[0];
-	};
+	}
 	
 	
-	var _checkDefaultLang = function() {
+	_checkDefaultLang() {
 		if ( this.ALL_LANG.indexOf( this.LANG ) < 0 )
 			this.LANG = this.DEFAULT_LANG;
-	};
+	}
 	
 	
-	var _setLangLinks = function() {
+	_setLangLinks() {
 		this.LANG_LINK_ROOT	= this.LANG == this.DEFAULT_LANG ? '' : this.LANG;
 		this.LANG_LINK		= this.MULTI_LANG ? this.LANG + '/' : '';
-	};
+	}
 	
 	
-	return new Lang();
-	
-	
+}
+
+
+return new Lang();
+
+
 } ) (window);
 
 
@@ -20005,63 +20038,68 @@ STF.Views.Pages.LegalNotices = ( function( window ) {
 
 
 STF.Main = ( function( window ) {
-	'use strict';
+
+
+class Main {
 	
 	
-	function Main() {
+	constructor() {
 		
 	}
 	
 	
-	Main.prototype.init = function() {
+	init() {
 		STF.Config.init();
 		STF.Props.init();
 		STF.Device.init();
 		STF.Path.init();
-		STF.Lang.init();
+		// STF.Lang.init();
 		
-		_initDebug.call( this );
+		this._initDebug();
 		
-		STF.PagesController.init();
-		STF.MainView.init();
-		STF.Router.init();
+		// STF.PagesController.init();
+		// STF.MainView.init();
+		// STF.Router.init();
 		
 		// this.$window.on( 'load', $.proxy( _windowLoad, this ) );
-	};
+	}
 	
 	
-	var _initDebug = function() {
-		_initFPSStats.call( this, false );
-		_initMemoryStats.call( this, false );
-		_initDatGUI.call( this, false );
-	};
+	_initDebug() {
+		this._initFPSStats( false );
+		this._initMemoryStats( false );
+		this._initDatGUI( false );
+	}
 	
 	
-	var _initFPSStats = function( isSet ) {
+	_initFPSStats( isSet ) {
 		STF.Config.setFPSStats( isSet );
 		
 		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.FPSStats.init();
-	};
+	}
 	
 	
-	var _initMemoryStats = function( isSet ) {
+	_initMemoryStats( isSet ) {
 		STF.Config.setMemoryStats( isSet );
 		
 		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.MemoryStats.init();
-	};
+	}
 	
 	
-	var _initDatGUI = function( isSet ) {
+	_initDatGUI( isSet ) {
 		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.DatGUI.init();
-	};
+	}
 	
 	
-	return new Main();
-	
-	
+}
+
+
+return new Main();
+
+
 } ) ( window );
 
 

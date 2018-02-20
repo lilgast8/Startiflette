@@ -1,21 +1,23 @@
 
 
 STF.Path = ( function( window ) {
-	'use strict';
+
+
+class Path {
 	
 	
-	function Path() {
+	constructor() {
 		this.URL = null;
 	}
 	
 	
-	Path.prototype.init = function() {
-		_setPaths.call( this );
-	};
+	init() {
+		this._setPaths();
+	}
 	
 	
-	var _setPaths = function() {
-		var baseUrl = STF.Config.ENVS.base_url;
+	_setPaths() {
+		const baseUrl = STF.Config.ENVS.base_url;
 		
 		// url paths
 		this.URL = {
@@ -33,21 +35,24 @@ STF.Path = ( function( window ) {
 			routes:		baseUrl + 'configs/routes/',
 			server:		baseUrl + 'server/',
 		};
-	};
+	}
 	
 	
-	Path.prototype.overwriteSpecialPaths = function( assetsBaseUrl ) {
+	overwriteSpecialPaths( assetsBaseUrl ) {
 		if ( !assetsBaseUrl )
 			return;
 		
 		
-		for ( var key in this.URL )
+		for ( const key in this.URL )
 			this.URL[ key ] = this.URL[ key ].replace( 'assets/', assetsBaseUrl );
-	};
+	}
 	
 	
-	return new Path();
-	
-	
+}
+
+
+return new Path();
+
+
 } ) (window);
 

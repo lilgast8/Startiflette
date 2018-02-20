@@ -1,10 +1,12 @@
 
 
 STF.Device = ( function( window ) {
-	'use strict';
+
+
+class Device {
 	
 	
-	function Device() {
+	constructor() {
 		this.HAS_MOBILE_VERSION	= null;
 		this.TABLET_VERSION		= null;
 		this.FORCE_DEVICE		= null;
@@ -22,18 +24,22 @@ STF.Device = ( function( window ) {
 	}
 	
 	
-	Device.prototype.init = function() {
-		_setDevice.call( this );
-	};
+	init() {
+		this._setDevice();
+	}
 	
-	var _setDevice = function() {
-		for ( var varName in STF_Device )
+	
+	_setDevice() {
+		for ( const varName in STF_Device )
 			this[ varName ] = STF_Device[ varName ];
-	};
+	}
 	
 	
-	return new Device();
-	
-	
+}
+
+
+return new Device();
+
+
 } ) ( window );
 
