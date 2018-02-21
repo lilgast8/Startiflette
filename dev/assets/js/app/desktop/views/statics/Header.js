@@ -5,35 +5,36 @@ STF.Views.Statics	= STF.Views.Statics || {};
 
 
 STF.Views.Statics.Header = ( function( window ) {
-	'use strict';
+
+
+class Header extends STF.AbstractView {
 	
 	
-	function Header() {
-		STF.AbstractView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	Header.prototype				= Object.create( STF.AbstractView.prototype );
-	Header.prototype.constructor	= Header;
-	
-	
-	Header.prototype.initDOM = function() {
+	initDOM() {
 		this.$header		= $( document.getElementById( 'header' ) );
 		this.$headerLgLink	= this.$header.find( '.header-lang-link' );
 		this.$menu			= $( document.getElementById( 'menu' ) );
 		this.$menuLink		= this.$menu.find( '.menu-link' );
-	};
+	}
 	
 	
-	Header.prototype.bindEvents = function() {
-		STF.AbstractView.prototype.bindEvents.call( this );
+	bindEvents() {
+		super.bindEvents();
 		
 		this.$menuLink.on( 'click', $.proxy( this.changeUrl, this ) );
-	};
+	}
 	
 	
-	return new Header();
-	
-	
+}
+
+
+return new Header();
+
+
 } ) ( window );
 

@@ -1,11 +1,13 @@
 
 
 STF.AbstractView = ( function( window ) {
-	'use strict';
+
+
+class AbstractView extends STF.CustomEvent {
 	
 	
-	function AbstractView() {
-		STF.CustomEvent.call( this );
+	constructor() {
+		super();
 		
 		this.E		= {
 			SHOW:	'show',
@@ -21,110 +23,106 @@ STF.AbstractView = ( function( window ) {
 	}
 	
 	
-	AbstractView.prototype				= Object.create( STF.CustomEvent.prototype );
-	AbstractView.prototype.constructor	= AbstractView;
-	
-	
-	AbstractView.prototype.init = function() {
+	init() {
 		this.initDOM();
 		this.initEl();
 		this.initTl();
 		this.bindEvents();
 		
 		this.resize();
-	};
+	}
 	
 	
-	AbstractView.prototype.initDOM = function() {
+	initDOM() {
 		// console.log( 'AbstractView.initDOM() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.initEl = function() {
+	initEl() {
 		// console.log( 'AbstractView.initEl() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.initTl = function() {
+	initTl() {
 		// console.log( 'AbstractView.initTl() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.bindEvents = function() {
+	bindEvents() {
 		// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
 		
 		STF.MainView.bind( STF.MainView.E.RESIZE, this.resize, this );
-	};
+	}
 	
 	
-	AbstractView.prototype.unbindEvents = function() {
+	unbindEvents() {
 		// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
 		
 		STF.MainView.unbind( STF.MainView.E.RESIZE, this.resize, this );
-	};
+	}
 	
 	
-	AbstractView.prototype.initView = function() {
+	initView() {
 		// console.log( 'AbstractView.initView() — ', this.constructor.name );
 		
 		this.isInit = true;
-	};
+	}
 	
 	
-	AbstractView.prototype.show = function() {
+	show() {
 		// console.log( 'AbstractView.show() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.hide = function() {
+	hide() {
 		// console.log( 'AbstractView.hide() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.resize = function() {
+	resize() {
 		// console.log( 'AbstractView.resize() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.raf = function() {
+	raf() {
 		// console.log( 'AbstractView.raf() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.destroy = function() {
+	destroy() {
 		this.isInit = false;
 		
 		this.unbindEvents();
 		
 		this.destroyGSAP();
-	};
+	}
 	
 	
-	AbstractView.prototype.destroyGSAP = function() {
+	destroyGSAP() {
 		/* tween */
-		for ( var tween in this.tw )
+		for ( const tween in this.tw )
 			this.killTween( tween );
 		
 		/* timeline */
-		for ( var timeline in this.tl )
+		for ( const timeline in this.tl )
 			this.killTimeline( timeline );
 		
 		this.tl = {};
 		this.tw = {};
-	};
+	}
 	
 	
-	AbstractView.prototype.killTween = function( twName ) {
+	killTween( twName ) {
 		if ( !this.tw[ twName ] )
 			return;
 		
 		this.tw[ twName ].kill();
 		
 		this.tw[ twName ] = null;
-	};
+	}
 	
 	
-	AbstractView.prototype.killTimeline = function( tlName ) {
+	killTimeline( tlName ) {
 		if ( !this.tl[ tlName ] )
 			return;
 		
@@ -133,7 +131,7 @@ STF.AbstractView = ( function( window ) {
 		this.tl[ tlName ].kill();
 		
 		this.tl[ tlName ] = null;
-	};
+	}
 	
 	
 	/**
@@ -141,9 +139,9 @@ STF.AbstractView = ( function( window ) {
 	 * @params {object or string} e: most of time is an object when it come from a click on a link,
 	 *								 but if you need to force a specific url you can directly pass a string
 	 */
-	AbstractView.prototype.changeUrl = function( e ) {
+	changeUrl( e ) {
 		if ( STF.Props.HAS_PUSHSTATE ) { // if pushstate supported
-			var url;
+			let url;
 			
 			if ( typeof e == 'object' ) {
 				e.preventDefault();
@@ -155,23 +153,26 @@ STF.AbstractView = ( function( window ) {
 			
 			STF.Router.updateUrl( url );
 		}
-	};
+	}
 	
 	
-	AbstractView.prototype.updateSearch = function() {
+	updateSearch() {
 		if ( !STF.Config.IS_PROD )
 			console.warn( 'You need to override the updateSearch() method from AbstractView in the current page view.' );
-	};
+	}
 	
 	
-	AbstractView.prototype.updateHash = function() {
+	updateHash() {
 		if ( !STF.Config.IS_PROD )
 			console.warn( 'You need to override the updateHash() method from AbstractView in the current page view.' );
-	};
+	}
 	
 	
-	return AbstractView;
-	
-	
+}
+
+
+return AbstractView;
+
+
 } ) ( window );
 

@@ -1,11 +1,13 @@
 
 
 STF.AbstractMainView = ( function( window ) {
-	'use strict';
+
+
+class AbstractMainView extends STF.AbstractView {
 	
 	
-	function AbstractMainView() {
-		STF.AbstractView.call( this );
+	constructor() {
+		super();
 		
 		this.E = {
 			RESIZE:			'resize',
@@ -42,11 +44,7 @@ STF.AbstractMainView = ( function( window ) {
 	}
 	
 	
-	AbstractMainView.prototype				= Object.create( STF.AbstractView.prototype );
-	AbstractMainView.prototype.constructor	= AbstractMainView;
-	
-	
-	AbstractMainView.prototype.init = function() {
+	init() {
 		this.initDOM();
 		this.initEl();
 		this.initTl();
@@ -55,23 +53,23 @@ STF.AbstractMainView = ( function( window ) {
 		this.initStaticsViews();
 		
 		this.resize();
-	};
+	}
 	
 	
-	AbstractMainView.prototype.initDOM = function() {
+	initDOM() {
 		this.$window	= $( window );
 		this.$body		= $( document.body );
 		this.$mainCont	= $( document.getElementById( 'main-container' ) );
 		this.$pageCont	= $( document.getElementById( 'page-container' ) );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.initEl = function() {
+	initEl() {
 		STF.Path.overwriteSpecialPaths( this.$mainCont[0].getAttribute( 'data-assets-base-url' ) );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.bindEvents = function() {
+	bindEvents() {
 		this.$window.on( 'resize', $.proxy( this.resize, this ) );
 		// TweenLite.ticker.addEventListener( 'tick', this.raf, this );
 		// this.$window.on( 'mousemove', $.proxy( this.mouseMove, this ) );
@@ -82,32 +80,32 @@ STF.AbstractMainView = ( function( window ) {
 		// this.$window.on( 'touchend', $.proxy( this.touchEnd, this ) );
 		// this.$window.on( 'blur', $.proxy( this.windowOut, this ) );
 		// this.$window.on( 'focus', $.proxy( this.windowIn, this ) );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.initStaticsViews = function() {
+	initStaticsViews() {
 		STF.Views.Statics.MainLoader.init();
 		STF.Views.Statics.Header.init();
 		STF.Views.Statics.Footer.init();
 		
 		STF_dom_removeClass( this.$mainCont[0], 'preload' );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.disableScrollRestoration = function() {
+	disableScrollRestoration() {
 		if ( 'scrollRestoration' in history )
 			history.scrollRestoration = 'manual';
-	};
+	}
 	
 	
-	AbstractMainView.prototype.resize = function() {
-		_setResizeProps.call( this );
+	resize() {
+		this._setResizeProps();
 		
 		this.dispatch( this.E.RESIZE );
-	};
+	}
 	
 	
-	var _setResizeProps = function() {
+	_setResizeProps() {
 		this.bW = this.$body.width();
 		this.bH = this.$body.height();
 		this.wW = this.$window.width();
@@ -119,15 +117,15 @@ STF.AbstractMainView = ( function( window ) {
 			this.mX = this.cX;
 			this.mY = this.cY;
 		}
-	};
+	}
 	
 	
-	AbstractMainView.prototype.raf = function() {
+	raf() {
 		if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.FPSStats.begin();
 		
 		
-		_setRafProps.call( this );
+		this._setRafProps();
 		
 		this.dispatch( this.E.RAF );
 		
@@ -137,39 +135,39 @@ STF.AbstractMainView = ( function( window ) {
 		
 		if ( STF.Config.HAS_MEMORY_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.MemoryStats.update();
-	};
+	}
 	
 	
-	var _setRafProps = function() {
+	_setRafProps() {
 		this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
 		this.siY	= STF_math_getInertia( this.sY, this.siY, this.SCROLL_INERTIA );
 		
 		this.miX	= STF_math_getInertia( this.mX, this.miX, this.MOUSE_INERTIA );
 		this.miY	= STF_math_getInertia( this.mY, this.miY, this.MOUSE_INERTIA );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.mouseMove = function( e ) {
+	mouseMove( e ) {
 		this.mX = e.clientX;
 		this.mY = e.clientY;
 		
 		// console.log( 'AbstractMainView _mouseMove()', this.mX, this.mY );
 		
 		this.dispatch( this.E.MOUSE_MOVE );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.mouseDown = function() {
+	mouseDown() {
 		this.dispatch( this.E.MOUSE_DOWN );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.mouseUp = function() {
+	mouseUp() {
 		this.dispatch( this.E.MOUSE_UP );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.touchMove = function( e ) {
+	touchMove( e ) {
 		e.preventDefault();
 		
 		// Zepto
@@ -180,56 +178,59 @@ STF.AbstractMainView = ( function( window ) {
 		// this.tY = e.originalEvent.touches[0].pageY;
 		
 		this.dispatch( this.E.TOUCH_MOVE );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.touchStart = function() {
+	touchStart() {
 		this.dispatch( this.E.TOUCH_START );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.touchEnd = function() {
+	touchEnd() {
 		this.dispatch( this.E.TOUCH_END );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.windowOut = function() {
+	windowOut() {
 		this.isWindowFocused = false;
 		
 		this.dispatch( this.E.WINDOW_OUT );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.windowIn = function() {
+	windowIn() {
 		this.isWindowFocused = true;
 		
 		this.dispatch( this.E.WINDOW_IN );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.setScrollY = function( scrollY ) {
+	setScrollY( scrollY ) {
 		this.sY		= scrollY;
 		this.siY	= scrollY;
 		
 		this.$window[0].scrollTo( 0, scrollY );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.setBodyHeight = function( bodyH ) {
+	setBodyHeight( bodyH ) {
 		if ( bodyH === null )
 			bodyH = this.$pageCont.height();
 		
 		this.$body[0].style.height = bodyH + 'px';
-	};
+	}
 	
 	
-	AbstractMainView.prototype.initAfterAssetsLoaded = function() {
+	initAfterAssetsLoaded() {
 		
-	};
+	}
 	
 	
-	return AbstractMainView;
-	
-	
+}
+
+
+return AbstractMainView;
+
+
 } ) ( window );
 

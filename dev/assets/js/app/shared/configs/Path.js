@@ -54,5 +54,5 @@ class Path {
 return new Path();
 
 
-} ) (window);
+} ) ( window );
 

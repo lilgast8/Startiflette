@@ -4,19 +4,17 @@ STF.Models = STF.Models || {};
 
 
 STF.Models.Assets = ( function( window ) {
-	'use strict';
+
+
+class Assets extends STF.AbstractAssets {
 	
 	
-	function Assets() {
-		STF.AbstractAssets.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	Assets.prototype				= Object.create( STF.AbstractAssets.prototype );
-	Assets.prototype.constructor	= Assets;
-	
-	
-	Assets.prototype.init = function() {
+	init() {
 		this.aImg = {
 			'global': [
 				/* bgs */
@@ -71,11 +69,14 @@ STF.Models.Assets = ( function( window ) {
 				projects: STF.Path.URL.json + 'test-projects.json'
 			}
 		};
-	};
+	}
 	
 	
-	return new Assets();
-	
-	
+}
+
+
+return new Assets();
+
+
 } ) ( window );
 

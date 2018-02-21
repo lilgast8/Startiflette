@@ -5,40 +5,41 @@ STF.Views.Pages	= STF.Views.Pages || {};
 
 
 STF.Views.Pages.About = ( function( window ) {
-	'use strict';
+
+
+class About extends STF.AbstractPageView {
 	
 	
-	function About() {
-		STF.AbstractPageView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	About.prototype				= Object.create( STF.AbstractPageView.prototype );
-	About.prototype.constructor	= About;
+	init() {
+		init();
+	}
 	
 	
-	About.prototype.init = function() {
-		STF.AbstractPageView.prototype.init.call( this );
-	};
+	bindEvents() {
+		bindEvents();
+	}
 	
 	
-	About.prototype.bindEvents = function() {
-		STF.AbstractPageView.prototype.bindEvents.call( this );
-	};
+	unbindEvents() {
+		unbindEvents();
+	}
 	
 	
-	About.prototype.unbindEvents = function() {
-		STF.AbstractPageView.prototype.unbindEvents.call( this );
-	};
-	
-	
-	About.prototype.resize = function() {
+	resize() {
 		
-	};
+	}
 	
 	
-	return About;
-	
-	
+}
+
+
+return About;
+
+
 } ) ( window );
 

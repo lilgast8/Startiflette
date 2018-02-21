@@ -1,11 +1,13 @@
 
 
 STF.Video = ( function( window ) {
-	'use strict';
+
+
+class Video extends STF.AbstractView {
 	
 	
-	function Video( id, url, poster, isFireLoadStart, isFireCanPlay, isFireCanPlayThrough ) {
-		STF.AbstractView.call( this );
+	constructor( id, url, poster, isFireLoadStart, isFireCanPlay, isFireCanPlayThrough ) {
+		super( this );
 		
 		this.E = {
 			LOAD_START:			'loadStart',
@@ -31,126 +33,125 @@ STF.Video = ( function( window ) {
 	}
 	
 	
-	Video.prototype				= Object.create( STF.AbstractView.prototype );
-	Video.prototype.constructor	= Video;
-	
-	
-	Video.prototype.initDOM = function() {
+	initDOM() {
 		this.$video = $( document.getElementById( this.id ) );
-	};
+	}
 	
 	
-	Video.prototype.initEl = function() {
-		_setPoster.call( this );
+	initEl() {
+		this._setPoster();
 		this.setUrl( null );
-	};
+	}
 	
 	
-	Video.prototype.bindEvents = function() {
-		this.$video.on( 'loadstart', $.proxy( _loadStart, this ) );
-		this.$video.on( 'canplay', $.proxy( _canPlay, this ) );
-		this.$video.on( 'canplaythrough', $.proxy( _canPlayThrough, this ) );
-	};
+	bindEvents() {
+		this.$video.on( 'loadstart', $.proxy( this._loadStart, this ) );
+		this.$video.on( 'canplay', $.proxy( this._canPlay, this ) );
+		this.$video.on( 'canplaythrough', $.proxy( this._canPlayThrough, this ) );
+	}
 	
 	
-	Video.prototype.unbindEvents = function() {
-		this.$video.off( 'loadstart', $.proxy( _loadStart, this ) );
-		this.$video.off( 'canplay', $.proxy( _canPlay, this ) );
-		this.$video.off( 'canplaythrough', $.proxy( _canPlayThrough, this ) );
-	};
+	unbindEvents() {
+		this.$video.off( 'loadstart', $.proxy( this._loadStart, this ) );
+		this.$video.off( 'canplay', $.proxy( this._canPlay, this ) );
+		this.$video.off( 'canplaythrough', $.proxy( this._canPlayThrough, this ) );
+	}
 	
 	
-	var _setPoster = function() {
+	_setPoster() {
 		if ( this.poster === null )
 			return;
 		
 		this.$video[0].setAttribute( 'poster', this.poster );
-	};
+	}
 	
 	
-	Video.prototype.setUrl = function( url ) {
+	setUrl( url ) {
 		if ( this.isDynamic )
 			this.$video[0].src = this.url;
-	};
+	}
 	
 	
-	Video.prototype.load = function() {
+	load() {
 		this.$video[0].load();
 		this.$video[0].setAttribute( 'preload', 'auto' );
-	};
+	}
 	
 	
-	Video.prototype.play = function() {
+	play() {
 		this.$video[0].play();
-	};
+	}
 	
 	
-	Video.prototype.pause = function() {
+	pause() {
 		this.$video[0].pause();
-	};
+	}
 	
 	
-	Video.prototype.getDuration = function() {
+	getDuration() {
 		return this.duration;
-	};
+	}
 	
 	
-	Video.prototype.getCurrentTime = function() {
+	getCurrentTime() {
 		return this.$video[0].currentTime;
-	};
+	}
 	
 	
-	Video.prototype.setCurrentTime = function( currentTime ) {
+	setCurrentTime( currentTime ) {
 		this.$video[0].currentTime = currentTime;
-	};
+	}
 	
 	
-	Video.prototype.setVolume = function( volume ) {
+	setVolume( volume ) {
 		this.$video[0].volume = volume;
-	};
+	}
 	
 	
-	Video.prototype.getProgress = function() {
+	getProgress() {
 		if ( !this.duration )
 			return;
 		
-		var percentage = Math.round( this.$video[0].currentTime / this.duration * 100 );
+		const percentage = Math.round( this.$video[0].currentTime / this.duration * 100 );
 		
 		return percentage;
-	};
+	}
 	
 	
-	var _loadStart = function() {
+	_loadStart() {
 		if ( this.isFireLoadStart && !this.isLoadStart && STF.Device.IS_DESKTOP ) {
 			this.isLoadStart = true;
 			
 			this.dispatch( this.E.LOAD_START );
 		}
-	};
+	}
 	
 	
-	var _canPlay = function() {
+	_canPlay() {
 		if ( this.isFireCanPlay && !this.isCanPlay && STF.Device.IS_DESKTOP ) {
 			this.isCanPlay	= true;
 			this.duration	= this.$video[0].duration;
 			
 			this.dispatch( this.E.CAN_PLAY );
 		}
-	};
+	}
 	
 	
-	var _canPlayThrough = function() {
+	_canPlayThrough() {
 		if ( this.isFireCanPlayThrough && !this.isCanPlayThrough ) {
 			this.isCanPlayThrough = true;
 			
 			if ( STF.Device.IS_DESKTOP )
 				this.dispatch( this.E.CAN_PLAY_THROUGH );
 		}
-	};
+	}
 	
 	
-	return Video;
-	
-	
+}
+
+
+return Video;
+
+
 } ) ( window );
 

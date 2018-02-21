@@ -61,5 +61,5 @@ class Lang {
 return new Lang();
 
 
-} ) (window);
+} ) ( window );
 

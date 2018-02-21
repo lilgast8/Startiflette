@@ -1,11 +1,13 @@
 
 
 STF.AbstractMainLoader = ( function( window ) {
-	'use strict';
+
+
+class AbstractMainLoader extends STF.AbstractView {
 	
 	
-	function AbstractMainLoader() {
-		STF.AbstractView.call( this );
+	constructor() {
+		super();
 		
 		this.E = {
 			PROGRESS:	'progress',
@@ -17,66 +19,65 @@ STF.AbstractMainLoader = ( function( window ) {
 	}
 	
 	
-	AbstractMainLoader.prototype				= Object.create( STF.AbstractView.prototype );
-	AbstractMainLoader.prototype.constructor	= AbstractMainLoader;
-	
-	
-	AbstractMainLoader.prototype.init = function() {
-		STF.AbstractView.prototype.init.call( this );
+	init() {
+		super.init();
 		
-		_instanceAssetsLoader.call( this );
-	};
+		this._instanceAssetsLoader();
+	}
 	
 	
-	AbstractMainLoader.prototype.initDOM = function() {
+	initDOM() {
 		
-	};
+	}
 	
 	
-	AbstractMainLoader.prototype.initTl = function() {
+	initTl() {
 		
-	};
+	}
 	
 	
-	AbstractMainLoader.prototype.resize = function() {
-		STF.AbstractView.prototype.resize.call( this );
-	};
+	resize() {
+		super.resize();
+	}
 	
 	
-	var _instanceAssetsLoader = function() {
+	_instanceAssetsLoader() {
 		this.assetsLoader = new STF.Loader( true, true );
 		this.assetsLoader.init();
 		
 		this.assetsLoader.bind( this.assetsLoader.E.PROGRESS, this.onProgress, this );
-		this.assetsLoader.bind( this.assetsLoader.E.FILE_LOAD, _onFileLoad, this );
-		this.assetsLoader.bind( this.assetsLoader.E.COMPLETE, _onComplete, this );
-	};
+		this.assetsLoader.bind( this.assetsLoader.E.FILE_LOAD, this._onFileLoad, this );
+		this.assetsLoader.bind( this.assetsLoader.E.COMPLETE, this._onComplete, this );
+	}
 	
 	
-	AbstractMainLoader.prototype.loadAssets = function( aAssetsToLoad ) {
+	loadAssets( aAssetsToLoad ) {
 		// console.log( aAssetsToLoad );
 		
 		this.assetsLoader.startLoad( aAssetsToLoad );
-	};
+	}
 	
 	
-	AbstractMainLoader.prototype.onProgress = function( percentage ) {
+	onProgress( percentage ) {
 		
-	};
+	}
 	
 	
-	var _onFileLoad = function( e ) {
+	_onFileLoad( e ) {
 		this.dispatch( this.E.FILE_LOAD, e );
-	};
+	}
 	
 	
-	var _onComplete = function( data ) {
+	_onComplete( data ) {
 		this.dispatch( this.E.COMPLETE, data );
-	};
+	}
 	
 	
-	return AbstractMainLoader;
-	
-	
+}
+
+
+return AbstractMainLoader;
+
+
 } ) ( window );
 

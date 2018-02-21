@@ -1,11 +1,13 @@
 
 
 STF.Router = ( function( window ) {
-	'use strict';
+
+
+class Router extends STF.CustomEvent {
 	
 	
-	function Router() {
-		STF.CustomEvent.call( this );
+	constructor() {
+		super();
 		
 		this.URL					= {};
 		this.ALT_LANG_URL			= {};
@@ -18,25 +20,20 @@ STF.Router = ( function( window ) {
 	}
 	
 	
-	Router.prototype				= Object.create( STF.CustomEvent.prototype );
-	Router.prototype.constructor	= Router;
-	
-	
-	Router.prototype.setUrl = function( isInit, url )
-	{
-		this.URL.full			= _getFullUrl.call( this, url );
+	setUrl( isInit, url ) {
+		this.URL.full			= this._getFullUrl( url );
 		this.URL.path			= STF_str_getPath( this.URL.full );
 		this.URL.pathParams		= this.URL.path.split( '/' );
 		this.URL.search			= STF_str_getSearch( this.URL.full );
 		this.URL.searchParams	= STF_str_getParams( this.URL.full, 'search' );
 		this.URL.hash			= STF_str_getHash( this.URL.full );
 		this.URL.hashParams		= STF_str_getParams( this.URL.full, 'hash' );
-		this.URL.fullGA			= _getFullGaUrl.call( this );
-	};
+		this.URL.fullGA			= this._getFullGaUrl();
+	}
 	
 	
-	var _getFullUrl = function( url ) {
-		var fullUrl;
+	_getFullUrl( url ) {
+		let fullUrl;
 		
 		if ( url === null )
 			fullUrl = window.location.href;
@@ -45,32 +42,32 @@ STF.Router = ( function( window ) {
 		
 		
 		return fullUrl;
-	};
+	}
 	
 	
-	var _getFullGaUrl = function () {
-		var fullGaUrl = this.URL.full.replace( STF.Path.URL.base, '' );
+	_getFullGaUrl() {
+		const fullGaUrl = this.URL.full.replace( STF.Path.URL.base, '' );
 		
 		
 		return fullGaUrl;
-	};
+	}
 	
 	
-	Router.prototype.init = function() {
-		_bindEvents.call( this );
+	init() {
+		this._bindEvents();
 		
 		STF.PagesController.initFirstPage();
-	};
+	}
 	
 	
-	var _bindEvents = function() {
-		STF.MainView.$window.on( 'popstate', $.proxy( _onPopState, this ) );
-		STF.MainView.$window.on( 'hashchange', $.proxy( _onHashChange, this ) );
-	};
+	_bindEvents() {
+		STF.MainView.$window.on( 'popstate', $.proxy( this._onPopState, this ) );
+		STF.MainView.$window.on( 'hashchange', $.proxy( this._onHashChange, this ) );
+	}
 	
 	
-	var _getLangExistence = function() {
-		var langExist = true;
+	_getLangExistence() {
+		let langExist = true;
 		
 		if ( STF.Lang.ALL_LANG.indexOf( STF.Lang.LANG ) == -1 ) {
 			STF.Lang.LANG = STF.Lang.DEFAULT_LANG;
@@ -80,32 +77,31 @@ STF.Router = ( function( window ) {
 		
 		
 		return langExist;
-	};
+	}
 	
 	
-	var _setIsHomepage = function( pageId )
-	{
+	_setIsHomepage( pageId ) {
 		this.isHomepage = pageId == 'home' ? true : false;
-	};
+	}
 	
 	
-	Router.prototype.checkUrlCorrespondence = function() {
-		if ( this.URL.full != _getFullUrl.call( this, null ) )
-			_onPopState.call( this );
-	};
+	checkUrlCorrespondence() {
+		if ( this.URL.full != this._getFullUrl( null ) )
+			this._onPopState();
+	}
 	
 	
-	Router.prototype.updateUrl = function( url ) {
+	updateUrl( url ) {
 		if ( STF.PagesController.isPageChange )
 			return;
 		
 		this.isPageChangeByClick = true;
 		
-		_setUrlPartChange.call( this, url );
+		this._setUrlPartChange( url );
 		this.setUrl( false, url );
 		
 		
-		var data = {
+		const data = {
 			'isPageChange':		this.isPageChange,
 			'isSearchChange':	this.isSearchChange,
 			'isHashChange':		this.isHashChange
@@ -120,16 +116,16 @@ STF.Router = ( function( window ) {
 			STF.PagesController.changeSearch();
 		else if ( this.isHashChange )
 			STF.PagesController.changeHash();
-	};
+	}
 	
 	
-	var _onPopState = function( e ) {
+	_onPopState( e ) {
 		if ( STF.PagesController.isPageChange )
 			return;
 		
 		this.isPageChangeByClick = false;
 		
-		_setUrlPartChange.call( this, window.location.href );
+		this._setUrlPartChange( window.location.href );
 		
 		
 		if ( this.isPageChange || this.isSearchChange )
@@ -139,73 +135,76 @@ STF.Router = ( function( window ) {
 			STF.PagesController.changePage( this.URL.full );
 		else if ( this.isSearchChange )
 			STF.PagesController.changeSearch();
-	};
+	}
 	
 	
-	var _onHashChange = function( e ) {
+	_onHashChange( e ) {
 		if ( STF.PagesController.isPageChange )
 			return;
 		
-		_setUrlPartChange.call( this, window.location.href );
+		this._setUrlPartChange( window.location.href );
 		this.setUrl( false, null );
 		
 		
 		if ( this.isHashChange && !this.isPageChange && !this.isSearchChange )
 			STF.PagesController.changeHash();
-	};
+	}
 	
 	
-	var _setUrlPartChange = function( url ) {
-		_isPageChanged.call( this, url );
-		_isSearchChanged.call( this, url );
-		_isHashChanged.call( this, url );
-	};
+	_setUrlPartChange( url ) {
+		this._isPageChanged( url );
+		this._isSearchChanged( url );
+		this._isHashChanged( url );
+	}
 	
 	
-	var _isPageChanged = function( url ) {
-		var nextPath		= STF_str_getPath( url );
+	_isPageChanged( url ) {
+		const nextPath		= STF_str_getPath( url );
 		this.isPageChange	= this.URL.path != nextPath;
-	};
+	}
 	
 	
-	var _isSearchChanged = function( url ) {
-		var nextSearch		= STF_str_getSearch( url );
+	_isSearchChanged( url ) {
+		const nextSearch	= STF_str_getSearch( url );
 		this.isSearchChange	= this.URL.search != nextSearch;
-	};
+	}
 	
 	
-	var _isHashChanged = function( url ) {
-		var nextHash		= STF_str_getHash( url );
+	_isHashChanged( url ) {
+		const nextHash		= STF_str_getHash( url );
 		this.isHashChange	= this.URL.hash != nextHash;
-	};
+	}
 	
 	
-	Router.prototype.setAltLangUrl = function( $page ) {
-		var lang;
+	setAltLangUrl( $page ) {
+		let lang;
 		
-		for ( var i = 0; i < STF.Lang.ALL_LANG.length; i++ ) {
+		for ( let i = 0; i < STF.Lang.ALL_LANG.length; i++ ) {
 			lang = STF.Lang.ALL_LANG[ i ];
 			
 			if ( lang != STF.Lang.LANG )
 				this.ALT_LANG_URL[ lang ] = $page[0].getAttribute( 'data-lang-' + lang );
 		}
-	};
+	}
 	
 	
-	Router.prototype.updateGA = function() {
+	updateGA() {
 		if ( STF.Config.IS_PROD && Object.keys( STF.Config.GA_ID ).length > 0 ) {
-			for ( var gaName in STF.Config.GA_ID ) {
+			for ( const gaName in STF.Config.GA_ID ) {
 				if ( gaName == 'default' )
 					ga( 'send', 'pageview', '/' + this.URL.fullGA );
 				else
 					ga( gaName + '.send', 'pageview', '/' + this.URL.fullGA );
 			}
 		}
-	};
+	}
 	
 	
-	return new Router();
-	
-	
+}
+
+
+return new Router();
+
+
 } ) ( window );
 

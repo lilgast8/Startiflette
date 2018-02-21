@@ -16,13 +16,14 @@ class Main {
 		STF.Props.init();
 		STF.Device.init();
 		STF.Path.init();
-		// STF.Lang.init();
+		STF.Lang.init();
 		
 		this._initDebug();
 		
-		// STF.PagesController.init();
-		// STF.MainView.init();
-		// STF.Router.init();
+		
+		STF.PagesController.init();
+		STF.MainView.init();
+		STF.Router.init();
 		
 		// this.$window.on( 'load', $.proxy( _windowLoad, this ) );
 	}

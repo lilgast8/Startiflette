@@ -1,11 +1,13 @@
 
 
 STF.Loader = ( function( window ) {
-	'use strict';
+
+
+class Loader extends STF.CustomEvent {
 	
 	
-	function Loader( isOnProgress, isOnFileLoad ) {
-		STF.CustomEvent.call( this );
+	constructor( isOnProgress, isOnFileLoad ) {
+		super();
 		
 		this.isOnProgress = isOnProgress;
 		this.isOnFileLoad = isOnFileLoad;
@@ -25,82 +27,81 @@ STF.Loader = ( function( window ) {
 	}
 	
 	
-	Loader.prototype				= Object.create( STF.CustomEvent.prototype );
-	Loader.prototype.constructor	= Loader;
-	
-	
-	Loader.prototype.init = function() {
+	init() {
 		this.queue = new createjs.LoadQueue( true );
 		
 		this.bindEvents();
-	};
+	}
 	
 	
-	Loader.prototype.bindEvents = function() {
-		this.queue.addEventListener( 'loadstart', $.proxy( _onLoadStart, this ) );
-		this.queue.addEventListener( 'progress', $.proxy( _onProgress, this ) );
-		this.queue.addEventListener( 'fileload', $.proxy( _onFileLoad, this ) );
-		this.queue.addEventListener( 'complete', $.proxy( _onComplete, this ) );
-		this.queue.addEventListener( 'error', $.proxy( _onError, this ) );
-	};
+	bindEvents() {
+		this.queue.addEventListener( 'loadstart', $.proxy( this._onLoadStart, this ) );
+		this.queue.addEventListener( 'progress', $.proxy( this._onProgress, this ) );
+		this.queue.addEventListener( 'fileload', $.proxy( this._onFileLoad, this ) );
+		this.queue.addEventListener( 'complete', $.proxy( this._onComplete, this ) );
+		this.queue.addEventListener( 'error', $.proxy( this._onError, this ) );
+	}
 	
 	
-	Loader.prototype.unbindEvents = function() {
+	unbindEvents() {
 		this.queue.removeAllEventListeners();
-	};
+	}
 	
 	
-	Loader.prototype.startLoad = function( items ) {
+	startLoad( items ) {
 		if ( items.length !== 0 )
 			this.queue.loadManifest( items );
 		else
-			_onComplete.call( this, null );
-	};
+			this._onComplete( null );
+	}
 	
 	
-	Loader.prototype.destroy = function() {
+	destroy() {
 		this.unbindEvents();
 		
 		this.queue.removeAll();
-	};
+	}
 	
 	
-	var _onLoadStart = function( e ) {
+	_onLoadStart( e ) {
 		// console.log('Loader._loadStart()');
 		// this.dispatch( this.E.STARTED, e );
-	};
+	}
 	
 	
-	var _onProgress = function( e ) {
+	_onProgress( e ) {
 		if ( this.isOnProgress )
 			this.dispatch( this.E.PROGRESS, e.progress * 100 );
-	};
+	}
 	
 	
-	var _onFileLoad = function( e ) {
+	_onFileLoad( e ) {
 		if ( this.isOnFileLoad )
 			this.dispatch( this.E.FILE_LOAD, e );
 		
 		else
 			this.data[ e.item.id ] = e.result;
-	};
+	}
 	
 	
-	var _onComplete = function( e ) {
+	_onComplete( e ) {
 		this.queue.removeAll();
 		
 		this.dispatch( this.E.COMPLETE, this.data );
-	};
+	}
 	
 	
-	var _onError = function( e ) {
+	_onError( e ) {
 		// console.log(e);
 		// this.dispatch( this.E.ERROR, e );
-	};
+	}
 	
 	
-	return Loader;
-	
-	
+}
+
+
+return Loader;
+
+
 } ) ( window );
 

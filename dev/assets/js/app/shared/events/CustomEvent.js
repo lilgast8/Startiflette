@@ -3,7 +3,7 @@
 STF.CustomEvent = ( function( window ) {
 
 
-class Config {
+class CustomEvent {
 	
 	
 	constructor() {

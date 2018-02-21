@@ -17142,7 +17142,7 @@ const STF = {};
 STF.CustomEvent = ( function( window ) {
 
 
-class Config {
+class CustomEvent {
 	
 	
 	constructor() {
@@ -17453,7 +17453,7 @@ class Path {
 return new Path();
 
 
-} ) (window);
+} ) ( window );
 
 
 
@@ -17519,49 +17519,51 @@ class Lang {
 return new Lang();
 
 
-} ) (window);
+} ) ( window );
 
 
 
 
 STF.AbstractAssets = ( function( window ) {
-	'use strict';
+
+
+class AbstractAssets {
 	
 	
-	function AbstractAssets() {
+	constructor() {
 		this.aImg		= {};
 		this.aJson		= {};
 		this.jsonData	= {};
 	}
 	
 	
-	AbstractAssets.prototype.init = function() {
+	init() {
 		
-	};
+	}
 	
 	
-	AbstractAssets.prototype.getAssetsToLoad = function( pageId, isFirstLoad, loadingMode ) {
-		var aListIds		= _getAssetsListIds.call( this, pageId, isFirstLoad, loadingMode );
+	getAssetsToLoad( pageId, isFirstLoad, loadingMode ) {
+		const aListIds		= this._getAssetsListIds( pageId, isFirstLoad, loadingMode );
 		
-		var aAssetsToLoad	= [];
-		aAssetsToLoad		= _addStaticAssetsToLoad.call( this, 'img', aAssetsToLoad, aListIds );
-		aAssetsToLoad		= _addStaticAssetsToLoad.call( this, 'json', aAssetsToLoad, aListIds );
+		let aAssetsToLoad	= [];
+		aAssetsToLoad		= this._addStaticAssetsToLoad( 'img', aAssetsToLoad, aListIds );
+		aAssetsToLoad		= this._addStaticAssetsToLoad( 'json', aAssetsToLoad, aListIds );
 		
 		if ( loadingMode == 'byPageDynamic' )
-			aAssetsToLoad	= _addDynamicAssetsToLoad.call( this, isFirstLoad, aAssetsToLoad );
+			aAssetsToLoad	= this._addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad );
 		
 		
 		return aAssetsToLoad;
-	};
+	}
 	
 	
-	var _getAssetsListIds = function( pageId, isFirstLoad, loadingMode ) {
-		var aIds = [];
+	_getAssetsListIds( pageId, isFirstLoad, loadingMode ) {
+		let aIds = [];
 		
 		
 		// first load
 		if ( isFirstLoad && loadingMode == 'allStatic')
-			aIds = _getAllStaticAssetsListIds.call( this );
+			aIds = this._getAllStaticAssetsListIds();
 		
 		else if ( isFirstLoad && loadingMode == 'byPageStatic' ||
 				  isFirstLoad && loadingMode == 'byPageDynamic' )
@@ -17575,59 +17577,58 @@ STF.AbstractAssets = ( function( window ) {
 		
 		
 		return aIds;
-	};
+	}
 	
 	
-	var _getAllStaticAssetsListIds = function() {
-		var aIds = [];
+	_getAllStaticAssetsListIds() {
+		let aIds = [];
 		
-		for ( var id in this.aImg )
+		for ( const id in this.aImg )
 			aIds.push( id );
 		
-		for ( id in this.aJson )
+		for ( const id in this.aJson )
 			if( aIds.indexOf( id ) < 0 )
 				aIds.push( id );
 		
 		
 		return aIds;
-	};
+	}
 	
 	
-	var _addStaticAssetsToLoad = function( type, aAssetsToLoad, aListIds ) {
-		var assetsList;
-		var aAssets = type == 'img' ? this.aImg : this.aJson;
+	_addStaticAssetsToLoad( type, aAssetsToLoad, aListIds ) {
+		let assetsList;
+		const aAssets = type == 'img' ? this.aImg : this.aJson;
 		
-		for ( var i = 0; i < aListIds.length; i++ ) {
+		for ( let i = 0; i < aListIds.length; i++ ) {
 			assetsList = aAssets[ aListIds[ i ] ];
 			
-			var fileId;
 			if ( assetsList !== undefined )
-				for ( var id in assetsList ) {
-					fileId = STF_gl_getType( assetsList ) === 'object' ? id : null;
+				for ( const id in assetsList ) {
+					const fileId = STF_gl_getType( assetsList ) === 'object' ? id : null;
 					
-					_addAsset.call( this, aAssetsToLoad, fileId, assetsList[ id ] );
+					this._addAsset( aAssetsToLoad, fileId, assetsList[ id ] );
 				}
 		}
 		
 		
 		return aAssetsToLoad;
-	};
+	}
 	
 	
-	var _addDynamicAssetsToLoad = function( isFirstLoad, aAssetsToLoad ) {
-		var $dynamicImgs = isFirstLoad ? STF.MainView.$mainCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD ) :
-										 STF.MainView.$pageCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD );
+	_addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad ) {
+		const $dynamicImgs = isFirstLoad ? STF.MainView.$mainCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD ) :
+										   STF.MainView.$pageCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD );
 		
-		for ( var i = 0; i < $dynamicImgs.length; i++ )
+		for ( let i = 0; i < $dynamicImgs.length; i++ )
 			if ( $dynamicImgs[ i ].getAttribute( 'data-lazyload' ) != 'true' )
-				_addAsset.call( this, aAssetsToLoad, null, $dynamicImgs[ i ].getAttribute( 'data-src' ) );
+				this._addAsset( aAssetsToLoad, null, $dynamicImgs[ i ].getAttribute( 'data-src' ) );
 		
 		
 		return aAssetsToLoad;
-	};
+	}
 	
 	
-	var _addAsset = function( aAssetsToLoad, id, assetUrl ) {
+	_addAsset( aAssetsToLoad, id, assetUrl ) {
 		if ( aAssetsToLoad.indexOf( assetUrl ) < 0 && id === null )
 			return aAssetsToLoad.push( assetUrl );
 		else if ( aAssetsToLoad.indexOf( assetUrl ) < 0 && id !== null )
@@ -17637,28 +17638,33 @@ STF.AbstractAssets = ( function( window ) {
 			} );
 		else if ( !STF.Config.IS_PROD )
 			console.warn( 'AbstractAssets:' + assetUrl + ' already added to the loading assets list!' );
-	};
+	}
 	
 	
-	AbstractAssets.prototype.setJsonData = function( id, data ) {
+	setJsonData( id, data ) {
 		this.jsonData[ id ] = data;
-	};
+	}
 	
 	
-	return AbstractAssets;
-	
-	
+}
+
+
+return AbstractAssets;
+
+
 } ) ( window );
 
 
 
 
 STF.AbstractView = ( function( window ) {
-	'use strict';
+
+
+class AbstractView extends STF.CustomEvent {
 	
 	
-	function AbstractView() {
-		STF.CustomEvent.call( this );
+	constructor() {
+		super();
 		
 		this.E		= {
 			SHOW:	'show',
@@ -17674,110 +17680,106 @@ STF.AbstractView = ( function( window ) {
 	}
 	
 	
-	AbstractView.prototype				= Object.create( STF.CustomEvent.prototype );
-	AbstractView.prototype.constructor	= AbstractView;
-	
-	
-	AbstractView.prototype.init = function() {
+	init() {
 		this.initDOM();
 		this.initEl();
 		this.initTl();
 		this.bindEvents();
 		
 		this.resize();
-	};
+	}
 	
 	
-	AbstractView.prototype.initDOM = function() {
+	initDOM() {
 		// console.log( 'AbstractView.initDOM() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.initEl = function() {
+	initEl() {
 		// console.log( 'AbstractView.initEl() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.initTl = function() {
+	initTl() {
 		// console.log( 'AbstractView.initTl() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.bindEvents = function() {
+	bindEvents() {
 		// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
 		
 		STF.MainView.bind( STF.MainView.E.RESIZE, this.resize, this );
-	};
+	}
 	
 	
-	AbstractView.prototype.unbindEvents = function() {
+	unbindEvents() {
 		// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
 		
 		STF.MainView.unbind( STF.MainView.E.RESIZE, this.resize, this );
-	};
+	}
 	
 	
-	AbstractView.prototype.initView = function() {
+	initView() {
 		// console.log( 'AbstractView.initView() — ', this.constructor.name );
 		
 		this.isInit = true;
-	};
+	}
 	
 	
-	AbstractView.prototype.show = function() {
+	show() {
 		// console.log( 'AbstractView.show() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.hide = function() {
+	hide() {
 		// console.log( 'AbstractView.hide() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.resize = function() {
+	resize() {
 		// console.log( 'AbstractView.resize() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.raf = function() {
+	raf() {
 		// console.log( 'AbstractView.raf() — ', this.constructor.name );
-	};
+	}
 	
 	
-	AbstractView.prototype.destroy = function() {
+	destroy() {
 		this.isInit = false;
 		
 		this.unbindEvents();
 		
 		this.destroyGSAP();
-	};
+	}
 	
 	
-	AbstractView.prototype.destroyGSAP = function() {
+	destroyGSAP() {
 		/* tween */
-		for ( var tween in this.tw )
+		for ( const tween in this.tw )
 			this.killTween( tween );
 		
 		/* timeline */
-		for ( var timeline in this.tl )
+		for ( const timeline in this.tl )
 			this.killTimeline( timeline );
 		
 		this.tl = {};
 		this.tw = {};
-	};
+	}
 	
 	
-	AbstractView.prototype.killTween = function( twName ) {
+	killTween( twName ) {
 		if ( !this.tw[ twName ] )
 			return;
 		
 		this.tw[ twName ].kill();
 		
 		this.tw[ twName ] = null;
-	};
+	}
 	
 	
-	AbstractView.prototype.killTimeline = function( tlName ) {
+	killTimeline( tlName ) {
 		if ( !this.tl[ tlName ] )
 			return;
 		
@@ -17786,7 +17788,7 @@ STF.AbstractView = ( function( window ) {
 		this.tl[ tlName ].kill();
 		
 		this.tl[ tlName ] = null;
-	};
+	}
 	
 	
 	/**
@@ -17794,9 +17796,9 @@ STF.AbstractView = ( function( window ) {
 	 * @params {object or string} e: most of time is an object when it come from a click on a link,
 	 *								 but if you need to force a specific url you can directly pass a string
 	 */
-	AbstractView.prototype.changeUrl = function( e ) {
+	changeUrl( e ) {
 		if ( STF.Props.HAS_PUSHSTATE ) { // if pushstate supported
-			var url;
+			let url;
 			
 			if ( typeof e == 'object' ) {
 				e.preventDefault();
@@ -17808,35 +17810,40 @@ STF.AbstractView = ( function( window ) {
 			
 			STF.Router.updateUrl( url );
 		}
-	};
+	}
 	
 	
-	AbstractView.prototype.updateSearch = function() {
+	updateSearch() {
 		if ( !STF.Config.IS_PROD )
 			console.warn( 'You need to override the updateSearch() method from AbstractView in the current page view.' );
-	};
+	}
 	
 	
-	AbstractView.prototype.updateHash = function() {
+	updateHash() {
 		if ( !STF.Config.IS_PROD )
 			console.warn( 'You need to override the updateHash() method from AbstractView in the current page view.' );
-	};
+	}
 	
 	
-	return AbstractView;
-	
-	
+}
+
+
+return AbstractView;
+
+
 } ) ( window );
 
 
 
 
 STF.AbstractMainView = ( function( window ) {
-	'use strict';
+
+
+class AbstractMainView extends STF.AbstractView {
 	
 	
-	function AbstractMainView() {
-		STF.AbstractView.call( this );
+	constructor() {
+		super();
 		
 		this.E = {
 			RESIZE:			'resize',
@@ -17873,11 +17880,7 @@ STF.AbstractMainView = ( function( window ) {
 	}
 	
 	
-	AbstractMainView.prototype				= Object.create( STF.AbstractView.prototype );
-	AbstractMainView.prototype.constructor	= AbstractMainView;
-	
-	
-	AbstractMainView.prototype.init = function() {
+	init() {
 		this.initDOM();
 		this.initEl();
 		this.initTl();
@@ -17886,23 +17889,23 @@ STF.AbstractMainView = ( function( window ) {
 		this.initStaticsViews();
 		
 		this.resize();
-	};
+	}
 	
 	
-	AbstractMainView.prototype.initDOM = function() {
+	initDOM() {
 		this.$window	= $( window );
 		this.$body		= $( document.body );
 		this.$mainCont	= $( document.getElementById( 'main-container' ) );
 		this.$pageCont	= $( document.getElementById( 'page-container' ) );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.initEl = function() {
+	initEl() {
 		STF.Path.overwriteSpecialPaths( this.$mainCont[0].getAttribute( 'data-assets-base-url' ) );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.bindEvents = function() {
+	bindEvents() {
 		this.$window.on( 'resize', $.proxy( this.resize, this ) );
 		// TweenLite.ticker.addEventListener( 'tick', this.raf, this );
 		// this.$window.on( 'mousemove', $.proxy( this.mouseMove, this ) );
@@ -17913,32 +17916,32 @@ STF.AbstractMainView = ( function( window ) {
 		// this.$window.on( 'touchend', $.proxy( this.touchEnd, this ) );
 		// this.$window.on( 'blur', $.proxy( this.windowOut, this ) );
 		// this.$window.on( 'focus', $.proxy( this.windowIn, this ) );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.initStaticsViews = function() {
+	initStaticsViews() {
 		STF.Views.Statics.MainLoader.init();
 		STF.Views.Statics.Header.init();
 		STF.Views.Statics.Footer.init();
 		
 		STF_dom_removeClass( this.$mainCont[0], 'preload' );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.disableScrollRestoration = function() {
+	disableScrollRestoration() {
 		if ( 'scrollRestoration' in history )
 			history.scrollRestoration = 'manual';
-	};
+	}
 	
 	
-	AbstractMainView.prototype.resize = function() {
-		_setResizeProps.call( this );
+	resize() {
+		this._setResizeProps();
 		
 		this.dispatch( this.E.RESIZE );
-	};
+	}
 	
 	
-	var _setResizeProps = function() {
+	_setResizeProps() {
 		this.bW = this.$body.width();
 		this.bH = this.$body.height();
 		this.wW = this.$window.width();
@@ -17950,15 +17953,15 @@ STF.AbstractMainView = ( function( window ) {
 			this.mX = this.cX;
 			this.mY = this.cY;
 		}
-	};
+	}
 	
 	
-	AbstractMainView.prototype.raf = function() {
+	raf() {
 		if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.FPSStats.begin();
 		
 		
-		_setRafProps.call( this );
+		this._setRafProps();
 		
 		this.dispatch( this.E.RAF );
 		
@@ -17968,39 +17971,39 @@ STF.AbstractMainView = ( function( window ) {
 		
 		if ( STF.Config.HAS_MEMORY_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.MemoryStats.update();
-	};
+	}
 	
 	
-	var _setRafProps = function() {
+	_setRafProps() {
 		this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
 		this.siY	= STF_math_getInertia( this.sY, this.siY, this.SCROLL_INERTIA );
 		
 		this.miX	= STF_math_getInertia( this.mX, this.miX, this.MOUSE_INERTIA );
 		this.miY	= STF_math_getInertia( this.mY, this.miY, this.MOUSE_INERTIA );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.mouseMove = function( e ) {
+	mouseMove( e ) {
 		this.mX = e.clientX;
 		this.mY = e.clientY;
 		
 		// console.log( 'AbstractMainView _mouseMove()', this.mX, this.mY );
 		
 		this.dispatch( this.E.MOUSE_MOVE );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.mouseDown = function() {
+	mouseDown() {
 		this.dispatch( this.E.MOUSE_DOWN );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.mouseUp = function() {
+	mouseUp() {
 		this.dispatch( this.E.MOUSE_UP );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.touchMove = function( e ) {
+	touchMove( e ) {
 		e.preventDefault();
 		
 		// Zepto
@@ -18011,68 +18014,73 @@ STF.AbstractMainView = ( function( window ) {
 		// this.tY = e.originalEvent.touches[0].pageY;
 		
 		this.dispatch( this.E.TOUCH_MOVE );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.touchStart = function() {
+	touchStart() {
 		this.dispatch( this.E.TOUCH_START );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.touchEnd = function() {
+	touchEnd() {
 		this.dispatch( this.E.TOUCH_END );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.windowOut = function() {
+	windowOut() {
 		this.isWindowFocused = false;
 		
 		this.dispatch( this.E.WINDOW_OUT );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.windowIn = function() {
+	windowIn() {
 		this.isWindowFocused = true;
 		
 		this.dispatch( this.E.WINDOW_IN );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.setScrollY = function( scrollY ) {
+	setScrollY( scrollY ) {
 		this.sY		= scrollY;
 		this.siY	= scrollY;
 		
 		this.$window[0].scrollTo( 0, scrollY );
-	};
+	}
 	
 	
-	AbstractMainView.prototype.setBodyHeight = function( bodyH ) {
+	setBodyHeight( bodyH ) {
 		if ( bodyH === null )
 			bodyH = this.$pageCont.height();
 		
 		this.$body[0].style.height = bodyH + 'px';
-	};
+	}
 	
 	
-	AbstractMainView.prototype.initAfterAssetsLoaded = function() {
+	initAfterAssetsLoaded() {
 		
-	};
+	}
 	
 	
-	return AbstractMainView;
-	
-	
+}
+
+
+return AbstractMainView;
+
+
 } ) ( window );
 
 
 
 
 STF.AbstractMainLoader = ( function( window ) {
-	'use strict';
+
+
+class AbstractMainLoader extends STF.AbstractView {
 	
 	
-	function AbstractMainLoader() {
-		STF.AbstractView.call( this );
+	constructor() {
+		super();
 		
 		this.E = {
 			PROGRESS:	'progress',
@@ -18084,78 +18092,79 @@ STF.AbstractMainLoader = ( function( window ) {
 	}
 	
 	
-	AbstractMainLoader.prototype				= Object.create( STF.AbstractView.prototype );
-	AbstractMainLoader.prototype.constructor	= AbstractMainLoader;
-	
-	
-	AbstractMainLoader.prototype.init = function() {
-		STF.AbstractView.prototype.init.call( this );
+	init() {
+		super.init();
 		
-		_instanceAssetsLoader.call( this );
-	};
+		this._instanceAssetsLoader();
+	}
 	
 	
-	AbstractMainLoader.prototype.initDOM = function() {
+	initDOM() {
 		
-	};
+	}
 	
 	
-	AbstractMainLoader.prototype.initTl = function() {
+	initTl() {
 		
-	};
+	}
 	
 	
-	AbstractMainLoader.prototype.resize = function() {
-		STF.AbstractView.prototype.resize.call( this );
-	};
+	resize() {
+		super.resize();
+	}
 	
 	
-	var _instanceAssetsLoader = function() {
+	_instanceAssetsLoader() {
 		this.assetsLoader = new STF.Loader( true, true );
 		this.assetsLoader.init();
 		
 		this.assetsLoader.bind( this.assetsLoader.E.PROGRESS, this.onProgress, this );
-		this.assetsLoader.bind( this.assetsLoader.E.FILE_LOAD, _onFileLoad, this );
-		this.assetsLoader.bind( this.assetsLoader.E.COMPLETE, _onComplete, this );
-	};
+		this.assetsLoader.bind( this.assetsLoader.E.FILE_LOAD, this._onFileLoad, this );
+		this.assetsLoader.bind( this.assetsLoader.E.COMPLETE, this._onComplete, this );
+	}
 	
 	
-	AbstractMainLoader.prototype.loadAssets = function( aAssetsToLoad ) {
+	loadAssets( aAssetsToLoad ) {
 		// console.log( aAssetsToLoad );
 		
 		this.assetsLoader.startLoad( aAssetsToLoad );
-	};
+	}
 	
 	
-	AbstractMainLoader.prototype.onProgress = function( percentage ) {
+	onProgress( percentage ) {
 		
-	};
+	}
 	
 	
-	var _onFileLoad = function( e ) {
+	_onFileLoad( e ) {
 		this.dispatch( this.E.FILE_LOAD, e );
-	};
+	}
 	
 	
-	var _onComplete = function( data ) {
+	_onComplete( data ) {
 		this.dispatch( this.E.COMPLETE, data );
-	};
+	}
 	
 	
-	return AbstractMainLoader;
-	
-	
+}
+
+
+return AbstractMainLoader;
+
+
 } ) ( window );
 
 
 
 
 STF.Router = ( function( window ) {
-	'use strict';
+
+
+class Router extends STF.CustomEvent {
 	
 	
-	function Router() {
-		STF.CustomEvent.call( this );
+	constructor() {
+		super();
 		
 		this.URL					= {};
 		this.ALT_LANG_URL			= {};
@@ -18168,25 +18177,20 @@ STF.Router = ( function( window ) {
 	}
 	
 	
-	Router.prototype				= Object.create( STF.CustomEvent.prototype );
-	Router.prototype.constructor	= Router;
-	
-	
-	Router.prototype.setUrl = function( isInit, url )
-	{
-		this.URL.full			= _getFullUrl.call( this, url );
+	setUrl( isInit, url ) {
+		this.URL.full			= this._getFullUrl( url );
 		this.URL.path			= STF_str_getPath( this.URL.full );
 		this.URL.pathParams		= this.URL.path.split( '/' );
 		this.URL.search			= STF_str_getSearch( this.URL.full );
 		this.URL.searchParams	= STF_str_getParams( this.URL.full, 'search' );
 		this.URL.hash			= STF_str_getHash( this.URL.full );
 		this.URL.hashParams		= STF_str_getParams( this.URL.full, 'hash' );
-		this.URL.fullGA			= _getFullGaUrl.call( this );
-	};
+		this.URL.fullGA			= this._getFullGaUrl();
+	}
 	
 	
-	var _getFullUrl = function( url ) {
-		var fullUrl;
+	_getFullUrl( url ) {
+		let fullUrl;
 		
 		if ( url === null )
 			fullUrl = window.location.href;
@@ -18195,32 +18199,32 @@ STF.Router = ( function( window ) {
 		
 		
 		return fullUrl;
-	};
+	}
 	
 	
-	var _getFullGaUrl = function () {
-		var fullGaUrl = this.URL.full.replace( STF.Path.URL.base, '' );
+	_getFullGaUrl() {
+		const fullGaUrl = this.URL.full.replace( STF.Path.URL.base, '' );
 		
 		
 		return fullGaUrl;
-	};
+	}
 	
 	
-	Router.prototype.init = function() {
-		_bindEvents.call( this );
+	init() {
+		this._bindEvents();
 		
 		STF.PagesController.initFirstPage();
-	};
+	}
 	
 	
-	var _bindEvents = function() {
-		STF.MainView.$window.on( 'popstate', $.proxy( _onPopState, this ) );
-		STF.MainView.$window.on( 'hashchange', $.proxy( _onHashChange, this ) );
-	};
+	_bindEvents() {
+		STF.MainView.$window.on( 'popstate', $.proxy( this._onPopState, this ) );
+		STF.MainView.$window.on( 'hashchange', $.proxy( this._onHashChange, this ) );
+	}
 	
 	
-	var _getLangExistence = function() {
-		var langExist = true;
+	_getLangExistence() {
+		let langExist = true;
 		
 		if ( STF.Lang.ALL_LANG.indexOf( STF.Lang.LANG ) == -1 ) {
 			STF.Lang.LANG = STF.Lang.DEFAULT_LANG;
@@ -18230,32 +18234,31 @@ STF.Router = ( function( window ) {
 		
 		
 		return langExist;
-	};
+	}
 	
 	
-	var _setIsHomepage = function( pageId )
-	{
+	_setIsHomepage( pageId ) {
 		this.isHomepage = pageId == 'home' ? true : false;
-	};
+	}
 	
 	
-	Router.prototype.checkUrlCorrespondence = function() {
-		if ( this.URL.full != _getFullUrl.call( this, null ) )
-			_onPopState.call( this );
-	};
+	checkUrlCorrespondence() {
+		if ( this.URL.full != this._getFullUrl( null ) )
+			this._onPopState();
+	}
 	
 	
-	Router.prototype.updateUrl = function( url ) {
+	updateUrl( url ) {
 		if ( STF.PagesController.isPageChange )
 			return;
 		
 		this.isPageChangeByClick = true;
 		
-		_setUrlPartChange.call( this, url );
+		this._setUrlPartChange( url );
 		this.setUrl( false, url );
 		
 		
-		var data = {
+		const data = {
 			'isPageChange':		this.isPageChange,
 			'isSearchChange':	this.isSearchChange,
 			'isHashChange':		this.isHashChange
@@ -18270,16 +18273,16 @@ STF.Router = ( function( window ) {
 			STF.PagesController.changeSearch();
 		else if ( this.isHashChange )
 			STF.PagesController.changeHash();
-	};
+	}
 	
 	
-	var _onPopState = function( e ) {
+	_onPopState( e ) {
 		if ( STF.PagesController.isPageChange )
 			return;
 		
 		this.isPageChangeByClick = false;
 		
-		_setUrlPartChange.call( this, window.location.href );
+		this._setUrlPartChange( window.location.href );
 		
 		
 		if ( this.isPageChange || this.isSearchChange )
@@ -18289,74 +18292,77 @@ STF.Router = ( function( window ) {
 			STF.PagesController.changePage( this.URL.full );
 		else if ( this.isSearchChange )
 			STF.PagesController.changeSearch();
-	};
+	}
 	
 	
-	var _onHashChange = function( e ) {
+	_onHashChange( e ) {
 		if ( STF.PagesController.isPageChange )
 			return;
 		
-		_setUrlPartChange.call( this, window.location.href );
+		this._setUrlPartChange( window.location.href );
 		this.setUrl( false, null );
 		
 		
 		if ( this.isHashChange && !this.isPageChange && !this.isSearchChange )
 			STF.PagesController.changeHash();
-	};
+	}
 	
 	
-	var _setUrlPartChange = function( url ) {
-		_isPageChanged.call( this, url );
-		_isSearchChanged.call( this, url );
-		_isHashChanged.call( this, url );
-	};
+	_setUrlPartChange( url ) {
+		this._isPageChanged( url );
+		this._isSearchChanged( url );
+		this._isHashChanged( url );
+	}
 	
 	
-	var _isPageChanged = function( url ) {
-		var nextPath		= STF_str_getPath( url );
+	_isPageChanged( url ) {
+		const nextPath		= STF_str_getPath( url );
 		this.isPageChange	= this.URL.path != nextPath;
-	};
+	}
 	
 	
-	var _isSearchChanged = function( url ) {
-		var nextSearch		= STF_str_getSearch( url );
+	_isSearchChanged( url ) {
+		const nextSearch	= STF_str_getSearch( url );
 		this.isSearchChange	= this.URL.search != nextSearch;
-	};
+	}
 	
 	
-	var _isHashChanged = function( url ) {
-		var nextHash		= STF_str_getHash( url );
+	_isHashChanged( url ) {
+		const nextHash		= STF_str_getHash( url );
 		this.isHashChange	= this.URL.hash != nextHash;
-	};
+	}
 	
 	
-	Router.prototype.setAltLangUrl = function( $page ) {
-		var lang;
+	setAltLangUrl( $page ) {
+		let lang;
 		
-		for ( var i = 0; i < STF.Lang.ALL_LANG.length; i++ ) {
+		for ( let i = 0; i < STF.Lang.ALL_LANG.length; i++ ) {
 			lang = STF.Lang.ALL_LANG[ i ];
 			
 			if ( lang != STF.Lang.LANG )
 				this.ALT_LANG_URL[ lang ] = $page[0].getAttribute( 'data-lang-' + lang );
 		}
-	};
+	}
 	
 	
-	Router.prototype.updateGA = function() {
+	updateGA() {
 		if ( STF.Config.IS_PROD && Object.keys( STF.Config.GA_ID ).length > 0 ) {
-			for ( var gaName in STF.Config.GA_ID ) {
+			for ( const gaName in STF.Config.GA_ID ) {
 				if ( gaName == 'default' )
 					ga( 'send', 'pageview', '/' + this.URL.fullGA );
 				else
 					ga( gaName + '.send', 'pageview', '/' + this.URL.fullGA );
 			}
 		}
-	};
+	}
 	
 	
-	return new Router();
-	
-	
+}
+
+
+return new Router();
+
+
 } ) ( window );
 
 
@@ -18445,11 +18451,13 @@ STF.Models.Assets = ( function( window ) {
 
 
 STF.Loader = ( function( window ) {
-	'use strict';
+
+
+class Loader extends STF.CustomEvent {
 	
 	
-	function Loader( isOnProgress, isOnFileLoad ) {
-		STF.CustomEvent.call( this );
+	constructor( isOnProgress, isOnFileLoad ) {
+		super();
 		
 		this.isOnProgress = isOnProgress;
 		this.isOnFileLoad = isOnFileLoad;
@@ -18469,94 +18477,95 @@ STF.Loader = ( function( window ) {
 	}
 	
 	
-	Loader.prototype				= Object.create( STF.CustomEvent.prototype );
-	Loader.prototype.constructor	= Loader;
-	
-	
-	Loader.prototype.init = function() {
+	init() {
 		this.queue = new createjs.LoadQueue( true );
 		
 		this.bindEvents();
-	};
+	}
 	
 	
-	Loader.prototype.bindEvents = function() {
-		this.queue.addEventListener( 'loadstart', $.proxy( _onLoadStart, this ) );
-		this.queue.addEventListener( 'progress', $.proxy( _onProgress, this ) );
-		this.queue.addEventListener( 'fileload', $.proxy( _onFileLoad, this ) );
-		this.queue.addEventListener( 'complete', $.proxy( _onComplete, this ) );
-		this.queue.addEventListener( 'error', $.proxy( _onError, this ) );
-	};
+	bindEvents() {
+		this.queue.addEventListener( 'loadstart', $.proxy( this._onLoadStart, this ) );
+		this.queue.addEventListener( 'progress', $.proxy( this._onProgress, this ) );
+		this.queue.addEventListener( 'fileload', $.proxy( this._onFileLoad, this ) );
+		this.queue.addEventListener( 'complete', $.proxy( this._onComplete, this ) );
+		this.queue.addEventListener( 'error', $.proxy( this._onError, this ) );
+	}
 	
 	
-	Loader.prototype.unbindEvents = function() {
+	unbindEvents() {
 		this.queue.removeAllEventListeners();
-	};
+	}
 	
 	
-	Loader.prototype.startLoad = function( items ) {
+	startLoad( items ) {
 		if ( items.length !== 0 )
 			this.queue.loadManifest( items );
 		else
-			_onComplete.call( this, null );
-	};
+			this._onComplete( null );
+	}
 	
 	
-	Loader.prototype.destroy = function() {
+	destroy() {
 		this.unbindEvents();
 		
 		this.queue.removeAll();
-	};
+	}
 	
 	
-	var _onLoadStart = function( e ) {
+	_onLoadStart( e ) {
 		// console.log('Loader._loadStart()');
 		// this.dispatch( this.E.STARTED, e );
-	};
+	}
 	
 	
-	var _onProgress = function( e ) {
+	_onProgress( e ) {
 		if ( this.isOnProgress )
 			this.dispatch( this.E.PROGRESS, e.progress * 100 );
-	};
+	}
 	
 	
-	var _onFileLoad = function( e ) {
+	_onFileLoad( e ) {
 		if ( this.isOnFileLoad )
 			this.dispatch( this.E.FILE_LOAD, e );
 		
 		else
 			this.data[ e.item.id ] = e.result;
-	};
+	}
 	
 	
-	var _onComplete = function( e ) {
+	_onComplete( e ) {
 		this.queue.removeAll();
 		
 		this.dispatch( this.E.COMPLETE, this.data );
-	};
+	}
 	
 	
-	var _onError = function( e ) {
+	_onError( e ) {
 		// console.log(e);
 		// this.dispatch( this.E.ERROR, e );
-	};
+	}
 	
 	
-	return Loader;
-	
-	
+}
+
+
+return Loader;
+
+
 } ) ( window );
 
 
 
 
 STF.LazyLoader = ( function( window ) {
-	'use strict';
+
+
+class LazyLoader extends STF.CustomEvent {
 	
 	
-	function LazyLoader( $container, className, parentEl, stackSize, autoInit ) {
-		STF.CustomEvent.call( this );
+	constructor( $container, className, parentEl, stackSize, autoInit ) {
+		super();
 		
 		this.$container		= $container;
 		this.CLASS_NAME		= className;
@@ -18572,76 +18581,69 @@ STF.LazyLoader = ( function( window ) {
 	}
 	
 	
-	LazyLoader.prototype				= Object.create( STF.CustomEvent.prototype );
-	LazyLoader.prototype.constructor	= LazyLoader;
-	
-	
-	LazyLoader.prototype.init = function() {
+	init() {
 		this.initDOM();
 		this.initEl();
 		this.bindEvents();
 		
-		this.startLazyload.call( this );
-	};
+		this.startLazyload();
+	}
 	
 	
-	LazyLoader.prototype.initDOM = function() {
+	initDOM() {
 		this.$imgToLazyload	= this.$container.find( 'img.' + this.CLASS_NAME );
-	};
+	}
 	
 	
-	LazyLoader.prototype.initEl = function() {
+	initEl() {
 		this.loaderImg = new STF.Loader( false, true );
 		
-		var src;
-		
-		for ( var i = 0; i < this.$imgToLazyload.length; i++ ) {
-			src = this.$imgToLazyload[ i ].getAttribute( 'data-src' );
+		for ( let i = 0; i < this.$imgToLazyload.length; i++ ) {
+			const src = this.$imgToLazyload[ i ].getAttribute( 'data-src' );
 			
 			if ( this.imgToLazyload.indexOf( src ) < 0 && src != 'preloaded' )
 				this.imgToLazyload.push( src );
 		}
-	};
+	}
 	
 	
-	LazyLoader.prototype.bindEvents = function() {
+	bindEvents() {
 		this.loaderImg.bind( this.loaderImg.E.FILE_LOAD, this.onImgLoad, this );
 		this.loaderImg.bind( this.loaderImg.E.COMPLETE, this.onImgLoadingComplete, this );
-	};
+	}
 	
 	
-	LazyLoader.prototype.unbindEvents = function() {
+	unbindEvents() {
 		this.loaderImg.unbind( this.loaderImg.E.FILE_LOAD, this.onImgLoad, this );
 		this.loaderImg.unbind( this.loaderImg.E.COMPLETE, this.onImgLoadingComplete, this );
-	};
+	}
 	
 	
-	LazyLoader.prototype.destroy = function() {
+	destroy() {
 		this.unbindEvents();
 		
 		this.loaderImg.destroy();
-	};
+	}
 	
 	
-	LazyLoader.prototype.startLazyload = function() {
+	startLazyload() {
 		if ( this.imgToLazyload.length === 0 )
 			return;
 		
 		
-		var imgToLazyload = this.imgToLazyload.slice( this.posLoadedImg, this.posLoadedImg + this.STACK_SIZE );
+		const imgToLazyload = this.imgToLazyload.slice( this.posLoadedImg, this.posLoadedImg + this.STACK_SIZE );
 		
-		// setTimeout( function() {
-			this.loaderImg.startLoad( imgToLazyload );
-		// }.bind( this ), 1000 );
-	};
+		// setTimeout( () => {
+		this.loaderImg.startLoad( imgToLazyload );
+		// }, 1000 );
+	}
 	
 	
-	LazyLoader.prototype.onImgLoad = function( e ) {
-		var $imgs = this.$imgToLazyload.filter( '[ data-src="' + e.item.src + '" ]' );
-		var $img;
+	onImgLoad( e ) {
+		const $imgs = this.$imgToLazyload.filter( '[ data-src="' + e.item.src + '" ]' );
 		
-		for ( var i = 0; i < $imgs.length; i++ ) {
-			$img		= $imgs[ i ];
+		for ( let i = 0; i < $imgs.length; i++ ) {
+			const $img	= $imgs[ i ];
 			$img.src	= e.item.src;
 			
 			$img.offsetHeight; // jshint ignore:line
@@ -18650,369 +18652,324 @@ STF.LazyLoader = ( function( window ) {
 			if ( this.PARENT_EL !== null )
 				STF_dom_addClass( $( $imgs[ i ] ).parent( this.PARENT_EL )[0], 'loaded' );
 		}
-	};
+	}
 	
 	
-	LazyLoader.prototype.onImgLoadingComplete = function() {
+	onImgLoadingComplete() {
 		this.posLoadedImg += this.STACK_SIZE;
 		
 		if ( this.posLoadedImg < this.imgToLazyload.length )
-			this.startLazyload.call( this );
+			this.startLazyload();
 		else
-			this.onLazyloadCompleted.call( this );
-	};
+			this.onLazyloadCompleted();
+	}
 	
 	
-	LazyLoader.prototype.onLazyloadCompleted = function() {
+	onLazyloadCompleted() {
 		// console.log( '_onLazyloadCompleted:', this.$container );
-	};
+	}
 	
 	
-	return LazyLoader;
-	
-	
+}
+
+
+return LazyLoader;
+
+
 } ) ( window );
 
 
 
 
-STF.Utils = STF.Utils || {};
+window.STF_gl_colors = {};
 
 
-STF.Utils.Global = ( function( window ) {
-	'use strict';
+window.STF_gl_encryptMailto = ( el, address, domain, end, replaceContent ) => {
+	const className	= el.className;
+	const mailto	= 'mailto';
+	const separator	= ':';
+	const at		= '@';
+	const dot		= '.';
+	
+	const content	= replaceContent ? address + at + domain + dot + end : el.innerHTML;
+	const email		= mailto + separator + address + at + domain + dot + end;
+	
+	el.outerHTML	= '<a href="' + email + '" class="' + className + '">' + content + '</a>';
+};
+
+
+window.STF_gl_getObjSize = ( obj ) => {
+	let size = 0;
+	
+	for ( const key in obj )
+		if ( obj.hasOwnProperty( key ) )
+			size++;
 	
 	
-	window.color = {};
+	return size;
+};
+
+
+window.STF_gl_getType = ( obj ) => {
+	return ( {} ).toString.call( obj ).match( /\s([a-z|A-Z]+)/ )[1].toLowerCase();
+};
+
+
+
+
+/**
+ * Insert value(s) in a array
+ * @params {array} array: array where the value(s) will be inserted
+ * @params {int} index: index of the array
+ * @params {string, number, int or array} item: value or array of values
+ * @return {array} array: new array
+ */
+window.STF_arr_insert = ( array, index, item ) => {
+	if ( typeof item != 'object' )
+		array.splice( index, 0, item );
+	
+	else
+		item.map( ( value, i ) => {
+			return array.splice( index + i, 0, value );
+		} );
 	
 	
-	window.STF_gl_encryptMailto = function( el, address, domain, end, replaceContent ) {
-		var className	= el.className;
-		var mailto		= 'mailto';
-		var separator	= ':';
-		var at			= '@';
-		var dot			= '.';
+	return array;
+};
+
+
+
+
+window.STF_dom_addClass = ( el, classToAdd ) => {
+	if ( el.classList )
+		el.classList.add( classToAdd );
+	else {
+		if ( !STF_dom_hasClass( el, classToAdd ) )
+			el.className += ' ' + classToAdd;
+	}
+};
+
+
+window.STF_dom_removeClass = ( el, classToRemove ) => {
+	if ( el.classList )
+		el.classList.remove( classToRemove );
+	else {
+		el.className = el.className.replace( new RegExp( '(^|\\b)' + classToRemove.split(' ').join( '|' ) + '(\\b|$)', 'gi' ), '');
 		
-		var content		= replaceContent ? address + at + domain + dot + end : el.innerHTML;
-		var email		= mailto + separator + address + at + domain + dot + end;
-		
-		el.outerHTML	= '<a href="' + email + '" class="' + className + '">' + content + '</a>';
+		const lastCharPos = el.className.length - 1;
+		if ( el.className[ lastCharPos ] == ' ' )
+			el.className = el.className.substring( 0, lastCharPos );
+	}
+};
+
+
+window.STF_dom_resetClass = ( el ) => {
+	el.className = '';
+};
+
+
+window.STF_dom_hasClass = ( el, classToCheck ) => {
+	let hasClass;
+	
+	if ( el.classList )
+		hasClass = el.classList.contains( classToCheck );
+	else
+		hasClass = new RegExp( '(^| )' + classToCheck + '( |$)', 'gi' ).test( el.className );
+	
+	
+	return hasClass;
+};
+
+
+window.STF_dom_resetStyle = ( el ) => {
+	el.style.cssText = '';
+};
+
+
+window.STF_dom_setTranslate = ( el, x, y ) => {
+	x = x === null ? 0 : x;
+	y = y === null ? 0 : y;
+	
+	if ( STF.Props.HAS_TRANSFORMS_3D )
+		el.style[ STF.Props.TRANSFORM ] = 'translate3d(' + x + 'px, ' + y + 'px, 0px)';
+	else
+		el.style[ STF.Props.TRANSFORM ] = 'translate(' + x + 'px, ' + y + 'px)';
+};
+
+
+
+
+window.STF_math_getElPos = ( elW, elH, contW, contH ) => {
+	const elRatio	= elW / elH;
+	const contRatio	= contW / contH;
+	const pos		= {
+		x: 0,
+		y: 0,
+		w: 0,
+		h: 0
 	};
 	
+	if ( elRatio < contRatio ) {
+		pos.w = contW;
+		pos.h = Math.round( pos.w / elRatio );
+		pos.y = Math.round( - ( pos.h - contH ) / 2 );
+	}
+	else {
+		pos.h = contH;
+		pos.w = Math.round ( pos.h * elRatio );
+		pos.x = Math.round ( - ( pos.w - contW ) / 2 );
+	}
 	
-	window.STF_gl_getObjSize = function( obj ) {
-		var size = 0;
-		
-		for ( var key in obj )
-			if ( obj.hasOwnProperty( key ) )
-				size++;
-		
-		
-		return size;
+	
+	return pos;
+};
+
+
+window.STF_math_getCropPos = ( elW, elH, contW, contH ) => {
+	const elRatio	= elW / elH;
+	const contRatio	= contW / contH;
+	const pos		= {
+		x: 0,
+		y: 0,
+		w: 0,
+		h: 0
 	};
 	
-	
-	window.STF_gl_getType = function( obj ) {
-		return ({}).toString.call( obj ).match( /\s([a-z|A-Z]+)/ )[1].toLowerCase();
-	};
-	
-	
-} ) ( window );
-
-
-
-
-STF.Utils = STF.Utils || {};
-
-
-STF.Utils.Array = ( function( window ) {
-	'use strict';
+	if ( elRatio < contRatio ) {
+		pos.w = elW;
+		pos.h = Math.round( pos.w / contRatio );
+		pos.y = Math.round( - ( pos.h - elH ) / 2 );
+	}
+	else {
+		pos.h = elH;
+		pos.w = Math.round ( pos.h * contRatio );
+		pos.x = Math.round ( - ( pos.w - elW ) / 2 );
+	}
 	
 	
-	/**
-	 * Insert value(s) in a array
-	 * @params {array} array: array where the value(s) will be inserted
-	 * @params {int} index: index of the array
-	 * @params {string, number, int or array} item: value or array of values
-	 * @return {array} array: new array
-	 */
-	window.STF_arr_insert = function( array, index, item ) {
-		if ( typeof item != 'object' )
-			array.splice( index, 0, item );
-		
-		else
-			item.map( function( value, i ) {
-				return array.splice( index + i, 0, value );
-			} );
-		
-		
-		return array;
-	};
+	return pos;
+};
+
+
+window.STF_math_degToRad = ( deg ) => {
+	return deg * Math.PI / 180;
+};
+
+
+window.STF_math_radToDeg = ( rad ) => {
+	return rad * 180 / Math.PI;
+};
+
+
+window.STF_math_getHypotenuse = ( widthA, widthB ) => {
+	return Math.sqrt( widthA * widthA + widthB * widthB );
+};
+
+
+window.STF_math_getInertia = ( destValue, value, inertia ) => {
+	const valueToAdd	= Math.abs ( ( destValue - value ) * inertia ) >= 0.01 ? ( destValue - value ) * inertia : destValue - value;
+	value				+= valueToAdd;
 	
 	
-} ) ( window );
+	return value;
+};
 
 
 
 
-STF.Utils = STF.Utils || {};
+window.STF_str_removeFirstSpecificChar = ( string, char ) => {
+	if ( string.substr( 0, 1 ) == char )
+		string = string.substr( 1 );
+	
+	
+	return string;
+};
 
 
-STF.Utils.DOM = ( function( window ) {
-	'use strict';
+window.STF_str_removeLastSpecificChar = ( string, char ) => {
+	if ( string.substr( string.length - 1, 1 ) == char )
+		string = string.substr( 0, string.length - 1 );
 	
 	
-	window.STF_dom_addClass = function( el, classToAdd ) {
-		if ( el.classList )
-			el.classList.add( classToAdd );
-		else {
-			if ( !STF_dom_hasClass( el, classToAdd ) )
-				el.className += ' ' + classToAdd;
-		}
-	};
+	return string;
+};
+
+
+window.STF_str_convertToUrl = ( string ) => {
+	const link	= document.createElement( 'a' );
+	link.href	= string;
 	
 	
-	window.STF_dom_removeClass = function( el, classToRemove ) {
-		if ( el.classList )
-			el.classList.remove( classToRemove );
-		else {
-			el.className = el.className.replace( new RegExp( '(^|\\b)' + classToRemove.split(' ').join( '|' ) + '(\\b|$)', 'gi' ), '');
+	return link;
+};
+
+
+window.STF_str_getPath = ( string, baseUrl ) => {
+	if ( baseUrl === null || baseUrl === undefined )
+		baseUrl = STF.Path.URL.base;
+	
+	let path	= string.replace( baseUrl, '' );
+	
+	path		= path.split( '#' )[0]; // remove #hash
+	path		= path.split( '?' )[0]; // remove ?search
+	
+	path		= STF_str_removeFirstSpecificChar( path, '/' );
+	path		= STF_str_removeLastSpecificChar( path, '/' );
+	
+	
+	return path;
+};
+
+
+window.STF_str_getSearch = ( string ) => {
+	const url	= STF_str_convertToUrl( string );
+	
+	let search	= url.search.split( '?' )[1] || '';
+	
+	search		= STF_str_removeFirstSpecificChar( search, '/' );
+	search		= STF_str_removeLastSpecificChar( search, '/' );
+	
+	
+	return search;
+};
+
+
+window.STF_str_getHash = ( string ) => {
+	const url	= STF_str_convertToUrl( string );
+	
+	let hash	= url.hash.split( '#' )[1] || '';
+	
+	hash		= STF_str_removeFirstSpecificChar( hash, '/' );
+	hash		= STF_str_removeLastSpecificChar( hash, '/' );
+	
+	
+	return hash;
+};
+
+
+window.STF_str_getParams = ( string, type ) => {
+	const url		= STF_str_convertToUrl( string );
+	const params	= {};
+	
+	if ( url[ type ].length > 1 ) {
+		for ( let aItKey, nKeyId = 0, aCouples = url[ type ].substr(1).split( '&' ); nKeyId < aCouples.length; nKeyId++ ) {
+			aItKey	= aCouples[ nKeyId ].split( '=' );
 			
-			var lastCharPos = el.className.length - 1;
-			if ( el.className[ lastCharPos ] == ' ' )
-				el.className = el.className.substring( 0, lastCharPos );
+			let key		= unescape( aItKey[0] );
+			key			= STF_str_removeFirstSpecificChar( key, '/' );
+			key			= STF_str_removeLastSpecificChar( key, '/' );
+			
+			let value	= aItKey.length > 1 ? unescape( aItKey[1] ) : '';
+			value		= STF_str_removeFirstSpecificChar( value, '/' );
+			value		= STF_str_removeLastSpecificChar( value, '/' );
+			
+			params[ key ] = value;
 		}
-	};
+	}
 	
 	
-	window.STF_dom_resetClass = function( el ) {
-		el.className = '';
-	};
-	
-	
-	window.STF_dom_hasClass = function( el, classToCheck ) {
-		var hasClass;
-		
-		if ( el.classList )
-			hasClass = el.classList.contains( classToCheck );
-		else
-			hasClass = new RegExp( '(^| )' + classToCheck + '( |$)', 'gi' ).test( el.className );
-		
-		return hasClass;
-	};
-	
-	
-	window.STF_dom_resetStyle = function( el ) {
-		el.style.cssText = '';
-	};
-	
-	
-	window.STF_dom_setTranslate = function( el, x, y ) {
-		x = x === null ? 0 : x;
-		y = y === null ? 0 : y;
-		
-		if ( STF.Props.HAS_TRANSFORMS_3D )
-			el.style[ STF.Props.TRANSFORM ] = 'translate3d(' + x + 'px, ' + y + 'px, 0px)';
-		else
-			el.style[ STF.Props.TRANSFORM ] = 'translate(' + x + 'px, ' + y + 'px)';
-	};
-	
-	
-} ) ( window );
-
-
-
-
-STF.Utils = STF.Utils || {};
-
-
-STF.Utils.Math = ( function( window ) {
-	'use strict';
-	
-	
-	window.STF_math_getElPos = function( elW, elH, contW, contH ) {
-		var elRatio		= elW / elH;
-		var contRatio	= contW / contH;
-		var pos			= {
-			x: 0,
-			y: 0,
-			w: 0,
-			h: 0
-		};
-		
-		if ( elRatio < contRatio ) {
-			pos.w = contW;
-			pos.h = Math.round( pos.w / elRatio );
-			pos.y = Math.round( - ( pos.h - contH ) / 2 );
-		}
-		else {
-			pos.h = contH;
-			pos.w = Math.round ( pos.h * elRatio );
-			pos.x = Math.round ( - ( pos.w - contW ) / 2 );
-		}
-		
-		return pos;
-	};
-	
-	
-	window.STF_math_getCropPos = function( elW, elH, contW, contH ) {
-		var elRatio		= elW / elH;
-		var contRatio	= contW / contH;
-		var pos			= {
-			x: 0,
-			y: 0,
-			w: 0,
-			h: 0
-		};
-		
-		if ( elRatio < contRatio ) {
-			pos.w = elW;
-			pos.h = Math.round( pos.w / contRatio );
-			pos.y = Math.round( - ( pos.h - elH ) / 2 );
-		}
-		else {
-			pos.h = elH;
-			pos.w = Math.round ( pos.h * contRatio );
-			pos.x = Math.round ( - ( pos.w - elW ) / 2 );
-		}
-		
-		return pos;
-	};
-	
-	
-	window.STF_math_degToRad = function( deg ) {
-		return deg * Math.PI / 180;
-	};
-	
-	
-	window.STF_math_radToDeg = function( rad ) {
-		return rad * 180 / Math.PI;
-	};
-	
-	
-	window.STF_math_getHypotenuse = function( widthA, widthB ) {
-		return Math.sqrt( widthA * widthA + widthB * widthB );
-	};
-	
-	
-	window.STF_math_getInertia = function( destValue, value, inertia ) {
-		var valueToAdd	= Math.abs ( ( destValue - value ) * inertia ) >= 0.01 ? ( destValue - value ) * inertia : destValue - value;
-		value			+= valueToAdd;
-		
-		return value;
-	};
-	
-	
-} ) ( window );
-
-
-
-
-STF.Utils = STF.Utils || {};
-
-
-STF.Utils.String = ( function( window ) {
-	'use strict';
-	
-	
-	window.STF_str_removeFirstSpecificChar = function ( string, char ) {
-		if ( string.substr( 0, 1 ) == char )
-			string = string.substr( 1 );
-		
-		
-		return string;
-	};
-	
-	
-	window.STF_str_removeLastSpecificChar = function ( string, char ) {
-		if ( string.substr( string.length - 1, 1 ) == char )
-			string = string.substr( 0, string.length - 1 );
-		
-		
-		return string;
-	};
-	
-	
-	window.STF_str_convertToUrl = function( string ) {
-		var link	= document.createElement( 'a' );
-		link.href	= string;
-		
-		
-		return link;
-	};
-	
-	
-	window.STF_str_getPath = function( string, baseUrl ) {
-		if ( baseUrl === null || baseUrl === undefined )
-			baseUrl = STF.Path.URL.base;
-		
-		var path	= string.replace( baseUrl, '' );
-		
-		path		= path.split( '#' )[0]; // remove #hash
-		path		= path.split( '?' )[0]; // remove ?search
-		
-		path		= STF_str_removeFirstSpecificChar( path, '/' );
-		path		= STF_str_removeLastSpecificChar( path, '/' );
-		
-		
-		return path;
-	};
-	
-	
-	window.STF_str_getSearch = function( string ) {
-		var url		= STF_str_convertToUrl( string );
-		
-		var search	= url.search.split( '?' )[1] || '';
-		
-		search		= STF_str_removeFirstSpecificChar( search, '/' );
-		search		= STF_str_removeLastSpecificChar( search, '/' );
-		
-		
-		return search;
-	};
-	
-	
-	window.STF_str_getHash = function( string ) {
-		var url		= STF_str_convertToUrl( string );
-		
-		var hash	= url.hash.split( '#' )[1] || '';
-		
-		hash		= STF_str_removeFirstSpecificChar( hash, '/' );
-		hash		= STF_str_removeLastSpecificChar( hash, '/' );
-		
-		
-		return hash;
-	};
-	
-	
-	window.STF_str_getParams = function( string, type ) {
-		var url		= STF_str_convertToUrl( string );
-		
-		var params	= {};
-		var key, value;
-		
-		if ( url[ type ].length > 1 ) {
-			for ( var aItKey, nKeyId = 0, aCouples = url[ type ].substr(1).split( '&' ); nKeyId < aCouples.length; nKeyId++ ) {
-				aItKey	= aCouples[ nKeyId ].split( '=' );
-				
-				key		= unescape( aItKey[0] );
-				key		= STF_str_removeFirstSpecificChar( key, '/' );
-				key		= STF_str_removeLastSpecificChar( key, '/' );
-				
-				value	= aItKey.length > 1 ? unescape( aItKey[1] ) : '';
-				value	= STF_str_removeFirstSpecificChar( value, '/' );
-				value	= STF_str_removeLastSpecificChar( value, '/' );
-				
-				params[ key ] = value;
-			}
-		}
-		
-		
-		return params;
-	};
-	
-	
-} ) ( window );
+	return params;
+};
 
 
 
@@ -19059,11 +19016,13 @@ STF.MainView = ( function( window ) {
 
 
 STF.AbstractPagesController = ( function( window ) {
-	'use strict';
+
+
+class AbstractPagesController extends STF.CustomEvent {
 	
 	
-	function AbstractPagesController() {
-		STF.CustomEvent.call( this );
+	constructor() {
+		super();
 		
 		this.LOADING_MODE			= 'byPageStatic'; // can be allStatic, byPageStatic, byPageDynamic
 		this.DYNAMIC_IMG_TO_LOAD	= 'img'; // used when LOADING_MODE == 'byPageDynamic', can be img.class for selective preload
@@ -19087,17 +19046,13 @@ STF.AbstractPagesController = ( function( window ) {
 	}
 	
 	
-	AbstractPagesController.prototype				= Object.create( STF.CustomEvent.prototype );
-	AbstractPagesController.prototype.constructor	= AbstractPagesController;
-	
-	
-	AbstractPagesController.prototype.init = function() {
+	init() {
 		this.initPages();
 		this.initEl();
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.initPages = function() {
+	initPages() {
 		this.pages = {
 			'error-404':		STF.Views.Pages.Error404,
 			'legal-notices':	STF.Views.Pages.LegalNotices,
@@ -19106,47 +19061,47 @@ STF.AbstractPagesController = ( function( window ) {
 			'projects':			STF.Views.Pages.Projects,
 			'project':			STF.Views.Pages.Project,
 		};
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.initEl = function() {
+	initEl() {
 		this.assetsModel = STF.Models.Assets;
 		this.assetsModel.init();
 		
 		this.mainLoader = STF.Views.Statics.MainLoader;
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.initFirstPage = function() {
+	initFirstPage() {
 		this.bindEvents();
-		_setPageInfos.call( this );
+		this._setPageInfos();
 		this.manageMenuLinks();
-		_loadAssets.call( this );
-	};
+		this._loadAssets();
+	}
 	
 	
-	AbstractPagesController.prototype.bindEvents = function() {
-		this.mainLoader.bind( this.mainLoader.E.FILE_LOAD, _onFileLoad, this );
-		this.mainLoader.bind( this.mainLoader.E.COMPLETE, _onAssetsLoaded, this );
-	};
+	bindEvents() {
+		this.mainLoader.bind( this.mainLoader.E.FILE_LOAD, this._onFileLoad, this );
+		this.mainLoader.bind( this.mainLoader.E.COMPLETE, this._onAssetsLoaded, this );
+	}
 	
 	
-	var _setPageId = function( url ) {
-		var path	= STF.Router.URL.path === '' ? 'index' : STF.Router.URL.path;
-		var id		= STF.Config.JS_VIEWS_ID[ path ];
+	_setPageId( url ) {
+		const path	= STF.Router.URL.path === '' ? 'index' : STF.Router.URL.path;
+		let id		= STF.Config.JS_VIEWS_ID[ path ];
 		
 		if ( id === undefined )
 			id = 'error-404';
 		
 		this.prevPageInfos.id	= this.pageInfos.id;
 		this.pageInfos.id		= id;
-	};
+	}
 	
 	
-	var _setPageInfos = function() {
-		var $page	= $( document.getElementById( 'page' ) );
-		var id		= $page[0].getAttribute( 'data-js-id' );
-		var title	= $page[0].getAttribute( 'data-title' );
+	_setPageInfos() {
+		const $page	= $( document.getElementById( 'page' ) );
+		const id	= $page[0].getAttribute( 'data-js-id' );
+		const title	= $page[0].getAttribute( 'data-title' );
 		
 		if ( !STF.Config.NEED_PAGE_ID )
 			this.prevPageInfos.id	= this.pageInfos.id;
@@ -19155,13 +19110,13 @@ STF.AbstractPagesController = ( function( window ) {
 		this.pageInfos.id			= id;
 		this.pageInfos.title		= title;
 		
-		_setPage.call( this );
+		this._setPage();
 		
 		STF.Router.setAltLangUrl( $page );
-	};
+	}
 	
 	
-	var _setPage = function() {
+	_setPage() {
 		if ( this.pages[ this.pageInfos.id ] === undefined) {
 			if ( !STF.Config.IS_PROD )
 				console.warn( 'PagesController: no specific page view for the "' + this.pageInfos.id + '" ID. If you need one, create it and then set the view in the PagesController.pages object.' );
@@ -19170,55 +19125,53 @@ STF.AbstractPagesController = ( function( window ) {
 		}
 		else
 			this.page = new this.pages[ this.pageInfos.id ]();
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.initPageChangeValues = function() {
+	initPageChangeValues() {
 		this.isContentLoaded	= false;
 		this.isAssetsLoaded		= false;
 		this.isPageHidden		= false;
 		this.isPageShown		= false;
 		this.isMainLoaderShown	= false;
 		this.isMainLoaderHidden	= false;
-	};
+	}
 	
 	
-	var _loadAssets = function() {
-		var aAssetsToLoad = this.assetsModel.getAssetsToLoad( this.pageInfos.id, this.isFirstLoad, this.LOADING_MODE );
+	_loadAssets() {
+		const aAssetsToLoad = this.assetsModel.getAssetsToLoad( this.pageInfos.id, this.isFirstLoad, this.LOADING_MODE );
 		
 		this.mainLoader.loadAssets( aAssetsToLoad );
-	};
+	}
 	
 	
-	var _onFileLoad = function( e ) {
+	_onFileLoad( e ) {
 		if ( e.item.type == 'image' )
-			_onImgLoaded.call( this, e );
+			this._onImgLoaded( e );
 		else if ( e.item.type == 'json' )
 			this.assetsModel.setJsonData( e.item.id, e.result );
-	};
+	}
 	
 	
-	var _onImgLoaded = function( e ) {
-		var $imgs = $( 'img' ).filter( '[ data-src="' + e.item.src + '" ]' );
-		_setImages.call( this, $imgs, e.item.src, 'preloaded' );
-	};
+	_onImgLoaded( e ) {
+		const $imgs = $( 'img' ).filter( '[ data-src="' + e.item.src + '" ]' );
+		this._setImages( $imgs, e.item.src, 'preloaded' );
+	}
 	
 	
-	var _setImages = function( $imgs, src, dataSrc ) {
-		var $img;
-		
-		for ( var i = 0; i < $imgs.length; i++ ) {
-			$img		= $imgs[ i ];
+	_setImages( $imgs, src, dataSrc ) {
+		for ( let i = 0; i < $imgs.length; i++ ) {
+			const $img	= $imgs[ i ];
 			$img.src	= src !== null ? src : $img.getAttribute( 'data-src' );
 			
 			$img.offsetHeight; // jshint ignore:line
 			$img.setAttribute( 'data-src', dataSrc );
 		}
-	};
+	}
 	
 	
-	var _onAssetsLoaded = function() {
-		_showNonLoadedImages.call( this );
+	_onAssetsLoaded() {
+		this._showNonLoadedImages();
 		
 		
 		// first load
@@ -19234,7 +19187,6 @@ STF.AbstractPagesController = ( function( window ) {
 			
 			if ( this.IS_HIDE_INIT )
 				this.mainLoader.hideInit();
-			
 			else
 				this.mainLoader.hide();
 		}
@@ -19246,50 +19198,49 @@ STF.AbstractPagesController = ( function( window ) {
 			
 			this.checkPageHiding();
 		}
-	};
+	}
 	
 	
-	var _showNonLoadedImages = function() {
-		var $imgsCont = this.isFirstLoad ? STF.MainView.$body : STF.MainView.$pageCont;
+	_showNonLoadedImages() {
+		const $imgsCont	= this.isFirstLoad ? STF.MainView.$body : STF.MainView.$pageCont;
 		
-		var $imgs = $imgsCont.find( 'img' ).filter( function() {
-			return this.getAttribute( 'data-lazyload' ) != 'true' && this.getAttribute( 'data-src' ) != 'preloaded';
-		} );
+		const $allImgs	= $imgsCont.find( 'img' );
+		const $imgs		= $allImgs.filter( key => $allImgs[ key ].getAttribute( 'data-lazyload' ) != 'true' && $allImgs[ key ].getAttribute( 'data-src' ) != 'preloaded' );
 		
-		_setImages.call( this, $imgs, null, 'non-preloaded' );
-	};
+		this._setImages( $imgs, null, 'non-preloaded' );
+	}
 	
 	
-	AbstractPagesController.prototype.changePage = function( url ) {
+	changePage( url ) {
 		STF.Router.updateGA();
 		
 		if ( STF.Config.NEED_PAGE_ID )
-			_setPageId.call( this, url );
+			this._setPageId( url );
 		
-		_disablePageChange.call( this );
+		this._disablePageChange();
 		this.initPageChangeValues();
 		
 		if ( this.LOADING_MODE == 'allStatic' )
 			this.isAssetsLoaded = true;
 		
-		_loadContent.call( this, url );
+		this._loadContent( url );
 		
 		this.managePageHidingTransitions();
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.changeSearch = function() {
+	changeSearch() {
 		this.page.updateSearch();
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.changeHash = function() {
+	changeHash() {
 		this.page.updateHash();
-	};
+	}
 	
 	
-	var _loadContent = function( url ) {
-		// setTimeout( function() { // simulate a very slow connection = very long load
+	_loadContent( url ) {
+		// setTimeout( () => { // simulate a very slow connection = very long load
 		
 		$.ajax({
 			context:	this,
@@ -19302,72 +19253,72 @@ STF.AbstractPagesController = ( function( window ) {
 							type: 'pageChange'
 						},
 			dataType:	'html',
-			success:	_onContentLoaded.bind( this ),
-			error:		_onContentError.bind( this )
+			success:	this._onContentLoaded,
+			error:		this._onContentError
 		});
 		
-		// }.bind( this ), 3000 ); // simulate a very slow connection = very long load
-	};
+		// }, 3000 ); // simulate a very slow connection = very long load
+	}
 	
 	
-	var _onContentLoaded = function( data ) {
+	_onContentLoaded( data ) {
 		this.data = data;
 		
 		this.isContentLoaded = true;
 		this.checkPageHiding();
-	};
+	}
 	
 	
-	var _onContentError = function( e ) {
+	_onContentError( e ) {
 		console.warn( 'Ajax loading error', e );
 		
 		if ( e.status == 404 )
-			_force404Load.call( this );
-	};
+			this._force404Load();
+	}
 	
 	
-	var _force404Load = function() {
-		var lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/' : '';
-		var url		= STF.Path.URL.base + lang + '404';
+	_force404Load() {
+		const lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/' : '';
+		const url	= STF.Path.URL.base + lang + '404';
 		
-		_loadContent.call( this, url );
-	};
+		this._loadContent( url );
+	}
 	
 	
-	AbstractPagesController.prototype.managePageHidingTransitions = function() {
+	managePageHidingTransitions() {
 		this.page.bind( this.page.E.HIDDEN, this.onPageHidden, this );
 		this.page.hide();
 		
 		this.mainLoader.bind( this.mainLoader.E.SHOWN, this.onMainLoaderShown, this );
 		this.mainLoader.show();
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.onPageHidden = function() {
+	onPageHidden() {
 		this.page.unbind( this.page.E.HIDDEN, this.onPageHidden, this );
 		
-		_destroyPage.call( this );
+		this._destroyPage();
 		
 		this.isPageHidden = true;
 		this.checkPageHiding();
-	};
+	}
 	
 	
-	var _destroyPage = function() {
+	_destroyPage() {
 		this.page.destroy();
 		this.page = null;
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.onMainLoaderShown = function() {
+	onMainLoaderShown() {
 		this.mainLoader.unbind( this.mainLoader.E.SHOWN, this.onMainLoaderShown, this );
 		
 		this.isMainLoaderShown = true;
 		this.checkPageHiding();
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.checkPageHiding = function() {
+	checkPageHiding() {
 		if ( this. LOADING_MODE == 'allStatic' &&
 			 this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
 			
@@ -19386,118 +19337,119 @@ STF.AbstractPagesController = ( function( window ) {
 			
 			this.showPage();
 		}
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.setContent = function() {
+	setContent() {
 		STF.MainView.$pageCont[0].innerHTML = this.data;
 		
-		_setPageInfos.call( this );
+		this._setPageInfos();
 		
-		if ( this. LOADING_MODE != 'allStatic' ) {
+		if ( this.LOADING_MODE != 'allStatic' ) {
 			STF_resetImgs( STF.MainView.$pageCont.find( 'img' ) );
-			setTimeout( function() { _loadAssets.call( this ); }.bind( this ), 0 );
+			setTimeout( () => this._loadAssets(), 0 );
 		}
 		
 		this.data = null;
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.showPage = function() {
+	showPage() {
 		this.manageMenuLinks();
-		_updateTitle.call( this );
+		this._updateTitle();
 		
 		this.page.init();
 		
 		this.managePageShowingTransitions();
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.managePageShowingTransitions = function() {
+	managePageShowingTransitions() {
 		this.page.bind( this.page.E.SHOWN, this.onPageShown, this );
 		this.page.show();
 		
 		this.mainLoader.bind( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden, this );
 		this.mainLoader.hide();
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.onPageShown = function() {
+	onPageShown() {
 		this.page.unbind( this.page.E.SHOWN, this.onPageShown, this );
 		
 		this.isPageShown = true;
 		this.checkPageShowing();
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.onMainLoaderHidden = function() {
+	onMainLoaderHidden() {
 		this.mainLoader.unbind( this.mainLoader.E.HIDDEN, this.onMainLoaderHidden, this );
 		
 		this.isMainLoaderHidden = true;
 		this.checkPageShowing();
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.checkPageShowing = function() {
+	checkPageShowing() {
 		if ( this.isPageShown && this.isMainLoaderHidden )
 			this.enablePageChange();
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.manageMenuLinks = function() {
+	manageMenuLinks() {
 		
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.updateMenuLinks = function( $link ) {
-		var $linkToInactivate	= $link.filter( '.active' );
-		var $linkToActivate		= $link.filter( '[ data-link-id="' + this.pageInfos.id + '" ]' );
+	updateMenuLinks( $link ) {
+		const $linkToInactivate	= $link.filter( '.active' );
+		const $linkToActivate	= $link.filter( '[ data-link-id="' + this.pageInfos.id + '" ]' );
 		
 		if ( $linkToInactivate.length > 0 )
 			STF_dom_removeClass( $linkToInactivate[0], 'active' );
 		if ( $linkToActivate.length )
 			STF_dom_addClass( $linkToActivate[0], 'active' );
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.manageLangLinks = function() {
+	manageLangLinks() {
 		
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.changeLangLinks = function( $links ) {
-		var $link;
-		
-		for ( var i = 0; i < $links.length; i++ ) {
-			$link		= $links[ i ];
+	changeLangLinks( $links ) {
+		for ( let i = 0; i < $links.length; i++ ) {
+			const $link	= $links[ i ];
 			$link.href	= STF.Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
 		}
-	};
+	}
 	
 	
-	var _updateTitle = function() {
+	_updateTitle() {
 		document.title = this.pageInfos.title;
-	};
+	}
 	
 	
-	AbstractPagesController.prototype.enablePageChange = function() {
+	enablePageChange() {
 		this.isPageChange = false;
 		
 		if ( this.isFirstLoad )
 			this.isFirstLoad = false;
 		
 		STF.Router.checkUrlCorrespondence();
-	};
+	}
 	
 	
-	var _disablePageChange = function() {
+	_disablePageChange() {
 		this.isPageChange = true;
-	};
+	}
 	
 	
-	return AbstractPagesController;
-	
-	
+}
+
+
+return AbstractPagesController;
+
+
 } ) ( window );
 
 
@@ -20053,13 +20005,14 @@ class Main {
 		STF.Props.init();
 		STF.Device.init();
 		STF.Path.init();
-		// STF.Lang.init();
+		STF.Lang.init();
 		
 		this._initDebug();
 		
-		// STF.PagesController.init();
-		// STF.MainView.init();
-		// STF.Router.init();
+		
+		STF.PagesController.init();
+		STF.MainView.init();
+		STF.Router.init();
 		
 		// this.$window.on( 'load', $.proxy( _windowLoad, this ) );
 	}

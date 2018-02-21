@@ -1,42 +1,43 @@
 
 
 STF.MainView = ( function( window ) {
-	'use strict';
+
+
+class MainView extends STF.AbstractMainView {
 	
 	
-	function MainView() {
-		STF.AbstractMainView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	MainView.prototype				= Object.create( STF.AbstractMainView.prototype );
-	MainView.prototype.constructor	= MainView;
+	/*initDOM() {
+		super.initDOM();
+	}*/
 	
 	
-	/*MainView.prototype.initDOM = function() {
-		STF.AbstractMainView.prototype.initDOM.call( this );
-	};*/
-	
-	
-	MainView.prototype.initEl = function() {
-		STF.AbstractMainView.prototype.initEl.call( this );
+	initEl() {
+		super.initEl();
 		
 		this.disableScrollRestoration();
-	};
+	}
 	
 	
-	/*MainView.prototype.bindEvents = function() {
-		STF.AbstractMainView.prototype.bindEvents.call( this );
-	};*/
+	/*bindEvents() {
+		super.bindEvents();
+	}*/
 	
 	
-	/*MainView.prototype.initStaticsViews = function() {
-		STF.AbstractMainView.prototype.initStaticsViews.call( this );
-	};*/
+	/*initStaticsViews() {
+		super.initStaticsViews();
+	}*/
 	
 	
-	return new MainView();
-	
-	
+}
+
+
+return new MainView();
+
+
 } ) ( window );
 

@@ -1,36 +1,34 @@
 
 
 STF.AbstractPageView = ( function( window ) {
-	'use strict';
+
+
+class AbstractPageView extends STF.AbstractView {
 	
 	
-	function AbstractPageView() {
-		STF.AbstractView.call( this );
+	constructor() {
+		super();
 		
 		this.imgToLazyloadClassName	= 'img-lazyload'; // class name of images to lazyload
 		this.lazyloadParentEl		= null; // selector of parent of images to lazyload
 	}
 	
 	
-	AbstractPageView.prototype				= Object.create( STF.AbstractView.prototype );
-	AbstractPageView.prototype.constructor	= AbstractPageView;
-	
-	
-	AbstractPageView.prototype.initDOM = function() {
+	initDOM() {
 		// console.log( 'AbstractPageView.initDOM() — ', this.constructor.name );
 		
 		this.$page = $( document.getElementById( 'page' ) );
-	};
+	}
 	
 	
-	AbstractPageView.prototype.initEl = function() {
+	initEl() {
 		// console.log( 'AbstractPageView.initEl() — ', this.constructor.name );
 		
 		this.lazyLoader = new STF.LazyLoader( this.$page, this.imgToLazyloadClassName, this.lazyloadParentEl, 1, true );
-	};
+	}
 	
 	
-	AbstractPageView.prototype.initTl = function() {
+	initTl() {
 		/* Show page */
 		this.tl.showPage = new TimelineLite( {
 			paused:		true,
@@ -44,43 +42,46 @@ STF.AbstractPageView = ( function( window ) {
 			onComplete:	this.onPageHidden.bind( this )
 		} );
 		this.tl.hidePage.to( this.$page, 0.8, { opacity:0, ease:Quad.easeOut } );
-	};
+	}
 	
 	
-	AbstractPageView.prototype.show = function() {
+	show() {
 		// if ( STF.PagesController.isFirstLoad )
 		// 	this.tl.showPage.progress(1);
 			
 		// else
 			this.tl.showPage.play(0);
-	};
+	}
 	
 	
-	AbstractPageView.prototype.hide = function() {
+	hide() {
 		this.tl.hidePage.play(0);
-	};
+	}
 	
 	
-	AbstractPageView.prototype.destroy = function() {
-		STF.AbstractView.prototype.destroy.call( this );
+	destroy() {
+		super.destroy();
 		
 		if ( this.lazyLoader !== undefined )
 			this.lazyLoader.destroy();
-	};
+	}
 	
 	
-	AbstractPageView.prototype.onPageShown = function() {
+	onPageShown() {
 		this.dispatch( this.E.SHOWN );
-	};
+	}
 	
 	
-	AbstractPageView.prototype.onPageHidden = function() {
+	onPageHidden() {
 		this.dispatch( this.E.HIDDEN );
-	};
+	}
 	
 	
-	return AbstractPageView;
-	
-	
+}
+
+
+return AbstractPageView;
+
+
 } ) ( window );
 
