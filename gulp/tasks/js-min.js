@@ -19,7 +19,9 @@ gulp.task( 'js-min', [ 'js-concat' ], function() {
 	
 	gulp.src( paths.env.dev + paths.assets.js.allRootJsFiles )
 		.pipe( plumber() )
-		.pipe( babel() )
+		.pipe( babel( {
+			presets: [ 'env' ]
+        } ) )
 		.pipe( uglify() )
 		.pipe( rename( { suffix : '-es5.min' } ) )
 		.pipe( gulp.dest( paths.env.prod + paths.assets.js.dir ) );
