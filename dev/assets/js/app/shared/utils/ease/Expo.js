@@ -5,10 +5,12 @@ STF.Utils.Ease	= STF.Utils.Ease || {};
 
 
 STF.Utils.Ease.Expo = ( function( window ) {
-	'use strict';
+
+
+class Ease {
 	
 	
-	function Ease( value, pow, duration, timeBegin ) {
+	constructor( value, pow, duration, timeBegin ) {
 		this.value			= this.begin = this.end = value;
 		this.pow			= pow;
 		this.maxDuration	= duration;
@@ -18,22 +20,19 @@ STF.Utils.Ease.Expo = ( function( window ) {
 	}
 	
 	
-	Ease.prototype.init = function() {
+	init() {
 		this.begin		= this.end;
-		
 		this.end		= Math.random();
-		
 		this.time		= 0;
-		
 		this.duration	= Math.sqrt( Math.abs ( this.end - this.begin ) ) * this.maxDuration;
-	};
+	}
 	
 	
-	Ease.prototype.update = function( timeChange ) {
+	update( timeChange ) {
 		if ( timeChange === undefined )
 			timeChange = 1;
 		
-		var timeRatio = this.time / this.duration;
+		let timeRatio = this.time / this.duration;
 		
 		if ( timeRatio < 0.5 )
 			timeRatio = 0.5 * Math.pow( timeRatio * 2, this.pow );
@@ -45,11 +44,14 @@ STF.Utils.Ease.Expo = ( function( window ) {
 		
 		if ( this.time > this.duration )
 			this.init();
-	};
+	}
 	
 	
-	return Ease;
-	
-	
+}
+
+
+return Ease;
+
+
 } ) ( window );
 

@@ -4,41 +4,46 @@ STF.Utils = STF.Utils || {};
 
 
 STF.Utils.FPSStats = ( function( window ) {
-	'use strict';
+
+
+class FPSStats {
 	
 	
-	function FPSStats() {
+	constructor() {
 		this.stats = null;
 	}
 	
 	
-	FPSStats.prototype.init = function() {
+	init() {
 		this.stats = new Stats();
 		
 		this.stats.setMode( 0 );
 		
-		this.stats.dom.style.top		= 'auto';
-		this.stats.dom.style.left		= 'auto';
-		this.stats.dom.style.right		= '0px';
-		this.stats.dom.style.bottom		= '0px';
-		this.stats.dom.style.zIndex		= 88;
+		this.stats.dom.style.top	= 'auto';
+		this.stats.dom.style.right	= 'auto';
+		this.stats.dom.style.bottom	= '0px';
+		this.stats.dom.style.left	= '0px';
+		this.stats.dom.style.zIndex	= 88;
 		
 		document.body.appendChild( this.stats.dom );
-	};
+	}
 	
 	
-	FPSStats.prototype.begin = function() {
+	begin() {
 		this.stats.begin();
-	};
+	}
 	
 	
-	FPSStats.prototype.end = function() {
+	end() {
 		this.stats.end();
-	};
+	}
 	
 	
-	return new FPSStats();
-	
-	
+}
+
+
+return new FPSStats();
+
+
 } ) ( window );
 

@@ -4,10 +4,12 @@ STF.Utils = STF.Utils || {};
 
 
 STF.Utils.DatGUI = ( function( window ) {
-	'use strict';
+
+
+class DatGUI {
 	
 	
-	function DatGUI() {
+	constructor() {
 		this.gui	= null;
 		
 		this.var1	= 'message';
@@ -18,67 +20,70 @@ STF.Utils.DatGUI = ( function( window ) {
 	}
 	
 	
-	DatGUI.prototype.init = function() {
+	init() {
 		this.gui = new dat.GUI( {
 			width : 300
 		} );
 		
-		var text		= this.gui.add( STF.Utils.DatGUI, 'var1', 10, 100 ).name( 'TEXT' );
-		var slider		= this.gui.add( STF.Utils.DatGUI, 'var2', 10, 100 ).step(1).name( 'SLIDER' );
-		var select		= this.gui.add( STF.Utils.DatGUI, 'var3', [ 'option 1', 'option 2', 'option 3' ] ).name( 'SELECT' );
-		var checkBox	= this.gui.add( STF.Utils.DatGUI, 'var4' ).name( 'CHECKBOX' );
-		var color		= this.gui.addColor(STF.Utils.DatGUI, 'var5').name( 'COLOR' );
-		this.gui.add( STF.Utils.DatGUI, '_function' ).name( 'FUNCTION' );
+		const text		= this.gui.add( this, 'var1', 10, 100 ).name( 'Text' );
+		const slider	= this.gui.add( this, 'var2', 10, 100 ).step(1).name( 'Slider' );
+		const select	= this.gui.add( this, 'var3', [ 'option 1', 'option 2', 'option 3' ] ).name( 'Select' );
+		const checkBox	= this.gui.add( this, 'var4' ).name( 'Checkbox' );
+		const color		= this.gui.addColor( this, 'var5').name( 'Color' );
+		this.gui.add( this, '_fct' ).name( 'Function' );
 		
-		text.onChange( _changeText.bind( this ) );
-		slider.onChange( _changeSlider.bind( this ) );
-		slider.onFinishChange( _finishChangeSlider.bind( this ) );
-		select.onChange( _changeSelect.bind( this ) );
-		checkBox.onChange( _changeCheckbox.bind( this ) );
-		color.onChange( _changeColor.bind( this ) );
+		text.onChange( this._changeText );
+		slider.onChange( this._changeSlider );
+		slider.onFinishChange( this._finishChangeSlider );
+		select.onChange( this._changeSelect );
+		checkBox.onChange( this._changeCheckbox );
+		color.onChange( this._changeColor );
 		
 		
 		// this.test = this.gui.__controllers[1];
-	};
+	}
 	
 	
-	var _changeText = function( v ) {
+	_changeText( v ) {
 		console.log( '_changeText :', v );
-	};
+	}
 	
 	
-	var _changeSlider = function( v ) {
+	_changeSlider( v ) {
 		console.log( '_changeSlider :', v );
-	};
+	}
 	
 	
-	var _finishChangeSlider = function( v ) {
+	_finishChangeSlider( v ) {
 		console.log( '_finishChangeSlider :', v );
-	};
+	}
 	
 	
-	var _changeSelect = function( v ) {
+	_changeSelect( v ) {
 		console.log( '_changeSelect :', v );
-	};
+	}
 	
 	
-	var _changeCheckbox = function( v ) {
+	_changeCheckbox( v ) {
 		console.log( '_changeCheckbox :', v );
-	};
+	}
 	
 	
-	var _changeColor = function( v ) {
+	_changeColor( v ) {
 		console.log( '_changeColor :', v );
-	};
+	}
 	
 	
-	DatGUI.prototype._function = function() {
+	_fct() {
 		console.log( '_function' );
-	};
+	}
 	
 	
-	return new DatGUI();
-	
-	
+}
+
+
+return new DatGUI();
+
+
 } ) ( window );
 
