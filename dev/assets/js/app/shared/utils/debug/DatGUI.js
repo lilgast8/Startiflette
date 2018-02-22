@@ -1,12 +1,6 @@
 
 
-STF.Utils = STF.Utils || {};
-
-
-STF.Utils.DatGUI = ( function( window ) {
-
-
-class DatGUI {
+STF.Utils.Debug.DatGUI = new class DatGUI {
 	
 	
 	constructor() {
@@ -79,11 +73,5 @@ class DatGUI {
 	}
 	
 	
-}
-
-
-return new DatGUI();
-
-
-} ) ( window );
+}();
 

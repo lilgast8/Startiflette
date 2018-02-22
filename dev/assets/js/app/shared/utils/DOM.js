@@ -50,9 +50,9 @@ window.STF_dom_setTranslate = ( el, x, y ) => {
 	x = x === null ? 0 : x;
 	y = y === null ? 0 : y;
 	
-	if ( STF.Props.HAS_TRANSFORMS_3D )
-		el.style[ STF.Props.TRANSFORM ] = 'translate3d(' + x + 'px, ' + y + 'px, 0px)';
+	if ( STF.Configs.Props.HAS_TRANSFORMS_3D )
+		el.style[ STF.Configs.Props.TRANSFORM ] = 'translate3d(' + x + 'px, ' + y + 'px, 0px)';
 	else
-		el.style[ STF.Props.TRANSFORM ] = 'translate(' + x + 'px, ' + y + 'px)';
+		el.style[ STF.Configs.Props.TRANSFORM ] = 'translate(' + x + 'px, ' + y + 'px)';
 };
 

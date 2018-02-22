@@ -1,9 +1,6 @@
 
 
-STF.LazyLoader = ( function( window ) {
-
-
-class LazyLoader extends STF.CustomEvent {
+STF.Loaders.LazyLoader = class LazyLoader extends STF.Events.CustomEvent {
 	
 	
 	constructor( $container, className, parentEl, stackSize, autoInit ) {
@@ -38,7 +35,7 @@ class LazyLoader extends STF.CustomEvent {
 	
 	
 	initEl() {
-		this.loaderImg = new STF.Loader( false, true );
+		this.loaderImg = new STF.Loaders.Loader( false, true );
 		
 		for ( let i = 0; i < this.$imgToLazyload.length; i++ ) {
 			const src = this.$imgToLazyload[ i ].getAttribute( 'data-src' );
@@ -112,11 +109,5 @@ class LazyLoader extends STF.CustomEvent {
 	}
 	
 	
-}
-
-
-return LazyLoader;
-
-
-} ) ( window );
+};
 

@@ -1,13 +1,6 @@
 
 
-STF.Views			= STF.Views || {};
-STF.Views.Statics	= STF.Views.Statics || {};
-
-
-STF.Views.Statics.Footer = ( function( window ) {
-
-
-class Footer extends STF.AbstractView {
+STF.Views.Statics.Footer = new class Footer extends STF.Abstracts.AbstractView {
 	
 	
 	constructor() {
@@ -29,11 +22,5 @@ class Footer extends STF.AbstractView {
 	}
 	
 	
-}
-
-
-return new Footer();
-
-
-} ) ( window );
+}();
 

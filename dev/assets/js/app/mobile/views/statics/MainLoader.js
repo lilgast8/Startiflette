@@ -1,13 +1,6 @@
 
 
-STF.Views			= STF.Views || {};
-STF.Views.Statics	= STF.Views.Statics || {};
-
-
-STF.Views.Statics.MainLoader = ( function( window ) {
-
-
-class MainLoader extends STF.AbstractMainLoader {
+STF.Views.Statics.MainLoader = new class MainLoader extends STF.Abstracts.AbstractMainLoader {
 	
 	
 	constructor() {
@@ -77,11 +70,5 @@ class MainLoader extends STF.AbstractMainLoader {
 	}
 	
 	
-}
-
-
-return new MainLoader();
-
-
-} ) ( window );
+}();
 

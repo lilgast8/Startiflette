@@ -1,9 +1,6 @@
 
 
-STF.AbstractView = ( function( window ) {
-
-
-class AbstractView extends STF.CustomEvent {
+STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 	
 	
 	constructor() {
@@ -51,14 +48,14 @@ class AbstractView extends STF.CustomEvent {
 	bindEvents() {
 		// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
 		
-		STF.MainView.bind( STF.MainView.E.RESIZE, this.resize, this );
+		STF.Core.Main.bind( STF.Core.Main.E.RESIZE, this.resize, this );
 	}
 	
 	
 	unbindEvents() {
 		// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
 		
-		STF.MainView.unbind( STF.MainView.E.RESIZE, this.resize, this );
+		STF.Core.Main.unbind( STF.Core.Main.E.RESIZE, this.resize, this );
 	}
 	
 	
@@ -140,7 +137,7 @@ class AbstractView extends STF.CustomEvent {
 	 *								 but if you need to force a specific url you can directly pass a string
 	 */
 	changeUrl( e ) {
-		if ( STF.Props.HAS_PUSHSTATE ) { // if pushstate supported
+		if ( STF.Configs.Props.HAS_PUSHSTATE ) { // if pushstate supported
 			let url;
 			
 			if ( typeof e == 'object' ) {
@@ -151,28 +148,22 @@ class AbstractView extends STF.CustomEvent {
 			else if ( typeof e == 'string' )
 				url = e;
 			
-			STF.Router.updateUrl( url );
+			STF.Core.Router.updateUrl( url );
 		}
 	}
 	
 	
 	updateSearch() {
-		if ( !STF.Config.IS_PROD )
+		if ( !STF.Configs.Config.IS_PROD )
 			console.warn( 'You need to override the updateSearch() method from AbstractView in the current page view.' );
 	}
 	
 	
 	updateHash() {
-		if ( !STF.Config.IS_PROD )
+		if ( !STF.Configs.Config.IS_PROD )
 			console.warn( 'You need to override the updateHash() method from AbstractView in the current page view.' );
 	}
 	
 	
-}
-
-
-return AbstractView;
-
-
-} ) ( window );
+};
 

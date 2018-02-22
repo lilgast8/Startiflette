@@ -1,9 +1,6 @@
 
 
-STF.Path = ( function( window ) {
-
-
-class Path {
+STF.Configs.Path = new class Path {
 	
 	
 	constructor() {
@@ -17,7 +14,7 @@ class Path {
 	
 	
 	_setPaths() {
-		const baseUrl = STF.Config.ENVS.base_url;
+		const baseUrl = STF.Configs.Config.ENVS.base_url;
 		
 		// url paths
 		this.URL = {
@@ -48,11 +45,5 @@ class Path {
 	}
 	
 	
-}
-
-
-return new Path();
-
-
-} ) ( window );
+}();
 

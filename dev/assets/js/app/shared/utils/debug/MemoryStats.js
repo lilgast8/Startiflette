@@ -1,12 +1,6 @@
 
 
-STF.Utils = STF.Utils || {};
-
-
-STF.Utils.MemoryStats = ( function( window ) {
-
-
-class MemoryStats {
+STF.Utils.Debug.MemoryStats = new class MemoryStats {
 	
 	
 	constructor() {
@@ -31,11 +25,5 @@ class MemoryStats {
 	}
 	
 	
-}
-
-
-return new MemoryStats();
-
-
-} ) ( window );
+}();
 

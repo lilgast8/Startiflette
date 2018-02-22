@@ -1,13 +1,6 @@
 
 
-STF.Views		= STF.Views || {};
-STF.Views.Pages	= STF.Views.Pages || {};
-
-
-STF.Views.Pages.LegalNotices = ( function( window ) {
-
-
-class LegalNotices extends STF.AbstractPageView {
+STF.Views.Pages.LegalNotices = class LegalNotices extends STF.Abstracts.AbstractPageView {
 	
 	
 	constructor() {
@@ -39,11 +32,5 @@ class LegalNotices extends STF.AbstractPageView {
 	}
 	
 	
-}
-
-
-return LegalNotices;
-
-
-} ) ( window );
+};
 

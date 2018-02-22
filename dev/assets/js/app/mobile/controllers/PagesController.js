@@ -1,9 +1,6 @@
 
 
-STF.PagesController = ( function( window ) {
-
-
-class PagesController extends STF.AbstractPagesController {
+STF.Core.PagesController = new class PagesController extends STF.Abstracts.AbstractPagesController {
 	
 	
 	constructor() {
@@ -52,11 +49,5 @@ class PagesController extends STF.AbstractPagesController {
 	}
 	
 	
-}
-
-
-return new PagesController();
-
-
-} ) ( window );
+}();
 

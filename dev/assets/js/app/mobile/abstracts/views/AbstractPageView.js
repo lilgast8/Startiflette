@@ -1,9 +1,6 @@
 
 
-STF.AbstractPageView = ( function( window ) {
-
-
-class AbstractPageView extends STF.AbstractView {
+STF.Abstracts.AbstractPageView = class AbstractPageView extends STF.Abstracts.AbstractView {
 	
 	
 	constructor() {
@@ -24,7 +21,7 @@ class AbstractPageView extends STF.AbstractView {
 	initEl() {
 		// console.log( 'AbstractPageView.initEl() — ', this.constructor.name );
 		
-		this.lazyLoader = new STF.LazyLoader( this.$page, this.imgToLazyloadClassName, this.lazyloadParentEl, 1, true );
+		this.lazyLoader = new STF.Loaders.LazyLoader( this.$page, this.imgToLazyloadClassName, this.lazyloadParentEl, 1, true );
 	}
 	
 	
@@ -61,11 +58,5 @@ class AbstractPageView extends STF.AbstractView {
 	}*/
 	
 	
-}
-
-
-return AbstractPageView;
-
-
-} ) ( window );
+};
 

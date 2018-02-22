@@ -1,13 +1,6 @@
 
 
-STF.Views		= STF.Views || {};
-STF.Views.Pages	= STF.Views.Pages || {};
-
-
-STF.Views.Pages.About = ( function( window ) {
-
-
-class About extends STF.AbstractPageView {
+STF.Views.Pages.About = class About extends STF.Abstracts.AbstractPageView {
 	
 	
 	constructor() {
@@ -35,11 +28,5 @@ class About extends STF.AbstractPageView {
 	}
 	
 	
-}
-
-
-return About;
-
-
-} ) ( window );
+};
 

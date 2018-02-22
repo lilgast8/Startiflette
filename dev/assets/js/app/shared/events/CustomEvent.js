@@ -1,9 +1,6 @@
 
 
-STF.CustomEvent = ( function( window ) {
-
-
-class CustomEvent {
+STF.Events.CustomEvent = class CustomEvent {
 	
 	
 	constructor() {
@@ -16,7 +13,7 @@ class CustomEvent {
 	
 	bind( name, fct, context ) {
 		if ( !name || !fct ) {
-			if ( !STF.Config.IS_PROD ) {
+			if ( !STF.Configs.Config.IS_PROD ) {
 				let missingParams;
 				
 				if ( !name && !fct )
@@ -32,7 +29,7 @@ class CustomEvent {
 			return;
 		}
 		
-		if ( !context && !STF.Config.IS_PROD )
+		if ( !context && !STF.Configs.Config.IS_PROD )
 			console.warn( 'Bind "' + name + '" custom event without context.' );
 		
 		if ( this.e[ name ] === undefined ) // if the custom event doesn't exist, create it
@@ -44,7 +41,7 @@ class CustomEvent {
 	
 	unbind( name, fct, context ) {
 		if ( !name ) {
-			if ( !STF.Config.IS_PROD )
+			if ( !STF.Configs.Config.IS_PROD )
 				console.warn( 'You must to define the name of the custom event you want to unbind.' );
 			
 			return;
@@ -67,7 +64,7 @@ class CustomEvent {
 	
 	dispatch( name, params ) {
 		if ( this.e[ name ] === undefined ) { // if the event is not registred
-			if ( !STF.Config.IS_PROD && !this.isWarningDispatched ) {
+			if ( !STF.Configs.Config.IS_PROD && !this.isWarningDispatched ) {
 				console.warn( 'Trying to dispath "' + name + '" custom event which is undefined.' );
 				
 				this.isWarningDispatched = true;
@@ -83,11 +80,5 @@ class CustomEvent {
 	}
 	
 	
-}
-
-
-return CustomEvent;
-
-
-} ) ( window );
+};
 

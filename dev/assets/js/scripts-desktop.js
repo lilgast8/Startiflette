@@ -17134,15 +17134,31 @@ this.createjs = this.createjs || {};
 }());
 
 
-const STF = {};
+const STF			= {};
+
+STF.Events			= {};
+STF.Configs			= {};
+STF.Abstracts		= {};
+STF.Loaders			= {};
+
+STF.Core			= {};
+STF.Models			= {};
+
+STF.Utils			= {};
+STF.Utils.Debug		= {};
+STF.Utils.Ease		= {};
+
+STF.Medias			= {};
+
+STF.Views			= {};
+STF.Views.Statics	= {};
+STF.Views.Partials	= {};
+STF.Views.Pages		= {};
 
 
 
 
-STF.CustomEvent = ( function( window ) {
-
-
-class CustomEvent {
+STF.Events.CustomEvent = class CustomEvent {
 	
 	
 	constructor() {
@@ -17155,7 +17171,7 @@ class CustomEvent {
 	
 	bind( name, fct, context ) {
 		if ( !name || !fct ) {
-			if ( !STF.Config.IS_PROD ) {
+			if ( !STF.Configs.Config.IS_PROD ) {
 				let missingParams;
 				
 				if ( !name && !fct )
@@ -17171,7 +17187,7 @@ class CustomEvent {
 			return;
 		}
 		
-		if ( !context && !STF.Config.IS_PROD )
+		if ( !context && !STF.Configs.Config.IS_PROD )
 			console.warn( 'Bind "' + name + '" custom event without context.' );
 		
 		if ( this.e[ name ] === undefined ) // if the custom event doesn't exist, create it
@@ -17183,7 +17199,7 @@ class CustomEvent {
 	
 	unbind( name, fct, context ) {
 		if ( !name ) {
-			if ( !STF.Config.IS_PROD )
+			if ( !STF.Configs.Config.IS_PROD )
 				console.warn( 'You must to define the name of the custom event you want to unbind.' );
 			
 			return;
@@ -17206,7 +17222,7 @@ class CustomEvent {
 	
 	dispatch( name, params ) {
 		if ( this.e[ name ] === undefined ) { // if the event is not registred
-			if ( !STF.Config.IS_PROD && !this.isWarningDispatched ) {
+			if ( !STF.Configs.Config.IS_PROD && !this.isWarningDispatched ) {
 				console.warn( 'Trying to dispath "' + name + '" custom event which is undefined.' );
 				
 				this.isWarningDispatched = true;
@@ -17222,21 +17238,12 @@ class CustomEvent {
 	}
 	
 	
-}
-
-
-return CustomEvent;
-
-
-} ) ( window );
+};
 
 
 
 
-STF.Config = ( function( window ) {
-
-
-class Config {
+STF.Configs.Config = new class Config {
 	
 	
 	constructor() {
@@ -17298,22 +17305,12 @@ class Config {
 	}
 	
 	
-}
-
-
-return new Config();
-
-
-} ) ( window );
+}();
 
 
 
 
-STF.Props = ( function( window ) {
-// STF.Props = ( () => {
-
-
-class Props {
+STF.Configs.Props = new class Props {
 	
 	
 	constructor() {
@@ -17341,22 +17338,12 @@ class Props {
 	}
 	
 	
-}
-
-
-return new Props();
-
-
-// } ) ();
-} ) ( window );
+}();
 
 
 
 
-STF.Device = ( function( window ) {
-
-
-class Device {
+STF.Configs.Device = new class Device {
 	
 	
 	constructor() {
@@ -17388,21 +17375,12 @@ class Device {
 	}
 	
 	
-}
-
-
-return new Device();
-
-
-} ) ( window );
+}();
 
 
 
 
-STF.Path = ( function( window ) {
-
-
-class Path {
+STF.Configs.Path = new class Path {
 	
 	
 	constructor() {
@@ -17416,7 +17394,7 @@ class Path {
 	
 	
 	_setPaths() {
-		const baseUrl = STF.Config.ENVS.base_url;
+		const baseUrl = STF.Configs.Config.ENVS.base_url;
 		
 		// url paths
 		this.URL = {
@@ -17447,21 +17425,12 @@ class Path {
 	}
 	
 	
-}
-
-
-return new Path();
-
-
-} ) ( window );
+}();
 
 
 
 
-STF.Lang = ( function( window ) {
-
-
-class Lang {
+STF.Configs.Lang = new class Lang {
 	
 	
 	constructor() {
@@ -17471,7 +17440,7 @@ class Lang {
 	
 	init() {
 		this._setGlobalInfos();
-		STF.Router.setUrl( true, null );
+		STF.Core.Router.setUrl( true, null );
 		this._setCurrentLang();
 		this._checkDefaultLang();
 		this._setLangLinks();
@@ -17480,7 +17449,7 @@ class Lang {
 	
 	_setGlobalInfos() {
 		// all lang
-		this.ALL_LANG = STF.Config.ALL_LANG;
+		this.ALL_LANG = STF.Configs.Config.ALL_LANG;
 		
 		// default lang
 		this.DEFAULT_LANG = this.ALL_LANG[0];
@@ -17494,10 +17463,10 @@ class Lang {
 	
 	
 	_setCurrentLang() {
-		if ( !this.MULTI_LANG || STF.Router.URL.path.length === 0 )
+		if ( !this.MULTI_LANG || STF.Core.Router.URL.path.length === 0 )
 			this.LANG = this.DEFAULT_LANG;
 		else
-			this.LANG = STF.Router.URL.pathParams[0];
+			this.LANG = STF.Core.Router.URL.pathParams[0];
 	}
 	
 	
@@ -17513,1171 +17482,7 @@ class Lang {
 	}
 	
 	
-}
-
-
-return new Lang();
-
-
-} ) ( window );
-
-
-
-
-STF.AbstractAssets = ( function( window ) {
-
-
-class AbstractAssets {
-	
-	
-	constructor() {
-		this.aImg		= {};
-		this.aJson		= {};
-		this.jsonData	= {};
-	}
-	
-	
-	init() {
-		
-	}
-	
-	
-	getAssetsToLoad( pageId, isFirstLoad, loadingMode ) {
-		const aListIds		= this._getAssetsListIds( pageId, isFirstLoad, loadingMode );
-		
-		let aAssetsToLoad	= [];
-		aAssetsToLoad		= this._addStaticAssetsToLoad( 'img', aAssetsToLoad, aListIds );
-		aAssetsToLoad		= this._addStaticAssetsToLoad( 'json', aAssetsToLoad, aListIds );
-		
-		if ( loadingMode == 'byPageDynamic' )
-			aAssetsToLoad	= this._addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad );
-		
-		
-		return aAssetsToLoad;
-	}
-	
-	
-	_getAssetsListIds( pageId, isFirstLoad, loadingMode ) {
-		let aIds = [];
-		
-		
-		// first load
-		if ( isFirstLoad && loadingMode == 'allStatic')
-			aIds = this._getAllStaticAssetsListIds();
-		
-		else if ( isFirstLoad && loadingMode == 'byPageStatic' ||
-				  isFirstLoad && loadingMode == 'byPageDynamic' )
-			aIds = [ 'global', pageId ];
-		
-		
-		// page change load
-		else if ( !isFirstLoad && loadingMode == 'byPageStatic' ||
-				  !isFirstLoad && loadingMode == 'byPageDynamic' )
-			aIds = [ pageId ];
-		
-		
-		return aIds;
-	}
-	
-	
-	_getAllStaticAssetsListIds() {
-		let aIds = [];
-		
-		for ( const id in this.aImg )
-			aIds.push( id );
-		
-		for ( const id in this.aJson )
-			if( aIds.indexOf( id ) < 0 )
-				aIds.push( id );
-		
-		
-		return aIds;
-	}
-	
-	
-	_addStaticAssetsToLoad( type, aAssetsToLoad, aListIds ) {
-		let assetsList;
-		const aAssets = type == 'img' ? this.aImg : this.aJson;
-		
-		for ( let i = 0; i < aListIds.length; i++ ) {
-			assetsList = aAssets[ aListIds[ i ] ];
-			
-			if ( assetsList !== undefined )
-				for ( const id in assetsList ) {
-					const fileId = STF_gl_getType( assetsList ) === 'object' ? id : null;
-					
-					this._addAsset( aAssetsToLoad, fileId, assetsList[ id ] );
-				}
-		}
-		
-		
-		return aAssetsToLoad;
-	}
-	
-	
-	_addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad ) {
-		const $dynamicImgs = isFirstLoad ? STF.MainView.$mainCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD ) :
-										   STF.MainView.$pageCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD );
-		
-		for ( let i = 0; i < $dynamicImgs.length; i++ )
-			if ( $dynamicImgs[ i ].getAttribute( 'data-lazyload' ) != 'true' )
-				this._addAsset( aAssetsToLoad, null, $dynamicImgs[ i ].getAttribute( 'data-src' ) );
-		
-		
-		return aAssetsToLoad;
-	}
-	
-	
-	_addAsset( aAssetsToLoad, id, assetUrl ) {
-		if ( aAssetsToLoad.indexOf( assetUrl ) < 0 && id === null )
-			return aAssetsToLoad.push( assetUrl );
-		else if ( aAssetsToLoad.indexOf( assetUrl ) < 0 && id !== null )
-			return aAssetsToLoad.push( {
-				id:		id,
-				src:	assetUrl
-			} );
-		else if ( !STF.Config.IS_PROD )
-			console.warn( 'AbstractAssets:' + assetUrl + ' already added to the loading assets list!' );
-	}
-	
-	
-	setJsonData( id, data ) {
-		this.jsonData[ id ] = data;
-	}
-	
-	
-}
-
-
-return AbstractAssets;
-
-
-} ) ( window );
-
-
-
-
-STF.AbstractView = ( function( window ) {
-
-
-class AbstractView extends STF.CustomEvent {
-	
-	
-	constructor() {
-		super();
-		
-		this.E		= {
-			SHOW:	'show',
-			SHOWN:	'shown',
-			HIDE:	'hide',
-			HIDDEN:	'hidden'
-		};
-		
-		this.tw		= {};
-		this.tl		= {};
-		
-		this.isInit	= false;
-	}
-	
-	
-	init() {
-		this.initDOM();
-		this.initEl();
-		this.initTl();
-		this.bindEvents();
-		
-		this.resize();
-	}
-	
-	
-	initDOM() {
-		// console.log( 'AbstractView.initDOM() — ', this.constructor.name );
-	}
-	
-	
-	initEl() {
-		// console.log( 'AbstractView.initEl() — ', this.constructor.name );
-	}
-	
-	
-	initTl() {
-		// console.log( 'AbstractView.initTl() — ', this.constructor.name );
-	}
-	
-	
-	bindEvents() {
-		// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
-		
-		STF.MainView.bind( STF.MainView.E.RESIZE, this.resize, this );
-	}
-	
-	
-	unbindEvents() {
-		// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
-		
-		STF.MainView.unbind( STF.MainView.E.RESIZE, this.resize, this );
-	}
-	
-	
-	initView() {
-		// console.log( 'AbstractView.initView() — ', this.constructor.name );
-		
-		this.isInit = true;
-	}
-	
-	
-	show() {
-		// console.log( 'AbstractView.show() — ', this.constructor.name );
-	}
-	
-	
-	hide() {
-		// console.log( 'AbstractView.hide() — ', this.constructor.name );
-	}
-	
-	
-	resize() {
-		// console.log( 'AbstractView.resize() — ', this.constructor.name );
-	}
-	
-	
-	raf() {
-		// console.log( 'AbstractView.raf() — ', this.constructor.name );
-	}
-	
-	
-	destroy() {
-		this.isInit = false;
-		
-		this.unbindEvents();
-		
-		this.destroyGSAP();
-	}
-	
-	
-	destroyGSAP() {
-		/* tween */
-		for ( const tween in this.tw )
-			this.killTween( tween );
-		
-		/* timeline */
-		for ( const timeline in this.tl )
-			this.killTimeline( timeline );
-		
-		this.tl = {};
-		this.tw = {};
-	}
-	
-	
-	killTween( twName ) {
-		if ( !this.tw[ twName ] )
-			return;
-		
-		this.tw[ twName ].kill();
-		
-		this.tw[ twName ] = null;
-	}
-	
-	
-	killTimeline( tlName ) {
-		if ( !this.tl[ tlName ] )
-			return;
-		
-		this.tl[ tlName ].stop();
-		this.tl[ tlName ].clear();
-		this.tl[ tlName ].kill();
-		
-		this.tl[ tlName ] = null;
-	}
-	
-	
-	/**
-	 * Change the url
-	 * @params {object or string} e: most of time is an object when it come from a click on a link,
-	 *								 but if you need to force a specific url you can directly pass a string
-	 */
-	changeUrl( e ) {
-		if ( STF.Props.HAS_PUSHSTATE ) { // if pushstate supported
-			let url;
-			
-			if ( typeof e == 'object' ) {
-				e.preventDefault();
-				
-				url = e.currentTarget.href;
-			}
-			else if ( typeof e == 'string' )
-				url = e;
-			
-			STF.Router.updateUrl( url );
-		}
-	}
-	
-	
-	updateSearch() {
-		if ( !STF.Config.IS_PROD )
-			console.warn( 'You need to override the updateSearch() method from AbstractView in the current page view.' );
-	}
-	
-	
-	updateHash() {
-		if ( !STF.Config.IS_PROD )
-			console.warn( 'You need to override the updateHash() method from AbstractView in the current page view.' );
-	}
-	
-	
-}
-
-
-return AbstractView;
-
-
-} ) ( window );
-
-
-
-
-STF.AbstractMainView = ( function( window ) {
-
-
-class AbstractMainView extends STF.AbstractView {
-	
-	
-	constructor() {
-		super();
-		
-		this.E = {
-			RESIZE:			'resize',
-			RAF:			'raf',
-			MOUSE_MOVE:		'mousemove',
-			MOUSE_DOWN:		'mousedown',
-			MOUSE_UP:		'mouseup',
-			TOUCH_MOVE:		'touchmove',
-			TOUCH_START:	'touchstart',
-			TOUCH_END:		'touchend',
-			WINDOW_OUT:		'windowout',
-			WINDOW_IN:		'windowin'
-		};
-		
-		this.bW		= null; // body width
-		this.bH		= null; // body height
-		this.wW		= null; // window width
-		this.wH		= null; // window height
-		this.cX		= null; // center X
-		this.cY		= null; // center Y
-		this.sY		= null; // scroll Y
-		this.siY	= null; // scroll inertia Y
-		this.mX		= null; // mouse X
-		this.mY		= null; // mouse Y
-		this.miX	= null; // mouse inertia X
-		this.miY	= null; // mouse inertia Y
-		this.tX		= null; // touch X
-		this.tY		= null; // touch Y
-		
-		this.SCROLL_INERTIA		= 0.07;
-		this.MOUSE_INERTIA		= 0.03;
-		
-		this.isWindowFocused	= true;
-	}
-	
-	
-	init() {
-		this.initDOM();
-		this.initEl();
-		this.initTl();
-		this.bindEvents();
-		
-		this.initStaticsViews();
-		
-		this.resize();
-	}
-	
-	
-	initDOM() {
-		this.$window	= $( window );
-		this.$body		= $( document.body );
-		this.$mainCont	= $( document.getElementById( 'main-container' ) );
-		this.$pageCont	= $( document.getElementById( 'page-container' ) );
-	}
-	
-	
-	initEl() {
-		STF.Path.overwriteSpecialPaths( this.$mainCont[0].getAttribute( 'data-assets-base-url' ) );
-	}
-	
-	
-	bindEvents() {
-		this.$window.on( 'resize', $.proxy( this.resize, this ) );
-		// TweenLite.ticker.addEventListener( 'tick', this.raf, this );
-		// this.$window.on( 'mousemove', $.proxy( this.mouseMove, this ) );
-		// this.$window.on( 'mousedown', $.proxy( this.mouseDown, this ) );
-		// this.$window.on( 'mouseup', $.proxy( this.mouseUp, this ) );
-		// this.$window.on( 'touchmove', $.proxy( this.touchMove, this ) );
-		// this.$window.on( 'touchstart', $.proxy( this.touchStart, this ) );
-		// this.$window.on( 'touchend', $.proxy( this.touchEnd, this ) );
-		// this.$window.on( 'blur', $.proxy( this.windowOut, this ) );
-		// this.$window.on( 'focus', $.proxy( this.windowIn, this ) );
-	}
-	
-	
-	initStaticsViews() {
-		STF.Views.Statics.MainLoader.init();
-		STF.Views.Statics.Header.init();
-		STF.Views.Statics.Footer.init();
-		
-		STF_dom_removeClass( this.$mainCont[0], 'preload' );
-	}
-	
-	
-	disableScrollRestoration() {
-		if ( 'scrollRestoration' in history )
-			history.scrollRestoration = 'manual';
-	}
-	
-	
-	resize() {
-		this._setResizeProps();
-		
-		this.dispatch( this.E.RESIZE );
-	}
-	
-	
-	_setResizeProps() {
-		this.bW = this.$body.width();
-		this.bH = this.$body.height();
-		this.wW = this.$window.width();
-		this.wH = this.$window.height();
-		this.cX = Math.round( this.bW / 2 );
-		this.cY = Math.round( this.wH / 2 );
-		
-		if ( this.mX === null && this.mY === null ) {
-			this.mX = this.cX;
-			this.mY = this.cY;
-		}
-	}
-	
-	
-	raf() {
-		if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.FPSStats.begin();
-		
-		
-		this._setRafProps();
-		
-		this.dispatch( this.E.RAF );
-		
-		
-		if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.FPSStats.end();
-		
-		if ( STF.Config.HAS_MEMORY_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.MemoryStats.update();
-	}
-	
-	
-	_setRafProps() {
-		this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
-		this.siY	= STF_math_getInertia( this.sY, this.siY, this.SCROLL_INERTIA );
-		
-		this.miX	= STF_math_getInertia( this.mX, this.miX, this.MOUSE_INERTIA );
-		this.miY	= STF_math_getInertia( this.mY, this.miY, this.MOUSE_INERTIA );
-	}
-	
-	
-	mouseMove( e ) {
-		this.mX = e.clientX;
-		this.mY = e.clientY;
-		
-		// console.log( 'AbstractMainView _mouseMove()', this.mX, this.mY );
-		
-		this.dispatch( this.E.MOUSE_MOVE );
-	}
-	
-	
-	mouseDown() {
-		this.dispatch( this.E.MOUSE_DOWN );
-	}
-	
-	
-	mouseUp() {
-		this.dispatch( this.E.MOUSE_UP );
-	}
-	
-	
-	touchMove( e ) {
-		e.preventDefault();
-		
-		// Zepto
-		this.tX = e.touches[0].pageX;
-		this.tY = e.touches[0].pageY;
-		// jQuery
-		// this.tX = e.originalEvent.touches[0].pageX;
-		// this.tY = e.originalEvent.touches[0].pageY;
-		
-		this.dispatch( this.E.TOUCH_MOVE );
-	}
-	
-	
-	touchStart() {
-		this.dispatch( this.E.TOUCH_START );
-	}
-	
-	
-	touchEnd() {
-		this.dispatch( this.E.TOUCH_END );
-	}
-	
-	
-	windowOut() {
-		this.isWindowFocused = false;
-		
-		this.dispatch( this.E.WINDOW_OUT );
-	}
-	
-	
-	windowIn() {
-		this.isWindowFocused = true;
-		
-		this.dispatch( this.E.WINDOW_IN );
-	}
-	
-	
-	setScrollY( scrollY ) {
-		this.sY		= scrollY;
-		this.siY	= scrollY;
-		
-		this.$window[0].scrollTo( 0, scrollY );
-	}
-	
-	
-	setBodyHeight( bodyH ) {
-		if ( bodyH === null )
-			bodyH = this.$pageCont.height();
-		
-		this.$body[0].style.height = bodyH + 'px';
-	}
-	
-	
-	initAfterAssetsLoaded() {
-		
-	}
-	
-	
-}
-
-
-return AbstractMainView;
-
-
-} ) ( window );
-
-
-
-
-STF.AbstractMainLoader = ( function( window ) {
-
-
-class AbstractMainLoader extends STF.AbstractView {
-	
-	
-	constructor() {
-		super();
-		
-		this.E = {
-			PROGRESS:	'progress',
-			FILE_LOAD:	'fileLoad',
-			COMPLETE:	'complete',
-			SHOWN:		'shown',
-			HIDDEN:		'hidden'
-		};
-	}
-	
-	
-	init() {
-		super.init();
-		
-		this._instanceAssetsLoader();
-	}
-	
-	
-	initDOM() {
-		
-	}
-	
-	
-	initTl() {
-		
-	}
-	
-	
-	resize() {
-		super.resize();
-	}
-	
-	
-	_instanceAssetsLoader() {
-		this.assetsLoader = new STF.Loader( true, true );
-		this.assetsLoader.init();
-		
-		this.assetsLoader.bind( this.assetsLoader.E.PROGRESS, this.onProgress, this );
-		this.assetsLoader.bind( this.assetsLoader.E.FILE_LOAD, this._onFileLoad, this );
-		this.assetsLoader.bind( this.assetsLoader.E.COMPLETE, this._onComplete, this );
-	}
-	
-	
-	loadAssets( aAssetsToLoad ) {
-		// console.log( aAssetsToLoad );
-		
-		this.assetsLoader.startLoad( aAssetsToLoad );
-	}
-	
-	
-	onProgress( percentage ) {
-		
-	}
-	
-	
-	_onFileLoad( e ) {
-		this.dispatch( this.E.FILE_LOAD, e );
-	}
-	
-	
-	_onComplete( data ) {
-		this.dispatch( this.E.COMPLETE, data );
-	}
-	
-	
-}
-
-
-return AbstractMainLoader;
-
-
-} ) ( window );
-
-
-
-
-STF.Router = ( function( window ) {
-
-
-class Router extends STF.CustomEvent {
-	
-	
-	constructor() {
-		super();
-		
-		this.URL					= {};
-		this.ALT_LANG_URL			= {};
-		
-		this.isHomepage				= null;
-		this.isPageChange			= null;
-		this.isPageChangeByClick	= null;
-		this.isSearchChange			= null;
-		this.isHashChange			= null;
-	}
-	
-	
-	setUrl( isInit, url ) {
-		this.URL.full			= this._getFullUrl( url );
-		this.URL.path			= STF_str_getPath( this.URL.full );
-		this.URL.pathParams		= this.URL.path.split( '/' );
-		this.URL.search			= STF_str_getSearch( this.URL.full );
-		this.URL.searchParams	= STF_str_getParams( this.URL.full, 'search' );
-		this.URL.hash			= STF_str_getHash( this.URL.full );
-		this.URL.hashParams		= STF_str_getParams( this.URL.full, 'hash' );
-		this.URL.fullGA			= this._getFullGaUrl();
-	}
-	
-	
-	_getFullUrl( url ) {
-		let fullUrl;
-		
-		if ( url === null )
-			fullUrl = window.location.href;
-		else
-			fullUrl = url;
-		
-		
-		return fullUrl;
-	}
-	
-	
-	_getFullGaUrl() {
-		const fullGaUrl = this.URL.full.replace( STF.Path.URL.base, '' );
-		
-		
-		return fullGaUrl;
-	}
-	
-	
-	init() {
-		this._bindEvents();
-		
-		STF.PagesController.initFirstPage();
-	}
-	
-	
-	_bindEvents() {
-		STF.MainView.$window.on( 'popstate', $.proxy( this._onPopState, this ) );
-		STF.MainView.$window.on( 'hashchange', $.proxy( this._onHashChange, this ) );
-	}
-	
-	
-	_getLangExistence() {
-		let langExist = true;
-		
-		if ( STF.Lang.ALL_LANG.indexOf( STF.Lang.LANG ) == -1 ) {
-			STF.Lang.LANG = STF.Lang.DEFAULT_LANG;
-			
-			langExist = false;
-		}
-		
-		
-		return langExist;
-	}
-	
-	
-	_setIsHomepage( pageId ) {
-		this.isHomepage = pageId == 'home' ? true : false;
-	}
-	
-	
-	checkUrlCorrespondence() {
-		if ( this.URL.full != this._getFullUrl( null ) )
-			this._onPopState();
-	}
-	
-	
-	updateUrl( url ) {
-		if ( STF.PagesController.isPageChange )
-			return;
-		
-		this.isPageChangeByClick = true;
-		
-		this._setUrlPartChange( url );
-		this.setUrl( false, url );
-		
-		
-		const data = {
-			'isPageChange':		this.isPageChange,
-			'isSearchChange':	this.isSearchChange,
-			'isHashChange':		this.isHashChange
-		};
-		
-		history.pushState( data, '', url );
-		
-		
-		if ( this.isPageChange )
-			STF.PagesController.changePage( this.URL.full );
-		else if ( this.isSearchChange )
-			STF.PagesController.changeSearch();
-		else if ( this.isHashChange )
-			STF.PagesController.changeHash();
-	}
-	
-	
-	_onPopState( e ) {
-		if ( STF.PagesController.isPageChange )
-			return;
-		
-		this.isPageChangeByClick = false;
-		
-		this._setUrlPartChange( window.location.href );
-		
-		
-		if ( this.isPageChange || this.isSearchChange )
-			this.setUrl( false, null );
-		
-		if ( this.isPageChange )
-			STF.PagesController.changePage( this.URL.full );
-		else if ( this.isSearchChange )
-			STF.PagesController.changeSearch();
-	}
-	
-	
-	_onHashChange( e ) {
-		if ( STF.PagesController.isPageChange )
-			return;
-		
-		this._setUrlPartChange( window.location.href );
-		this.setUrl( false, null );
-		
-		
-		if ( this.isHashChange && !this.isPageChange && !this.isSearchChange )
-			STF.PagesController.changeHash();
-	}
-	
-	
-	_setUrlPartChange( url ) {
-		this._isPageChanged( url );
-		this._isSearchChanged( url );
-		this._isHashChanged( url );
-	}
-	
-	
-	_isPageChanged( url ) {
-		const nextPath		= STF_str_getPath( url );
-		this.isPageChange	= this.URL.path != nextPath;
-	}
-	
-	
-	_isSearchChanged( url ) {
-		const nextSearch	= STF_str_getSearch( url );
-		this.isSearchChange	= this.URL.search != nextSearch;
-	}
-	
-	
-	_isHashChanged( url ) {
-		const nextHash		= STF_str_getHash( url );
-		this.isHashChange	= this.URL.hash != nextHash;
-	}
-	
-	
-	setAltLangUrl( $page ) {
-		let lang;
-		
-		for ( let i = 0; i < STF.Lang.ALL_LANG.length; i++ ) {
-			lang = STF.Lang.ALL_LANG[ i ];
-			
-			if ( lang != STF.Lang.LANG )
-				this.ALT_LANG_URL[ lang ] = $page[0].getAttribute( 'data-lang-' + lang );
-		}
-	}
-	
-	
-	updateGA() {
-		if ( STF.Config.IS_PROD && Object.keys( STF.Config.GA_ID ).length > 0 ) {
-			for ( const gaName in STF.Config.GA_ID ) {
-				if ( gaName == 'default' )
-					ga( 'send', 'pageview', '/' + this.URL.fullGA );
-				else
-					ga( gaName + '.send', 'pageview', '/' + this.URL.fullGA );
-			}
-		}
-	}
-	
-	
-}
-
-
-return new Router();
-
-
-} ) ( window );
-
-
-
-
-STF.Models = STF.Models || {};
-
-
-STF.Models.Assets = ( function( window ) {
-
-
-class Assets extends STF.AbstractAssets {
-	
-	
-	constructor() {
-		super();
-	}
-	
-	
-	init() {
-		this.aImg = {
-			'global': [
-				/* bgs */
-				
-				/* btns */
-				
-				/* icons */
-				
-				/* logos */
-				
-				/* others */
-			],
-			
-			'error-404': [
-				/* temp */
-				STF.Path.URL.img + 'temp/404.jpg',
-			],
-			
-			'not-available': [
-				/* temp */
-				STF.Path.URL.img + 'temp/not-available.gif',
-			],
-			
-			'home': [
-				/* temp */
-				STF.Path.URL.img + 'temp/home.jpg',
-			],
-			
-			'about': [
-				/* temp */
-				STF.Path.URL.img + 'temp/about-1.jpg',
-				STF.Path.URL.img + 'temp/about-2.jpg',
-			],
-			
-			'projects': [
-				/* temp */
-				STF.Path.URL.img + 'temp/projects.jpg',
-			]
-		};
-		
-		
-		this.aJson = {
-			'global': {
-				global: STF.Path.URL.json + 'test-global.json'
-			},
-			
-			'home': {
-				home: STF.Path.URL.json + 'test-home.json'
-			},
-			
-			'projects': {
-				projects: STF.Path.URL.json + 'test-projects.json'
-			}
-		};
-	}
-	
-	
-}
-
-
-return new Assets();
-
-
-} ) ( window );
-
-
-
-
-STF.Loader = ( function( window ) {
-
-
-class Loader extends STF.CustomEvent {
-	
-	
-	constructor( isOnProgress, isOnFileLoad ) {
-		super();
-		
-		this.isOnProgress = isOnProgress;
-		this.isOnFileLoad = isOnFileLoad;
-		
-		this.E = {
-			STARTED:	'started',
-			PROGRESS:	'progress',
-			FILE_LOAD:	'fileLoad',
-			COMPLETE:	'complete',
-			ERROR:		'error'
-		};
-		
-		this.data	= [];
-		this.queue	= null;
-		
-		this.init();
-	}
-	
-	
-	init() {
-		this.queue = new createjs.LoadQueue( true );
-		
-		this.bindEvents();
-	}
-	
-	
-	bindEvents() {
-		this.queue.addEventListener( 'loadstart', $.proxy( this._onLoadStart, this ) );
-		this.queue.addEventListener( 'progress', $.proxy( this._onProgress, this ) );
-		this.queue.addEventListener( 'fileload', $.proxy( this._onFileLoad, this ) );
-		this.queue.addEventListener( 'complete', $.proxy( this._onComplete, this ) );
-		this.queue.addEventListener( 'error', $.proxy( this._onError, this ) );
-	}
-	
-	
-	unbindEvents() {
-		this.queue.removeAllEventListeners();
-	}
-	
-	
-	startLoad( items ) {
-		if ( items.length !== 0 )
-			this.queue.loadManifest( items );
-		else
-			this._onComplete( null );
-	}
-	
-	
-	destroy() {
-		this.unbindEvents();
-		
-		this.queue.removeAll();
-	}
-	
-	
-	_onLoadStart( e ) {
-		// console.log('Loader._loadStart()');
-		// this.dispatch( this.E.STARTED, e );
-	}
-	
-	
-	_onProgress( e ) {
-		if ( this.isOnProgress )
-			this.dispatch( this.E.PROGRESS, e.progress * 100 );
-	}
-	
-	
-	_onFileLoad( e ) {
-		if ( this.isOnFileLoad )
-			this.dispatch( this.E.FILE_LOAD, e );
-		
-		else
-			this.data[ e.item.id ] = e.result;
-	}
-	
-	
-	_onComplete( e ) {
-		this.queue.removeAll();
-		
-		this.dispatch( this.E.COMPLETE, this.data );
-	}
-	
-	
-	_onError( e ) {
-		// console.log(e);
-		// this.dispatch( this.E.ERROR, e );
-	}
-	
-	
-}
-
-
-return Loader;
-
-
-} ) ( window );
-
-
-
-
-STF.LazyLoader = ( function( window ) {
-
-
-class LazyLoader extends STF.CustomEvent {
-	
-	
-	constructor( $container, className, parentEl, stackSize, autoInit ) {
-		super();
-		
-		this.$container		= $container;
-		this.CLASS_NAME		= className;
-		this.PARENT_EL		= parentEl;
-		this.STACK_SIZE		= stackSize; // number of images loaded at each loading wave
-		
-		this.posLoadedImg	= 0;
-		this.imgToLazyload	= [];
-		this.loaderImg		= null;
-		
-		if ( autoInit )
-			this.init();
-	}
-	
-	
-	init() {
-		this.initDOM();
-		this.initEl();
-		this.bindEvents();
-		
-		this.startLazyload();
-	}
-	
-	
-	initDOM() {
-		this.$imgToLazyload	= this.$container.find( 'img.' + this.CLASS_NAME );
-	}
-	
-	
-	initEl() {
-		this.loaderImg = new STF.Loader( false, true );
-		
-		for ( let i = 0; i < this.$imgToLazyload.length; i++ ) {
-			const src = this.$imgToLazyload[ i ].getAttribute( 'data-src' );
-			
-			if ( this.imgToLazyload.indexOf( src ) < 0 && src != 'preloaded' )
-				this.imgToLazyload.push( src );
-		}
-	}
-	
-	
-	bindEvents() {
-		this.loaderImg.bind( this.loaderImg.E.FILE_LOAD, this.onImgLoad, this );
-		this.loaderImg.bind( this.loaderImg.E.COMPLETE, this.onImgLoadingComplete, this );
-	}
-	
-	
-	unbindEvents() {
-		this.loaderImg.unbind( this.loaderImg.E.FILE_LOAD, this.onImgLoad, this );
-		this.loaderImg.unbind( this.loaderImg.E.COMPLETE, this.onImgLoadingComplete, this );
-	}
-	
-	
-	destroy() {
-		this.unbindEvents();
-		
-		this.loaderImg.destroy();
-	}
-	
-	
-	startLazyload() {
-		if ( this.imgToLazyload.length === 0 )
-			return;
-		
-		
-		const imgToLazyload = this.imgToLazyload.slice( this.posLoadedImg, this.posLoadedImg + this.STACK_SIZE );
-		
-		// setTimeout( () => {
-		this.loaderImg.startLoad( imgToLazyload );
-		// }, 1000 );
-	}
-	
-	
-	onImgLoad( e ) {
-		const $imgs = this.$imgToLazyload.filter( '[ data-src="' + e.item.src + '" ]' );
-		
-		for ( let i = 0; i < $imgs.length; i++ ) {
-			const $img	= $imgs[ i ];
-			$img.src	= e.item.src;
-			
-			$img.offsetHeight; // jshint ignore:line
-			$img.setAttribute( 'data-src', 'lazyloaded' );
-			
-			if ( this.PARENT_EL !== null )
-				STF_dom_addClass( $( $imgs[ i ] ).parent( this.PARENT_EL )[0], 'loaded' );
-		}
-	}
-	
-	
-	onImgLoadingComplete() {
-		this.posLoadedImg += this.STACK_SIZE;
-		
-		if ( this.posLoadedImg < this.imgToLazyload.length )
-			this.startLazyload();
-		else
-			this.onLazyloadCompleted();
-	}
-	
-	
-	onLazyloadCompleted() {
-		// console.log( '_onLazyloadCompleted:', this.$container );
-	}
-	
-	
-}
-
-
-return LazyLoader;
-
-
-} ) ( window );
+}();
 
 
 
@@ -18791,10 +17596,10 @@ window.STF_dom_setTranslate = ( el, x, y ) => {
 	x = x === null ? 0 : x;
 	y = y === null ? 0 : y;
 	
-	if ( STF.Props.HAS_TRANSFORMS_3D )
-		el.style[ STF.Props.TRANSFORM ] = 'translate3d(' + x + 'px, ' + y + 'px, 0px)';
+	if ( STF.Configs.Props.HAS_TRANSFORMS_3D )
+		el.style[ STF.Configs.Props.TRANSFORM ] = 'translate3d(' + x + 'px, ' + y + 'px, 0px)';
 	else
-		el.style[ STF.Props.TRANSFORM ] = 'translate(' + x + 'px, ' + y + 'px)';
+		el.style[ STF.Configs.Props.TRANSFORM ] = 'translate(' + x + 'px, ' + y + 'px)';
 };
 
 
@@ -18907,7 +17712,7 @@ window.STF_str_convertToUrl = ( string ) => {
 
 window.STF_str_getPath = ( string, baseUrl ) => {
 	if ( baseUrl === null || baseUrl === undefined )
-		baseUrl = STF.Path.URL.base;
+		baseUrl = STF.Configs.Path.URL.base;
 	
 	let path	= string.replace( baseUrl, '' );
 	
@@ -18975,10 +17780,1131 @@ window.STF_str_getParams = ( string, type ) => {
 
 
 
-STF.MainView = ( function( window ) {
+STF.Utils.Debug.DebugController = new class DebugController {
+	
+	
+	constructor( isFPSStatsSet, isMemoryStatsSet, isDatGUISet ) {
+		
+	}
+	
+	
+	init( isFPSStatsSet, isMemoryStatsSet, isDatGUISet ) {
+		this._initFPSStats( isFPSStatsSet );
+		this._initMemoryStats( isMemoryStatsSet );
+		this._initDatGUI( isDatGUISet );
+	}
+	
+	
+	_initFPSStats( isSet ) {
+		STF.Configs.Config.setFPSStats( isSet );
+		
+		if ( isSet && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
+			STF.Utils.Debug.FPSStats.init();
+	}
+	
+	
+	_initMemoryStats( isSet ) {
+		STF.Configs.Config.setMemoryStats( isSet );
+		
+		if ( isSet && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
+			STF.Utils.Debug.MemoryStats.init();
+	}
+	
+	
+	_initDatGUI( isSet ) {
+		if ( isSet && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
+			STF.Utils.Debug.DatGUI.init();
+	}
+	
+	
+}();
 
 
-class MainView extends STF.AbstractMainView {
+
+
+STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
+	
+	
+	constructor() {
+		super();
+		
+		this.E = {
+			RESIZE:			'resize',
+			RAF:			'raf',
+			MOUSE_MOVE:		'mousemove',
+			MOUSE_DOWN:		'mousedown',
+			MOUSE_UP:		'mouseup',
+			TOUCH_MOVE:		'touchmove',
+			TOUCH_START:	'touchstart',
+			TOUCH_END:		'touchend',
+			WINDOW_OUT:		'windowout',
+			WINDOW_IN:		'windowin'
+		};
+		
+		this.bW		= null; // body width
+		this.bH		= null; // body height
+		this.wW		= null; // window width
+		this.wH		= null; // window height
+		this.cX		= null; // center X
+		this.cY		= null; // center Y
+		this.sY		= null; // scroll Y
+		this.siY	= null; // scroll inertia Y
+		this.mX		= null; // mouse X
+		this.mY		= null; // mouse Y
+		this.miX	= null; // mouse inertia X
+		this.miY	= null; // mouse inertia Y
+		this.tX		= null; // touch X
+		this.tY		= null; // touch Y
+		
+		this.SCROLL_INERTIA		= 0.07;
+		this.MOUSE_INERTIA		= 0.03;
+		
+		this.isWindowFocused	= true;
+	}
+	
+	
+	init() {
+		this.initDOM();
+		this.initEl();
+		this.bindEvents();
+		
+		this.initStaticsViews();
+		
+		this.resize();
+	}
+	
+	
+	initDOM() {
+		this.$window	= $( window );
+		this.$body		= $( document.body );
+		this.$mainCont	= $( document.getElementById( 'main-container' ) );
+		this.$pageCont	= $( document.getElementById( 'page-container' ) );
+	}
+	
+	
+	initEl() {
+		STF.Configs.Path.overwriteSpecialPaths( this.$mainCont[0].getAttribute( 'data-assets-base-url' ) );
+	}
+	
+	
+	bindEvents() {
+		this.$window.on( 'resize', $.proxy( this.resize, this ) );
+		TweenLite.ticker.addEventListener( 'tick', this.raf, this );
+		// this.$window.on( 'mousemove', $.proxy( this.mouseMove, this ) );
+		// this.$window.on( 'mousedown', $.proxy( this.mouseDown, this ) );
+		// this.$window.on( 'mouseup', $.proxy( this.mouseUp, this ) );
+		// this.$window.on( 'touchmove', $.proxy( this.touchMove, this ) );
+		// this.$window.on( 'touchstart', $.proxy( this.touchStart, this ) );
+		// this.$window.on( 'touchend', $.proxy( this.touchEnd, this ) );
+		// this.$window.on( 'blur', $.proxy( this.windowOut, this ) );
+		// this.$window.on( 'focus', $.proxy( this.windowIn, this ) );
+	}
+	
+	
+	initStaticsViews() {
+		STF.Views.Statics.MainLoader.init();
+		STF.Views.Statics.Header.init();
+		STF.Views.Statics.Footer.init();
+		
+		STF_dom_removeClass( this.$mainCont[0], 'preload' );
+	}
+	
+	
+	disableScrollRestoration() {
+		if ( 'scrollRestoration' in history )
+			history.scrollRestoration = 'manual';
+	}
+	
+	
+	resize() {
+		this._setResizeProps();
+		
+		this.dispatch( this.E.RESIZE );
+	}
+	
+	
+	_setResizeProps() {
+		this.bW = this.$body.width();
+		this.bH = this.$body.height();
+		this.wW = this.$window.width();
+		this.wH = this.$window.height();
+		this.cX = Math.round( this.bW / 2 );
+		this.cY = Math.round( this.wH / 2 );
+		
+		if ( this.mX === null && this.mY === null ) {
+			this.mX = this.cX;
+			this.mY = this.cY;
+		}
+	}
+	
+	
+	raf() {
+		if ( STF.Configs.Config.HAS_FPS_STATS && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
+			STF.Utils.Debug.FPSStats.begin();
+		
+		
+		this._setRafProps();
+		
+		this.dispatch( this.E.RAF );
+		
+		
+		if ( STF.Configs.Config.HAS_FPS_STATS && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
+			STF.Utils.Debug.FPSStats.end();
+		
+		if ( STF.Configs.Config.HAS_MEMORY_STATS && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
+			STF.Utils.Debug.MemoryStats.update();
+	}
+	
+	
+	_setRafProps() {
+		this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
+		this.siY	= STF_math_getInertia( this.sY, this.siY, this.SCROLL_INERTIA );
+		
+		this.miX	= STF_math_getInertia( this.mX, this.miX, this.MOUSE_INERTIA );
+		this.miY	= STF_math_getInertia( this.mY, this.miY, this.MOUSE_INERTIA );
+	}
+	
+	
+	mouseMove( e ) {
+		this.mX = e.clientX;
+		this.mY = e.clientY;
+		
+		// console.log( 'AbstractMain _mouseMove()', this.mX, this.mY );
+		
+		this.dispatch( this.E.MOUSE_MOVE );
+	}
+	
+	
+	mouseDown() {
+		this.dispatch( this.E.MOUSE_DOWN );
+	}
+	
+	
+	mouseUp() {
+		this.dispatch( this.E.MOUSE_UP );
+	}
+	
+	
+	touchMove( e ) {
+		e.preventDefault();
+		
+		// Zepto
+		this.tX = e.touches[0].pageX;
+		this.tY = e.touches[0].pageY;
+		// jQuery
+		// this.tX = e.originalEvent.touches[0].pageX;
+		// this.tY = e.originalEvent.touches[0].pageY;
+		
+		this.dispatch( this.E.TOUCH_MOVE );
+	}
+	
+	
+	touchStart() {
+		this.dispatch( this.E.TOUCH_START );
+	}
+	
+	
+	touchEnd() {
+		this.dispatch( this.E.TOUCH_END );
+	}
+	
+	
+	windowOut() {
+		this.isWindowFocused = false;
+		
+		this.dispatch( this.E.WINDOW_OUT );
+	}
+	
+	
+	windowIn() {
+		this.isWindowFocused = true;
+		
+		this.dispatch( this.E.WINDOW_IN );
+	}
+	
+	
+	setScrollY( scrollY ) {
+		this.sY		= scrollY;
+		this.siY	= scrollY;
+		
+		this.$window[0].scrollTo( 0, scrollY );
+	}
+	
+	
+	setBodyHeight( bodyH ) {
+		if ( bodyH === null )
+			bodyH = this.$pageCont.height();
+		
+		this.$body[0].style.height = bodyH + 'px';
+	}
+	
+	
+	initAfterAssetsLoaded() {
+		
+	}
+	
+	
+};
+
+
+
+
+STF.Abstracts.AbstractAssets = class AbstractAssets {
+	
+	
+	constructor() {
+		this.aImg		= {};
+		this.aJson		= {};
+		this.jsonData	= {};
+	}
+	
+	
+	init() {
+		
+	}
+	
+	
+	getAssetsToLoad( pageId, isFirstLoad, loadingMode ) {
+		const aListIds		= this._getAssetsListIds( pageId, isFirstLoad, loadingMode );
+		
+		let aAssetsToLoad	= [];
+		aAssetsToLoad		= this._addStaticAssetsToLoad( 'img', aAssetsToLoad, aListIds );
+		aAssetsToLoad		= this._addStaticAssetsToLoad( 'json', aAssetsToLoad, aListIds );
+		
+		if ( loadingMode == 'byPageDynamic' )
+			aAssetsToLoad	= this._addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad );
+		
+		
+		return aAssetsToLoad;
+	}
+	
+	
+	_getAssetsListIds( pageId, isFirstLoad, loadingMode ) {
+		let aIds = [];
+		
+		
+		// first load
+		if ( isFirstLoad && loadingMode == 'allStatic')
+			aIds = this._getAllStaticAssetsListIds();
+		
+		else if ( isFirstLoad && loadingMode == 'byPageStatic' ||
+				  isFirstLoad && loadingMode == 'byPageDynamic' )
+			aIds = [ 'global', pageId ];
+		
+		
+		// page change load
+		else if ( !isFirstLoad && loadingMode == 'byPageStatic' ||
+				  !isFirstLoad && loadingMode == 'byPageDynamic' )
+			aIds = [ pageId ];
+		
+		
+		return aIds;
+	}
+	
+	
+	_getAllStaticAssetsListIds() {
+		let aIds = [];
+		
+		for ( const id in this.aImg )
+			aIds.push( id );
+		
+		for ( const id in this.aJson )
+			if( aIds.indexOf( id ) < 0 )
+				aIds.push( id );
+		
+		
+		return aIds;
+	}
+	
+	
+	_addStaticAssetsToLoad( type, aAssetsToLoad, aListIds ) {
+		let assetsList;
+		const aAssets = type == 'img' ? this.aImg : this.aJson;
+		
+		for ( let i = 0; i < aListIds.length; i++ ) {
+			assetsList = aAssets[ aListIds[ i ] ];
+			
+			if ( assetsList !== undefined )
+				for ( const id in assetsList ) {
+					const fileId = STF_gl_getType( assetsList ) === 'object' ? id : null;
+					
+					this._addAsset( aAssetsToLoad, fileId, assetsList[ id ] );
+				}
+		}
+		
+		
+		return aAssetsToLoad;
+	}
+	
+	
+	_addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad ) {
+		const $dynamicImgs = isFirstLoad ? STF.Core.Main.$mainCont.find( STF.Core.PagesController.DYNAMIC_IMG_TO_LOAD ) :
+										   STF.Core.Main.$pageCont.find( STF.Core.PagesController.DYNAMIC_IMG_TO_LOAD );
+		
+		for ( let i = 0; i < $dynamicImgs.length; i++ )
+			if ( $dynamicImgs[ i ].getAttribute( 'data-lazyload' ) != 'true' )
+				this._addAsset( aAssetsToLoad, null, $dynamicImgs[ i ].getAttribute( 'data-src' ) );
+		
+		
+		return aAssetsToLoad;
+	}
+	
+	
+	_addAsset( aAssetsToLoad, id, assetUrl ) {
+		if ( aAssetsToLoad.indexOf( assetUrl ) < 0 && id === null )
+			return aAssetsToLoad.push( assetUrl );
+		else if ( aAssetsToLoad.indexOf( assetUrl ) < 0 && id !== null )
+			return aAssetsToLoad.push( {
+				id:		id,
+				src:	assetUrl
+			} );
+		else if ( !STF.Configs.Config.IS_PROD )
+			console.warn( 'AbstractAssets:' + assetUrl + ' already added to the loading assets list!' );
+	}
+	
+	
+	setJsonData( id, data ) {
+		this.jsonData[ id ] = data;
+	}
+	
+	
+};
+
+
+
+
+STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
+	
+	
+	constructor() {
+		super();
+		
+		this.E		= {
+			SHOW:	'show',
+			SHOWN:	'shown',
+			HIDE:	'hide',
+			HIDDEN:	'hidden'
+		};
+		
+		this.tw		= {};
+		this.tl		= {};
+		
+		this.isInit	= false;
+	}
+	
+	
+	init() {
+		this.initDOM();
+		this.initEl();
+		this.initTl();
+		this.bindEvents();
+		
+		this.resize();
+	}
+	
+	
+	initDOM() {
+		// console.log( 'AbstractView.initDOM() — ', this.constructor.name );
+	}
+	
+	
+	initEl() {
+		// console.log( 'AbstractView.initEl() — ', this.constructor.name );
+	}
+	
+	
+	initTl() {
+		// console.log( 'AbstractView.initTl() — ', this.constructor.name );
+	}
+	
+	
+	bindEvents() {
+		// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
+		
+		STF.Core.Main.bind( STF.Core.Main.E.RESIZE, this.resize, this );
+	}
+	
+	
+	unbindEvents() {
+		// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
+		
+		STF.Core.Main.unbind( STF.Core.Main.E.RESIZE, this.resize, this );
+	}
+	
+	
+	initView() {
+		// console.log( 'AbstractView.initView() — ', this.constructor.name );
+		
+		this.isInit = true;
+	}
+	
+	
+	show() {
+		// console.log( 'AbstractView.show() — ', this.constructor.name );
+	}
+	
+	
+	hide() {
+		// console.log( 'AbstractView.hide() — ', this.constructor.name );
+	}
+	
+	
+	resize() {
+		// console.log( 'AbstractView.resize() — ', this.constructor.name );
+	}
+	
+	
+	raf() {
+		// console.log( 'AbstractView.raf() — ', this.constructor.name );
+	}
+	
+	
+	destroy() {
+		this.isInit = false;
+		
+		this.unbindEvents();
+		
+		this.destroyGSAP();
+	}
+	
+	
+	destroyGSAP() {
+		/* tween */
+		for ( const tween in this.tw )
+			this.killTween( tween );
+		
+		/* timeline */
+		for ( const timeline in this.tl )
+			this.killTimeline( timeline );
+		
+		this.tl = {};
+		this.tw = {};
+	}
+	
+	
+	killTween( twName ) {
+		if ( !this.tw[ twName ] )
+			return;
+		
+		this.tw[ twName ].kill();
+		
+		this.tw[ twName ] = null;
+	}
+	
+	
+	killTimeline( tlName ) {
+		if ( !this.tl[ tlName ] )
+			return;
+		
+		this.tl[ tlName ].stop();
+		this.tl[ tlName ].clear();
+		this.tl[ tlName ].kill();
+		
+		this.tl[ tlName ] = null;
+	}
+	
+	
+	/**
+	 * Change the url
+	 * @params {object or string} e: most of time is an object when it come from a click on a link,
+	 *								 but if you need to force a specific url you can directly pass a string
+	 */
+	changeUrl( e ) {
+		if ( STF.Configs.Props.HAS_PUSHSTATE ) { // if pushstate supported
+			let url;
+			
+			if ( typeof e == 'object' ) {
+				e.preventDefault();
+				
+				url = e.currentTarget.href;
+			}
+			else if ( typeof e == 'string' )
+				url = e;
+			
+			STF.Core.Router.updateUrl( url );
+		}
+	}
+	
+	
+	updateSearch() {
+		if ( !STF.Configs.Config.IS_PROD )
+			console.warn( 'You need to override the updateSearch() method from AbstractView in the current page view.' );
+	}
+	
+	
+	updateHash() {
+		if ( !STF.Configs.Config.IS_PROD )
+			console.warn( 'You need to override the updateHash() method from AbstractView in the current page view.' );
+	}
+	
+	
+};
+
+
+
+
+STF.Abstracts.AbstractMainLoader = class AbstractMainLoader extends STF.Abstracts.AbstractView {
+	
+	
+	constructor() {
+		super();
+		
+		this.E = {
+			PROGRESS:	'progress',
+			FILE_LOAD:	'fileLoad',
+			COMPLETE:	'complete',
+			SHOWN:		'shown',
+			HIDDEN:		'hidden'
+		};
+	}
+	
+	
+	init() {
+		super.init();
+		
+		this._instanceAssetsLoader();
+	}
+	
+	
+	initDOM() {
+		
+	}
+	
+	
+	initTl() {
+		
+	}
+	
+	
+	resize() {
+		super.resize();
+	}
+	
+	
+	_instanceAssetsLoader() {
+		this.assetsLoader = new STF.Loaders.Loader( true, true );
+		this.assetsLoader.init();
+		
+		this.assetsLoader.bind( this.assetsLoader.E.PROGRESS, this.onProgress, this );
+		this.assetsLoader.bind( this.assetsLoader.E.FILE_LOAD, this._onFileLoad, this );
+		this.assetsLoader.bind( this.assetsLoader.E.COMPLETE, this._onComplete, this );
+	}
+	
+	
+	loadAssets( aAssetsToLoad ) {
+		// console.log( aAssetsToLoad );
+		
+		this.assetsLoader.startLoad( aAssetsToLoad );
+	}
+	
+	
+	onProgress( percentage ) {
+		
+	}
+	
+	
+	_onFileLoad( e ) {
+		this.dispatch( this.E.FILE_LOAD, e );
+	}
+	
+	
+	_onComplete( data ) {
+		this.dispatch( this.E.COMPLETE, data );
+	}
+	
+	
+};
+
+
+
+
+STF.Core.Router = new class Router extends STF.Events.CustomEvent {
+	
+	
+	constructor() {
+		super();
+		
+		this.URL					= {};
+		this.ALT_LANG_URL			= {};
+		
+		this.isHomepage				= null;
+		this.isPageChange			= null;
+		this.isPageChangeByClick	= null;
+		this.isSearchChange			= null;
+		this.isHashChange			= null;
+	}
+	
+	
+	setUrl( isInit, url ) {
+		this.URL.full			= this._getFullUrl( url );
+		this.URL.path			= STF_str_getPath( this.URL.full );
+		this.URL.pathParams		= this.URL.path.split( '/' );
+		this.URL.search			= STF_str_getSearch( this.URL.full );
+		this.URL.searchParams	= STF_str_getParams( this.URL.full, 'search' );
+		this.URL.hash			= STF_str_getHash( this.URL.full );
+		this.URL.hashParams		= STF_str_getParams( this.URL.full, 'hash' );
+		this.URL.fullGA			= this._getFullGaUrl();
+	}
+	
+	
+	_getFullUrl( url ) {
+		let fullUrl;
+		
+		if ( url === null )
+			fullUrl = window.location.href;
+		else
+			fullUrl = url;
+		
+		
+		return fullUrl;
+	}
+	
+	
+	_getFullGaUrl() {
+		const fullGaUrl = this.URL.full.replace( STF.Configs.Path.URL.base, '' );
+		
+		
+		return fullGaUrl;
+	}
+	
+	
+	init() {
+		this._bindEvents();
+		
+		STF.Core.PagesController.initFirstPage();
+	}
+	
+	
+	_bindEvents() {
+		STF.Core.Main.$window.on( 'popstate', $.proxy( this._onPopState, this ) );
+		STF.Core.Main.$window.on( 'hashchange', $.proxy( this._onHashChange, this ) );
+	}
+	
+	
+	_getLangExistence() {
+		let langExist = true;
+		
+		if ( STF.Configs.Lang.ALL_LANG.indexOf( STF.Configs.Lang.LANG ) == -1 ) {
+			STF.Configs.Lang.LANG = STF.Configs.Lang.DEFAULT_LANG;
+			
+			langExist = false;
+		}
+		
+		
+		return langExist;
+	}
+	
+	
+	_setIsHomepage( pageId ) {
+		this.isHomepage = pageId == 'home' ? true : false;
+	}
+	
+	
+	checkUrlCorrespondence() {
+		if ( this.URL.full != this._getFullUrl( null ) )
+			this._onPopState();
+	}
+	
+	
+	updateUrl( url ) {
+		if ( STF.Core.PagesController.isPageChange )
+			return;
+		
+		this.isPageChangeByClick = true;
+		
+		this._setUrlPartChange( url );
+		this.setUrl( false, url );
+		
+		
+		const data = {
+			'isPageChange':		this.isPageChange,
+			'isSearchChange':	this.isSearchChange,
+			'isHashChange':		this.isHashChange
+		};
+		
+		history.pushState( data, '', url );
+		
+		
+		if ( this.isPageChange )
+			STF.Core.PagesController.changePage( this.URL.full );
+		else if ( this.isSearchChange )
+			STF.Core.PagesController.changeSearch();
+		else if ( this.isHashChange )
+			STF.Core.PagesController.changeHash();
+	}
+	
+	
+	_onPopState( e ) {
+		if ( STF.Core.PagesController.isPageChange )
+			return;
+		
+		this.isPageChangeByClick = false;
+		
+		this._setUrlPartChange( window.location.href );
+		
+		
+		if ( this.isPageChange || this.isSearchChange )
+			this.setUrl( false, null );
+		
+		if ( this.isPageChange )
+			STF.Core.PagesController.changePage( this.URL.full );
+		else if ( this.isSearchChange )
+			STF.Core.PagesController.changeSearch();
+	}
+	
+	
+	_onHashChange( e ) {
+		if ( STF.Core.PagesController.isPageChange )
+			return;
+		
+		this._setUrlPartChange( window.location.href );
+		this.setUrl( false, null );
+		
+		
+		if ( this.isHashChange && !this.isPageChange && !this.isSearchChange )
+			STF.Core.PagesController.changeHash();
+	}
+	
+	
+	_setUrlPartChange( url ) {
+		this._isPageChanged( url );
+		this._isSearchChanged( url );
+		this._isHashChanged( url );
+	}
+	
+	
+	_isPageChanged( url ) {
+		const nextPath		= STF_str_getPath( url );
+		this.isPageChange	= this.URL.path != nextPath;
+	}
+	
+	
+	_isSearchChanged( url ) {
+		const nextSearch	= STF_str_getSearch( url );
+		this.isSearchChange	= this.URL.search != nextSearch;
+	}
+	
+	
+	_isHashChanged( url ) {
+		const nextHash		= STF_str_getHash( url );
+		this.isHashChange	= this.URL.hash != nextHash;
+	}
+	
+	
+	setAltLangUrl( $page ) {
+		let lang;
+		
+		for ( let i = 0; i < STF.Configs.Lang.ALL_LANG.length; i++ ) {
+			lang = STF.Configs.Lang.ALL_LANG[ i ];
+			
+			if ( lang != STF.Configs.Lang.LANG )
+				this.ALT_LANG_URL[ lang ] = $page[0].getAttribute( 'data-lang-' + lang );
+		}
+	}
+	
+	
+	updateGA() {
+		if ( STF.Configs.Config.IS_PROD && Object.keys( STF.Configs.Config.GA_ID ).length > 0 ) {
+			for ( const gaName in STF.Configs.Config.GA_ID ) {
+				if ( gaName == 'default' )
+					ga( 'send', 'pageview', '/' + this.URL.fullGA );
+				else
+					ga( gaName + '.send', 'pageview', '/' + this.URL.fullGA );
+			}
+		}
+	}
+	
+	
+}();
+
+
+
+
+STF.Models.Assets = new class Assets extends STF.Abstracts.AbstractAssets {
+	
+	
+	constructor() {
+		super();
+	}
+	
+	
+	init() {
+		this.aImg = {
+			'global': [
+				/* bgs */
+				
+				/* btns */
+				
+				/* icons */
+				
+				/* logos */
+				
+				/* others */
+			],
+			
+			'error-404': [
+				/* temp */
+				STF.Configs.Path.URL.img + 'temp/404.jpg',
+			],
+			
+			'not-available': [
+				/* temp */
+				STF.Configs.Path.URL.img + 'temp/not-available.gif',
+			],
+			
+			'home': [
+				/* temp */
+				STF.Configs.Path.URL.img + 'temp/home.jpg',
+			],
+			
+			'about': [
+				/* temp */
+				STF.Configs.Path.URL.img + 'temp/about-1.jpg',
+				STF.Configs.Path.URL.img + 'temp/about-2.jpg',
+			],
+			
+			'projects': [
+				/* temp */
+				STF.Configs.Path.URL.img + 'temp/projects.jpg',
+			]
+		};
+		
+		
+		this.aJson = {
+			'global': {
+				global: STF.Configs.Path.URL.json + 'test-global.json'
+			},
+			
+			'home': {
+				home: STF.Configs.Path.URL.json + 'test-home.json'
+			},
+			
+			'projects': {
+				projects: STF.Configs.Path.URL.json + 'test-projects.json'
+			}
+		};
+	}
+	
+	
+}();
+
+
+
+
+STF.Loaders.Loader = class Loader extends STF.Events.CustomEvent {
+	
+	
+	constructor( isOnProgress, isOnFileLoad ) {
+		super();
+		
+		this.isOnProgress = isOnProgress;
+		this.isOnFileLoad = isOnFileLoad;
+		
+		this.E = {
+			STARTED:	'started',
+			PROGRESS:	'progress',
+			FILE_LOAD:	'fileLoad',
+			COMPLETE:	'complete',
+			ERROR:		'error'
+		};
+		
+		this.data	= [];
+		this.queue	= null;
+		
+		this.init();
+	}
+	
+	
+	init() {
+		this.queue = new createjs.LoadQueue( true );
+		
+		this.bindEvents();
+	}
+	
+	
+	bindEvents() {
+		this.queue.addEventListener( 'loadstart', $.proxy( this._onLoadStart, this ) );
+		this.queue.addEventListener( 'progress', $.proxy( this._onProgress, this ) );
+		this.queue.addEventListener( 'fileload', $.proxy( this._onFileLoad, this ) );
+		this.queue.addEventListener( 'complete', $.proxy( this._onComplete, this ) );
+		this.queue.addEventListener( 'error', $.proxy( this._onError, this ) );
+	}
+	
+	
+	unbindEvents() {
+		this.queue.removeAllEventListeners();
+	}
+	
+	
+	startLoad( items ) {
+		if ( items.length !== 0 )
+			this.queue.loadManifest( items );
+		else
+			this._onComplete( null );
+	}
+	
+	
+	destroy() {
+		this.unbindEvents();
+		
+		this.queue.removeAll();
+	}
+	
+	
+	_onLoadStart( e ) {
+		// console.log('Loader._loadStart()');
+		// this.dispatch( this.E.STARTED, e );
+	}
+	
+	
+	_onProgress( e ) {
+		if ( this.isOnProgress )
+			this.dispatch( this.E.PROGRESS, e.progress * 100 );
+	}
+	
+	
+	_onFileLoad( e ) {
+		if ( this.isOnFileLoad )
+			this.dispatch( this.E.FILE_LOAD, e );
+		
+		else
+			this.data[ e.item.id ] = e.result;
+	}
+	
+	
+	_onComplete( e ) {
+		this.queue.removeAll();
+		
+		this.dispatch( this.E.COMPLETE, this.data );
+	}
+	
+	
+	_onError( e ) {
+		// console.log(e);
+		// this.dispatch( this.E.ERROR, e );
+	}
+	
+	
+};
+
+
+
+
+STF.Loaders.LazyLoader = class LazyLoader extends STF.Events.CustomEvent {
+	
+	
+	constructor( $container, className, parentEl, stackSize, autoInit ) {
+		super();
+		
+		this.$container		= $container;
+		this.CLASS_NAME		= className;
+		this.PARENT_EL		= parentEl;
+		this.STACK_SIZE		= stackSize; // number of images loaded at each loading wave
+		
+		this.posLoadedImg	= 0;
+		this.imgToLazyload	= [];
+		this.loaderImg		= null;
+		
+		if ( autoInit )
+			this.init();
+	}
+	
+	
+	init() {
+		this.initDOM();
+		this.initEl();
+		this.bindEvents();
+		
+		this.startLazyload();
+	}
+	
+	
+	initDOM() {
+		this.$imgToLazyload	= this.$container.find( 'img.' + this.CLASS_NAME );
+	}
+	
+	
+	initEl() {
+		this.loaderImg = new STF.Loaders.Loader( false, true );
+		
+		for ( let i = 0; i < this.$imgToLazyload.length; i++ ) {
+			const src = this.$imgToLazyload[ i ].getAttribute( 'data-src' );
+			
+			if ( this.imgToLazyload.indexOf( src ) < 0 && src != 'preloaded' )
+				this.imgToLazyload.push( src );
+		}
+	}
+	
+	
+	bindEvents() {
+		this.loaderImg.bind( this.loaderImg.E.FILE_LOAD, this.onImgLoad, this );
+		this.loaderImg.bind( this.loaderImg.E.COMPLETE, this.onImgLoadingComplete, this );
+	}
+	
+	
+	unbindEvents() {
+		this.loaderImg.unbind( this.loaderImg.E.FILE_LOAD, this.onImgLoad, this );
+		this.loaderImg.unbind( this.loaderImg.E.COMPLETE, this.onImgLoadingComplete, this );
+	}
+	
+	
+	destroy() {
+		this.unbindEvents();
+		
+		this.loaderImg.destroy();
+	}
+	
+	
+	startLazyload() {
+		if ( this.imgToLazyload.length === 0 )
+			return;
+		
+		
+		const imgToLazyload = this.imgToLazyload.slice( this.posLoadedImg, this.posLoadedImg + this.STACK_SIZE );
+		
+		// setTimeout( () => {
+		this.loaderImg.startLoad( imgToLazyload );
+		// }, 1000 );
+	}
+	
+	
+	onImgLoad( e ) {
+		const $imgs = this.$imgToLazyload.filter( '[ data-src="' + e.item.src + '" ]' );
+		
+		for ( let i = 0; i < $imgs.length; i++ ) {
+			const $img	= $imgs[ i ];
+			$img.src	= e.item.src;
+			
+			$img.offsetHeight; // jshint ignore:line
+			$img.setAttribute( 'data-src', 'lazyloaded' );
+			
+			if ( this.PARENT_EL !== null )
+				STF_dom_addClass( $( $imgs[ i ] ).parent( this.PARENT_EL )[0], 'loaded' );
+		}
+	}
+	
+	
+	onImgLoadingComplete() {
+		this.posLoadedImg += this.STACK_SIZE;
+		
+		if ( this.posLoadedImg < this.imgToLazyload.length )
+			this.startLazyload();
+		else
+			this.onLazyloadCompleted();
+	}
+	
+	
+	onLazyloadCompleted() {
+		// console.log( '_onLazyloadCompleted:', this.$container );
+	}
+	
+	
+};
+
+
+
+
+STF.Core.Main = new class Main extends STF.Abstracts.AbstractMain {
 	
 	
 	constructor() {
@@ -19008,21 +18934,12 @@ class MainView extends STF.AbstractMainView {
 	}*/
 	
 	
-}
-
-
-return new MainView();
-
-
-} ) ( window );
+}();
 
 
 
 
-STF.AbstractPagesController = ( function( window ) {
-
-
-class AbstractPagesController extends STF.CustomEvent {
+STF.Abstracts.AbstractPagesController = class AbstractPagesController extends STF.Events.CustomEvent {
 	
 	
 	constructor() {
@@ -19091,8 +19008,8 @@ class AbstractPagesController extends STF.CustomEvent {
 	
 	
 	_setPageId( url ) {
-		const path	= STF.Router.URL.path === '' ? 'index' : STF.Router.URL.path;
-		let id		= STF.Config.JS_VIEWS_ID[ path ];
+		const path	= STF.Core.Router.URL.path === '' ? 'index' : STF.Core.Router.URL.path;
+		let id		= STF.Configs.Config.JS_VIEWS_ID[ path ];
 		
 		if ( id === undefined )
 			id = 'error-404';
@@ -19107,7 +19024,7 @@ class AbstractPagesController extends STF.CustomEvent {
 		const id	= $page[0].getAttribute( 'data-js-id' );
 		const title	= $page[0].getAttribute( 'data-title' );
 		
-		if ( !STF.Config.NEED_PAGE_ID )
+		if ( !STF.Configs.Config.NEED_PAGE_ID )
 			this.prevPageInfos.id	= this.pageInfos.id;
 		this.prevPageInfos.title	= this.pageInfos.title;
 		
@@ -19116,16 +19033,16 @@ class AbstractPagesController extends STF.CustomEvent {
 		
 		this._setPage();
 		
-		STF.Router.setAltLangUrl( $page );
+		STF.Core.Router.setAltLangUrl( $page );
 	}
 	
 	
 	_setPage() {
 		if ( this.pages[ this.pageInfos.id ] === undefined) {
-			if ( !STF.Config.IS_PROD )
+			if ( !STF.Configs.Config.IS_PROD )
 				console.warn( 'PagesController: no specific page view for the "' + this.pageInfos.id + '" ID. If you need one, create it and then set the view in the PagesController.pages object.' );
 			
-			this.page = new STF.AbstractPageView();
+			this.page = new STF.Abstracts.AbstractPageView();
 		}
 		else
 			this.page = new this.pages[ this.pageInfos.id ]();
@@ -19180,7 +19097,7 @@ class AbstractPagesController extends STF.CustomEvent {
 		
 		// first load
 		if ( this.isFirstLoad ) {
-			STF.MainView.initAfterAssetsLoaded();
+			STF.Core.Main.initAfterAssetsLoaded();
 			
 			this.page.init();
 			
@@ -19206,7 +19123,7 @@ class AbstractPagesController extends STF.CustomEvent {
 	
 	
 	_showNonLoadedImages() {
-		const $imgsCont	= this.isFirstLoad ? STF.MainView.$body : STF.MainView.$pageCont;
+		const $imgsCont	= this.isFirstLoad ? STF.Core.Main.$body : STF.Core.Main.$pageCont;
 		
 		const $allImgs	= $imgsCont.find( 'img' );
 		const $imgs		= $allImgs.filter( key => $allImgs[ key ].getAttribute( 'data-lazyload' ) != 'true' && $allImgs[ key ].getAttribute( 'data-src' ) != 'preloaded' );
@@ -19216,9 +19133,9 @@ class AbstractPagesController extends STF.CustomEvent {
 	
 	
 	changePage( url ) {
-		STF.Router.updateGA();
+		STF.Core.Router.updateGA();
 		
-		if ( STF.Config.NEED_PAGE_ID )
+		if ( STF.Configs.Config.NEED_PAGE_ID )
 			this._setPageId( url );
 		
 		this._disablePageChange();
@@ -19282,8 +19199,8 @@ class AbstractPagesController extends STF.CustomEvent {
 	
 	
 	_force404Load() {
-		const lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/' : '';
-		const url	= STF.Path.URL.base + lang + '404';
+		const lang	= STF.Configs.Lang.MULTI_LANG ? STF.Configs.Lang.LANG + '/' : '';
+		const url	= STF.Configs.Path.URL.base + lang + '404';
 		
 		this._loadContent( url );
 	}
@@ -19345,12 +19262,12 @@ class AbstractPagesController extends STF.CustomEvent {
 	
 	
 	setContent() {
-		STF.MainView.$pageCont[0].innerHTML = this.data;
+		STF.Core.Main.$pageCont[0].innerHTML = this.data;
 		
 		this._setPageInfos();
 		
 		if ( this.LOADING_MODE != 'allStatic' ) {
-			STF_resetImgs( STF.MainView.$pageCont.find( 'img' ) );
+			STF_resetImgs( STF.Core.Main.$pageCont.find( 'img' ) );
 			setTimeout( () => this._loadAssets(), 0 );
 		}
 		
@@ -19423,7 +19340,7 @@ class AbstractPagesController extends STF.CustomEvent {
 	changeLangLinks( $links ) {
 		for ( let i = 0; i < $links.length; i++ ) {
 			const $link	= $links[ i ];
-			$link.href	= STF.Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
+			$link.href	= STF.Core.Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
 		}
 	}
 	
@@ -19439,7 +19356,7 @@ class AbstractPagesController extends STF.CustomEvent {
 		if ( this.isFirstLoad )
 			this.isFirstLoad = false;
 		
-		STF.Router.checkUrlCorrespondence();
+		STF.Core.Router.checkUrlCorrespondence();
 	}
 	
 	
@@ -19448,21 +19365,12 @@ class AbstractPagesController extends STF.CustomEvent {
 	}
 	
 	
-}
-
-
-return AbstractPagesController;
-
-
-} ) ( window );
+};
 
 
 
 
-STF.PagesController = ( function( window ) {
-
-
-class PagesController extends STF.AbstractPagesController {
+STF.Core.PagesController = new class PagesController extends STF.Abstracts.AbstractPagesController {
 	
 	
 	constructor() {
@@ -19511,25 +19419,12 @@ class PagesController extends STF.AbstractPagesController {
 	}
 	
 	
-}
-
-
-return new PagesController();
-
-
-} ) ( window );
+}();
 
 
 
 
-STF.Views			= STF.Views || {};
-STF.Views.Statics	= STF.Views.Statics || {};
-
-
-STF.Views.Statics.MainLoader = ( function( window ) {
-
-
-class MainLoader extends STF.AbstractMainLoader {
+STF.Views.Statics.MainLoader = new class MainLoader extends STF.Abstracts.AbstractMainLoader {
 	
 	
 	constructor() {
@@ -19592,7 +19487,7 @@ class MainLoader extends STF.AbstractMainLoader {
 		const posX = percentage - 100;
 		
 		this.$percentage[0].innerHTML					= parseInt( percentage ) + ' %';
-		this.$progress[0].style[ STF.Props.TRANSFORM ]	= 'translate(' + posX + '%, 0%)';
+		this.$progress[0].style[ STF.Configs.Props.TRANSFORM ]	= 'translate(' + posX + '%, 0%)';
 	}
 	
 	
@@ -19636,7 +19531,7 @@ class MainLoader extends STF.AbstractMainLoader {
 	_onHideComplete() {
 		// LOADING_MODE == 'byPageStatic' && LOADING_MODE == 'byPageDynamic'
 		this.$percentage[0].innerHTML					= '0 %';
-		this.$progress[0].style[ STF.Props.TRANSFORM ]	= 'translate(-100%, 0%)';
+		this.$progress[0].style[ STF.Configs.Props.TRANSFORM ]	= 'translate(-100%, 0%)';
 		
 		this.$loader[0].style.display					= 'none';
 		
@@ -19644,25 +19539,12 @@ class MainLoader extends STF.AbstractMainLoader {
 	}
 	
 	
-}
-
-
-return new MainLoader();
-
-
-} ) ( window );
+}();
 
 
 
 
-STF.Views			= STF.Views || {};
-STF.Views.Statics	= STF.Views.Statics || {};
-
-
-STF.Views.Statics.Header = ( function( window ) {
-
-
-class Header extends STF.AbstractView {
+STF.Views.Statics.Header = new class Header extends STF.Abstracts.AbstractView {
 	
 	
 	constructor() {
@@ -19685,25 +19567,12 @@ class Header extends STF.AbstractView {
 	}
 	
 	
-}
-
-
-return new Header();
-
-
-} ) ( window );
+}();
 
 
 
 
-STF.Views			= STF.Views || {};
-STF.Views.Statics	= STF.Views.Statics || {};
-
-
-STF.Views.Statics.Footer = ( function( window ) {
-
-
-class Footer extends STF.AbstractView {
+STF.Views.Statics.Footer = new class Footer extends STF.Abstracts.AbstractView {
 	
 	
 	constructor() {
@@ -19725,21 +19594,12 @@ class Footer extends STF.AbstractView {
 	}
 	
 	
-}
-
-
-return new Footer();
-
-
-} ) ( window );
+}();
 
 
 
 
-STF.AbstractPageView = ( function( window ) {
-
-
-class AbstractPageView extends STF.AbstractView {
+STF.Abstracts.AbstractPageView = class AbstractPageView extends STF.Abstracts.AbstractView {
 	
 	
 	constructor() {
@@ -19760,7 +19620,7 @@ class AbstractPageView extends STF.AbstractView {
 	initEl() {
 		// console.log( 'AbstractPageView.initEl() — ', this.constructor.name );
 		
-		this.lazyLoader = new STF.LazyLoader( this.$page, this.imgToLazyloadClassName, this.lazyloadParentEl, 1, true );
+		this.lazyLoader = new STF.Loaders.LazyLoader( this.$page, this.imgToLazyloadClassName, this.lazyloadParentEl, 1, true );
 	}
 	
 	
@@ -19787,7 +19647,7 @@ class AbstractPageView extends STF.AbstractView {
 	
 	
 	show() {
-		// if ( STF.PagesController.isFirstLoad )
+		// if ( STF.Core.PagesController.isFirstLoad )
 		// 	this.tl.showPage.progress(1);
 			
 		// else
@@ -19818,25 +19678,12 @@ class AbstractPageView extends STF.AbstractView {
 	}
 	
 	
-}
-
-
-return AbstractPageView;
-
-
-} ) ( window );
+};
 
 
 
 
-STF.Views		= STF.Views || {};
-STF.Views.Pages	= STF.Views.Pages || {};
-
-
-STF.Views.Pages.Error404 = ( function( window ) {
-
-
-class Error404 extends STF.AbstractPageView {
+STF.Views.Pages.Error404 = class Error404 extends STF.Abstracts.AbstractPageView {
 	
 	
 	constructor() {
@@ -19864,25 +19711,12 @@ class Error404 extends STF.AbstractPageView {
 	}
 	
 	
-}
-
-
-return Error404;
-
-
-} ) ( window );
+};
 
 
 
 
-STF.Views		= STF.Views || {};
-STF.Views.Pages	= STF.Views.Pages || {};
-
-
-STF.Views.Pages.Home = ( function( window ) {
-
-
-class Home extends STF.AbstractPageView {
+STF.Views.Pages.Home = class Home extends STF.Abstracts.AbstractPageView {
 	
 	
 	constructor() {
@@ -19910,25 +19744,12 @@ class Home extends STF.AbstractPageView {
 	}
 	
 	
-}
-
-
-return Home;
-
-
-} ) ( window );
+};
 
 
 
 
-STF.Views		= STF.Views || {};
-STF.Views.Pages	= STF.Views.Pages || {};
-
-
-STF.Views.Pages.Projects = ( function( window ) {
-
-
-class Projects extends STF.AbstractPageView {
+STF.Views.Pages.Projects = class Projects extends STF.Abstracts.AbstractPageView {
 	
 	
 	constructor() {
@@ -19962,25 +19783,12 @@ class Projects extends STF.AbstractPageView {
 	}
 	
 	
-}
-
-
-return Projects;
-
-
-} ) ( window );
+};
 
 
 
 
-STF.Views		= STF.Views || {};
-STF.Views.Pages	= STF.Views.Pages || {};
-
-
-STF.Views.Pages.Project = ( function( window ) {
-
-
-class Project extends STF.AbstractPageView {
+STF.Views.Pages.Project = class Project extends STF.Abstracts.AbstractPageView {
 	
 	
 	constructor() {
@@ -20008,25 +19816,12 @@ class Project extends STF.AbstractPageView {
 	}
 	
 	
-}
-
-
-return Project;
-
-
-} ) ( window );
+};
 
 
 
 
-STF.Views		= STF.Views || {};
-STF.Views.Pages	= STF.Views.Pages || {};
-
-
-STF.Views.Pages.LegalNotices = ( function( window ) {
-
-
-class LegalNotices extends STF.AbstractPageView {
+STF.Views.Pages.LegalNotices = class LegalNotices extends STF.Abstracts.AbstractPageView {
 	
 	
 	constructor() {
@@ -20058,21 +19853,12 @@ class LegalNotices extends STF.AbstractPageView {
 	}
 	
 	
-}
-
-
-return LegalNotices;
-
-
-} ) ( window );
+};
 
 
 
 
-STF.Main = ( function( window ) {
-
-
-class Main {
+STF.App = new class App {
 	
 	
 	constructor() {
@@ -20081,62 +19867,24 @@ class Main {
 	
 	
 	init() {
-		STF.Config.init();
-		STF.Props.init();
-		STF.Device.init();
-		STF.Path.init();
-		STF.Lang.init();
+		STF.Configs.Config.init();
+		STF.Configs.Props.init();
+		STF.Configs.Device.init();
+		STF.Configs.Path.init();
+		STF.Configs.Lang.init();
 		
-		this._initDebug();
+		STF.Utils.Debug.DebugController.init( false, false, false );
 		
-		
-		STF.PagesController.init();
-		STF.MainView.init();
-		STF.Router.init();
-		
-		// this.$window.on( 'load', $.proxy( _windowLoad, this ) );
+		STF.Core.PagesController.init();
+		STF.Core.Main.init();
+		STF.Core.Router.init();
 	}
 	
 	
-	_initDebug() {
-		this._initFPSStats( false );
-		this._initMemoryStats( false );
-		this._initDatGUI( false );
-	}
-	
-	
-	_initFPSStats( isSet ) {
-		STF.Config.setFPSStats( isSet );
-		
-		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.FPSStats.init();
-	}
-	
-	
-	_initMemoryStats( isSet ) {
-		STF.Config.setMemoryStats( isSet );
-		
-		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.MemoryStats.init();
-	}
-	
-	
-	_initDatGUI( isSet ) {
-		if ( isSet && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.DatGUI.init();
-	}
-	
-	
-}
+}();
 
 
-return new Main();
-
-
-} ) ( window );
-
-
-$( STF.Main.init.bind( STF.Main ) );
+$( STF.App.init() );
 
 
 //# sourceMappingURL=maps/scripts-desktop.js.map

@@ -1,13 +1,6 @@
 
 
-STF.Views			= STF.Views || {};
-STF.Views.Statics	= STF.Views.Statics || {};
-
-
-STF.Views.Statics.Header = ( function( window ) {
-
-
-class Header extends STF.AbstractView {
+STF.Views.Statics.Header = new class Header extends STF.Abstracts.AbstractView {
 	
 	
 	constructor() {
@@ -30,11 +23,5 @@ class Header extends STF.AbstractView {
 	}
 	
 	
-}
-
-
-return new Header();
-
-
-} ) ( window );
+}();
 

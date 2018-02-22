@@ -1,9 +1,6 @@
 
 
-STF.AbstractMainView = ( function( window ) {
-
-
-class AbstractMainView extends STF.AbstractView {
+STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
 	
 	
 	constructor() {
@@ -47,7 +44,6 @@ class AbstractMainView extends STF.AbstractView {
 	init() {
 		this.initDOM();
 		this.initEl();
-		this.initTl();
 		this.bindEvents();
 		
 		this.initStaticsViews();
@@ -65,13 +61,13 @@ class AbstractMainView extends STF.AbstractView {
 	
 	
 	initEl() {
-		STF.Path.overwriteSpecialPaths( this.$mainCont[0].getAttribute( 'data-assets-base-url' ) );
+		STF.Configs.Path.overwriteSpecialPaths( this.$mainCont[0].getAttribute( 'data-assets-base-url' ) );
 	}
 	
 	
 	bindEvents() {
 		this.$window.on( 'resize', $.proxy( this.resize, this ) );
-		// TweenLite.ticker.addEventListener( 'tick', this.raf, this );
+		TweenLite.ticker.addEventListener( 'tick', this.raf, this );
 		// this.$window.on( 'mousemove', $.proxy( this.mouseMove, this ) );
 		// this.$window.on( 'mousedown', $.proxy( this.mouseDown, this ) );
 		// this.$window.on( 'mouseup', $.proxy( this.mouseUp, this ) );
@@ -121,8 +117,8 @@ class AbstractMainView extends STF.AbstractView {
 	
 	
 	raf() {
-		if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.FPSStats.begin();
+		if ( STF.Configs.Config.HAS_FPS_STATS && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
+			STF.Utils.Debug.FPSStats.begin();
 		
 		
 		this._setRafProps();
@@ -130,11 +126,11 @@ class AbstractMainView extends STF.AbstractView {
 		this.dispatch( this.E.RAF );
 		
 		
-		if ( STF.Config.HAS_FPS_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.FPSStats.end();
+		if ( STF.Configs.Config.HAS_FPS_STATS && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
+			STF.Utils.Debug.FPSStats.end();
 		
-		if ( STF.Config.HAS_MEMORY_STATS && ( STF.Config.IS_DEV || STF.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.MemoryStats.update();
+		if ( STF.Configs.Config.HAS_MEMORY_STATS && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
+			STF.Utils.Debug.MemoryStats.update();
 	}
 	
 	
@@ -151,7 +147,7 @@ class AbstractMainView extends STF.AbstractView {
 		this.mX = e.clientX;
 		this.mY = e.clientY;
 		
-		// console.log( 'AbstractMainView _mouseMove()', this.mX, this.mY );
+		// console.log( 'AbstractMain _mouseMove()', this.mX, this.mY );
 		
 		this.dispatch( this.E.MOUSE_MOVE );
 	}
@@ -226,11 +222,5 @@ class AbstractMainView extends STF.AbstractView {
 	}
 	
 	
-}
-
-
-return AbstractMainView;
-
-
-} ) ( window );
+};
 

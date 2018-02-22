@@ -1,9 +1,6 @@
 
 
-STF.Video = ( function( window ) {
-
-
-class Video extends STF.AbstractView {
+STF.Medias.Video = class Video extends STF.Abstracts.AbstractView {
 	
 	
 	constructor( id, url, poster, isFireLoadStart, isFireCanPlay, isFireCanPlayThrough ) {
@@ -119,7 +116,7 @@ class Video extends STF.AbstractView {
 	
 	
 	_loadStart() {
-		if ( this.isFireLoadStart && !this.isLoadStart && STF.Device.IS_DESKTOP ) {
+		if ( this.isFireLoadStart && !this.isLoadStart && STF.Configs.Device.IS_DESKTOP ) {
 			this.isLoadStart = true;
 			
 			this.dispatch( this.E.LOAD_START );
@@ -128,7 +125,7 @@ class Video extends STF.AbstractView {
 	
 	
 	_canPlay() {
-		if ( this.isFireCanPlay && !this.isCanPlay && STF.Device.IS_DESKTOP ) {
+		if ( this.isFireCanPlay && !this.isCanPlay && STF.Configs.Device.IS_DESKTOP ) {
 			this.isCanPlay	= true;
 			this.duration	= this.$video[0].duration;
 			
@@ -141,17 +138,11 @@ class Video extends STF.AbstractView {
 		if ( this.isFireCanPlayThrough && !this.isCanPlayThrough ) {
 			this.isCanPlayThrough = true;
 			
-			if ( STF.Device.IS_DESKTOP )
+			if ( STF.Configs.Device.IS_DESKTOP )
 				this.dispatch( this.E.CAN_PLAY_THROUGH );
 		}
 	}
 	
 	
-}
-
-
-return Video;
-
-
-} ) ( window );
+};
 

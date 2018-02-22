@@ -1,9 +1,6 @@
 
 
-STF.AbstractPagesController = ( function( window ) {
-
-
-class AbstractPagesController extends STF.CustomEvent {
+STF.Abstracts.AbstractPagesController = class AbstractPagesController extends STF.Events.CustomEvent {
 	
 	
 	constructor() {
@@ -72,8 +69,8 @@ class AbstractPagesController extends STF.CustomEvent {
 	
 	
 	_setPageId( url ) {
-		const path	= STF.Router.URL.path === '' ? 'index' : STF.Router.URL.path;
-		let id		= STF.Config.JS_VIEWS_ID[ path ];
+		const path	= STF.Core.Router.URL.path === '' ? 'index' : STF.Core.Router.URL.path;
+		let id		= STF.Configs.Config.JS_VIEWS_ID[ path ];
 		
 		if ( id === undefined )
 			id = 'error-404';
@@ -88,7 +85,7 @@ class AbstractPagesController extends STF.CustomEvent {
 		const id	= $page[0].getAttribute( 'data-js-id' );
 		const title	= $page[0].getAttribute( 'data-title' );
 		
-		if ( !STF.Config.NEED_PAGE_ID )
+		if ( !STF.Configs.Config.NEED_PAGE_ID )
 			this.prevPageInfos.id	= this.pageInfos.id;
 		this.prevPageInfos.title	= this.pageInfos.title;
 		
@@ -97,16 +94,16 @@ class AbstractPagesController extends STF.CustomEvent {
 		
 		this._setPage();
 		
-		STF.Router.setAltLangUrl( $page );
+		STF.Core.Router.setAltLangUrl( $page );
 	}
 	
 	
 	_setPage() {
 		if ( this.pages[ this.pageInfos.id ] === undefined) {
-			if ( !STF.Config.IS_PROD )
+			if ( !STF.Configs.Config.IS_PROD )
 				console.warn( 'PagesController: no specific page view for the "' + this.pageInfos.id + '" ID. If you need one, create it and then set the view in the PagesController.pages object.' );
 			
-			this.page = new STF.AbstractPageView();
+			this.page = new STF.Abstracts.AbstractPageView();
 		}
 		else
 			this.page = new this.pages[ this.pageInfos.id ]();
@@ -161,7 +158,7 @@ class AbstractPagesController extends STF.CustomEvent {
 		
 		// first load
 		if ( this.isFirstLoad ) {
-			STF.MainView.initAfterAssetsLoaded();
+			STF.Core.Main.initAfterAssetsLoaded();
 			
 			this.page.init();
 			
@@ -187,7 +184,7 @@ class AbstractPagesController extends STF.CustomEvent {
 	
 	
 	_showNonLoadedImages() {
-		const $imgsCont	= this.isFirstLoad ? STF.MainView.$body : STF.MainView.$pageCont;
+		const $imgsCont	= this.isFirstLoad ? STF.Core.Main.$body : STF.Core.Main.$pageCont;
 		
 		const $allImgs	= $imgsCont.find( 'img' );
 		const $imgs		= $allImgs.filter( key => $allImgs[ key ].getAttribute( 'data-lazyload' ) != 'true' && $allImgs[ key ].getAttribute( 'data-src' ) != 'preloaded' );
@@ -197,9 +194,9 @@ class AbstractPagesController extends STF.CustomEvent {
 	
 	
 	changePage( url ) {
-		STF.Router.updateGA();
+		STF.Core.Router.updateGA();
 		
-		if ( STF.Config.NEED_PAGE_ID )
+		if ( STF.Configs.Config.NEED_PAGE_ID )
 			this._setPageId( url );
 		
 		this._disablePageChange();
@@ -263,8 +260,8 @@ class AbstractPagesController extends STF.CustomEvent {
 	
 	
 	_force404Load() {
-		const lang	= STF.Lang.MULTI_LANG ? STF.Lang.LANG + '/' : '';
-		const url	= STF.Path.URL.base + lang + '404';
+		const lang	= STF.Configs.Lang.MULTI_LANG ? STF.Configs.Lang.LANG + '/' : '';
+		const url	= STF.Configs.Path.URL.base + lang + '404';
 		
 		this._loadContent( url );
 	}
@@ -326,12 +323,12 @@ class AbstractPagesController extends STF.CustomEvent {
 	
 	
 	setContent() {
-		STF.MainView.$pageCont[0].innerHTML = this.data;
+		STF.Core.Main.$pageCont[0].innerHTML = this.data;
 		
 		this._setPageInfos();
 		
 		if ( this.LOADING_MODE != 'allStatic' ) {
-			STF_resetImgs( STF.MainView.$pageCont.find( 'img' ) );
+			STF_resetImgs( STF.Core.Main.$pageCont.find( 'img' ) );
 			setTimeout( () => this._loadAssets(), 0 );
 		}
 		
@@ -404,7 +401,7 @@ class AbstractPagesController extends STF.CustomEvent {
 	changeLangLinks( $links ) {
 		for ( let i = 0; i < $links.length; i++ ) {
 			const $link	= $links[ i ];
-			$link.href	= STF.Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
+			$link.href	= STF.Core.Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
 		}
 	}
 	
@@ -420,7 +417,7 @@ class AbstractPagesController extends STF.CustomEvent {
 		if ( this.isFirstLoad )
 			this.isFirstLoad = false;
 		
-		STF.Router.checkUrlCorrespondence();
+		STF.Core.Router.checkUrlCorrespondence();
 	}
 	
 	
@@ -429,11 +426,5 @@ class AbstractPagesController extends STF.CustomEvent {
 	}
 	
 	
-}
-
-
-return AbstractPagesController;
-
-
-} ) ( window );
+};
 

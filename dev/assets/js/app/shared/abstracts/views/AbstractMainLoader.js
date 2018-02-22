@@ -1,9 +1,6 @@
 
 
-STF.AbstractMainLoader = ( function( window ) {
-
-
-class AbstractMainLoader extends STF.AbstractView {
+STF.Abstracts.AbstractMainLoader = class AbstractMainLoader extends STF.Abstracts.AbstractView {
 	
 	
 	constructor() {
@@ -42,7 +39,7 @@ class AbstractMainLoader extends STF.AbstractView {
 	
 	
 	_instanceAssetsLoader() {
-		this.assetsLoader = new STF.Loader( true, true );
+		this.assetsLoader = new STF.Loaders.Loader( true, true );
 		this.assetsLoader.init();
 		
 		this.assetsLoader.bind( this.assetsLoader.E.PROGRESS, this.onProgress, this );
@@ -73,11 +70,5 @@ class AbstractMainLoader extends STF.AbstractView {
 	}
 	
 	
-}
-
-
-return AbstractMainLoader;
-
-
-} ) ( window );
+};
 

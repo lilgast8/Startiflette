@@ -1,9 +1,6 @@
 
 
-STF.Router = ( function( window ) {
-
-
-class Router extends STF.CustomEvent {
+STF.Core.Router = new class Router extends STF.Events.CustomEvent {
 	
 	
 	constructor() {
@@ -46,7 +43,7 @@ class Router extends STF.CustomEvent {
 	
 	
 	_getFullGaUrl() {
-		const fullGaUrl = this.URL.full.replace( STF.Path.URL.base, '' );
+		const fullGaUrl = this.URL.full.replace( STF.Configs.Path.URL.base, '' );
 		
 		
 		return fullGaUrl;
@@ -56,21 +53,21 @@ class Router extends STF.CustomEvent {
 	init() {
 		this._bindEvents();
 		
-		STF.PagesController.initFirstPage();
+		STF.Core.PagesController.initFirstPage();
 	}
 	
 	
 	_bindEvents() {
-		STF.MainView.$window.on( 'popstate', $.proxy( this._onPopState, this ) );
-		STF.MainView.$window.on( 'hashchange', $.proxy( this._onHashChange, this ) );
+		STF.Core.Main.$window.on( 'popstate', $.proxy( this._onPopState, this ) );
+		STF.Core.Main.$window.on( 'hashchange', $.proxy( this._onHashChange, this ) );
 	}
 	
 	
 	_getLangExistence() {
 		let langExist = true;
 		
-		if ( STF.Lang.ALL_LANG.indexOf( STF.Lang.LANG ) == -1 ) {
-			STF.Lang.LANG = STF.Lang.DEFAULT_LANG;
+		if ( STF.Configs.Lang.ALL_LANG.indexOf( STF.Configs.Lang.LANG ) == -1 ) {
+			STF.Configs.Lang.LANG = STF.Configs.Lang.DEFAULT_LANG;
 			
 			langExist = false;
 		}
@@ -92,7 +89,7 @@ class Router extends STF.CustomEvent {
 	
 	
 	updateUrl( url ) {
-		if ( STF.PagesController.isPageChange )
+		if ( STF.Core.PagesController.isPageChange )
 			return;
 		
 		this.isPageChangeByClick = true;
@@ -111,16 +108,16 @@ class Router extends STF.CustomEvent {
 		
 		
 		if ( this.isPageChange )
-			STF.PagesController.changePage( this.URL.full );
+			STF.Core.PagesController.changePage( this.URL.full );
 		else if ( this.isSearchChange )
-			STF.PagesController.changeSearch();
+			STF.Core.PagesController.changeSearch();
 		else if ( this.isHashChange )
-			STF.PagesController.changeHash();
+			STF.Core.PagesController.changeHash();
 	}
 	
 	
 	_onPopState( e ) {
-		if ( STF.PagesController.isPageChange )
+		if ( STF.Core.PagesController.isPageChange )
 			return;
 		
 		this.isPageChangeByClick = false;
@@ -132,14 +129,14 @@ class Router extends STF.CustomEvent {
 			this.setUrl( false, null );
 		
 		if ( this.isPageChange )
-			STF.PagesController.changePage( this.URL.full );
+			STF.Core.PagesController.changePage( this.URL.full );
 		else if ( this.isSearchChange )
-			STF.PagesController.changeSearch();
+			STF.Core.PagesController.changeSearch();
 	}
 	
 	
 	_onHashChange( e ) {
-		if ( STF.PagesController.isPageChange )
+		if ( STF.Core.PagesController.isPageChange )
 			return;
 		
 		this._setUrlPartChange( window.location.href );
@@ -147,7 +144,7 @@ class Router extends STF.CustomEvent {
 		
 		
 		if ( this.isHashChange && !this.isPageChange && !this.isSearchChange )
-			STF.PagesController.changeHash();
+			STF.Core.PagesController.changeHash();
 	}
 	
 	
@@ -179,18 +176,18 @@ class Router extends STF.CustomEvent {
 	setAltLangUrl( $page ) {
 		let lang;
 		
-		for ( let i = 0; i < STF.Lang.ALL_LANG.length; i++ ) {
-			lang = STF.Lang.ALL_LANG[ i ];
+		for ( let i = 0; i < STF.Configs.Lang.ALL_LANG.length; i++ ) {
+			lang = STF.Configs.Lang.ALL_LANG[ i ];
 			
-			if ( lang != STF.Lang.LANG )
+			if ( lang != STF.Configs.Lang.LANG )
 				this.ALT_LANG_URL[ lang ] = $page[0].getAttribute( 'data-lang-' + lang );
 		}
 	}
 	
 	
 	updateGA() {
-		if ( STF.Config.IS_PROD && Object.keys( STF.Config.GA_ID ).length > 0 ) {
-			for ( const gaName in STF.Config.GA_ID ) {
+		if ( STF.Configs.Config.IS_PROD && Object.keys( STF.Configs.Config.GA_ID ).length > 0 ) {
+			for ( const gaName in STF.Configs.Config.GA_ID ) {
 				if ( gaName == 'default' )
 					ga( 'send', 'pageview', '/' + this.URL.fullGA );
 				else
@@ -200,11 +197,5 @@ class Router extends STF.CustomEvent {
 	}
 	
 	
-}
-
-
-return new Router();
-
-
-} ) ( window );
+}();
 

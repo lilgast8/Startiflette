@@ -1,9 +1,6 @@
 
 
-STF.Loader = ( function( window ) {
-
-
-class Loader extends STF.CustomEvent {
+STF.Loaders.Loader = class Loader extends STF.Events.CustomEvent {
 	
 	
 	constructor( isOnProgress, isOnFileLoad ) {
@@ -97,11 +94,5 @@ class Loader extends STF.CustomEvent {
 	}
 	
 	
-}
-
-
-return Loader;
-
-
-} ) ( window );
+};
 

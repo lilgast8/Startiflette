@@ -1,12 +1,6 @@
 
 
-STF.Utils = STF.Utils || {};
-
-
-STF.Utils.FPSStats = ( function( window ) {
-
-
-class FPSStats {
+STF.Utils.Debug.FPSStats = new class FPSStats {
 	
 	
 	constructor() {
@@ -39,11 +33,5 @@ class FPSStats {
 	}
 	
 	
-}
-
-
-return new FPSStats();
-
-
-} ) ( window );
+}();
 

@@ -1,9 +1,6 @@
 
 
-STF.Config = ( function( window ) {
-
-
-class Config {
+STF.Configs.Config = new class Config {
 	
 	
 	constructor() {
@@ -65,11 +62,5 @@ class Config {
 	}
 	
 	
-}
-
-
-return new Config();
-
-
-} ) ( window );
+}();
 

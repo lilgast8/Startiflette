@@ -1,10 +1,6 @@
 
 
-STF.Props = ( function( window ) {
-// STF.Props = ( () => {
-
-
-class Props {
+STF.Configs.Props = new class Props {
 	
 	
 	constructor() {
@@ -32,12 +28,5 @@ class Props {
 	}
 	
 	
-}
-
-
-return new Props();
-
-
-// } ) ();
-} ) ( window );
+}();
 

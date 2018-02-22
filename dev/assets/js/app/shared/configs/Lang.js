@@ -1,9 +1,6 @@
 
 
-STF.Lang = ( function( window ) {
-
-
-class Lang {
+STF.Configs.Lang = new class Lang {
 	
 	
 	constructor() {
@@ -13,7 +10,7 @@ class Lang {
 	
 	init() {
 		this._setGlobalInfos();
-		STF.Router.setUrl( true, null );
+		STF.Core.Router.setUrl( true, null );
 		this._setCurrentLang();
 		this._checkDefaultLang();
 		this._setLangLinks();
@@ -22,7 +19,7 @@ class Lang {
 	
 	_setGlobalInfos() {
 		// all lang
-		this.ALL_LANG = STF.Config.ALL_LANG;
+		this.ALL_LANG = STF.Configs.Config.ALL_LANG;
 		
 		// default lang
 		this.DEFAULT_LANG = this.ALL_LANG[0];
@@ -36,10 +33,10 @@ class Lang {
 	
 	
 	_setCurrentLang() {
-		if ( !this.MULTI_LANG || STF.Router.URL.path.length === 0 )
+		if ( !this.MULTI_LANG || STF.Core.Router.URL.path.length === 0 )
 			this.LANG = this.DEFAULT_LANG;
 		else
-			this.LANG = STF.Router.URL.pathParams[0];
+			this.LANG = STF.Core.Router.URL.pathParams[0];
 	}
 	
 	
@@ -55,11 +52,5 @@ class Lang {
 	}
 	
 	
-}
-
-
-return new Lang();
-
-
-} ) ( window );
+}();
 

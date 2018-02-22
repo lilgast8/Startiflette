@@ -1,13 +1,6 @@
 
 
-STF.Utils		= STF.Utils || {};
-STF.Utils.Ease	= STF.Utils.Ease || {};
-
-
-STF.Utils.Ease.Expo = ( function( window ) {
-
-
-class Ease {
+STF.Utils.Ease.Expo = class Ease {
 	
 	
 	constructor( value, pow, duration, timeBegin ) {
@@ -47,11 +40,5 @@ class Ease {
 	}
 	
 	
-}
-
-
-return Ease;
-
-
-} ) ( window );
+};
 

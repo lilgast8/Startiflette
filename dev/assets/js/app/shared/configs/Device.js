@@ -1,9 +1,6 @@
 
 
-STF.Device = ( function( window ) {
-
-
-class Device {
+STF.Configs.Device = new class Device {
 	
 	
 	constructor() {
@@ -35,11 +32,5 @@ class Device {
 	}
 	
 	
-}
-
-
-return new Device();
-
-
-} ) ( window );
+}();
 

@@ -1,9 +1,6 @@
 
 
-STF.AbstractAssets = ( function( window ) {
-
-
-class AbstractAssets {
+STF.Abstracts.AbstractAssets = class AbstractAssets {
 	
 	
 	constructor() {
@@ -92,8 +89,8 @@ class AbstractAssets {
 	
 	
 	_addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad ) {
-		const $dynamicImgs = isFirstLoad ? STF.MainView.$mainCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD ) :
-										   STF.MainView.$pageCont.find( STF.PagesController.DYNAMIC_IMG_TO_LOAD );
+		const $dynamicImgs = isFirstLoad ? STF.Core.Main.$mainCont.find( STF.Core.PagesController.DYNAMIC_IMG_TO_LOAD ) :
+										   STF.Core.Main.$pageCont.find( STF.Core.PagesController.DYNAMIC_IMG_TO_LOAD );
 		
 		for ( let i = 0; i < $dynamicImgs.length; i++ )
 			if ( $dynamicImgs[ i ].getAttribute( 'data-lazyload' ) != 'true' )
@@ -112,7 +109,7 @@ class AbstractAssets {
 				id:		id,
 				src:	assetUrl
 			} );
-		else if ( !STF.Config.IS_PROD )
+		else if ( !STF.Configs.Config.IS_PROD )
 			console.warn( 'AbstractAssets:' + assetUrl + ' already added to the loading assets list!' );
 	}
 	
@@ -122,11 +119,5 @@ class AbstractAssets {
 	}
 	
 	
-}
-
-
-return AbstractAssets;
-
-
-} ) ( window );
+};
 

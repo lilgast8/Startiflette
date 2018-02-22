@@ -1,13 +1,6 @@
 
 
-STF.Views			= STF.Views || {};
-STF.Views.Statics	= STF.Views.Statics || {};
-
-
-STF.Views.Statics.MainLoader = ( function( window ) {
-
-
-class MainLoader extends STF.AbstractMainLoader {
+STF.Views.Statics.MainLoader = new class MainLoader extends STF.Abstracts.AbstractMainLoader {
 	
 	
 	constructor() {
@@ -70,7 +63,7 @@ class MainLoader extends STF.AbstractMainLoader {
 		const posX = percentage - 100;
 		
 		this.$percentage[0].innerHTML					= parseInt( percentage ) + ' %';
-		this.$progress[0].style[ STF.Props.TRANSFORM ]	= 'translate(' + posX + '%, 0%)';
+		this.$progress[0].style[ STF.Configs.Props.TRANSFORM ]	= 'translate(' + posX + '%, 0%)';
 	}
 	
 	
@@ -114,7 +107,7 @@ class MainLoader extends STF.AbstractMainLoader {
 	_onHideComplete() {
 		// LOADING_MODE == 'byPageStatic' && LOADING_MODE == 'byPageDynamic'
 		this.$percentage[0].innerHTML					= '0 %';
-		this.$progress[0].style[ STF.Props.TRANSFORM ]	= 'translate(-100%, 0%)';
+		this.$progress[0].style[ STF.Configs.Props.TRANSFORM ]	= 'translate(-100%, 0%)';
 		
 		this.$loader[0].style.display					= 'none';
 		
@@ -122,11 +115,5 @@ class MainLoader extends STF.AbstractMainLoader {
 	}
 	
 	
-}
-
-
-return new MainLoader();
-
-
-} ) ( window );
+}();
 

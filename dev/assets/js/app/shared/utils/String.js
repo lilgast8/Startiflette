@@ -29,7 +29,7 @@ window.STF_str_convertToUrl = ( string ) => {
 
 window.STF_str_getPath = ( string, baseUrl ) => {
 	if ( baseUrl === null || baseUrl === undefined )
-		baseUrl = STF.Path.URL.base;
+		baseUrl = STF.Configs.Path.URL.base;
 	
 	let path	= string.replace( baseUrl, '' );
 	

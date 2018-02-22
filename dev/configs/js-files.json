@@ -28,9 +28,16 @@
 			"app/shared/configs/Path.js",
 			"app/shared/configs/Lang.js",
 			
+			"app/shared/utils/Global.js",
+			"app/shared/utils/Array.js",
+			"app/shared/utils/DOM.js",
+			"app/shared/utils/Math.js",
+			"app/shared/utils/String.js",
+			"app/shared/utils/debug/DebugController.js",
+			
+			"app/shared/abstracts/controllers/AbstractMain.js",
 			"app/shared/abstracts/models/AbstractAssets.js",
 			"app/shared/abstracts/views/AbstractView.js",
-			"app/shared/abstracts/views/AbstractMainView.js",
 			"app/shared/abstracts/views/AbstractMainLoader.js",
 			
 			"app/shared/routes/Router.js",
@@ -40,13 +47,7 @@
 			"app/shared/loaders/Loader.js",
 			"app/shared/loaders/LazyLoader.js",
 			
-			"app/shared/utils/Global.js",
-			"app/shared/utils/Array.js",
-			"app/shared/utils/DOM.js",
-			"app/shared/utils/Math.js",
-			"app/shared/utils/String.js",
-			
-			"app/desktop/views/MainView.js",
+			"app/desktop/controllers/Main.js",
 			
 			"app/shared/abstracts/controllers/AbstractPagesController.js",
 			"app/desktop/controllers/PagesController.js",
@@ -62,7 +63,7 @@
 			"app/desktop/views/pages/Project.js",
 			"app/desktop/views/pages/LegalNotices.js",
 			
-			"app/Main.js"
+			"app/App.js"
 		]
 	},
 	
@@ -85,9 +86,16 @@
 			"app/shared/configs/Path.js",
 			"app/shared/configs/Lang.js",
 			
+			"app/shared/utils/Global.js",
+			"app/shared/utils/Array.js",
+			"app/shared/utils/DOM.js",
+			"app/shared/utils/Math.js",
+			"app/shared/utils/String.js",
+			"app/shared/utils/debug/DebugController.js",
+			
+			"app/shared/abstracts/controllers/AbstractMain.js",
 			"app/shared/abstracts/models/AbstractAssets.js",
 			"app/shared/abstracts/views/AbstractView.js",
-			"app/shared/abstracts/views/AbstractMainView.js",
 			"app/shared/abstracts/views/AbstractMainLoader.js",
 			
 			"app/shared/routes/Router.js",
@@ -97,13 +105,7 @@
 			"app/shared/loaders/Loader.js",
 			"app/shared/loaders/LazyLoader.js",
 			
-			"app/shared/utils/Global.js",
-			"app/shared/utils/Array.js",
-			"app/shared/utils/DOM.js",
-			"app/shared/utils/Math.js",
-			"app/shared/utils/String.js",
-			
-			"app/mobile/views/MainView.js",
+			"app/mobile/controllers/Main.js",
 			
 			"app/shared/abstracts/controllers/AbstractPagesController.js",
 			"app/mobile/controllers/PagesController.js",
@@ -119,7 +121,7 @@
 			"app/mobile/views/pages/Project.js",
 			"app/mobile/views/pages/LegalNotices.js",
 			
-			"app/Main.js"
+			"app/App.js"
 		]
 	}
 	

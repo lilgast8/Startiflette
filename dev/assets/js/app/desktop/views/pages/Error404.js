@@ -1,13 +1,6 @@
 
 
-STF.Views		= STF.Views || {};
-STF.Views.Pages	= STF.Views.Pages || {};
-
-
-STF.Views.Pages.Error404 = ( function( window ) {
-
-
-class Error404 extends STF.AbstractPageView {
+STF.Views.Pages.Error404 = class Error404 extends STF.Abstracts.AbstractPageView {
 	
 	
 	constructor() {
@@ -35,11 +28,5 @@ class Error404 extends STF.AbstractPageView {
 	}
 	
 	
-}
-
-
-return Error404;
-
-
-} ) ( window );
+};
 

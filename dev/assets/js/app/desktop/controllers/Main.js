@@ -1,9 +1,6 @@
 
 
-STF.MainView = ( function( window ) {
-
-
-class MainView extends STF.AbstractMainView {
+STF.Core.Main = new class Main extends STF.Abstracts.AbstractMain {
 	
 	
 	constructor() {
@@ -33,11 +30,5 @@ class MainView extends STF.AbstractMainView {
 	}*/
 	
 	
-}
-
-
-return new MainView();
-
-
-} ) ( window );
+}();
 
