@@ -31,14 +31,22 @@ class MainLoader extends STF.AbstractMainLoader {
 	
 	initTl() {
 		/* Hide init */
-		this.tl.hideInit = new TimelineLite( { paused:true, onComplete:this._onHideInitComplete, callbackScope:this } );
+		this.tl.hideInit = new TimelineLite( {
+			paused:			true,
+			onComplete:		this._onHideInitComplete,
+			callbackScope:	this
+		} );
 		
 		this.tl.hideInit.to( this.$loader, 1.5, { xPercent:100, ease:Quart.easeInOut }, 0 );
 		this.tl.hideInit.to( this.$loaderCont, 1.5, { xPercent:-100, ease:Quart.easeInOut }, 0 );
 		
 		
 		/* Show */
-		this.tl.show = new TimelineLite( { paused:true, onComplete:this._onShowComplete, callbackScope:this } );
+		this.tl.show = new TimelineLite( {
+			paused:			true,
+			onComplete:		this._onShowComplete,
+			callbackScope:	this
+		} );
 		
 		this.tl.show.set( this.$loader, { xPercent:-100 }, 0 );
 		this.tl.show.set( this.$loaderCont, { xPercent:100 }, 0 );
@@ -47,7 +55,11 @@ class MainLoader extends STF.AbstractMainLoader {
 		
 		
 		/* Hide */
-		this.tl.hide = new TimelineLite( { paused:true, onComplete:this._onHideComplete, callbackScope:this } );
+		this.tl.hide = new TimelineLite( {
+			paused:			true,
+			onComplete:		this._onHideComplete,
+			callbackScope:	this
+		} );
 		
 		this.tl.hide.to( this.$loader, 1, { xPercent:100, ease:Quart.easeInOut }, 0 );
 		this.tl.hide.to( this.$loaderCont, 1, { xPercent:-100, ease:Quart.easeInOut }, 0 );

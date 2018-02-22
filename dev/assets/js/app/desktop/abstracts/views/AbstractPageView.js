@@ -31,16 +31,21 @@ class AbstractPageView extends STF.AbstractView {
 	initTl() {
 		/* Show page */
 		this.tl.showPage = new TimelineLite( {
-			paused:		true,
-			onComplete:	this.onPageShown.bind( this )
+			paused:			true,
+			onComplete:		this.onPageShown,
+			callbackScope:	this
 		} );
+		
 		this.tl.showPage.to( this.$page, 0.8, { opacity:1, ease:Quad.easeOut } );
+		
 		
 		/* Hide page */
 		this.tl.hidePage = new TimelineLite( {
-			paused:		true,
-			onComplete:	this.onPageHidden.bind( this )
+			paused:			true,
+			onComplete:		this.onPageHidden,
+			callbackScope:	this
 		} );
+		
 		this.tl.hidePage.to( this.$page, 0.8, { opacity:0, ease:Quad.easeOut } );
 	}
 	

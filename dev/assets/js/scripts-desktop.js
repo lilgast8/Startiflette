@@ -19553,14 +19553,22 @@ class MainLoader extends STF.AbstractMainLoader {
 	
 	initTl() {
 		/* Hide init */
-		this.tl.hideInit = new TimelineLite( { paused:true, onComplete:this._onHideInitComplete, callbackScope:this } );
+		this.tl.hideInit = new TimelineLite( {
+			paused:			true,
+			onComplete:		this._onHideInitComplete,
+			callbackScope:	this
+		} );
 		
 		this.tl.hideInit.to( this.$loader, 1.5, { xPercent:100, ease:Quart.easeInOut }, 0 );
 		this.tl.hideInit.to( this.$loaderCont, 1.5, { xPercent:-100, ease:Quart.easeInOut }, 0 );
 		
 		
 		/* Show */
-		this.tl.show = new TimelineLite( { paused:true, onComplete:this._onShowComplete, callbackScope:this } );
+		this.tl.show = new TimelineLite( {
+			paused:			true,
+			onComplete:		this._onShowComplete,
+			callbackScope:	this
+		} );
 		
 		this.tl.show.set( this.$loader, { xPercent:-100 }, 0 );
 		this.tl.show.set( this.$loaderCont, { xPercent:100 }, 0 );
@@ -19569,7 +19577,11 @@ class MainLoader extends STF.AbstractMainLoader {
 		
 		
 		/* Hide */
-		this.tl.hide = new TimelineLite( { paused:true, onComplete:this._onHideComplete, callbackScope:this } );
+		this.tl.hide = new TimelineLite( {
+			paused:			true,
+			onComplete:		this._onHideComplete,
+			callbackScope:	this
+		} );
 		
 		this.tl.hide.to( this.$loader, 1, { xPercent:100, ease:Quart.easeInOut }, 0 );
 		this.tl.hide.to( this.$loaderCont, 1, { xPercent:-100, ease:Quart.easeInOut }, 0 );
@@ -19755,16 +19767,21 @@ class AbstractPageView extends STF.AbstractView {
 	initTl() {
 		/* Show page */
 		this.tl.showPage = new TimelineLite( {
-			paused:		true,
-			onComplete:	this.onPageShown.bind( this )
+			paused:			true,
+			onComplete:		this.onPageShown,
+			callbackScope:	this
 		} );
+		
 		this.tl.showPage.to( this.$page, 0.8, { opacity:1, ease:Quad.easeOut } );
+		
 		
 		/* Hide page */
 		this.tl.hidePage = new TimelineLite( {
-			paused:		true,
-			onComplete:	this.onPageHidden.bind( this )
+			paused:			true,
+			onComplete:		this.onPageHidden,
+			callbackScope:	this
 		} );
+		
 		this.tl.hidePage.to( this.$page, 0.8, { opacity:0, ease:Quad.easeOut } );
 	}
 	
