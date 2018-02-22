@@ -5,44 +5,45 @@ STF.Views.Pages	= STF.Views.Pages || {};
 
 
 STF.Views.Pages.LegalNotices = ( function( window ) {
-	'use strict';
+
+
+class LegalNotices extends STF.AbstractPageView {
 	
 	
-	function LegalNotices() {
-		STF.AbstractPageView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	LegalNotices.prototype				= Object.create( STF.AbstractPageView.prototype );
-	LegalNotices.prototype.constructor	= LegalNotices;
-	
-	
-	LegalNotices.prototype.initDOM = function() {
-		STF.AbstractPageView.prototype.initDOM.call( this );
+	initDOM() {
+		super.initDOM();
 		
 		this.$email	= this.$page.find( '.email' );
 		
 		// STF_gl_encryptMailto( this.$.email, 'contact', 'domain', 'com', true );
-	};
+	}
 	
 	
-	LegalNotices.prototype.bindEvents = function() {
-		STF.AbstractPageView.prototype.bindEvents.call( this );
-	};
+	bindEvents() {
+		super.bindEvents();
+	}
 	
 	
-	LegalNotices.prototype.unbindEvents = function() {
-		STF.AbstractPageView.prototype.unbindEvents.call( this );
-	};
+	unbindEvents() {
+		super.unbindEvents();
+	}
 	
 	
-	LegalNotices.prototype.resize = function() {
+	resize() {
 		
-	};
+	}
 	
 	
-	return LegalNotices;
-	
-	
+}
+
+
+return LegalNotices;
+
+
 } ) ( window );
 

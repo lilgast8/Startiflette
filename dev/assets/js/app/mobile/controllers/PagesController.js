@@ -1,11 +1,13 @@
 
 
 STF.PagesController = ( function( window ) {
-	'use strict';
+
+
+class PagesController extends STF.AbstractPagesController {
 	
 	
-	function PagesController() {
-		STF.AbstractPagesController.call( this );
+	constructor() {
+		super();
 		
 		// this.LOADING_MODE			= null;
 		// this.DYNAMIC_IMG_TO_LOAD	= null;
@@ -13,49 +15,48 @@ STF.PagesController = ( function( window ) {
 	}
 	
 	
-	PagesController.prototype				= Object.create( STF.AbstractPagesController.prototype );
-	PagesController.prototype.constructor	= PagesController;
-	
-	
-	/*PagesController.prototype.initPages = function() {
+	/*initPages() {
 		
-	};*/
+	}*/
 	
 	
-	/*PagesController.prototype.managePageHidingTransitions = function() {
+	/*managePageHidingTransitions() {
 		
-	};*/
+	}*/
 	
 	
-	/*PagesController.prototype.checkPageHiding = function() {
+	/*checkPageHiding() {
 		
-	};*/
+	}*/
 	
 	
-	/*PagesController.prototype.managePageShowingTransitions = function() {
+	/*managePageShowingTransitions() {
 		
-	};*/
+	}*/
 	
 	
-	/*AbstractPagesController.prototype.checkPageShowing = function() {
+	/*AbstractcheckPageShowing() {
 		
-	};*/
+	}*/
 	
 	
-	PagesController.prototype.manageMenuLinks = function() {
+	manageMenuLinks() {
 		this.updateMenuLinks( STF.Views.Statics.Header.$menuLink );
 		this.updateMenuLinks( STF.Views.Statics.Footer.$footerLink );
-	};
+	}
 	
 	
-	PagesController.prototype.manageLangLinks = function() {
+	manageLangLinks() {
 		this.changeLangLinks( STF.Views.Statics.Header.$headerLgLink );
 		this.changeLangLinks( STF.Views.Statics.Footer.$footerLgLink );
-	};
+	}
 	
 	
-	return new PagesController();
-	
-	
+}
+
+
+return new PagesController();
+
+
 } ) ( window );
 

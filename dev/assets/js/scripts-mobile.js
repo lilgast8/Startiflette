@@ -18372,19 +18372,17 @@ STF.Models = STF.Models || {};
 
 
 STF.Models.Assets = ( function( window ) {
-	'use strict';
+
+
+class Assets extends STF.AbstractAssets {
 	
 	
-	function Assets() {
-		STF.AbstractAssets.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	Assets.prototype				= Object.create( STF.AbstractAssets.prototype );
-	Assets.prototype.constructor	= Assets;
-	
-	
-	Assets.prototype.init = function() {
+	init() {
 		this.aImg = {
 			'global': [
 				/* bgs */
@@ -18439,12 +18437,15 @@ STF.Models.Assets = ( function( window ) {
 				projects: STF.Path.URL.json + 'test-projects.json'
 			}
 		};
-	};
+	}
 	
 	
-	return new Assets();
-	
-	
+}
+
+
+return new Assets();
+
+
 } ) ( window );
 
 
@@ -18975,41 +18976,42 @@ window.STF_str_getParams = ( string, type ) => {
 
 
 STF.MainView = ( function( window ) {
-	'use strict';
+
+
+class MainView extends STF.AbstractMainView {
 	
 	
-	function MainView() {
-		STF.AbstractMainView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	MainView.prototype				= Object.create( STF.AbstractMainView.prototype );
-	MainView.prototype.constructor	= MainView;
+	/*initDOM() {
+		super.initDOM();
+	}*/
 	
 	
-	/*MainView.prototype.initDOM = function() {
-		STF.AbstractMainView.prototype.initDOM.call( this );
-	};*/
+	/*initEl() {
+		super.initEl();
+	}*/
 	
 	
-	/*MainView.prototype.initEl = function() {
-		
-	};*/
+	/*bindEvents() {
+		super.bindEvents();
+	}*/
 	
 	
-	/*MainView.prototype.bindEvents = function() {
-		STF.AbstractMainView.prototype.bindEvents.call( this );
-	};*/
+	/*initStaticsViews() {
+		super.initStaticsViews();
+	}*/
 	
 	
-	/*MainView.prototype.initStaticsViews = function() {
-		STF.AbstractMainView.prototype.initStaticsViews.call( this );
-	};*/
-	
-	
-	return new MainView();
-	
-	
+}
+
+
+return new MainView();
+
+
 } ) ( window );
 
 
@@ -19456,11 +19458,13 @@ return AbstractPagesController;
 
 
 STF.PagesController = ( function( window ) {
-	'use strict';
+
+
+class PagesController extends STF.AbstractPagesController {
 	
 	
-	function PagesController() {
-		STF.AbstractPagesController.call( this );
+	constructor() {
+		super();
 		
 		// this.LOADING_MODE			= null;
 		// this.DYNAMIC_IMG_TO_LOAD	= null;
@@ -19468,50 +19472,49 @@ STF.PagesController = ( function( window ) {
 	}
 	
 	
-	PagesController.prototype				= Object.create( STF.AbstractPagesController.prototype );
-	PagesController.prototype.constructor	= PagesController;
-	
-	
-	/*PagesController.prototype.initPages = function() {
+	/*initPages() {
 		
-	};*/
+	}*/
 	
 	
-	/*PagesController.prototype.managePageHidingTransitions = function() {
+	/*managePageHidingTransitions() {
 		
-	};*/
+	}*/
 	
 	
-	/*PagesController.prototype.checkPageHiding = function() {
+	/*checkPageHiding() {
 		
-	};*/
+	}*/
 	
 	
-	/*PagesController.prototype.managePageShowingTransitions = function() {
+	/*managePageShowingTransitions() {
 		
-	};*/
+	}*/
 	
 	
-	/*AbstractPagesController.prototype.checkPageShowing = function() {
+	/*AbstractcheckPageShowing() {
 		
-	};*/
+	}*/
 	
 	
-	PagesController.prototype.manageMenuLinks = function() {
+	manageMenuLinks() {
 		this.updateMenuLinks( STF.Views.Statics.Header.$menuLink );
 		this.updateMenuLinks( STF.Views.Statics.Footer.$footerLink );
-	};
+	}
 	
 	
-	PagesController.prototype.manageLangLinks = function() {
+	manageLangLinks() {
 		this.changeLangLinks( STF.Views.Statics.Header.$headerLgLink );
 		this.changeLangLinks( STF.Views.Statics.Footer.$footerLgLink );
-	};
+	}
 	
 	
-	return new PagesController();
-	
-	
+}
+
+
+return new PagesController();
+
+
 } ) ( window );
 
 
@@ -19522,83 +19525,84 @@ STF.Views.Statics	= STF.Views.Statics || {};
 
 
 STF.Views.Statics.MainLoader = ( function( window ) {
-	'use strict';
+
+
+class MainLoader extends STF.AbstractMainLoader {
 	
 	
-	function MainLoader() {
-		STF.AbstractMainLoader.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	MainLoader.prototype				= Object.create( STF.AbstractMainLoader.prototype );
-	MainLoader.prototype.constructor	= MainLoader;
+	/*init() {
+		super.init();
+	}*/
 	
 	
-	/*MainLoader.prototype.init = function() {
-		STF.AbstractMainLoader.prototype.init.call( this );
-	};*/
-	
-	
-	MainLoader.prototype.initDOM = function() {
+	initDOM() {
 		this.$loader = $( document.getElementById( 'main-loader' ) );
-	};
+	}
 	
 	
-	MainLoader.prototype.initTl = function() {
+	initTl() {
 		
-	};
+	}
 	
 	
-	MainLoader.prototype.onProgress = function( percentage ) {
+	onProgress( percentage ) {
 		console.log( percentage );
-	};
+	}
 	
 	
-	MainLoader.prototype.hideInit = function() {
+	hideInit() {
 		this.$loader[0].style.display = 'none';
 		this.dispatch( this.E.HIDDEN );
-	};
+	}
 	
 	
-	MainLoader.prototype.show = function() {
+	show() {
 		this.$loader[0].style.display = 'block';
 		this.$loader[0].offsetHeight; // jshint ignore:line
 		
-		_onShowComplete.call( this );
-	};
+		this._onShowComplete();
+	}
 	
 	
-	MainLoader.prototype.hide = function() {
-		_onHideComplete.call( this );
-	};
+	hide() {
+		this._onHideComplete();
+	}
 	
 	
-	var _onHideInitComplete = function() {
+	_onHideInitComplete() {
 		this.killTimeline( 'hideInit' );
 		
 		STF_dom_removeClass( this.$loader[0], 'init' );
 		this.$loader[0].style.display = 'none';
 		
 		this.dispatch( this.E.HIDDEN );
-	};
+	}
 	
 	
-	var _onShowComplete = function() {
+	_onShowComplete() {
 		this.dispatch( this.E.SHOWN );
-	};
+	}
 	
 	
-	var _onHideComplete = function() {
+	_onHideComplete() {
 		// LOADING_MODE == 'byPageStatic' && LOADING_MODE == 'byPageDynamic'
 		this.$loader[0].style.display = 'none';
 		
 		this.dispatch( this.E.HIDDEN );
-	};
+	}
 	
 	
-	return new MainLoader();
-	
-	
+}
+
+
+return new MainLoader();
+
+
 } ) ( window );
 
 
@@ -19609,36 +19613,37 @@ STF.Views.Statics	= STF.Views.Statics || {};
 
 
 STF.Views.Statics.Header = ( function( window ) {
-	'use strict';
+
+
+class Header extends STF.AbstractView {
 	
 	
-	function Header() {
-		STF.AbstractView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	Header.prototype				= Object.create( STF.AbstractView.prototype );
-	Header.prototype.constructor	= Header;
-	
-	
-	Header.prototype.initDOM = function() {
+	initDOM() {
 		this.$header		= $( document.getElementById( 'header' ) );
 		this.$headerLgLink	= this.$header.find( '.header-lang-link' );
 		this.$menu			= $( document.getElementById( 'menu' ) );
 		this.$menuLink		= this.$menu.find( '.menu-link' );
-	};
+	}
 	
 	
-	Header.prototype.bindEvents = function() {
-		STF.AbstractView.prototype.bindEvents.call( this );
+	bindEvents() {
+		super.bindEvents();
 		
 		this.$menuLink.on( 'click', $.proxy( this.changeUrl, this ) );
-	};
+	}
 	
 	
-	return new Header();
-	
-	
+}
+
+
+return new Header();
+
+
 } ) ( window );
 
 
@@ -19649,106 +19654,108 @@ STF.Views.Statics	= STF.Views.Statics || {};
 
 
 STF.Views.Statics.Footer = ( function( window ) {
-	'use strict';
+
+
+class Footer extends STF.AbstractView {
 	
 	
-	function Footer() {
-		STF.AbstractView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	Footer.prototype				= Object.create( STF.AbstractView.prototype );
-	Footer.prototype.constructor	= Footer;
-	
-	
-	Footer.prototype.initDOM = function() {
+	initDOM() {
 		this.$footer		= $( document.getElementById( 'footer' ) );
 		this.$footerLgLink	= this.$footer.find( '.footer-lang-link' );
 		this.$footerLink	= this.$footer.find( '.footer-link' );
-	};
+	}
 	
 	
-	Footer.prototype.bindEvents = function() {
-		STF.AbstractView.prototype.bindEvents.call( this );
+	bindEvents() {
+		super.bindEvents();
 		
 		this.$footerLink.on( 'click', $.proxy( this.changeUrl, this ) );
-	};
+	}
 	
 	
-	return new Footer();
-	
-	
+}
+
+
+return new Footer();
+
+
 } ) ( window );
 
 
 
 
 STF.AbstractPageView = ( function( window ) {
-	'use strict';
+
+
+class AbstractPageView extends STF.AbstractView {
 	
 	
-	function AbstractPageView() {
-		STF.AbstractView.call( this );
+	constructor() {
+		super();
 		
 		this.imgToLazyloadClassName	= 'img-lazyload'; // class name of images to lazyload
 		this.lazyloadParentEl		= null; // selector of parent of images to lazyload
 	}
 	
 	
-	AbstractPageView.prototype				= Object.create( STF.AbstractView.prototype );
-	AbstractPageView.prototype.constructor	= AbstractPageView;
-	
-	
-	AbstractPageView.prototype.initDOM = function() {
+	initDOM() {
 		// console.log( 'AbstractPageView.initDOM() — ', this.constructor.name );
 		
 		this.$page = $( document.getElementById( 'page' ) );
-	};
+	}
 	
 	
-	AbstractPageView.prototype.initEl = function() {
+	initEl() {
 		// console.log( 'AbstractPageView.initEl() — ', this.constructor.name );
 		
 		this.lazyLoader = new STF.LazyLoader( this.$page, this.imgToLazyloadClassName, this.lazyloadParentEl, 1, true );
-	};
+	}
 	
 	
-	/*AbstractPageView.prototype.initTl = function() {
+	/*initTl() {
 		
-	};*/
+	}*/
 	
 	
-	AbstractPageView.prototype.show = function() {
+	show() {
 		this.dispatch( this.E.SHOWN );
-	};
+	}
 	
 	
-	AbstractPageView.prototype.hide = function() {
+	hide() {
 		this.dispatch( this.E.HIDDEN );
-	};
+	}
 	
 	
-	AbstractPageView.prototype.destroy = function() {
-		STF.AbstractView.prototype.destroy.call( this );
+	destroy() {
+		super.destroy();
 		
 		if ( this.lazyLoader !== undefined )
 			this.lazyLoader.destroy();
-	};
+	}
 	
 	
-	/*AbstractPageView.prototype.onPageShown = function() {
+	/*onPageShown() {
 		
-	};*/
+	}*/
 	
 	
-	/*AbstractPageView.prototype.onPageHidden = function() {
+	/*onPageHidden() {
 		
-	};*/
+	}*/
 	
 	
-	return AbstractPageView;
-	
-	
+}
+
+
+return AbstractPageView;
+
+
 } ) ( window );
 
 
@@ -19759,41 +19766,42 @@ STF.Views.Pages	= STF.Views.Pages || {};
 
 
 STF.Views.Pages.Error404 = ( function( window ) {
-	'use strict';
+
+
+class Error404 extends STF.AbstractPageView {
 	
 	
-	function Error404() {
-		STF.AbstractPageView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	Error404.prototype				= Object.create( STF.AbstractPageView.prototype );
-	Error404.prototype.constructor	= Error404;
+	init() {
+		super.init();
+	}
 	
 	
-	Error404.prototype.init = function() {
-		STF.AbstractPageView.prototype.init.call( this );
-	};
+	bindEvents() {
+		super.bindEvents();
+	}
 	
 	
-	Error404.prototype.bindEvents = function() {
-		STF.AbstractPageView.prototype.bindEvents.call( this );
-	};
+	unbindEvents() {
+		super.unbindEvents();
+	}
 	
 	
-	Error404.prototype.unbindEvents = function() {
-		STF.AbstractPageView.prototype.unbindEvents.call( this );
-	};
-	
-	
-	Error404.prototype.resize = function() {
+	resize() {
 		
-	};
+	}
 	
 	
-	return Error404;
-	
-	
+}
+
+
+return Error404;
+
+
 } ) ( window );
 
 
@@ -19804,41 +19812,42 @@ STF.Views.Pages	= STF.Views.Pages || {};
 
 
 STF.Views.Pages.Home = ( function( window ) {
-	'use strict';
+
+
+class Home extends STF.AbstractPageView {
 	
 	
-	function Home() {
-		STF.AbstractPageView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	Home.prototype				= Object.create( STF.AbstractPageView.prototype );
-	Home.prototype.constructor	= Home;
+	init() {
+		super.init();
+	}
 	
 	
-	Home.prototype.init = function() {
-		STF.AbstractPageView.prototype.init.call( this );
-	};
+	bindEvents() {
+		super.bindEvents();
+	}
 	
 	
-	Home.prototype.bindEvents = function() {
-		STF.AbstractPageView.prototype.bindEvents.call( this );
-	};
+	unbindEvents() {
+		super.unbindEvents();
+	}
 	
 	
-	Home.prototype.unbindEvents = function() {
-		STF.AbstractPageView.prototype.unbindEvents.call( this );
-	};
-	
-	
-	Home.prototype.resize = function() {
+	resize() {
 		
-	};
+	}
 	
 	
-	return Home;
-	
-	
+}
+
+
+return Home;
+
+
 } ) ( window );
 
 
@@ -19849,47 +19858,48 @@ STF.Views.Pages	= STF.Views.Pages || {};
 
 
 STF.Views.Pages.Projects = ( function( window ) {
-	'use strict';
+
+
+class Projects extends STF.AbstractPageView {
 	
 	
-	function Projects() {
-		STF.AbstractPageView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	Projects.prototype				= Object.create( STF.AbstractPageView.prototype );
-	Projects.prototype.constructor	= Projects;
-	
-	
-	Projects.prototype.initDOM = function() {
-		STF.AbstractPageView.prototype.initDOM.call( this );
+	initDOM() {
+		super.initDOM();
 		
 		this.$projectLink = this.$page.find( '.project-link' );
-	};
+	}
 	
 	
-	Projects.prototype.bindEvents = function() {
-		STF.AbstractPageView.prototype.bindEvents.call( this );
+	bindEvents() {
+		super.bindEvents();
 		
 		this.$projectLink.on( 'click', $.proxy( this.changeUrl, this ) );
-	};
+	}
 	
 	
-	Projects.prototype.unbindEvents = function() {
-		STF.AbstractPageView.prototype.unbindEvents.call( this );
+	unbindEvents() {
+		super.unbindEvents();
 		
 		this.$projectLink.off( 'click', $.proxy( this.changeUrl, this ) );
-	};
+	}
 	
 	
-	Projects.prototype.resize = function() {
+	resize() {
 		
-	};
+	}
 	
 	
-	return Projects;
-	
-	
+}
+
+
+return Projects;
+
+
 } ) ( window );
 
 
@@ -19900,41 +19910,42 @@ STF.Views.Pages	= STF.Views.Pages || {};
 
 
 STF.Views.Pages.Project = ( function( window ) {
-	'use strict';
+
+
+class Project extends STF.AbstractPageView {
 	
 	
-	function Project() {
-		STF.AbstractPageView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	Project.prototype				= Object.create( STF.AbstractPageView.prototype );
-	Project.prototype.constructor	= Project;
+	init() {
+		super.init();
+	}
 	
 	
-	Project.prototype.init = function() {
-		STF.AbstractPageView.prototype.init.call( this );
-	};
+	bindEvents() {
+		super.bindEvents();
+	}
 	
 	
-	Project.prototype.bindEvents = function() {
-		STF.AbstractPageView.prototype.bindEvents.call( this );
-	};
+	unbindEvents() {
+		super.unbindEvents();
+	}
 	
 	
-	Project.prototype.unbindEvents = function() {
-		STF.AbstractPageView.prototype.unbindEvents.call( this );
-	};
-	
-	
-	Project.prototype.resize = function() {
+	resize() {
 		
-	};
+	}
 	
 	
-	return Project;
-	
-	
+}
+
+
+return Project;
+
+
 } ) ( window );
 
 
@@ -19945,45 +19956,46 @@ STF.Views.Pages	= STF.Views.Pages || {};
 
 
 STF.Views.Pages.LegalNotices = ( function( window ) {
-	'use strict';
+
+
+class LegalNotices extends STF.AbstractPageView {
 	
 	
-	function LegalNotices() {
-		STF.AbstractPageView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	LegalNotices.prototype				= Object.create( STF.AbstractPageView.prototype );
-	LegalNotices.prototype.constructor	= LegalNotices;
-	
-	
-	LegalNotices.prototype.initDOM = function() {
-		STF.AbstractPageView.prototype.initDOM.call( this );
+	initDOM() {
+		super.initDOM();
 		
 		this.$email	= this.$page.find( '.email' );
 		
 		// STF_gl_encryptMailto( this.$.email, 'contact', 'domain', 'com', true );
-	};
+	}
 	
 	
-	LegalNotices.prototype.bindEvents = function() {
-		STF.AbstractPageView.prototype.bindEvents.call( this );
-	};
+	bindEvents() {
+		super.bindEvents();
+	}
 	
 	
-	LegalNotices.prototype.unbindEvents = function() {
-		STF.AbstractPageView.prototype.unbindEvents.call( this );
-	};
+	unbindEvents() {
+		super.unbindEvents();
+	}
 	
 	
-	LegalNotices.prototype.resize = function() {
+	resize() {
 		
-	};
+	}
 	
 	
-	return LegalNotices;
-	
-	
+}
+
+
+return LegalNotices;
+
+
 } ) ( window );
 
 

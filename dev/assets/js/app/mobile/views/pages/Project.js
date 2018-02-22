@@ -5,40 +5,41 @@ STF.Views.Pages	= STF.Views.Pages || {};
 
 
 STF.Views.Pages.Project = ( function( window ) {
-	'use strict';
+
+
+class Project extends STF.AbstractPageView {
 	
 	
-	function Project() {
-		STF.AbstractPageView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	Project.prototype				= Object.create( STF.AbstractPageView.prototype );
-	Project.prototype.constructor	= Project;
+	init() {
+		super.init();
+	}
 	
 	
-	Project.prototype.init = function() {
-		STF.AbstractPageView.prototype.init.call( this );
-	};
+	bindEvents() {
+		super.bindEvents();
+	}
 	
 	
-	Project.prototype.bindEvents = function() {
-		STF.AbstractPageView.prototype.bindEvents.call( this );
-	};
+	unbindEvents() {
+		super.unbindEvents();
+	}
 	
 	
-	Project.prototype.unbindEvents = function() {
-		STF.AbstractPageView.prototype.unbindEvents.call( this );
-	};
-	
-	
-	Project.prototype.resize = function() {
+	resize() {
 		
-	};
+	}
 	
 	
-	return Project;
-	
-	
+}
+
+
+return Project;
+
+
 } ) ( window );
 

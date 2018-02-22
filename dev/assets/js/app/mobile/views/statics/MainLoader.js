@@ -5,82 +5,83 @@ STF.Views.Statics	= STF.Views.Statics || {};
 
 
 STF.Views.Statics.MainLoader = ( function( window ) {
-	'use strict';
+
+
+class MainLoader extends STF.AbstractMainLoader {
 	
 	
-	function MainLoader() {
-		STF.AbstractMainLoader.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	MainLoader.prototype				= Object.create( STF.AbstractMainLoader.prototype );
-	MainLoader.prototype.constructor	= MainLoader;
+	/*init() {
+		super.init();
+	}*/
 	
 	
-	/*MainLoader.prototype.init = function() {
-		STF.AbstractMainLoader.prototype.init.call( this );
-	};*/
-	
-	
-	MainLoader.prototype.initDOM = function() {
+	initDOM() {
 		this.$loader = $( document.getElementById( 'main-loader' ) );
-	};
+	}
 	
 	
-	MainLoader.prototype.initTl = function() {
+	initTl() {
 		
-	};
+	}
 	
 	
-	MainLoader.prototype.onProgress = function( percentage ) {
+	onProgress( percentage ) {
 		console.log( percentage );
-	};
+	}
 	
 	
-	MainLoader.prototype.hideInit = function() {
+	hideInit() {
 		this.$loader[0].style.display = 'none';
 		this.dispatch( this.E.HIDDEN );
-	};
+	}
 	
 	
-	MainLoader.prototype.show = function() {
+	show() {
 		this.$loader[0].style.display = 'block';
 		this.$loader[0].offsetHeight; // jshint ignore:line
 		
-		_onShowComplete.call( this );
-	};
+		this._onShowComplete();
+	}
 	
 	
-	MainLoader.prototype.hide = function() {
-		_onHideComplete.call( this );
-	};
+	hide() {
+		this._onHideComplete();
+	}
 	
 	
-	var _onHideInitComplete = function() {
+	_onHideInitComplete() {
 		this.killTimeline( 'hideInit' );
 		
 		STF_dom_removeClass( this.$loader[0], 'init' );
 		this.$loader[0].style.display = 'none';
 		
 		this.dispatch( this.E.HIDDEN );
-	};
+	}
 	
 	
-	var _onShowComplete = function() {
+	_onShowComplete() {
 		this.dispatch( this.E.SHOWN );
-	};
+	}
 	
 	
-	var _onHideComplete = function() {
+	_onHideComplete() {
 		// LOADING_MODE == 'byPageStatic' && LOADING_MODE == 'byPageDynamic'
 		this.$loader[0].style.display = 'none';
 		
 		this.dispatch( this.E.HIDDEN );
-	};
+	}
 	
 	
-	return new MainLoader();
-	
-	
+}
+
+
+return new MainLoader();
+
+
 } ) ( window );
 

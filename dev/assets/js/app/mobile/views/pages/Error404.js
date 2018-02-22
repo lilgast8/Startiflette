@@ -5,40 +5,41 @@ STF.Views.Pages	= STF.Views.Pages || {};
 
 
 STF.Views.Pages.Error404 = ( function( window ) {
-	'use strict';
+
+
+class Error404 extends STF.AbstractPageView {
 	
 	
-	function Error404() {
-		STF.AbstractPageView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	Error404.prototype				= Object.create( STF.AbstractPageView.prototype );
-	Error404.prototype.constructor	= Error404;
+	init() {
+		super.init();
+	}
 	
 	
-	Error404.prototype.init = function() {
-		STF.AbstractPageView.prototype.init.call( this );
-	};
+	bindEvents() {
+		super.bindEvents();
+	}
 	
 	
-	Error404.prototype.bindEvents = function() {
-		STF.AbstractPageView.prototype.bindEvents.call( this );
-	};
+	unbindEvents() {
+		super.unbindEvents();
+	}
 	
 	
-	Error404.prototype.unbindEvents = function() {
-		STF.AbstractPageView.prototype.unbindEvents.call( this );
-	};
-	
-	
-	Error404.prototype.resize = function() {
+	resize() {
 		
-	};
+	}
 	
 	
-	return Error404;
-	
-	
+}
+
+
+return Error404;
+
+
 } ) ( window );
 

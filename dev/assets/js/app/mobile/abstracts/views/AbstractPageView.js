@@ -1,70 +1,71 @@
 
 
 STF.AbstractPageView = ( function( window ) {
-	'use strict';
+
+
+class AbstractPageView extends STF.AbstractView {
 	
 	
-	function AbstractPageView() {
-		STF.AbstractView.call( this );
+	constructor() {
+		super();
 		
 		this.imgToLazyloadClassName	= 'img-lazyload'; // class name of images to lazyload
 		this.lazyloadParentEl		= null; // selector of parent of images to lazyload
 	}
 	
 	
-	AbstractPageView.prototype				= Object.create( STF.AbstractView.prototype );
-	AbstractPageView.prototype.constructor	= AbstractPageView;
-	
-	
-	AbstractPageView.prototype.initDOM = function() {
+	initDOM() {
 		// console.log( 'AbstractPageView.initDOM() — ', this.constructor.name );
 		
 		this.$page = $( document.getElementById( 'page' ) );
-	};
+	}
 	
 	
-	AbstractPageView.prototype.initEl = function() {
+	initEl() {
 		// console.log( 'AbstractPageView.initEl() — ', this.constructor.name );
 		
 		this.lazyLoader = new STF.LazyLoader( this.$page, this.imgToLazyloadClassName, this.lazyloadParentEl, 1, true );
-	};
+	}
 	
 	
-	/*AbstractPageView.prototype.initTl = function() {
+	/*initTl() {
 		
-	};*/
+	}*/
 	
 	
-	AbstractPageView.prototype.show = function() {
+	show() {
 		this.dispatch( this.E.SHOWN );
-	};
+	}
 	
 	
-	AbstractPageView.prototype.hide = function() {
+	hide() {
 		this.dispatch( this.E.HIDDEN );
-	};
+	}
 	
 	
-	AbstractPageView.prototype.destroy = function() {
-		STF.AbstractView.prototype.destroy.call( this );
+	destroy() {
+		super.destroy();
 		
 		if ( this.lazyLoader !== undefined )
 			this.lazyLoader.destroy();
-	};
+	}
 	
 	
-	/*AbstractPageView.prototype.onPageShown = function() {
+	/*onPageShown() {
 		
-	};*/
+	}*/
 	
 	
-	/*AbstractPageView.prototype.onPageHidden = function() {
+	/*onPageHidden() {
 		
-	};*/
+	}*/
 	
 	
-	return AbstractPageView;
-	
-	
+}
+
+
+return AbstractPageView;
+
+
 } ) ( window );
 
