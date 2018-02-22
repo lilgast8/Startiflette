@@ -17,9 +17,9 @@ STF.App = new class App {
 		
 		STF.Utils.Debug.DebugController.init( false, false, false );
 		
-		STF.Core.PagesController.init();
-		STF.Core.Main.init();
-		STF.Core.Router.init();
+		STF.Controllers.PagesController.init();
+		STF.Controllers.Main.init();
+		STF.Controllers.Router.init();
 	}
 	
 	

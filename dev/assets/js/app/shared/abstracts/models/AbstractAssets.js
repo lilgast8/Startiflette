@@ -89,8 +89,8 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 	
 	
 	_addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad ) {
-		const $dynamicImgs = isFirstLoad ? STF.Core.Main.$mainCont.find( STF.Core.PagesController.DYNAMIC_IMG_TO_LOAD ) :
-										   STF.Core.Main.$pageCont.find( STF.Core.PagesController.DYNAMIC_IMG_TO_LOAD );
+		const $dynamicImgs = isFirstLoad ? STF.Controllers.Main.$mainCont.find( STF.Controllers.PagesController.DYNAMIC_IMG_TO_LOAD ) :
+										   STF.Controllers.Main.$pageCont.find( STF.Controllers.PagesController.DYNAMIC_IMG_TO_LOAD );
 		
 		for ( let i = 0; i < $dynamicImgs.length; i++ )
 			if ( $dynamicImgs[ i ].getAttribute( 'data-lazyload' ) != 'true' )

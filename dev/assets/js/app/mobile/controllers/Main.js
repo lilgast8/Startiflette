@@ -1,6 +1,6 @@
 
 
-STF.Core.Main = new class Main extends STF.Abstracts.AbstractMain {
+STF.Controllers.Main = new class Main extends STF.Abstracts.AbstractMain {
 	
 	
 	constructor() {

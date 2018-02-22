@@ -10,7 +10,7 @@ STF.Configs.Lang = new class Lang {
 	
 	init() {
 		this._setGlobalInfos();
-		STF.Core.Router.setUrl( true, null );
+		STF.Controllers.Router.setUrl( true, null );
 		this._setCurrentLang();
 		this._checkDefaultLang();
 		this._setLangLinks();
@@ -33,10 +33,10 @@ STF.Configs.Lang = new class Lang {
 	
 	
 	_setCurrentLang() {
-		if ( !this.MULTI_LANG || STF.Core.Router.URL.path.length === 0 )
+		if ( !this.MULTI_LANG || STF.Controllers.Router.URL.path.length === 0 )
 			this.LANG = this.DEFAULT_LANG;
 		else
-			this.LANG = STF.Core.Router.URL.pathParams[0];
+			this.LANG = STF.Controllers.Router.URL.pathParams[0];
 	}
 	
 	

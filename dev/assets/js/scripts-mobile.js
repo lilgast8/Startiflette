@@ -17141,13 +17141,12 @@ STF.Configs			= {};
 STF.Abstracts		= {};
 STF.Loaders			= {};
 
-STF.Core			= {};
-STF.Models			= {};
-
 STF.Utils			= {};
 STF.Utils.Debug		= {};
 STF.Utils.Ease		= {};
 
+STF.Controllers		= {};
+STF.Models			= {};
 STF.Medias			= {};
 
 STF.Views			= {};
@@ -17440,7 +17439,7 @@ STF.Configs.Lang = new class Lang {
 	
 	init() {
 		this._setGlobalInfos();
-		STF.Core.Router.setUrl( true, null );
+		STF.Controllers.Router.setUrl( true, null );
 		this._setCurrentLang();
 		this._checkDefaultLang();
 		this._setLangLinks();
@@ -17463,10 +17462,10 @@ STF.Configs.Lang = new class Lang {
 	
 	
 	_setCurrentLang() {
-		if ( !this.MULTI_LANG || STF.Core.Router.URL.path.length === 0 )
+		if ( !this.MULTI_LANG || STF.Controllers.Router.URL.path.length === 0 )
 			this.LANG = this.DEFAULT_LANG;
 		else
-			this.LANG = STF.Core.Router.URL.pathParams[0];
+			this.LANG = STF.Controllers.Router.URL.pathParams[0];
 	}
 	
 	
@@ -17829,37 +17828,8 @@ STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
 		super();
 		
 		this.E = {
-			RESIZE:			'resize',
-			RAF:			'raf',
-			MOUSE_MOVE:		'mousemove',
-			MOUSE_DOWN:		'mousedown',
-			MOUSE_UP:		'mouseup',
-			TOUCH_MOVE:		'touchmove',
-			TOUCH_START:	'touchstart',
-			TOUCH_END:		'touchend',
-			WINDOW_OUT:		'windowout',
-			WINDOW_IN:		'windowin'
+			RAF: 'raf'
 		};
-		
-		this.bW		= null; // body width
-		this.bH		= null; // body height
-		this.wW		= null; // window width
-		this.wH		= null; // window height
-		this.cX		= null; // center X
-		this.cY		= null; // center Y
-		this.sY		= null; // scroll Y
-		this.siY	= null; // scroll inertia Y
-		this.mX		= null; // mouse X
-		this.mY		= null; // mouse Y
-		this.miX	= null; // mouse inertia X
-		this.miY	= null; // mouse inertia Y
-		this.tX		= null; // touch X
-		this.tY		= null; // touch Y
-		
-		this.SCROLL_INERTIA		= 0.07;
-		this.MOUSE_INERTIA		= 0.03;
-		
-		this.isWindowFocused	= true;
 	}
 	
 	
@@ -17869,8 +17839,6 @@ STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
 		this.bindEvents();
 		
 		this.initStaticsViews();
-		
-		this.resize();
 	}
 	
 	
@@ -17883,21 +17851,17 @@ STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
 	
 	
 	initEl() {
+		STF.Controllers.Screen.init( this.$window, this.$body, this.$pageCont );
+		STF.Controllers.Scroll.init( this.$window );
+		// STF.Controllers.Mouse.init( this.$window, STF.Controllers.Screen.cX, STF.Controllers.Screen.cY );
+		// STF.Controllers.Touch.init( this.$window, STF.Controllers.Screen.cX, STF.Controllers.Screen.cY );
+		
 		STF.Configs.Path.overwriteSpecialPaths( this.$mainCont[0].getAttribute( 'data-assets-base-url' ) );
 	}
 	
 	
 	bindEvents() {
-		this.$window.on( 'resize', $.proxy( this.resize, this ) );
-		TweenLite.ticker.addEventListener( 'tick', this.raf, this );
-		// this.$window.on( 'mousemove', $.proxy( this.mouseMove, this ) );
-		// this.$window.on( 'mousedown', $.proxy( this.mouseDown, this ) );
-		// this.$window.on( 'mouseup', $.proxy( this.mouseUp, this ) );
-		// this.$window.on( 'touchmove', $.proxy( this.touchMove, this ) );
-		// this.$window.on( 'touchstart', $.proxy( this.touchStart, this ) );
-		// this.$window.on( 'touchend', $.proxy( this.touchEnd, this ) );
-		// this.$window.on( 'blur', $.proxy( this.windowOut, this ) );
-		// this.$window.on( 'focus', $.proxy( this.windowIn, this ) );
+		// TweenLite.ticker.addEventListener( 'tick', this.raf, this );
 	}
 	
 	
@@ -17910,40 +17874,10 @@ STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
 	}
 	
 	
-	disableScrollRestoration() {
-		if ( 'scrollRestoration' in history )
-			history.scrollRestoration = 'manual';
-	}
-	
-	
-	resize() {
-		this._setResizeProps();
-		
-		this.dispatch( this.E.RESIZE );
-	}
-	
-	
-	_setResizeProps() {
-		this.bW = this.$body.width();
-		this.bH = this.$body.height();
-		this.wW = this.$window.width();
-		this.wH = this.$window.height();
-		this.cX = Math.round( this.bW / 2 );
-		this.cY = Math.round( this.wH / 2 );
-		
-		if ( this.mX === null && this.mY === null ) {
-			this.mX = this.cX;
-			this.mY = this.cY;
-		}
-	}
-	
-	
 	raf() {
 		if ( STF.Configs.Config.HAS_FPS_STATS && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.Debug.FPSStats.begin();
 		
-		
-		this._setRafProps();
 		
 		this.dispatch( this.E.RAF );
 		
@@ -17953,89 +17887,6 @@ STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
 		
 		if ( STF.Configs.Config.HAS_MEMORY_STATS && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
 			STF.Utils.Debug.MemoryStats.update();
-	}
-	
-	
-	_setRafProps() {
-		this.sY		= this.$window[0].scrollY || this.$window[0].pageYOffset;
-		this.siY	= STF_math_getInertia( this.sY, this.siY, this.SCROLL_INERTIA );
-		
-		this.miX	= STF_math_getInertia( this.mX, this.miX, this.MOUSE_INERTIA );
-		this.miY	= STF_math_getInertia( this.mY, this.miY, this.MOUSE_INERTIA );
-	}
-	
-	
-	mouseMove( e ) {
-		this.mX = e.clientX;
-		this.mY = e.clientY;
-		
-		// console.log( 'AbstractMain _mouseMove()', this.mX, this.mY );
-		
-		this.dispatch( this.E.MOUSE_MOVE );
-	}
-	
-	
-	mouseDown() {
-		this.dispatch( this.E.MOUSE_DOWN );
-	}
-	
-	
-	mouseUp() {
-		this.dispatch( this.E.MOUSE_UP );
-	}
-	
-	
-	touchMove( e ) {
-		e.preventDefault();
-		
-		// Zepto
-		this.tX = e.touches[0].pageX;
-		this.tY = e.touches[0].pageY;
-		// jQuery
-		// this.tX = e.originalEvent.touches[0].pageX;
-		// this.tY = e.originalEvent.touches[0].pageY;
-		
-		this.dispatch( this.E.TOUCH_MOVE );
-	}
-	
-	
-	touchStart() {
-		this.dispatch( this.E.TOUCH_START );
-	}
-	
-	
-	touchEnd() {
-		this.dispatch( this.E.TOUCH_END );
-	}
-	
-	
-	windowOut() {
-		this.isWindowFocused = false;
-		
-		this.dispatch( this.E.WINDOW_OUT );
-	}
-	
-	
-	windowIn() {
-		this.isWindowFocused = true;
-		
-		this.dispatch( this.E.WINDOW_IN );
-	}
-	
-	
-	setScrollY( scrollY ) {
-		this.sY		= scrollY;
-		this.siY	= scrollY;
-		
-		this.$window[0].scrollTo( 0, scrollY );
-	}
-	
-	
-	setBodyHeight( bodyH ) {
-		if ( bodyH === null )
-			bodyH = this.$pageCont.height();
-		
-		this.$body[0].style.height = bodyH + 'px';
 	}
 	
 	
@@ -18138,8 +17989,8 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 	
 	
 	_addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad ) {
-		const $dynamicImgs = isFirstLoad ? STF.Core.Main.$mainCont.find( STF.Core.PagesController.DYNAMIC_IMG_TO_LOAD ) :
-										   STF.Core.Main.$pageCont.find( STF.Core.PagesController.DYNAMIC_IMG_TO_LOAD );
+		const $dynamicImgs = isFirstLoad ? STF.Controllers.Main.$mainCont.find( STF.Controllers.PagesController.DYNAMIC_IMG_TO_LOAD ) :
+										   STF.Controllers.Main.$pageCont.find( STF.Controllers.PagesController.DYNAMIC_IMG_TO_LOAD );
 		
 		for ( let i = 0; i < $dynamicImgs.length; i++ )
 			if ( $dynamicImgs[ i ].getAttribute( 'data-lazyload' ) != 'true' )
@@ -18221,14 +18072,14 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 	bindEvents() {
 		// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
 		
-		STF.Core.Main.bind( STF.Core.Main.E.RESIZE, this.resize, this );
+		STF.Controllers.Screen.bind( STF.Controllers.Screen.E.RESIZE, this.resize, this );
 	}
 	
 	
 	unbindEvents() {
 		// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
 		
-		STF.Core.Main.unbind( STF.Core.Main.E.RESIZE, this.resize, this );
+		STF.Controllers.Screen.unbind( STF.Controllers.Screen.E.RESIZE, this.resize, this );
 	}
 	
 	
@@ -18321,7 +18172,7 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 			else if ( typeof e == 'string' )
 				url = e;
 			
-			STF.Core.Router.updateUrl( url );
+			STF.Controllers.Router.updateUrl( url );
 		}
 	}
 	
@@ -18418,7 +18269,7 @@ STF.Abstracts.AbstractMainLoader = class AbstractMainLoader extends STF.Abstract
 
 
 
-STF.Core.Router = new class Router extends STF.Events.CustomEvent {
+STF.Controllers.Router = new class Router extends STF.Events.CustomEvent {
 	
 	
 	constructor() {
@@ -18471,13 +18322,13 @@ STF.Core.Router = new class Router extends STF.Events.CustomEvent {
 	init() {
 		this._bindEvents();
 		
-		STF.Core.PagesController.initFirstPage();
+		STF.Controllers.PagesController.initFirstPage();
 	}
 	
 	
 	_bindEvents() {
-		STF.Core.Main.$window.on( 'popstate', $.proxy( this._onPopState, this ) );
-		STF.Core.Main.$window.on( 'hashchange', $.proxy( this._onHashChange, this ) );
+		STF.Controllers.Main.$window.on( 'popstate', $.proxy( this._onPopState, this ) );
+		STF.Controllers.Main.$window.on( 'hashchange', $.proxy( this._onHashChange, this ) );
 	}
 	
 	
@@ -18507,7 +18358,7 @@ STF.Core.Router = new class Router extends STF.Events.CustomEvent {
 	
 	
 	updateUrl( url ) {
-		if ( STF.Core.PagesController.isPageChange )
+		if ( STF.Controllers.PagesController.isPageChange )
 			return;
 		
 		this.isPageChangeByClick = true;
@@ -18526,16 +18377,16 @@ STF.Core.Router = new class Router extends STF.Events.CustomEvent {
 		
 		
 		if ( this.isPageChange )
-			STF.Core.PagesController.changePage( this.URL.full );
+			STF.Controllers.PagesController.changePage( this.URL.full );
 		else if ( this.isSearchChange )
-			STF.Core.PagesController.changeSearch();
+			STF.Controllers.PagesController.changeSearch();
 		else if ( this.isHashChange )
-			STF.Core.PagesController.changeHash();
+			STF.Controllers.PagesController.changeHash();
 	}
 	
 	
 	_onPopState( e ) {
-		if ( STF.Core.PagesController.isPageChange )
+		if ( STF.Controllers.PagesController.isPageChange )
 			return;
 		
 		this.isPageChangeByClick = false;
@@ -18547,14 +18398,14 @@ STF.Core.Router = new class Router extends STF.Events.CustomEvent {
 			this.setUrl( false, null );
 		
 		if ( this.isPageChange )
-			STF.Core.PagesController.changePage( this.URL.full );
+			STF.Controllers.PagesController.changePage( this.URL.full );
 		else if ( this.isSearchChange )
-			STF.Core.PagesController.changeSearch();
+			STF.Controllers.PagesController.changeSearch();
 	}
 	
 	
 	_onHashChange( e ) {
-		if ( STF.Core.PagesController.isPageChange )
+		if ( STF.Controllers.PagesController.isPageChange )
 			return;
 		
 		this._setUrlPartChange( window.location.href );
@@ -18562,7 +18413,7 @@ STF.Core.Router = new class Router extends STF.Events.CustomEvent {
 		
 		
 		if ( this.isHashChange && !this.isPageChange && !this.isSearchChange )
-			STF.Core.PagesController.changeHash();
+			STF.Controllers.PagesController.changeHash();
 	}
 	
 	
@@ -18904,7 +18755,165 @@ STF.Loaders.LazyLoader = class LazyLoader extends STF.Events.CustomEvent {
 
 
 
-STF.Core.Main = new class Main extends STF.Abstracts.AbstractMain {
+STF.Controllers.Screen = new class Screen extends STF.Events.CustomEvent {
+	
+	
+	constructor() {
+		super();
+		
+		this.E = {
+			RESIZE:		'resize',
+			WINDOW_OUT:	'windowout',
+			WINDOW_IN:	'windowin'
+		};
+		
+		this.wW	= null; // window width
+		this.wH	= null; // window height
+		this.bW	= null; // body width
+		this.bH	= null; // body height
+		this.cX	= null; // center X
+		this.cY	= null; // center Y
+		
+		this.isWindowFocused = true;
+	}
+	
+	
+	init( $window = $( window ), $body = $( document.body ), $pageCont = $body ) {
+		this._initDOM( $window, $body, $pageCont );
+		this._initEl();
+		this._bindEvents();
+		
+		this._resize();
+	}
+	
+	
+	_initDOM( $window, $body, $pageCont ) {
+		this.$window	= $window;
+		this.$body		= $body;
+		this.$pageCont	= $pageCont;
+	}
+	
+	
+	_initEl() {
+		
+	}
+	
+	
+	_bindEvents() {
+		this.$window.on( 'resize', $.proxy( this._resize, this ) );
+		// this.$window.on( 'blur', $.proxy( this._windowOut, this ) );
+		// this.$window.on( 'focus', $.proxy( this._windowIn, this ) );
+	}
+	
+	
+	_resize() {
+		this._setResizeProps();
+		
+		this.dispatch( this.E.RESIZE );
+	}
+	
+	
+	_setResizeProps() {
+		this.wW = this.$window.width();
+		this.wH = this.$window.height();
+		this.bW = this.$body.width();
+		this.bH = this.$body.height();
+		this.cX = Math.round( this.bW / 2 );
+		this.cY = Math.round( this.wH / 2 );
+	}
+	
+	
+	_windowOut() {
+		this.isWindowFocused = false;
+		
+		this.dispatch( this.E.WINDOW_OUT );
+	}
+	
+	
+	_windowIn() {
+		this.isWindowFocused = true;
+		
+		this.dispatch( this.E.WINDOW_IN );
+	}
+	
+	
+	setBodyHeight( bodyH ) {
+		if ( bodyH === null )
+			bodyH = this.$pageCont.height();
+		
+		this.$body[0].style.height = bodyH + 'px';
+	}
+	
+	
+}();
+
+
+
+
+STF.Controllers.Scroll = new class Scroll extends STF.Events.CustomEvent {
+	
+	
+	constructor() {
+		super();
+		
+		this.y	= null; // scroll Y
+		this.yI	= null; // scroll Y with inertia
+		
+		this.SCROLL_INERTIA = 0.07;
+	}
+	
+	
+	init( $window = $( window ) ) {
+		this._initDOM( $window );
+		this._initEl();
+		this._bindEvents();
+	}
+	
+	
+	_initDOM( $window ) {
+		this.$window = $window;
+	}
+	
+	
+	_initEl() {
+		
+	}
+	
+	
+	_bindEvents() {
+		STF.Controllers.Main.bind( STF.Controllers.Main.E.RAF, this._raf, this );
+	}
+	
+	
+	disableScrollRestoration() {
+		if ( 'scrollRestoration' in history )
+			history.scrollRestoration = 'manual';
+	}
+	
+	
+	_raf() {
+		this.y	= this.$window[0].scrollY || this.$window[0].pageYOffset;
+		this.yI	= STF_math_getInertia( this.y, this.yI, this.SCROLL_INERTIA );
+		
+		// console.log( `🎡 y: ${ this.y }` );
+		// console.log( `🎡 yI: ${ this.yI }` );
+	}
+	
+	
+	setScrollY( scrollY ) {
+		this.y	= scrollY;
+		this.yI	= scrollY;
+		
+		this.$window[0].scrollTo( 0, scrollY );
+	}
+	
+	
+}();
+
+
+
+
+STF.Controllers.Main = new class Main extends STF.Abstracts.AbstractMain {
 	
 	
 	constructor() {
@@ -18917,9 +18926,11 @@ STF.Core.Main = new class Main extends STF.Abstracts.AbstractMain {
 	}*/
 	
 	
-	/*initEl() {
+	initEl() {
 		super.initEl();
-	}*/
+		
+		STF.Controllers.Scroll.disableScrollRestoration();
+	}
 	
 	
 	/*bindEvents() {
@@ -19006,7 +19017,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	
 	
 	_setPageId( url ) {
-		const path	= STF.Core.Router.URL.path === '' ? 'index' : STF.Core.Router.URL.path;
+		const path	= STF.Controllers.Router.URL.path === '' ? 'index' : STF.Controllers.Router.URL.path;
 		let id		= STF.Configs.Config.JS_VIEWS_ID[ path ];
 		
 		if ( id === undefined )
@@ -19031,7 +19042,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 		
 		this._setPage();
 		
-		STF.Core.Router.setAltLangUrl( $page );
+		STF.Controllers.Router.setAltLangUrl( $page );
 	}
 	
 	
@@ -19095,7 +19106,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 		
 		// first load
 		if ( this.isFirstLoad ) {
-			STF.Core.Main.initAfterAssetsLoaded();
+			STF.Controllers.Main.initAfterAssetsLoaded();
 			
 			this.page.init();
 			
@@ -19121,7 +19132,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	
 	
 	_showNonLoadedImages() {
-		const $imgsCont	= this.isFirstLoad ? STF.Core.Main.$body : STF.Core.Main.$pageCont;
+		const $imgsCont	= this.isFirstLoad ? STF.Controllers.Main.$body : STF.Controllers.Main.$pageCont;
 		
 		const $allImgs	= $imgsCont.find( 'img' );
 		const $imgs		= $allImgs.filter( key => $allImgs[ key ].getAttribute( 'data-lazyload' ) != 'true' && $allImgs[ key ].getAttribute( 'data-src' ) != 'preloaded' );
@@ -19131,7 +19142,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	
 	
 	changePage( url ) {
-		STF.Core.Router.updateGA();
+		STF.Controllers.Router.updateGA();
 		
 		if ( STF.Configs.Config.NEED_PAGE_ID )
 			this._setPageId( url );
@@ -19260,12 +19271,12 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	
 	
 	setContent() {
-		STF.Core.Main.$pageCont[0].innerHTML = this.data;
+		STF.Controllers.Main.$pageCont[0].innerHTML = this.data;
 		
 		this._setPageInfos();
 		
 		if ( this.LOADING_MODE != 'allStatic' ) {
-			STF_resetImgs( STF.Core.Main.$pageCont.find( 'img' ) );
+			STF_resetImgs( STF.Controllers.Main.$pageCont.find( 'img' ) );
 			setTimeout( () => this._loadAssets(), 0 );
 		}
 		
@@ -19338,7 +19349,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	changeLangLinks( $links ) {
 		for ( let i = 0; i < $links.length; i++ ) {
 			const $link	= $links[ i ];
-			$link.href	= STF.Core.Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
+			$link.href	= STF.Controllers.Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
 		}
 	}
 	
@@ -19354,7 +19365,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 		if ( this.isFirstLoad )
 			this.isFirstLoad = false;
 		
-		STF.Core.Router.checkUrlCorrespondence();
+		STF.Controllers.Router.checkUrlCorrespondence();
 	}
 	
 	
@@ -19368,7 +19379,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 
 
 
-STF.Core.PagesController = new class PagesController extends STF.Abstracts.AbstractPagesController {
+STF.Controllers.PagesController = new class PagesController extends STF.Abstracts.AbstractPagesController {
 	
 	
 	constructor() {
@@ -19807,9 +19818,9 @@ STF.App = new class App {
 		
 		STF.Utils.Debug.DebugController.init( false, false, false );
 		
-		STF.Core.PagesController.init();
-		STF.Core.Main.init();
-		STF.Core.Router.init();
+		STF.Controllers.PagesController.init();
+		STF.Controllers.Main.init();
+		STF.Controllers.Router.init();
 	}
 	
 	

@@ -69,7 +69,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	
 	
 	_setPageId( url ) {
-		const path	= STF.Core.Router.URL.path === '' ? 'index' : STF.Core.Router.URL.path;
+		const path	= STF.Controllers.Router.URL.path === '' ? 'index' : STF.Controllers.Router.URL.path;
 		let id		= STF.Configs.Config.JS_VIEWS_ID[ path ];
 		
 		if ( id === undefined )
@@ -94,7 +94,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 		
 		this._setPage();
 		
-		STF.Core.Router.setAltLangUrl( $page );
+		STF.Controllers.Router.setAltLangUrl( $page );
 	}
 	
 	
@@ -158,7 +158,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 		
 		// first load
 		if ( this.isFirstLoad ) {
-			STF.Core.Main.initAfterAssetsLoaded();
+			STF.Controllers.Main.initAfterAssetsLoaded();
 			
 			this.page.init();
 			
@@ -184,7 +184,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	
 	
 	_showNonLoadedImages() {
-		const $imgsCont	= this.isFirstLoad ? STF.Core.Main.$body : STF.Core.Main.$pageCont;
+		const $imgsCont	= this.isFirstLoad ? STF.Controllers.Main.$body : STF.Controllers.Main.$pageCont;
 		
 		const $allImgs	= $imgsCont.find( 'img' );
 		const $imgs		= $allImgs.filter( key => $allImgs[ key ].getAttribute( 'data-lazyload' ) != 'true' && $allImgs[ key ].getAttribute( 'data-src' ) != 'preloaded' );
@@ -194,7 +194,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	
 	
 	changePage( url ) {
-		STF.Core.Router.updateGA();
+		STF.Controllers.Router.updateGA();
 		
 		if ( STF.Configs.Config.NEED_PAGE_ID )
 			this._setPageId( url );
@@ -323,12 +323,12 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	
 	
 	setContent() {
-		STF.Core.Main.$pageCont[0].innerHTML = this.data;
+		STF.Controllers.Main.$pageCont[0].innerHTML = this.data;
 		
 		this._setPageInfos();
 		
 		if ( this.LOADING_MODE != 'allStatic' ) {
-			STF_resetImgs( STF.Core.Main.$pageCont.find( 'img' ) );
+			STF_resetImgs( STF.Controllers.Main.$pageCont.find( 'img' ) );
 			setTimeout( () => this._loadAssets(), 0 );
 		}
 		
@@ -401,7 +401,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	changeLangLinks( $links ) {
 		for ( let i = 0; i < $links.length; i++ ) {
 			const $link	= $links[ i ];
-			$link.href	= STF.Core.Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
+			$link.href	= STF.Controllers.Router.ALT_LANG_URL[ $link.getAttribute( 'data-lang' ) ];
 		}
 	}
 	
@@ -417,7 +417,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 		if ( this.isFirstLoad )
 			this.isFirstLoad = false;
 		
-		STF.Core.Router.checkUrlCorrespondence();
+		STF.Controllers.Router.checkUrlCorrespondence();
 	}
 	
 	

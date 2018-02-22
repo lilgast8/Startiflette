@@ -1,6 +1,6 @@
 
 
-STF.Core.PagesController = new class PagesController extends STF.Abstracts.AbstractPagesController {
+STF.Controllers.PagesController = new class PagesController extends STF.Abstracts.AbstractPagesController {
 	
 	
 	constructor() {

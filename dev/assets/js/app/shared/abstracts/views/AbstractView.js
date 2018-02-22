@@ -48,14 +48,14 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 	bindEvents() {
 		// console.log( 'AbstractView.bindEvents() — ', this.constructor.name );
 		
-		STF.Core.Main.bind( STF.Core.Main.E.RESIZE, this.resize, this );
+		STF.Controllers.Screen.bind( STF.Controllers.Screen.E.RESIZE, this.resize, this );
 	}
 	
 	
 	unbindEvents() {
 		// console.log( 'AbstractView.unbindEvents() — ', this.constructor.name );
 		
-		STF.Core.Main.unbind( STF.Core.Main.E.RESIZE, this.resize, this );
+		STF.Controllers.Screen.unbind( STF.Controllers.Screen.E.RESIZE, this.resize, this );
 	}
 	
 	
@@ -148,7 +148,7 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 			else if ( typeof e == 'string' )
 				url = e;
 			
-			STF.Core.Router.updateUrl( url );
+			STF.Controllers.Router.updateUrl( url );
 		}
 	}
 	

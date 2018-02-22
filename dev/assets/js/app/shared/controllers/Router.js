@@ -1,6 +1,6 @@
 
 
-STF.Core.Router = new class Router extends STF.Events.CustomEvent {
+STF.Controllers.Router = new class Router extends STF.Events.CustomEvent {
 	
 	
 	constructor() {
@@ -53,13 +53,13 @@ STF.Core.Router = new class Router extends STF.Events.CustomEvent {
 	init() {
 		this._bindEvents();
 		
-		STF.Core.PagesController.initFirstPage();
+		STF.Controllers.PagesController.initFirstPage();
 	}
 	
 	
 	_bindEvents() {
-		STF.Core.Main.$window.on( 'popstate', $.proxy( this._onPopState, this ) );
-		STF.Core.Main.$window.on( 'hashchange', $.proxy( this._onHashChange, this ) );
+		STF.Controllers.Main.$window.on( 'popstate', $.proxy( this._onPopState, this ) );
+		STF.Controllers.Main.$window.on( 'hashchange', $.proxy( this._onHashChange, this ) );
 	}
 	
 	
@@ -89,7 +89,7 @@ STF.Core.Router = new class Router extends STF.Events.CustomEvent {
 	
 	
 	updateUrl( url ) {
-		if ( STF.Core.PagesController.isPageChange )
+		if ( STF.Controllers.PagesController.isPageChange )
 			return;
 		
 		this.isPageChangeByClick = true;
@@ -108,16 +108,16 @@ STF.Core.Router = new class Router extends STF.Events.CustomEvent {
 		
 		
 		if ( this.isPageChange )
-			STF.Core.PagesController.changePage( this.URL.full );
+			STF.Controllers.PagesController.changePage( this.URL.full );
 		else if ( this.isSearchChange )
-			STF.Core.PagesController.changeSearch();
+			STF.Controllers.PagesController.changeSearch();
 		else if ( this.isHashChange )
-			STF.Core.PagesController.changeHash();
+			STF.Controllers.PagesController.changeHash();
 	}
 	
 	
 	_onPopState( e ) {
-		if ( STF.Core.PagesController.isPageChange )
+		if ( STF.Controllers.PagesController.isPageChange )
 			return;
 		
 		this.isPageChangeByClick = false;
@@ -129,14 +129,14 @@ STF.Core.Router = new class Router extends STF.Events.CustomEvent {
 			this.setUrl( false, null );
 		
 		if ( this.isPageChange )
-			STF.Core.PagesController.changePage( this.URL.full );
+			STF.Controllers.PagesController.changePage( this.URL.full );
 		else if ( this.isSearchChange )
-			STF.Core.PagesController.changeSearch();
+			STF.Controllers.PagesController.changeSearch();
 	}
 	
 	
 	_onHashChange( e ) {
-		if ( STF.Core.PagesController.isPageChange )
+		if ( STF.Controllers.PagesController.isPageChange )
 			return;
 		
 		this._setUrlPartChange( window.location.href );
@@ -144,7 +144,7 @@ STF.Core.Router = new class Router extends STF.Events.CustomEvent {
 		
 		
 		if ( this.isHashChange && !this.isPageChange && !this.isSearchChange )
-			STF.Core.PagesController.changeHash();
+			STF.Controllers.PagesController.changeHash();
 	}
 	
 	

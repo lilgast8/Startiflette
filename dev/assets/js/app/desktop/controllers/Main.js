@@ -1,6 +1,6 @@
 
 
-STF.Core.Main = new class Main extends STF.Abstracts.AbstractMain {
+STF.Controllers.Main = new class Main extends STF.Abstracts.AbstractMain {
 	
 	
 	constructor() {
@@ -16,7 +16,7 @@ STF.Core.Main = new class Main extends STF.Abstracts.AbstractMain {
 	initEl() {
 		super.initEl();
 		
-		this.disableScrollRestoration();
+		STF.Controllers.Scroll.disableScrollRestoration();
 	}
 	
 	

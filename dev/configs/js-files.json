@@ -40,13 +40,15 @@
 			"app/shared/abstracts/views/AbstractView.js",
 			"app/shared/abstracts/views/AbstractMainLoader.js",
 			
-			"app/shared/routes/Router.js",
+			"app/shared/controllers/Router.js",
 			
 			"app/desktop/models/Assets.js",
 			
 			"app/shared/loaders/Loader.js",
 			"app/shared/loaders/LazyLoader.js",
 			
+			"app/shared/controllers/Screen.js",
+			"app/shared/controllers/Scroll.js",
 			"app/desktop/controllers/Main.js",
 			
 			"app/shared/abstracts/controllers/AbstractPagesController.js",
@@ -98,14 +100,16 @@
 			"app/shared/abstracts/views/AbstractView.js",
 			"app/shared/abstracts/views/AbstractMainLoader.js",
 			
-			"app/shared/routes/Router.js",
+			"app/shared/controllers/Router.js",
 			
 			"app/mobile/models/Assets.js",
 			
 			"app/shared/loaders/Loader.js",
 			"app/shared/loaders/LazyLoader.js",
 			
-			"app/mobile/controllers/Main.js",
+			"app/shared/controllers/Screen.js",
+			"app/shared/controllers/Scroll.js",
+			"app/desktop/controllers/Main.js",
 			
 			"app/shared/abstracts/controllers/AbstractPagesController.js",
 			"app/mobile/controllers/PagesController.js",

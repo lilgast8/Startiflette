@@ -48,7 +48,7 @@ STF.Abstracts.AbstractPageView = class AbstractPageView extends STF.Abstracts.Ab
 	
 	
 	show() {
-		// if ( STF.Core.PagesController.isFirstLoad )
+		// if ( STF.Controllers.PagesController.isFirstLoad )
 		// 	this.tl.showPage.progress(1);
 			
 		// else
