@@ -9,8 +9,8 @@ var helpers = {
 	
 	getJsAppName: function() {
 		var data		= fs.readFileSync( paths.env.dev + paths.assets.js.app.initFile, 'utf8' );
-		var startPos	= data.indexOf( 'var ' ) + 4;
-		var endPos		= data.indexOf( ' = ' );
+		var startPos	= data.indexOf( 'const ' ) + 6;
+		var endPos		= data.indexOf( ' = {}' );
 		var jsAppName	= data.substring( startPos, endPos );
 		
 		return jsAppName;
