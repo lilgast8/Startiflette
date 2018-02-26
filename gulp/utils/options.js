@@ -6,23 +6,25 @@ var gutil	= require( 'gulp-util' );
 
 
 
-options.image		= image;
+options.image			= image;
 
-options.task		= options._[0] === undefined ? 'default' : options._[0];
-options.subtask		= null;
+options.task			= options._[0] === undefined ? 'default' : options._[0];
+options.subtask			= null;
 
-options.isDev		= null;
-options.env			= getEnv();
-options.device		= getDevice();
-options.htmlify		= getHTMLify();
+options.isDev			= null;
+options.env				= getEnv();
+options.device			= getDevice();
+options.htmlify			= getHTMLify();
 
-options.filePath	= null;
-options.fileName	= null;
-options.devicePath	= null;
-options.cssSrcPath	= null;
-options.jsSrcPath	= null;
-options.jsonSrcPath	= null;
-options.svgSrcPath	= null;
+options.jsFileChanged	= false;
+
+options.filePath		= null;
+options.fileName		= null;
+options.devicePath		= null;
+options.cssSrcPath		= null;
+options.jsSrcPath		= null;
+options.jsonSrcPath		= null;
+options.svgSrcPath		= null;
 
 
 

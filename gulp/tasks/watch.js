@@ -85,14 +85,8 @@ gulp.task( 'watch', function() {
 			taskname = 'js';
 		
 		/* JSON */
-		else if ( ext == '.json' ) {
+		else if ( ext == '.json' )
 			taskname = 'json';
-			
-			if ( configs )
-				options.jsonSrcPath = paths.env.dev + paths.configs.allRootJsonFiles;
-			else
-				options.jsonSrcPath = paths.env.dev + paths.assets.json.allFiles;
-		}
 		
 		/* SVG */
 		else if ( ext == '.svg' ) {
@@ -128,6 +122,7 @@ gulp.task( 'watch', function() {
 		
 		/* Config */
 		paths.env.dev + paths.configs.allFiles,
+		'!' + paths.env.dev + paths.configs.jsFilesFile,
 		'!' + paths.env.dev + paths.configs.favicons.dataFile,
 		
 		/* Server */

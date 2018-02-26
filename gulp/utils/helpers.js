@@ -57,6 +57,13 @@ var helpers = {
 		}
 		
 		return hasSpecialChars;
+	},
+	
+	
+	deleteCache( path ) {
+		for ( var id in require.cache )
+			if ( id.indexOf( path ) >= 0 )
+				delete require.cache[ id ];
 	}
 	
 	

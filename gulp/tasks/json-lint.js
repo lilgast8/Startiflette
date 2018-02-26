@@ -11,14 +11,10 @@ var notify		= require( 'gulp-notify' );
 
 gulp.task( 'json-lint', function() {
 	
-	if ( options.jsonSrcPath === null )
-		options.jsonSrcPath = [
-			paths.env.dev + paths.assets.json.allFiles,
-			paths.env.dev + paths.configs.allJsonFiles
-		];
-	
-	
-	gulp.src( options.jsonSrcPath )
+	gulp.src( [
+		paths.env.dev + paths.assets.json.allFiles,
+		paths.env.dev + paths.configs.allJsonFiles
+	] )
 		.pipe( plumber() )
 		.pipe( jsonlint() )
 		.pipe( jsonlint.reporter() )
