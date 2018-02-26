@@ -17401,6 +17401,7 @@ STF.Configs.Path = new class Path {
 		this.URL = {
 			base:		baseUrl,
 			assets:		baseUrl + 'assets/',
+			_3d:		baseUrl + 'assets/3d/',
 			css:		baseUrl + 'assets/css/',
 			favicons:	baseUrl + 'assets/favicons/',
 			files:		baseUrl + 'assets/files/',
@@ -17421,8 +17422,10 @@ STF.Configs.Path = new class Path {
 			return;
 		
 		
+		const prevAssetsBaseUrl = this.URL.assets;
+		
 		for ( const key in this.URL )
-			this.URL[ key ] = this.URL[ key ].replace( 'assets/', assetsBaseUrl );
+			this.URL[ key ] = this.URL[ key ].replace( prevAssetsBaseUrl, assetsBaseUrl );
 	}
 	
 	
