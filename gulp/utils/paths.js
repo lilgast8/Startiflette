@@ -15,6 +15,15 @@ module.exports = {
 	assets: {
 		allFiles: 'assets/**/*',
 		
+		_3d: {
+			dir: 'assets/3d/',
+			
+			shaders: {
+				dir:		'assets/3d/shaders/',
+				allFiles:	'assets/3d/shaders/**/*',
+			}
+		},
+		
 		css: {
 			dir:			'assets/css/',
 			allMinFiles:	'assets/css/*.css',

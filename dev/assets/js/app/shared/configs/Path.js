@@ -20,6 +20,7 @@ STF.Configs.Path = new class Path {
 		this.URL = {
 			base:		baseUrl,
 			assets:		baseUrl + 'assets/',
+			_3d:		baseUrl + 'assets/3d/',
 			css:		baseUrl + 'assets/css/',
 			favicons:	baseUrl + 'assets/favicons/',
 			files:		baseUrl + 'assets/files/',
