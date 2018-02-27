@@ -1,6 +1,6 @@
 
 
-STF.Controllers.DeviceOrientation = new class DeviceOrientation extends STF.Events.CustomEvent {
+STF.Controllers.Orientation = new class Orientation extends STF.Events.CustomEvent {
 	
 	
 	constructor() {
