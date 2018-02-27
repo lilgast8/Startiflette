@@ -67,9 +67,11 @@ window.STF_math_getHypotenuse = ( widthA, widthB ) => {
 };
 
 
-window.STF_math_getInertia = ( destValue, value, inertia ) => {
-	const valueToAdd	= Math.abs ( ( destValue - value ) * inertia ) >= 0.01 ? ( destValue - value ) * inertia : destValue - value;
-	value				+= valueToAdd;
+window.STF_math_getInertia = ( destValue, value, inertia, hasMinStep = true, minStep = 0.01 ) => {
+	const valueToAdd = !hasMinStep || hasMinStep && Math.abs ( ( destValue - value ) * inertia ) >= minStep ?
+						( destValue - value ) * inertia :
+						destValue - value;
+	value			+= valueToAdd;
 	
 	
 	return value;
