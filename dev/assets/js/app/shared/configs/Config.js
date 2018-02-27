@@ -18,9 +18,6 @@ STF.Configs.Config = new class Config {
 		this.NEED_PAGE_ID		= null;
 		
 		this.JS_VIEWS_ID		= null;
-		
-		this.HAS_FPS_STATS		= null;
-		this.HAS_MEMORY_STATS	= null;
 	}
 	
 	
@@ -49,16 +46,6 @@ STF.Configs.Config = new class Config {
 			`padding: 8px 15px; color: ${ this.CREDITS.color2 }; background-color: ${ this.CREDITS.color3 }; line-height:25px;`,
 			`padding: 8px 5px; color: ${ this.CREDITS.color3 }; line-height:25px;`
 		);
-	}
-	
-	
-	setFPSStats( isSet ) {
-		this.HAS_FPS_STATS = isSet;
-	}
-	
-	
-	setMemoryStats( isSet ) {
-		this.HAS_MEMORY_STATS = isSet;
 	}
 	
 	

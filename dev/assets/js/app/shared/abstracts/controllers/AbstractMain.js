@@ -56,18 +56,13 @@ STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
 	
 	
 	raf() {
-		if ( STF.Configs.Config.HAS_FPS_STATS && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.Debug.FPSStats.begin();
+		STF.Utils.Debug.DebugController.rafStart();
 		
 		
 		this.dispatch( this.E.RAF );
 		
 		
-		if ( STF.Configs.Config.HAS_FPS_STATS && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.Debug.FPSStats.end();
-		
-		if ( STF.Configs.Config.HAS_MEMORY_STATS && ( STF.Configs.Config.IS_DEV || STF.Configs.Config.IS_PREPROD_LOCAL ) )
-			STF.Utils.Debug.MemoryStats.update();
+		STF.Utils.Debug.DebugController.rafEnd();
 	}
 	
 	
