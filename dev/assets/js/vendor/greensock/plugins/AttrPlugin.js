@@ -1,9 +1,9 @@
 /*!
- * VERSION: 0.6.0
- * DATE: 2016-07-13
+ * VERSION: 0.6.1
+ * DATE: 2018-02-15
  * UPDATES AND DOCS AT: http://greensock.com
  *
- * @license Copyright (c) 2008-2016, GreenSock. All rights reserved.
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
  * This work is subject to the terms at http://greensock.com/standard-license or for
  * Club GreenSock members, the software agreement that was issued with your membership.
  * 
@@ -17,7 +17,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	_gsScope._gsDefine.plugin({
 		propName: "attr",
 		API: 2,
-		version: "0.6.0",
+		version: "0.6.1",
 
 		//called when the tween renders for the first time. This is where initial values should be recorded and any setup routines should run.
 		init: function(target, value, tween, index) {
@@ -39,3 +39,17 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	});
 
 }); if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); }
+
+//export to AMD/RequireJS and CommonJS/Node (precursor to full modular build system coming at a later date)
+(function(name) {
+	"use strict";
+	var getGlobal = function() {
+		return (_gsScope.GreenSockGlobals || _gsScope)[name];
+	};
+	if (typeof(module) !== "undefined" && module.exports) { //node
+		require("../TweenLite.js");
+		module.exports = getGlobal();
+	} else if (typeof(define) === "function" && define.amd) { //AMD
+		define(["TweenLite"], getGlobal);
+	}
+}("AttrPlugin"));

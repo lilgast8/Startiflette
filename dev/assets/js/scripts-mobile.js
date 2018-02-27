@@ -1,7 +1,12 @@
-/* Zepto v1.1.6 - zepto event ajax form ie - zeptojs.com/license */
-
-var Zepto = (function() {
-  var undefined, key, $, classList, emptyArray = [], slice = emptyArray.slice, filter = emptyArray.filter,
+/* Zepto v1.2.0 - zepto event ajax form ie - zeptojs.com/license */
+(function(global, factory) {
+  if (typeof define === 'function' && define.amd)
+    define(function() { return factory(global) })
+  else
+    factory(global)
+}(this, function(window) {
+  var Zepto = (function() {
+  var undefined, key, $, classList, emptyArray = [], concat = emptyArray.concat, filter = emptyArray.filter, slice = emptyArray.slice,
     document = window.document,
     elementDisplay = {}, classCache = {},
     cssNumber = { 'column-count': 1, 'columns': 1, 'font-weight': 1, 'line-height': 1,'opacity': 1, 'z-index': 1, 'zoom': 1 },
@@ -49,8 +54,9 @@ var Zepto = (function() {
 
   zepto.matches = function(element, selector) {
     if (!selector || !element || element.nodeType !== 1) return false
-    var matchesSelector = element.webkitMatchesSelector || element.mozMatchesSelector ||
-                          element.oMatchesSelector || element.matchesSelector
+    var matchesSelector = element.matches || element.webkitMatchesSelector ||
+                          element.mozMatchesSelector || element.oMatchesSelector ||
+                          element.matchesSelector
     if (matchesSelector) return matchesSelector.call(element, selector)
     // fall back to performing a selector:
     var match, parent = element.parentNode, temp = !parent
@@ -72,7 +78,16 @@ var Zepto = (function() {
   function isPlainObject(obj) {
     return isObject(obj) && !isWindow(obj) && Object.getPrototypeOf(obj) == Object.prototype
   }
-  function likeArray(obj) { return typeof obj.length == 'number' }
+
+  function likeArray(obj) {
+    var length = !!obj && 'length' in obj && obj.length,
+      type = $.type(obj)
+
+    return 'function' != type && !isWindow(obj) && (
+      'array' == type || length === 0 ||
+        (typeof length == 'number' && length > 0 && (length - 1) in obj)
+    )
+  }
 
   function compact(array) { return filter.call(array, function(item){ return item != null }) }
   function flatten(array) { return array.length > 0 ? $.fn.concat.apply([], array) : array }
@@ -114,10 +129,17 @@ var Zepto = (function() {
       $.map(element.childNodes, function(node){ if (node.nodeType == 1) return node })
   }
 
+  function Z(dom, selector) {
+    var i, len = dom ? dom.length : 0
+    for (i = 0; i < len; i++) this[i] = dom[i]
+    this.length = len
+    this.selector = selector || ''
+  }
+
   // `$.zepto.fragment` takes a html string and an optional tag name
-  // to generate DOM nodes nodes from the given html string.
+  // to generate DOM nodes from the given html string.
   // The generated DOM nodes are returned as an array.
-  // This function can be overriden in plugins for example to make
+  // This function can be overridden in plugins for example to make
   // it compatible with browsers that don't support the DOM fully.
   zepto.fragment = function(html, name, properties) {
     var dom, nodes, container
@@ -150,17 +172,13 @@ var Zepto = (function() {
 
   // `$.zepto.Z` swaps out the prototype of the given `dom` array
   // of nodes with `$.fn` and thus supplying all the Zepto functions
-  // to the array. Note that `__proto__` is not supported on Internet
-  // Explorer. This method can be overriden in plugins.
+  // to the array. This method can be overridden in plugins.
   zepto.Z = function(dom, selector) {
-    dom = dom || []
-    dom.__proto__ = $.fn
-    dom.selector = selector || ''
-    return dom
+    return new Z(dom, selector)
   }
 
   // `$.zepto.isZ` should return `true` if the given object is a Zepto
-  // collection. This method can be overriden in plugins.
+  // collection. This method can be overridden in plugins.
   zepto.isZ = function(object) {
     return object instanceof zepto.Z
   }
@@ -168,7 +186,7 @@ var Zepto = (function() {
   // `$.zepto.init` is Zepto's counterpart to jQuery's `$.fn.init` and
   // takes a CSS selector and an optional context (and handles various
   // special cases).
-  // This method can be overriden in plugins.
+  // This method can be overridden in plugins.
   zepto.init = function(selector, context) {
     var dom
     // If nothing given, return an empty Zepto collection
@@ -244,18 +262,18 @@ var Zepto = (function() {
 
   // `$.zepto.qsa` is Zepto's CSS selector implementation which
   // uses `document.querySelectorAll` and optimizes for some special cases, like `#id`.
-  // This method can be overriden in plugins.
+  // This method can be overridden in plugins.
   zepto.qsa = function(element, selector){
     var found,
         maybeID = selector[0] == '#',
         maybeClass = !maybeID && selector[0] == '.',
         nameOnly = maybeID || maybeClass ? selector.slice(1) : selector, // Ensure that a 1 char tag name still gets checked
         isSimple = simpleSelectorRE.test(nameOnly)
-    return (isDocument(element) && isSimple && maybeID) ?
+    return (element.getElementById && isSimple && maybeID) ? // Safari DocumentFragment doesn't have getElementById
       ( (found = element.getElementById(nameOnly)) ? [found] : [] ) :
-      (element.nodeType !== 1 && element.nodeType !== 9) ? [] :
+      (element.nodeType !== 1 && element.nodeType !== 9 && element.nodeType !== 11) ? [] :
       slice.call(
-        isSimple && !maybeID ?
+        isSimple && !maybeID && element.getElementsByClassName ? // DocumentFragment doesn't have getElementsByClassName/TagName
           maybeClass ? element.getElementsByClassName(nameOnly) : // If it's simple, it could be a class
           element.getElementsByTagName(selector) : // Or a tag
           element.querySelectorAll(selector) // Or it's not simple, and we need to query all
@@ -328,6 +346,13 @@ var Zepto = (function() {
     return true
   }
 
+  $.isNumeric = function(val) {
+    var num = Number(val), type = typeof val
+    return val != null && type != 'boolean' &&
+      (type != 'string' || val.length) &&
+      !isNaN(num) && isFinite(num) || false
+  }
+
   $.inArray = function(elem, array, i){
     return emptyArray.indexOf.call(array, elem, i)
   }
@@ -341,6 +366,7 @@ var Zepto = (function() {
   $.uuid = 0
   $.support = { }
   $.expr = { }
+  $.noop = function() {}
 
   $.map = function(elements, callback){
     var value, values = [], i, key
@@ -384,14 +410,25 @@ var Zepto = (function() {
   // Define methods that will be available on all
   // Zepto collections
   $.fn = {
+    constructor: zepto.Z,
+    length: 0,
+
     // Because a collection acts like an array
     // copy over these useful array functions.
     forEach: emptyArray.forEach,
     reduce: emptyArray.reduce,
     push: emptyArray.push,
     sort: emptyArray.sort,
+    splice: emptyArray.splice,
     indexOf: emptyArray.indexOf,
-    concat: emptyArray.concat,
+    concat: function(){
+      var i, value, args = []
+      for (i = 0; i < arguments.length; i++) {
+        value = arguments[i]
+        args[i] = zepto.isZ(value) ? value.toArray() : value
+      }
+      return concat.apply(zepto.isZ(this) ? this.toArray() : this, args)
+    },
 
     // `map` and `slice` in the jQuery API work differently
     // from their array counterparts
@@ -488,11 +525,13 @@ var Zepto = (function() {
       return result
     },
     closest: function(selector, context){
-      var node = this[0], collection = false
-      if (typeof selector == 'object') collection = $(selector)
-      while (node && !(collection ? collection.indexOf(node) >= 0 : zepto.matches(node, selector)))
-        node = node !== context && !isDocument(node) && node.parentNode
-      return $(node)
+      var nodes = [], collection = typeof selector == 'object' && $(selector)
+      this.each(function(_, node){
+        while (node && !(collection ? collection.indexOf(node) >= 0 : zepto.matches(node, selector)))
+          node = node !== context && !isDocument(node) && node.parentNode
+        if (node && nodes.indexOf(node) < 0) nodes.push(node)
+      })
+      return $(nodes)
     },
     parents: function(selector){
       var ancestors = [], nodes = this
@@ -512,7 +551,7 @@ var Zepto = (function() {
       return filtered(this.map(function(){ return children(this) }), selector)
     },
     contents: function() {
-      return this.map(function() { return slice.call(this.childNodes) })
+      return this.map(function() { return this.contentDocument || slice.call(this.childNodes) })
     },
     siblings: function(selector){
       return filtered(this.map(function(i, el){
@@ -601,14 +640,12 @@ var Zepto = (function() {
           var newText = funcArg(this, text, idx, this.textContent)
           this.textContent = newText == null ? '' : ''+newText
         }) :
-        (0 in this ? this[0].textContent : null)
+        (0 in this ? this.pluck('textContent').join("") : null)
     },
     attr: function(name, value){
       var result
       return (typeof name == 'string' && !(1 in arguments)) ?
-        (!this.length || this[0].nodeType !== 1 ? undefined :
-          (!(result = this[0].getAttribute(name)) && name in this[0]) ? this[0][name] : result
-        ) :
+        (0 in this && this[0].nodeType == 1 && (result = this[0].getAttribute(name)) != null ? result : undefined) :
         this.each(function(idx){
           if (this.nodeType !== 1) return
           if (isObject(name)) for (key in name) setAttribute(this, key, name[key])
@@ -628,6 +665,10 @@ var Zepto = (function() {
         }) :
         (this[0] && this[0][name])
     },
+    removeProp: function(name){
+      name = propMap[name] || name
+      return this.each(function(){ delete this[name] })
+    },
     data: function(name, value){
       var attrName = 'data-' + name.replace(capitalRE, '-$1').toLowerCase()
 
@@ -638,14 +679,16 @@ var Zepto = (function() {
       return data !== null ? deserializeValue(data) : undefined
     },
     val: function(value){
-      return 0 in arguments ?
-        this.each(function(idx){
+      if (0 in arguments) {
+        if (value == null) value = ""
+        return this.each(function(idx){
           this.value = funcArg(this, value, idx, this.value)
-        }) :
-        (this[0] && (this[0].multiple ?
+        })
+      } else {
+        return this[0] && (this[0].multiple ?
            $(this[0]).find('option').filter(function(){ return this.selected }).pluck('value') :
            this[0].value)
-        )
+      }
     },
     offset: function(coordinates){
       if (coordinates) return this.each(function(index){
@@ -661,6 +704,8 @@ var Zepto = (function() {
         $this.css(props)
       })
       if (!this.length) return null
+      if (document.documentElement !== this[0] && !$.contains(document.documentElement, this[0]))
+        return {top: 0, left: 0}
       var obj = this[0].getBoundingClientRect()
       return {
         left: obj.left + window.pageXOffset,
@@ -671,13 +716,14 @@ var Zepto = (function() {
     },
     css: function(property, value){
       if (arguments.length < 2) {
-        var computedStyle, element = this[0]
-        if(!element) return
-        computedStyle = getComputedStyle(element, '')
-        if (typeof property == 'string')
-          return element.style[camelize(property)] || computedStyle.getPropertyValue(property)
-        else if (isArray(property)) {
+        var element = this[0]
+        if (typeof property == 'string') {
+          if (!element) return
+          return element.style[camelize(property)] || getComputedStyle(element, '').getPropertyValue(property)
+        } else if (isArray(property)) {
+          if (!element) return
           var props = {}
+          var computedStyle = getComputedStyle(element, '')
           $.each(property, function(_, prop){
             props[prop] = (element.style[camelize(prop)] || computedStyle.getPropertyValue(prop))
           })
@@ -829,8 +875,17 @@ var Zepto = (function() {
     $.fn[operator] = function(){
       // arguments can be nodes, arrays of nodes, Zepto objects and HTML strings
       var argType, nodes = $.map(arguments, function(arg) {
+            var arr = []
             argType = type(arg)
-            return argType == "object" || argType == "array" || arg == null ?
+            if (argType == "array") {
+              arg.forEach(function(el) {
+                if (el.nodeType !== undefined) return arr.push(el)
+                else if ($.zepto.isZ(el)) return arr = arr.concat(el.get())
+                arr = arr.concat(zepto.fragment(el))
+              })
+              return arr
+            }
+            return argType == "object" || arg == null ?
               arg : zepto.fragment(arg)
           }),
           parent, copyByClone = this.length > 1
@@ -854,8 +909,10 @@ var Zepto = (function() {
           parent.insertBefore(node, target)
           if (parentInDocument) traverseNode(node, function(el){
             if (el.nodeName != null && el.nodeName.toUpperCase() === 'SCRIPT' &&
-               (!el.type || el.type === 'text/javascript') && !el.src)
-              window['eval'].call(window, el.innerHTML)
+               (!el.type || el.type === 'text/javascript') && !el.src){
+              var target = el.ownerDocument ? el.ownerDocument.defaultView : window
+              target['eval'].call(target, el.innerHTML)
+            }
           })
         })
       })
@@ -871,7 +928,7 @@ var Zepto = (function() {
     }
   })
 
-  zepto.Z.prototype = $.fn
+  zepto.Z.prototype = Z.prototype = $.fn
 
   // Export internal API functions in the `$.zepto` namespace
   zepto.uniq = uniq
@@ -1001,7 +1058,7 @@ window.$ === undefined && (window.$ = Zepto)
 
   var returnTrue = function(){return true},
       returnFalse = function(){return false},
-      ignoreProperties = /^([A-Z]|returnValue$|layer[XY]$)/,
+      ignoreProperties = /^([A-Z]|returnValue$|layer[XY]$|webkitMovement[XY]$)/,
       eventMethods = {
         preventDefault: 'isDefaultPrevented',
         stopImmediatePropagation: 'isImmediatePropagationStopped',
@@ -1020,6 +1077,8 @@ window.$ === undefined && (window.$ = Zepto)
         }
         event[predicate] = returnFalse
       })
+
+      event.timeStamp || (event.timeStamp = Date.now())
 
       if (source.defaultPrevented !== undefined ? source.defaultPrevented :
           'returnValue' in source ? source.returnValue === false :
@@ -1064,7 +1123,7 @@ window.$ === undefined && (window.$ = Zepto)
 
     if (!isString(selector) && !isFunction(callback) && callback !== false)
       callback = data, data = selector, selector = undefined
-    if (isFunction(data) || data === false)
+    if (callback === undefined || data === false)
       callback = data, data = undefined
 
     if (callback === false) callback = returnFalse
@@ -1155,7 +1214,7 @@ window.$ === undefined && (window.$ = Zepto)
 })(Zepto)
 
 ;(function($){
-  var jsonpID = 0,
+  var jsonpID = +new Date(),
       document = window.document,
       key,
       name,
@@ -1223,6 +1282,12 @@ window.$ === undefined && (window.$ = Zepto)
     ajaxStop(settings)
   }
 
+  function ajaxDataFilter(data, type, settings) {
+    if (settings.dataFilter == empty) return data
+    var context = settings.context
+    return settings.dataFilter.call(context, data, type)
+  }
+
   // Empty function, used as default callback
   function empty() {}
 
@@ -1231,7 +1296,7 @@ window.$ === undefined && (window.$ = Zepto)
 
     var _callbackName = options.jsonpCallback,
       callbackName = ($.isFunction(_callbackName) ?
-        _callbackName() : _callbackName) || ('jsonp' + (++jsonpID)),
+        _callbackName() : _callbackName) || ('Zepto' + (jsonpID++)),
       script = document.createElement('script'),
       originalCallback = window[callbackName],
       responseData,
@@ -1313,7 +1378,11 @@ window.$ === undefined && (window.$ = Zepto)
     // Whether data should be serialized to string
     processData: true,
     // Whether the browser should be allowed to cache GET responses
-    cache: true
+    cache: true,
+    //Used to handle the raw response data of XMLHttpRequest.
+    //This is a pre-filtering function to sanitize the response.
+    //The sanitized response should be returned
+    dataFilter: empty
   }
 
   function mimeToDataType(mime) {
@@ -1333,14 +1402,14 @@ window.$ === undefined && (window.$ = Zepto)
   function serializeData(options) {
     if (options.processData && options.data && $.type(options.data) != "string")
       options.data = $.param(options.data, options.traditional)
-    if (options.data && (!options.type || options.type.toUpperCase() == 'GET'))
+    if (options.data && (!options.type || options.type.toUpperCase() == 'GET' || 'jsonp' == options.dataType))
       options.url = appendQuery(options.url, options.data), options.data = undefined
   }
 
   $.ajax = function(options){
     var settings = $.extend({}, options || {}),
         deferred = $.Deferred && $.Deferred(),
-        urlAnchor
+        urlAnchor, hashIndex
     for (key in $.ajaxSettings) if (settings[key] === undefined) settings[key] = $.ajaxSettings[key]
 
     ajaxStart(settings)
@@ -1348,11 +1417,13 @@ window.$ === undefined && (window.$ = Zepto)
     if (!settings.crossDomain) {
       urlAnchor = document.createElement('a')
       urlAnchor.href = settings.url
+      // cleans up URL for .href (IE only), see https://github.com/madrobby/zepto/pull/1049
       urlAnchor.href = urlAnchor.href
       settings.crossDomain = (originAnchor.protocol + '//' + originAnchor.host) !== (urlAnchor.protocol + '//' + urlAnchor.host)
     }
 
     if (!settings.url) settings.url = window.location.toString()
+    if ((hashIndex = settings.url.indexOf('#')) > -1) settings.url = settings.url.slice(0, hashIndex)
     serializeData(settings)
 
     var dataType = settings.dataType, hasPlaceholder = /\?.+=\?/.test(settings.url)
@@ -1400,17 +1471,25 @@ window.$ === undefined && (window.$ = Zepto)
         var result, error = false
         if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304 || (xhr.status == 0 && protocol == 'file:')) {
           dataType = dataType || mimeToDataType(settings.mimeType || xhr.getResponseHeader('content-type'))
-          result = xhr.responseText
 
-          try {
-            // http://perfectionkills.com/global-eval-what-are-the-options/
-            if (dataType == 'script')    (1,eval)(result)
-            else if (dataType == 'xml')  result = xhr.responseXML
-            else if (dataType == 'json') result = blankRE.test(result) ? null : $.parseJSON(result)
-          } catch (e) { error = e }
+          if (xhr.responseType == 'arraybuffer' || xhr.responseType == 'blob')
+            result = xhr.response
+          else {
+            result = xhr.responseText
 
-          if (error) ajaxError(error, 'parsererror', xhr, settings, deferred)
-          else ajaxSuccess(result, xhr, settings, deferred)
+            try {
+              // http://perfectionkills.com/global-eval-what-are-the-options/
+              // sanitize response accordingly if data filter callback provided
+              result = ajaxDataFilter(result, dataType, settings)
+              if (dataType == 'script')    (1,eval)(result)
+              else if (dataType == 'xml')  result = xhr.responseXML
+              else if (dataType == 'json') result = blankRE.test(result) ? null : $.parseJSON(result)
+            } catch (e) { error = e }
+
+            if (error) return ajaxError(error, 'parsererror', xhr, settings, deferred)
+          }
+
+          ajaxSuccess(result, xhr, settings, deferred)
         } else {
           ajaxError(xhr.statusText || null, xhr.status ? 'error' : 'abort', xhr, settings, deferred)
         }
@@ -1423,10 +1502,10 @@ window.$ === undefined && (window.$ = Zepto)
       return xhr
     }
 
-    if (settings.xhrFields) for (name in settings.xhrFields) xhr[name] = settings.xhrFields[name]
-
     var async = 'async' in settings ? settings.async : true
     xhr.open(settings.type, settings.url, async, settings.username, settings.password)
+
+    if (settings.xhrFields) for (name in settings.xhrFields) xhr[name] = settings.xhrFields[name]
 
     for (name in headers) nativeSetHeader.apply(xhr, headers[name])
 
@@ -1551,49 +1630,33 @@ window.$ === undefined && (window.$ = Zepto)
 
 })(Zepto)
 
-;(function($){
-  // __proto__ doesn't exist on IE<11, so redefine
-  // the Z function to use object extension instead
-  if (!('__proto__' in {})) {
-    $.extend($.zepto, {
-      Z: function(dom, selector){
-        dom = dom || []
-        $.extend(dom, $.fn)
-        dom.selector = selector || ''
-        dom.__Z = true
-        return dom
-      },
-      // this is a kludge but works
-      isZ: function(object){
-        return $.type(object) === 'array' && '__Z' in object
-      }
-    })
-  }
-
+;(function(){
   // getComputedStyle shouldn't freak out when called
   // without a valid element as argument
   try {
     getComputedStyle(undefined)
   } catch(e) {
-    var nativeGetComputedStyle = getComputedStyle;
-    window.getComputedStyle = function(element){
+    var nativeGetComputedStyle = getComputedStyle
+    window.getComputedStyle = function(element, pseudoElement){
       try {
-        return nativeGetComputedStyle(element)
+        return nativeGetComputedStyle(element, pseudoElement)
       } catch(e) {
         return null
       }
     }
   }
-})(Zepto)
+})()
+  return Zepto
+}))
 
 /*!
- * VERSION: 1.19.0
- * DATE: 2016-07-14
+ * VERSION: 1.20.4
+ * DATE: 2018-02-15
  * UPDATES AND DOCS AT: http://greensock.com
  * 
  * Includes all of the following: TweenLite, TweenMax, TimelineLite, TimelineMax, EasePack, CSSPlugin, RoundPropsPlugin, BezierPlugin, AttrPlugin, DirectionalRotationPlugin
  *
- * @license Copyright (c) 2008-2016, GreenSock. All rights reserved.
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
  * This work is subject to the terms at http://greensock.com/standard-license or for
  * Club GreenSock members, the software agreement that was issued with your membership.
  * 
@@ -1625,10 +1688,12 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			TweenMax = function(target, duration, vars) {
 				TweenLite.call(this, target, duration, vars);
 				this._cycle = 0;
-				this._yoyo = (this.vars.yoyo === true);
+				this._yoyo = (this.vars.yoyo === true || !!this.vars.yoyoEase);
 				this._repeat = this.vars.repeat || 0;
 				this._repeatDelay = this.vars.repeatDelay || 0;
-				this._dirty = true; //ensures that if there is any repeat, the totalDuration will get recalculated to accurately report it.
+				if (this._repeat) {
+					this._uncache(true); //ensures that if there is any repeat, the totalDuration will get recalculated to accurately report it.
+				}
 				this.render = TweenMax.prototype.render; //speed optimization (avoid prototype lookup on this "hot" method)
 			},
 			_tinyNum = 0.0000000001,
@@ -1638,7 +1703,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			p = TweenMax.prototype = TweenLite.to({}, 0.1, {}),
 			_blankArray = [];
 
-		TweenMax.version = "1.19.0";
+		TweenMax.version = "1.20.4";
 		p.constructor = TweenMax;
 		p.kill()._gc = false;
 		TweenMax.killTweensOf = TweenMax.killDelayedCallsTo = TweenLite.killTweensOf;
@@ -1648,9 +1713,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		TweenMax.render = TweenLite.render;
 
 		p.invalidate = function() {
-			this._yoyo = (this.vars.yoyo === true);
+			this._yoyo = (this.vars.yoyo === true || !!this.vars.yoyoEase);
 			this._repeat = this.vars.repeat || 0;
 			this._repeatDelay = this.vars.repeatDelay || 0;
+			this._yoyoEase = null;
 			this._uncache(true);
 			return TweenLite.prototype.invalidate.call(this);
 		};
@@ -1718,8 +1784,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				prevCycle = this._cycle,
 				duration = this._duration,
 				prevRawPrevTime = this._rawPrevTime,
-				isComplete, callback, pt, cycleDuration, r, type, pow, rawPrevTime;
-			if (time >= totalDur - 0.0000001) { //to work around occasional floating point math artifacts.
+				isComplete, callback, pt, cycleDuration, r, type, pow, rawPrevTime, yoyoEase;
+			if (time >= totalDur - 0.0000001 && time >= 0) { //to work around occasional floating point math artifacts.
 				this._totalTime = totalDur;
 				this._cycle = this._repeat;
 				if (this._yoyo && (this._cycle & 1) !== 0) {
@@ -1777,6 +1843,18 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					this._time = this._totalTime - (this._cycle * cycleDuration);
 					if (this._yoyo) if ((this._cycle & 1) !== 0) {
 						this._time = duration - this._time;
+						yoyoEase = this._yoyoEase || this.vars.yoyoEase; //note: we don't set this._yoyoEase in _init() like we do other properties because it's TweenMax-specific and doing it here allows us to optimize performance (most tweens don't have a yoyoEase). Note that we also must skip the this.ratio calculation further down right after we _init() in this function, because we're doing it here.
+						if (yoyoEase) {
+							if (!this._yoyoEase) {
+								if (yoyoEase === true && !this._initted) { //if it's not initted and yoyoEase is true, this._ease won't have been populated yet so we must discern it here.
+									yoyoEase = this.vars.ease;
+									this._yoyoEase = yoyoEase = !yoyoEase ? TweenLite.defaultEase : (yoyoEase instanceof Ease) ? yoyoEase : (typeof(yoyoEase) === "function") ? new Ease(yoyoEase, this.vars.easeParams) : Ease.map[yoyoEase] || TweenLite.defaultEase;
+								} else {
+									this._yoyoEase = yoyoEase = (yoyoEase === true) ? this._ease : (yoyoEase instanceof Ease) ? yoyoEase : Ease.map[yoyoEase];
+								}
+							}
+							this.ratio = yoyoEase ? 1 - yoyoEase.getRatio((duration - this._time) / duration) : 0;
+						}
 					}
 					if (this._time > duration) {
 						this._time = duration;
@@ -1784,8 +1862,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						this._time = 0;
 					}
 				}
-
-				if (this._easeType) {
+				if (this._easeType && !yoyoEase) {
 					r = this._time / duration;
 					type = this._easeType;
 					pow = this._easePower;
@@ -1815,7 +1892,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						this.ratio = 1 - (r / 2);
 					}
 
-				} else {
+				} else if (!yoyoEase) {
 					this.ratio = this._ease.getRatio(this._time / duration);
 				}
 				
@@ -1840,9 +1917,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					return;
 				}
 				//_ease is initially set to defaultEase, so now that init() has run, _ease is set properly and we need to recalculate the ratio. Overall this is faster than using conditional logic earlier in the method to avoid having to set ratio twice because we only init() once but renderTime() gets called VERY frequently.
-				if (this._time && !isComplete) {
+				if (this._time && !isComplete && !yoyoEase) {
 					this.ratio = this._ease.getRatio(this._time / duration);
-				} else if (isComplete && this._ease._calcEnd) {
+				} else if (isComplete && this._ease._calcEnd && !yoyoEase) {
 					this.ratio = this._ease.getRatio((this._time === 0) ? 0 : 1);
 				}
 			}
@@ -1860,7 +1937,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 				if (this._startAt) {
 					if (time >= 0) {
-						this._startAt.render(time, suppressEvents, force);
+						this._startAt.render(time, true, force);
 					} else if (!callback) {
 						callback = "_dummyGS"; //if no callback is defined, use a dummy value just so that the condition at the end evaluates as true because _startAt should render AFTER the normal render loop when the time is negative. We could handle this in a more intuitive way, of course, but the render loop is the MOST important thing to optimize, so this technique allows us to avoid adding extra conditional logic in a high-frequency area.
 					}
@@ -1882,7 +1959,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			
 			if (this._onUpdate) {
 				if (time < 0) if (this._startAt && this._startTime) { //if the tween is positioned at the VERY beginning (_startTime 0) of its parent timeline, it's illegal for the playhead to go back further, so we should not render the recorded startAt values.
-					this._startAt.render(time, suppressEvents, force); //note: for performance reasons, we tuck this conditional logic inside less traveled areas (most tweens don't have an onUpdate). We'd just have it at the end before the onComplete, but the values should be updated before any onUpdate is called, so we ALSO put it here and then if it's not called, we do so later near the onComplete.
+					this._startAt.render(time, true, force); //note: for performance reasons, we tuck this conditional logic inside less traveled areas (most tweens don't have an onUpdate). We'd just have it at the end before the onComplete, but the values should be updated before any onUpdate is called, so we ALSO put it here and then if it's not called, we do so later near the onComplete.
 				}
 				if (!suppressEvents) if (this._totalTime !== prevTotalTime || callback) {
 					this._callback("onUpdate");
@@ -1893,7 +1970,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 			if (callback) if (!this._gc || force) { //check gc because there's a chance that kill() could be called in an onUpdate
 				if (time < 0 && this._startAt && !this._onUpdate && this._startTime) { //if the tween is positioned at the VERY beginning (_startTime 0) of its parent timeline, it's illegal for the playhead to go back further, so we should not render the recorded startAt values.
-					this._startAt.render(time, suppressEvents, force);
+					this._startAt.render(time, true, force);
 				}
 				if (isComplete) {
 					if (this._timeline.autoRemoveChildren) {
@@ -2261,7 +2338,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					p, val;
 				for (p in alt) {
 					val = alt[p];
-					vars[p] = (typeof(val) === "function") ? val.call(targets[i], i) : val[i % val.length];
+					vars[p] = (typeof(val) === "function") ? val(i, targets[i]) : val[i % val.length];
 				}
 				delete vars.cycle;
 			},
@@ -2275,7 +2352,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			},
 			p = TimelineLite.prototype = new SimpleTimeline();
 
-		TimelineLite.version = "1.19.0";
+		TimelineLite.version = "1.20.4";
 		p.constructor = TimelineLite;
 		p.kill()._gc = p._forcingPlayhead = p._hasPause = false;
 
@@ -2383,7 +2460,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 			var tl = new TimelineLite(vars),
 				root = tl._timeline,
-				tween, next;
+				hasNegativeStart, time,	tween, next;
 			if (ignoreDelayedCalls == null) {
 				ignoreDelayedCalls = true;
 			}
@@ -2394,11 +2471,18 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			while (tween) {
 				next = tween._next;
 				if (!ignoreDelayedCalls || !(tween instanceof TweenLite && tween.target === tween.vars.onComplete)) {
-					tl.add(tween, tween._startTime - tween._delay);
+					time = tween._startTime - tween._delay;
+					if (time < 0) {
+						hasNegativeStart = 1;
+					}
+					tl.add(tween, time);
 				}
 				tween = next;
 			}
 			root.add(tl, 0);
+			if (hasNegativeStart) { //calling totalDuration() will force the adjustment necessary to shift the children forward so none of them start before zero, and moves the timeline backwards the same amount, so the playhead is still aligned where it should be globally, but the timeline doesn't have illegal children that start before zero.
+				tl.totalDuration();
+			}
 			return tl;
 		};
 
@@ -2438,6 +2522,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 
 			SimpleTimeline.prototype.add.call(this, value, position);
+
+			if (value._time) { //in case, for example, the _startTime is moved on a tween that has already rendered. Imagine it's at its end state, then the startTime is moved WAY later (after the end of this timeline), it should render at its beginning.
+				value.render((this.rawTime() - value._startTime) * value._timeScale, false, false);
+			}
 
 			//if the timeline has already ended but the inserted tween/timeline extends the duration, we should enable this timeline again so that it renders properly. We should also align the playhead with the parent timeline's when appropriate.
 			if (this._gc || this._time === this._duration) if (!this._paused) if (this._duration < this.duration()) {
@@ -2480,8 +2568,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			var last = this._last;
 			if (!last) {
 				this._time = this._totalTime = this._duration = this._totalDuration = 0;
-			} else if (this._time > last._startTime + last._totalDuration / last._timeScale) {
-				this._time = this.duration();
+			} else if (this._time > this.duration()) {
+				this._time = this._duration;
 				this._totalTime = this._totalDuration;
 			}
 			return this;
@@ -2522,7 +2610,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		};
 
 		p._parseTimeOrLabel = function(timeOrLabel, offsetOrLabel, appendIfAbsent, ignore) {
-			var i;
+			var clippedDuration, i;
 			//if we're about to add a tween/timeline (or an array of them) that's already a child of this timeline, we should remove it first so that it doesn't contaminate the duration().
 			if (ignore instanceof Animation && ignore.timeline === this) {
 				this.remove(ignore);
@@ -2534,22 +2622,23 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					}
 				}
 			}
+			clippedDuration = (typeof(timeOrLabel) === "number" && !offsetOrLabel) ? 0 : (this.duration() > 99999999999) ? this.recent().endTime(false) : this._duration; //in case there's a child that infinitely repeats, users almost never intend for the insertion point of a new child to be based on a SUPER long value like that so we clip it and assume the most recently-added child's endTime should be used instead.
 			if (typeof(offsetOrLabel) === "string") {
-				return this._parseTimeOrLabel(offsetOrLabel, (appendIfAbsent && typeof(timeOrLabel) === "number" && this._labels[offsetOrLabel] == null) ? timeOrLabel - this.duration() : 0, appendIfAbsent);
+				return this._parseTimeOrLabel(offsetOrLabel, (appendIfAbsent && typeof(timeOrLabel) === "number" && this._labels[offsetOrLabel] == null) ? timeOrLabel - clippedDuration : 0, appendIfAbsent);
 			}
 			offsetOrLabel = offsetOrLabel || 0;
 			if (typeof(timeOrLabel) === "string" && (isNaN(timeOrLabel) || this._labels[timeOrLabel] != null)) { //if the string is a number like "1", check to see if there's a label with that name, otherwise interpret it as a number (absolute value).
 				i = timeOrLabel.indexOf("=");
 				if (i === -1) {
 					if (this._labels[timeOrLabel] == null) {
-						return appendIfAbsent ? (this._labels[timeOrLabel] = this.duration() + offsetOrLabel) : offsetOrLabel;
+						return appendIfAbsent ? (this._labels[timeOrLabel] = clippedDuration + offsetOrLabel) : offsetOrLabel;
 					}
 					return this._labels[timeOrLabel] + offsetOrLabel;
 				}
 				offsetOrLabel = parseInt(timeOrLabel.charAt(i-1) + "1", 10) * Number(timeOrLabel.substr(i+1));
-				timeOrLabel = (i > 1) ? this._parseTimeOrLabel(timeOrLabel.substr(0, i-1), 0, appendIfAbsent) : this.duration();
+				timeOrLabel = (i > 1) ? this._parseTimeOrLabel(timeOrLabel.substr(0, i-1), 0, appendIfAbsent) : clippedDuration;
 			} else if (timeOrLabel == null) {
-				timeOrLabel = this.duration();
+				timeOrLabel = clippedDuration;
 			}
 			return Number(timeOrLabel) + offsetOrLabel;
 		};
@@ -2574,13 +2663,16 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			if (this._gc) {
 				this._enabled(true, false);
 			}
-			var totalDur = (!this._dirty) ? this._totalDuration : this.totalDuration(),
-				prevTime = this._time,
+			var prevTime = this._time,
+				totalDur = (!this._dirty) ? this._totalDuration : this.totalDuration(),
 				prevStart = this._startTime,
 				prevTimeScale = this._timeScale,
 				prevPaused = this._paused,
 				tween, isComplete, next, callback, internalForce, pauseTween, curTime;
-			if (time >= totalDur - 0.0000001) { //to work around occasional floating point math artifacts.
+			if (prevTime !== this._time) { //if totalDuration() finds a child with a negative startTime and smoothChildTiming is true, things get shifted around internally so we need to adjust the time accordingly. For example, if a tween starts at -30 we must shift EVERYTHING forward 30 seconds and move this timeline's startTime backward by 30 seconds so that things align with the playhead (no jump).
+				time += this._time - prevTime;
+			}
+			if (time >= totalDur - 0.0000001 && time >= 0) { //to work around occasional floating point math artifacts.
 				this._totalTime = this._time = totalDur;
 				if (!this._reversed) if (!this._hasPausedChild()) {
 					isComplete = true;
@@ -2912,8 +3004,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						if (tween._dirty) {
 							tween.totalDuration(); //could change the tween._startTime, so make sure the tween's cache is clean before analyzing it.
 						}
-						if (tween._startTime > prevStart && this._sortChildren && !tween._paused) { //in case one of the tweens shifted out of order, it needs to be re-inserted into the correct position in the sequence
+						if (tween._startTime > prevStart && this._sortChildren && !tween._paused && !this._calculatingDuration) { //in case one of the tweens shifted out of order, it needs to be re-inserted into the correct position in the sequence
+							this._calculatingDuration = 1; //prevent endless recursive calls - there are methods that get triggered that check duration/totalDuration when we add(), like _parseTimeOrLabel().
 							this.add(tween, tween._startTime - tween._delay);
+							this._calculatingDuration = 0;
 						} else {
 							prevStart = tween._startTime;
 						}
@@ -2921,6 +3015,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 							max -= tween._startTime;
 							if (this._timeline.smoothChildTiming) {
 								this._startTime += tween._startTime / this._timeScale;
+								this._time -= tween._startTime;
+								this._totalTime -= tween._startTime;
+								this._rawPrevTime -= tween._startTime;
 							}
 							this.shiftChildren(-tween._startTime, false, -9999999999);
 							prevStart = 0;
@@ -2961,8 +3058,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			return (tl === Animation._rootFramesTimeline);
 		};
 
-		p.rawTime = function() {
-			return this._paused ? this._totalTime : (this._timeline.rawTime() - this._startTime) * this._timeScale;
+		p.rawTime = function(wrapRepeats) {
+			return (wrapRepeats && (this._paused || (this._repeat && this.time() > 0 && this.totalProgress() < 1))) ? this._totalTime % (this._duration + this._repeatDelay) : this._paused ? this._totalTime : (this._timeline.rawTime(wrapRepeats) - this._startTime) * this._timeScale;
 		};
 
 		return TimelineLite;
@@ -3006,7 +3103,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 		p.constructor = TimelineMax;
 		p.kill()._gc = false;
-		TimelineMax.version = "1.19.0";
+		TimelineMax.version = "1.20.4";
 
 		p.invalidate = function() {
 			this._yoyo = (this.vars.yoyo === true);
@@ -3044,7 +3141,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 		p.tweenTo = function(position, vars) {
 			vars = vars || {};
-			var copy = {ease:_easeNone, useFrames:this.usesFrames(), immediateRender:false},
+			var copy = {ease:_easeNone, useFrames:this.usesFrames(), immediateRender:false, lazy:false},
 				Engine = (vars.repeat && _globals.TweenMax) || TweenLite,
 				duration, p, t;
 			for (p in vars) {
@@ -3055,11 +3152,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			t = new Engine(this, duration, copy);
 			copy.onStart = function() {
 				t.target.paused(true);
-				if (t.vars.time !== t.target.time() && duration === t.duration()) { //don't make the duration zero - if it's supposed to be zero, don't worry because it's already initting the tween and will complete immediately, effectively making the duration zero anyway. If we make duration zero, the tween won't run at all.
-					t.duration( Math.abs( t.vars.time - t.target.time()) / t.target._timeScale );
+				if (t.vars.time !== t.target.time() && duration === t.duration() && !t.isFromTo) { //don't make the duration zero - if it's supposed to be zero, don't worry because it's already initting the tween and will complete immediately, effectively making the duration zero anyway. If we make duration zero, the tween won't run at all.
+					t.duration( Math.abs( t.vars.time - t.target.time()) / t.target._timeScale ).render(t.time(), true, true); //render() right away to ensure that things look right, especially in the case of .tweenTo(0).
 				}
 				if (vars.onStart) { //in case the user had an onStart in the vars - we don't want to overwrite it.
-					t._callback("onStart");
+					vars.onStart.apply(vars.onStartScope || vars.callbackScope || t, vars.onStartParams || []); //don't use t._callback("onStart") or it'll point to the copy.onStart and we'll get a recursion error.
 				}
 			};
 			return t;
@@ -3071,6 +3168,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			vars.startAt = {onComplete:this.seek, onCompleteParams:[fromPosition], callbackScope:this};
 			vars.immediateRender = (vars.immediateRender !== false);
 			var t = this.tweenTo(toPosition, vars);
+			t.isFromTo = 1; //to ensure we don't mess with the duration in the onStart (we've got the start and end values here, so lock it in)
 			return t.duration((Math.abs( t.vars.time - fromPosition) / this._timeScale) || 0.001);
 		};
 
@@ -3078,9 +3176,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			if (this._gc) {
 				this._enabled(true, false);
 			}
-			var totalDur = (!this._dirty) ? this._totalDuration : this.totalDuration(),
+			var prevTime = this._time,
+				totalDur = (!this._dirty) ? this._totalDuration : this.totalDuration(),
 				dur = this._duration,
-				prevTime = this._time,
 				prevTotalTime = this._totalTime,
 				prevStart = this._startTime,
 				prevTimeScale = this._timeScale,
@@ -3088,7 +3186,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				prevPaused = this._paused,
 				prevCycle = this._cycle,
 				tween, isComplete, next, callback, internalForce, cycleDuration, pauseTween, curTime;
-			if (time >= totalDur - 0.0000001) { //to work around occasional floating point math artifacts.
+			if (prevTime !== this._time) { //if totalDuration() finds a child with a negative startTime and smoothChildTiming is true, things get shifted around internally so we need to adjust the time accordingly. For example, if a tween starts at -30 we must shift EVERYTHING forward 30 seconds and move this timeline's startTime backward by 30 seconds so that things align with the playhead (no jump).
+				time += this._time - prevTime;
+			}
+			if (time >= totalDur - 0.0000001 && time >= 0) { //to work around occasional floating point math artifacts.
 				if (!this._locked) {
 					this._totalTime = totalDur;
 					this._cycle = this._repeat;
@@ -3177,7 +3278,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 				if (this._hasPause && !this._forcingPlayhead && !suppressEvents) {
 					time = this._time;
-					if (time >= prevTime) {
+					if (time >= prevTime || (this._repeat && prevCycle !== this._cycle)) {
 						tween = this._first;
 						while (tween && tween._startTime <= time && !pauseTween) {
 							if (!tween._duration) if (tween.data === "isPause" && !tween.ratio && !(tween._startTime === 0 && this._rawPrevTime === 0)) {
@@ -3194,7 +3295,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 							tween = tween._prev;
 						}
 					}
-					if (pauseTween) {
+					if (pauseTween && pauseTween._startTime < dur) {
 						this._time = time = pauseTween._startTime;
 						this._totalTime = time + (this._cycle * (this._totalDuration + this._repeatDelay));
 					}
@@ -3233,6 +3334,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				this.render(prevTime, suppressEvents, (dur === 0));
 				if (!suppressEvents) if (!this._gc) {
 					if (this.vars.onRepeat) {
+						this._cycle = recCycle; //in case the onRepeat alters the playhead or invalidates(), we shouldn't stay locked or use the previous cycle.
+						this._locked = false;
 						this._callback("onRepeat");
 					}
 				}
@@ -3240,6 +3343,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					return;
 				}
 				if (wrap) {
+					this._cycle = prevCycle; //if there's an onRepeat, we reverted this above, so make sure it's set properly again. We also unlocked in that scenario, so reset that too.
+					this._locked = true;
 					prevTime = (backwards) ? dur + 0.0001 : -0.0001;
 					this.render(prevTime, true, false);
 				}
@@ -3404,15 +3509,20 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			return a;
 		};
 
+		p.invalidate = function() {
+			this._locked = false; //unlock and set cycle in case invalidate() is called from inside an onRepeat
+			return TimelineLite.prototype.invalidate.call(this);
+		};
+
 
 //---- GETTERS / SETTERS -------------------------------------------------------------------------------------------------------
 
 		p.progress = function(value, suppressEvents) {
-			return (!arguments.length) ? this._time / this.duration() : this.totalTime( this.duration() * ((this._yoyo && (this._cycle & 1) !== 0) ? 1 - value : value) + (this._cycle * (this._duration + this._repeatDelay)), suppressEvents);
+			return (!arguments.length) ? (this._time / this.duration()) || 0 : this.totalTime( this.duration() * ((this._yoyo && (this._cycle & 1) !== 0) ? 1 - value : value) + (this._cycle * (this._duration + this._repeatDelay)), suppressEvents);
 		};
 
 		p.totalProgress = function(value, suppressEvents) {
-			return (!arguments.length) ? this._totalTime / this.totalDuration() : this.totalTime( this.totalDuration() * value, suppressEvents);
+			return (!arguments.length) ? (this._totalTime / this.totalDuration()) || 0 : this.totalTime( this.totalDuration() * value, suppressEvents);
 		};
 
 		p.totalDuration = function(value) {
@@ -3489,7 +3599,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	
 	
 	
-	
+
 	
 /*
  * ----------------------------------------------------------------
@@ -3612,7 +3722,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 				l = values.length - 2;
 				if (l < 0) {
-					a[0] = new Segment(values[0][p], 0, 0, values[(l < -1) ? 0 : 1][p]);
+					a[0] = new Segment(values[0][p], 0, 0, values[0][p]);
 					return a;
 				}
 				for (i = 0; i < l; i++) {
@@ -3798,7 +3908,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			BezierPlugin = _gsScope._gsDefine.plugin({
 					propName: "bezier",
 					priority: -1,
-					version: "1.3.7",
+					version: "1.3.8",
 					API: 2,
 					global:true,
 
@@ -4124,7 +4234,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			p = CSSPlugin.prototype = new TweenPlugin("css");
 
 		p.constructor = CSSPlugin;
-		CSSPlugin.version = "1.19.0";
+		CSSPlugin.version = "1.20.4";
 		CSSPlugin.API = 2;
 		CSSPlugin.defaultTransformPerspective = 0;
 		CSSPlugin.defaultSkewType = "compensated";
@@ -4154,14 +4264,15 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			_DEG2RAD = Math.PI / 180,
 			_RAD2DEG = 180 / Math.PI,
 			_forcePT = {},
-			_doc = document,
-			_createElement = function(type) {
-				return _doc.createElementNS ? _doc.createElementNS("http://www.w3.org/1999/xhtml", type) : _doc.createElement(type);
+			_dummyElement = {style:{}},
+			_doc = _gsScope.document || {createElement: function() {return _dummyElement;}},
+			_createElement = function(type, ns) {
+				return _doc.createElementNS ? _doc.createElementNS(ns || "http://www.w3.org/1999/xhtml", type) : _doc.createElement(type);
 			},
 			_tempDiv = _createElement("div"),
 			_tempImg = _createElement("img"),
 			_internals = CSSPlugin._internals = {_specialProps:_specialProps}, //provides a hook to a few internal methods that we need to access from inside other plugins
-			_agent = navigator.userAgent,
+			_agent = (_gsScope.navigator || {}).userAgent || "",
 			_autoRound,
 			_reqSafariFix, //we won't apply the Safari transform fix until we actually come across a tween that affects a transform property (to maintain best performance).
 
@@ -4172,8 +4283,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			_supportsOpacity = (function() { //we set _isSafari, _ieVers, _isFirefox, and _supportsOpacity all in one function here to reduce file size slightly, especially in the minified version.
 				var i = _agent.indexOf("Android"),
 					a = _createElement("a");
-				_isSafari = (_agent.indexOf("Safari") !== -1 && _agent.indexOf("Chrome") === -1 && (i === -1 || Number(_agent.substr(i+8, 1)) > 3));
-				_isSafariLT6 = (_isSafari && (Number(_agent.substr(_agent.indexOf("Version/")+8, 1)) < 6));
+				_isSafari = (_agent.indexOf("Safari") !== -1 && _agent.indexOf("Chrome") === -1 && (i === -1 || parseFloat(_agent.substr(i+8, 2)) > 3));
+				_isSafariLT6 = (_isSafari && (parseFloat(_agent.substr(_agent.indexOf("Version/")+8, 2)) < 6));
 				_isFirefox = (_agent.indexOf("Firefox") !== -1);
 				if ((/MSIE ([0-9]{1,}[\.0-9]{0,})/).exec(_agent) || (/Trident\/.*rv:([0-9]{1,}[\.0-9]{0,})/).exec(_agent)) {
 					_ieVers = parseFloat( RegExp.$1 );
@@ -4188,7 +4299,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				return (_opacityExp.test( ((typeof(v) === "string") ? v : (v.currentStyle ? v.currentStyle.filter : v.style.filter) || "") ) ? ( parseFloat( RegExp.$1 ) / 100 ) : 1);
 			},
 			_log = function(s) {//for logging messages, but in a way that won't throw errors in old versions of IE.
-				if (window.console) {
+				if (_gsScope.console) {
 					console.log(s);
 				}
 			},
@@ -4256,7 +4367,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			 * @return {number} value in pixels
 			 */
 			_convertToPixels = _internals.convertToPixels = function(t, p, v, sfx, recurse) {
-				if (sfx === "px" || !sfx) { return v; }
+				if (sfx === "px" || (!sfx && p !== "lineHeight")) { return v; }
 				if (sfx === "auto" || !v) { return 0; }
 				var horiz = _horizExp.test(p),
 					node = t,
@@ -4270,12 +4381,20 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				if (precise) {
 					v *= 100;
 				}
-				if (sfx === "%" && p.indexOf("border") !== -1) {
+				if (p === "lineHeight" && !sfx) { //special case of when a simple lineHeight (without a unit) is used. Set it to the value, read back the computed value, and then revert.
+					cache = _getComputedStyle(t).lineHeight;
+					t.style.lineHeight = v;
+					pix = parseFloat(_getComputedStyle(t).lineHeight);
+					t.style.lineHeight = cache;
+				} else if (sfx === "%" && p.indexOf("border") !== -1) {
 					pix = (v / 100) * (horiz ? t.clientWidth : t.clientHeight);
 				} else {
 					style.cssText = "border:0 solid red;position:" + _getStyle(t, "position") + ";line-height:0;";
 					if (sfx === "%" || !node.appendChild || sfx.charAt(0) === "v" || sfx === "rem") {
 						node = t.parentNode || _doc.body;
+						if (_getStyle(node, "display").indexOf("flex") !== -1) { //Edge and IE11 have a bug that causes offsetWidth to report as 0 if the container has display:flex and the child is position:relative. Switching to position: absolute solves it.
+							style.position = "absolute";
+						}
 						cache = node._gsCache;
 						time = TweenLite.ticker.frame;
 						if (cache && horiz && cache.time === time) { //performance optimization: we record the width of elements along with the ticker frame so that we can quickly get it again on the same tick (seems relatively safe to assume it wouldn't change on the same tick)
@@ -4392,7 +4511,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			_getDimension = function(t, p, cs) {
 				if ((t.nodeName + "").toLowerCase() === "svg") { //Chrome no longer supports offsetWidth/offsetHeight on SVG elements.
 					return (cs || _getComputedStyle(t))[p] || 0;
-				} else if (t.getBBox && _isSVG(t)) {
+				} else if (t.getCTM && _isSVG(t)) {
 					return t.getBBox()[p] || 0;
 				}
 				var v = parseFloat((p === "width") ? t.offsetWidth : t.offsetHeight),
@@ -4582,7 +4701,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 							g = (l <= 0.5) ? l * (s + 1) : l + s - l * s;
 							r = l * 2 - g;
 							if (a.length > 3) {
-								a[3] = Number(v[3]);
+								a[3] = Number(a[3]);
 							}
 							a[0] = _hue(h + 1 / 3, r, g);
 							a[1] = _hue(h, r, g);
@@ -4624,8 +4743,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			_formatColors = function(s, toHSL) {
 				var colors = s.match(_colorExp) || [],
 					charIndex = 0,
-					parsed = colors.length ? "" : s,
+					parsed = "",
 					i, color, temp;
+				if (!colors.length) {
+					return s;
+				}
 				for (i = 0; i < colors.length; i++) {
 					color = colors[i];
 					temp = s.substr(charIndex, s.indexOf(color, charIndex)-charIndex);
@@ -4646,7 +4768,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		_colorExp = new RegExp(_colorExp+")", "gi");
 
 		CSSPlugin.colorStringFilter = function(a) {
-			var combined = a[0] + a[1],
+			var combined = a[0] + " " + a[1],
 				toHSL;
 			if (_colorExp.test(combined)) {
 				toHSL = (combined.indexOf("hsl(") !== -1 || combined.indexOf("hsla(") !== -1);
@@ -4961,8 +5083,13 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					autoRound = (_autoRound !== false),
 					i, xi, ni, bv, ev, bnums, enums, bn, hasAlpha, temp, cv, str, useHSL;
 				if (e.indexOf(",") !== -1 || b.indexOf(",") !== -1) {
-					ba = ba.join(" ").replace(_commasOutsideParenExp, ", ").split(" ");
-					ea = ea.join(" ").replace(_commasOutsideParenExp, ", ").split(" ");
+					if ((e + b).indexOf("rgb") !== -1 || (e + b).indexOf("hsl") !== -1) { //keep rgb(), rgba(), hsl(), and hsla() values together! (remember, we're splitting on spaces)
+						ba = ba.join(" ").replace(_commasOutsideParenExp, ", ").split(" ");
+						ea = ea.join(" ").replace(_commasOutsideParenExp, ", ").split(" ");
+					} else {
+						ba = ba.join(" ").split(",").join(", ").split(" ");
+						ea = ea.join(" ").split(",").join(", ").split(" ");
+					}
 					l = ba.length;
 				}
 				if (l !== ea.length) {
@@ -4986,6 +5113,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						str = ev.indexOf(")") + 1;
 						str = ")" + (str ? ev.substr(str) : ""); //if there's a comma or ) at the end, retain it.
 						useHSL = (ev.indexOf("hsl") !== -1 && _supportsOpacity);
+						temp = ev; //original string value so we can look for any prefix later.
 						bv = _parseColor(bv, useHSL);
 						ev = _parseColor(ev, useHSL);
 						hasAlpha = (bv.length + ev.length > 6);
@@ -4997,11 +5125,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 								hasAlpha = false;
 							}
 							if (useHSL) {
-								pt.appendXtra((hasAlpha ? "hsla(" : "hsl("), bv[0], _parseChange(ev[0], bv[0]), ",", false, true)
+								pt.appendXtra(temp.substr(0, temp.indexOf("hsl")) + (hasAlpha ? "hsla(" : "hsl("), bv[0], _parseChange(ev[0], bv[0]), ",", false, true)
 									.appendXtra("", bv[1], _parseChange(ev[1], bv[1]), "%,", false)
 									.appendXtra("", bv[2], _parseChange(ev[2], bv[2]), (hasAlpha ? "%," : "%" + str), false);
 							} else {
-								pt.appendXtra((hasAlpha ? "rgba(" : "rgb("), bv[0], ev[0] - bv[0], ",", true, true)
+								pt.appendXtra(temp.substr(0, temp.indexOf("rgb")) + (hasAlpha ? "rgba(" : "rgb("), bv[0], ev[0] - bv[0], ",", true, true)
 									.appendXtra("", bv[1], ev[1] - bv[1], ",", true)
 									.appendXtra("", bv[2], ev[2] - bv[2], (hasAlpha ? "," : str), true);
 							}
@@ -5272,7 +5400,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 
 		//transform-related methods and properties
-		CSSPlugin.useSVGTransformAttr = _isSafari || _isFirefox; //Safari and Firefox both have some rendering bugs when applying CSS transforms to SVG elements, so default to using the "transform" attribute instead (users can override this).
+		CSSPlugin.useSVGTransformAttr = true; //Safari and Firefox both have some rendering bugs when applying CSS transforms to SVG elements, so default to using the "transform" attribute instead (users can override this).
 		var _transformProps = ("scaleX,scaleY,scaleZ,x,y,z,skewX,skewY,rotation,rotationX,rotationY,perspective,xPercent,yPercent").split(","),
 			_transformProp = _checkPropPrefix("transform"), //the Javascript (camelCase) transform property, like msTransform, WebkitTransform, MozTransform, or OTransform.
 			_transformPropCSS = _prefixCSS + "transform",
@@ -5282,7 +5410,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				this.perspective = parseFloat(CSSPlugin.defaultTransformPerspective) || 0;
 				this.force3D = (CSSPlugin.defaultForce3D === false || !_supports3D) ? false : CSSPlugin.defaultForce3D || "auto";
 			},
-			_SVGElement = window.SVGElement,
+			_SVGElement = _gsScope.SVGElement,
 			_useSVGTransformAttr,
 			//Some browsers (like Firefox and IE) don't honor transform-origin properly in SVG elements, so we need to manually adjust the matrix accordingly. We feature detect here rather than always doing the conversion for certain browsers because they may fix the problem at some point in the future.
 
@@ -5296,10 +5424,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				container.appendChild(element);
 				return element;
 			},
-			_docElement = _doc.documentElement,
+			_docElement = _doc.documentElement || {},
 			_forceSVGTransformAttr = (function() {
 				//IE and Android stock don't support CSS transforms on SVG elements, so we must write them to the "transform" attribute. We populate this variable in the _parseTransform() method, and only if/when we come across an SVG element
-				var force = _ieVers || (/Android/i.test(_agent) && !window.chrome),
+				var force = _ieVers || (/Android/i.test(_agent) && !_gsScope.chrome),
 					svg, rect, width;
 				if (_doc.createElementNS && !force) { //IE8 and earlier doesn't support SVG anyway
 					svg = _createSVG("svg", _docElement);
@@ -5322,6 +5450,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 				if (!absolute || (v = absolute.split(" ")).length < 2) {
 					b = e.getBBox();
+					if (b.x === 0 && b.y === 0 && b.width + b.height === 0) { //some browsers (like Firefox) misreport the bounds if the element has zero width and height (it just assumes it's at x:0, y:0), thus we need to manually grab the position in that case.
+						b = {x: parseFloat(e.hasAttribute("x") ? e.getAttribute("x") : e.hasAttribute("cx") ? e.getAttribute("cx") : 0) || 0, y: parseFloat(e.hasAttribute("y") ? e.getAttribute("y") : e.hasAttribute("cy") ? e.getAttribute("cy") : 0) || 0, width:0, height:0};
+					}
 					local = _parsePosition(local).split(" ");
 					v = [(local[0].indexOf("%") !== -1 ? parseFloat(local[0]) / 100 * b.width : parseFloat(local[0])) + b.x,
 						 (local[1].indexOf("%") !== -1 ? parseFloat(local[1]) / 100 * b.height : parseFloat(local[1])) + b.y];
@@ -5336,10 +5467,12 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					tx = m[4];
 					ty = m[5];
 					determinant = (a * d - b * c);
-					x = xOrigin * (d / determinant) + yOrigin * (-c / determinant) + ((c * ty - d * tx) / determinant);
-					y = xOrigin * (-b / determinant) + yOrigin * (a / determinant) - ((a * ty - b * tx) / determinant);
-					xOrigin = decoratee.xOrigin = v[0] = x;
-					yOrigin = decoratee.yOrigin = v[1] = y;
+					if (determinant) { //if it's zero (like if scaleX and scaleY are zero), skip it to avoid errors with dividing by zero.
+						x = xOrigin * (d / determinant) + yOrigin * (-c / determinant) + ((c * ty - d * tx) / determinant);
+						y = xOrigin * (-b / determinant) + yOrigin * (a / determinant) - ((a * ty - b * tx) / determinant);
+						xOrigin = decoratee.xOrigin = v[0] = x;
+						yOrigin = decoratee.yOrigin = v[1] = y;
+					}
 				}
 				if (tm) { //avoid jump when transformOrigin is changed - adjust the x/y values accordingly
 					if (skipRecord) {
@@ -5363,13 +5496,42 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					e.setAttribute("data-svg-origin", v.join(" "));
 				}
 			},
-			_canGetBBox = function(e) {
+			_getBBoxHack = function(swapIfPossible) { //works around issues in some browsers (like Firefox) that don't correctly report getBBox() on SVG elements inside a <defs> element and/or <mask>. We try creating an SVG, adding it to the documentElement and toss the element in there so that it's definitely part of the rendering tree, then grab the bbox and if it works, we actually swap out the original getBBox() method for our own that does these extra steps whenever getBBox is needed. This helps ensure that performance is optimal (only do all these extra steps when absolutely necessary...most elements don't need it).
+				var svg = _createElement("svg", (this.ownerSVGElement && this.ownerSVGElement.getAttribute("xmlns")) || "http://www.w3.org/2000/svg"),
+					oldParent = this.parentNode,
+					oldSibling = this.nextSibling,
+					oldCSS = this.style.cssText,
+					bbox;
+				_docElement.appendChild(svg);
+				svg.appendChild(this);
+				this.style.display = "block";
+				if (swapIfPossible) {
+					try {
+						bbox = this.getBBox();
+						this._originalGetBBox = this.getBBox;
+						this.getBBox = _getBBoxHack;
+					} catch (e) { }
+				} else if (this._originalGetBBox) {
+					bbox = this._originalGetBBox();
+				}
+				if (oldSibling) {
+					oldParent.insertBefore(this, oldSibling);
+				} else {
+					oldParent.appendChild(this);
+				}
+				_docElement.removeChild(svg);
+				this.style.cssText = oldCSS;
+				return bbox;
+			},
+			_getBBox = function(e) {
 				try {
 					return e.getBBox(); //Firefox throws errors if you try calling getBBox() on an SVG element that's not rendered (like in a <symbol> or <defs>). https://bugzilla.mozilla.org/show_bug.cgi?id=612118
-				} catch (e) {}
+				} catch (error) {
+					return _getBBoxHack.call(e, true);
+				}
 			},
 			_isSVG = function(e) { //reports if the element is an SVG on which getBBox() actually works
-				return !!(_SVGElement && e.getBBox && e.getCTM && _canGetBBox(e) && (!e.parentNode || (e.parentNode.getBBox && e.parentNode.getCTM)));
+				return !!(_SVGElement && e.getCTM && (!e.parentNode || e.ownerSVGElement) && _getBBox(e));
 			},
 			_identity2DMatrix = [1,0,0,1,0,0],
 			_getMatrix = function(e, force2D) {
@@ -5385,8 +5547,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					s = (s && s.length === 4) ? [s[0].substr(4), Number(s[2].substr(4)), Number(s[1].substr(4)), s[3].substr(4), (tm.x || 0), (tm.y || 0)].join(",") : "";
 				}
 				isDefault = (!s || s === "none" || s === "matrix(1, 0, 0, 1, 0, 0)");
-				if (isDefault && _transformProp && ((none = (_getComputedStyle(e).display === "none")) || !e.parentNode)) {
-					if (none) { //browsers don't report transforms accurately unless the element is in the DOM and has a display value that's not "none".
+				if (_transformProp && ((none = (!_getComputedStyle(e) || _getComputedStyle(e).display === "none")) || !e.parentNode)) { //note: Firefox returns null for getComputedStyle() if the element is in an iframe that has display:none. https://bugzilla.mozilla.org/show_bug.cgi?id=548397
+					if (none) { //browsers don't report transforms accurately unless the element is in the DOM and has a display value that's not "none". Firefox and Microsoft browsers have a partial bug where they'll report transforms even if display:none BUT not any percentage-based values like translate(-50%, 8px) will be reported as if it's translate(0, 8px).
 						n = style.display;
 						style.display = "block";
 					}
@@ -5405,20 +5567,16 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						_docElement.removeChild(e);
 					}
 				}
-				if (tm.svg || (e.getBBox && _isSVG(e))) {
+				if (tm.svg || (e.getCTM && _isSVG(e))) {
 					if (isDefault && (style[_transformProp] + "").indexOf("matrix") !== -1) { //some browsers (like Chrome 40) don't correctly report transforms that are applied inline on an SVG element (they don't get included in the computed style), so we double-check here and accept matrix values
 						s = style[_transformProp];
 						isDefault = 0;
 					}
 					m = e.getAttribute("transform");
 					if (isDefault && m) {
-						if (m.indexOf("matrix") !== -1) { //just in case there's a "transform" value specified as an attribute instead of CSS style. Accept either a matrix() or simple translate() value though.
-							s = m;
-							isDefault = 0;
-						} else if (m.indexOf("translate") !== -1) {
-							s = "matrix(1,0,0,1," + m.match(/(?:\-|\b)[\d\-\.e]+\b/gi).join(",") + ")";
-							isDefault = 0;
-						}
+						m = e.transform.baseVal.consolidate().matrix; //ensures that even complex values like "translate(50,60) rotate(135,0,0)" are parsed because it mashes it into a matrix.
+						s = "matrix(" + m.a + "," + m.b + "," + m.c + "," + m.d + "," + m.e + "," + m.f + ")";
+						isDefault = 0;
 					}
 				}
 				if (isDefault) {
@@ -5454,7 +5612,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					defaultTransformPerspective = parseFloat(CSSPlugin.defaultTransformPerspective) || 0,
 					m, i, scaleX, scaleY, rotation, skewX;
 
-				tm.svg = !!(t.getBBox && _isSVG(t));
+				tm.svg = !!(t.getCTM && _isSVG(t));
 				if (tm.svg) {
 					_parseSVGOrigin(t, _getStyle(t, _transformOriginProp, cs, false, "50% 50%") + "", tm, t.getAttribute("data-svg-origin"));
 					_useSVGTransformAttr = CSSPlugin.useSVGTransformAttr || _forceSVGTransformAttr;
@@ -5471,7 +5629,6 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 							a43 = m[11],
 							angle = Math.atan2(a32, a33),
 							t1, t2, t3, t4, cos, sin;
-
 						//we manually compensate for non-zero z component of transformOrigin to work around bugs in Safari
 						if (tm.zOrigin) {
 							a34 = -tm.zOrigin;
@@ -5479,6 +5636,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 							a24 = a23*a34-m[13];
 							a34 = a33*a34+tm.zOrigin-m[14];
 						}
+						//note for possible future consolidation: rotationX: Math.atan2(a32, a33), rotationY: Math.atan2(-a31, Math.sqrt(a33 * a33 + a32 * a32)), rotation: Math.atan2(a21, a11), skew: Math.atan2(a12, a22). However, it doesn't seem to be quite as reliable as the full-on backwards rotation procedure.
 						tm.rotationX = angle * _RAD2DEG;
 						//rotationX
 						if (angle) {
@@ -5515,13 +5673,17 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						angle = Math.atan2(a21, a11);
 						tm.rotation = angle * _RAD2DEG;
 						if (angle) {
-							cos = Math.cos(-angle);
-							sin = Math.sin(-angle);
-							a11 = a11*cos+a12*sin;
-							t2 = a21*cos+a22*sin;
-							a22 = a21*-sin+a22*cos;
-							a32 = a31*-sin+a32*cos;
-							a21 = t2;
+							cos = Math.cos(angle);
+							sin = Math.sin(angle);
+							t1 = a11*cos+a21*sin;
+							t2 = a12*cos+a22*sin;
+							t3 = a13*cos+a23*sin;
+							a21 = a21*cos-a11*sin;
+							a22 = a22*cos-a12*sin;
+							a23 = a23*cos-a13*sin;
+							a11 = t1;
+							a12 = t2;
+							a13 = t3;
 						}
 
 						if (tm.rotationX && Math.abs(tm.rotationX) + Math.abs(tm.rotation) > 359.9) { //when rotationY is set, it will often be parsed as 180 degrees different than it should be, and rotationX and rotation both being 180 (it looks the same), so we adjust for that here.
@@ -5529,24 +5691,46 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 							tm.rotationY = 180 - tm.rotationY;
 						}
 
-						tm.scaleX = ((Math.sqrt(a11 * a11 + a21 * a21) * rnd + 0.5) | 0) / rnd;
-						tm.scaleY = ((Math.sqrt(a22 * a22 + a23 * a23) * rnd + 0.5) | 0) / rnd;
-						tm.scaleZ = ((Math.sqrt(a32 * a32 + a33 * a33) * rnd + 0.5) | 0) / rnd;
-						if (tm.rotationX || tm.rotationY) {
-							tm.skewX = 0;
-						} else {
-							tm.skewX = (a12 || a22) ? Math.atan2(a12, a22) * _RAD2DEG + tm.rotation : tm.skewX || 0;
-							if (Math.abs(tm.skewX) > 90 && Math.abs(tm.skewX) < 270) {
-								if (invX) {
-									tm.scaleX *= -1;
-									tm.skewX += (tm.rotation <= 0) ? 180 : -180;
-									tm.rotation += (tm.rotation <= 0) ? 180 : -180;
-								} else {
-									tm.scaleY *= -1;
-									tm.skewX += (tm.skewX <= 0) ? 180 : -180;
-								}
+						//skewX
+						angle = Math.atan2(a12, a22);
+
+						//scales
+						tm.scaleX = ((Math.sqrt(a11 * a11 + a21 * a21 + a31 * a31) * rnd + 0.5) | 0) / rnd;
+						tm.scaleY = ((Math.sqrt(a22 * a22 + a32 * a32) * rnd + 0.5) | 0) / rnd;
+						tm.scaleZ = ((Math.sqrt(a13 * a13 + a23 * a23 + a33 * a33) * rnd + 0.5) | 0) / rnd;
+						a11 /= tm.scaleX;
+						a12 /= tm.scaleY;
+						a21 /= tm.scaleX;
+						a22 /= tm.scaleY;
+						if (Math.abs(angle) > min) {
+							tm.skewX = angle * _RAD2DEG;
+							a12 = 0; //unskews
+							if (tm.skewType !== "simple") {
+								tm.scaleY *= 1 / Math.cos(angle); //by default, we compensate the scale based on the skew so that the element maintains a similar proportion when skewed, so we have to alter the scaleY here accordingly to match the default (non-adjusted) skewing that CSS does (stretching more and more as it skews).
 							}
+
+						} else {
+							tm.skewX = 0;
 						}
+
+						/* //for testing purposes
+						var transform = "matrix3d(",
+							comma = ",",
+							zero = "0";
+						a13 /= tm.scaleZ;
+						a23 /= tm.scaleZ;
+						a31 /= tm.scaleX;
+						a32 /= tm.scaleY;
+						a33 /= tm.scaleZ;
+						transform += ((a11 < min && a11 > -min) ? zero : a11) + comma + ((a21 < min && a21 > -min) ? zero : a21) + comma + ((a31 < min && a31 > -min) ? zero : a31);
+						transform += comma + ((a41 < min && a41 > -min) ? zero : a41) + comma + ((a12 < min && a12 > -min) ? zero : a12) + comma + ((a22 < min && a22 > -min) ? zero : a22);
+						transform += comma + ((a32 < min && a32 > -min) ? zero : a32) + comma + ((a42 < min && a42 > -min) ? zero : a42) + comma + ((a13 < min && a13 > -min) ? zero : a13);
+						transform += comma + ((a23 < min && a23 > -min) ? zero : a23) + comma + ((a33 < min && a33 > -min) ? zero : a33) + comma + ((a43 < min && a43 > -min) ? zero : a43) + comma;
+						transform += a14 + comma + a24 + comma + a34 + comma + (tm.perspective ? (1 + (-a34 / tm.perspective)) : 1) + ")";
+						console.log(transform);
+						document.querySelector(".test").style[_transformProp] = transform;
+						*/
+
 						tm.perspective = a43 ? 1 / ((a43 < 0) ? -a43 : a43) : 0;
 						tm.x = a14;
 						tm.y = a24;
@@ -5568,16 +5752,6 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						scaleY = Math.sqrt(d * d + c * c);
 						rotation = (a || b) ? Math.atan2(b, a) * _RAD2DEG : tm.rotation || 0; //note: if scaleX is 0, we cannot accurately measure rotation. Same for skewX with a scaleY of 0. Therefore, we default to the previously recorded value (or zero if that doesn't exist).
 						skewX = (c || d) ? Math.atan2(c, d) * _RAD2DEG + rotation : tm.skewX || 0;
-						if (Math.abs(skewX) > 90 && Math.abs(skewX) < 270) {
-							if (invX) {
-								scaleX *= -1;
-								skewX += (rotation <= 0) ? 180 : -180;
-								rotation += (rotation <= 0) ? 180 : -180;
-							} else {
-								scaleY *= -1;
-								skewX += (skewX <= 0) ? 180 : -180;
-							}
-						}
 						tm.scaleX = scaleX;
 						tm.scaleY = scaleY;
 						tm.rotation = rotation;
@@ -5590,6 +5764,16 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						if (tm.svg) {
 							tm.x -= tm.xOrigin - (tm.xOrigin * a + tm.yOrigin * c);
 							tm.y -= tm.yOrigin - (tm.xOrigin * b + tm.yOrigin * d);
+						}
+					}
+					if (Math.abs(tm.skewX) > 90 && Math.abs(tm.skewX) < 270) {
+						if (invX) {
+							tm.scaleX *= -1;
+							tm.skewX += (tm.rotation <= 0) ? 180 : -180;
+							tm.rotation += (tm.rotation <= 0) ? 180 : -180;
+						} else {
+							tm.scaleY *= -1;
+							tm.skewX += (tm.skewX <= 0) ? 180 : -180;
 						}
 					}
 					tm.zOrigin = zOrigin;
@@ -5720,27 +5904,34 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					isSVG = t.svg,
 					perspective = t.perspective,
 					force3D = t.force3D,
-					a11, a12, a13, a21, a22, a23, a31, a32, a33, a41, a42, a43,
-					zOrigin, min, cos, sin, t1, t2, transform, comma, zero, skew, rnd;
+					skewY = t.skewY,
+					skewX = t.skewX,
+					t1,	a11, a12, a13, a21, a22, a23, a31, a32, a33, a41, a42, a43,
+					zOrigin, min, cos, sin, t2, transform, comma, zero, skew, rnd;
+				if (skewY) { //for performance reasons, we combine all skewing into the skewX and rotation values. Remember, a skewY of 10 degrees looks the same as a rotation of 10 degrees plus a skewX of 10 degrees.
+					skewX += skewY;
+					angle += skewY;
+				}
+
 				//check to see if we should render as 2D (and SVGs must use 2D when _useSVGTransformAttr is true)
 				if (((((v === 1 || v === 0) && force3D === "auto" && (this.tween._totalTime === this.tween._totalDuration || !this.tween._totalTime)) || !force3D) && !z && !perspective && !rotationY && !rotationX && sz === 1) || (_useSVGTransformAttr && isSVG) || !_supports3D) { //on the final render (which could be 0 for a from tween), if there are no 3D aspects, render in 2D to free up memory and improve performance especially on mobile devices. Check the tween's totalTime/totalDuration too in order to make sure it doesn't happen between repeats if it's a repeating tween.
 
 					//2D
-					if (angle || t.skewX || isSVG) {
+					if (angle || skewX || isSVG) {
 						angle *= _DEG2RAD;
-						skew = t.skewX * _DEG2RAD;
+						skew = skewX * _DEG2RAD;
 						rnd = 100000;
 						a11 = Math.cos(angle) * sx;
 						a21 = Math.sin(angle) * sx;
 						a12 = Math.sin(angle - skew) * -sy;
 						a22 = Math.cos(angle - skew) * sy;
 						if (skew && t.skewType === "simple") { //by default, we compensate skewing on the other axis to make it look more natural, but you can set the skewType to "simple" to use the uncompensated skewing that CSS does
-							t1 = Math.tan(skew - t.skewY * _DEG2RAD);
+							t1 = Math.tan(skew - skewY * _DEG2RAD);
 							t1 = Math.sqrt(1 + t1 * t1);
 							a12 *= t1;
 							a22 *= t1;
-							if (t.skewY) {
-								t1 = Math.tan(t.skewY * _DEG2RAD);
+							if (skewY) {
+								t1 = Math.tan(skewY * _DEG2RAD);
 								t1 = Math.sqrt(1 + t1 * t1);
 								a11 *= t1;
 								a21 *= t1;
@@ -5787,21 +5978,21 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						perspective = 0;
 					}
 				}
-				if (angle || t.skewX) {
+				if (angle || skewX) {
 					angle *= _DEG2RAD;
 					cos = a11 = Math.cos(angle);
 					sin = a21 = Math.sin(angle);
-					if (t.skewX) {
-						angle -= t.skewX * _DEG2RAD;
+					if (skewX) {
+						angle -= skewX * _DEG2RAD;
 						cos = Math.cos(angle);
 						sin = Math.sin(angle);
 						if (t.skewType === "simple") { //by default, we compensate skewing on the other axis to make it look more natural, but you can set the skewType to "simple" to use the uncompensated skewing that CSS does
-							t1 = Math.tan((t.skewX - t.skewY) * _DEG2RAD);
+							t1 = Math.tan((skewX - skewY) * _DEG2RAD);
 							t1 = Math.sqrt(1 + t1 * t1);
 							cos *= t1;
 							sin *= t1;
 							if (t.skewY) {
-								t1 = Math.tan(t.skewY * _DEG2RAD);
+								t1 = Math.tan(skewY * _DEG2RAD);
 								t1 = Math.sqrt(1 + t1 * t1);
 								a11 *= t1;
 								a21 *= t1;
@@ -5818,7 +6009,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					a11 = a22 = 1;
 					a12 = a21 = 0;
 				}
-				// KEY  INDEX   AFFECTS
+				// KEY  INDEX   AFFECTS a[row][column]
 				// a11  0       rotation, rotationY, scaleX
 				// a21  1       rotation, rotationY, scaleX
 				// a31  2       rotationY, scaleX
@@ -5935,10 +6126,14 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		_registerComplexSpecialProp("transform,scale,scaleX,scaleY,scaleZ,x,y,z,rotation,rotationX,rotationY,rotationZ,skewX,skewY,shortRotation,shortRotationX,shortRotationY,shortRotationZ,transformOrigin,svgOrigin,transformPerspective,directionalRotation,parseTransform,force3D,skewType,xPercent,yPercent,smoothOrigin", {parser:function(t, e, parsingProp, cssp, pt, plugin, vars) {
 			if (cssp._lastParsedTransform === vars) { return pt; } //only need to parse the transform once, and only if the browser supports it.
 			cssp._lastParsedTransform = vars;
-			var swapFunc;
+			var scaleFunc = (vars.scale && typeof(vars.scale) === "function") ? vars.scale : 0, //if there's a function-based "scale" value, swap in the resulting numeric value temporarily. Otherwise, if it's called for both scaleX and scaleY independently, they may not match (like if the function uses Math.random()).
+				swapFunc;
 			if (typeof(vars[parsingProp]) === "function") { //whatever property triggers the initial parsing might be a function-based value in which case it already got called in parse(), thus we don't want to call it again in here. The most efficient way to avoid this is to temporarily swap the value directly into the vars object, and then after we do all our parsing in this function, we'll swap it back again.
 				swapFunc = vars[parsingProp];
 				vars[parsingProp] = e;
+			}
+			if (scaleFunc) {
+				vars.scale = scaleFunc(_index, t);
 			}
 			var originalGSTransform = t._gsTransform,
 				style = t.style,
@@ -5950,6 +6145,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				m1 = _getTransform(t, _cs, true, v.parseTransform),
 				orig = v.transform && ((typeof(v.transform) === "function") ? v.transform(_index, _target) : v.transform),
 				m2, copy, has3D, hasChange, dr, x, y, matrix, p;
+			m1.skewType = v.skewType || m1.skewType || CSSPlugin.defaultSkewType;
 			cssp._transform = m1;
 			if (orig && typeof(orig) === "string" && _transformProp) { //for values like transform:"rotate(60deg) scale(0.5, 0.8)"
 				copy = _tempDiv.style; //don't use the original target because it might be SVG in which case some browsers don't report computed style correctly.
@@ -5958,6 +6154,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				copy.position = "absolute";
 				_doc.body.appendChild(_tempDiv);
 				m2 = _getTransform(_tempDiv, null, false);
+				if (m1.skewType === "simple") { //the default _getTransform() reports the skewX/scaleY as if skewType is "compensated", thus we need to adjust that here if skewType is "simple".
+					m2.scaleY *= Math.cos(m2.skewX * _DEG2RAD);
+				}
 				if (m1.svg) { //if it's an SVG element, x/y part of the matrix will be affected by whatever we use as the origin and the offsets, so compensate here...
 					x = m1.xOrigin;
 					y = m1.yOrigin;
@@ -6016,25 +6215,18 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					m2.yPercent = _parseVal(v.y, m1.yPercent);
 				}
 
-				m2.rotation = _parseAngle(("rotation" in v) ? v.rotation : ("shortRotation" in v) ? v.shortRotation + "_short" : ("rotationZ" in v) ? v.rotationZ : m1.rotation - m1.skewY, m1.rotation - m1.skewY, "rotation", endRotations); //see notes below about skewY for why we subtract it from rotation here
+				m2.rotation = _parseAngle(("rotation" in v) ? v.rotation : ("shortRotation" in v) ? v.shortRotation + "_short" : ("rotationZ" in v) ? v.rotationZ : m1.rotation, m1.rotation, "rotation", endRotations);
 				if (_supports3D) {
 					m2.rotationX = _parseAngle(("rotationX" in v) ? v.rotationX : ("shortRotationX" in v) ? v.shortRotationX + "_short" : m1.rotationX || 0, m1.rotationX, "rotationX", endRotations);
 					m2.rotationY = _parseAngle(("rotationY" in v) ? v.rotationY : ("shortRotationY" in v) ? v.shortRotationY + "_short" : m1.rotationY || 0, m1.rotationY, "rotationY", endRotations);
 				}
-				m2.skewX = _parseAngle(v.skewX, m1.skewX - m1.skewY); //see notes below about skewY and why we subtract it from skewX here
-
-				//note: for performance reasons, we combine all skewing into the skewX and rotation values, ignoring skewY but we must still record it so that we can discern how much of the overall skew is attributed to skewX vs. skewY. Otherwise, if the skewY would always act relative (tween skewY to 10deg, for example, multiple times and if we always combine things into skewX, we can't remember that skewY was 10 from last time). Remember, a skewY of 10 degrees looks the same as a rotation of 10 degrees plus a skewX of -10 degrees.
-				if ((m2.skewY = _parseAngle(v.skewY, m1.skewY))) {
-					m2.skewX += m2.skewY;
-					m2.rotation += m2.skewY;
-				}
+				m2.skewX = _parseAngle(v.skewX, m1.skewX);
+				m2.skewY = _parseAngle(v.skewY, m1.skewY);
 			}
 			if (_supports3D && v.force3D != null) {
 				m1.force3D = v.force3D;
 				hasChange = true;
 			}
-
-			m1.skewType = v.skewType || m1.skewType || CSSPlugin.defaultSkewType;
 
 			has3D = (m1.force3D || m1.z || m1.rotationX || m1.rotationY || m2.z || m2.rotationX || m2.rotationY || m2.perspective);
 			if (!has3D && v.scale != null) {
@@ -6067,7 +6259,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					pt = _addNonTweeningNumericPT(m1, "xOffset", (originalGSTransform ? x : m1.xOffset), m1.xOffset, pt, transformOriginString);
 					pt = _addNonTweeningNumericPT(m1, "yOffset", (originalGSTransform ? y : m1.yOffset), m1.yOffset, pt, transformOriginString);
 				}
-				orig = _useSVGTransformAttr ? null : "0px 0px"; //certain browsers (like firefox) completely botch transform-origin, so we must remove it to prevent it from contaminating transforms. We manage it ourselves with xOrigin and yOrigin
+				orig = "0px 0px"; //certain browsers (like firefox) completely botch transform-origin, so we must remove it to prevent it from contaminating transforms. We manage it ourselves with xOrigin and yOrigin
 			}
 			if (orig || (_supports3D && has3D && m1.zOrigin)) { //if anything 3D is happening and there's a transformOrigin with a z component that's non-zero, we must ensure that the transformOrigin's z-component is set to 0 so that we can manually do those calculations to get around Safari bugs. Even if the user didn't specifically define a "transformOrigin" in this particular tween (maybe they did it via css directly).
 				if (_transformProp) {
@@ -6099,6 +6291,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 			if (swapFunc) {
 				vars[parsingProp] = swapFunc;
+			}
+			if (scaleFunc) {
+				vars.scale = scaleFunc;
 			}
 			return pt;
 		}, prefix:true});
@@ -6540,7 +6735,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				sp = _specialProps[p]; //SpecialProp lookup.
 				if (sp) {
 					pt = sp.parse(target, es, p, this, pt, plugin, vars);
-
+				} else if (p.substr(0,2) === "--") { //for tweening CSS variables (which always start with "--"). To maximize performance and simplicity, we bypass CSSPlugin altogether and just add a normal property tween to the tween instance itself.
+					this._tween._propLookup[p] = this._addTween.call(this._tween, target.style, "setProperty", _getComputedStyle(target).getPropertyValue(p) + "", es + "", p, false, p);
+					continue;
 				} else {
 					bs = _getStyle(target, p, _cs) + "";
 					isStr = (typeof(es) === "string");
@@ -6587,9 +6784,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						}
 
 						es = (en || en === 0) ? (rel ? en + bn : en) + esfx : vars[p]; //ensures that any += or -= prefixes are taken care of. Record the end value before normalizing the suffix because we always want to end the tween on exactly what they intended even if it doesn't match the beginning value's suffix.
-
 						//if the beginning/ending suffixes don't match, normalize them...
-						if (bsfx !== esfx) if (esfx !== "") if (en || en === 0) if (bn) { //note: if the beginning value (bn) is 0, we don't need to convert units!
+						if (bsfx !== esfx) if (esfx !== "" || p === "lineHeight") if (en || en === 0) if (bn) { //note: if the beginning value (bn) is 0, we don't need to convert units!
 							bn = _convertToPixels(target, p, bn, bsfx);
 							if (esfx === "%") {
 								bn /= _convertToPixels(target, p, 100, "%") / 100;
@@ -7011,7 +7207,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		_gsScope._gsDefine.plugin({
 			propName: "attr",
 			API: 2,
-			version: "0.6.0",
+			version: "0.6.1",
 
 			//called when the tween renders for the first time. This is where initial values should be recorded and any setup routines should run.
 			init: function(target, value, tween, index) {
@@ -7050,7 +7246,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
  */
 	_gsScope._gsDefine.plugin({
 		propName: "directionalRotation",
-		version: "0.3.0",
+		version: "0.3.1",
 		API: 2,
 
 		//called when the tween renders for the first time. This is where initial values should be recorded and any setup routines should run.
@@ -7209,7 +7405,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				this._calcEnd = (yoyoMode === true);
 			}, true),
 			p = SlowMo.prototype = new Ease(),
-			SteppedEase, RoughEase, _createElastic;
+			SteppedEase, ExpoScaleEase, RoughEase, _createElastic;
 
 		p.constructor = SlowMo;
 		p.getRatio = function(p) {
@@ -7217,7 +7413,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			if (p < this._p1) {
 				return this._calcEnd ? 1 - ((p = 1 - (p / this._p1)) * p) : r - ((p = 1 - (p / this._p1)) * p * p * p * r);
 			} else if (p > this._p3) {
-				return this._calcEnd ? 1 - (p = (p - this._p3) / this._p1) * p : r + ((p - r) * (p = (p - this._p3) / this._p1) * p * p * p);
+				return this._calcEnd ? (p === 1 ? 0 : 1 - (p = (p - this._p3) / this._p1) * p) : r + ((p - r) * (p = (p - this._p3) / this._p1) * p * p * p); //added p === 1 ? 0 to avoid floating point rounding errors from affecting the final value, like 1 - 0.7 = 0.30000000000000004 instead of 0.3
 			}
 			return this._calcEnd ? 1 : r;
 		};
@@ -7229,10 +7425,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 
 		//SteppedEase
-		SteppedEase = _class("easing.SteppedEase", function(steps) {
+		SteppedEase = _class("easing.SteppedEase", function(steps, immediateStart) {
 				steps = steps || 1;
 				this._p1 = 1 / steps;
-				this._p2 = steps + 1;
+				this._p2 = steps + (immediateStart ? 0 : 1);
+				this._p3 = immediateStart ? 1 : 0;
 			}, true);
 		p = SteppedEase.prototype = new Ease();
 		p.constructor = SteppedEase;
@@ -7242,10 +7439,29 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			} else if (p >= 1) {
 				p = 0.999999999;
 			}
-			return ((this._p2 * p) >> 0) * this._p1;
+			return (((this._p2 * p) | 0) + this._p3) * this._p1;
 		};
-		p.config = SteppedEase.config = function(steps) {
-			return new SteppedEase(steps);
+		p.config = SteppedEase.config = function(steps, immediateStart) {
+			return new SteppedEase(steps, immediateStart);
+		};
+
+		//ExpoScaleEase
+		ExpoScaleEase = _class("easing.ExpoScaleEase", function(start, end, ease) {
+			this._p1 = Math.log(end / start);
+			this._p2 = end - start;
+			this._p3 = start;
+			this._ease = ease;
+		}, true);
+		p = ExpoScaleEase.prototype = new Ease();
+		p.constructor = ExpoScaleEase;
+		p.getRatio = function(p) {
+			if (this._ease) {
+				p = this._ease.getRatio(p);
+			}
+			return (this._p3 * Math.exp(this._p1 * p) - this._p3) / this._p2;
+		};
+		p.config = ExpoScaleEase.config = function(start, end, ease) {
+			return new ExpoScaleEase(start, end, ease);
 		};
 
 
@@ -7483,6 +7699,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 		"use strict";
 		var _exports = {},
+			_doc = window.document,
 			_globals = window.GreenSockGlobals = window.GreenSockGlobals || window;
 		if (_globals.TweenLite) {
 			return; //in case the core set of classes is already loaded, don't instantiate twice.
@@ -7557,7 +7774,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 				this.check = function(init) {
 					var i = dependencies.length,
 						missing = i,
-						cur, a, n, cl, hasModule;
+						cur, a, n, cl;
 					while (--i > -1) {
 						if ((cur = _defLookup[dependencies[i]] || new Definition(dependencies[i], [])).gsClass) {
 							_classes[i] = cur.gsClass;
@@ -7574,10 +7791,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 						//exports to multiple environments
 						if (global) {
 							_globals[n] = _exports[n] = cl; //provides a way to avoid global namespace pollution. By default, the main classes like TweenLite, Power1, Strong, etc. are added to window unless a GreenSockGlobals is defined. So if you want to have things added to a custom object instead, just do something like window.GreenSockGlobals = {} before loading any GreenSock files. You can even set up an alias like window.GreenSockGlobals = windows.gs = {} so that you can access everything like gs.TweenLite. Also remember that ALL classes are added to the window.com.greensock object (in their respective packages, like com.greensock.easing.Power1, com.greensock.TweenLite, etc.)
-							hasModule = (typeof(module) !== "undefined" && module.exports);
-							if (!hasModule && typeof(define) === "function" && define.amd){ //AMD
-								define((window.GreenSockAMDPath ? window.GreenSockAMDPath + "/" : "") + ns.split(".").pop(), [], function() { return cl; });
-							} else if (hasModule){ //node
+							if (typeof(module) !== "undefined" && module.exports) { //node
 								if (ns === moduleName) {
 									module.exports = _exports[moduleName] = cl;
 									for (i in _exports) {
@@ -7586,6 +7800,8 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 								} else if (_exports[moduleName]) {
 									_exports[moduleName][n] = cl;
 								}
+							} else if (typeof(define) === "function" && define.amd){ //AMD
+								define((window.GreenSockAMDPath ? window.GreenSockAMDPath + "/" : "") + ns.split(".").pop(), [], function() { return cl; });
 							}
 						}
 						for (i = 0; i < this.sc.length; i++) {
@@ -7618,7 +7834,6 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
  * ----------------------------------------------------------------
  */
 		var _baseParams = [0, 0, 1, 1],
-			_blankArray = [],
 			Ease = _class("easing.Ease", function(func, extraParams, type, power) {
 				this._func = func;
 				this._type = type || 0;
@@ -7802,6 +8017,9 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 			};
 
 			_self.lagSmoothing = function(threshold, adjustedLag) {
+				if (!arguments.length) { //if lagSmoothing() is called with no arguments, treat it like a getter that returns a boolean indicating if it's enabled or not. This is purposely undocumented and is for internal use.
+					return (_lagThreshold < 1 / _tinyNum);
+				}
 				_lagThreshold = threshold || (1 / _tinyNum); //zero should be interpreted as basically unlimited
 				_adjustedLag = Math.min(adjustedLag, _lagThreshold, 0);
 			};
@@ -7859,7 +8077,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 			//a bug in iOS 6 Safari occasionally prevents the requestAnimationFrame from working initially, so we use a 1.5-second timeout that automatically falls back to setTimeout() if it senses this condition.
 			setTimeout(function() {
-				if (_useRAF === "auto" && _self.frame < 5 && document.visibilityState !== "hidden") {
+				if (_useRAF === "auto" && _self.frame < 5 && (_doc || {}).visibilityState !== "hidden") {
 					_self.useRAF(false);
 				}
 			}, 1500);
@@ -7909,10 +8127,14 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 		//some browsers (like iOS) occasionally drop the requestAnimationFrame event when the user switches to a different tab and then comes back again, so we use a 2-second setTimeout() to sense if/when that condition occurs and then wake() the ticker.
 		var _checkTimeout = function() {
-				if (_tickerActive && _getTime() - _lastUpdate > 2000) {
+				if (_tickerActive && _getTime() - _lastUpdate > 2000 && ((_doc || {}).visibilityState !== "hidden" || !_ticker.lagSmoothing())) { //note: if the tab is hidden, we should still wake if lagSmoothing has been disabled.
 					_ticker.wake();
 				}
-				setTimeout(_checkTimeout, 2000);
+				var t = setTimeout(_checkTimeout, 2000);
+				if (t.unref) {
+					// allows a node process to exit even if the timeout’s callback hasn't been invoked. Without it, the node process could hang as this function is called every two seconds.
+					t.unref();
+				}
 			};
 		_checkTimeout();
 
@@ -7971,7 +8193,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 			var tl = this._timeline, //the 2 root timelines won't have a _timeline; they're always active.
 				startTime = this._startTime,
 				rawTime;
-			return (!tl || (!this._gc && !this._paused && tl.isActive() && (rawTime = tl.rawTime()) >= startTime && rawTime < startTime + this.totalDuration() / this._timeScale));
+			return (!tl || (!this._gc && !this._paused && tl.isActive() && (rawTime = tl.rawTime(true)) >= startTime && rawTime < startTime + this.totalDuration() / this._timeScale - 0.0000001));
 		};
 
 		p._enabled = function (enabled, ignoreTimeline) {
@@ -8171,14 +8393,21 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 			if (!arguments.length) {
 				return this._timeScale;
 			}
+			var pauseTime, t;
 			value = value || _tinyNum; //can't allow zero because it'll throw the math off
 			if (this._timeline && this._timeline.smoothChildTiming) {
-				var pauseTime = this._pauseTime,
-					t = (pauseTime || pauseTime === 0) ? pauseTime : this._timeline.totalTime();
+				pauseTime = this._pauseTime;
+				t = (pauseTime || pauseTime === 0) ? pauseTime : this._timeline.totalTime();
 				this._startTime = t - ((t - this._startTime) * this._timeScale / value);
 			}
 			this._timeScale = value;
-			return this._uncache(false);
+			t = this.timeline;
+			while (t && t.timeline) { //must update the duration/totalDuration of all ancestor timelines immediately in case in the middle of a render loop, one tween alters another tween's timeScale which shoves its startTime before 0, forcing the parent timeline to shift around and shiftChildren() which could affect that next tween's render (startTime). Doesn't matter for the root timeline though.
+				t._dirty = true;
+				t.totalDuration();
+				t = t.timeline;
+			}
+			return this;
 		};
 
 		p.reversed = function(value) {
@@ -8313,7 +8542,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 			this._totalTime = this._time = this._rawPrevTime = time;
 			while (tween) {
 				next = tween._next; //record it here because the value could change after rendering...
-				if (tween._active || (time >= tween._startTime && !tween._paused)) {
+				if (tween._active || (time >= tween._startTime && !tween._paused && !tween._gc)) {
 					if (!tween._reversed) {
 						tween.render((time - tween._startTime) * tween._timeScale, suppressEvents, force);
 					} else {
@@ -8415,7 +8644,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		p._firstPT = p._targets = p._overwrittenProps = p._startAt = null;
 		p._notifyPluginsOfEnabled = p._lazy = false;
 
-		TweenLite.version = "1.19.0";
+		TweenLite.version = "1.20.4";
 		TweenLite.defaultEase = p._ease = new Ease(null, null, 1, 1);
 		TweenLite.defaultOverwrite = "auto";
 		TweenLite.ticker = _ticker;
@@ -8430,22 +8659,23 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 				TweenLite.selector = selector;
 				return selector(e);
 			}
-			return (typeof(document) === "undefined") ? e : (document.querySelectorAll ? document.querySelectorAll(e) : document.getElementById((e.charAt(0) === "#") ? e.substr(1) : e));
+			return (typeof(_doc) === "undefined") ? e : (_doc.querySelectorAll ? _doc.querySelectorAll(e) : _doc.getElementById((e.charAt(0) === "#") ? e.substr(1) : e));
 		};
 
 		var _lazyTweens = [],
 			_lazyLookup = {},
 			_numbersExp = /(?:(-|-=|\+=)?\d*\.?\d*(?:e[\-+]?\d+)?)[0-9]/ig,
+			_relExp = /[\+-]=-?[\.\d]/,
 			//_nonNumbersExp = /(?:([\-+](?!(\d|=)))|[^\d\-+=e]|(e(?![\-+][\d])))+/ig,
 			_setRatio = function(v) {
 				var pt = this._firstPT,
 					min = 0.000001,
 					val;
 				while (pt) {
-					val = !pt.blob ? pt.c * v + pt.s : v ? this.join("") : this.start;
+					val = !pt.blob ? pt.c * v + pt.s : (v === 1 && this.end != null) ? this.end : v ? this.join("") : this.start;
 					if (pt.m) {
 						val = pt.m(val, this._target || pt.t);
-					} else if (val < min) if (val > -min) { //prevents issues with converting very small numbers to strings in the browser
+					} else if (val < min) if (val > -min && !pt.blob) { //prevents issues with converting very small numbers to strings in the browser
 						val = 0;
 					}
 					if (!pt.f) {
@@ -8460,12 +8690,15 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 			},
 			//compares two strings (start/end), finds the numbers that are different and spits back an array representing the whole value but with the changing values isolated as elements. For example, "rgb(0,0,0)" and "rgb(100,50,0)" would become ["rgb(", 0, ",", 50, ",0)"]. Notice it merges the parts that are identical (performance optimization). The array also has a linked list of PropTweens attached starting with _firstPT that contain the tweening data (t, p, s, c, f, etc.). It also stores the starting value as a "start" property so that we can revert to it if/when necessary, like when a tween rewinds fully. If the quantity of numbers differs between the start and end, it will always prioritize the end value(s). The pt parameter is optional - it's for a PropTween that will be appended to the end of the linked list and is typically for actually setting the value after all of the elements have been updated (with array.join("")).
 			_blobDif = function(start, end, filter, pt) {
-				var a = [start, end],
+				var a = [],
 					charIndex = 0,
 					s = "",
 					color = 0,
 					startNums, endNums, num, i, l, nonNumbers, currentNum;
 				a.start = start;
+				a.end = end;
+				start = a[0] = start + ""; //ensure values are strings
+				end = a[1] = end + "";
 				if (filter) {
 					filter(a); //pass an array with the starting and ending values and let the filter do whatever it needs to the values.
 					start = a[0];
@@ -8509,6 +8742,9 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 					a.push(s);
 				}
 				a.setRatio = _setRatio;
+				if (_relExp.test(end)) { //if the end string contains relative values, delete it so that on the final render (in _setRatio()), we don't actually set it to the string with += or -= characters (forces it to use the calculated value).
+					a.end = null;
+				}
 				return a;
 			},
 			//note: "funcParam" is only necessary for function-based getters/setters that require an extra parameter like getAttribute("width") and setAttribute("width", value). In this example, funcParam would be "width". Used by AttrPlugin for example.
@@ -8516,24 +8752,24 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 				if (typeof(end) === "function") {
 					end = end(index || 0, target);
 				}
-				var s = (start === "get") ? target[prop] : start,
-					type = typeof(target[prop]),
+				var type = typeof(target[prop]),
+					getterName = (type !== "function") ? "" : ((prop.indexOf("set") || typeof(target["get" + prop.substr(3)]) !== "function") ? prop : "get" + prop.substr(3)),
+					s = (start !== "get") ? start : !getterName ? target[prop] : funcParam ? target[getterName](funcParam) : target[getterName](),
 					isRelative = (typeof(end) === "string" && end.charAt(1) === "="),
 					pt = {t:target, p:prop, s:s, f:(type === "function"), pg:0, n:overwriteProp || prop, m:(!mod ? 0 : (typeof(mod) === "function") ? mod : Math.round), pr:0, c:isRelative ? parseInt(end.charAt(0) + "1", 10) * parseFloat(end.substr(2)) : (parseFloat(end) - s) || 0},
-					blob, getterName;
-				if (type !== "number") {
-					if (type === "function" && start === "get") {
-						getterName = ((prop.indexOf("set") || typeof(target["get" + prop.substr(3)]) !== "function") ? prop : "get" + prop.substr(3));
-						pt.s = s = funcParam ? target[getterName](funcParam) : target[getterName]();
-					}
-					if (typeof(s) === "string" && (funcParam || isNaN(s))) {
+					blob;
+
+				if (typeof(s) !== "number" || (typeof(end) !== "number" && !isRelative)) {
+					if (funcParam || isNaN(s) || (!isRelative && isNaN(end)) || typeof(s) === "boolean" || typeof(end) === "boolean") {
 						//a blob (string that has multiple numbers in it)
 						pt.fp = funcParam;
-						blob = _blobDif(s, end, stringFilter || TweenLite.defaultStringFilter, pt);
-						pt = {t:blob, p:"setRatio", s:0, c:1, f:2, pg:0, n:overwriteProp || prop, pr:0, m:0}; //"2" indicates it's a Blob property tween. Needed for RoundPropsPlugin for example.
-					} else if (!isRelative) {
+						blob = _blobDif(s, (isRelative ? (parseFloat(pt.s) + pt.c) + (pt.s + "").replace(/[0-9\-\.]/g, "") : end), stringFilter || TweenLite.defaultStringFilter, pt);
+						pt = {t: blob, p: "setRatio", s: 0, c: 1, f: 2, pg: 0, n: overwriteProp || prop, pr: 0, m: 0}; //"2" indicates it's a Blob property tween. Needed for RoundPropsPlugin for example.
+					} else {
 						pt.s = parseFloat(s);
-						pt.c = (parseFloat(end) - pt.s) || 0;
+						if (!isRelative) {
+							pt.c = (parseFloat(end) - pt.s) || 0;
+						}
 					}
 				}
 				if (pt.c) { //only add it to the linked list if there's a change.
@@ -8548,7 +8784,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 			_plugins = TweenLite._plugins = {},
 			_tweenLookup = _internals.tweenLookup = {},
 			_tweenLookupNum = 0,
-			_reservedProps = _internals.reservedProps = {ease:1, delay:1, overwrite:1, onComplete:1, onCompleteParams:1, onCompleteScope:1, useFrames:1, runBackwards:1, startAt:1, onUpdate:1, onUpdateParams:1, onUpdateScope:1, onStart:1, onStartParams:1, onStartScope:1, onReverseComplete:1, onReverseCompleteParams:1, onReverseCompleteScope:1, onRepeat:1, onRepeatParams:1, onRepeatScope:1, easeParams:1, yoyo:1, immediateRender:1, repeat:1, repeatDelay:1, data:1, paused:1, reversed:1, autoCSS:1, lazy:1, onOverwrite:1, callbackScope:1, stringFilter:1, id:1},
+			_reservedProps = _internals.reservedProps = {ease:1, delay:1, overwrite:1, onComplete:1, onCompleteParams:1, onCompleteScope:1, useFrames:1, runBackwards:1, startAt:1, onUpdate:1, onUpdateParams:1, onUpdateScope:1, onStart:1, onStartParams:1, onStartScope:1, onReverseComplete:1, onReverseCompleteParams:1, onReverseCompleteScope:1, onRepeat:1, onRepeatParams:1, onRepeatScope:1, easeParams:1, yoyo:1, immediateRender:1, repeat:1, repeatDelay:1, data:1, paused:1, reversed:1, autoCSS:1, lazy:1, onOverwrite:1, callbackScope:1, stringFilter:1, id:1, yoyoEase:1},
 			_overwriteLookup = {none:0, all:1, auto:2, concurrent:3, allOnStart:4, preexisting:5, "true":1, "false":0},
 			_rootFramesTimeline = Animation._rootFramesTimeline = new SimpleTimeline(),
 			_rootTimeline = Animation._rootTimeline = new SimpleTimeline(),
@@ -8729,10 +8965,14 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 				for (p in v.startAt) { //copy the properties/values into a new object to avoid collisions, like var to = {x:0}, from = {x:500}; timeline.fromTo(e, 1, from, to).fromTo(e, 1, to, from);
 					startVars[p] = v.startAt[p];
 				}
+				startVars.data = "isStart";
 				startVars.overwrite = false;
 				startVars.immediateRender = true;
 				startVars.lazy = (immediate && v.lazy !== false);
 				startVars.startAt = startVars.delay = null; //no nesting of startAt objects allowed (otherwise it could cause an infinite loop).
+				startVars.onUpdate = v.onUpdate;
+				startVars.onUpdateParams = v.onUpdateParams;
+				startVars.onUpdateScope = v.onUpdateScope || v.callbackScope || this;
 				this._startAt = TweenLite.to(this.target, 0, startVars);
 				if (immediate) {
 					if (this._time > 0) {
@@ -8879,7 +9119,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 				duration = this._duration,
 				prevRawPrevTime = this._rawPrevTime,
 				isComplete, callback, pt, rawPrevTime;
-			if (time >= duration - 0.0000001) { //to work around occasional floating point math artifacts.
+			if (time >= duration - 0.0000001 && time >= 0) { //to work around occasional floating point math artifacts.
 				this._totalTime = this._time = duration;
 				this.ratio = this._ease._calcEnd ? this._ease.getRatio(1) : 1;
 				if (!this._reversed ) {
@@ -8916,7 +9156,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 						this._rawPrevTime = rawPrevTime = (!suppressEvents || time || prevRawPrevTime === time) ? time : _tinyNum; //when the playhead arrives at EXACTLY time 0 (right on top) of a zero-duration tween, we need to discern if events are suppressed so that when the playhead moves again (next time), it'll trigger the callback. If events are NOT suppressed, obviously the callback would be triggered in this render. Basically, the callback should fire either when the playhead ARRIVES or LEAVES this exact spot, not both. Imagine doing a timeline.seek(0) and there's a callback that sits at 0. Since events are suppressed on that seek() by default, nothing will fire, but when the playhead moves off of that position, the callback should fire. This behavior is what people intuitively expect. We set the _rawPrevTime to be a precise tiny number to indicate this scenario rather than using another property/variable which would increase memory usage. This technique is less readable, but more efficient.
 					}
 				}
-				if (!this._initted) { //if we render the very beginning (time == 0) of a fromTo(), we must force the render (normal tweens wouldn't need to render at a time of 0 when the prevTime was also 0). This is also mandatory to make sure overwriting kicks in immediately.
+				if (!this._initted || (this._startAt && this._startAt.progress())) { //if we render the very beginning (time == 0) of a fromTo(), we must force the render (normal tweens wouldn't need to render at a time of 0 when the prevTime was also 0). This is also mandatory to make sure overwriting kicks in immediately. Also, we check progress() because if startAt has already rendered at its end, we should force a render at its beginning. Otherwise, if you put the playhead directly on top of where a fromTo({immediateRender:false}) starts, and then move it backwards, the from() won't revert its values.
 					force = true;
 				}
 			} else {
@@ -8984,7 +9224,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 			if (prevTime === 0) {
 				if (this._startAt) {
 					if (time >= 0) {
-						this._startAt.render(time, suppressEvents, force);
+						this._startAt.render(time, true, force);
 					} else if (!callback) {
 						callback = "_dummyGS"; //if no callback is defined, use a dummy value just so that the condition at the end evaluates as true because _startAt should render AFTER the normal render loop when the time is negative. We could handle this in a more intuitive way, of course, but the render loop is the MOST important thing to optimize, so this technique allows us to avoid adding extra conditional logic in a high-frequency area.
 					}
@@ -9005,7 +9245,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 			if (this._onUpdate) {
 				if (time < 0) if (this._startAt && time !== -0.0001) { //if the tween is positioned at the VERY beginning (_startTime 0) of its parent timeline, it's illegal for the playhead to go back further, so we should not render the recorded startAt values.
-					this._startAt.render(time, suppressEvents, force); //note: for performance reasons, we tuck this conditional logic inside less traveled areas (most tweens don't have an onUpdate). We'd just have it at the end before the onComplete, but the values should be updated before any onUpdate is called, so we ALSO put it here and then if it's not called, we do so later near the onComplete.
+					this._startAt.render(time, true, force); //note: for performance reasons, we tuck this conditional logic inside less traveled areas (most tweens don't have an onUpdate). We'd just have it at the end before the onComplete, but the values should be updated before any onUpdate is called, so we ALSO put it here and then if it's not called, we do so later near the onComplete.
 				}
 				if (!suppressEvents) if (this._time !== prevTime || isComplete || force) {
 					this._callback("onUpdate");
@@ -9013,7 +9253,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 			}
 			if (callback) if (!this._gc || force) { //check _gc because there's a chance that kill() could be called in an onUpdate
 				if (time < 0 && this._startAt && !this._onUpdate && time !== -0.0001) { //-0.0001 is a special value that we use when looping back to the beginning of a repeated TimelineMax, in which case we shouldn't render the _startAt values.
-					this._startAt.render(time, suppressEvents, force);
+					this._startAt.render(time, true, force);
 				}
 				if (isComplete) {
 					if (this._timeline.autoRemoveChildren) {
@@ -9207,7 +9447,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 						}
 					}
 				}
-			} else {
+			} else if (target._gsTweenID) {
 				a = _register(target).concat();
 				i = a.length;
 				while (--i > -1) {
@@ -9216,7 +9456,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 					}
 				}
 			}
-			return a;
+			return a || [];
 		};
 
 		TweenLite.killTweensOf = TweenLite.killDelayedCallsTo = function(target, onlyActive, vars) {
@@ -9882,7 +10122,7 @@ this.createjs = this.createjs || {};
 	 * @type {String}
 	 * @static
 	 **/
-	s.version = /*=version*/"0.6.2"; // injected by build process
+	s.version = /*=version*/"1.0.0"; // injected by build process
 
 	/**
 	 * The build date for this release in UTC format.
@@ -9890,7 +10130,7 @@ this.createjs = this.createjs || {};
 	 * @type {String}
 	 * @static
 	 **/
-	s.buildDate = /*=date*/"Thu, 26 Nov 2015 20:44:31 GMT"; // injected by build process
+	s.buildDate = /*=date*/"Thu, 14 Sep 2017 19:47:47 GMT"; // injected by build process
 
 })();
 
@@ -9988,6 +10228,48 @@ createjs.promote = function(subclass, prefix) {
 		}
 	}
 	return subclass;
+};
+
+//##############################################################################
+// deprecate.js
+//##############################################################################
+
+this.createjs = this.createjs||{};
+
+/**
+ * @class Utility Methods
+ */
+
+/**
+ * Wraps deprecated methods so they still be used, but throw warnings to developers.
+ *
+ *	obj.deprecatedMethod = createjs.deprecate("Old Method Name", obj._fallbackMethod);
+ *
+ * The recommended approach for deprecated properties is:
+ *
+ *	try {
+ *		Obj	ect.defineProperties(object, {
+ *			readyOnlyProp: { get: createjs.deprecate("readOnlyProp", function() { return this.alternateProp; }) },
+ *			readWriteProp: {
+ *				get: createjs.deprecate("readOnlyProp", function() { return this.alternateProp; }),
+ *				set: createjs.deprecate("readOnlyProp", function(val) { this.alternateProp = val; })
+ *		});
+ *	} catch (e) {}
+ *
+ * @method deprecate
+ * @param {Function} [fallbackMethod=null] A method to call when the deprecated method is used. See the example for how
+ * @param {String} [name=null] The name of the method or property to display in the console warning.
+ * to deprecate properties.
+ * @return {Function} If a fallbackMethod is supplied, returns a closure that will call the fallback method after
+ * logging the warning in the console.
+ */
+createjs.deprecate = function(fallbackMethod, name) {
+	"use strict";
+	return function() {
+		var msg = "Deprecated property or method '"+name+"'. See docs for info.";
+		console && (console.warn ? console.warn(msg) : console.log(msg));
+		return fallbackMethod && fallbackMethod.apply(this, arguments);
+	}
 };
 
 //##############################################################################
@@ -10210,19 +10492,6 @@ this.createjs = this.createjs||{};
 	}
 	var p = Event.prototype;
 
-	/**
-	 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-	 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-	 * for details.
-	 *
-	 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-	 *
-	 * @method initialize
-	 * @protected
-	 * @deprecated
-	 */
-	// p.initialize = function() {}; // searchable for devs wondering where it is.
-
 // public methods:
 	/**
 	 * Sets {{#crossLink "Event/defaultPrevented"}}{{/crossLink}} to true if the event is cancelable.
@@ -10437,20 +10706,6 @@ this.createjs = this.createjs||{};
 		this._captureListeners = null;
 	}
 	var p = EventDispatcher.prototype;
-
-	/**
-	 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-	 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-	 * for details.
-	 *
-	 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-	 *
-	 * @method initialize
-	 * @protected
-	 * @deprecated
-	 */
-	// p.initialize = function() {}; // searchable for devs wondering where it is.
-
 
 // static public methods:
 	/**
@@ -10719,17 +10974,15 @@ this.createjs = this.createjs||{};
 // private methods:
 	/**
 	 * @method _dispatchEvent
-	 * @param {Object | String | Event} eventObj
+	 * @param {Object | Event} eventObj
 	 * @param {Object} eventPhase
 	 * @protected
 	 **/
 	p._dispatchEvent = function(eventObj, eventPhase) {
-		var l, listeners = (eventPhase==1) ? this._captureListeners : this._listeners;
-		if (eventObj && listeners) {
-			var arr = listeners[eventObj.type];
-			if (!arr||!(l=arr.length)) { return; }
+		var l, arr, listeners = (eventPhase <= 2) ? this._captureListeners : this._listeners;
+		if (eventObj && listeners && (arr = listeners[eventObj.type]) && (l=arr.length)) {
 			try { eventObj.currentTarget = this; } catch (e) {}
-			try { eventObj.eventPhase = eventPhase; } catch (e) {}
+			try { eventObj.eventPhase = eventPhase|0; } catch (e) {}
 			eventObj.removed = false;
 			
 			arr = arr.slice(); // to avoid issues with items being removed or added during the dispatch
@@ -10743,6 +10996,7 @@ this.createjs = this.createjs||{};
 				}
 			}
 		}
+		if (eventPhase === 2) { this._dispatchEvent(eventObj, 2.1); }
 	};
 
 
@@ -11718,6 +11972,262 @@ this.createjs = this.createjs || {};
 }).call(this);
 
 //##############################################################################
+// Elements.js
+//##############################################################################
+
+(function () {
+
+	/**
+	 * Convenience methods for creating various elements used by PrelaodJS.
+	 *
+	 * @class DomUtils
+	 */
+	var s = {};
+
+	s.a = function() {
+		return s.el("a");
+	}
+
+	s.svg = function() {
+		return s.el("svg");
+	}
+
+	s.object = function() {
+		return s.el("object");
+	}
+
+	s.image = function() {
+		return s.el("image");
+	}
+
+	s.img = function() {
+		return s.el("img");
+	}
+
+	s.style = function() {
+		return s.el("style");
+	}
+
+	s.link = function() {
+		return s.el("link");
+	}
+
+	s.script = function() {
+		return s.el("script");
+	}
+
+	s.audio = function() {
+		return s.el("audio");
+	}
+
+	s.video = function() {
+		return s.el("video");
+	}
+
+	s.text = function(value) {
+		return document.createTextNode(value);
+	}
+
+	s.el = function(name) {
+		return document.createElement(name);
+	}
+
+	createjs.Elements = s;
+
+}());
+
+//##############################################################################
+// URLUtils.js
+//##############################################################################
+
+(function () {
+
+	/**
+	 * Utilities that assist with parsing load items, and determining file types, etc.
+	 * @class URLUtils
+	 */
+	var s = {};
+
+	/**
+	 * The Regular Expression used to test file URLS for an absolute path.
+	 * @property ABSOLUTE_PATH
+	 * @type {RegExp}
+	 * @static
+	 */
+	s.ABSOLUTE_PATT = /^(?:\w+:)?\/{2}/i;
+
+	/**
+	 * The Regular Expression used to test file URLS for a relative path.
+	 * @property RELATIVE_PATH
+	 * @type {RegExp}
+	 * @static
+	 */
+	s.RELATIVE_PATT = (/^[./]*?\//i);
+
+	/**
+	 * The Regular Expression used to test file URLS for an extension. Note that URIs must already have the query string
+	 * removed.
+	 * @property EXTENSION_PATT
+	 * @type {RegExp}
+	 * @static
+	 */
+	s.EXTENSION_PATT = /\/?[^/]+\.(\w{1,5})$/i;
+
+	/**
+	 * Parse a file path to determine the information we need to work with it. Currently, PreloadJS needs to know:
+	 * <ul>
+	 *     <li>If the path is absolute. Absolute paths start with a protocol (such as `http://`, `file://`, or
+	 *     `//networkPath`)</li>
+	 *     <li>If the path is relative. Relative paths start with `../` or `/path` (or similar)</li>
+	 *     <li>The file extension. This is determined by the filename with an extension. Query strings are dropped, and
+	 *     the file path is expected to follow the format `name.ext`.</li>
+	 * </ul>
+	 *
+	 * @method parseURI
+	 * @param {String} path
+	 * @returns {Object} An Object with an `absolute` and `relative` Boolean values,
+	 * 	the pieces of the path (protocol, hostname, port, pathname, search, hash, host)
+	 * 	as well as an optional 'extension` property, which is the lowercase extension.
+	 *
+	 * @static
+	 */
+	s.parseURI = function (path) {
+		var info = {
+			absolute: false,
+			relative: false,
+			protocol: null,
+			hostname: null,
+			port: null,
+			pathname: null,
+			search: null,
+			hash: null,
+			host: null
+		};
+
+		if (path == null) { return info; }
+
+		// Inject the path parts.
+		var parser = createjs.Elements.a();
+		parser.href = path;
+
+		for (var n in info) {
+			if (n in parser) {
+				info[n] = parser[n];
+			}
+		}
+
+		// Drop the query string
+		var queryIndex = path.indexOf("?");
+		if (queryIndex > -1) {
+			path = path.substr(0, queryIndex);
+		}
+
+		// Absolute
+		var match;
+		if (s.ABSOLUTE_PATT.test(path)) {
+			info.absolute = true;
+
+			// Relative
+		} else if (s.RELATIVE_PATT.test(path)) {
+			info.relative = true;
+		}
+
+		// Extension
+		if (match = path.match(s.EXTENSION_PATT)) {
+			info.extension = match[1].toLowerCase();
+		}
+
+		return info;
+	};
+
+	/**
+	 * Formats an object into a query string for either a POST or GET request.
+	 * @method formatQueryString
+	 * @param {Object} data The data to convert to a query string.
+	 * @param {Array} [query] Existing name/value pairs to append on to this query.
+	 * @static
+	 */
+	s.formatQueryString = function (data, query) {
+		if (data == null) {
+			throw new Error("You must specify data.");
+		}
+		var params = [];
+		for (var n in data) {
+			params.push(n + "=" + escape(data[n]));
+		}
+		if (query) {
+			params = params.concat(query);
+		}
+		return params.join("&");
+	};
+
+	/**
+	 * A utility method that builds a file path using a source and a data object, and formats it into a new path.
+	 * @method buildURI
+	 * @param {String} src The source path to add values to.
+	 * @param {Object} [data] Object used to append values to this request as a query string. Existing parameters on the
+	 * path will be preserved.
+	 * @returns {string} A formatted string that contains the path and the supplied parameters.
+	 * @static
+	 */
+	s.buildURI = function (src, data) {
+		if (data == null) {
+			return src;
+		}
+
+		var query = [];
+		var idx = src.indexOf("?");
+
+		if (idx != -1) {
+			var q = src.slice(idx + 1);
+			query = query.concat(q.split("&"));
+		}
+
+		if (idx != -1) {
+			return src.slice(0, idx) + "?" + this.formatQueryString(data, query);
+		} else {
+			return src + "?" + this.formatQueryString(data, query);
+		}
+	};
+
+	/**
+	 * @method isCrossDomain
+	 * @param {LoadItem|Object} item A load item with a `src` property.
+	 * @return {Boolean} If the load item is loading from a different domain than the current location.
+	 * @static
+	 */
+	s.isCrossDomain = function (item) {
+		var target = createjs.Elements.a();
+		target.href = item.src;
+
+		var host = createjs.Elements.a();
+		host.href = location.href;
+
+		var crossdomain = (target.hostname != "") &&
+			(target.port != host.port ||
+			target.protocol != host.protocol ||
+			target.hostname != host.hostname);
+		return crossdomain;
+	};
+
+	/**
+	 * @method isLocal
+	 * @param {LoadItem|Object} item A load item with a `src` property
+	 * @return {Boolean} If the load item is loading from the "file:" protocol. Assume that the host must be local as
+	 * well.
+	 * @static
+	 */
+	s.isLocal = function (item) {
+		var target = createjs.Elements.a();
+		target.href = item.src;
+		return target.hostname == "" && target.protocol == "file:";
+	};
+
+	createjs.URLUtils = s;
+
+}());
+
+//##############################################################################
 // DomUtils.js
 //##############################################################################
 
@@ -11727,10 +12237,27 @@ this.createjs = this.createjs || {};
 	 * A few utilities for interacting with the dom.
 	 * @class DomUtils
 	 */
-	var s = {};
+	var s = {
+		container: null
+	};
 
 	s.appendToHead = function (el) {
-		s.getHead().appendChild(el)
+		s.getHead().appendChild(el);
+	}
+
+	s.appendToBody = function (el) {
+		if (s.container == null) {
+			s.container = document.createElement("div");
+			s.container.id = "preloadjs-container";
+			var style = s.container.style;
+			style.visibility = "hidden";
+			style.position = "absolute";
+			style.width = s.container.style.height = "10px";
+			style.overflow = "hidden";
+			style.transform = style.msTransform = style.webkitTransform = style.oTransform = "translate(-10px, -10px)"; //LM: Not working
+			s.getBody().appendChild(s.container);
+		}
+		s.container.appendChild(el);
 	}
 
 	s.getHead = function () {
@@ -11740,6 +12267,53 @@ this.createjs = this.createjs || {};
 	s.getBody = function () {
 		return document.body || document.getElementsByTagName("body")[0];
 	}
+
+	s.removeChild = function(el) {
+		if (el.parent) {
+			el.parent.removeChild(el);
+		}
+	}
+
+	/**
+	 * Check if item is a valid HTMLImageElement
+	 * @method isImageTag
+	 * @param {Object} item
+	 * @returns {Boolean}
+	 * @static
+	 */
+	s.isImageTag = function(item) {
+		return item instanceof HTMLImageElement;
+	};
+
+	/**
+	 * Check if item is a valid HTMLAudioElement
+	 * @method isAudioTag
+	 * @param {Object} item
+	 * @returns {Boolean}
+	 * @static
+	 */
+	s.isAudioTag = function(item) {
+		if (window.HTMLAudioElement) {
+			return item instanceof HTMLAudioElement;
+		} else {
+			return false;
+		}
+	};
+
+	/**
+	 * Check if item is a valid HTMLVideoElement
+	 * @method isVideoTag
+	 * @param {Object} item
+	 * @returns {Boolean}
+	 * @static
+	 */
+	s.isVideoTag = function(item) {
+		if (window.HTMLVideoElement) {
+			return item instanceof HTMLVideoElement;
+		} else {
+			return false;
+		}
+	};
 
 	createjs.DomUtils = s;
 
@@ -11762,11 +12336,10 @@ this.createjs = this.createjs || {};
 	 * Parse XML using the DOM. This is required when preloading XML or SVG.
 	 * @method parseXML
 	 * @param {String} text The raw text or XML that is loaded by XHR.
-	 * @param {String} type The mime type of the XML. Use "text/xml" for XML, and  "image/svg+xml" for SVG parsing.
 	 * @return {XML} An XML document
 	 * @static
 	 */
-	s.parseXML = function (text, type) {
+	s.parseXML = function (text) {
 		var xml = null;
 		// CocoonJS does not support XML parsing with either method.
 
@@ -11775,7 +12348,7 @@ this.createjs = this.createjs || {};
 		try {
 			if (window.DOMParser) {
 				var parser = new DOMParser();
-				xml = parser.parseFromString(text, type);
+				xml = parser.parseFromString(text, "text/xml");
 			}
 		} catch (e) {
 		}
@@ -11815,6 +12388,217 @@ this.createjs = this.createjs || {};
 
 	createjs.DataUtils = s;
 
+}());
+
+//##############################################################################
+// Types.js
+//##############################################################################
+
+this.createjs = this.createjs || {};
+
+(function() {
+	var s = {};
+
+	/**
+	 * The preload type for generic binary types. Note that images are loaded as binary files when using XHR.
+	 * @property BINARY
+	 * @type {String}
+	 * @default binary
+	 * @static
+	 * @since 0.6.0
+	 */
+	s.BINARY = "binary";
+
+	/**
+	 * The preload type for css files. CSS files are loaded using a &lt;link&gt; when loaded with XHR, or a
+	 * &lt;style&gt; tag when loaded with tags.
+	 * @property CSS
+	 * @type {String}
+	 * @default css
+	 * @static
+	 * @since 0.6.0
+	 */
+	s.CSS = "css";
+
+	/**
+	 * The preload type for font files.
+	 * @property FONT
+	 * @type {String}
+	 * @default font
+	 * @static
+	 * @since 0.9.0
+	 */
+	s.FONT = "font";
+
+	/**
+	 * The preload type for fonts specified with CSS (such as Google fonts)
+	 * @property FONTCSS
+	 * @type {String}
+	 * @default fontcss
+	 * @static
+	 * @since 0.9.0
+	 */
+	s.FONTCSS = "fontcss";
+
+	/**
+	 * The preload type for image files, usually png, gif, or jpg/jpeg. Images are loaded into an &lt;image&gt; tag.
+	 * @property IMAGE
+	 * @type {String}
+	 * @default image
+	 * @static
+	 * @since 0.6.0
+	 */
+	s.IMAGE = "image";
+
+	/**
+	 * The preload type for javascript files, usually with the "js" file extension. JavaScript files are loaded into a
+	 * &lt;script&gt; tag.
+	 *
+	 * Since version 0.4.1+, due to how tag-loaded scripts work, all JavaScript files are automatically injected into
+	 * the body of the document to maintain parity between XHR and tag-loaded scripts. In version 0.4.0 and earlier,
+	 * only tag-loaded scripts are injected.
+	 * @property JAVASCRIPT
+	 * @type {String}
+	 * @default javascript
+	 * @static
+	 * @since 0.6.0
+	 */
+	s.JAVASCRIPT = "javascript";
+
+	/**
+	 * The preload type for json files, usually with the "json" file extension. JSON data is loaded and parsed into a
+	 * JavaScript object. Note that if a `callback` is present on the load item, the file will be loaded with JSONP,
+	 * no matter what the {{#crossLink "LoadQueue/preferXHR:property"}}{{/crossLink}} property is set to, and the JSON
+	 * must contain a matching wrapper function.
+	 * @property JSON
+	 * @type {String}
+	 * @default json
+	 * @static
+	 * @since 0.6.0
+	 */
+	s.JSON = "json";
+
+	/**
+	 * The preload type for jsonp files, usually with the "json" file extension. JSON data is loaded and parsed into a
+	 * JavaScript object. You are required to pass a callback parameter that matches the function wrapper in the JSON.
+	 * Note that JSONP will always be used if there is a callback present, no matter what the {{#crossLink "LoadQueue/preferXHR:property"}}{{/crossLink}}
+	 * property is set to.
+	 * @property JSONP
+	 * @type {String}
+	 * @default jsonp
+	 * @static
+	 * @since 0.6.0
+	 */
+	s.JSONP = "jsonp";
+
+	/**
+	 * The preload type for json-based manifest files, usually with the "json" file extension. The JSON data is loaded
+	 * and parsed into a JavaScript object. PreloadJS will then look for a "manifest" property in the JSON, which is an
+	 * Array of files to load, following the same format as the {{#crossLink "LoadQueue/loadManifest"}}{{/crossLink}}
+	 * method. If a "callback" is specified on the manifest object, then it will be loaded using JSONP instead,
+	 * regardless of what the {{#crossLink "LoadQueue/preferXHR:property"}}{{/crossLink}} property is set to.
+	 * @property MANIFEST
+	 * @type {String}
+	 * @default manifest
+	 * @static
+	 * @since 0.6.0
+	 */
+	s.MANIFEST = "manifest";
+
+	/**
+	 * The preload type for sound files, usually mp3, ogg, or wav. When loading via tags, audio is loaded into an
+	 * &lt;audio&gt; tag.
+	 * @property SOUND
+	 * @type {String}
+	 * @default sound
+	 * @static
+	 * @since 0.6.0
+	 */
+	s.SOUND = "sound";
+
+	/**
+	 * The preload type for video files, usually mp4, ts, or ogg. When loading via tags, video is loaded into an
+	 * &lt;video&gt; tag.
+	 * @property VIDEO
+	 * @type {String}
+	 * @default video
+	 * @static
+	 * @since 0.6.0
+	 */
+	s.VIDEO = "video";
+
+	/**
+	 * The preload type for SpriteSheet files. SpriteSheet files are JSON files that contain string image paths.
+	 * @property SPRITESHEET
+	 * @type {String}
+	 * @default spritesheet
+	 * @static
+	 * @since 0.6.0
+	 */
+	s.SPRITESHEET = "spritesheet";
+
+	/**
+	 * The preload type for SVG files.
+	 * @property SVG
+	 * @type {String}
+	 * @default svg
+	 * @static
+	 * @since 0.6.0
+	 */
+	s.SVG = "svg";
+
+	/**
+	 * The preload type for text files, which is also the default file type if the type can not be determined. Text is
+	 * loaded as raw text.
+	 * @property TEXT
+	 * @type {String}
+	 * @default text
+	 * @static
+	 * @since 0.6.0
+	 */
+	s.TEXT = "text";
+
+	/**
+	 * The preload type for xml files. XML is loaded into an XML document.
+	 * @property XML
+	 * @type {String}
+	 * @default xml
+	 * @static
+	 * @since 0.6.0
+	 */
+	s.XML = "xml";
+
+	createjs.Types = s;
+}());
+
+//##############################################################################
+// Methods.js
+//##############################################################################
+
+this.createjs = this.createjs || {};
+
+(function() {
+	var s = {};
+
+	/**
+	 * Defines a POST request, use for a method value when loading data.
+	 * @property POST
+	 * @type {string}
+	 * @default post
+	 * @static
+	 */
+	s.POST = "POST";
+
+	/**
+	 * Defines a GET request, use for a method value when loading data.
+	 * @property GET
+	 * @type {string}
+	 * @default get
+	 * @static
+	 */
+	s.GET = "GET";
+
+	createjs.Methods = s;
 }());
 
 //##############################################################################
@@ -11893,14 +12677,14 @@ this.createjs = this.createjs || {};
 		this.data = null;
 
 		/**
-		 * The request method used for HTTP calls. Both {{#crossLink "AbstractLoader/GET:property"}}{{/crossLink}} or
-		 * {{#crossLink "AbstractLoader/POST:property"}}{{/crossLink}} request types are supported, and are defined as
+		 * The request method used for HTTP calls. Both {{#crossLink "Methods/GET:property"}}{{/crossLink}} or
+		 * {{#crossLink "Methods/POST:property"}}{{/crossLink}} request types are supported, and are defined as
 		 * constants on {{#crossLink "AbstractLoader"}}{{/crossLink}}.
 		 * @property method
 		 * @type {String}
-		 * @default get
+		 * @default GET
 		 */
-		this.method = createjs.LoadItem.GET;
+		this.method = createjs.Methods.GET;
 
 		/**
 		 * An object hash of name/value pairs to send to the server.
@@ -12029,156 +12813,6 @@ this.createjs = this.createjs || {};
 	var s = {};
 
 	/**
-	 * The Regular Expression used to test file URLS for an absolute path.
-	 * @property ABSOLUTE_PATH
-	 * @type {RegExp}
-	 * @static
-	 */
-	s.ABSOLUTE_PATT = /^(?:\w+:)?\/{2}/i;
-
-	/**
-	 * The Regular Expression used to test file URLS for a relative path.
-	 * @property RELATIVE_PATH
-	 * @type {RegExp}
-	 * @static
-	 */
-	s.RELATIVE_PATT = (/^[./]*?\//i);
-
-	/**
-	 * The Regular Expression used to test file URLS for an extension. Note that URIs must already have the query string
-	 * removed.
-	 * @property EXTENSION_PATT
-	 * @type {RegExp}
-	 * @static
-	 */
-	s.EXTENSION_PATT = /\/?[^/]+\.(\w{1,5})$/i;
-
-	/**
-	 * Parse a file path to determine the information we need to work with it. Currently, PreloadJS needs to know:
-	 * <ul>
-	 *     <li>If the path is absolute. Absolute paths start with a protocol (such as `http://`, `file://`, or
-	 *     `//networkPath`)</li>
-	 *     <li>If the path is relative. Relative paths start with `../` or `/path` (or similar)</li>
-	 *     <li>The file extension. This is determined by the filename with an extension. Query strings are dropped, and
-	 *     the file path is expected to follow the format `name.ext`.</li>
-	 * </ul>
-	 * @method parseURI
-	 * @param {String} path
-	 * @returns {Object} An Object with an `absolute` and `relative` Boolean values, as well as an optional 'extension`
-	 * property, which is the lowercase extension.
-	 * @static
-	 */
-	s.parseURI = function (path) {
-		var info = {absolute: false, relative: false};
-		if (path == null) { return info; }
-
-		// Drop the query string
-		var queryIndex = path.indexOf("?");
-		if (queryIndex > -1) {
-			path = path.substr(0, queryIndex);
-		}
-
-		// Absolute
-		var match;
-		if (s.ABSOLUTE_PATT.test(path)) {
-			info.absolute = true;
-
-			// Relative
-		} else if (s.RELATIVE_PATT.test(path)) {
-			info.relative = true;
-		}
-
-		// Extension
-		if (match = path.match(s.EXTENSION_PATT)) {
-			info.extension = match[1].toLowerCase();
-		}
-		return info;
-	};
-
-	/**
-	 * Formats an object into a query string for either a POST or GET request.
-	 * @method formatQueryString
-	 * @param {Object} data The data to convert to a query string.
-	 * @param {Array} [query] Existing name/value pairs to append on to this query.
-	 * @static
-	 */
-	s.formatQueryString = function (data, query) {
-		if (data == null) {
-			throw new Error('You must specify data.');
-		}
-		var params = [];
-		for (var n in data) {
-			params.push(n + '=' + escape(data[n]));
-		}
-		if (query) {
-			params = params.concat(query);
-		}
-		return params.join('&');
-	};
-
-	/**
-	 * A utility method that builds a file path using a source and a data object, and formats it into a new path.
-	 * @method buildPath
-	 * @param {String} src The source path to add values to.
-	 * @param {Object} [data] Object used to append values to this request as a query string. Existing parameters on the
-	 * path will be preserved.
-	 * @returns {string} A formatted string that contains the path and the supplied parameters.
-	 * @static
-	 */
-	s.buildPath = function (src, data) {
-		if (data == null) {
-			return src;
-		}
-
-		var query = [];
-		var idx = src.indexOf('?');
-
-		if (idx != -1) {
-			var q = src.slice(idx + 1);
-			query = query.concat(q.split('&'));
-		}
-
-		if (idx != -1) {
-			return src.slice(0, idx) + '?' + this.formatQueryString(data, query);
-		} else {
-			return src + '?' + this.formatQueryString(data, query);
-		}
-	};
-
-	/**
-	 * @method isCrossDomain
-	 * @param {LoadItem|Object} item A load item with a `src` property.
-	 * @return {Boolean} If the load item is loading from a different domain than the current location.
-	 * @static
-	 */
-	s.isCrossDomain = function (item) {
-		var target = document.createElement("a");
-		target.href = item.src;
-
-		var host = document.createElement("a");
-		host.href = location.href;
-
-		var crossdomain = (target.hostname != "") &&
-						  (target.port != host.port ||
-						   target.protocol != host.protocol ||
-						   target.hostname != host.hostname);
-		return crossdomain;
-	};
-
-	/**
-	 * @method isLocal
-	 * @param {LoadItem|Object} item A load item with a `src` property
-	 * @return {Boolean} If the load item is loading from the "file:" protocol. Assume that the host must be local as
-	 * well.
-	 * @static
-	 */
-	s.isLocal = function (item) {
-		var target = document.createElement("a");
-		target.href = item.src;
-		return target.hostname == "" && target.protocol == "file:";
-	};
-
-	/**
 	 * Determine if a specific type should be loaded as a binary file. Currently, only images and items marked
 	 * specifically as "binary" are loaded as binary. Note that audio is <b>not</b> a binary type, as we can not play
 	 * back using an audio tag if it is loaded as binary. Plugins can change the item type to binary to ensure they get
@@ -12191,52 +12825,11 @@ this.createjs = this.createjs || {};
 	 */
 	s.isBinary = function (type) {
 		switch (type) {
-			case createjs.AbstractLoader.IMAGE:
-			case createjs.AbstractLoader.BINARY:
+			case createjs.Types.IMAGE:
+			case createjs.Types.BINARY:
 				return true;
 			default:
 				return false;
-		}
-	};
-
-	/**
-	 * Check if item is a valid HTMLImageElement
-	 * @method isImageTag
-	 * @param {Object} item
-	 * @returns {Boolean}
-	 * @static
-	 */
-	s.isImageTag = function(item) {
-		return item instanceof HTMLImageElement;
-	};
-
-	/**
-	 * Check if item is a valid HTMLAudioElement
-	 * @method isAudioTag
-	 * @param {Object} item
-	 * @returns {Boolean}
-	 * @static
-	 */
-	s.isAudioTag = function(item) {
-		if (window.HTMLAudioElement) {
-			return item instanceof HTMLAudioElement;
-		} else {
-			return false;
-		}
-	};
-
-	/**
-	 * Check if item is a valid HTMLVideoElement
-	 * @method isVideoTag
-	 * @param {Object} item
-	 * @returns {Boolean}
-	 * @static
-	 */
-	s.isVideoTag = function(item) {
-		if (window.HTMLVideoElement) {
-			return item instanceof HTMLVideoElement;
-		} else {
-			return false;
 		}
 	};
 
@@ -12249,14 +12842,14 @@ this.createjs = this.createjs || {};
 	 */
 	s.isText = function (type) {
 		switch (type) {
-			case createjs.AbstractLoader.TEXT:
-			case createjs.AbstractLoader.JSON:
-			case createjs.AbstractLoader.MANIFEST:
-			case createjs.AbstractLoader.XML:
-			case createjs.AbstractLoader.CSS:
-			case createjs.AbstractLoader.SVG:
-			case createjs.AbstractLoader.JAVASCRIPT:
-			case createjs.AbstractLoader.SPRITESHEET:
+			case createjs.Types.TEXT:
+			case createjs.Types.JSON:
+			case createjs.Types.MANIFEST:
+			case createjs.Types.XML:
+			case createjs.Types.CSS:
+			case createjs.Types.SVG:
+			case createjs.Types.JAVASCRIPT:
+			case createjs.Types.SPRITESHEET:
 				return true;
 			default:
 				return false;
@@ -12268,13 +12861,13 @@ this.createjs = this.createjs || {};
 	 * if it is an unusual extension.
 	 * @method getTypeByExtension
 	 * @param {String} extension The file extension to use to determine the load type.
-	 * @return {String} The determined load type (for example, <code>AbstractLoader.IMAGE</code>). Will return `null` if
+	 * @return {String} The determined load type (for example, `createjs.Types.IMAGE`). Will return `null` if
 	 * the type can not be determined by the extension.
 	 * @static
 	 */
 	s.getTypeByExtension = function (extension) {
 		if (extension == null) {
-			return createjs.AbstractLoader.TEXT;
+			return createjs.Types.TEXT;
 		}
 
 		switch (extension.toLowerCase()) {
@@ -12284,27 +12877,27 @@ this.createjs = this.createjs || {};
 			case "png":
 			case "webp":
 			case "bmp":
-				return createjs.AbstractLoader.IMAGE;
+				return createjs.Types.IMAGE;
 			case "ogg":
 			case "mp3":
 			case "webm":
-				return createjs.AbstractLoader.SOUND;
+				return createjs.Types.SOUND;
 			case "mp4":
 			case "webm":
 			case "ts":
-				return createjs.AbstractLoader.VIDEO;
+				return createjs.Types.VIDEO;
 			case "json":
-				return createjs.AbstractLoader.JSON;
+				return createjs.Types.JSON;
 			case "xml":
-				return createjs.AbstractLoader.XML;
+				return createjs.Types.XML;
 			case "css":
-				return createjs.AbstractLoader.CSS;
+				return createjs.Types.CSS;
 			case "js":
-				return createjs.AbstractLoader.JAVASCRIPT;
+				return createjs.Types.JAVASCRIPT;
 			case 'svg':
-				return createjs.AbstractLoader.SVG;
+				return createjs.Types.SVG;
 			default:
-				return createjs.AbstractLoader.TEXT;
+				return createjs.Types.TEXT;
 		}
 	};
 
@@ -12478,176 +13071,29 @@ this.createjs = this.createjs || {};
 	var p = createjs.extend(AbstractLoader, createjs.EventDispatcher);
 	var s = AbstractLoader;
 
-	// TODO: deprecated
-	// p.initialize = function() {}; // searchable for devs wondering where it is. REMOVED. See docs for details.
+	// Remove these @deprecated properties after 1.0
+	try {
+		Object.defineProperties(s, {
+			POST: { get: createjs.deprecate(function() { return createjs.Methods.POST; }, "AbstractLoader.POST") },
+			GET: { get: createjs.deprecate(function() { return createjs.Methods.GET; }, "AbstractLoader.GET") },
 
-
-	/**
-	 * Defines a POST request, use for a method value when loading data.
-	 * @property POST
-	 * @type {string}
-	 * @default post
-	 * @static
-	 */
-	s.POST = "POST";
-
-	/**
-	 * Defines a GET request, use for a method value when loading data.
-	 * @property GET
-	 * @type {string}
-	 * @default get
-	 * @static
-	 */
-	s.GET = "GET";
-
-	/**
-	 * The preload type for generic binary types. Note that images are loaded as binary files when using XHR.
-	 * @property BINARY
-	 * @type {String}
-	 * @default binary
-	 * @static
-	 * @since 0.6.0
-	 */
-	s.BINARY = "binary";
-
-	/**
-	 * The preload type for css files. CSS files are loaded using a &lt;link&gt; when loaded with XHR, or a
-	 * &lt;style&gt; tag when loaded with tags.
-	 * @property CSS
-	 * @type {String}
-	 * @default css
-	 * @static
-	 * @since 0.6.0
-	 */
-	s.CSS = "css";
-
-	/**
-	 * The preload type for image files, usually png, gif, or jpg/jpeg. Images are loaded into an &lt;image&gt; tag.
-	 * @property IMAGE
-	 * @type {String}
-	 * @default image
-	 * @static
-	 * @since 0.6.0
-	 */
-	s.IMAGE = "image";
-
-	/**
-	 * The preload type for javascript files, usually with the "js" file extension. JavaScript files are loaded into a
-	 * &lt;script&gt; tag.
-	 *
-	 * Since version 0.4.1+, due to how tag-loaded scripts work, all JavaScript files are automatically injected into
-	 * the body of the document to maintain parity between XHR and tag-loaded scripts. In version 0.4.0 and earlier,
-	 * only tag-loaded scripts are injected.
-	 * @property JAVASCRIPT
-	 * @type {String}
-	 * @default javascript
-	 * @static
-	 * @since 0.6.0
-	 */
-	s.JAVASCRIPT = "javascript";
-
-	/**
-	 * The preload type for json files, usually with the "json" file extension. JSON data is loaded and parsed into a
-	 * JavaScript object. Note that if a `callback` is present on the load item, the file will be loaded with JSONP,
-	 * no matter what the {{#crossLink "LoadQueue/preferXHR:property"}}{{/crossLink}} property is set to, and the JSON
-	 * must contain a matching wrapper function.
-	 * @property JSON
-	 * @type {String}
-	 * @default json
-	 * @static
-	 * @since 0.6.0
-	 */
-	s.JSON = "json";
-
-	/**
-	 * The preload type for jsonp files, usually with the "json" file extension. JSON data is loaded and parsed into a
-	 * JavaScript object. You are required to pass a callback parameter that matches the function wrapper in the JSON.
-	 * Note that JSONP will always be used if there is a callback present, no matter what the {{#crossLink "LoadQueue/preferXHR:property"}}{{/crossLink}}
-	 * property is set to.
-	 * @property JSONP
-	 * @type {String}
-	 * @default jsonp
-	 * @static
-	 * @since 0.6.0
-	 */
-	s.JSONP = "jsonp";
-
-	/**
-	 * The preload type for json-based manifest files, usually with the "json" file extension. The JSON data is loaded
-	 * and parsed into a JavaScript object. PreloadJS will then look for a "manifest" property in the JSON, which is an
-	 * Array of files to load, following the same format as the {{#crossLink "LoadQueue/loadManifest"}}{{/crossLink}}
-	 * method. If a "callback" is specified on the manifest object, then it will be loaded using JSONP instead,
-	 * regardless of what the {{#crossLink "LoadQueue/preferXHR:property"}}{{/crossLink}} property is set to.
-	 * @property MANIFEST
-	 * @type {String}
-	 * @default manifest
-	 * @static
-	 * @since 0.6.0
-	 */
-	s.MANIFEST = "manifest";
-
-	/**
-	 * The preload type for sound files, usually mp3, ogg, or wav. When loading via tags, audio is loaded into an
-	 * &lt;audio&gt; tag.
-	 * @property SOUND
-	 * @type {String}
-	 * @default sound
-	 * @static
-	 * @since 0.6.0
-	 */
-	s.SOUND = "sound";
-
-	/**
-	 * The preload type for video files, usually mp4, ts, or ogg. When loading via tags, video is loaded into an
-	 * &lt;video&gt; tag.
-	 * @property VIDEO
-	 * @type {String}
-	 * @default video
-	 * @static
-	 * @since 0.6.0
-	 */
-	s.VIDEO = "video";
-
-	/**
-	 * The preload type for SpriteSheet files. SpriteSheet files are JSON files that contain string image paths.
-	 * @property SPRITESHEET
-	 * @type {String}
-	 * @default spritesheet
-	 * @static
-	 * @since 0.6.0
-	 */
-	s.SPRITESHEET = "spritesheet";
-
-	/**
-	 * The preload type for SVG files.
-	 * @property SVG
-	 * @type {String}
-	 * @default svg
-	 * @static
-	 * @since 0.6.0
-	 */
-	s.SVG = "svg";
-
-	/**
-	 * The preload type for text files, which is also the default file type if the type can not be determined. Text is
-	 * loaded as raw text.
-	 * @property TEXT
-	 * @type {String}
-	 * @default text
-	 * @static
-	 * @since 0.6.0
-	 */
-	s.TEXT = "text";
-
-	/**
-	 * The preload type for xml files. XML is loaded into an XML document.
-	 * @property XML
-	 * @type {String}
-	 * @default xml
-	 * @static
-	 * @since 0.6.0
-	 */
-	s.XML = "xml";
+			BINARY: { get: createjs.deprecate(function() { return createjs.Types.BINARY; }, "AbstractLoader.BINARY") },
+			CSS: { get: createjs.deprecate(function() { return createjs.Types.CSS; }, "AbstractLoader.CSS") },
+			FONT: { get: createjs.deprecate(function() { return createjs.Types.FONT; }, "AbstractLoader.FONT") },
+			FONTCSS: { get: createjs.deprecate(function() { return createjs.Types.FONTCSS; }, "AbstractLoader.FONTCSS") },
+			IMAGE: { get: createjs.deprecate(function() { return createjs.Types.IMAGE; }, "AbstractLoader.IMAGE") },
+			JAVASCRIPT: { get: createjs.deprecate(function() { return createjs.Types.JAVASCRIPT; }, "AbstractLoader.JAVASCRIPT") },
+			JSON: { get: createjs.deprecate(function() { return createjs.Types.JSON; }, "AbstractLoader.JSON") },
+			JSONP: { get: createjs.deprecate(function() { return createjs.Types.JSONP; }, "AbstractLoader.JSONP") },
+			MANIFEST: { get: createjs.deprecate(function() { return createjs.Types.MANIFEST; }, "AbstractLoader.MANIFEST") },
+			SOUND: { get: createjs.deprecate(function() { return createjs.Types.SOUND; }, "AbstractLoader.SOUND") },
+			VIDEO: { get: createjs.deprecate(function() { return createjs.Types.VIDEO; }, "AbstractLoader.VIDEO") },
+			SPRITESHEET: { get: createjs.deprecate(function() { return createjs.Types.SPRITESHEET; }, "AbstractLoader.SPRITESHEET") },
+			SVG: { get: createjs.deprecate(function() { return createjs.Types.SVG; }, "AbstractLoader.SVG") },
+			TEXT: { get: createjs.deprecate(function() { return createjs.Types.TEXT; }, "AbstractLoader.TEXT") },
+			XML: { get: createjs.deprecate(function() { return createjs.Types.XML; }, "AbstractLoader.XML") }
+		});
+	} catch (e) {}
 
 // Events
 	/**
@@ -12686,7 +13132,7 @@ this.createjs = this.createjs || {};
 	 * This enables loaders to maintain internal queues, and surface file load errors.
 	 * @event fileerror
 	 * @param {Object} target The object that dispatched the event.
-	 * @param {String} type The even type ("fileerror")
+	 * @param {String} type The event type ("fileerror")
 	 * @param {LoadItem|object} The item that encountered the error
 	 * @since 0.6.0
 	 */
@@ -12969,11 +13415,13 @@ this.createjs = this.createjs || {};
 			case "complete":
 				this._rawResult = event.target._response;
 				var result = this.resultFormatter && this.resultFormatter(this);
+				// The resultFormatter is asynchronous
 				if (result instanceof Function) {
 					result.call(this,
 							createjs.proxy(this._resultFormatSuccess, this),
 							createjs.proxy(this._resultFormatFailed, this)
 					);
+				// The result formatter is synchronous
 				} else {
 					this._result =  result || this._rawResult;
 					this._sendComplete();
@@ -13018,16 +13466,6 @@ this.createjs = this.createjs || {};
 	 */
 	p._resultFormatFailed = function (event) {
 		this._sendError(event);
-	};
-
-	/**
-	 * @method buildPath
-	 * @protected
-	 * @deprecated Use the {{#crossLink "RequestUtils"}}{{/crossLink}} method {{#crossLink "RequestUtils/buildPath"}}{{/crossLink}}
-	 * instead.
-	 */
-	p.buildPath = function (src, data) {
-		return createjs.RequestUtils.buildPath(src, data);
 	};
 
 	/**
@@ -13243,13 +13681,6 @@ this.createjs = this.createjs || {};
 		 */
 		this._addedToDOM = false;
 
-		/**
-		 * Determines what the tags initial style.visibility was, so we can set it correctly after a load.
-		 *
-		 * @type {null}
-		 * @private
-		 */
-		this._startTagVisibility = null;
 	};
 
 	var p = createjs.extend(TagRequest, createjs.AbstractRequest);
@@ -13265,15 +13696,13 @@ this.createjs = this.createjs || {};
 
 		this.dispatchEvent(evt);
 
-		this._hideTag();
-
 		this._loadTimeout = setTimeout(createjs.proxy(this._handleTimeout, this), this._item.loadTimeout);
 
 		this._tag[this._tagSrcAttribute] = this._item.src;
 
 		// wdg:: Append the tag AFTER setting the src, or SVG loading on iOS will fail.
 		if (this._tag.parentNode == null) {
-			window.document.body.appendChild(this._tag);
+			createjs.DomUtils.appendToBody(this._tag);
 			this._addedToDOM = true;
 		}
 	};
@@ -13323,7 +13752,6 @@ this.createjs = this.createjs || {};
 		this._result = this.resultFormatter && this.resultFormatter(this) || this._rawResult;
 
 		this._clean();
-		this._showTag();
 
 		this.dispatchEvent("complete");
 	};
@@ -13352,15 +13780,6 @@ this.createjs = this.createjs || {};
 			this._tag.parentNode.removeChild(this._tag);
 		}
 		clearTimeout(this._loadTimeout);
-	};
-
-	p._hideTag = function() {
-		this._startTagVisibility = this._tag.style.visibility;
-		this._tag.style.visibility = "hidden";
-	};
-
-	p._showTag = function() {
-		this._tag.style.visibility = this._startTagVisibility;
 	};
 
 	/**
@@ -13648,10 +14067,10 @@ this.createjs = this.createjs || {};
 
 		// Sometimes we get back 404s immediately, particularly when there is a cross origin request.  // note this does not catch in Chrome
 		try {
-			if (!this._item.values || this._item.method == createjs.AbstractLoader.GET) {
+			if (!this._item.values) {
 				this._request.send();
-			} else if (this._item.method == createjs.AbstractLoader.POST) {
-				this._request.send(createjs.RequestUtils.formatQueryString(this._item.values));
+			} else {
+				this._request.send(createjs.URLUtils.formatQueryString(this._item.values));
 			}
 		} catch (error) {
 			this.dispatchEvent(new createjs.ErrorEvent("XHR_SEND", null, error));
@@ -13769,6 +14188,9 @@ this.createjs = this.createjs || {};
 	/**
 	 * The XHR request has completed. This is called by the XHR request directly, or by a readyStateChange that has
 	 * <code>request.readyState == 4</code>. Only the first call to this method will be processed.
+	 *
+	 * Note that This method uses {{#crossLink "_checkError"}}{{/crossLink}} to determine if the server has returned an
+	 * error code.
 	 * @method _handleLoad
 	 * @param {Object} event The XHR load event.
 	 * @private
@@ -13815,29 +14237,35 @@ this.createjs = this.createjs || {};
 	 */
 	p._handleTimeout = function (event) {
 		this._clean();
-
 		this.dispatchEvent(new createjs.ErrorEvent("PRELOAD_TIMEOUT", null, event));
 	};
 
 // Protected
 	/**
-	 * Determine if there is an error in the current load. This checks the status of the request for problem codes. Note
-	 * that this does not check for an actual response. Currently, it only checks for 404 or 0 error code.
+	 * Determine if there is an error in the current load.
+	 * Currently this checks the status of the request for problem codes, and not actual response content:
+	 * <ul>
+	 *     <li>Status codes between 400 and 599 (HTTP error range)</li>
+	 *     <li>A status of 0, but *only when the application is running on a server*. If the application is running
+	 *     on `file:`, then it may incorrectly treat an error on local (or embedded applications) as a successful
+	 *     load.</li>
+	 * </ul>
 	 * @method _checkError
-	 * @return {int} If the request status returns an error code.
+	 * @return {Error} An error with the status code in the `message` argument.
 	 * @private
 	 */
 	p._checkError = function () {
-		//LM: Probably need additional handlers here, maybe 501
 		var status = parseInt(this._request.status);
-
-		switch (status) {
-			case 404:   // Not Found
-			case 0:     // Not Loaded
-				return new Error(status);
+		if (status >= 400 && status <= 599) {
+			return new Error(status);
+		} else if (status == 0) {
+			if ((/^https?:/).test(location.protocol)) { return new Error(0); }
+			return null; // Likely an embedded app.
+		} else {
+			return null;
 		}
-		return null;
 	};
+
 
 	/**
 	 * Validate the response. Different browsers have different approaches, some of which throw errors when accessed
@@ -13888,7 +14316,7 @@ this.createjs = this.createjs || {};
 	 */
 	p._createXHR = function (item) {
 		// Check for cross-domain loads. We can't fully support them, but we can try.
-		var crossdomain = createjs.RequestUtils.isCrossDomain(item);
+		var crossdomain = createjs.URLUtils.isCrossDomain(item);
 		var headers = {};
 
 		// Create the request. Fallback to whatever support we have.
@@ -13927,21 +14355,21 @@ this.createjs = this.createjs || {};
 		this._xhrLevel = (typeof req.responseType === "string") ? 2 : 1;
 
 		var src = null;
-		if (item.method == createjs.AbstractLoader.GET) {
-			src = createjs.RequestUtils.buildPath(item.src, item.values);
+		if (item.method == createjs.Methods.GET) {
+			src = createjs.URLUtils.buildURI(item.src, item.values);
 		} else {
 			src = item.src;
 		}
 
 		// Open the request.  Set cross-domain flags if it is supported (XHR level 1 only)
-		req.open(item.method || createjs.AbstractLoader.GET, src, true);
+		req.open(item.method || createjs.Methods.GET, src, true);
 
 		if (crossdomain && req instanceof XMLHttpRequest && this._xhrLevel == 1) {
 			headers["Origin"] = location.origin;
 		}
 
 		// To send data we need to set the Content-type header)
-		if (item.values && item.method == createjs.AbstractLoader.POST) {
+		if (item.values && item.method == createjs.Methods.POST) {
 			headers["Content-Type"] = "application/x-www-form-urlencoded";
 		}
 
@@ -14079,33 +14507,31 @@ this.createjs = this.createjs || {};
 	 * either a non-standard file extension, or are serving the file using a proxy script, then you can pass in a
 	 * <code>type</code> property with any manifest item.
 	 *
-	 *      queue.loadFile({src:"path/to/myFile.mp3x", type:createjs.AbstractLoader.SOUND});
+	 *      queue.loadFile({src:"path/to/myFile.mp3x", type:createjs.Types.SOUND});
 	 *
 	 *      // Note that PreloadJS will not read a file extension from the query string
-	 *      queue.loadFile({src:"http://server.com/proxy?file=image.jpg", type:createjs.AbstractLoader.IMAGE});
+	 *      queue.loadFile({src:"http://server.com/proxy?file=image.jpg", type:createjs.Types.IMAGE});
 	 *
 	 * Supported types are defined on the {{#crossLink "AbstractLoader"}}{{/crossLink}} class, and include:
 	 * <ul>
-	 *     <li>{{#crossLink "AbstractLoader/BINARY:property"}}{{/crossLink}}: Raw binary data via XHR</li>
-	 *     <li>{{#crossLink "AbstractLoader/CSS:property"}}{{/crossLink}}: CSS files</li>
-	 *     <li>{{#crossLink "AbstractLoader/IMAGE:property"}}{{/crossLink}}: Common image formats</li>
-	 *     <li>{{#crossLink "AbstractLoader/JAVASCRIPT:property"}}{{/crossLink}}: JavaScript files</li>
-	 *     <li>{{#crossLink "AbstractLoader/JSON:property"}}{{/crossLink}}: JSON data</li>
-	 *     <li>{{#crossLink "AbstractLoader/JSONP:property"}}{{/crossLink}}: JSON files cross-domain</li>
-	 *     <li>{{#crossLink "AbstractLoader/MANIFEST:property"}}{{/crossLink}}: A list of files to load in JSON format, see
+	 *     <li>{{#crossLink "Types/BINARY:property"}}{{/crossLink}}: Raw binary data via XHR</li>
+	 *     <li>{{#crossLink "Types/CSS:property"}}{{/crossLink}}: CSS files</li>
+	 *     <li>{{#crossLink "Types/IMAGE:property"}}{{/crossLink}}: Common image formats</li>
+	 *     <li>{{#crossLink "Types/JAVASCRIPT:property"}}{{/crossLink}}: JavaScript files</li>
+	 *     <li>{{#crossLink "Types/JSON:property"}}{{/crossLink}}: JSON data</li>
+	 *     <li>{{#crossLink "Types/JSONP:property"}}{{/crossLink}}: JSON files cross-domain</li>
+	 *     <li>{{#crossLink "Types/MANIFEST:property"}}{{/crossLink}}: A list of files to load in JSON format, see
 	 *     {{#crossLink "AbstractLoader/loadManifest"}}{{/crossLink}}</li>
-	 *     <li>{{#crossLink "AbstractLoader/SOUND:property"}}{{/crossLink}}: Audio file formats</li>
-	 *     <li>{{#crossLink "AbstractLoader/SPRITESHEET:property"}}{{/crossLink}}: JSON SpriteSheet definitions. This
+	 *     <li>{{#crossLink "Types/SOUND:property"}}{{/crossLink}}: Audio file formats</li>
+	 *     <li>{{#crossLink "Types/SPRITESHEET:property"}}{{/crossLink}}: JSON SpriteSheet definitions. This
 	 *     will also load sub-images, and provide a {{#crossLink "SpriteSheet"}}{{/crossLink}} instance.</li>
-	 *     <li>{{#crossLink "AbstractLoader/SVG:property"}}{{/crossLink}}: SVG files</li>
-	 *     <li>{{#crossLink "AbstractLoader/TEXT:property"}}{{/crossLink}}: Text files - XHR only</li>
-     *     <li>{{#crossLink "AbstractLoader/VIDEO:property"}}{{/crossLink}}: Video objects</li>
-	 *     <li>{{#crossLink "AbstractLoader/XML:property"}}{{/crossLink}}: XML data</li>
+	 *     <li>{{#crossLink "Types/SVG:property"}}{{/crossLink}}: SVG files</li>
+	 *     <li>{{#crossLink "Types/TEXT:property"}}{{/crossLink}}: Text files - XHR only</li>
+     *     <li>{{#crossLink "Types/VIDEO:property"}}{{/crossLink}}: Video objects</li>
+	 *     <li>{{#crossLink "Types/XML:property"}}{{/crossLink}}: XML data</li>
 	 * </ul>
 	 *
-	 * <em>Note: Loader types used to be defined on LoadQueue, but have been moved to AbstractLoader for better
-	 * portability of loader classes, which can be used individually now. The properties on LoadQueue still exist, but
-	 * are deprecated.</em>
+	 * <em>Note: Loader types used to be defined on LoadQueue, but have been moved to the Types class</em>
 	 *
 	 * <b>Handling Results</b><br />
 	 * When a file is finished downloading, a {{#crossLink "LoadQueue/fileload:event"}}{{/crossLink}} event is
@@ -14131,7 +14557,7 @@ this.createjs = this.createjs || {};
 	 *          var type = item.type;
 	 *
 	 *          // Add any images to the page body.
-	 *          if (type == createjs.LoadQueue.IMAGE) {
+	 *          if (type == createjs.Types.IMAGE) {
 	 *              document.body.appendChild(event.result);
 	 *          }
 	 *      }
@@ -14296,6 +14722,7 @@ this.createjs = this.createjs || {};
 		 * @since 0.6.0
 		 */
 		this._availableLoaders = [
+            createjs.FontLoader,
 			createjs.ImageLoader,
 			createjs.JavaScriptLoader,
 			createjs.CSSLoader,
@@ -14326,18 +14753,29 @@ this.createjs = this.createjs || {};
 	var p = createjs.extend(LoadQueue, createjs.AbstractLoader);
 	var s = LoadQueue;
 
-	/**
-	 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-	 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-	 * for details.
-	 *
-	 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-	 *
-	 * @method initialize
-	 * @protected
-	 * @deprecated
-	 */
-	// p.initialize = function() {}; // searchable for devs wondering where it is.
+	// Remove these @deprecated properties after 1.0
+	try {
+		Object.defineProperties(s, {
+			POST: { get: createjs.deprecate(function() { return createjs.Methods.POST; }, "AbstractLoader.POST") },
+			GET: { get: createjs.deprecate(function() { return createjs.Methods.GET; }, "AbstractLoader.GET") },
+
+			BINARY: { get: createjs.deprecate(function() { return createjs.Types.BINARY; }, "AbstractLoader.BINARY") },
+			CSS: { get: createjs.deprecate(function() { return createjs.Types.CSS; }, "AbstractLoader.CSS") },
+			FONT: { get: createjs.deprecate(function() { return createjs.Types.FONT; }, "AbstractLoader.FONT") },
+			FONTCSS: { get: createjs.deprecate(function() { return createjs.Types.FONTCSS; }, "AbstractLoader.FONTCSS") },
+			IMAGE: { get: createjs.deprecate(function() { return createjs.Types.IMAGE; }, "AbstractLoader.IMAGE") },
+			JAVASCRIPT: { get: createjs.deprecate(function() { return createjs.Types.JAVASCRIPT; }, "AbstractLoader.JAVASCRIPT") },
+			JSON: { get: createjs.deprecate(function() { return createjs.Types.JSON; }, "AbstractLoader.JSON") },
+			JSONP: { get: createjs.deprecate(function() { return createjs.Types.JSONP; }, "AbstractLoader.JSONP") },
+			MANIFEST: { get: createjs.deprecate(function() { return createjs.Types.MANIFEST; }, "AbstractLoader.MANIFEST") },
+			SOUND: { get: createjs.deprecate(function() { return createjs.Types.SOUND; }, "AbstractLoader.SOUND") },
+			VIDEO: { get: createjs.deprecate(function() { return createjs.Types.VIDEO; }, "AbstractLoader.VIDEO") },
+			SPRITESHEET: { get: createjs.deprecate(function() { return createjs.Types.SPRITESHEET; }, "AbstractLoader.SPRITESHEET") },
+			SVG: { get: createjs.deprecate(function() { return createjs.Types.SVG; }, "AbstractLoader.SVG") },
+			TEXT: { get: createjs.deprecate(function() { return createjs.Types.TEXT; }, "AbstractLoader.TEXT") },
+			XML: { get: createjs.deprecate(function() { return createjs.Types.XML; }, "AbstractLoader.XML") }
+		});
+	} catch (e) {}
 
 	/**
 	 * An internal initialization method, which is used for initial set up, but also to reset the LoadQueue.
@@ -14350,14 +14788,6 @@ this.createjs = this.createjs || {};
 	p.init = function (preferXHR, basePath, crossOrigin) {
 
 		// public properties
-		/**
-		 * @property useXHR
-		 * @type {Boolean}
-		 * @readonly
-		 * @default true
-		 * @deprecated Use preferXHR instead.
-		 */
-		this.useXHR = true;
 
 		/**
 		 * Try and use XMLHttpRequest (XHR) when possible. Note that LoadQueue will default to tag loading or XHR
@@ -14535,150 +14965,6 @@ this.createjs = this.createjs || {};
 	};
 
 // static properties
-	/**
-	 * The time in milliseconds to assume a load has failed. An {{#crossLink "AbstractLoader/error:event"}}{{/crossLink}}
-	 * event is dispatched if the timeout is reached before any data is received.
-	 * @property loadTimeout
-	 * @type {Number}
-	 * @default 8000
-	 * @static
-	 * @since 0.4.1
-	 * @deprecated In favour of {{#crossLink "LoadItem/LOAD_TIMEOUT_DEFAULT:property}}{{/crossLink}} property.
-	 */
-	s.loadTimeout = 8000;
-
-	/**
-	 * The time in milliseconds to assume a load has failed.
-	 * @property LOAD_TIMEOUT
-	 * @type {Number}
-	 * @default 0
-	 * @deprecated in favor of the {{#crossLink "LoadQueue/loadTimeout:property"}}{{/crossLink}} property.
-	 */
-	s.LOAD_TIMEOUT = 0;
-
-// Preload Types
-	/**
-	 * @property BINARY
-	 * @type {String}
-	 * @default binary
-	 * @static
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/BINARY:property"}}{{/crossLink}} instead.
-	 */
-	s.BINARY = createjs.AbstractLoader.BINARY;
-
-	/**
-	 * @property CSS
-	 * @type {String}
-	 * @default css
-	 * @static
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/CSS:property"}}{{/crossLink}} instead.
-	 */
-	s.CSS = createjs.AbstractLoader.CSS;
-
-	/**
-	 * @property IMAGE
-	 * @type {String}
-	 * @default image
-	 * @static
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/CSS:property"}}{{/crossLink}} instead.
-	 */
-	s.IMAGE = createjs.AbstractLoader.IMAGE;
-
-	/**
-	 * @property JAVASCRIPT
-	 * @type {String}
-	 * @default javascript
-	 * @static
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/JAVASCRIPT:property"}}{{/crossLink}} instead.
-	 */
-	s.JAVASCRIPT = createjs.AbstractLoader.JAVASCRIPT;
-
-	/**
-	 * @property JSON
-	 * @type {String}
-	 * @default json
-	 * @static
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/JSON:property"}}{{/crossLink}} instead.
-	 */
-	s.JSON = createjs.AbstractLoader.JSON;
-
-	/**
-	 * @property JSONP
-	 * @type {String}
-	 * @default jsonp
-	 * @static
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/JSONP:property"}}{{/crossLink}} instead.
-	 */
-	s.JSONP = createjs.AbstractLoader.JSONP;
-
-	/**
-	 * @property MANIFEST
-	 * @type {String}
-	 * @default manifest
-	 * @static
-	 * @since 0.4.1
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/MANIFEST:property"}}{{/crossLink}} instead.
-	 */
-	s.MANIFEST = createjs.AbstractLoader.MANIFEST;
-
-	/**
-	 * @property SOUND
-	 * @type {String}
-	 * @default sound
-	 * @static
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/JAVASCRIPT:property"}}{{/crossLink}} instead.
-	 */
-	s.SOUND = createjs.AbstractLoader.SOUND;
-
-	/**
-	 * @property VIDEO
-	 * @type {String}
-	 * @default video
-	 * @static
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/JAVASCRIPT:property"}}{{/crossLink}} instead.
-	 */
-	s.VIDEO = createjs.AbstractLoader.VIDEO;
-
-	/**
-	 * @property SVG
-	 * @type {String}
-	 * @default svg
-	 * @static
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/SVG:property"}}{{/crossLink}} instead.
-	 */
-	s.SVG = createjs.AbstractLoader.SVG;
-
-	/**
-	 * @property TEXT
-	 * @type {String}
-	 * @default text
-	 * @static
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/TEXT:property"}}{{/crossLink}} instead.
-	 */
-	s.TEXT = createjs.AbstractLoader.TEXT;
-
-	/**
-	 * @property XML
-	 * @type {String}
-	 * @default xml
-	 * @static
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/XML:property"}}{{/crossLink}} instead.
-	 */
-	s.XML = createjs.AbstractLoader.XML;
-
-	/**
-	 * @property POST
-	 * @type {string}
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/POST:property"}}{{/crossLink}} instead.
-	 */
-	s.POST = createjs.AbstractLoader.POST;
-
-	/**
-	 * @property GET
-	 * @type {string}
-	 * @deprecated Use the AbstractLoader {{#crossLink "AbstractLoader/GET:property"}}{{/crossLink}} instead.
-	 */
-	s.GET = createjs.AbstractLoader.GET;
 
 // events
 	/**
@@ -14704,7 +14990,7 @@ this.createjs = this.createjs || {};
 	/**
 	 * This event is fired when an individual file starts to load.
 	 * @event filestart
-	 * @param {Object} The object that dispatched the event.
+	 * @param {Object} target The object that dispatched the event.
 	 * @param {String} type The event type.
 	 * @param {Object} item The file item which was specified in the {{#crossLink "LoadQueue/loadFile"}}{{/crossLink}}
 	 * or {{#crossLink "LoadQueue/loadManifest"}}{{/crossLink}} call. If only a string path or tag was specified, the
@@ -14748,19 +15034,6 @@ this.createjs = this.createjs || {};
 		if (idx != -1 && idx < this._defaultLoaderLength - 1) {
 			this._availableLoaders.splice(idx, 1);
 		}
-	};
-
-	/**
-	 * @method setUseXHR
-	 * @param {Boolean} value The new useXHR value to set.
-	 * @return {Boolean} The new useXHR value. If XHR is not supported by the browser, this will return false, even if
-	 * the provided value argument was true.
-	 * @since 0.3.0
-	 * @deprecated use the {{#crossLink "LoadQueue/preferXHR:property"}}{{/crossLink}} property, or the
-	 * {{#crossLink "LoadQueue/setUseXHR"}}{{/crossLink}} method instead.
-	 */
-	p.setUseXHR = function (value) {
-		return this.setPreferXHR(value);
 	};
 
 	/**
@@ -14979,7 +15252,7 @@ this.createjs = this.createjs || {};
 	 * value is true. If the queue is paused using {{#crossLink "LoadQueue/setPaused"}}{{/crossLink}}, and the value is
 	 * `true`, the queue will resume automatically.
 	 * @param {String} [basePath] A base path that will be prepended to each file. The basePath argument overrides the
-	 * path specified in the constructor. Note that if you load a manifest using a file of type {{#crossLink "AbstractLoader/MANIFEST:property"}}{{/crossLink}},
+	 * path specified in the constructor. Note that if you load a manifest using a file of type {{#crossLink "Types/MANIFEST:property"}}{{/crossLink}},
 	 * its files will <strong>NOT</strong> use the basePath parameter. <strong>The basePath parameter is deprecated.</strong>
 	 * This parameter will be removed in a future version. Please either use the `basePath` parameter in the LoadQueue
 	 * constructor, or a `path` property in a manifest definition.
@@ -15255,7 +15528,7 @@ this.createjs = this.createjs || {};
 
 			// Only worry about script order when using XHR to load scripts. Tags are only loading one at a time.
 			if ((this.maintainScriptOrder
-					&& item.type == createjs.LoadQueue.JAVASCRIPT
+					&& item.type == createjs.Types.JAVASCRIPT
 						//&& loader instanceof createjs.XHRLoader //NOTE: Have to track all JS files this way
 					)
 					|| item.maintainOrder === true) {
@@ -15297,7 +15570,7 @@ this.createjs = this.createjs || {};
 			} // the the src is an object, type is required to pass off to plugin
 			if (path) {
 				bp = path;
-				var pathMatch = createjs.RequestUtils.parseURI(path);
+				var pathMatch = createjs.URLUtils.parseURI(path);
 				// Also append basePath
 				if (useBasePath != null && !pathMatch.absolute && !pathMatch.relative) {
 					bp = useBasePath + bp;
@@ -15307,7 +15580,7 @@ this.createjs = this.createjs || {};
 			}
 		} else {
 			// Determine Extension, etc.
-			var match = createjs.RequestUtils.parseURI(item.src);
+			var match = createjs.URLUtils.parseURI(item.src);
 			if (match.extension) {
 				item.ext = match.extension;
 			}
@@ -15320,7 +15593,7 @@ this.createjs = this.createjs || {};
 			if (!match.absolute && !match.relative) {
 				if (path) {
 					bp = path;
-					var pathMatch = createjs.RequestUtils.parseURI(path);
+					var pathMatch = createjs.URLUtils.parseURI(path);
 					autoId = path + autoId;
 					// Also append basePath
 					if (useBasePath != null && !pathMatch.absolute && !pathMatch.relative) {
@@ -15359,7 +15632,7 @@ this.createjs = this.createjs || {};
 			}
 
 			// Update the extension in case the type changed:
-			match = createjs.RequestUtils.parseURI(item.src);
+			match = createjs.URLUtils.parseURI(item.src);
 			if (match.extension != null) {
 				item.ext = match.extension;
 			}
@@ -15598,7 +15871,7 @@ this.createjs = this.createjs || {};
 	p._finishOrderedItem = function (loader, loadFailed) {
 		var item = loader.getItem();
 
-		if ((this.maintainScriptOrder && item.type == createjs.LoadQueue.JAVASCRIPT)
+		if ((this.maintainScriptOrder && item.type == createjs.Types.JAVASCRIPT)
 				|| item.maintainOrder) {
 
 			//TODO: Evaluate removal of the _currentlyLoadingScript
@@ -15641,7 +15914,7 @@ this.createjs = this.createjs || {};
 			} // This has completed, and been processed. Move on.
 
 			var loadItem = this._loadedResults[item.id];
-			if (item.type == createjs.LoadQueue.JAVASCRIPT) {
+			if (item.type == createjs.Types.JAVASCRIPT) {
 				// Append script tags to the head automatically.
 				createjs.DomUtils.appendToHead(loadItem);
 			}
@@ -15665,7 +15938,7 @@ this.createjs = this.createjs || {};
 
 		// Since LoadQueue needs maintain order, we can't append scripts in the loader.
 		// So we do it here instead. Or in _checkScriptLoadOrder();
-		if (!this.maintainScriptOrder && item.type == createjs.LoadQueue.JAVASCRIPT) {
+		if (!this.maintainScriptOrder && item.type == createjs.Types.JAVASCRIPT) {
 			var tag = loader.getTag();
 			createjs.DomUtils.appendToHead(tag);
 		}
@@ -15689,7 +15962,7 @@ this.createjs = this.createjs || {};
 			return true;
 		}
 		var item = loader.getItem();
-		if (item.type != createjs.LoadQueue.JAVASCRIPT) {
+		if (item.type != createjs.Types.JAVASCRIPT) {
 			return true;
 		}
 		if (this._currentlyLoadingScript) {
@@ -15887,7 +16160,7 @@ this.createjs = this.createjs || {};
 	 * @constructor
 	 */
 	function TextLoader(loadItem) {
-		this.AbstractLoader_constructor(loadItem, true, createjs.AbstractLoader.TEXT);
+		this.AbstractLoader_constructor(loadItem, true, createjs.Types.TEXT);
 	};
 
 	var p = createjs.extend(TextLoader, createjs.AbstractLoader);
@@ -15895,7 +16168,7 @@ this.createjs = this.createjs || {};
 
 	// static methods
 	/**
-	 * Determines if the loader can load a specific item. This loader loads items that are of type {{#crossLink "AbstractLoader/TEXT:property"}}{{/crossLink}},
+	 * Determines if the loader can load a specific item. This loader loads items that are of type {{#crossLink "Types/TEXT:property"}}{{/crossLink}},
 	 * but is also the default loader if a file type can not be determined.
 	 * @method canLoadItem
 	 * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
@@ -15903,7 +16176,7 @@ this.createjs = this.createjs || {};
 	 * @static
 	 */
 	s.canLoadItem = function (item) {
-		return item.type == createjs.AbstractLoader.TEXT;
+		return item.type == createjs.Types.TEXT;
 	};
 
 	createjs.TextLoader = createjs.promote(TextLoader, "AbstractLoader");
@@ -15928,7 +16201,7 @@ this.createjs = this.createjs || {};
 	 * @constructor
 	 */
 	function BinaryLoader(loadItem) {
-		this.AbstractLoader_constructor(loadItem, true, createjs.AbstractLoader.BINARY);
+		this.AbstractLoader_constructor(loadItem, true, createjs.Types.BINARY);
 		this.on("initialize", this._updateXHR, this);
 	};
 
@@ -15938,14 +16211,14 @@ this.createjs = this.createjs || {};
 	// static methods
 	/**
 	 * Determines if the loader can load a specific item. This loader can only load items that are of type
-	 * {{#crossLink "AbstractLoader/BINARY:property"}}{{/crossLink}}
+	 * {{#crossLink "Types/BINARY:property"}}{{/crossLink}}
 	 * @method canLoadItem
 	 * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
 	 * @returns {Boolean} Whether the loader can load the item.
 	 * @static
 	 */
 	s.canLoadItem = function (item) {
-		return item.type == createjs.AbstractLoader.BINARY;
+		return item.type == createjs.Types.BINARY;
 	};
 
 	// private methods
@@ -15982,7 +16255,7 @@ this.createjs = this.createjs || {};
 	 * @constructor
 	 */
 	function CSSLoader(loadItem, preferXHR) {
-		this.AbstractLoader_constructor(loadItem, preferXHR, createjs.AbstractLoader.CSS);
+		this.AbstractLoader_constructor(loadItem, preferXHR, createjs.Types.CSS);
 
 		// public properties
 		this.resultFormatter = this._formatResult;
@@ -15991,9 +16264,9 @@ this.createjs = this.createjs || {};
 		this._tagSrcAttribute = "href";
 
 		if (preferXHR) {
-			this._tag = document.createElement("style");
+			this._tag = createjs.Elements.style();
 		} else {
-			this._tag = document.createElement("link");
+			this._tag = createjs.Elements.link();
 		}
 
 		this._tag.rel = "stylesheet";
@@ -16006,14 +16279,14 @@ this.createjs = this.createjs || {};
 	// static methods
 	/**
 	 * Determines if the loader can load a specific item. This loader can only load items that are of type
-	 * {{#crossLink "AbstractLoader/CSS:property"}}{{/crossLink}}.
+	 * {{#crossLink "Types/CSS:property"}}{{/crossLink}}.
 	 * @method canLoadItem
 	 * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
 	 * @returns {Boolean} Whether the loader can load the item.
 	 * @static
 	 */
 	s.canLoadItem = function (item) {
-		return item.type == createjs.AbstractLoader.CSS;
+		return item.type == createjs.Types.CSS;
 	};
 
 	// protected methods
@@ -16031,7 +16304,7 @@ this.createjs = this.createjs || {};
 			if (tag.styleSheet) { // IE
 				tag.styleSheet.cssText = loader.getResult(true);
 			} else {
-				var textNode = document.createTextNode(loader.getResult(true));
+				var textNode = createjs.Elements.text(loader.getResult(true));
 				tag.appendChild(textNode);
 			}
 		} else {
@@ -16046,6 +16319,554 @@ this.createjs = this.createjs || {};
 	createjs.CSSLoader = createjs.promote(CSSLoader, "AbstractLoader");
 
 }());
+
+//##############################################################################
+// FontLoader.js
+//##############################################################################
+
+this.createjs = this.createjs || {};
+
+(function () {
+	"use strict";
+
+// constructor:
+	/**
+	 * A loader that handles font files, CSS definitions, and CSS paths. FontLoader doesn't actually preload fonts
+	 * themselves, but rather generates CSS definitions, and then tests the size changes on an HTML5 Canvas element.
+	 *
+	 * Note that FontLoader does not support tag-based loading due to the requirement that CSS be read to determine the
+	 * font definitions to test for.
+	 * @class FontLoader
+	 * @param {LoadItem|object|string} loadItem The item to be loaded.
+	 * @extends AbstractLoader
+	 * @constructor
+	 **/
+	function FontLoader(loadItem, preferXHR) {
+		this.AbstractLoader_constructor(loadItem, preferXHR, loadItem.type);
+
+		// private properties:
+		/**
+		 * A lookup of font faces to load.
+		 * @property _faces
+		 * @protected
+		 * @type Object
+		 **/
+		this._faces = {};
+
+		/**
+		 * A list of font faces currently being "watched". Watched fonts will be tested on a regular interval, and be
+		 * removed from this list when they are complete.
+		 * @oroperty _watched
+		 * @type {Array}
+		 * @protected
+		 */
+		this._watched = [];
+
+		/**
+		 * A count of the total font faces to load.
+		 * @property _count
+		 * @type {number}
+		 * @protected
+		 * @default 0
+		 */
+		this._count = 0;
+
+		/**
+		 * The interval for checking if fonts have been loaded.
+		 * @property _watchInterval
+		 * @type {Number}
+		 * @protected
+		 */
+		this._watchInterval = null;
+
+		/**
+		 * The timeout for determining if a font can't be loaded. Uses the LoadItem {{#crossLink "LoadImte/timeout:property"}}{{/crossLink}}
+		 * value.
+		 * @property _loadTimeout
+		 * @type {Number}
+		 * @protected
+		 */
+		this._loadTimeout = null;
+		/**
+		 * Determines if generated CSS should be injected into the document.
+		 * @property _injectCSS
+		 * @type {boolean}
+		 * @protected
+		 */
+		this._injectCSS = (loadItem.injectCSS === undefined) ? true : loadItem.injectCSS;
+
+		this.dispatchEvent("initialize");
+	}
+	var p = createjs.extend(FontLoader, createjs.AbstractLoader);
+    
+    /**
+     * Determines if the loader can load a specific item. This loader can only load items that are of type
+     * {{#crossLink "Types/FONT:property"}}{{/crossLink}}.
+     * @method canLoadItem
+     * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
+     * @returns {Boolean} Whether the loader can load the item.
+     * @static
+     */
+    FontLoader.canLoadItem = function (item) {
+        return item.type == createjs.Types.FONT || item.type == createjs.Types.FONTCSS;
+    };
+
+// static properties:
+	/**
+	 * Sample text used by the FontLoader to determine if the font has been loaded. The sample text size is compared
+	 * to the loaded font size, and a change indicates that the font has completed.
+	 * @property sampleText
+	 * @type {String}
+	 * @default abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
+	 * @static
+	 * @private
+	 */
+	FontLoader.sampleText = "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+	/**
+	 * The canvas context used to test the font size. Note that this currently requires an HTML DOM.
+	 * @property _ctx
+	 * @type {CanvasRenderingContext2D}
+	 * @static
+	 * @private
+	 */
+	FontLoader._ctx = document.createElement("canvas").getContext("2d"); // TODO: Consider a method to do this like EaselJS Stage has.
+
+	/**
+	 * A list of reference fonts to test. Multiple faces are tested to address the rare case of a loaded font being the
+	 * exact same dimensions as the test font.
+	 * @property _referenceFonts
+	 * @type {Array}
+	 * @default ["serif", "monospace"]
+	 * @private
+	 */
+	FontLoader._referenceFonts = ["serif","monospace"];
+
+	/**
+	 * A regular expression that pulls out possible style values from the font name.
+	 * <ul>
+	 *     <li>This includes font names that include thin, normal, book, regular, medium, black, and heavy (such as
+	 *     "Arial Black")</li>
+	 *     <li>Weight modifiers including extra, ultra, semi, demi, light, and bold (such as "WorkSans SemiBold")</li>
+	 * </ul>
+	 *
+	 * Weight descriptions map to font weight values by default using the following (from
+	 * http://www.w3.org/TR/css3-fonts/#font-weight-numeric-values):
+	 * <ul>
+	 *     <li>100 - Thin</li>
+	 * 	   <li>200 - Extra Light, Ultra Light</li>
+	 *     <li>300 - Light, Semi Light, Demi Light</li>
+	 *     <li>400 - Normal, Book, Regular</li>
+	 *     <li>500 - Medium</li>
+	 *     <li>600 - Semi Bold, Demi Bold</li>
+	 *     <li>700 - Bold</li>
+	 *     <li>800 - Extra Bold, Ultra Bold</li>
+	 *     <li>900 - Black, Heavy</li>
+	 * </ul>
+	 * @property WEIGHT_REGEX
+	 * @type {RegExp}
+	 * @static
+	 */
+	FontLoader.WEIGHT_REGEX = /[- ._]*(thin|normal|book|regular|medium|black|heavy|[1-9]00|(?:extra|ultra|semi|demi)?[- ._]*(?:light|bold))[- ._]*/ig;
+
+	/**
+	 * A regular expression that pulls out possible style values from the font name. These include "italic"
+	 * and "oblique".
+	 * @property STYLE_REGEX
+	 * @type {RegExp}
+	 * @static
+	 */
+	FontLoader.STYLE_REGEX = /[- ._]*(italic|oblique)[- ._]*/ig;
+
+	/**
+	 * A lookup of font types for generating a CSS definition. For example, TTF fonts requires a "truetype" type.
+	 * @property FONT_FORMAT
+	 * @type {Object}
+	 * @static
+	 */
+	FontLoader.FONT_FORMAT = {woff2:"woff2", woff:"woff", ttf:"truetype", otf:"truetype"};
+
+	/**
+	 * A lookup of font weights based on a name. These values are from http://www.w3.org/TR/css3-fonts/#font-weight-numeric-values.
+	 * @property FONT_WEIGHT
+	 * @type {Object}
+	 * @static
+	 */
+	FontLoader.FONT_WEIGHT = {thin:100, extralight:200, ultralight:200, light:300, semilight:300, demilight:300, book:"normal", regular:"normal", semibold:600, demibold:600, extrabold:800, ultrabold:800, black:900, heavy:900};
+
+	/**
+	 * The frequency in milliseconds to check for loaded fonts.
+	 * @property WATCH_DURATION
+	 * @type {number}
+	 * @default 10
+	 * @static
+	 */
+	FontLoader.WATCH_DURATION = 10;
+// public methods:
+	p.load = function() {
+		if (this.type == createjs.Types.FONTCSS) {
+			var loaded = this._watchCSS();
+
+			// If the CSS is not ready, it will create a request, which AbstractLoader can handle.
+			if (!loaded) {
+				this.AbstractLoader_load();
+				return;
+			}
+
+		} else if (this._item.src instanceof Array) {
+			this._watchFontArray();
+		} else {
+			var def = this._defFromSrc(this._item.src);
+			this._watchFont(def);
+			this._injectStyleTag(this._cssFromDef(def));
+		}
+
+		this._loadTimeout = setTimeout(createjs.proxy(this._handleTimeout, this), this._item.loadTimeout);
+
+		this.dispatchEvent("loadstart");
+	};
+
+	/**
+	 * The font load has timed out. This is called via a <code>setTimeout</code>.
+	 * callback.
+	 * @method _handleTimeout
+	 * @protected
+	 */
+	p._handleTimeout = function () {
+		this._stopWatching();
+		this.dispatchEvent(new createjs.ErrorEvent("PRELOAD_TIMEOUT"));
+	};
+
+	// WatchCSS does the work for us, and provides a modified src.
+	p._createRequest = function() {
+		return this._request;
+	};
+
+	// Events come from the internal XHR loader.
+	p.handleEvent = function (event) {
+		switch (event.type) {
+			case "complete":
+				this._rawResult = event.target._response;
+				this._result = true;
+				this._parseCSS(this._rawResult);
+				break;
+
+			case "error":
+				this._stopWatching();
+				this.AbstractLoader_handleEvent(event);
+				break;
+		}
+	};
+
+// private methods:
+	/**
+	 * Determine if the provided CSS is a string definition, CSS HTML element, or a CSS file URI. Depending on the
+	 * format, the CSS will be parsed, or loaded.
+	 * @method _watchCSS
+	 * @returns {boolean} Whether or not the CSS is ready
+	 * @protected
+	 */
+	p._watchCSS = function() {
+		var src = this._item.src;
+
+		// An HTMLElement was passed in. Just use it.
+		if (src instanceof HTMLStyleElement) {
+			if (this._injectCSS && !src.parentNode) { (document.head || document.getElementsByTagName('head')[0]).appendChild(src); }
+			this._injectCSS = false;
+			src = "\n"+src.textContent;
+		}
+
+		// A CSS string was passed in. Parse and use it
+		if (src.search(/\n|\r|@font-face/i) !== -1) { // css string.
+			this._parseCSS(src);
+			return true;
+		}
+
+		// Load a CSS Path. Note that we CAN NOT load it without XHR because we need to read the CSS definition
+		this._request = new createjs.XHRRequest(this._item);
+		return false;
+	};
+
+	/**
+	 * Parse a CSS string to determine the fonts to load.
+	 * @method _parseCSS
+	 * @param {String} css The CSS string to parse
+	 * @protected
+	 */
+	p._parseCSS = function(css) {
+		var regex = /@font-face\s*\{([^}]+)}/g
+		while (true) {
+			var result = regex.exec(css);
+			if (!result) { break; }
+			this._watchFont(this._parseFontFace(result[1]));
+		}
+		this._injectStyleTag(css);
+	};
+
+	/**
+	 * The provided fonts were an array of object or string definitions. Parse them, and inject any that are ready.
+	 * @method _watchFontArray
+	 * @protected
+	 */
+	p._watchFontArray = function() {
+		var arr = this._item.src, css = "", def;
+		for (var i=arr.length-1; i>=0; i--) {
+			var o = arr[i];
+			if (typeof o === "string") { def = this._defFromSrc(o) }
+			else { def = this._defFromObj(o); }
+			this._watchFont(def);
+			css += this._cssFromDef(def)+"\n";
+		}
+		this._injectStyleTag(css);
+	};
+
+	/**
+	 * Inject any style definitions into the document head. This is necessary when the definition is just a string or
+	 * object definition in order for the styles to be applied to the document. If the loaded fonts are already HTML CSS
+	 * elements, they don't need to be appended again.
+	 * @method _injectStyleTag
+	 * @param {String} css The CSS string content to be appended to the
+	 * @protected
+	 */
+	p._injectStyleTag = function(css) {
+		if (!this._injectCSS) { return; }
+		var head = document.head || document.getElementsByTagName('head')[0];
+		var styleTag = document.createElement("style");
+		styleTag.type = "text/css";
+		if (styleTag.styleSheet){
+			styleTag.styleSheet.cssText = css;
+		} else {
+			styleTag.appendChild(document.createTextNode(css));
+		}
+		head.appendChild(styleTag);
+	};
+
+	/**
+	 * Determine the font face from a CSS definition.
+	 * @method _parseFontFace
+	 * @param {String} str The CSS string definition
+	 * @protected
+	 * @return {String} A modified CSS object containing family name, src, style, and weight
+	 */
+	p._parseFontFace = function(str) {
+		var family = this._getCSSValue(str, "font-family"), src = this._getCSSValue(str, "src");
+		if (!family || !src) { return null; }
+		return this._defFromObj({
+			family: family,
+			src: src,
+			style: this._getCSSValue(str, "font-style"),
+			weight: this._getCSSValue(str, "font-weight")
+		});
+	};
+
+	/**
+	 * Add a font to the list of fonts currently being watched. If the font is already watched or loaded, it won't be
+	 * added again.
+	 * @method _watchFont
+	 * @param {Object} def The font definition
+	 * @protected
+	 */
+	p._watchFont = function(def) {
+		if (!def || this._faces[def.id]) { return; }
+		this._faces[def.id] = def;
+		this._watched.push(def);
+		this._count++;
+
+		this._calculateReferenceSizes(def);
+		this._startWatching();
+	};
+
+	/**
+	 * Create a interval to check for loaded fonts. Only one interval is used for all fonts. The fonts are checked based
+	 * on the {{#crossLink "FontLoader/WATCH_DURATION:property"}}{{/crossLink}}.
+	 * @method _startWatching
+	 * @protected
+	 */
+	p._startWatching = function() {
+		if (this._watchInterval != null) { return; }
+		this._watchInterval = setInterval(createjs.proxy(this._watch, this), FontLoader.WATCH_DURATION);
+	};
+
+	/**
+	 * Clear the interval used to check fonts. This happens when all fonts are loaded, or an error occurs, such as a
+	 * CSS file error, or a load timeout.
+	 * @method _stopWatching
+	 * @protected
+	 */
+	p._stopWatching = function() {
+		clearInterval(this._watchInterval);
+		clearTimeout(this._loadTimeout);
+		this._watchInterval = null;
+	};
+
+	/**
+	 * Check all the fonts that have not been loaded. The fonts are drawn to a canvas in memory, and if their font size
+	 * varies from the default text size, then the font is considered loaded.
+	 *
+	 * A {{#crossLink "AbstractLoader/fileload"}}{{/crossLink}} event will be dispatched when each file is loaded, along
+	 * with the font family name as the `item` value. A {{#crossLink "ProgressEvent"}}{{/crossLink}} is dispatched a
+	 * maximum of one time per check when any fonts are loaded, with the {{#crossLink "ProgressEvent/progress:property"}}{{/crossLink}}
+	 * value showing the percentage of fonts that have loaded.
+	 * @method _watch
+	 * @protected
+	 */
+	p._watch = function() {
+		var defs = this._watched, refFonts = FontLoader._referenceFonts, l = defs.length;
+		for (var i = l - 1; i >= 0; i--) {
+			var def = defs[i], refs = def.refs;
+			for (var j = refs.length - 1; j >= 0; j--) {
+				var w = this._getTextWidth(def.family + "," + refFonts[j], def.weight, def.style);
+				if (w != refs[j]) {
+					var event = new createjs.Event("fileload");
+					def.type = "font-family";
+					event.item = def;
+					this.dispatchEvent(event);
+					defs.splice(i, 1);
+					break;
+				}
+			}
+		}
+		if (l !== defs.length) {
+			var event = new createjs.ProgressEvent(this._count-defs.length, this._count);
+			this.dispatchEvent(event);
+		}
+		if (l === 0) {
+			this._stopWatching();
+			this._sendComplete();
+		}
+	};
+
+	/**
+	 * Determine the default size of the reference fonts used to compare against loaded fonts.
+	 * @method _calculateReferenceSizes
+	 * @param {Object} def The font definition to get the size of.
+	 * @protected
+	 */
+	p._calculateReferenceSizes = function(def) {
+		var refFonts = FontLoader._referenceFonts;
+		var refs = def.refs = [];
+		for (var i=0; i<refFonts.length; i++) {
+			refs[i] = this._getTextWidth(refFonts[i], def.weight, def.style);
+		}
+	};
+
+	/**
+	 * Get a CSS definition from a font source and name.
+	 * @method _defFromSrc
+	 * @param {String} src The font source
+	 * @protected
+	 */
+	p._defFromSrc = function(src) {
+		var re = /[- ._]+/g, name = src, ext = null, index;
+		
+		index = name.search(/[?#]/);
+		if (index !== -1) {
+			name = name.substr(0,index);
+		}
+		index = name.lastIndexOf(".");
+		if (index !== -1) {
+			ext = name.substr(index+1);
+			name = name.substr(0,index);
+		}
+		index = name.lastIndexOf("/");
+		if (index !== -1) {
+			name = name.substr(index+1);
+		}
+		
+		var family = name,
+				weight = family.match(FontLoader.WEIGHT_REGEX);
+		if (weight) {
+			weight = weight[0];
+			family = family.replace(weight, "");
+			weight = weight.replace(re, "").toLowerCase();
+		}
+		var style = name.match(FontLoader.STYLE_REGEX);
+		if (style) {
+			family = family.replace(style[0], "");
+			style = "italic";
+		}
+		family = family.replace(re, "");
+		
+		var cssSrc = "local('"+name.replace(re," ")+"'), url('"+src+"')";
+		var format = FontLoader.FONT_FORMAT[ext];
+		if (format) { cssSrc += " format('"+format+"')"; }
+		
+		return this._defFromObj({
+			family: family,
+			weight: FontLoader.FONT_WEIGHT[weight]||weight,
+			style: style,
+			src: cssSrc
+		});
+	};
+
+	/**
+	 * Get a font definition from a raw font object.
+	 * @method _defFromObj
+	 * @param {Object} o A raw object provided to the FontLoader
+	 * @returns {Object} A standard font object that the FontLoader understands
+	 * @protected
+	 */
+	p._defFromObj = function(o) {
+		var def = {
+			family: o.family,
+			src: o.src,
+			style: o.style || "normal",
+			weight: o.weight || "normal"
+		};
+		def.id = def.family + ";" + def.style + ";" + def.weight;
+		return def;
+	};
+
+	/**
+	 * Get CSS from a font definition.
+	 * @method _cssFromDef
+	 * @param {Object} def A font definition
+	 * @returns {string} A CSS string representing the object
+	 * @protected
+	 */
+	p._cssFromDef = function(def) {
+		return "@font-face {\n" +
+			"\tfont-family: '"+def.family+"';\n" +
+			"\tfont-style: "+def.style+";\n" +
+			"\tfont-weight: "+def.weight+";\n" +
+			"\tsrc: "+def.src+";\n" +
+			"}";
+	};
+
+	/**
+	 * Get the text width of text using the family, weight, and style
+	 * @method _getTextWidth
+	 * @param {String} family The font family
+	 * @param {String} weight The font weight
+	 * @param {String} style The font style
+	 * @returns {Number} The pixel measurement of the font.
+	 * @protected
+	 */
+	p._getTextWidth = function(family, weight, style) {
+		var ctx = FontLoader._ctx;
+		ctx.font = style+" "+weight+" 72px "+family;
+		return ctx.measureText(FontLoader.sampleText).width;
+	};
+
+	/**
+	 * Get the value of a property from a CSS string. For example, searches a CSS string for the value of the
+	 * "font-family" property.
+	 * @method _getCSSValue
+	 * @param {String} str The CSS string to search
+	 * @param {String} propName The property name to get the value for
+	 * @returns {String} The value in the CSS for the provided property name
+	 * @protected
+	 */
+	p._getCSSValue = function(str, propName) {
+		var regex = new RegExp(propName+":\s*([^;}]+?)\s*[;}]");
+		var result = regex.exec(str);
+		if (!result || !result[1]) { return null; }
+		return result[1];
+	};
+
+	createjs.FontLoader = createjs.promote(FontLoader, "AbstractLoader");
+
+})();
 
 //##############################################################################
 // ImageLoader.js
@@ -16066,7 +16887,7 @@ this.createjs = this.createjs || {};
 	 * @constructor
 	 */
 	function ImageLoader (loadItem, preferXHR) {
-		this.AbstractLoader_constructor(loadItem, preferXHR, createjs.AbstractLoader.IMAGE);
+		this.AbstractLoader_constructor(loadItem, preferXHR, createjs.Types.IMAGE);
 
 		// public properties
 		this.resultFormatter = this._formatResult;
@@ -16075,18 +16896,18 @@ this.createjs = this.createjs || {};
 		this._tagSrcAttribute = "src";
 
 		// Check if the preload item is already a tag.
-		if (createjs.RequestUtils.isImageTag(loadItem)) {
+		if (createjs.DomUtils.isImageTag(loadItem)) {
 			this._tag = loadItem;
-		} else if (createjs.RequestUtils.isImageTag(loadItem.src)) {
+		} else if (createjs.DomUtils.isImageTag(loadItem.src)) {
 			this._tag = loadItem.src;
-		} else if (createjs.RequestUtils.isImageTag(loadItem.tag)) {
+		} else if (createjs.DomUtils.isImageTag(loadItem.tag)) {
 			this._tag = loadItem.tag;
 		}
 
 		if (this._tag != null) {
 			this._preferXHR = false;
 		} else {
-			this._tag = document.createElement("img");
+			this._tag = createjs.Elements.img();
 		}
 
 		this.on("initialize", this._updateXHR, this);
@@ -16098,14 +16919,14 @@ this.createjs = this.createjs || {};
 	// static methods
 	/**
 	 * Determines if the loader can load a specific item. This loader can only load items that are of type
-	 * {{#crossLink "AbstractLoader/IMAGE:property"}}{{/crossLink}}.
+	 * {{#crossLink "Types/IMAGE:property"}}{{/crossLink}}.
 	 * @method canLoadItem
 	 * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
 	 * @returns {Boolean} Whether the loader can load the item.
 	 * @static
 	 */
 	s.canLoadItem = function (item) {
-		return item.type == createjs.AbstractLoader.IMAGE;
+		return item.type == createjs.Types.IMAGE;
 	};
 
 	// public methods
@@ -16117,7 +16938,7 @@ this.createjs = this.createjs || {};
 
 		var crossOrigin = this._item.crossOrigin;
 		if (crossOrigin == true) { crossOrigin = "Anonymous"; }
-		if (crossOrigin != null && !createjs.RequestUtils.isLocal(this._item.src)) {
+		if (crossOrigin != null && !createjs.URLUtils.isLocal(this._item)) {
 			this._tag.crossOrigin = crossOrigin;
 		}
 
@@ -16164,6 +16985,7 @@ this.createjs = this.createjs || {};
 		var URL = window.URL || window.webkitURL;
 
 		if (!this._preferXHR) {
+
 			//document.body.removeChild(tag);
 		} else if (URL) {
 			var objURL = URL.createObjectURL(this.getResult(true));
@@ -16180,10 +17002,12 @@ this.createjs = this.createjs || {};
 		} else {
             tag.onload = createjs.proxy(function() {
                 successCallback(this._tag);
+                tag.onload = tag.onerror = null;
             }, this);
 
-            tag.onerror = createjs.proxy(function() {
-                errorCallback(_this._tag);
+            tag.onerror = createjs.proxy(function(event) {
+                errorCallback(new createjs.ErrorEvent('IMAGE_FORMAT', null, event));
+                tag.onload = tag.onerror = null;
             }, this);
 		}
 	};
@@ -16224,14 +17048,14 @@ this.createjs = this.createjs || {};
 	 * @constructor
 	 */
 	function JavaScriptLoader(loadItem, preferXHR) {
-		this.AbstractLoader_constructor(loadItem, preferXHR, createjs.AbstractLoader.JAVASCRIPT);
+		this.AbstractLoader_constructor(loadItem, preferXHR, createjs.Types.JAVASCRIPT);
 
 		// public properties
 		this.resultFormatter = this._formatResult;
 
 		// protected properties
 		this._tagSrcAttribute = "src";
-		this.setTag(document.createElement("script"));
+		this.setTag(createjs.Elements.script());
 	};
 
 	var p = createjs.extend(JavaScriptLoader, createjs.AbstractLoader);
@@ -16240,14 +17064,14 @@ this.createjs = this.createjs || {};
 	// static methods
 	/**
 	 * Determines if the loader can load a specific item. This loader can only load items that are of type
-	 * {{#crossLink "AbstractLoader/JAVASCRIPT:property"}}{{/crossLink}}
+	 * {{#crossLink "Types/JAVASCRIPT:property"}}{{/crossLink}}
 	 * @method canLoadItem
 	 * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
 	 * @returns {Boolean} Whether the loader can load the item.
 	 * @static
 	 */
 	s.canLoadItem = function (item) {
-		return item.type == createjs.AbstractLoader.JAVASCRIPT;
+		return item.type == createjs.Types.JAVASCRIPT;
 	};
 
 	// protected methods
@@ -16290,7 +17114,7 @@ this.createjs = this.createjs || {};
 	 * @constructor
 	 */
 	function JSONLoader(loadItem) {
-		this.AbstractLoader_constructor(loadItem, true, createjs.AbstractLoader.JSON);
+		this.AbstractLoader_constructor(loadItem, true, createjs.Types.JSON);
 
 		// public properties
 		this.resultFormatter = this._formatResult;
@@ -16302,14 +17126,14 @@ this.createjs = this.createjs || {};
 	// static methods
 	/**
 	 * Determines if the loader can load a specific item. This loader can only load items that are of type
-	 * {{#crossLink "AbstractLoader/JSON:property"}}{{/crossLink}}.
+	 * {{#crossLink "Types/JSON:property"}}{{/crossLink}}.
 	 * @method canLoadItem
 	 * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
 	 * @returns {Boolean} Whether the loader can load the item.
 	 * @static
 	 */
 	s.canLoadItem = function (item) {
-		return item.type == createjs.AbstractLoader.JSON;
+		return item.type == createjs.Types.JSON;
 	};
 
 	// protected methods
@@ -16377,9 +17201,12 @@ this.createjs = this.createjs || {};
 	 * 			console.log(json.obj.bool); // true
 	 * 		}
 	 *
-	 * Note that JSONP files loaded concurrently require a <em>unique</em> callback. To ensure JSONP files are loaded
-	 * in order, either use the {{#crossLink "LoadQueue/setMaxConnections"}}{{/crossLink}} method (set to 1),
-	 * or set {{#crossLink "LoadItem/maintainOrder:property"}}{{/crossLink}} on items with the same callback.
+	 * JSONP files loaded concurrently require a <em>unique</em> callback. To ensure JSONP files are loaded in order,
+	 * either use the {{#crossLink "LoadQueue/setMaxConnections"}}{{/crossLink}} method (set to 1), or set
+	 * {{#crossLink "LoadItem/maintainOrder:property"}}{{/crossLink}} on items with the same callback.
+	 *
+	 * Important note: Some browsers will prevent JSONP from firing the callback if the file was loaded as JSON, and not
+	 * JavaScript. You may have to have your server give you a JavaScript mime-type for this to work.
 	 *
 	 * @class JSONPLoader
 	 * @param {LoadItem|Object} loadItem
@@ -16387,8 +17214,8 @@ this.createjs = this.createjs || {};
 	 * @constructor
 	 */
 	function JSONPLoader(loadItem) {
-		this.AbstractLoader_constructor(loadItem, false, createjs.AbstractLoader.JSONP);
-		this.setTag(document.createElement("script"));
+		this.AbstractLoader_constructor(loadItem, false, createjs.Types.JSONP);
+		this.setTag(createjs.Elements.script());
 		this.getTag().type = "text/javascript";
 	};
 
@@ -16399,14 +17226,14 @@ this.createjs = this.createjs || {};
 	// static methods
 	/**
 	 * Determines if the loader can load a specific item. This loader can only load items that are of type
-	 * {{#crossLink "AbstractLoader/JSONP:property"}}{{/crossLink}}.
+	 * {{#crossLink "Types/JSONP:property"}}{{/crossLink}}.
 	 * @method canLoadItem
 	 * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
 	 * @returns {Boolean} Whether the loader can load the item.
 	 * @static
 	 */
 	s.canLoadItem = function (item) {
-		return item.type == createjs.AbstractLoader.JSONP;
+		return item.type == createjs.Types.JSONP;
 	};
 
 	// public methods
@@ -16439,7 +17266,7 @@ this.createjs = this.createjs || {};
 		}
 
 		window[this._item.callback] = createjs.proxy(this._handleLoad, this);
-		window.document.body.appendChild(this._tag);
+		createjs.DomUtils.appendToBody(this._tag);
 
 		this._loadTimeout = setTimeout(createjs.proxy(this._handleTimeout, this), this._item.loadTimeout);
 
@@ -16478,7 +17305,7 @@ this.createjs = this.createjs || {};
 	 * @private
 	 */
 	p._dispose = function () {
-		window.document.body.removeChild(this._tag);
+		createjs.DomUtils.removeChild(this._tag);
 		delete window[this._item.callback];
 
 		clearTimeout(this._loadTimeout);
@@ -16520,14 +17347,17 @@ this.createjs = this.createjs || {};
 	 *
 	 * Note that the {{#crossLink "JSONLoader"}}{{/crossLink}} and {{#crossLink "JSONPLoader"}}{{/crossLink}} are
 	 * higher priority loaders, so manifests <strong>must</strong> set the {{#crossLink "LoadItem"}}{{/crossLink}}
-	 * {{#crossLink "LoadItem/type:property"}}{{/crossLink}} property to {{#crossLink "AbstractLoader/MANIFEST:property"}}{{/crossLink}}.
+	 * {{#crossLink "LoadItem/type:property"}}{{/crossLink}} property to {{#crossLink "Types/MANIFEST:property"}}{{/crossLink}}.
+	 *
+	 * Additionally, some browsers require the server to serve a JavaScript mime-type for JSONP, so it may not work in
+	 * some conditions.
 	 * @class ManifestLoader
 	 * @param {LoadItem|Object} loadItem
 	 * @extends AbstractLoader
 	 * @constructor
 	 */
-	function ManifestLoader(loadItem) {
-		this.AbstractLoader_constructor(loadItem, null, createjs.AbstractLoader.MANIFEST);
+	function ManifestLoader(loadItem, preferXHR) {
+		this.AbstractLoader_constructor(loadItem, preferXHR, createjs.Types.MANIFEST);
 
 	// Public Properties
 		/**
@@ -16568,14 +17398,14 @@ this.createjs = this.createjs || {};
 	// static methods
 	/**
 	 * Determines if the loader can load a specific item. This loader can only load items that are of type
-	 * {{#crossLink "AbstractLoader/MANIFEST:property"}}{{/crossLink}}
+	 * {{#crossLink "Types/MANIFEST:property"}}{{/crossLink}}
 	 * @method canLoadItem
 	 * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
 	 * @returns {Boolean} Whether the loader can load the item.
 	 * @static
 	 */
 	s.canLoadItem = function (item) {
-		return item.type == createjs.AbstractLoader.MANIFEST;
+		return item.type == createjs.Types.MANIFEST;
 	};
 
 	// public methods
@@ -16624,7 +17454,7 @@ this.createjs = this.createjs || {};
 	 */
 	p._loadManifest = function (json) {
 		if (json && json.manifest) {
-			var queue = this._manifestQueue = new createjs.LoadQueue();
+			var queue = this._manifestQueue = new createjs.LoadQueue(this._preferXHR);
 			queue.on("fileload", this._handleManifestFileLoad, this);
 			queue.on("progress", this._handleManifestProgress, this);
 			queue.on("complete", this._handleManifestComplete, this, true);
@@ -16710,15 +17540,15 @@ this.createjs = this.createjs || {};
 	 * @constructor
 	 */
 	function SoundLoader(loadItem, preferXHR) {
-		this.AbstractMediaLoader_constructor(loadItem, preferXHR, createjs.AbstractLoader.SOUND);
+		this.AbstractMediaLoader_constructor(loadItem, preferXHR, createjs.Types.SOUND);
 
 		// protected properties
-		if (createjs.RequestUtils.isAudioTag(loadItem)) {
+		if (createjs.DomUtils.isAudioTag(loadItem)) {
 			this._tag = loadItem;
-		} else if (createjs.RequestUtils.isAudioTag(loadItem.src)) {
+		} else if (createjs.DomUtils.isAudioTag(loadItem.src)) {
 			this._tag = loadItem;
-		} else if (createjs.RequestUtils.isAudioTag(loadItem.tag)) {
-			this._tag = createjs.RequestUtils.isAudioTag(loadItem) ? loadItem : loadItem.src;
+		} else if (createjs.DomUtils.isAudioTag(loadItem.tag)) {
+			this._tag = createjs.DomUtils.isAudioTag(loadItem) ? loadItem : loadItem.src;
 		}
 
 		if (this._tag != null) {
@@ -16732,19 +17562,19 @@ this.createjs = this.createjs || {};
 	// static methods
 	/**
 	 * Determines if the loader can load a specific item. This loader can only load items that are of type
-	 * {{#crossLink "AbstractLoader/SOUND:property"}}{{/crossLink}}.
+	 * {{#crossLink "Types/SOUND:property"}}{{/crossLink}}.
 	 * @method canLoadItem
 	 * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
 	 * @returns {Boolean} Whether the loader can load the item.
 	 * @static
 	 */
 	s.canLoadItem = function (item) {
-		return item.type == createjs.AbstractLoader.SOUND;
+		return item.type == createjs.Types.SOUND;
 	};
 
 	// protected methods
 	p._createTag = function (src) {
-		var tag = document.createElement("audio");
+		var tag = createjs.Elements.audio();
 		tag.autoplay = false;
 		tag.preload = "none";
 
@@ -16776,10 +17606,10 @@ this.createjs = this.createjs || {};
 	 * @constructor
 	 */
 	function VideoLoader(loadItem, preferXHR) {
-		this.AbstractMediaLoader_constructor(loadItem, preferXHR, createjs.AbstractLoader.VIDEO);
+		this.AbstractMediaLoader_constructor(loadItem, preferXHR, createjs.Types.VIDEO);
 
-		if (createjs.RequestUtils.isVideoTag(loadItem) || createjs.RequestUtils.isVideoTag(loadItem.src)) {
-			this.setTag(createjs.RequestUtils.isVideoTag(loadItem)?loadItem:loadItem.src);
+		if (createjs.DomUtils.isVideoTag(loadItem) || createjs.DomUtils.isVideoTag(loadItem.src)) {
+			this.setTag(createjs.DomUtils.isVideoTag(loadItem)?loadItem:loadItem.src);
 
 			// We can't use XHR for a tag that's passed in.
 			this._preferXHR = false;
@@ -16798,20 +17628,20 @@ this.createjs = this.createjs || {};
 	 * @private
 	 */
 	p._createTag = function () {
-		return document.createElement("video");
+		return createjs.Elements.video();
 	};
 
 	// static methods
 	/**
 	 * Determines if the loader can load a specific item. This loader can only load items that are of type
-	 * {{#crossLink "AbstractLoader/VIDEO:property"}}{{/crossLink}}.
+	 * {{#crossLink "Types/VIDEO:property"}}{{/crossLink}}.
 	 * @method canLoadItem
 	 * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
 	 * @returns {Boolean} Whether the loader can load the item.
 	 * @static
 	 */
 	s.canLoadItem = function (item) {
-		return item.type == createjs.AbstractLoader.VIDEO;
+		return item.type == createjs.Types.VIDEO;
 	};
 
 	createjs.VideoLoader = createjs.promote(VideoLoader, "AbstractMediaLoader");
@@ -16834,7 +17664,7 @@ this.createjs = this.createjs || {};
 	 * as part of the {{#crossLink "LoadItem"}}{{/crossLink}}. Note that the {{#crossLink "JSONLoader"}}{{/crossLink}}
 	 * and {{#crossLink "JSONPLoader"}}{{/crossLink}} are higher priority loaders, so SpriteSheets <strong>must</strong>
 	 * set the {{#crossLink "LoadItem"}}{{/crossLink}} {{#crossLink "LoadItem/type:property"}}{{/crossLink}} property
-	 * to {{#crossLink "AbstractLoader/SPRITESHEET:property"}}{{/crossLink}}.
+	 * to {{#crossLink "Types/SPRITESHEET:property"}}{{/crossLink}}.
 	 *
 	 * The {{#crossLink "LoadItem"}}{{/crossLink}} {{#crossLink "LoadItem/crossOrigin:property"}}{{/crossLink}} as well
 	 * as the {{#crossLink "LoadQueue's"}}{{/crossLink}} `basePath` argument and {{#crossLink "LoadQueue/_preferXHR"}}{{/crossLink}}
@@ -16851,7 +17681,7 @@ this.createjs = this.createjs || {};
 	 * @constructor
 	 */
 	function SpriteSheetLoader(loadItem, preferXHR) {
-		this.AbstractLoader_constructor(loadItem, preferXHR, createjs.AbstractLoader.SPRITESHEET);
+		this.AbstractLoader_constructor(loadItem, preferXHR, createjs.Types.SPRITESHEET);
 
 		// protected properties
 		/**
@@ -16880,19 +17710,19 @@ this.createjs = this.createjs || {};
 	// static methods
 	/**
 	 * Determines if the loader can load a specific item. This loader can only load items that are of type
-	 * {{#crossLink "AbstractLoader/SPRITESHEET:property"}}{{/crossLink}}
+	 * {{#crossLink "Types/SPRITESHEET:property"}}{{/crossLink}}
 	 * @method canLoadItem
 	 * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
 	 * @returns {Boolean} Whether the loader can load the item.
 	 * @static
 	 */
 	s.canLoadItem = function (item) {
-		return item.type == createjs.AbstractLoader.SPRITESHEET;
+		return item.type == createjs.Types.SPRITESHEET;
 	};
 
 	// public methods
 	p.destroy = function() {
-		this.AbstractLoader_destroy;
+		this.AbstractLoader_destroy();
 		this._manifestQueue.close();
 	};
 
@@ -17015,7 +17845,7 @@ this.createjs = this.createjs || {};
 	 * @constructor
 	 */
 	function SVGLoader(loadItem, preferXHR) {
-		this.AbstractLoader_constructor(loadItem, preferXHR, createjs.AbstractLoader.SVG);
+		this.AbstractLoader_constructor(loadItem, preferXHR, createjs.Types.SVG);
 
 		// public properties
 		this.resultFormatter = this._formatResult;
@@ -17024,9 +17854,9 @@ this.createjs = this.createjs || {};
 		this._tagSrcAttribute = "data";
 
 		if (preferXHR) {
-			this.setTag(document.createElement("svg"));
+			this.setTag(createjs.Elements.svg());
 		} else {
-			this.setTag(document.createElement("object"));
+			this.setTag(createjs.Elements.object());
 			this.getTag().type = "image/svg+xml";
 		}
 	};
@@ -17037,14 +17867,14 @@ this.createjs = this.createjs || {};
 	// static methods
 	/**
 	 * Determines if the loader can load a specific item. This loader can only load items that are of type
-	 * {{#crossLink "AbstractLoader/SVG:property"}}{{/crossLink}}
+	 * {{#crossLink "Types/SVG:property"}}{{/crossLink}}
 	 * @method canLoadItem
 	 * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
 	 * @returns {Boolean} Whether the loader can load the item.
 	 * @static
 	 */
 	s.canLoadItem = function (item) {
-		return item.type == createjs.AbstractLoader.SVG;
+		return item.type == createjs.Types.SVG;
 	};
 
 	// protected methods
@@ -17057,7 +17887,7 @@ this.createjs = this.createjs || {};
 	 */
 	p._formatResult = function (loader) {
 		// mime should be image/svg+xml, but Opera requires text/xml
-		var xml = createjs.DataUtils.parseXML(loader.getResult(true), "text/xml");
+		var xml = createjs.DataUtils.parseXML(loader.getResult(true));
 		var tag = loader.getTag();
 
 		if (!this._preferXHR && document.body.contains(tag)) {
@@ -17065,8 +17895,12 @@ this.createjs = this.createjs || {};
 		}
 
 		if (xml.documentElement != null) {
-			tag.appendChild(xml.documentElement);
-			tag.style.visibility = "visible";
+			var element = xml.documentElement;
+			// Support loading an SVG from a different domain in ID
+			if (document.importNode) {
+				element = document.importNode(element, true);
+			}
+			tag.appendChild(element);
 			return tag;
 		} else { // For browsers that don't support SVG, just give them the XML. (IE 9-8)
 			return xml;
@@ -17095,7 +17929,7 @@ this.createjs = this.createjs || {};
 	 * @constructor
 	 */
 	function XMLLoader(loadItem) {
-		this.AbstractLoader_constructor(loadItem, true, createjs.AbstractLoader.XML);
+		this.AbstractLoader_constructor(loadItem, true, createjs.Types.XML);
 
 		// public properties
 		this.resultFormatter = this._formatResult;
@@ -17107,14 +17941,14 @@ this.createjs = this.createjs || {};
 	// static methods
 	/**
 	 * Determines if the loader can load a specific item. This loader can only load items that are of type
-	 * {{#crossLink "AbstractLoader/XML:property"}}{{/crossLink}}.
+	 * {{#crossLink "Types/XML:property"}}{{/crossLink}}.
 	 * @method canLoadItem
 	 * @param {LoadItem|Object} item The LoadItem that a LoadQueue is trying to load.
 	 * @returns {Boolean} Whether the loader can load the item.
 	 * @static
 	 */
 	s.canLoadItem = function (item) {
-		return item.type == createjs.AbstractLoader.XML;
+		return item.type == createjs.Types.XML;
 	};
 
 	// protected methods
@@ -17126,7 +17960,7 @@ this.createjs = this.createjs || {};
 	 * @private
 	 */
 	p._formatResult = function (loader) {
-		return createjs.DataUtils.parseXML(loader.getResult(true), "text/xml");
+		return createjs.DataUtils.parseXML(loader.getResult(true));
 	};
 
 	createjs.XMLLoader = createjs.promote(XMLLoader, "AbstractLoader");
