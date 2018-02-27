@@ -109,7 +109,7 @@
 			
 			"app/shared/controllers/Screen.js",
 			"app/shared/controllers/Scroll.js",
-			"app/desktop/controllers/Main.js",
+			"app/mobile/controllers/Main.js",
 			
 			"app/shared/abstracts/controllers/AbstractPagesController.js",
 			"app/mobile/controllers/PagesController.js",

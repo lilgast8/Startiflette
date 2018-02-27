@@ -19776,11 +19776,11 @@ STF.Controllers.Main = new class Main extends STF.Abstracts.AbstractMain {
 	}*/
 	
 	
-	initEl() {
+	/*initEl() {
 		super.initEl();
 		
-		STF.Controllers.Scroll.disableScrollRestoration();
-	}
+		// STF.Controllers.DeviceOrientation.init( this.$window );
+	}*/
 	
 	
 	/*bindEvents() {

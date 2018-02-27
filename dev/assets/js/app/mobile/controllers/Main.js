@@ -16,7 +16,7 @@ STF.Controllers.Main = new class Main extends STF.Abstracts.AbstractMain {
 	/*initEl() {
 		super.initEl();
 		
-		// STF.Controllers.DeviceOrientation.init( this.$window, undefined, undefined, true, true );
+		// STF.Controllers.DeviceOrientation.init( this.$window );
 	}*/
 	
 	
