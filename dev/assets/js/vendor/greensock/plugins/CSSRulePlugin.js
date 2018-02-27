@@ -1,9 +1,9 @@
 /*!
- * VERSION: 0.6.4
- * DATE: 2016-07-08
+ * VERSION: 0.6.6
+ * DATE: 2018-02-15
  * UPDATES AND DOCS AT: http://greensock.com
  *
- * @license Copyright (c) 2008-2016, GreenSock. All rights reserved.
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
  * This work is subject to the terms at http://greensock.com/standard-license or for
  * Club GreenSock members, the software agreement that was issued with your membership.
  * 
@@ -21,13 +21,13 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				TweenPlugin.call(this, "cssRule");
 				this._overwriteProps.length = 0;
 			},
-			_doc = window.document,
+			_doc = _gsScope.document,
 			_superSetRatio = CSSPlugin.prototype.setRatio,
 			p = CSSRulePlugin.prototype = new CSSPlugin();
 
 		p._propName = "cssRule";
 		p.constructor = CSSRulePlugin;
-		CSSRulePlugin.version = "0.6.4";
+		CSSRulePlugin.version = "0.6.6";
 		CSSRulePlugin.API = 2;
 
 		/**
@@ -39,12 +39,12 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		 * @return a reference to the style sheet (or an array of them in the case of a pseudo selector). If none was found, null is returned (or an empty array for a pseudo selector)
 		 */
 		CSSRulePlugin.getRule = function(selector) {
-			var ruleProp = _doc.all ? 'rules' : 'cssRules',
+			var ruleProp = _doc.all ? "rules" : "cssRules",
 				ss = _doc.styleSheets,
 				i = ss.length,
 				pseudo = (selector.charAt(0) === ":"),
 				j, curSS, cs, a;
-			selector = (pseudo ? "" : ",") + selector.toLowerCase() + ","; //note: old versions of IE report tag name selectors as upper case, so we just change everything to lowercase.
+			selector = (pseudo ? "" : ",") + selector.split("::").join(":").toLowerCase() + ","; //note: old versions of IE report tag name selectors as upper case, so we just change everything to lowercase.
 			if (pseudo) {
 				a = [];
 			}
@@ -110,10 +110,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	var getGlobal = function() {
 		return (_gsScope.GreenSockGlobals || _gsScope)[name];
 	};
-	if (typeof(define) === "function" && define.amd) { //AMD
-		define(["TweenLite"], getGlobal);
-	} else if (typeof(module) !== "undefined" && module.exports) { //node
+	if (typeof(module) !== "undefined" && module.exports) { //node
 		require("../TweenLite.js");
 		module.exports = getGlobal();
+	} else if (typeof(define) === "function" && define.amd) { //AMD
+		define(["TweenLite"], getGlobal);
 	}
 }("CSSRulePlugin"));

@@ -1,9 +1,9 @@
 /*!
- * VERSION: beta 1.5.0
- * DATE: 2016-07-14
+ * VERSION: 1.5.3
+ * DATE: 2018-02-15
  * UPDATES AND DOCS AT: http://greensock.com
  *
- * @license Copyright (c) 2008-2016, GreenSock. All rights reserved.
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
  * This work is subject to the terms at http://greensock.com/standard-license or for
  * Club GreenSock members, the software agreement that was issued with your membership.
  * 
@@ -76,7 +76,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						g = (l <= 0.5) ? l * (s + 1) : l + s - l * s;
 						r = l * 2 - g;
 						if (a.length > 3) {
-							a[3] = Number(v[3]);
+							a[3] = Number(a[3]);
 						}
 						a[0] = _hue(h + 1 / 3, r, g);
 						a[1] = _hue(h, r, g);
@@ -118,8 +118,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		_formatColors = function(s, toHSL) {
 			var colors = (s + "").match(_colorExp) || [],
 				charIndex = 0,
-				parsed = colors.length ? "" : s,
+				parsed = "",
 				i, color, temp;
+			if (!colors.length) {
+				return s;
+			}
 			for (i = 0; i < colors.length; i++) {
 				color = colors[i];
 				temp = s.substr(charIndex, s.indexOf(color, charIndex)-charIndex);
@@ -132,12 +135,12 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 			return parsed + s.substr(charIndex);
 		}, p, _colorStringFilter,
-		TweenLite = _gsScope.TweenLite,
+		TweenLite = (_gsScope.GreenSockGlobals || _gsScope).TweenLite,
 		_colorExp = "(?:\\b(?:(?:rgb|rgba|hsl|hsla)\\(.+?\\))|\\B#(?:[0-9a-f]{3}){1,2}\\b", //we'll dynamically build this Regular Expression to conserve file size. After building it, it will be able to find rgb(), rgba(), # (hexadecimal), and named color values like red, blue, purple, etc.
 
 		ColorPropsPlugin = _gsScope._gsDefine.plugin({
 			propName: "colorProps",
-			version: "1.5.0",
+			version: "1.5.3",
 			priority: -1,
 			API: 2,
 			global: true,
@@ -189,7 +192,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	}
 	_colorExp = new RegExp(_colorExp+")", "gi");
 	ColorPropsPlugin.colorStringFilter = _colorStringFilter = function(a) {
-		var combined = a[0] + a[1],
+		var combined = a[0] + " " + a[1],
 			toHSL;
 		_colorExp.lastIndex = 0;
 		if (_colorExp.test(combined)) {
@@ -226,3 +229,17 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	};
 
 }); if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); }
+
+//export to AMD/RequireJS and CommonJS/Node (precursor to full modular build system coming at a later date)
+(function(name) {
+	"use strict";
+	var getGlobal = function() {
+		return (_gsScope.GreenSockGlobals || _gsScope)[name];
+	};
+	if (typeof(module) !== "undefined" && module.exports) { //node
+		require("../TweenLite.js");
+		module.exports = getGlobal();
+	} else if (typeof(define) === "function" && define.amd) { //AMD
+		define(["TweenLite"], getGlobal);
+	}
+}("ColorPropsPlugin"));

@@ -1,9 +1,9 @@
 /*!
- * VERSION: 1.8.0
- * DATE: 2016-07-09
+ * VERSION: 1.9.0
+ * DATE: 2018-02-15
  * UPDATES AND DOCS AT: http://greensock.com
  *
- * @license Copyright (c) 2008-2016, GreenSock. All rights reserved.
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
  * This work is subject to the terms at http://greensock.com/standard-license or for
  * Club GreenSock members, the software agreement that was issued with your membership.
  * 
@@ -14,8 +14,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 	"use strict";
 
-	var _doc = document.documentElement,
-		_window = window,
+	var _doc = (_gsScope.document || {}).documentElement,
+		_window = _gsScope,
 		_max = function(element, axis) {
 			var dim = (axis === "x") ? "Width" : "Height",
 				scroll = "scroll" + dim,
@@ -60,18 +60,14 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		},
 		_parseVal = function(value, target, axis) {
 			var type = typeof(value);
-			if (type === "number" || (type === "string" && value.charAt(1) === "=")) {
-				return value;
-			} else if (value === "max") {
-				return _max(target, axis);
-			}
-			return Math.min(_max(target, axis), _getOffset(value, target)[axis]);
+			return !isNaN(value) ? parseFloat(value) : (type === "number" || (type === "string" && value.charAt(1) === "=")) ? value : (value === "max") ? _max(target, axis) : Math.min(_max(target, axis), _getOffset(value, target)[axis]);
 		},
 
 		ScrollToPlugin = _gsScope._gsDefine.plugin({
 			propName: "scrollTo",
 			API: 2,
-			version:"1.8.0",
+			global: true,
+			version:"1.9.0",
 
 			//called when the tween renders for the first time. This is where initial values should be recorded and any setup routines should run.
 			init: function(target, value, tween) {
@@ -157,6 +153,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 	ScrollToPlugin.max = _max;
 	ScrollToPlugin.getOffset = _getOffset;
+	ScrollToPlugin.buildGetter = _buildGetter;
 	ScrollToPlugin.autoKillThreshold = 7;
 
 	p._kill = function(lookup) {
@@ -177,10 +174,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	var getGlobal = function() {
 		return (_gsScope.GreenSockGlobals || _gsScope)[name];
 	};
-	if (typeof(define) === "function" && define.amd) { //AMD
-		define(["TweenLite"], getGlobal);
-	} else if (typeof(module) !== "undefined" && module.exports) { //node
+	if (typeof(module) !== "undefined" && module.exports) { //node
 		require("../TweenLite.js");
 		module.exports = getGlobal();
+	} else if (typeof(define) === "function" && define.amd) { //AMD
+		define(["TweenLite"], getGlobal);
 	}
 }("ScrollToPlugin"));
