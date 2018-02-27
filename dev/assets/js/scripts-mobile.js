@@ -18170,6 +18170,8 @@ STF.Configs.Props = new class Props {
 		this.HAS_TRANSFORMS_3D	= Modernizr.csstransforms3d;
 		this.HAS_TRANSITIONS	= Modernizr.csstransitions;
 		this.HAS_ANIMATIONS		= Modernizr.cssanimations;
+		
+		this.HAS_WEBGL			= window.Detector !== undefined ? Detector.webgl : null;
 	}
 	
 	
@@ -18683,6 +18685,7 @@ STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
 	
 	initDOM() {
 		this.$window	= $( window );
+		this.$html		= $( 'html' );
 		this.$body		= $( document.body );
 		this.$mainCont	= $( document.getElementById( 'main-container' ) );
 		this.$pageCont	= $( document.getElementById( 'page-container' ) );
@@ -18696,6 +18699,7 @@ STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
 		// STF.Controllers.Touch.init( this.$window, STF.Controllers.Screen.cX, STF.Controllers.Screen.cY );
 		
 		STF.Configs.Path.overwriteSpecialPaths( this.$mainCont[0].getAttribute( 'data-assets-base-url' ) );
+		this.setClassWebGL();
 	}
 	
 	
@@ -18731,6 +18735,13 @@ STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
 	
 	initAfterAssetsLoaded() {
 		
+	}
+	
+	
+	setClassWebGL() {
+		const webGL = STF.Configs.Props.HAS_WEBGL === null ? null : STF.Configs.Props.HAS_WEBGL ? 'webgl' : 'no-webgl';
+		if ( webGL )
+			STF_dom_addClass( this.$html[0], webGL );
 	}
 	
 	

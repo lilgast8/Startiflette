@@ -25,6 +25,8 @@ STF.Configs.Props = new class Props {
 		this.HAS_TRANSFORMS_3D	= Modernizr.csstransforms3d;
 		this.HAS_TRANSITIONS	= Modernizr.csstransitions;
 		this.HAS_ANIMATIONS		= Modernizr.cssanimations;
+		
+		this.HAS_WEBGL			= window.Detector !== undefined ? Detector.webgl : null;
 	}
 	
 	
