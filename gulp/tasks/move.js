@@ -27,7 +27,7 @@ gulp.task( 'move', function() {
 		
 		movePath = {
 			from: [
-				[ paths.env.dev + paths.assets.css.allMinFiles ],
+				// [ paths.env.dev + paths.assets.css.allMinFiles ],
 				[
 					paths.env.dev + paths.assets.css.fonts.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles
@@ -55,7 +55,7 @@ gulp.task( 'move', function() {
 				]
 			],
 			to: [
-				paths.env.prod + paths.assets.css.dir,
+				// paths.env.prod + paths.assets.css.dir,
 				paths.env.prod + paths.assets.css.fonts.dir,
 				paths.env.prod + paths.assets.favicons.dir,
 				paths.env.prod + paths.assets.files.dir,
@@ -84,14 +84,14 @@ gulp.task( 'move', function() {
 	else if ( options.task == 'sass' )
 		movePath = {
 			from: [
-				[ paths.env.dev + paths.assets.css.allMinFiles ],
+				// [ paths.env.dev + paths.assets.css.allMinFiles ],
 				[
 					paths.env.dev + paths.assets.css.fonts.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles
 				]
 			],
 			to: [
-				paths.env.prod + paths.assets.css.dir,
+				// paths.env.prod + paths.assets.css.dir,
 				paths.env.prod + paths.assets.css.fonts.dir
 			]
 		};

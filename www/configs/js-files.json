@@ -1,1 +1,1 @@
-{"header":{"name":"header.min.js","dest":""},"scripts-desktop":{"name":["scripts-desktop.min.js","scripts-desktop-oldie.min.js"],"dest":""},"scripts-mobile":{"name":"scripts-mobile.min.js","dest":""}}
+{"scripts-header":{"name":"scripts-header.js","dest":""},"scripts-desktop":{"name":"scripts-desktop.js","dest":""},"scripts-mobile":{"name":"scripts-mobile.js","dest":""}}

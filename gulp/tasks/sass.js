@@ -15,10 +15,17 @@ var rename			= require( 'gulp-rename' );
 
 
 
-gulp.task( 'sass', [ 'sass:dev' ], function() {
+gulp.task( 'sass', [ 'sass:dev', 'set-uid' ], function() {
 	
-	if ( options.task == 'sass' )
-		gulp.start( 'move' );
+	if ( options.task == 'sass' || options.task == 'prod' ) {
+		// console.log( '⚡️ SLP ⚡️⚡️ SLP ⚡️⚡️ SLP ⚡️⚡️ SLP ⚡️⚡️ SLP ⚡️' );
+		// gulp.start( 'move' );
+		return gulp.src( paths.env.dev + paths.assets.css.allMinFiles )
+			.pipe( rename( function( path ) {
+				path.basename = path.basename.replace( '.min', '' ) + '-' + options.U_ID.css + '.min';
+			} ) )
+			.pipe( gulp.dest( paths.env.prod + paths.assets.css.dir ) );
+	}
 	
 } );
 

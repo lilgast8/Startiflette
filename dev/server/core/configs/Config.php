@@ -17,6 +17,7 @@ class Config
 	static $TABLET_VERSION		= null;
 	static $FORCE_DEVICE		= null;
 	static $GA_ID				= null;
+	static $U_ID				= null;
 	static $CREDITS				= null;
 	
 	static $IS_DEV				= null;
@@ -156,6 +157,7 @@ class Config
 		$this->params->ALL_LANG			= self::$ALL_LANG;
 		$this->params->FORCE_DEVICE		= self::$FORCE_DEVICE;
 		$this->params->GA_ID			= self::$GA_ID;
+		$this->params->U_ID				= self::$U_ID;
 		$this->params->CREDITS			= self::$CREDITS;
 		
 		$this->params->IS_DEV			= self::$IS_DEV;

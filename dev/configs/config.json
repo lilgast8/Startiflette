@@ -33,6 +33,10 @@
 	"TABLET_VERSION":		"desktop",
 	"FORCE_DEVICE":			false,
 	"GA_ID":				{},
+	"U_ID":					{
+								"css":	null,
+								"js":	null
+							},
 	"CREDITS":				{
 								"author":		"Gaston Bouchayer",
 								"authorUrl":	"www.gastonbouchayer.com",

@@ -24,7 +24,7 @@ gulp.task( 'default', [
 
 
 /* Prod */
-gulp.task( 'prod', [ 'delete' ], function() {
+gulp.task( 'prod', [ 'delete', 'set-uid:prod' ], function() {
 	
 	helpers.createDir( paths.env.prod );
 	

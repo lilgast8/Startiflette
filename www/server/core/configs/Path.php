@@ -117,38 +117,8 @@ class Path
 		$jsFiles		= $this->config->getJsFilesFile();
 		
 		foreach ( $jsFiles as $fileId => $fileInfos ) { // parse JsFiles infos
-			$listFiles	= '';
-			
-			// dev
-			if ( Config::$IS_DEV && !Config::$HTMLIFY ) {
-				$files = $jsFiles->$fileId->files;
-				
-				foreach ( $files as $filePath ) { // parse files list
-					if ( is_array( $filePath ) ) {
-						if ( $filePath[1] != '' )
-							$listFiles .= '<!--[if lt IE 9]><script src="' . self::$URL->js . $filePath[1] . '"></script><![endif]-->' . "\n";
-						if ( $filePath[0] != '' )
-							$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . self::$URL->js . $filePath[0] . '"></script><!--<![endif]-->' . "\n";
-					}
-					else
-						$listFiles .= '<script src="' . self::$URL->js . $filePath . '"></script>' . "\n";
-				}
-			}
-			
-			// preprod-local, preprod or prod
-			else {
-				$fileName = $jsFiles->$fileId->name;
-				$fileDest = $jsFiles->$fileId->dest;
-				
-				if ( is_array( $fileName ) ) {
-					$listFiles .= '<!--[if lt IE 9]><script src="' . self::$URL->js . $fileName[1] . '"></script><![endif]-->' . "\n";
-					$listFiles .= '<!--[if (gte IE 9) | !(IE)]><!--><script src="' . self::$URL->js . $fileName[0] . '"></script><!--<![endif]-->' . "\n";
-				}
-				else
-					$listFiles .= '<script src="' . self::$URL->js . $fileDest . $fileName . '"></script>' . "\n";
-			}
-			
-			self::$JS_FILES[ $fileId ] = $listFiles;
+			$fileName = Config::$IS_DEV && !Config::$HTMLIFY ? $jsFiles->$fileId->name : str_replace( '.js', '-' . Config::$U_ID->js . '.min.js', $jsFiles->$fileId->name );
+			self::$JS_FILES[ $fileId ] = self::$URL->js . $fileName;
 		}
 	}
 	

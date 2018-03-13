@@ -16,6 +16,10 @@ options.env				= getEnv();
 options.device			= getDevice();
 options.htmlify			= getHTMLify();
 
+options.U_ID			= {
+							css:	null,
+							js:		null,
+						};
 options.jsFileChanged	= false;
 
 options.filePath		= null;

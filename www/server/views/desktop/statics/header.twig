@@ -26,12 +26,10 @@
 	{# Favicons #}
 	{% include 'favicons.twig' %}
 	
-	<link media="screen" rel="stylesheet" type="text/css" href="{{ Path.URL.css }}styles-desktop.min.css" />
-	
-	<!-- [if lt IE 9]><script src="{{ Path.URL.js }}vendor/html5shiv.min.js"></script><![endif] -->
+	<link media="screen" rel="stylesheet" type="text/css" href="{{ Path.URL.css }}styles-desktop{% if Config.U_ID.css %}-{{ Config.U_ID.css }}{% endif %}.min.css" />
 	
 	<!-- Modernirz & Detectizr -->
-	{{ Path.JS_FILES.header|raw }}
+	<script src="{{ Path.JS_FILES[ 'scripts-header' ]|raw }}"></script>
 	
 	{# Google Analytics #}
 	{% include 'google-analytics.twig' %}
