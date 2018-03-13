@@ -8,8 +8,6 @@ var fs			= require( 'fs' );
 var plumber		= require( 'gulp-plumber' );
 var jsonminify	= require( 'gulp-jsonminify' );
 
-// var config		= require( '../../' + paths.env.dev + paths.configs.configFile );
-
 
 
 gulp.task( 'json-min', [ 'json-min:json', 'json-min:configs' ], function () {
@@ -43,7 +41,6 @@ gulp.task( 'json-min:configs', [ 'delete' ], function() {
 		'!' + paths.env.dev + paths.configs.jsFilesFile,
 		'!' + paths.env.dev + paths.configs.favicons.allFiles
 	];
-	console.log( jsonSrcPath );
 	var jsonDestPath = paths.env.prod + paths.configs.dir;
 	
 	
