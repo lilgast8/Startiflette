@@ -19080,8 +19080,12 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 	
 	
 	killTween( twName ) {
-		if ( !this.tw[ twName ] )
+		if ( !this.tw[ twName ] ) {
+			if ( !STF.Configs.Config.IS_PROD )
+				console.warn( `You're trying to kill a tween named "${ twName }" that doesn't exist.` );
+			
 			return;
+		}
 		
 		this.tw[ twName ].kill();
 		
@@ -19090,8 +19094,12 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 	
 	
 	killTimeline( tlName ) {
-		if ( !this.tl[ tlName ] )
+		if ( !this.tl[ tlName ] ) {
+			if ( !STF.Configs.Config.IS_PROD )
+				console.warn( `You're trying to kill a timeline named "${ tlName }" that doesn't exist.` );
+			
 			return;
+		}
 		
 		this.tl[ tlName ].stop();
 		this.tl[ tlName ].clear();
@@ -19818,7 +19826,7 @@ STF.Controllers.Scroll = new class Scroll extends STF.Events.CustomEvent {
 		this.y	= null; // scroll Y
 		this.yI	= null; // scroll Y with inertia
 		
-		this.SCROLL_INERTIA = 0.07;
+		this.SCROLL_INERTIA = 0.09;
 	}
 	
 	
