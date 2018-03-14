@@ -43,8 +43,8 @@ STF.Abstracts.AbstractMainLoader = class AbstractMainLoader extends STF.Abstract
 		this.assetsLoader.init();
 		
 		this.assetsLoader.bind( this.assetsLoader.E.PROGRESS, this.onProgress, this );
-		this.assetsLoader.bind( this.assetsLoader.E.FILE_LOAD, this._onFileLoad, this );
-		this.assetsLoader.bind( this.assetsLoader.E.COMPLETE, this._onComplete, this );
+		this.assetsLoader.bind( this.assetsLoader.E.FILE_LOAD, this.onFileLoad, this );
+		this.assetsLoader.bind( this.assetsLoader.E.COMPLETE, this.onComplete, this );
 	}
 	
 	
@@ -60,12 +60,12 @@ STF.Abstracts.AbstractMainLoader = class AbstractMainLoader extends STF.Abstract
 	}
 	
 	
-	_onFileLoad( e ) {
+	onFileLoad( e ) {
 		this.dispatch( this.E.FILE_LOAD, e );
 	}
 	
 	
-	_onComplete( data ) {
+	onComplete( data ) {
 		this.dispatch( this.E.COMPLETE, data );
 	}
 	
