@@ -21,7 +21,10 @@ gulp.task( 'js-min', [ 'js-concat', 'set-uid' ], function() {
 		.pipe( gulp.dest( paths.env.prod + paths.assets.js.dir ) );
 	*/
 	
+	
 	// es5
+	var suffixId = options.htmlify ? '' : '-' + options.U_ID.js;
+	
 	gulp.src( paths.env.dev + paths.assets.js.allRootJsFiles )
 		.pipe( plumber() )
 		.pipe( babel( {
@@ -32,7 +35,7 @@ gulp.task( 'js-min', [ 'js-concat', 'set-uid' ], function() {
 		} ) )
 		.pipe( uglify() )
 		// .pipe( rename( { suffix : '-es5-' + options.U_ID.js + '.min' } ) )
-		.pipe( rename( { suffix : '-' + options.U_ID.js + '.min' } ) )
+		.pipe( rename( { suffix : suffixId + '.min' } ) )
 		.pipe( gulp.dest( paths.env.prod + paths.assets.js.dir ) );
 	
 } );

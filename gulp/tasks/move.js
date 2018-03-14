@@ -14,19 +14,17 @@ gulp.task( 'move', function() {
 	/* Prod */
 	if ( options.task == 'prod' || options.htmlify ) {
 		
-		var imgPathFrom;
-		
-		if ( options.image.min )
-			imgPathFrom = [];
-		else
-			imgPathFrom = [
-				paths.env.dev + paths.assets.img.allFiles,
-				'!' + paths.env.dev + paths.emptyFiles
-			];
+		var sassPathFrom	= options.htmlify ? [ paths.env.dev + paths.assets.css.allMinFiles ] : [];
+		var imgPathFrom		= options.image.min ? [] :
+													[
+														paths.env.dev + paths.assets.img.allFiles,
+														'!' + paths.env.dev + paths.emptyFiles
+													];
 		
 		
 		movePath = {
 			from: [
+				sassPathFrom,
 				[
 					paths.env.dev + paths.assets.css.fonts.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles
@@ -54,6 +52,7 @@ gulp.task( 'move', function() {
 				]
 			],
 			to: [
+				paths.env.prod + paths.assets.css.dir,
 				paths.env.prod + paths.assets.css.fonts.dir,
 				paths.env.prod + paths.assets.favicons.dir,
 				paths.env.prod + paths.assets.files.dir,
