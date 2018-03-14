@@ -11,6 +11,7 @@
 	@include user-select('none');
 	-ms-touch-action: none;
 	touch-action: none;
+	cursor: default;
 	// pointer-events: none;
 	// -webkit-user-drag: none;
 }
