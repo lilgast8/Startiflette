@@ -18977,6 +18977,8 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 		
 		this.tw		= {};
 		this.tl		= {};
+		this.sto	= {};
+		this.si		= {};
 		
 		this.isInit	= false;
 	}
@@ -19054,6 +19056,7 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 		this.unbindEvents();
 		
 		this.destroyGSAP();
+		this.destroyTimer();
 	}
 	
 	
@@ -19090,6 +19093,18 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 		this.tl[ tlName ].kill();
 		
 		this.tl[ tlName ] = null;
+	}
+	
+	
+	
+	destroyTimer() {
+		/* setTimeout */
+		for ( const sto in this.sto )
+			clearTimeout( this.sto[ sto ] );
+		
+		/* setInterval */
+		for ( const si in this.si )
+			clearInterval( this.si[ si ] );
 	}
 	
 	
