@@ -118,7 +118,7 @@ class Path
 		
 		foreach ( $jsFiles as $fileId => $fileInfos ) { // parse JsFiles infos
 			$fileName = Config::$IS_DEV ? $jsFiles->$fileId->name :
-										  Config::$HTMLIFY ? str_replace( '.js', '.min.js', $jsFiles->$fileId->name ) : str_replace( '.js', '-' . Config::$U_ID->js . '.min.js', $jsFiles->$fileId->name );
+										  ( Config::$HTMLIFY ? str_replace( '.js', '.min.js', $jsFiles->$fileId->name ) : str_replace( '.js', '-' . Config::$U_ID->js . '.min.js', $jsFiles->$fileId->name ) );
 			self::$JS_FILES[ $fileId ] = self::$URL->js . $fileName;
 		}
 	}
