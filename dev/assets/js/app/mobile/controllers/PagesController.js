@@ -32,7 +32,7 @@ STF.Controllers.PagesController = new class PagesController extends STF.Abstract
 	}*/
 	
 	
-	/*AbstractcheckPageShowing() {
+	/*checkPageShowing() {
 		
 	}*/
 	
