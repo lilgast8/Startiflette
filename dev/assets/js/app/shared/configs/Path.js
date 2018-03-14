@@ -14,26 +14,26 @@ STF.Configs.Path = new class Path {
 	
 	
 	_setPaths() {
-		const baseUrl		= STF.Configs.Config.ENVS.base_url;
-		const baseUrlCms	= STF.Configs.Config.ENVS.base_url_cms;
+		const base		= STF.Configs.Config.ENVS.base_url;
+		const baseCms	= STF.Configs.Config.ENVS.base_url_cms;
 		
 		// url paths
 		this.URL = {
-			base:		baseUrl,
-			baseCms:	baseUrlCms,
-			assets:		baseUrl + 'assets/',
-			_3d:		baseUrl + 'assets/3d/',
-			css:		baseUrl + 'assets/css/',
-			favicons:	baseUrl + 'assets/favicons/',
-			files:		baseUrl + 'assets/files/',
-			img:		baseUrl + 'assets/img/',
-			js:			baseUrl + 'assets/js/',
-			json:		baseUrl + 'assets/json/',
-			sounds:		baseUrl + 'assets/sounds/',
-			svg:		baseUrl + 'assets/svg/',
-			videos:		baseUrl + 'assets/videos/',
-			routes:		baseUrl + 'configs/routes/',
-			server:		baseUrl + 'server/',
+			base:		base,
+			baseCms:	baseCms,
+			assets:		base + 'assets/',
+			_3d:		base + 'assets/3d/',
+			css:		base + 'assets/css/',
+			favicons:	base + 'assets/favicons/',
+			files:		base + 'assets/files/',
+			img:		base + 'assets/img/',
+			js:			base + 'assets/js/',
+			json:		base + 'assets/json/',
+			sounds:		base + 'assets/sounds/',
+			svg:		base + 'assets/svg/',
+			videos:		base + 'assets/videos/',
+			routes:		base + 'configs/routes/',
+			server:		base + 'server/',
 		};
 	}
 	
