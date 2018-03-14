@@ -88,11 +88,12 @@ class Device
 		self::$BROWSER_ENGINE	= $this->whichBrowser->engine->getName();
 		
 		if ( self::$IS_DESKTOP &&
-		   ( $this->whichBrowser->isBrowser( 'Internet Explorer', '<', '9' ) ||
-			 $this->whichBrowser->isBrowser( 'Firefox', '<', '35' ) ||
-			 $this->whichBrowser->isBrowser( 'Opera', '<', '30' ) ||
-			 $this->whichBrowser->isBrowser( 'Safari', '<', '6' ) ||
-			 $this->whichBrowser->isBrowser( 'Chrome', '<', '30' ) )
+		   ( $this->whichBrowser->isBrowser( 'Internet Explorer', '<', '10' ) ||
+			 $this->whichBrowser->isBrowser( 'Edge', '<', '13' ) ||
+			 $this->whichBrowser->isBrowser( 'Firefox', '<', '50' ) ||
+			 $this->whichBrowser->isBrowser( 'Opera', '<', '45' ) ||
+			 $this->whichBrowser->isBrowser( 'Safari', '<', '8' ) ||
+			 $this->whichBrowser->isBrowser( 'Chrome', '<', '60' ) )
 		   )
 			self::$IS_OLD_BROWSER = true;
 		else
