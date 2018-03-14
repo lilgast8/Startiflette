@@ -17970,7 +17970,7 @@ this.createjs = this.createjs || {};
 
 const STF = {}; // Do not touch to this line, ever!
 				// If you want to change the app name,
-				// use the rename-js-app gulp task.
+				// use the "rename-js-app" gulp task.
 
 STF.Events			= {};
 STF.Configs			= {};
