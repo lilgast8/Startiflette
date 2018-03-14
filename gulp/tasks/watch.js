@@ -52,7 +52,7 @@ gulp.task( 'watch', function() {
 		}
 		
 		/* SASS */
-		else if ( ext == '.scss' ) {
+		else if ( ext == '.scss' || ext == '.sass' ) {
 			taskname = 'sass';
 			
 			if ( desktop )
