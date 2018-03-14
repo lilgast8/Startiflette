@@ -19341,7 +19341,8 @@ STF.Controllers.Router = new class Router extends STF.Events.CustomEvent {
 			'isHashChange':		this.isHashChange
 		};
 		
-		history.pushState( data, '', url );
+		if ( this.isPageChange || this.isSearchChange || this.isHashChange )
+			history.pushState( data, '', url );
 		
 		
 		if ( this.isPageChange )
