@@ -18969,6 +18969,7 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 		super();
 		
 		this.E		= {
+			INIT:	'init',
 			SHOW:	'show',
 			SHOWN:	'shown',
 			HIDE:	'hide',
