@@ -18218,11 +18218,13 @@ STF.Configs.Path = new class Path {
 	
 	
 	_setPaths() {
-		const baseUrl = STF.Configs.Config.ENVS.base_url;
+		const baseUrl		= STF.Configs.Config.ENVS.base_url;
+		const baseUrlCms	= STF.Configs.Config.ENVS.base_url_cms;
 		
 		// url paths
 		this.URL = {
 			base:		baseUrl,
+			baseCms:	baseUrlCms,
 			assets:		baseUrl + 'assets/',
 			_3d:		baseUrl + 'assets/3d/',
 			css:		baseUrl + 'assets/css/',
