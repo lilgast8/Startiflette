@@ -64,7 +64,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	
 	bindEvents() {
 		this.mainLoader.bind( this.mainLoader.E.FILE_LOAD, this._onFileLoad, this );
-		this.mainLoader.bind( this.mainLoader.E.COMPLETE, this._onAssetsLoaded, this );
+		this.mainLoader.bind( this.mainLoader.E.COMPLETE, this.onAssetsLoaded, this );
 	}
 	
 	
@@ -152,7 +152,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	}
 	
 	
-	_onAssetsLoaded() {
+	onAssetsLoaded() {
 		this._showNonLoadedImages();
 		
 		
