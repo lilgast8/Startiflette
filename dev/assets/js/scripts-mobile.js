@@ -19798,7 +19798,8 @@ STF.Controllers.Screen = new class Screen extends STF.Events.CustomEvent {
 		if ( bodyH === null )
 			bodyH = this.$pageCont.height();
 		
-		this.$body[0].style.height = bodyH + 'px';
+		this.bH						= bodyH;
+		this.$body[0].style.height	= bodyH + 'px';
 	}
 	
 	
