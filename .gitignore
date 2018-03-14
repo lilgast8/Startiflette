@@ -1,4 +1,4 @@
-/node_modules
+**/node_modules
 **/server/vendor
 
 **/.DS_Store
