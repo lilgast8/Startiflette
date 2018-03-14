@@ -11,6 +11,7 @@ module.exports = {
 	htaccess:	'.htaccess',
 	indexFile:	'index.php',
 	robots:		'robots.txt',
+	htmlFiles:	'*.html',
 	
 	assets: {
 		allFiles: 'assets/**/*',
