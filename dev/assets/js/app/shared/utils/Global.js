@@ -3,15 +3,15 @@
 window.STF_gl_colors = {};
 
 
-window.STF_gl_encryptMailto = ( el, address, domain, end, replaceContent ) => {
+window.STF_gl_encryptMailto = ( el, address, domain, ext, replaceContent ) => {
 	const className	= el.className;
 	const mailto	= 'mailto';
 	const separator	= ':';
 	const at		= '@';
 	const dot		= '.';
 	
-	const content	= replaceContent ? address + at + domain + dot + end : el.innerHTML;
-	const email		= mailto + separator + address + at + domain + dot + end;
+	const content	= replaceContent ? address + at + domain + dot + ext : el.innerHTML;
+	const email		= mailto + separator + address + at + domain + dot + ext;
 	
 	el.outerHTML	= '<a href="' + email + '" class="' + className + '">' + content + '</a>';
 };
