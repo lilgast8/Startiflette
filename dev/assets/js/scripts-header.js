@@ -1828,7 +1828,7 @@ Detects whether or not elements can be animated using CSS
  * Written by Baris Aydinoglu (http://baris.aydinoglu.info) - Copyright 2012
  * Released under the MIT license
  *
- * Date: 2016-06-10T11:58Z
+ * Date: 2016-11-10T12:08Z
  */
 window.Detectizr = (function(window, navigator, document, undefined) {
 	var Detectizr = {},
@@ -2288,6 +2288,10 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 				browser.name = "chrome";
 				browser.engine = "webkit";
 				setVersion(browser, (test(/crios\/([\d\.]+)/) ? RegExp.$1 : ""));
+			} else if (is("fxios")) {
+				browser.name = "firefox";
+				browser.engine = "webkit";
+				setVersion(browser, (test(/fxios\/([\d\.]+)/) ? RegExp.$1 : ""));
 			} else if (is("applewebkit/")) {
 				browser.name = "safari";
 				browser.engine = "webkit";
