@@ -19023,10 +19023,13 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 	}
 	
 	
-	initView() {
-		// console.log( 'AbstractView.initView() — ', this.constructor.name );
-		
-		this.isInit = true;
+	get initView() {
+		return this.isInit;
+	}
+	
+	
+	set initView( value ) {
+		this.isInit = value;
 	}
 	
 	
@@ -19052,6 +19055,7 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 	
 	destroy() {
 		this.isInit = false;
+		
 		
 		this.unbindEvents();
 		

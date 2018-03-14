@@ -10,6 +10,8 @@ STF.Views.Pages.Home = class Home extends STF.Abstracts.AbstractPageView {
 	
 	init() {
 		super.init();
+		
+		this.initView = true;
 	}
 	
 	
