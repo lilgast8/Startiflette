@@ -9,7 +9,7 @@ STF.Controllers.Scroll = new class Scroll extends STF.Events.CustomEvent {
 		this.y	= null; // scroll Y
 		this.yI	= null; // scroll Y with inertia
 		
-		this.SCROLL_INERTIA = 0.07;
+		this.SCROLL_INERTIA = 0.09;
 	}
 	
 	
