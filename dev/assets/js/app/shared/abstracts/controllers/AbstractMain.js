@@ -17,7 +17,7 @@ STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
 		this.initEl();
 		this.bindEvents();
 		
-		this.initStaticsViews();
+		this.initStaticViews();
 	}
 	
 	
@@ -46,7 +46,7 @@ STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
 	}
 	
 	
-	initStaticsViews() {
+	initStaticViews() {
 		STF.Views.Statics.MainLoader.init();
 		STF.Views.Statics.Header.init();
 		STF.Views.Statics.Footer.init();

@@ -25,8 +25,8 @@ STF.Controllers.Main = new class Main extends STF.Abstracts.AbstractMain {
 	}*/
 	
 	
-	/*initStaticsViews() {
-		super.initStaticsViews();
+	/*initStaticViews() {
+		super.initStaticViews();
 	}*/
 	
 	
