@@ -1,4 +1,5 @@
 var options	= require( 'minimist' )( process.argv.slice(2) );
+
 var paths	= require( '../utils/paths' );
 var image	= require( '../utils/image' );
 
@@ -12,7 +13,7 @@ options.task			= options._[0] === undefined ? 'default' : options._[0];
 options.subtask			= null;
 
 options.isDev			= null;
-options.env				= getEnv();
+options.env				= options.env;
 options.device			= getDevice();
 options.htmlify			= getHTMLify();
 
@@ -30,32 +31,45 @@ options.jsSrcPath		= null;
 options.jsonSrcPath		= null;
 options.svgSrcPath		= null;
 
+options.initEnv			= initEnv.bind( this );
 
 
-function getEnv() {
+initEnv();
+
+
+
+function initEnv() {
 	var config		= require( '../../' + paths.env.dev + paths.configs.configFile );
-	var defaultEnv	= config.ENV;
-	var env			= options.env;
 	
-	checkEnvExistence( config, env );
+	options.isDev	= getIsDev();
+	options.env		= getEnv( config );
 	
-	// dev
-	if ( env == defaultEnv || options.task == 'init' || options.task == 'default' ) {
-		if ( env === undefined )
-			env = config.ENV;
-		
-		options.isDev = true;
-	}
+	checkEnvExistence( config, options.env );
 	
-	// preprod-local, preprod or prod
-	else {
-		if ( env === undefined )
-			env = 'prod';
-		
-		options.isDev = false;
-	}
+	console.log( gutil.colors.bgMagenta( ' — ENV: ' + options.env + ' — ' ) );
+}
+
+
+function getIsDev() {
+	var isDev;
 	
-	console.log( gutil.colors.bgMagenta( ' — ENV: ' + env + ' — ' ) );
+	if ( options.task == 'init' || options.task == 'default' )
+		isDev = true;
+	else
+		isDev = false;
+	
+	
+	return isDev;
+}
+
+
+function getEnv( config ) {
+	var env = options.env;
+	
+	if ( options.isDev && options.env != config.ENV )
+		env = config.ENV;
+	else if ( !options.isDev && env === undefined )
+		env = 'prod';
 	
 	
 	return env;
@@ -63,7 +77,7 @@ function getEnv() {
 
 
 function checkEnvExistence( config, env ) {
-	if ( env !== undefined && config.ENVS[ env ] === undefined )
+	if ( config.ENVS[ env ] === undefined )
 		console.log( gutil.colors.red( 'WARNING!: ' ) + gutil.colors.bgRed( ' ' + env + ' ' ) + gutil.colors.red( ' doesn\'t exist! Please set an existing environment.' ) );	
 }
 

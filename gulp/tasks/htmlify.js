@@ -16,7 +16,7 @@ var routes	= require( '../../' + paths.env.dev + paths.configs.routesFile );
 gulp.task( 'htmlify', [ 'delete' ], function() {
 	
 	if ( options.task == 'htmlify' ) {
-		console.log( gutil.colors.red( 'You can\'t directly launch ' + gutil.colors.bgRed.white( ' htmlify ' ) + ' gulp task! Use ' + gutil.colors.bgRed.white( ' prod-htmlify ' ) + ' instead.' ) );
+		console.log( gutil.colors.red( 'You can\'t directly launch ' + gutil.colors.bgRed.white( ' htmlify ' ) + ' gulp task! Use ' + gutil.colors.bgRed.white( ' prod-htmlify ' ) + ' task instead.' ) );
 		
 		return;
 	}

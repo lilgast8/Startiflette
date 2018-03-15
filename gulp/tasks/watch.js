@@ -3,12 +3,21 @@ var path		= require( 'path' );
 
 var options		= require( '../utils/options' );
 var paths		= require( '../utils/paths' );
+var helpers		= require( '../utils/helpers' );
 
+var gutil		= require( 'gulp-util' );
 var livereload	= require( 'gulp-livereload' );
 
 
 
 gulp.task( 'watch', function() {
+	
+	if ( options.task == 'watch' ) {
+		console.log( gutil.colors.red( 'You can\'t directly launch ' + gutil.colors.bgRed.white( ' watch ' ) + ' gulp task! Use ' + gutil.colors.bgRed.white( ' default ' ) + ' task instead.' ) );
+		
+		return;
+	}
+	
 	
 	livereload.listen();
 	
@@ -85,8 +94,14 @@ gulp.task( 'watch', function() {
 			taskname = 'js';
 		
 		/* JSON */
-		else if ( ext == '.json' )
+		else if ( ext == '.json' ) {
 			taskname = 'json';
+			
+			if ( options.fileName == 'config.json' ) {
+				helpers.deleteCache( paths.env.dev + paths.configs.configFile );
+				options.initEnv();
+			}
+		}
 		
 		/* SVG */
 		else if ( ext == '.svg' ) {

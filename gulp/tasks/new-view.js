@@ -8,8 +8,6 @@ var gutil		= require( 'gulp-util' );
 var inquirer	= require( 'inquirer' );
 var fs			= require( 'fs' );
 
-var config		= require( '../../' + paths.env.dev + paths.configs.configFile );
-
 
 
 gulp.task( 'new-view', function() {
@@ -183,6 +181,7 @@ function showDialogue( DEFAULT_NAME, SHORT_DEFAULT_NAME ) {
 
 
 function manageFileCreation( file, viewType, destFilePath, aStringToReplace, aNewString ) {
+	var config	= require( '../../' + paths.env.dev + paths.configs.configFile );
 	var data	= fs.readFileSync( paths.env.base + file, 'utf8' );
 	var stringToReplace, newString;
 	

@@ -5,12 +5,11 @@ var paths	= require( '../utils/paths' );
 
 var fs		= require( 'fs' );
 
-var config	= require( '../../' + paths.env.dev + paths.configs.configFile );
-
 
 
 gulp.task( 'robots', function() {
 	
+	var config	= require( '../../' + paths.env.dev + paths.configs.configFile );
 	var data	= fs.readFileSync( paths.env.base + paths.robots, 'utf8' );
 	data		= data.replace( 'BASE_URL/', config.ENVS[ options.env ].base_url );
 	
