@@ -31,12 +31,7 @@ function showDialogue( currentJsAppName ) {
 				validate:	function( input ) {
 					var done = this.async();
 					
-					if ( input == currentJsAppName ) {
-						console.log( gutil.colors.red( '\nWARNING!: You need to provide a name!' ) );
-						return;
-					}
-					
-					else if ( helpers.checkSpecialChars( input, false ) ) {
+					if ( helpers.checkSpecialChars( input, false ) ) {
 						console.log( gutil.colors.red( '\nWARNING!: Name should not contain any special characters, symbols or spaces! Use only alphanumeric characters.' ) );
 						return;
 					}
@@ -53,10 +48,14 @@ function showDialogue( currentJsAppName ) {
 			}
 		] ).then( function( answers ) {
 			
-			if ( !answers.namedJsApp )
-				return;
-			
 			var newJsAppName = answers.jsAppName.toUpperCase();
+			
+			if ( !answers.namedJsApp || currentJsAppName == newJsAppName ) {
+				console.log( gutil.colors.cyan( 'App wasn\'t renamed.' ) );
+				
+				return;
+			}
+			
 			
 			recursive( paths.env.dev + paths.assets.js.app.dir, [ '.*' ], function ( err, filesList ) {
 				
