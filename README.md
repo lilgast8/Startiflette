@@ -32,7 +32,7 @@ There are 4 default environments:
 * `preprod`: used to test prod version online, the targeted directory is `www/`.
 * `prod`: used for production, the targeted directory is `www/`.
 
-You can add as many environments as you want. You just need to keep the prefix `dev-`, `preprod-local-`, `preprod-` or `prod-` depends on which type of environment you want to set.
+You can add as many environments as you want.
 
 
 
@@ -40,13 +40,14 @@ You can add as many environments as you want. You just need to keep the prefix `
 
 Some tasks depend on the environment.
 The default environment is `prod` for all tasks except for `init` & `default` for which is the default environment `dev`.
-You can force a specific environment by adding a flag before the gulp task name `gulp TASK_NAME --env=ENV_NAME`.
+You can force a specific environment by adding a flag before the gulp task name `gulp TASK_NAME --env=ENV_NAME`, except for `init` & `default` tasks.
 
 The 3 main tasks (you can find them in `gulpfile.js`) are:
 
-* `init`: First task you need to execute, executes `htaccess` & `rename-js-app`. Don't forget to specify the environment if you use a customized environment.
+* `init`: First task you need to execute, executes `htaccess` & `rename-js-app`.
 * `default`: Executes `watch`, used for development.
 * `prod`: Executes `delete` which deletes the `www/` directory then re-created it. Then executes `robots`, `sass`, `js`, `json`, `svg` & `image`. And finally executes `move` which moves all the rest of files in `www/`.
+* `prod-htmlify`: Excecutes `delete` which deletes the `www/` directory then re-created it. Then executes `sass`, `js`, `json`, `svg` & `image`. And finally executes `move` which moves all the rest of files in `www/` and `htmlify`.
 
 
 If, for some reasons, you need or want to execute a task separately, here is the complete list of tasks you can:
@@ -58,8 +59,9 @@ If, for some reasons, you need or want to execute a task separately, here is the
 * `image-move`
 * `image-min`
 * `js`
-* `js-min`
+* `js-concat`
 * `js-hint`
+* `js-min`
 * `json`
 * `json-min`
 * `json-lint`
@@ -76,30 +78,37 @@ If, for some reasons, you need or want to execute a task separately, here is the
 
 Complete list of gulp tasks & what they do:
 
+* `default`: Manage all the development tasks.
 * `delete`: Deletes files depending to the executed task.
 * `favicons`: Generates all type of favicons.
-* `files`: Removes all files in `www/files/` & moves all sounds files from `dev/files/` to `www/files/`.
+* `files`: Removes all files in `www/files/` & moves all files from `dev/files/` to `www/files/`.
 * `htaccess`: Sets the htaccess.
+* `htmlify`: Called by `prod-htmlify` to generate HTML static files for each view according to existing routes.
 * `image`: Executes `image-min` or `image-move` depending on `image.min` option in `utils/image.js` file, [more infos](#config-image-gulp-task).
 * `image-min`: Minifies images in `www/img/`. If directly called, `delete` which deletes all images in `www/img/` is executed before. You can manage compression independently for each files, [more infos](#config-image-gulp-task).
 * `image-move`: Moves images in `www/img/`. If directly called, `delete` which deletes all images in `www/img/` is executed before.
-* `js`: If called by `watch`, this will only execute `js-hint`. Else this will execute `js-hint` then `js-min`.
+* `init`: Sets the basic configuration by calling `htaccess`& `rename-js-app`;
+* `js`: If called by `watch`, this will execute `js-hint` then `js-concat`. Else this will execute `js-hint` then `js-min`.
+* `js-concat`: Concatenates JS files in `assets/js` depending on `js-files.json` configurations. If directly called, `delete` which deletes all JS files in the root of `assets/js` is executed.
 * `js-hint`: Checks the potential errors & problems in JSON files.
-* `js-min`: Concats & minifies JS files from `assets/js/` to `www/js`. If directly called, `delete` which deletes JS files in `www/js/` is executed before then `html5shiv.min.js` file is also moved to `www/js/vendor/`.
+* `js-min`: Concatenates & minifies JS files from `assets/js/` to `www/js`. If directly called, `delete` which deletes JS files in `www/js/` & `set-uid` which generate a new unique JS id are executed before.
 * `json`: If called by `watch`, this will only execute `js-lint` except if that's `config.json` which is modified, then it will execute `htaccess`. Else this will execute `json-lint` then `json-min`.
 * `json-lint`: Checks the potential errors & problems in JSON files.
 * `json-min`: Minifies all JSON files (`assets/json/` & `configs/`) from `dev/` to `www/` then execute `set-env`. If directly called, `delete` which deletes all JSON files (`assets/json/` & `configs/`) in `www/` is executed before.
 * `move`: Moves files depending to the executed task.
 * `new-view`: Creates all the necessary files (CSS, Twig, content, PHP controller & JS) for a new view template. The device folder by default is `desktop`. You can define a specific device by using the following flag `--device=DEVICE_NAME`. Even so you need to add by hand the route in `configs/routes/statics.json` & the JS view connection in the `PagesController.pages` object.
+* `prod`: Manage all the production tasks, then the project is ready for production.
+* `prod-htmlify`: Manage all the production tasks like `prod`, but the difference is that it will generate a HTML static version of your project.
 * `rename-js-app`: Gives you the possibility to rename the JS app. Must be a sequence of simple letter (no special characters, numbers or spaces).
 * `robots`: Sets the `robots.txt` file in `www/`;
-* `sass`: Compiles SCSS files to CSS. If directly called, `delete` which deletes all CSS files is executed before then compiled files are moved to `www/css/`.
+* `sass`: Compiles SCSS files to CSS. If directly called, `delete` which deletes all CSS files & `set-uid` which generate a new unique CSS id are executed before then compiled files are renamed & moved to `www/css/`.
 * `server`: Removes all files in `www/server/` & moves all files from `dev/server/` to `www/server/`.
 * `set-env`: Executes `htaccess` then sets the environment on `config.json`.
+* `set-uid`: Generate a unique id for CSS & JS compiled files, which is used to avoid cache when a new version of these ones are put online.
 * `sounds`: Removes all sounds files in `www/sounds/` & moves all sounds files from `dev/sounds/` to `www/sounds/`.
 * `svg`: Compiles SVG files to SVG sprite. If directly called, `delete` which deletes all SVG sprites is executed before then SVG sprite is also moved to `www/assets/svg/_sprite/`.
 * `videos`: Removes all sounds files in `www/videos/` & moves all videos files from `dev/videos/` to `www/videos/`.
-* `watch`: This is the dev task. It watches all files, run the associated tasks (`sass`, `js`, `json` or `svg`) & livereload when a file us updated.
+* `watch`: This is the default dev task. It watches all files, run the associated tasks (`htaccess`, `sass`, `favicons`, `js`, `json` or `svg`) & livereload when a file is updated.
 
 
 ### Config CSS supports for `sass` gulp task
