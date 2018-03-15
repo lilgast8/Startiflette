@@ -56,9 +56,8 @@ gulp.task( 'watch', function() {
 		
 		
 		/* htaccess */
-		if ( options.fileName == '.htaccess' ) {
+		if ( options.fileName == '.htaccess' )
 			taskname = 'htaccess';
-		}
 		
 		/* SASS */
 		else if ( ext == '.scss' || ext == '.sass' ) {
