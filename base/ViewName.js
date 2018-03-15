@@ -1,81 +1,64 @@
 
 
-STF.Views			= STF.Views || {};
-STF.Views.ViewType	= STF.Views.ViewType || {};
-
-
-STF.Views.ViewType.ViewName = ( function( window ) {
-	'use strict';
+STF.Views.ViewType.ViewName = class ViewName extends STF.Abstracts.AbstractView {
 	
 	
-	function ViewName() {
-		STF.AbstractView.call( this );
+	constructor() {
+		super();
 	}
 	
 	
-	ViewName.prototype				= Object.create( STF.AbstractView.prototype );
-	ViewName.prototype.constructor	= ViewName;
-	
-	
-	ViewName.prototype.init = function() {
-		STF.AbstractView.prototype.init.call( this );
+	init() {
+		super.init();
 		
 		// init others objects
-	};
+	}
 	
 	
-	ViewName.prototype.initDOM = function() {
-		STF.AbstractView.prototype.initDOM.call( this );
-	};
+	initDOM() {
+		// super.initDOM();
+	}
 	
 	
-	ViewName.prototype.initEl = function() {
+	initEl() {
+		// super.initEl();
+	}
+	
+	
+	initTl() {
 		
-	};
+	}
 	
 	
-	ViewName.prototype.initTl = function() {
+	bindEvents() {
+		super.bindEvents();
+	}
+	
+	
+	unbindEvents() {
+		super.unbindEvents();
+	}
+	
+	
+	show() {
 		
-	};
+	}
 	
 	
-	ViewName.prototype.bindEvents = function() {
-		STF.AbstractView.prototype.bindEvents.call( this );
-	};
-	
-	
-	ViewName.prototype.unbindEvents = function() {
-		STF.AbstractView.prototype.unbindEvents.call( this );
-	};
-	
-	
-	ViewName.prototype.initView = function() {
-		this.isInit = true;
-	};
-	
-	
-	ViewName.prototype.show = function() {
+	hide() {
 		
-	};
+	}
 	
 	
-	ViewName.prototype.hide = function() {
+	resize() {
 		
-	};
+	}
 	
 	
-	ViewName.prototype.resize = function() {
+	raf() {
 		
-	};
+	}
 	
 	
-	ViewName.prototype.raf = function() {
-		
-	};
-	
-	
-	return ViewName;
-	
-	
-} ) ( window );
+};
 
