@@ -40,10 +40,10 @@ initEnv();
 function initEnv() {
 	var config		= require( '../../' + paths.env.dev + paths.configs.configFile );
 	
+	checkEnvExistence( config, options.env );
+	
 	options.isDev	= getIsDev();
 	options.env		= getEnv( config );
-	
-	checkEnvExistence( config, options.env );
 	
 	console.log( gutil.colors.bgMagenta( ' — ENV: ' + options.env + ' — ' ) );
 }
@@ -76,7 +76,7 @@ function getEnv( config ) {
 
 
 function checkEnvExistence( config, env ) {
-	if ( config.ENVS[ env ] === undefined )
+	if ( env !== undefined && config.ENVS[ env ] === undefined )
 		console.log( gutil.colors.red( 'WARNING!: ' ) + gutil.colors.bgRed( ' ' + env + ' ' ) + gutil.colors.red( ' doesn\'t exist! Please set an existing environment.' ) );	
 }
 
