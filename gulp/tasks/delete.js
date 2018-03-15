@@ -3,11 +3,19 @@ var gulp	= require( 'gulp' );
 var options	= require( '../utils/options' );
 var paths	= require( '../utils/paths' );
 
+var gutil	= require( 'gulp-util' );
 var del		= require( 'del' );
 
 
 
 gulp.task( 'delete', function() {
+	
+	if ( options.task == 'delete' ) {
+		console.log( gutil.colors.red( 'You can\'t directly launch ' + gutil.colors.bgRed.white( ' delete ' ) + ' gulp task!' ) );
+		
+		return;
+	}
+	
 	
 	var deletePath = null;
 	

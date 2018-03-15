@@ -3,6 +3,7 @@ var gulp	= require( 'gulp' );
 var options	= require( '../utils/options' );
 var paths	= require( '../utils/paths' );
 
+var gutil	= require( 'gulp-util' );
 var getUid	= require( 'get-uid' );
 
 var fs		= require( 'fs' );
@@ -10,6 +11,13 @@ var fs		= require( 'fs' );
 
 
 gulp.task( 'set-uid', function() {
+	
+	if ( options.task == 'set-uid' ) {
+		console.log( gutil.colors.red( 'You can\'t directly launch ' + gutil.colors.bgRed.white( ' set-uid ' ) + ' gulp task!' ) );
+		
+		return;
+	}
+	
 	
 	if ( options.task == 'js' || options.task == 'js-min' )
 		setUID( 'js' );

@@ -3,9 +3,10 @@ var gulp	= require( 'gulp' );
 var options	= require( '../utils/options' );
 var paths	= require( '../utils/paths' );
 
+var gutil	= require( 'gulp-util' );
+
 var curl	= require( 'curljs' );
 var fs		= require( 'fs' );
-var gutil	= require( 'gulp-util' );
 
 var config	= require( '../../' + paths.env.dev + paths.configs.configFile );
 var routes	= require( '../../' + paths.env.dev + paths.configs.routesFile );

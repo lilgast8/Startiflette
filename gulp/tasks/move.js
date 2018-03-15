@@ -3,11 +3,19 @@ var gulp	= require( 'gulp' );
 var options	= require( '../utils/options' );
 var paths	= require( '../utils/paths' );
 
+var gutil	= require( 'gulp-util' );
 var plumber	= require( 'gulp-plumber' );
 
 
 
 gulp.task( 'move', function() {
+	
+	if ( options.task == 'move' ) {
+		console.log( gutil.colors.red( 'You can\'t directly launch ' + gutil.colors.bgRed.white( ' move ' ) + ' gulp task!' ) );
+		
+		return;
+	}
+	
 	
 	var movePath = null;
 	
