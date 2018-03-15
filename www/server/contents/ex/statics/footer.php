@@ -10,7 +10,7 @@ class FooterContent extends AbstractContent
 		$d = new stdClass();
 		
 		
-		// $d->data = new stdClass();
+		// $d->datum = new stdClass();
 		
 		
 		
