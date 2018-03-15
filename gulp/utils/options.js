@@ -21,7 +21,6 @@ options.U_ID			= {
 							css:	null,
 							js:		null,
 						};
-options.jsFileChanged	= false;
 
 options.filePath		= null;
 options.fileName		= null;

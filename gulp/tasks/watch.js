@@ -101,6 +101,8 @@ gulp.task( 'watch', function() {
 				helpers.deleteCache( paths.env.dev + paths.configs.configFile );
 				options.initEnv();
 			}
+			else if ( options.fileName == 'js-files.json' )
+				helpers.deleteCache( paths.env.dev + paths.configs.jsFilesFile );
 		}
 		
 		/* SVG */

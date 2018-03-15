@@ -14,9 +14,6 @@ var livereload	= require( 'gulp-livereload' );
 
 gulp.task( 'js-concat', [ 'delete' ], function() {
 	
-	if ( options.jsFileChanged ) // delete cache if js-files.json changed
-		helpers.deleteCache( paths.env.dev + paths.configs.jsFilesFile );
-	
 	var jsFiles		= require( '../../' + paths.env.dev + paths.configs.jsFilesFile );
 	
 	var jsFilesList	= getJsFileList( jsFiles );
@@ -110,9 +107,7 @@ function getJsFileList( jsFiles ) {
 		for ( var j = 0; j < jsFile.files.length; j++ ) {
 			var file = jsFile.files[ j ];
 			
-			if ( options.filePath === null || options.jsFileChanged )
-				isNeedConcat = true;
-			else if ( options.filePath.indexOf( file ) >= 0 )
+			if ( options.filePath === null || options.filePath.indexOf( file ) >= 0 || options.filePath.indexOf( paths.configs.jsFilesFile ) >= 0 )
 				isNeedConcat = true;
 			
 			fullUrlJsFile.push( paths.env.dev + paths.assets.js.dir + file );

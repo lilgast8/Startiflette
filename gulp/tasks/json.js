@@ -7,10 +7,8 @@ var paths	= require( '../utils/paths' );
 
 gulp.task( 'json', [ 'json-lint' ], function() {
 	
-	if ( options.task == 'default' && options.fileName == 'js-files.json' ) {
-		options.jsFileChanged = true;
+	if ( options.task == 'default' && options.fileName == 'js-files.json' )
 		gulp.start( 'js' );
-	}
 	
 	else if ( options.task == 'default' && options.fileName == 'config.json' )
 		gulp.start( 'htaccess' );
