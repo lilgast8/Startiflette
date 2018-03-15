@@ -50,30 +50,9 @@ The 3 main tasks (you can find them in `gulpfile.js`) are:
 * `prod-htmlify`: Excecutes `delete` which deletes the `www/` directory then re-created it. Then executes `sass`, `js`, `json`, `svg` & `image`. And finally executes `move` which moves all the rest of files in `www/` and `htmlify`.
 
 
-If, for some reasons, you need or want to execute a task separately, here is the complete list of tasks you can:
+If, for some reasons, you need or want to execute a task separately, here is the complete list of tasks you can directly call:
 
-* `favicons`
-* `files`
-* `htaccess`
-* `image`
-* `image-move`
-* `image-min`
-* `js`
-* `js-concat`
-* `js-hint`
-* `js-min`
-* `json`
-* `json-min`
-* `json-lint`
-* `new-view`
-* `rename-js-app`
-* `robots`
-* `sass`
-* `server`
-* `set-env`
-* `sounds`
-* `svg`
-* `videos`
+* `favicons`, `files`, `htaccess`, `image`, `image-move`, `image-min`, `js`, `js-concat`, `js-hint`, `js-min`, `json`, `json-min`, `json-lint`, `new-view`, `rename-js-app`, `robots`, `sass`, `server`, `set-env`, `sounds`, `svg` & `videos`
 
 
 Complete list of gulp tasks & what they do:
