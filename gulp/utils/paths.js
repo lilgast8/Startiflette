@@ -150,6 +150,7 @@ module.exports = {
 		configFile:			'configs/config.json',
 		jsFilesFile:		'configs/js-files.json',
 		routesFile:			'configs/routes.json',
+		uIdFile:			'configs/u-id.json',
 		
 		favicons: {
 			dir:		'configs/favicons/',

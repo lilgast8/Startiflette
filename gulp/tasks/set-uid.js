@@ -40,13 +40,20 @@ gulp.task( 'set-uid:prod', function() {
 
 
 function setUID( type ) {
-	var config				= require( '../../' + paths.env.prod + paths.configs.configFile );
+	var uID = getUid();
 	
-	var uID					= getUid();
+	updateFile( paths.env.prod + paths.configs.configFile, type, uID );
+	updateFile( paths.env.dev + paths.configs.uIdFile, type, uID );
+}
+
+
+function updateFile( filePath, type, uID ) {
+	var file				= require( '../../' + filePath );
+	
 	options.U_ID[ type ]	= uID;
-	config.U_ID[ type ]		= uID;
+	file.U_ID[ type ]		= uID;
 	
-	var data				= JSON.stringify( config );
+	var data				= JSON.stringify( file );
 	
-	fs.writeFileSync( paths.env.prod + paths.configs.configFile, data, 'utf8' );
+	fs.writeFileSync( filePath, data, 'utf8' );
 }

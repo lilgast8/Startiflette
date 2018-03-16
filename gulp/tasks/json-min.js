@@ -39,7 +39,8 @@ gulp.task( 'json-min:configs', [ 'delete' ], function() {
 		paths.env.dev + paths.configs.allJsonFiles,
 		'!' + paths.env.dev + paths.configs.configFile,
 		'!' + paths.env.dev + paths.configs.jsFilesFile,
-		'!' + paths.env.dev + paths.configs.favicons.allFiles
+		'!' + paths.env.dev + paths.configs.favicons.allFiles,
+		'!' + paths.env.dev + paths.configs.uIdFile
 	];
 	var jsonDestPath = paths.env.prod + paths.configs.dir;
 	

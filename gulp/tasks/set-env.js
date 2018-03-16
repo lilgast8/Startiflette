@@ -17,12 +17,19 @@ gulp.task( 'set-env', [ 'htaccess' ], function() {
 	config.ENVS[ options.env ] = envProd;
 	
 	if ( options.task == 'prod' ) {
-		config.U_ID.css	= options.U_ID.css;
-		config.U_ID.js	= options.U_ID.js;
+		config.U_ID	= {};
+		config.U_ID	= options.U_ID;
+		
+		var uId		= require( '../../' + paths.env.dev + paths.configs.uIdFile );
+		uId.U_ID	= options.U_ID;
+		
+		var data	= JSON.stringify( uId );
+		
+		fs.writeFileSync( paths.env.dev + paths.configs.uIdFile, data, 'utf8' );
 	}
-	else if ( options.task == 'set-env' ) {
-		var configProd	= require( '../../' + paths.env.prod + paths.configs.configFile );
-		config.U_ID		= configProd.U_ID;
+	else if ( options.task == 'set-env' || options.task == 'json' || options.task == 'json-min' ) {
+		var uId		= require( '../../' + paths.env.dev + paths.configs.uIdFile );
+		config.U_ID	= uId.U_ID;
 	}
 	
 	var data = JSON.stringify( config );
