@@ -65,7 +65,7 @@ class Config
 	private function getConfigFile()
 	{
 		if ( !file_exists( self::CONFIG_FILE_PATH ) )
-			throw new ErrorException( 'Config file is missing!' );
+			throw new ErrorException( 'Config file is missing! "' . self::CONFIG_FILE_PATH . '" not found' );
 		
 		$config = file_get_contents( self::CONFIG_FILE_PATH );
 		$config = json_decode( $config );

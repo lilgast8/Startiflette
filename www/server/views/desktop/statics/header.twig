@@ -1,38 +1,5 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>	<html dir="ltr" lang="{{ Lang.LANG }}" class="no-js ie6 lt-ie7 lt-ie8 lt-ie9 lt-ie10"> <![endif]-->
-<!--[if IE 7]>		<html dir="ltr" lang="{{ Lang.LANG }}" class="no-js ie7 lt-ie8 lt-ie9 lt-ie10"> <![endif]-->
-<!--[if IE 8]>		<html dir="ltr" lang="{{ Lang.LANG }}" class="no-js ie8 lt-ie9 lt-ie10"> <![endif]-->
-<!--[if IE 9]>		<html dir="ltr" lang="{{ Lang.LANG }}" class="no-js ie9 lt-ie10"> <![endif]-->
-<!--[if (gte IE 9) | !(IE)]><!--><html dir="ltr" lang="{{ Lang.LANG }}" class="no-js"> <!--<![endif]-->
-<head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-	
-	<title>{{ metas.title }}</title>
-	<meta name="description" content="{{ metas.desc }}" />
-	<meta name="keywords" content="" />
-	<meta name="robots" content="index, follow" />
-	<meta name="author" content="{{ metas.author }}" />
-	<meta name="designer" content="{{ metas.designer }}" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	
-	{% for lang, altLangUrl in Router.ALT_LANG_URL %}
-	<link rel="alternate" href="{{ altLangUrl }}" hreflang="{{ lang }}" />
-	{% endfor %}
-	
-	{# Social share #}
-	{% include 'social-share.twig' %}
-	
-	{# Favicons #}
-	{% include 'favicons.twig' %}
-	
-	<link media="screen" rel="stylesheet" type="text/css" href="{{ Path.URL.css }}styles-desktop{% if Config.U_ID.css %}-{{ Config.U_ID.css }}{% endif %}.min.css" />
-	<script src="{{ Path.JS_FILES[ 'scripts-header' ]|raw }}"></script>
-	
-	{# Google Analytics #}
-	{% include 'google-analytics.twig' %}
-	
-</head>
+{# Head #}
+{% include 'head.twig' with { cssFileName: 'desktop' } %}
 
 <body>
 
