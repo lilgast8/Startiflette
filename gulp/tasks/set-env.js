@@ -9,20 +9,23 @@ var fs		= require( 'fs' );
 
 gulp.task( 'set-env', [ 'htaccess' ], function() {
 	
-	var config		= require( '../../' + paths.env.dev + paths.configs.configFile );
-	var configProd	= JSON.parse( JSON.stringify( config ) );
-	var envProd		= JSON.parse( JSON.stringify( configProd.ENVS[ options.env ] ) );
+	var config	= require( '../../' + paths.env.dev + paths.configs.configFile );
+	var envProd	= config.ENVS[ options.env ];
 	
-	configProd.ENV	= options.env;
-	configProd.ENVS = {};
-	configProd.ENVS[ options.env ] = envProd;
+	config.ENV	= options.env;
+	config.ENVS = {};
+	config.ENVS[ options.env ] = envProd;
 	
 	if ( options.task == 'prod' ) {
-		configProd.U_ID.css	= options.U_ID.css;
-		configProd.U_ID.js	= options.U_ID.js;
+		config.U_ID.css	= options.U_ID.css;
+		config.U_ID.js	= options.U_ID.js;
+	}
+	else if ( options.task == 'set-env' ) {
+		var configProd	= require( '../../' + paths.env.prod + paths.configs.configFile );
+		config.U_ID		= configProd.U_ID;
 	}
 	
-	var data = JSON.stringify( configProd );
+	var data = JSON.stringify( config );
 	
 	fs.writeFileSync( paths.env.prod + paths.configs.configFile, data, 'utf8' );
 	
