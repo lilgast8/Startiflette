@@ -7,6 +7,8 @@ class Device
 	
 	protected static $instance;
 	
+	const BROWSERS_FILE_PATH		= 'configs/browsers.json';
+	
 	static $HAS_MOBILE_VERSION	= null;
 	static $TABLET_VERSION		= null;
 	static $FORCE_DEVICE		= null;
@@ -86,21 +88,39 @@ class Device
 		self::$BROWSER			= $this->whichBrowser->browser->name;
 		self::$BROWSER_VERSION	= $this->whichBrowser->browser->getVersion();
 		self::$BROWSER_ENGINE	= $this->whichBrowser->engine->getName();
+		$oldBrowser				= $this->getIsBrowserOld();
+		self::$IS_OLD_BROWSER	= self::$IS_DESKTOP && $oldBrowser ? true : false;
+		self::$IS_IE			= $this->whichBrowser->isBrowser( 'Internet Explorer' );
+		self::$IS_EDGE			= $this->whichBrowser->isBrowser( 'Edge' );
+	}
+	
+	
+	private function getIsBrowserOld()
+	{
+		$devices		= $this->getBrowsersFile();
 		
-		if ( self::$IS_DESKTOP &&
-		   ( $this->whichBrowser->isBrowser( 'Internet Explorer', '<', '10' ) ||
-			 $this->whichBrowser->isBrowser( 'Edge', '<', '13' ) ||
-			 $this->whichBrowser->isBrowser( 'Firefox', '<', '50' ) ||
-			 $this->whichBrowser->isBrowser( 'Opera', '<', '45' ) ||
-			 $this->whichBrowser->isBrowser( 'Safari', '<', '8' ) ||
-			 $this->whichBrowser->isBrowser( 'Chrome', '<', '60' ) )
-		   )
-			self::$IS_OLD_BROWSER = true;
-		else
-			self::$IS_OLD_BROWSER = false;
+		$isBrowserOld	= false;
 		
-		self::$IS_IE	= $this->whichBrowser->isBrowser( 'Internet Explorer' );
-		self::$IS_EDGE	= $this->whichBrowser->isBrowser( 'Edge' );
+		foreach ( $devices as $browser => $version ) {
+			if ( $this->whichBrowser->isBrowser( $browser, '<', $version ) )
+				$isBrowserOld = true;
+		}
+		
+		
+		return $isBrowserOld;
+	}
+	
+	
+	private function getBrowsersFile()
+	{
+		if ( !file_exists( self::BROWSERS_FILE_PATH ) )
+			throw new ErrorException( 'Browser file is missing! "' . self::BROWSERS_FILE_PATH . '" not found' );
+		
+		$browsers = file_get_contents( self::BROWSERS_FILE_PATH );
+		$browsers = json_decode( $browsers );
+		
+		
+		return $browsers;
 	}
 	
 	
