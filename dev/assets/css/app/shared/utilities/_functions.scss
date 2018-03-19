@@ -16,7 +16,7 @@
 	// -webkit-user-drag: none;
 }
 
-@mixin triangle($top, $right, $bottom, $left, $colorTop, $colorRight, $colorBottom, $colorLeft) {
+@mixin triangle( $top, $right, $bottom, $left, $colorTop, $colorRight, $colorBottom, $colorLeft ) {
 	width: 0;
 	height: 0;
 	border-style: solid;
