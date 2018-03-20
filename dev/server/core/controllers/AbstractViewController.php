@@ -84,6 +84,11 @@ class AbstractViewController
 		$this->staticViewsInfos->alt->contentClassName	= 'AltContent';
 		$this->staticViewsInfos->alt->phpFilePath		= Path::$FILE->contentsStatics . 'alt.php';
 		$this->staticViewsInfos->alt->phpSharedFilePath	= Path::$FILE->contentsSharedStatics . 'alt.php';
+		
+		$this->staticViewsInfos->cookies					= new stdClass();
+		$this->staticViewsInfos->cookies->contentClassName	= 'CookiesPolicyContent';
+		$this->staticViewsInfos->cookies->phpFilePath		= Path::$FILE->contentsPartials . 'cookies-policy.php';
+		$this->staticViewsInfos->cookies->phpSharedFilePath	= Path::$FILE->contentsSharedPartials . 'cookies-policy.php';
 	}
 	
 	

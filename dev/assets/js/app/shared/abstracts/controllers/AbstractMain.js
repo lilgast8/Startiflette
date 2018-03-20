@@ -38,6 +38,8 @@ STF.Abstracts.AbstractMain = class AbstractMain extends STF.Events.CustomEvent {
 		
 		STF.Configs.Path.overwriteSpecialPaths( this.$mainCont[0].getAttribute( 'data-assets-base-url' ) );
 		this.setClassWebGL();
+		
+		STF.Views.Partials.CookiesPolicy.init( 'STF' );
 	}
 	
 	

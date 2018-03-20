@@ -15,6 +15,7 @@
 		"files": [
 			"vendor/zepto.js",
 			"vendor/greensock/TweenMax.js",
+			"vendor/js-cookie.js",
 			"vendor/signals.js",
 			"vendor/preloadjs.js",
 			
@@ -41,6 +42,7 @@
 			"app/shared/abstracts/views/AbstractMainLoader.js",
 			
 			"app/shared/controllers/Router.js",
+			"app/shared/views/partials/CookiesPolicy.js",
 			
 			"app/desktop/models/Assets.js",
 			
@@ -75,6 +77,7 @@
 		"files": [
 			"vendor/zepto.js",
 			"vendor/greensock/TweenMax.js",
+			"vendor/js-cookie.js",
 			"vendor/signals.js",
 			"vendor/preloadjs.js",
 			
@@ -101,6 +104,7 @@
 			"app/shared/abstracts/views/AbstractMainLoader.js",
 			
 			"app/shared/controllers/Router.js",
+			"app/shared/views/partials/CookiesPolicy.js",
 			
 			"app/mobile/models/Assets.js",
 			

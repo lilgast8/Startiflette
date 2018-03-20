@@ -1,0 +1,56 @@
+
+
+
+/************************************/
+/* -------- Cookies policy -------- */
+/************************************/
+
+
+#cookies-policy {
+	display: none;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: rgba( $alt2, 0.9 );
+	opacity: 0;
+	z-index: 88;
+}
+
+.cookies-policy-txt {
+	width: 100%;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 10px 20px;
+	color: $alt1;
+	
+	a { color: $alt1; }
+}
+
+.cookies-policy-close {
+	position: absolute;
+	right: 20px;
+	top: 50%;
+	width: 20px;
+	height: 20px;
+	margin-top: -10px;
+	border-radius: 50%;
+	background-color: $alt1;
+	cursor: pointer;
+	
+	&:before, &:after {
+		content: '';
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 10px;
+		height: 2px;
+		margin: -1px 0 0 -5px;
+		background-color: $alt2;
+	}
+	
+	&:before { transform: rotate( 45deg); }
+	&:after { transform: rotate( -45deg); }
+}
+
+
