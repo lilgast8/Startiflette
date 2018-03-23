@@ -18752,11 +18752,11 @@ window.STF_str_getParams = ( string, type ) => {
 		for ( let aItKey, nKeyId = 0, aCouples = url[ type ].substr(1).split( '&' ); nKeyId < aCouples.length; nKeyId++ ) {
 			aItKey	= aCouples[ nKeyId ].split( '=' );
 			
-			let key		= unescape( aItKey[0] );
+			let key		= decodeURI( aItKey[0] );
 			key			= STF_str_removeFirstSpecificChar( key, '/' );
 			key			= STF_str_removeLastSpecificChar( key, '/' );
 			
-			let value	= aItKey.length > 1 ? unescape( aItKey[1] ) : '';
+			let value	= aItKey.length > 1 ? decodeURI( aItKey[1] ) : '';
 			value		= STF_str_removeFirstSpecificChar( value, '/' );
 			value		= STF_str_removeLastSpecificChar( value, '/' );
 			
