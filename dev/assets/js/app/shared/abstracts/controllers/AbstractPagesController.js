@@ -279,8 +279,6 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	onPageHidden() {
 		this.page.unbind( this.page.E.HIDDEN, this.onPageHidden, this );
 		
-		this._destroyPage();
-		
 		this.isPageHidden = true;
 		this.checkPageHiding();
 	}
@@ -304,6 +302,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 		if ( this. LOADING_MODE == 'allStatic' &&
 			 this.isContentLoaded && this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
 			
+			this._destroyPage();
 			this.setContent();
 			this.showPage();
 		}
@@ -311,6 +310,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 		else if ( ( this. LOADING_MODE == 'byPageStatic' || this. LOADING_MODE == 'byPageDynamic' ) &&
 				  this.isContentLoaded && !this.isAssetsLoaded && this.isPageHidden && this.isMainLoaderShown ) {
 			
+			this._destroyPage();
 			this.setContent();
 		}
 		
