@@ -22,9 +22,9 @@ STF.Controllers.Router = new class Router extends STF.Events.CustomEvent {
 		this.URL.path			= STF_str_getPath( this.URL.full, STF.Configs.Path.URL.base );
 		this.URL.pathParams		= this.URL.path.split( '/' );
 		this.URL.search			= STF_str_getSearch( this.URL.full );
-		this.URL.searchParams	= STF_str_getParams( this.URL.full, 'search' );
+		this.URL.searchParams	= STF_str_getSearchParams( this.URL.full );
 		this.URL.hash			= STF_str_getHash( this.URL.full );
-		this.URL.hashParams		= STF_str_getParams( this.URL.full, 'hash' );
+		this.URL.hashParams		= STF_str_getHashParams( this.URL.full );
 		this.URL.fullGA			= this._getFullGaUrl();
 	}
 	
