@@ -28,9 +28,6 @@ window.STF_str_convertToUrl = ( string ) => {
 
 
 window.STF_str_getPath = ( string, baseUrl ) => {
-	if ( baseUrl === null || baseUrl === undefined )
-		baseUrl = STF.Configs.Path.URL.base;
-	
 	let path	= string.replace( baseUrl, '' );
 	
 	path		= path.split( '#' )[0]; // remove #hash

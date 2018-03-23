@@ -18705,9 +18705,6 @@ window.STF_str_convertToUrl = ( string ) => {
 
 
 window.STF_str_getPath = ( string, baseUrl ) => {
-	if ( baseUrl === null || baseUrl === undefined )
-		baseUrl = STF.Configs.Path.URL.base;
-	
 	let path	= string.replace( baseUrl, '' );
 	
 	path		= path.split( '#' )[0]; // remove #hash
@@ -19421,7 +19418,7 @@ STF.Controllers.Router = new class Router extends STF.Events.CustomEvent {
 	
 	setUrl( isInit, url ) {
 		this.URL.full			= this._getFullUrl( url );
-		this.URL.path			= STF_str_getPath( this.URL.full );
+		this.URL.path			= STF_str_getPath( this.URL.full, STF.Configs.Path.URL.base );
 		this.URL.pathParams		= this.URL.path.split( '/' );
 		this.URL.search			= STF_str_getSearch( this.URL.full );
 		this.URL.searchParams	= STF_str_getParams( this.URL.full, 'search' );
@@ -19559,7 +19556,7 @@ STF.Controllers.Router = new class Router extends STF.Events.CustomEvent {
 	
 	
 	_isPageChanged( url ) {
-		const nextPath		= STF_str_getPath( url );
+		const nextPath		= STF_str_getPath( url, STF.Configs.Path.URL.base );
 		this.isPageChange	= this.URL.path != nextPath;
 	}
 	
