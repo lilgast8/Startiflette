@@ -6,7 +6,9 @@ STF.Controllers.Orientation = new class Orientation extends STF.Events.CustomEve
 	constructor() {
 		super();
 		
-		this.E.ORIENTATION_CHANGE		= 'orientationchange';
+		this.E = {
+			ORIENTATION_CHANGE: 'orientationchange'
+		};
 		
 		this.X_AMP						= 20;
 		this.Y_AMP						= 10;
