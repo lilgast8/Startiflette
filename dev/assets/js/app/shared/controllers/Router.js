@@ -63,25 +63,6 @@ STF.Controllers.Router = new class Router extends STF.Events.CustomEvent {
 	}
 	
 	
-	_getLangExistence() {
-		let langExist = true;
-		
-		if ( STF.Configs.Lang.ALL_LANG.indexOf( STF.Configs.Lang.LANG ) == -1 ) {
-			STF.Configs.Lang.LANG = STF.Configs.Lang.DEFAULT_LANG;
-			
-			langExist = false;
-		}
-		
-		
-		return langExist;
-	}
-	
-	
-	_setIsHomepage( pageId ) {
-		this.isHomepage = pageId == 'home' ? true : false;
-	}
-	
-	
 	checkUrlCorrespondence() {
 		if ( this.URL.full != this._getFullUrl( null ) )
 			this._onPopState();
