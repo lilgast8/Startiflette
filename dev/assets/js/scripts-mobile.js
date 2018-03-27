@@ -19236,9 +19236,6 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 	
 	
 	destroy() {
-		this.isInit = false;
-		
-		
 		this.unbindEvents();
 		
 		this.destroyGSAP();

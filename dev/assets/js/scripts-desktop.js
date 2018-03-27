@@ -19236,9 +19236,6 @@ STF.Abstracts.AbstractView = class AbstractView extends STF.Events.CustomEvent {
 	
 	
 	destroy() {
-		this.isInit = false;
-		
-		
 		this.unbindEvents();
 		
 		this.destroyGSAP();
@@ -20901,6 +20898,8 @@ STF.Abstracts.AbstractPageView = class AbstractPageView extends STF.Abstracts.Ab
 	
 	
 	onPageHidden() {
+		this.initView = false;
+		
 		this.dispatch( this.E.HIDDEN );
 	}
 	
