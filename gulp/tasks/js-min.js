@@ -30,7 +30,7 @@ gulp.task( 'js-min', [ 'js-concat', 'set-uid' ], function() {
 		.pipe( babel( {
 			// presets: [ 'env' ]
 			presets: [
-				[ 'es2015', { 'modules': false } ]
+				[ '@babel/preset-es2015', { modules: false } ]
 			]
 		} ) )
 		.pipe( uglify() )
