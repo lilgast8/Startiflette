@@ -17,6 +17,8 @@ options.env				= options.env;
 options.device			= getDevice();
 options.htmlify			= getHTMLify();
 
+options.remove			= options.remove;
+
 options.U_ID			= {
 							css:	null,
 							js:		null,

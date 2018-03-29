@@ -52,6 +52,7 @@
     "minimist": "^1.2.0",
     "path": "^0.12.7",
     "recursive-readdir": "^2.2.2",
-    "require-dir": "^1.0.0"
+    "require-dir": "^1.0.0",
+    "vinyl-ftp": "^0.6.1"
   }
 }
