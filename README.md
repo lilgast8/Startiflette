@@ -52,13 +52,14 @@ The 3 main tasks (you can find them in `gulpfile.js`) are:
 
 If, for some reasons, you need or want to execute a task separately, here is the complete list of tasks you can directly call:
 
-* `favicons`, `files`, `htaccess`, `image`, `image-move`, `image-min`, `js`, `js-concat`, `js-hint`, `js-min`, `json`, `json-min`, `json-lint`, `new-view`, `rename-js-app`, `robots`, `sass`, `server`, `set-env`, `sounds`, `svg` & `videos`
+* `deploy`, `favicons`, `files`, `htaccess`, `image`, `image-move`, `image-min`, `js`, `js-concat`, `js-hint`, `js-min`, `json`, `json-min`, `json-lint`, `new-view`, `rename-js-app`, `robots`, `sass`, `server`, `set-env`, `sounds`, `svg` & `videos`
 
 
 Complete list of gulp tasks & what they do:
 
 * `default`: Manage all the development tasks.
 * `delete`: Deletes files depending to the executed task.
+* `deploy`: Put online the project, [more infos](#uses-and-config-deploy-gulp-task).
 * `favicons`: Generates all type of favicons.
 * `files`: Removes all files in `www/files/` & moves all files from `dev/files/` to `www/files/`.
 * `htaccess`: Sets the htaccess.
@@ -92,7 +93,7 @@ Complete list of gulp tasks & what they do:
 
 ### Config CSS supports for `sass` gulp task
 
-The `sass` gulp task have options to manage css supports which can be edited in `gulp/utils/css-supports.js` file.
+The `sass` gulp task have options to manage css supports which can be updated in `gulp/utils/css-supports.js` file.
 
 * `cssSupports`: @type {object} List of parameters which will define CSS supports, using [Browserslist library](https://github.com/ai/browserslist). See [Browserslist docs](https://github.com/ai/browserslist#queries) for available queries and default value.
 
@@ -108,6 +109,18 @@ The `image` gulp task allows you to compress the images from the `img/` director
 	* `quality`: @type {object}
 		* `min`: @type {int} Minimum quality, value between 0-100.
 		* `max`: @type {int} Maximum quality, value between 0-100.
+
+
+### Uses and config `deploy` gulp task
+
+The `deploy` gulp task is used to put your project online. Make the configurations in `gulp/utils/server.js` file. For more information have a look to the [vinly-ftp](https://www.npmjs.com/package/vinyl-ftp) documentation.
+
+* `config`: @type {object} Configuration to connect to the FTP.
+* `src`: @type {array} List of targeted sources.
+* `base`: @type {string} Path of the local targeted directory.
+* `dest`: @type {string} Path of the destination targeted directory.
+
+You can use the flag `--remove` if you want to completely delete the online directory before the upload.
 
 
 
