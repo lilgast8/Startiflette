@@ -14,7 +14,7 @@ gulp.task( 'deploy', function( cb ) {
 	
 	
 	if ( options.remove != 'true' && options.remove !== true )
-		return gulp.src( server.globs, { base: server.base, buffer: false } )
+		return gulp.src( server.src, { base: server.base, buffer: false } )
 			.pipe( conn.newerOrDifferentSize( server.dest ) )
 			.pipe( conn.dest( server.dest ) );
 	
@@ -27,7 +27,7 @@ gulp.task( 'deploy', function( cb ) {
 			else {
 				console.log( gutil.colors.bgMagenta( ' ' + server.dest + ' ' ) + gutil.colors.magenta( ' directory removed.' ) );
 				
-				return gulp.src( server.globs, { base: server.base, buffer: false } )
+				return gulp.src( server.src, { base: server.base, buffer: false } )
 					.pipe( conn.newerOrDifferentSize( server.dest ) )
 					.pipe( conn.dest( server.dest ) );
 			}

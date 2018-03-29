@@ -14,7 +14,7 @@ module.exports = {
 		log:		gutil.log
 	},
 	
-	globs: [
+	src: [
 		paths.env.prod + '.htaccess',
 		paths.env.prod + '**'
 	],
