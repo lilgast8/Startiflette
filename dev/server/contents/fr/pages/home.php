@@ -10,7 +10,7 @@ class HomeContent extends AbstractContent
 		$author	= $this->getContent( 'author' );
 		
 		
-		$d		= new stdClass();
+		$d = new stdClass();
 		
 		
 		$d->metas			= new stdClass();
