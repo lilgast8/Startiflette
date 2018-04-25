@@ -20,6 +20,7 @@ Here are the dependencies you need to install globally before starting:
 2. Install composer packages to the `dev/server` directory: `composer install`
 3. Set up your config environment in `dev/configs/config.json`
 4. Run init gulp task: `gulp init`
+5. Start coding!
 
 
 
@@ -47,7 +48,7 @@ The 3 main tasks (you can find them in `gulpfile.js`) are:
 * `init`: First task you need to execute, executes `htaccess` & `rename-js-app`.
 * `default`: Executes `watch`, used for development.
 * `prod`: Executes `delete` which deletes the `www/` directory then re-created it. Then executes `robots`, `sass`, `js`, `json`, `svg` & `image`. And finally executes `move` which moves all the rest of files in `www/`.
-* `prod-htmlify`: Excecutes `delete` which deletes the `www/` directory then re-created it. Then executes `sass`, `js`, `json`, `svg` & `image`. And finally executes `move` which moves all the rest of files in `www/` and `htmlify`.
+* `prod-htmlify`: Excecutes `delete` which deletes the `www/` directory then re-created it. Then executes `sass`, `js`, `json`, `svg` & `image`. And finally executes `move` which moves all the rest of files in `www/` and `htmlify`, [more infos](#config-htmlify-gulp-task).
 
 
 If, for some reasons, you need or want to execute a task separately, here is the complete list of tasks you can directly call:
@@ -78,7 +79,7 @@ Complete list of gulp tasks & what they do:
 * `move`: Moves files depending to the executed task.
 * `new-view`: Creates all the necessary files (CSS, Twig, content, PHP controller & JS) for a new view template. The device folder by default is `desktop`. You can define a specific device by using the following flag `--device=DEVICE_NAME`. Even so you need to add by hand the route in `configs/routes/statics.json` & the JS view connection in the `PagesController.pages` object.
 * `prod`: Manage all the production tasks, then the project is ready for production.
-* `prod-htmlify`: Manage all the production tasks like `prod`, but the difference is that it will generate a HTML static version of your project.
+* `prod-htmlify`: Manage all the production tasks like `prod`, but the difference is that it will generate a HTML static version of your project, [more infos](#config-htmlify-gulp-task).
 * `rename-js-app`: Gives you the possibility to rename the JS app. Must be a sequence of simple letter (no special characters, numbers or spaces).
 * `robots`: Sets the `robots.txt` file in `www/`;
 * `sass`: Compiles SCSS files to CSS. If directly called, `delete` which deletes all CSS files & `set-uid` which generate a new unique CSS id are executed before then compiled files are renamed & moved to `www/css/`.
@@ -96,6 +97,13 @@ Complete list of gulp tasks & what they do:
 The `sass` gulp task have options to manage css supports which can be updated in `gulp/utils/css-supports.js` file.
 
 * `cssSupports`: @type {object} List of parameters which will define CSS supports, using [Browserslist library](https://github.com/ai/browserslist). See [Browserslist docs](https://github.com/ai/browserslist#queries) for available queries and default value.
+
+
+### Config `htmlify` gulp task
+
+The `htmlify` gulp task have options which can be manage in `gulp/utils/htmlify.js` file.
+
+* `relativePath`: @type {boolean} Set to `true` (used by default) if you need to have relative paths on every links in your generated HTML files. Otherwise, if you need to have absolute paths set it to `false`. It will overwrites all paths and add the base url from your `prod` config in the `dev/configs/config.json` file.
 
 
 ### Config `image` gulp task
