@@ -2,6 +2,7 @@ var gulp	= require( 'gulp' );
 
 var options	= require( '../utils/options' );
 var paths	= require( '../utils/paths' );
+var htmlify	= require( '../utils/htmlify' );
 
 var gutil	= require( 'gulp-util' );
 
@@ -33,7 +34,7 @@ gulp.task( 'htmlify', [ 'delete' ], function() {
 			if ( config.ALL_LANG.indexOf( lg ) >= 0 ) {
 				path = urlPage[ lg ];
 				
-				htmlify( multiLang, lg, path );
+				buildHTMLFile( multiLang, lg, path );
 			}
 		}
 	}
@@ -42,12 +43,16 @@ gulp.task( 'htmlify', [ 'delete' ], function() {
 
 
 
-function htmlify( multiLang, lg, path ) {
+function buildHTMLFile( multiLang, lg, path ) {
 	var baseUrl		= config.ENVS[ config.ENV ].base_url;
 	var lgPath		= !multiLang || lg == config.ALL_LANG[0] && path == '' ? '' : lg + '/';
 	var url			= baseUrl + lgPath + path;
 	
-	var dataObject	= { htmlify: 'true' };
+	var dataObject	= {
+		htmlify:		'true',
+		env:			options.env,
+		relativePath:	htmlify.relativePath
+	};
 	var curlOpts	= curl.opts.silent()
 								.ignore_cert()
 								.follow_redirects()
@@ -60,7 +65,8 @@ function htmlify( multiLang, lg, path ) {
 		
 		var filePath	= paths.env.prod + lg + '-' + id + '.html';
 		
-		data			= data.replace( new RegExp( baseUrl, 'g' ), '' );
+		var destBaseUrl	= htmlify.relativePath ? '' : config.ENVS[ options.env ].base_url;
+		data			= data.replace( new RegExp( baseUrl, 'g' ), destBaseUrl );
 		
 		fs.writeFileSync( filePath, data, 'utf8' );
 		

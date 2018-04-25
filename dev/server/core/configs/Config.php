@@ -79,10 +79,19 @@ class Config
 	{
 		if ( isset( $_POST[ 'htmlify' ] ) ) {
 			self::$HTMLIFY			= true;
-			self::$ASSETS_BASE_URL	= ' data-assets-base-url="assets/"';
+			self::$ASSETS_BASE_URL	= $this->getDataAssetsBaseUrl( $_POST[ 'env' ], $_POST[ 'relativePath' ] );
 		}
 		else
 			self::$HTMLIFY = false;
+	}
+	
+	
+	private function getDataAssetsBaseUrl( $env, $relativePath )
+	{
+		$config		= $this->getConfigFile();
+		$baseUrl	= $relativePath == 'true' ? '' : $config->ENVS->{ $env }->base_url;
+		
+		return ' data-assets-base-url="' . $baseUrl . 'assets/"';
 	}
 	
 	
@@ -171,7 +180,14 @@ class Config
 		
 		
 		if ( self::$HTMLIFY )
-			$this->params->ENVS->base_url	= '';
+			$this->overwriteEnv( $_POST[ 'env' ] );
+	}
+	
+	
+	private function overwriteEnv( $env )
+	{
+		$this->params->ENV	= $env;
+		$this->params->ENVS	= self::$ENVS->{ $env };
 	}
 	
 	
