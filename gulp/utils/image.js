@@ -17,7 +17,20 @@ image.params	= [
 			min: 80,
 			max: 80
 		}
+	},
+	
+	{
+		src: [
+			paths.env.dev + paths.assets._3d.textures.allFiles,
+			'!' + paths.env.dev + paths.emptyFiles
+		],
+		dest: paths.env.prod + paths.assets._3d.textures.dir,
+		quality: {
+			min: 80,
+			max: 80
+		}
 	}
+	
 ];
 
 

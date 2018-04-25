@@ -18,10 +18,21 @@ module.exports = {
 		
 		_3d: {
 			dir: 'assets/3d/',
+			allFiles:	'assets/3d/**/*',
+			
+			models: {
+				dir:		'assets/3d/models/',
+				allFiles:	'assets/3d/models/**/*',
+			},
 			
 			shaders: {
 				dir:		'assets/3d/shaders/',
 				allFiles:	'assets/3d/shaders/**/*',
+			},
+			
+			textures: {
+				dir:		'assets/3d/textures/',
+				allFiles:	'assets/3d/textures/**/*',
 			}
 		},
 		

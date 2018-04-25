@@ -34,6 +34,12 @@ gulp.task( 'move', function() {
 			from: [
 				sassPathFrom,
 				[
+					paths.env.dev + paths.assets._3d.allFiles,
+					'!' + paths.env.dev + paths.assets._3d.textures.allFiles,
+					'!' + paths.env.dev + paths.assets._3d.textures.dir,
+					'!' + paths.env.dev + paths.emptyFiles
+				],
+				[
 					paths.env.dev + paths.assets.css.fonts.allFiles,
 					'!' + paths.env.dev + paths.emptyFiles
 				],
@@ -61,6 +67,7 @@ gulp.task( 'move', function() {
 			],
 			to: [
 				paths.env.prod + paths.assets.css.dir,
+				paths.env.prod + paths.assets._3d.dir,
 				paths.env.prod + paths.assets.css.fonts.dir,
 				paths.env.prod + paths.assets.favicons.dir,
 				paths.env.prod + paths.assets.files.dir,
