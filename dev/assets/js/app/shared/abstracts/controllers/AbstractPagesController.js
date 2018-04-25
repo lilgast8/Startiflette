@@ -132,6 +132,8 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 			this._onImgLoaded( e );
 		else if ( e.item.type == 'json' )
 			this.assetsModel.setJsonData( e.item.id, e.result );
+		else if ( e.item.ext == 'vert' || e.item.ext == 'frag'  )
+			this.assetsModel.setShaderData( e.item.id, e.result );
 	}
 	
 	

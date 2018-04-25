@@ -19023,9 +19023,10 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 	
 	
 	constructor() {
-		this.aImg		= {};
-		this.aJson		= {};
-		this.jsonData	= {};
+		this.aImg	= {};
+		this.aTxt	= {};
+		this.json	= {};
+		this.shader	= {};
 	}
 	
 	
@@ -19078,7 +19079,7 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 		for ( const id in this.aImg )
 			aIds.push( id );
 		
-		for ( const id in this.aJson )
+		for ( const id in this.aTxt )
 			if( aIds.indexOf( id ) < 0 )
 				aIds.push( id );
 		
@@ -19089,7 +19090,7 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 	
 	_addStaticAssetsToLoad( type, aAssetsToLoad, aListIds ) {
 		let assetsList;
-		const aAssets = type == 'img' ? this.aImg : this.aJson;
+		const aAssets = type == 'img' ? this.aImg : this.aTxt;
 		
 		for ( let i = 0; i < aListIds.length; i++ ) {
 			assetsList = aAssets[ aListIds[ i ] ];
@@ -19134,7 +19135,12 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 	
 	
 	setJsonData( id, data ) {
-		this.jsonData[ id ] = data;
+		this.json[ id ] = data;
+	}
+	
+	
+	setShaderData( id, data ) {
+		this.shader[ id ] = data;
 	}
 	
 	
@@ -19735,7 +19741,7 @@ STF.Models.Assets = new class Assets extends STF.Abstracts.AbstractAssets {
 		};
 		
 		
-		this.aJson = {
+		this.aTxt = {
 			'global': {
 				global: STF.Configs.Path.URL.json + 'test-global.json'
 			},
@@ -20295,6 +20301,8 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 			this._onImgLoaded( e );
 		else if ( e.item.type == 'json' )
 			this.assetsModel.setJsonData( e.item.id, e.result );
+		else if ( e.item.ext == 'vert' || e.item.ext == 'frag'  )
+			this.assetsModel.setShaderData( e.item.id, e.result );
 	}
 	
 	

@@ -50,7 +50,7 @@ STF.Models.Assets = new class Assets extends STF.Abstracts.AbstractAssets {
 		};
 		
 		
-		this.aJson = {
+		this.aTxt = {
 			'global': {
 				global: STF.Configs.Path.URL.json + 'test-global.json'
 			},
