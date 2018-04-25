@@ -20210,14 +20210,14 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	
 	
 	initEl() {
-		this.assetsModel = STF.Models.Assets;
-		this.assetsModel.init();
-		
-		this.mainLoader = STF.Views.Statics.MainLoader;
+		this.assetsModel	= STF.Models.Assets;
+		this.mainLoader		= STF.Views.Statics.MainLoader;
 	}
 	
 	
 	initFirstPage() {
+		this.assetsModel.init();
+		
 		this.bindEvents();
 		this._setPageInfos();
 		this.manageMenuLinks();
