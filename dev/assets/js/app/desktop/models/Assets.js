@@ -63,6 +63,13 @@ STF.Models.Assets = new class Assets extends STF.Abstracts.AbstractAssets {
 				projects: STF.Configs.Path.URL.json + 'test-projects.json'
 			}
 		};
+		
+		
+		this.aSounds = {
+			'home': {
+				'sound-id': STF.Configs.Path.URL.sounds + 'fake-sound.mp3'
+			}
+		};
 	}
 	
 	

@@ -4,10 +4,11 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 	
 	
 	constructor() {
-		this.aImg	= {};
-		this.aTxt	= {};
-		this.json	= {};
-		this.shader	= {};
+		this.aImg		= {};
+		this.aTxt		= {};
+		this.aSounds	= {};
+		this.json		= {};
+		this.shader		= {};
 	}
 	
 	
@@ -20,8 +21,9 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 		const aListIds		= this._getAssetsListIds( pageId, isFirstLoad, loadingMode );
 		
 		let aAssetsToLoad	= [];
-		aAssetsToLoad		= this._addStaticAssetsToLoad( 'img', aAssetsToLoad, aListIds );
-		aAssetsToLoad		= this._addStaticAssetsToLoad( 'json', aAssetsToLoad, aListIds );
+		aAssetsToLoad		= this._addStaticAssetsToLoad( this.aImg, aAssetsToLoad, aListIds );
+		aAssetsToLoad		= this._addStaticAssetsToLoad( this.aTxt, aAssetsToLoad, aListIds );
+		aAssetsToLoad		= this._addStaticAssetsToLoad( this.aSounds, aAssetsToLoad, aListIds );
 		
 		if ( loadingMode == 'byPageDynamic' )
 			aAssetsToLoad	= this._addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad );
@@ -69,12 +71,9 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 	}
 	
 	
-	_addStaticAssetsToLoad( type, aAssetsToLoad, aListIds ) {
-		let assetsList;
-		const aAssets = type == 'img' ? this.aImg : this.aTxt;
-		
+	_addStaticAssetsToLoad( aAssets, aAssetsToLoad, aListIds ) {
 		for ( let i = 0; i < aListIds.length; i++ ) {
-			assetsList = aAssets[ aListIds[ i ] ];
+			const assetsList = aAssets[ aListIds[ i ] ];
 			
 			if ( assetsList !== undefined )
 				for ( const id in assetsList ) {

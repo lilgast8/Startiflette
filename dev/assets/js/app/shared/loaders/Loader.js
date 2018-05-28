@@ -26,6 +26,8 @@ STF.Loaders.Loader = class Loader extends STF.Events.CustomEvent {
 	
 	init() {
 		this.queue = new createjs.LoadQueue( true );
+		if ( createjs.Sound )
+			this.queue.installPlugin( createjs.Sound );
 		
 		this.bindEvents();
 	}
