@@ -199,13 +199,33 @@ Then use the following methods to manage a custom event:
 
 ## Assets loading
 
-Define the list of assets you want to load in `Assets.js`. The `aImg` and `aJson` objects are respectively used for images and JSON files. These objects contain a list of arrays with a key. This key is the id of the page you previously defined in `routes.json`. In this way we can load the images according to the page on which the user is. The `global` id is used for assets which need to be loaded just once, at start. Basically the assets which don't depend on a specific page.
+Define the list of assets you want to load in `Assets.js`. The `aImg`, `aTxt` and `aSounds` objects are respectively used for images, text files (JSON, shaders) and sounds files. These objects contain a list of arrays with a key. This key is the id of the page you previously defined in `routes.json`. In this way we can load the images according to the page on which the user is. The `global` id is used for assets which need to be loaded just once, at start. Basically the assets which don't depend on a specific page.
 
 There are 3 types of images loading. You can set the mode you want in `AbstractPagesController.js` or `PagesController.js` with `LOADING_MODE` variable. Here is the 3 options:
 
 * `allStatic`: It load all the assets defined in `Assets.js` at the start, then no loading on page change.
 * `byPageStatic`: At the start it load the assets in `global` and the assets of the page `page_id` defined in `Assets.js`. On page change only the assets of the page `page_id` are loaded.
 * `byPageDynamic`: Same behaviour than `byPageStatic` but it also parse the DOM to find images defined by `DYNAMIC_IMG_TO_LOAD` and preload them, except these which have the following data-value `data-lazyload="true"` ([see lazyloading management below](#lazyloading)). At the start it parse all the DOM but on page change it only parse the page container `#page-container`.
+
+The asset management use [`CreateJS/PreloadJS`](https://github.com/CreateJS/PreloadJS). Don't hesitate to check [the documentation](http://createjs.com/docs/preloadjs/) to have more information about it. Basically you have to know there are two ways to list the assets you want to load.
+By just listing the files to load in an array, recommended for image files:
+```
+'page-id': [
+	'path-to-asset-1',
+	'path-to-asset-2'
+]
+```
+Or by listing the files in an object and using an id for eacha asset, recommended for text (JSON & shader) and sound files:
+```
+'page-id': {
+	'asset-id-1': 'path-to-asset-1',
+	'asset-id-2': 'path-to-asset-2'
+},
+```
+
+Once loaded, the JSON and shader files are respectively saved in `STF.Models.Assets.json` and `STF.Models.Assets.shader`. This is why is quite important to set them an id in the loading list, because it will be necessary when you will need to get them in these objects.
+
+For the sounds it's pretty the same thing, expect that the sounds are not saved in `STF.Models.Assets` because they are already manage by `CreateJS/SoundJS`. See [how to manage sound](#sound-management) if you need for information about it.
 
 
 
