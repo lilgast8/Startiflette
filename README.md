@@ -178,7 +178,7 @@ Make the configurations in the `dev/configs/config.json` file.
 
 ## Custom events
 
-You can create and manage custom events in any inherited class from CustomEvent class. [CustomEvent.js](https://github.com/LilGast8/Startiflette/blob/master/dev/assets/js/app/shared/events/CustomEvent.js) depend on [`js-signal`](http://millermedeiros.github.io/js-signals).
+You can create and manage custom events in any inherited class from CustomEvent class [CustomEvent.js](https://github.com/LilGast8/Startiflette/blob/master/dev/assets/js/app/shared/events/CustomEvent.js) which depends on [`js-signal`](http://millermedeiros.github.io/js-signals).
 
 First of all, set the list of event(s) in `this.E` of the object which will be listened:
 
@@ -274,3 +274,14 @@ Here is a example:
 * Your dynamic sub-path file will look like this ([see the `example.json`](https://github.com/LilGast8/Startiflette/tree/master/dev/configs/dynamic-sub-path/example.json))
 
 Once the array stocked in `JS_VIEWS_ID`, it will be used to set the `pageInfos.id` & `prevPageInfos.id` in `AbstractPagesController.js`. Then these ids can be used to make conditions and launch the specific hide/show transition you want.
+
+
+
+## Sound management
+
+You can create and manage sound by using Sound class [Sound.js](https://github.com/LilGast8/Startiflette/blob/master/dev/assets/js/app/shared/medias/Sound.js) which depend on [`CreateJS/SoundJS`](https://github.com/CreateJS/SoundJS).
+The good news is that the sound loading is managed by [`CreateJS/PreloadJS`](https://github.com/CreateJS/PreloadJS) already used for all others assets. 
+
+So basically you just have to add the sounds following the [assets loading](#assets-loading) instruction.
+
+Then to create a new sound object use `new STF.Views.Partials.Sound( id, volume, volumeCoeff, loop )`, where the id will be the asset id you used in the asset list.
