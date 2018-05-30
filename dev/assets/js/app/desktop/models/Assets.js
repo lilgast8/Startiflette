@@ -51,12 +51,23 @@ STF.Models.Assets = new class Assets extends STF.Abstracts.AbstractAssets {
 		
 		
 		this.aTxt = {
-			'global': {
-				global: STF.Configs.Path.URL.json + 'test-global.json'
-			},
+			'global': [
+				// global1: STF.Configs.Path.URL.json + 'test-global.json'
+				{
+					pageId:	'global',
+					id:		'global1',
+					src:	STF.Configs.Path.URL.json + 'test-global.json'
+				},
+				{
+					pageId:	'global',
+					id:		'projects',
+					src:	STF.Configs.Path.URL.json + 'test-projects.json'
+				}
+			],
 			
 			'home': {
-				home: STF.Configs.Path.URL.json + 'test-home.json'
+				home1: STF.Configs.Path.URL.json + 'test-home.json',
+				home2: STF.Configs.Path.URL.json + 'test-global.json',
 			},
 			
 			'projects': {

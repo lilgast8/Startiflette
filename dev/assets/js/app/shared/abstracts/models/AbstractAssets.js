@@ -29,6 +29,7 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 			aAssetsToLoad	= this._addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad );
 		
 		
+		console.log( aAssetsToLoad );
 		return aAssetsToLoad;
 	}
 	
@@ -114,8 +115,40 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 	}
 	
 	
-	setJsonData( id, data ) {
+	/*setJsonData( id, data ) {
+		console.log( id );
 		this.json[ id ] = data;
+	}*/
+	
+	
+	setJsonData( pageId, dataId, data ) {
+	// setJsonData( id, data ) {
+	// 	this.json[ id ] = data;
+		
+		
+		// console.log( pageId, dataId );
+		
+		
+		if ( this.json[ pageId ] === undefined )
+			this.json[ pageId ] = {};
+		
+		this.json[ pageId ][ dataId ] = data;
+		
+	}
+	
+	
+	resetJsonData( pageId, dataId = null ) {
+		console.log( pageId, dataId );
+		
+		if ( dataId === null ) {
+			console.log( this.json[ pageId ] );
+			delete this.json[ pageId ];
+		}
+		else {
+			console.log( '⚡️ SLP ⚡️' );
+			delete this.json[ pageId ][ dataId ];
+		}
+		// this.json[ id ] = {};
 	}
 	
 	

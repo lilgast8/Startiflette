@@ -130,8 +130,16 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	_onFileLoad( e ) {
 		if ( e.item.type == 'image' )
 			this._onImgLoaded( e );
-		else if ( e.item.type == 'json' )
-			this.assetsModel.setJsonData( e.item.id, e.result );
+		else if ( e.item.type == 'json' ) {
+			// console.log( e.item );
+			// this.assetsModel.setJsonData( e.item.id, e.result );
+			// this.assetsModel.setJsonData( this.pageInfos.id, e.item.id, e.result );
+			
+			const pageId = e.item.pageId === undefined ? this.pageInfos.id : e.item.pageId;
+			
+			// this.assetsModel.setJsonData( e.item.pageId, e.item.id, e.result );
+			this.assetsModel.setJsonData( pageId, e.item.id, e.result );
+		}
 		else if ( e.item.ext == 'vert' || e.item.ext == 'frag'  )
 			this.assetsModel.setShaderData( e.item.id, e.result );
 	}

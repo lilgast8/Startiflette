@@ -19048,6 +19048,7 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 			aAssetsToLoad	= this._addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad );
 		
 		
+		console.log( aAssetsToLoad );
 		return aAssetsToLoad;
 	}
 	
@@ -19133,8 +19134,40 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 	}
 	
 	
-	setJsonData( id, data ) {
+	/*setJsonData( id, data ) {
+		console.log( id );
 		this.json[ id ] = data;
+	}*/
+	
+	
+	setJsonData( pageId, dataId, data ) {
+	// setJsonData( id, data ) {
+	// 	this.json[ id ] = data;
+		
+		
+		// console.log( pageId, dataId );
+		
+		
+		if ( this.json[ pageId ] === undefined )
+			this.json[ pageId ] = {};
+		
+		this.json[ pageId ][ dataId ] = data;
+		
+	}
+	
+	
+	resetJsonData( pageId, dataId = null ) {
+		console.log( pageId, dataId );
+		
+		if ( dataId === null ) {
+			console.log( this.json[ pageId ] );
+			delete this.json[ pageId ];
+		}
+		else {
+			console.log( '⚡️ SLP ⚡️' );
+			delete this.json[ pageId ][ dataId ];
+		}
+		// this.json[ id ] = {};
 	}
 	
 	
@@ -19741,12 +19774,23 @@ STF.Models.Assets = new class Assets extends STF.Abstracts.AbstractAssets {
 		
 		
 		this.aTxt = {
-			'global': {
-				global: STF.Configs.Path.URL.json + 'test-global.json'
-			},
+			'global': [
+				// global1: STF.Configs.Path.URL.json + 'test-global.json'
+				{
+					pageId:	'global',
+					id:		'global1',
+					src:	STF.Configs.Path.URL.json + 'test-global.json'
+				},
+				{
+					pageId:	'global',
+					id:		'projects',
+					src:	STF.Configs.Path.URL.json + 'test-projects.json'
+				}
+			],
 			
 			'home': {
-				home: STF.Configs.Path.URL.json + 'test-home.json'
+				home1: STF.Configs.Path.URL.json + 'test-home.json',
+				home2: STF.Configs.Path.URL.json + 'test-global.json',
 			},
 			
 			'projects': {
@@ -20307,8 +20351,16 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	_onFileLoad( e ) {
 		if ( e.item.type == 'image' )
 			this._onImgLoaded( e );
-		else if ( e.item.type == 'json' )
-			this.assetsModel.setJsonData( e.item.id, e.result );
+		else if ( e.item.type == 'json' ) {
+			// console.log( e.item );
+			// this.assetsModel.setJsonData( e.item.id, e.result );
+			// this.assetsModel.setJsonData( this.pageInfos.id, e.item.id, e.result );
+			
+			const pageId = e.item.pageId === undefined ? this.pageInfos.id : e.item.pageId;
+			
+			// this.assetsModel.setJsonData( e.item.pageId, e.item.id, e.result );
+			this.assetsModel.setJsonData( pageId, e.item.id, e.result );
+		}
 		else if ( e.item.ext == 'vert' || e.item.ext == 'frag'  )
 			this.assetsModel.setShaderData( e.item.id, e.result );
 	}
@@ -20970,6 +21022,11 @@ STF.Views.Pages.Home = class Home extends STF.Abstracts.AbstractPageView {
 		super.init();
 		
 		this.initView = true;
+		
+		console.log( STF.Models.Assets.json.home );
+		// console.log( STF.Models.Assets.json.home.home2 );
+		
+		STF.Models.Assets.resetJsonData( 'home', 'home1' );
 	}
 	
 	
