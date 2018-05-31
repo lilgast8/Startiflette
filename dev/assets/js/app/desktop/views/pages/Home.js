@@ -12,11 +12,6 @@ STF.Views.Pages.Home = class Home extends STF.Abstracts.AbstractPageView {
 		super.init();
 		
 		this.initView = true;
-		
-		console.log( STF.Models.Assets.json.home );
-		// console.log( STF.Models.Assets.json.home.home2 );
-		
-		STF.Models.Assets.resetJsonData( 'home', 'home1' );
 	}
 	
 	

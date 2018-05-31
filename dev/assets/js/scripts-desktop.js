@@ -19045,10 +19045,9 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 		aAssetsToLoad		= this._addStaticAssetsToLoad( this.aSounds, aAssetsToLoad, aListIds );
 		
 		if ( loadingMode == 'byPageDynamic' )
-			aAssetsToLoad	= this._addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad );
+			aAssetsToLoad	= this._addDynamicAssetsToLoad( pageId, isFirstLoad, aAssetsToLoad );
 		
 		
-		console.log( aAssetsToLoad );
 		return aAssetsToLoad;
 	}
 	
@@ -19086,21 +19085,22 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 			if( aIds.indexOf( id ) < 0 )
 				aIds.push( id );
 		
+		for ( const id in this.aSounds )
+			if( aIds.indexOf( id ) < 0 )
+				aIds.push( id );
+		
 		
 		return aIds;
 	}
 	
 	
 	_addStaticAssetsToLoad( aAssets, aAssetsToLoad, aListIds ) {
-		for ( let i = 0; i < aListIds.length; i++ ) {
-			const assetsList = aAssets[ aListIds[ i ] ];
+		for ( const pageId in aAssets ) {
+			const aAssetsByPage = aAssets[ pageId ];
 			
-			if ( assetsList !== undefined )
-				for ( const id in assetsList ) {
-					const fileId = STF_gl_getType( assetsList ) === 'object' ? id : null;
-					
-					this._addAsset( aAssetsToLoad, fileId, assetsList[ id ] );
-				}
+			if ( aListIds.indexOf( pageId ) >= 0 )
+				for ( const id in aAssetsByPage )
+					this._addAsset( aAssetsToLoad, aAssetsByPage[ id ], id, pageId );
 		}
 		
 		
@@ -19108,46 +19108,46 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 	}
 	
 	
-	_addDynamicAssetsToLoad( isFirstLoad, aAssetsToLoad ) {
+	_getAssetObj( src, id, pageId ) {
+		return {
+			src,
+			id,
+			pageId
+		};
+	}
+	
+	
+	_addDynamicAssetsToLoad( pageId, isFirstLoad, aAssetsToLoad ) {
 		const $dynamicImgs = isFirstLoad ? STF.Controllers.Main.$mainCont.find( STF.Controllers.PagesController.DYNAMIC_IMG_TO_LOAD ) :
 										   STF.Controllers.Main.$pageCont.find( STF.Controllers.PagesController.DYNAMIC_IMG_TO_LOAD );
 		
 		for ( let i = 0; i < $dynamicImgs.length; i++ )
 			if ( $dynamicImgs[ i ].getAttribute( 'data-lazyload' ) != 'true' )
-				this._addAsset( aAssetsToLoad, null, $dynamicImgs[ i ].getAttribute( 'data-src' ) );
+				this._addAsset( aAssetsToLoad, $dynamicImgs[ i ].getAttribute( 'data-src' ), i, pageId );
 		
 		
 		return aAssetsToLoad;
 	}
 	
 	
-	_addAsset( aAssetsToLoad, id, assetUrl ) {
-		if ( aAssetsToLoad.indexOf( assetUrl ) < 0 && id === null )
-			return aAssetsToLoad.push( assetUrl );
-		else if ( aAssetsToLoad.indexOf( assetUrl ) < 0 && id !== null )
-			return aAssetsToLoad.push( {
-				id:		id,
-				src:	assetUrl
-			} );
-		else if ( !STF.Configs.Config.IS_PROD )
-			console.warn( 'AbstractAssets:' + assetUrl + ' already added to the loading assets list!' );
+	_addAsset( aAssetsToLoad, src, id, pageId ) {
+		const asset		= { src, id, pageId };
+		let addAsset	= true;
+		
+		for ( let i = 0; i < aAssetsToLoad.length; i++ ) {
+			if ( aAssetsToLoad[ i ].src == src ) {
+				addAsset = false;
+				
+				break;
+			}
+		}
+		
+		if ( addAsset )
+			aAssetsToLoad.push( asset );
 	}
 	
 	
-	/*setJsonData( id, data ) {
-		console.log( id );
-		this.json[ id ] = data;
-	}*/
-	
-	
 	setJsonData( pageId, dataId, data ) {
-	// setJsonData( id, data ) {
-	// 	this.json[ id ] = data;
-		
-		
-		// console.log( pageId, dataId );
-		
-		
 		if ( this.json[ pageId ] === undefined )
 			this.json[ pageId ] = {};
 		
@@ -19157,22 +19157,32 @@ STF.Abstracts.AbstractAssets = class AbstractAssets {
 	
 	
 	resetJsonData( pageId, dataId = null ) {
-		console.log( pageId, dataId );
-		
-		if ( dataId === null ) {
-			console.log( this.json[ pageId ] );
+		if ( dataId === null )
 			delete this.json[ pageId ];
-		}
-		else {
-			console.log( '⚡️ SLP ⚡️' );
+		else
 			delete this.json[ pageId ][ dataId ];
-		}
-		// this.json[ id ] = {};
 	}
 	
 	
-	setShaderData( id, data ) {
-		this.shader[ id ] = data;
+	setTxtData( ext, pageId, dataId, data ) {
+		if ( ext != 'obj' )
+			this.setShaderData( pageId, dataId, data );
+	}
+	
+	
+	setShaderData( pageId, dataId, data ) {
+		if ( this.shader[ pageId ] === undefined )
+			this.shader[ pageId ] = {};
+		
+		this.shader[ pageId ][ dataId ] = data;
+	}
+	
+	
+	resetShaderData( pageId, dataId = null ) {
+		if ( dataId === null )
+			delete this.shader[ pageId ];
+		else
+			delete this.shader[ pageId ][ dataId ];
 	}
 	
 	
@@ -19774,23 +19784,12 @@ STF.Models.Assets = new class Assets extends STF.Abstracts.AbstractAssets {
 		
 		
 		this.aTxt = {
-			'global': [
-				// global1: STF.Configs.Path.URL.json + 'test-global.json'
-				{
-					pageId:	'global',
-					id:		'global1',
-					src:	STF.Configs.Path.URL.json + 'test-global.json'
-				},
-				{
-					pageId:	'global',
-					id:		'projects',
-					src:	STF.Configs.Path.URL.json + 'test-projects.json'
-				}
-			],
+			'global': {
+				global: STF.Configs.Path.URL.json + 'test-global.json'
+			},
 			
 			'home': {
-				home1: STF.Configs.Path.URL.json + 'test-home.json',
-				home2: STF.Configs.Path.URL.json + 'test-global.json',
+				home: STF.Configs.Path.URL.json + 'test-home.json'
 			},
 			
 			'projects': {
@@ -20351,18 +20350,10 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 	_onFileLoad( e ) {
 		if ( e.item.type == 'image' )
 			this._onImgLoaded( e );
-		else if ( e.item.type == 'json' ) {
-			// console.log( e.item );
-			// this.assetsModel.setJsonData( e.item.id, e.result );
-			// this.assetsModel.setJsonData( this.pageInfos.id, e.item.id, e.result );
-			
-			const pageId = e.item.pageId === undefined ? this.pageInfos.id : e.item.pageId;
-			
-			// this.assetsModel.setJsonData( e.item.pageId, e.item.id, e.result );
-			this.assetsModel.setJsonData( pageId, e.item.id, e.result );
-		}
-		else if ( e.item.ext == 'vert' || e.item.ext == 'frag'  )
-			this.assetsModel.setShaderData( e.item.id, e.result );
+		else if ( e.item.type == 'json' )
+			this.assetsModel.setJsonData( e.item.pageId, e.item.id, e.result );
+		else if ( e.item.type == 'text'  )
+			this.assetsModel.setTxtData( e.item.ext, e.item.pageId, e.item.id, e.result );
 	}
 	
 	
@@ -20543,6 +20534,7 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 			
 			this._destroyPage();
 			this.setContent();
+			this._destroyPageModelData( this.prevPageInfos.id );
 		}
 		
 		else if ( ( this. LOADING_MODE == 'byPageStatic' || this. LOADING_MODE == 'byPageDynamic' ) &&
@@ -20564,6 +20556,12 @@ STF.Abstracts.AbstractPagesController = class AbstractPagesController extends ST
 		}
 		
 		this.data = null;
+	}
+	
+	
+	_destroyPageModelData( pageId ) {
+		this.assetsModel.resetJsonData( pageId );
+		this.assetsModel.resetShaderData( pageId );
 	}
 	
 	
@@ -21022,11 +21020,6 @@ STF.Views.Pages.Home = class Home extends STF.Abstracts.AbstractPageView {
 		super.init();
 		
 		this.initView = true;
-		
-		console.log( STF.Models.Assets.json.home );
-		// console.log( STF.Models.Assets.json.home.home2 );
-		
-		STF.Models.Assets.resetJsonData( 'home', 'home1' );
 	}
 	
 	
