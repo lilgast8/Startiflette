@@ -144,7 +144,7 @@ class AbstractViewController
 	}
 	
 	
-	private function getPageViewDynamicData()
+	public function getPageViewDynamicData()
 	{
 		$this->addData( $this->response->data );
 	}
